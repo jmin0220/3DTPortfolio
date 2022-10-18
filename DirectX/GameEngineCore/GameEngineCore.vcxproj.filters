@@ -153,9 +153,6 @@
     <ClInclude Include="GameEngineBlur.h">
       <Filter>Object\Component\Rendering\PostEffect</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineRenderSet.h">
-      <Filter>Object\Component\Rendering</Filter>
-    </ClInclude>
     <ClInclude Include="GameEngineStructuredBuffer.h">
       <Filter>Resources\ShaderResources</Filter>
     </ClInclude>
@@ -167,6 +164,9 @@
     </ClInclude>
     <ClInclude Include="GameEngineDefaultRenderer.h">
       <Filter>Object\Component\Rendering\Content</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineMesh.h">
+      <Filter>Resources\InputAssembler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -312,9 +312,6 @@
     <ClCompile Include="GameEngineBlur.cpp">
       <Filter>Object\Component\Rendering\PostEffect</Filter>
     </ClCompile>
-    <ClCompile Include="GameEngineRenderSet.cpp">
-      <Filter>Object\Component\Rendering</Filter>
-    </ClCompile>
     <ClCompile Include="GameEngineStructuredBuffer.cpp">
       <Filter>Resources\ShaderResources</Filter>
     </ClCompile>
@@ -326,6 +323,9 @@
     </ClCompile>
     <ClCompile Include="GameEngineDefaultRenderer.cpp">
       <Filter>Object\Component\Rendering\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineMesh.cpp">
+      <Filter>Resources\InputAssembler</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

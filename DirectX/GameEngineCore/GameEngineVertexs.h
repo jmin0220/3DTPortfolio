@@ -1,7 +1,7 @@
 #pragma once
 #include <GameEngineBase/GameEngineMath.h>
 
-class GameEngineLayOutDesc 
+class GameEngineLayOutDesc
 {
 	// 일반적인 맴버변수를 가지면 안됩니다.
 
@@ -23,20 +23,21 @@ public:
 	);
 
 public:
-	void OffsetReset() 
+	void OffsetReset()
 	{
 		LayOutOffset = 0;
 	}
 
 public:
 	GameEngineLayOutDesc()
-		: LayOutOffset(0)
+		: InstancingSize(0)
+		, LayOutOffset(0)
 	{
 
 	}
 };
 
-struct GameEngineVertex 
+struct GameEngineVertex
 {
 public:
 	static GameEngineLayOutDesc LayOut;
@@ -45,5 +46,5 @@ public:
 	float4 POSITION;
 	float4 TEXCOORD;
 	float4 COLOR;
+	// float4 TENGENT;
 };
-

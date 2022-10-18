@@ -6,6 +6,7 @@
 #include "GameEngineCore.h"
 #include "GameEngineCamera.h"
 #include "GameEngineTexture.h"
+#include "GameEngineRenderer.h"
 
 namespace GameEngineDebug
 {
@@ -22,14 +23,14 @@ namespace GameEngineDebug
 
 	public:
 		DebugInfo(DebugRenderType _Type, const float4& _Color)
-			: Type{static_cast<int>(_Type)}
+			: Type{ static_cast<int>(_Type) }
 			, Color(_Color)
 		{
 
 		}
 	};
 
-	struct DebugRenderData 
+	struct DebugRenderData
 	{
 	public:
 		DebugInfo Info;
@@ -39,7 +40,7 @@ namespace GameEngineDebug
 
 	std::vector<DebugRenderData> DebugData = std::vector<DebugRenderData>();
 
-	void DrawBox(const GameEngineTransform& _Trans, const float4& _Color) 
+	void DrawBox(const GameEngineTransform& _Trans, const float4& _Color)
 	{
 		DrawBox(_Trans, GameEngineCore::GetCurLevel()->GetMainCamera(), _Color);
 	}
@@ -111,11 +112,11 @@ namespace GameEngineDebug
 	}
 
 
-	void DrawSphere(const GameEngineTransform& _Trans, const float4& _Color) 
+	void DrawSphere(const GameEngineTransform& _Trans, const float4& _Color)
 	{
 		DrawSphere(_Trans, GameEngineCore::GetCurLevel()->GetMainCamera(), _Color);
 	}
-	void DrawSphere(const GameEngineTransform& _Trans, GameEngineCamera* _Camera, const float4& _Color) 
+	void DrawSphere(const GameEngineTransform& _Trans, GameEngineCamera* _Camera, const float4& _Color)
 	{
 		static GameEngineTransform DebugTrans;
 
@@ -127,14 +128,25 @@ namespace GameEngineDebug
 		DebugData.push_back(DebugRenderData{ DebugInfo(DebugRenderType::Sphere, _Color) , DebugTrans.GetTransformData() });
 	}
 
+	GameEngineRenderUnit* DebugRenderUnit;
+	GameEngineRenderUnit* DebugTextureRenderUnit;
 
-	GameEngineShaderResourcesHelper DebugShaderResources;
-	GameEngineRenderingPipeLine* DebugRenderingPipeLine;
+	void Debug3DDestroy()
+	{
+		if (nullptr != DebugRenderUnit)
+		{
+			delete DebugRenderUnit;
+			DebugRenderUnit = nullptr;
+		}
 
-	GameEngineShaderResourcesHelper TextureShaderResources;
-	GameEngineRenderingPipeLine* TextureRenderingPipeLine;
+		if (nullptr != DebugTextureRenderUnit)
+		{
+			delete DebugTextureRenderUnit;
+			DebugTextureRenderUnit = nullptr;
+		}
+	}
 
-	void Debug3DInitialize() 
+	void Debug3DInitialize()
 	{
 		static bool IsOnce = false;
 
@@ -143,12 +155,20 @@ namespace GameEngineDebug
 			return;
 		}
 
+		DebugRenderUnit = new GameEngineRenderUnit();
 
-		DebugRenderingPipeLine = GameEngineRenderingPipeLine::Find("3DDebug");
-		DebugShaderResources.ResourcesCheck(DebugRenderingPipeLine);
+		DebugRenderUnit->SetMesh("Box");
+		DebugRenderUnit->SetPipeLine("3DDebug");
 
-		TextureRenderingPipeLine = GameEngineRenderingPipeLine::Find("DebugTexture");
-		TextureShaderResources.ResourcesCheck(TextureRenderingPipeLine);
+		//DebugRenderingPipeLine = GameEngineRenderingPipeLine::Find("3DDebug");
+		//DebugShaderResources.ResourcesCheck(DebugRenderingPipeLine);
+
+		DebugTextureRenderUnit = new GameEngineRenderUnit();
+
+		DebugTextureRenderUnit->SetPipeLine("3DDebug");
+
+		//TextureRenderingPipeLine = GameEngineRenderingPipeLine::Find("DebugTexture");
+		//TextureShaderResources.ResourcesCheck(TextureRenderingPipeLine);
 
 		IsOnce = true;
 	}
@@ -160,26 +180,21 @@ namespace GameEngineDebug
 		{
 			if (nullptr == DebugData[i].Texture)
 			{
-				DebugShaderResources.SetConstantBufferLink("TransformData", DebugData[i].Data);
-				DebugShaderResources.SetConstantBufferLink("DebugInfo", DebugData[i].Info);
-				DebugShaderResources.AllResourcesSetting();
-				DebugRenderingPipeLine->Rendering();
-				DebugShaderResources.AllResourcesReset();
+				DebugRenderUnit->ShaderResources.SetConstantBufferLink("TransformData", DebugData[i].Data);
+				DebugRenderUnit->ShaderResources.SetConstantBufferLink("DebugInfo", DebugData[i].Info);
+				DebugRenderUnit->Render(GameEngineTime::GetDeltaTime());
 			}
-			else 
+			else
 			{
-				TextureShaderResources.SetConstantBufferLink("TransformData", DebugData[i].Data);
-				TextureShaderResources.SetConstantBufferLink("DebugInfo", DebugData[i].Info);
-				TextureShaderResources.SetTexture("Tex", DebugData[i].Texture);
-				TextureShaderResources.AllResourcesSetting();
-				TextureRenderingPipeLine->Rendering();
-				DebugShaderResources.AllResourcesReset();
+				DebugTextureRenderUnit->ShaderResources.SetConstantBufferLink("TransformData", DebugData[i].Data);
+				DebugTextureRenderUnit->ShaderResources.SetConstantBufferLink("DebugInfo", DebugData[i].Info);
+				DebugTextureRenderUnit->ShaderResources.SetTexture("Tex", DebugData[i].Texture);
+				DebugTextureRenderUnit->Render(GameEngineTime::GetDeltaTime());
 			}
 		}
-		// DebugData.push_back(DebugRenderData());
 
 		DebugData.clear();
 		int a = 0;
 	}
-	
+
 };

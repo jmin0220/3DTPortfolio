@@ -38,7 +38,7 @@ private:
 	bool IsUpdate_ = true;
 
 public:
-	bool IsUpdate() 
+	bool IsUpdate()
 	{
 		return IsUpdate_;
 	}
@@ -57,7 +57,7 @@ public:
 	virtual void EffectInit() = 0;
 	virtual void Effect(class GameEngineRenderTarget* _Render) = 0;
 
-	virtual ~GameEnginePostEffect() 
+	virtual ~GameEnginePostEffect()
 	{
 
 	}
@@ -111,7 +111,7 @@ public:
 
 	void CreateDepthTexture(int _Index = 0);
 
-	inline GameEngineTexture* GetDepthTexture() 
+	inline GameEngineTexture* GetDepthTexture()
 	{
 		return DepthTexture;
 	}
@@ -121,10 +121,10 @@ public:
 	void Copy(GameEngineRenderTarget* _Other, int _Index = 0);
 
 	void Merge(GameEngineRenderTarget* _Other, int _Index = 0);
-	
-	void Effect(GameEngineRenderingPipeLine* _Other, GameEngineShaderResourcesHelper* _ShaderResourcesHelper);
 
-	void Effect(class GameEngineRenderSet& _RenderSet);
+	// void Effect(GameEngineRenderingPipeLine* _Other, GameEngineShaderResourcesHelper* _ShaderResourcesHelper);
+
+	void Effect(class GameEngineRenderUnit& _RenderSet);
 
 	void EffectProcess();
 
@@ -139,8 +139,10 @@ protected:
 
 	ID3D11DepthStencilView* DepthStencilView;
 
-	GameEngineShaderResourcesHelper MergeShaderResourcesHelper;
-	GameEngineRenderingPipeLine* MergePipeLine;
+	GameEngineRenderUnit MergeUnit;
+
+	//GameEngineShaderResourcesHelper MergeShaderResourcesHelper;
+	//GameEngineRenderingPipeLine* MergePipeLine;
 
 	GameEngineTexture* DepthTexture;
 

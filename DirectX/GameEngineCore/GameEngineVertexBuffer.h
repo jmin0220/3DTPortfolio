@@ -12,7 +12,7 @@ class GameEngineVertexBuffer : public GameEngineRes<GameEngineVertexBuffer>
 {
 public:
 	friend GameEngineRes<GameEngineVertexBuffer>;
-	
+
 public:
 	template<typename VertexType>
 	static GameEngineVertexBuffer* Create(const std::string& _Name, const std::vector<VertexType>& _Vertex)
@@ -24,14 +24,19 @@ public:
 	static GameEngineVertexBuffer* Create(const std::string& _Name, const void* _Data, UINT _VertexSize, UINT _VertexCount, const GameEngineLayOutDesc& _LayOut);
 
 public:
-	const GameEngineLayOutDesc* GetLayOutDesc()
+	const GameEngineLayOutDesc& GetLayOutDesc()
 	{
-		return LayOutDesc;
+		if (nullptr == LayOutDesc)
+		{
+			MsgBoxAssert("버텍스 레이아웃 정보가 존재하지 않는 매쉬입니다");
+		}
+
+		return *LayOutDesc;
 	}
 
 	void Setting();
 
-	inline ID3D11Buffer* GetBuffer() 
+	inline ID3D11Buffer* GetBuffer()
 	{
 		return Buffer;
 	}

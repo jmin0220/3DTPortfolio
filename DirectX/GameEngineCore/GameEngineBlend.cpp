@@ -1,8 +1,9 @@
 #include "PreCompile.h"
 #include "GameEngineBlend.h"
 
-GameEngineBlend::GameEngineBlend() 
-	: Mask(0xffffffff)
+GameEngineBlend::GameEngineBlend()
+	: State(nullptr)
+	, Mask(0xffffffff)
 {
 }
 

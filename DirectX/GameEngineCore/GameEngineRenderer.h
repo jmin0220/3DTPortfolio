@@ -4,28 +4,29 @@
 #include "GameEngineLevel.h"
 #include "GameEngineRenderingPipeLine.h"
 #include "GameEngineShaderResourcesHelper.h"
+#include "GameEngineMesh.h"
 
-struct RenderOption 
+struct RenderOption
 {
-    float DeltaTime = 0.0f;
-    float SumDeltaTime = 0.0f;
+	float DeltaTime = 0.0f;
+	float SumDeltaTime = 0.0f;
 	int Temp0;
 	int Temp1;
 };
 
 // 랜더타겟이 세팅되어 있다면 이녀석으로 그릴수가 있다.
 
-class GameEngineRenderUnit 
+class GameEngineRenderUnit
 {
 public:
-	GameEngineShaderResourcesHelper ShaderResources;
+	GameEngineRenderUnit();
+
+	void SetMesh(const std::string& _Name);
 
 	void SetPipeLine(const std::string& _Name);
 
 	// 우리 엔진에서는 이런 이름을 가진x는 무조건 이렇게 세팅하기로 했어.
 	void EngineShaderResourcesSetting(GameEngineRenderer* _Renderer);
-
-	GameEngineRenderUnit();
 
 	void Render(float _DeltaTime);
 
@@ -37,10 +38,15 @@ public:
 
 	GameEngineRenderingPipeLine* ClonePipeLine(GameEngineRenderingPipeLine* _Rendering);
 
+	GameEngineShaderResourcesHelper ShaderResources;
+
 private:
 	GameEngineRenderer* ParentRenderer;
-
-	GameEngineRenderingPipeLine* PipeLine;
+	GameEngineMesh* Mesh; // 이 메쉬를
+	GameEngineRenderingPipeLine* PipeLine; // 이 설정으로
+	GameEngineInputLayOut* InputLayOut; // 인풋어셈블러1 세팅
+	// 	GameEngineShaderResourcesHelper ShaderResources; // 이 데이터를 가지고
+	D3D11_PRIMITIVE_TOPOLOGY Topology;// 이렇게 그린다.
 };
 
 
@@ -71,16 +77,16 @@ public:
 	// float4x4 ViewPort;
 	void ChangeCamera(CAMERAORDER _Order);
 
-    GameEngineRenderingPipeLine* ClonePipeLine(GameEngineRenderingPipeLine* _Rendering);
+	GameEngineRenderingPipeLine* ClonePipeLine(GameEngineRenderingPipeLine* _Rendering);
 
-    inline int GetRenderingOrder() 
-    {
-        return RenderingOrder;
-    }
+	inline int GetRenderingOrder()
+	{
+		return RenderingOrder;
+	}
 
-    void SetRenderingOrder(int _Order);
+	void SetRenderingOrder(int _Order);
 
-	virtual void InstancingOn() 
+	virtual void InstancingOn()
 	{
 		IsInstancing_ = true;
 	};
@@ -94,19 +100,19 @@ public:
 	void PushRendererToMainCamera();
 
 	void PushRendererToUICamera();
-	
+
 protected:
 	virtual void Start();
 	virtual void Update(float _DeltaTime) {}
 	virtual void End() {}
 
-    class GameEngineCamera* Camera;
+	class GameEngineCamera* Camera;
 
 
 
 private:
 	CAMERAORDER CameraOrder;
-    int RenderingOrder;
+	int RenderingOrder;
 	bool IsInstancing_;
 
 	virtual void Render(float _DeltaTime) = 0;
