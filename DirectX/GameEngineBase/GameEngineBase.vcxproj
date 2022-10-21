@@ -171,6 +171,10 @@
     <ClCompile Include="GameEngineRandom.cpp" />
     <ClCompile Include="GameEngineSound.cpp" />
     <ClCompile Include="GameEngineString.cpp" />
+    <ClCompile Include="GameEngineThread.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GameEngineThreadPool.cpp">
       <SubType>
       </SubType>
@@ -204,6 +208,10 @@
     <ClInclude Include="GameEngineRandom.h" />
     <ClInclude Include="GameEngineSound.h" />
     <ClInclude Include="GameEngineString.h" />
+    <ClInclude Include="GameEngineThread.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="GameEngineThreadPool.h">
       <SubType>
       </SubType>

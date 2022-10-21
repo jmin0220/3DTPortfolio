@@ -90,6 +90,9 @@
     <ClCompile Include="GameEngineThreadPool.cpp">
       <Filter>Thread</Filter>
     </ClCompile>
+    <ClCompile Include="GameEngineThread.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngineDebug.h">
@@ -147,6 +150,9 @@
       <Filter>Enum</Filter>
     </ClInclude>
     <ClInclude Include="GameEngineThreadPool.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineThread.h">
       <Filter>Thread</Filter>
     </ClInclude>
   </ItemGroup>
