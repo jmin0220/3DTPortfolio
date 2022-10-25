@@ -2,21 +2,21 @@
 #include "GameEngineCamera.h"
 #include "GameEngineTransformComponent.h"
 #include "GameEngineLevel.h"
-#include "GameEngineRenderingPipeLine.h"
+#include "GameEngineMaterial.h"
 #include "GameEngineShaderResourcesHelper.h"
 #include "GameEngineMesh.h"
 
-struct RenderOption
+struct RenderOption 
 {
-	float DeltaTime = 0.0f;
-	float SumDeltaTime = 0.0f;
+    float DeltaTime = 0.0f;
+    float SumDeltaTime = 0.0f;
 	int Temp0;
 	int Temp1;
 };
 
 // 랜더타겟이 세팅되어 있다면 이녀석으로 그릴수가 있다.
 
-class GameEngineRenderUnit
+class GameEngineRenderUnit 
 {
 public:
 	GameEngineRenderUnit();
@@ -32,18 +32,18 @@ public:
 
 	void SetRenderer(GameEngineRenderer* _Renderer);
 
-	GameEngineRenderingPipeLine* GetPipeLine();
+	GameEngineMaterial* GetPipeLine();
 
-	GameEngineRenderingPipeLine* GetClonePipeLine();
+	GameEngineMaterial* GetClonePipeLine();
 
-	GameEngineRenderingPipeLine* ClonePipeLine(GameEngineRenderingPipeLine* _Rendering);
+	GameEngineMaterial* ClonePipeLine(GameEngineMaterial* _Rendering);
 
 	GameEngineShaderResourcesHelper ShaderResources;
 
 private:
 	GameEngineRenderer* ParentRenderer;
 	GameEngineMesh* Mesh; // 이 메쉬를
-	GameEngineRenderingPipeLine* PipeLine; // 이 설정으로
+	GameEngineMaterial* PipeLine; // 이 설정으로
 	GameEngineInputLayOut* InputLayOut; // 인풋어셈블러1 세팅
 	// 	GameEngineShaderResourcesHelper ShaderResources; // 이 데이터를 가지고
 	D3D11_PRIMITIVE_TOPOLOGY Topology;// 이렇게 그린다.
@@ -53,7 +53,7 @@ private:
 // 추상클래스
 // 강제 내 자식들을 하나의 인터페이스로 묶는 역할입니다.
 // 설명 :
-class GameEngineRenderingPipeLine;
+class GameEngineMaterial;
 class GameEngineShaderResourcesHelper;
 class GameEngineRenderer : public GameEngineTransformComponent
 {
@@ -77,42 +77,42 @@ public:
 	// float4x4 ViewPort;
 	void ChangeCamera(CAMERAORDER _Order);
 
-	GameEngineRenderingPipeLine* ClonePipeLine(GameEngineRenderingPipeLine* _Rendering);
+    GameEngineMaterial* ClonePipeLine(GameEngineMaterial* _Rendering);
 
-	inline int GetRenderingOrder()
-	{
-		return RenderingOrder;
-	}
+    inline int GetRenderingOrder() 
+    {
+        return RenderingOrder;
+    }
 
-	void SetRenderingOrder(int _Order);
+    void SetRenderingOrder(int _Order);
 
-	virtual void InstancingOn()
+	virtual void InstancingOn() 
 	{
 		IsInstancing_ = true;
 	};
 
-	bool IsInstancing(GameEngineRenderingPipeLine* _Rendering);
+	bool IsInstancing(GameEngineMaterial* _Rendering);
 
-	void InstancingDataSetting(GameEngineRenderingPipeLine* _Line);
+	void InstancingDataSetting(GameEngineMaterial* _Line);
 
 	void EngineShaderResourcesSetting(GameEngineShaderResourcesHelper* _ShaderResources);
 
 	void PushRendererToMainCamera();
 
 	void PushRendererToUICamera();
-
+	
 protected:
 	virtual void Start();
 	virtual void Update(float _DeltaTime) {}
 	virtual void End() {}
 
-	class GameEngineCamera* Camera;
+    class GameEngineCamera* Camera;
 
 
 
 private:
 	CAMERAORDER CameraOrder;
-	int RenderingOrder;
+    int RenderingOrder;
 	bool IsInstancing_;
 
 	virtual void Render(float _DeltaTime) = 0;

@@ -9,7 +9,7 @@ class GameEngineInputLayOut : public GameEngineRes<GameEngineInputLayOut>
 {
 public:
 	static GameEngineInputLayOut* Create(const GameEngineLayOutDesc& _Desc, GameEngineVertexShader* _Shader);
-	
+
 public:
 	// constrcuter destructer
 	GameEngineInputLayOut();

@@ -1,5 +1,5 @@
 #include "PreCompile.h"
-#include "GameEngineRenderingPipeLine.h"
+#include "GameEngineMaterial.h"
 
 #include "GameEngineInputLayOut.h"
 #include "GameEngineVertexBuffer.h"
@@ -12,7 +12,7 @@
 #include "GameEngineBlend.h"
 
 
-GameEngineRenderingPipeLine::GameEngineRenderingPipeLine()
+GameEngineMaterial::GameEngineMaterial() 
 	: // InputLayOut(nullptr)
 	// , VertexBuffer(nullptr)
 	VertexShader(nullptr)
@@ -28,12 +28,12 @@ GameEngineRenderingPipeLine::GameEngineRenderingPipeLine()
 	DepthStencil = GameEngineDepthStencil::Find("EngineBaseDepth");
 }
 
-GameEngineRenderingPipeLine::~GameEngineRenderingPipeLine()
+GameEngineMaterial::~GameEngineMaterial() 
 {
 }
 
 //
-//void GameEngineRenderingPipeLine::SetInputAssembler1InputLayOutSetting(const std::string& _Name)
+//void GameEngineMaterial::SetInputAssembler1InputLayOutSetting(const std::string& _Name)
 //{
 //	InputLayOut = GameEngineInputLayOut::Find(_Name);
 //
@@ -44,7 +44,7 @@ GameEngineRenderingPipeLine::~GameEngineRenderingPipeLine()
 //	}
 //}
 
-void GameEngineRenderingPipeLine::AllShaderReset()
+void GameEngineMaterial::AllShaderReset()
 {
 	GameEngineDevice::GetContext()->VSSetShader(nullptr, nullptr, 0);
 	GameEngineDevice::GetContext()->GSSetShader(nullptr, nullptr, 0);
@@ -53,17 +53,17 @@ void GameEngineRenderingPipeLine::AllShaderReset()
 	GameEngineDevice::GetContext()->PSSetShader(nullptr, nullptr, 0);
 }
 
-GameEngineRenderingPipeLine* GameEngineRenderingPipeLine::Create()
+GameEngineMaterial* GameEngineMaterial::Create()
 {
 	return CreateResUnName();
 }
 
-GameEngineRenderingPipeLine* GameEngineRenderingPipeLine::Create(const std::string& _Name)
+GameEngineMaterial* GameEngineMaterial::Create(const std::string& _Name)
 {
 	return CreateResName(_Name);
 }
 
-void GameEngineRenderingPipeLine::SetVertexShader(const std::string& _Name)
+void GameEngineMaterial::SetVertexShader(const std::string& _Name)
 {
 	VertexShader = GameEngineVertexShader::Find(_Name);
 
@@ -80,7 +80,7 @@ void GameEngineRenderingPipeLine::SetVertexShader(const std::string& _Name)
 	//}
 }
 
-void GameEngineRenderingPipeLine::SetVertexShader(GameEngineVertexShader* _Shader)
+void GameEngineMaterial::SetVertexShader(GameEngineVertexShader* _Shader)
 {
 	VertexShader = _Shader;
 
@@ -94,7 +94,7 @@ void GameEngineRenderingPipeLine::SetVertexShader(GameEngineVertexShader* _Shade
 }
 
 
-void GameEngineRenderingPipeLine::SetRasterizer(const std::string& _Name)
+void GameEngineMaterial::SetRasterizer(const std::string& _Name)
 {
 	Rasterizer = GameEngineRasterizer::Find(_Name);
 
@@ -107,7 +107,7 @@ void GameEngineRenderingPipeLine::SetRasterizer(const std::string& _Name)
 }
 
 
-void GameEngineRenderingPipeLine::SetPixelShader(const std::string& _Name)
+void GameEngineMaterial::SetPixelShader(const std::string& _Name)
 {
 	PixelShader = GameEnginePixelShader::Find(_Name);
 
@@ -121,7 +121,7 @@ void GameEngineRenderingPipeLine::SetPixelShader(const std::string& _Name)
 
 
 
-void GameEngineRenderingPipeLine::SetOutputMergerDepthStencil(const std::string& _Name)
+void GameEngineMaterial::SetOutputMergerDepthStencil(const std::string& _Name)
 {
 	DepthStencil = GameEngineDepthStencil::Find(_Name);
 
@@ -134,7 +134,7 @@ void GameEngineRenderingPipeLine::SetOutputMergerDepthStencil(const std::string&
 }
 
 
-void GameEngineRenderingPipeLine::SetOutputMergerBlend(const std::string& _Name)
+void GameEngineMaterial::SetOutputMergerBlend(const std::string& _Name)
 {
 	Blend = GameEngineBlend::Find(_Name);
 
@@ -145,7 +145,7 @@ void GameEngineRenderingPipeLine::SetOutputMergerBlend(const std::string& _Name)
 	}
 }
 
-void GameEngineRenderingPipeLine::Setting()
+void GameEngineMaterial::Setting()
 {
 	// InputAssembler1VertexBufferSetting();
 
@@ -165,7 +165,7 @@ void GameEngineRenderingPipeLine::Setting()
 
 }
 
-void GameEngineRenderingPipeLine::RenderingInstancing(int _RenderingCount, class GameEngineInstancingBuffer* _Buffer)
+void GameEngineMaterial::RenderingInstancing(int _RenderingCount, class GameEngineInstancingBuffer* _Buffer)
 {
 	InputAssembler1InstancingVertexBufferSetting(_Buffer);
 
@@ -185,14 +185,14 @@ void GameEngineRenderingPipeLine::RenderingInstancing(int _RenderingCount, class
 
 }
 
-void GameEngineRenderingPipeLine::InstancingDataCollect()
+void GameEngineMaterial::InstancingDataCollect()
 {
 	// InstancingDraw();
 }
 
 // 실직적으로 세팅의 순서는 그다지 중요하지 않다.
 
-void GameEngineRenderingPipeLine::InputAssembler1InstancingVertexBufferSetting(GameEngineInstancingBuffer* _Buffer)
+void GameEngineMaterial::InputAssembler1InstancingVertexBufferSetting(GameEngineInstancingBuffer* _Buffer)
 {
 	// 그래픽리소스에 Setting이라는 함수가 존재한다면
 // 그건 이제부터 그 설정으로 랜더링 파이프라인이 돌아가게 된다는 뜻이 됩니다.
@@ -213,7 +213,7 @@ void GameEngineRenderingPipeLine::InputAssembler1InstancingVertexBufferSetting(G
 	//	2, ArrBuffer, ArrVertexSize, ArrOffset);
 }
 
-void GameEngineRenderingPipeLine::VertexShaderSetting()
+void GameEngineMaterial::VertexShaderSetting() 
 {
 	VertexShader->Setting();
 	// 위치 
@@ -221,33 +221,33 @@ void GameEngineRenderingPipeLine::VertexShaderSetting()
 }
 
 
-void GameEngineRenderingPipeLine::RasterizerSetting()
+void GameEngineMaterial::RasterizerSetting() 
 {
 	Rasterizer->Setting();
 }
 
-void GameEngineRenderingPipeLine::PixelShaderSetting()
+void GameEngineMaterial::PixelShaderSetting() 
 {
 	PixelShader->Setting();
 }
 
-void GameEngineRenderingPipeLine::OutputMergerBlendSetting()
+void GameEngineMaterial::OutputMergerBlendSetting() 
 {
 	Blend->Setting();
 }
 
-void GameEngineRenderingPipeLine::OutputMergerDepthStencilSetting()
+void GameEngineMaterial::OutputMergerDepthStencilSetting() 
 {
 	DepthStencil->Setting();
 }
 
 
-//void GameEngineRenderingPipeLine::Draw(GameEngineMesh* _Mesh)
+//void GameEngineMaterial::Draw(GameEngineMesh* _Mesh)
 //{
 //	GameEngineDevice::GetContext()->DrawIndexed(IndexBuffer->GetIndexCount(), 0, 0);
 //}
 
-void GameEngineRenderingPipeLine::InstancingDraw(int _RenderingCount)
+void GameEngineMaterial::InstancingDraw(int _RenderingCount)
 {
 	//[in] IndexCountPerInstance 유형 : UINT
 	//각 인스턴스에 대해 인덱스 버퍼에서 읽은 인덱스 수입니다.
@@ -269,15 +269,15 @@ void GameEngineRenderingPipeLine::InstancingDraw(int _RenderingCount)
 	// GameEngineDevice::GetContext()->DrawIndexedInstanced(IndexBuffer->GetIndexCount(), _RenderingCount, 0, 0, 0);
 }
 
-void GameEngineRenderingPipeLine::Copy(GameEngineRenderingPipeLine* _Original)
+void GameEngineMaterial::Copy(GameEngineMaterial* _Original)
 {
 	// InputLayOut			= _Original->InputLayOut;
 	// VertexBuffer			= _Original->VertexBuffer;
-	VertexShader = _Original->VertexShader;
+	VertexShader			= _Original->VertexShader;
 	// IndexBuffer			= _Original->IndexBuffer;
 	// Topology				= _Original->Topology;
-	Rasterizer = _Original->Rasterizer;
-	PixelShader = _Original->PixelShader;
-	DepthStencil = _Original->DepthStencil;
-	Blend = _Original->Blend;
+	Rasterizer				= _Original->Rasterizer;
+	PixelShader			= _Original->PixelShader;
+	DepthStencil			= _Original->DepthStencil;
+	Blend					= _Original->Blend;
 }

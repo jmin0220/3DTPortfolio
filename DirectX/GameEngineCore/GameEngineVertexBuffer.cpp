@@ -4,14 +4,14 @@
 #include <GameEngineBase/GameEngineString.h>
 
 
-GameEngineVertexBuffer::GameEngineVertexBuffer()
+GameEngineVertexBuffer::GameEngineVertexBuffer() 
 	: Buffer(nullptr)
 	, BufferDesc{}
 	, OffSet(0)
 {
 }
 
-GameEngineVertexBuffer::~GameEngineVertexBuffer()
+GameEngineVertexBuffer::~GameEngineVertexBuffer() 
 {
 	if (nullptr != Buffer)
 	{
@@ -21,7 +21,7 @@ GameEngineVertexBuffer::~GameEngineVertexBuffer()
 
 
 GameEngineVertexBuffer* GameEngineVertexBuffer::Create(
-	const std::string& _Name,
+	const std::string& _Name, 
 	const void* _Data, UINT _VertexSize,
 	UINT _VertexCount,
 	const GameEngineLayOutDesc& _LayOut

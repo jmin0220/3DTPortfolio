@@ -22,11 +22,11 @@ GameEngineThreadPool GameEngineCore::EngineThreadPool;
 std::map<std::string, class GameEngineLevel*> GameEngineCore::AllLevels;
 
 
-GameEngineCore::GameEngineCore()
+GameEngineCore::GameEngineCore() 
 {
 }
 
-GameEngineCore::~GameEngineCore()
+GameEngineCore::~GameEngineCore() 
 {
 }
 
@@ -69,8 +69,8 @@ void GameEngineCore::CoreStart(GameEngineCore* _UserCore)
 
 	GameEngineDebug::Debug3DInitialize();
 
-	// 엔진이 뭔가를 할겁니다.
-		// 준비를 먼저하고.
+// 엔진이 뭔가를 할겁니다.
+	// 준비를 먼저하고.
 	_UserCore->Start();
 }
 
@@ -119,7 +119,7 @@ void GameEngineCore::CoreUpdate(GameEngineCore* _UserCore)
 
 }
 
-void GameEngineCore::CoreEnd(GameEngineCore* _UserCore)
+void GameEngineCore::CoreEnd(GameEngineCore* _UserCore) 
 {
 	_UserCore->End();
 
@@ -184,7 +184,7 @@ void GameEngineCore::InitializeLevel(GameEngineLevel* _Level, const std::string 
 
 	_Level->Start();
 	_Level->SetName(_Name);
-
+	
 	// AllLevels.insert(std::map<std::string, GameEngineLevel*>::value_type(_Name, NewLevel));
 	AllLevels.insert(std::make_pair(_Name, _Level));
 }

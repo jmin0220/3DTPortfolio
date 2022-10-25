@@ -3,7 +3,7 @@
 #include "GameEngineVertexBuffer.h"
 #include "GameEngineIndexBuffer.h"
 
-GameEngineMesh::GameEngineMesh()
+GameEngineMesh::GameEngineMesh() 
 	: VertexBuffer(nullptr)
 	, IndexBuffer(nullptr)
 {
@@ -11,7 +11,7 @@ GameEngineMesh::GameEngineMesh()
 	SetInputAssembler2IndexBuffer("rect");
 }
 
-GameEngineMesh::~GameEngineMesh()
+GameEngineMesh::~GameEngineMesh() 
 {
 }
 

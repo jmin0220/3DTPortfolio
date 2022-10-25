@@ -11,25 +11,25 @@ class GameEngineRasterizer;
 class GameEnginePixelShader;
 class GameEngineDepthStencil;
 class GameEngineBlend;
-class GameEngineRenderingPipeLine : public GameEngineRes<GameEngineRenderingPipeLine>
+class GameEngineMaterial : public GameEngineRes<GameEngineMaterial>
 {
 public:
 	static void AllShaderReset();
 
-	static GameEngineRenderingPipeLine* Create();
+	static GameEngineMaterial* Create();
 
-	static GameEngineRenderingPipeLine* Create(const std::string& _Name);
+	static GameEngineMaterial* Create(const std::string& _Name);
 
 public:
 	// constrcuter destructer
-	GameEngineRenderingPipeLine();
-	~GameEngineRenderingPipeLine();
+	GameEngineMaterial();
+	~GameEngineMaterial();
 
 	// delete Function
-	GameEngineRenderingPipeLine(const GameEngineRenderingPipeLine& _Other) = delete;
-	GameEngineRenderingPipeLine(GameEngineRenderingPipeLine&& _Other) noexcept = delete;
-	GameEngineRenderingPipeLine& operator=(const GameEngineRenderingPipeLine& _Other) = delete;
-	GameEngineRenderingPipeLine& operator=(GameEngineRenderingPipeLine&& _Other) noexcept = delete;
+	GameEngineMaterial(const GameEngineMaterial& _Other) = delete;
+	GameEngineMaterial(GameEngineMaterial&& _Other) noexcept = delete;
+	GameEngineMaterial& operator=(const GameEngineMaterial& _Other) = delete;
+	GameEngineMaterial& operator=(GameEngineMaterial&& _Other) noexcept = delete;
 
 	// void SetInputAssembler1InputLayOutSetting(const std::string& _Name);
 
@@ -68,7 +68,7 @@ public:
 	//	return VertexBuffer;
 	//}
 
-	inline GameEngineVertexShader* GetVertexShader()
+	inline GameEngineVertexShader* GetVertexShader() 
 	{
 		return VertexShader;
 	}
@@ -78,11 +78,11 @@ public:
 		return PixelShader;
 	}
 
-	void Copy(GameEngineRenderingPipeLine* _Original);
+	void Copy(GameEngineMaterial* _Original);
 
 protected:
 
-
+	
 private:
 	//GameEngineInputLayOut* InputLayOut; // ÀÎÇ²¾î¼Àºí·¯1 ¼¼ÆÃ
 	//GameEngineVertexBuffer* VertexBuffer; // ÀÎÇ²¾î¼Àºí·¯1 ¼¼ÆÃ

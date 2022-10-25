@@ -1,6 +1,6 @@
 #include "PreCompile.h"
 #include "GameEngineDefaultRenderer.h"
-#include "GameEngineRenderingPipeLine.h"
+#include "GameEngineMaterial.h"
 #include "GameEngineVertexShader.h"
 
 GameEngineDefaultRenderer::GameEngineDefaultRenderer() 
@@ -22,7 +22,6 @@ void GameEngineDefaultRenderer::SetMesh(const std::string& _Name)
 {
 	Unit.SetMesh(_Name);
 }
-
 
 void GameEngineDefaultRenderer::SetPipeLine(const std::string& _Name)
 {

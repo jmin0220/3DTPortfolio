@@ -98,7 +98,7 @@ void GameEngineThreadPool::ThreadPoolFunction(GameEngineThreadPool* _ThreadPool,
 	}
 }
 
-GameEngineThreadPool::~GameEngineThreadPool()
+GameEngineThreadPool::~GameEngineThreadPool() 
 {
 	IsRun = false;
 
@@ -130,7 +130,7 @@ GameEngineThreadPool::~GameEngineThreadPool()
 }
 
 
-void GameEngineThreadPool::Work(std::function<void()> _CallBack)
+void GameEngineThreadPool::Work(std::function<void()> _CallBack) 
 {
 	if (nullptr == _CallBack)
 	{
@@ -143,9 +143,9 @@ void GameEngineThreadPool::Work(std::function<void()> _CallBack)
 
 	// iocp에게 하나의 컴플리션 키를 전달하면서 1개의 쓰레드를 깨운다..
 	if (FALSE == PostQueuedCompletionStatus(
-		IocpHandle,
-		static_cast<DWORD>(ThreadWorkType::UserWork),
-		reinterpret_cast<ULONG_PTR>(NewJob),
+		IocpHandle, 
+		static_cast<DWORD>(ThreadWorkType::UserWork), 
+		reinterpret_cast<ULONG_PTR>(NewJob), 
 		nullptr)
 		)
 	{
