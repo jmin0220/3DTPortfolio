@@ -267,22 +267,40 @@ std::vector<FBXNodeInfo> GameEngineFBX::CheckAllNode()
 {
 	std::vector<FBXNodeInfo> AllNode;
 
-	RecursiveAllNode(RootNode, AllNode);
+	RecursiveAllNode(RootNode);
 
 	return AllNode;
 }
 
-void GameEngineFBX::RecursiveAllNode(fbxsdk::FbxNode* _Node, std::vector<FBXNodeInfo>& _AllNode)
+void GameEngineFBX::FBXInfoDebugFunction(fbxsdk::FbxNode* _RootNode)
+{
+	if (nullptr == _RootNode)
+	{
+		return;
+	}
+
+	std::string Name = _RootNode->GetName();
+}
+
+void GameEngineFBX::RecursiveAllNode(fbxsdk::FbxNode* _Node, std::function<void(fbxsdk::FbxNode*)> _Function /*= nullptr*/)
 {
 	// 노드의 정보들을 얻어올수가 있습니다.
-	fbxsdk::FbxNodeAttribute* Info = _Node->GetNodeAttribute();
-
-	FBXNodeInfo& NewNodeInfo = _AllNode.emplace_back();
-	NewNodeInfo.Node = _Node;
-
-	if (nullptr != Info)
+	// fbxsdk::FbxNodeAttribute* Info = _Node->GetNodeAttribute();
+	if (nullptr != _Function)
 	{
+		_Function(_Node);
+	}
 
+	//FBXNodeInfo& NewNodeInfo = _AllNode.emplace_back();
+	//NewNodeInfo.Name = _Node->GetName();
+	//NewNodeInfo.Node = _Node;
+
+	int Count = _Node->GetChildCount();
+
+	for (int i = 0; i < Count; i++)
+	{
+		fbxsdk::FbxNode* Node = _Node->GetChild(i);
+		RecursiveAllNode(Node);
 	}
 
 }

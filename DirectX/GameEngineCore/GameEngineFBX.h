@@ -9,6 +9,8 @@
 // #pragma comment(lib, "libfbxsdk.lib")
 // #pragma warning(pop)
 
+#include <functional>
+
 
 struct FBXNodeInfo
 {
@@ -39,6 +41,8 @@ protected:
 
 	void FBXConvertScene();
 
+	void FBXInfoDebugFunction(fbxsdk::FbxNode* _RootNode);
+
 	// 기하 컨버트
 	float4x4 FbxMatTofloat4x4(const fbxsdk::FbxAMatrix& _BaseTrans);
 	fbxsdk::FbxAMatrix float4x4ToFbxAMatrix(const float4x4& _MATRIX);
@@ -46,7 +50,7 @@ protected:
 	float4 FbxVecToTransform(const fbxsdk::FbxVector4& _BaseVector);
 	float4 FbxQuaternionTofloat4(const fbxsdk::FbxQuaternion& _BaseVector); \
 
-	void RecursiveAllNode(fbxsdk::FbxNode* _Node, std::vector<FBXNodeInfo>& _AllNode);
+	void RecursiveAllNode(fbxsdk::FbxNode* _Node, std::function<void(fbxsdk::FbxNode*)> _Function = nullptr);
 
 	fbxsdk::FbxManager* Manager;
 	fbxsdk::FbxIOSettings* IOSetting;
