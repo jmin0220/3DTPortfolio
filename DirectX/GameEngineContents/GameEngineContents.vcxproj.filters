@@ -22,6 +22,9 @@
     <Filter Include="LevelGUI">
       <UniqueIdentifier>{b39fca88-0430-4b47-a91a-8a89b0768235}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\UIActor">
+      <UniqueIdentifier>{8b26083d-d910-4336-b3ce-cffe8dafa495}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -51,6 +54,9 @@
     <ClInclude Include="MapEditorGUI.h">
       <Filter>LevelGUI</Filter>
     </ClInclude>
+    <ClInclude Include="TitleActor.h">
+      <Filter>Actor\UIActor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -79,6 +85,9 @@
     </ClCompile>
     <ClCompile Include="MapEditorGUI.cpp">
       <Filter>LevelGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleActor.cpp">
+      <Filter>Actor\UIActor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

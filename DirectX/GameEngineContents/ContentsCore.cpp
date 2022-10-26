@@ -17,10 +17,23 @@ ContentsCore::~ContentsCore()
 
 void ContentsCore::Start()
 {
+	{	//리소스 읽기
+		GameEngineDirectory Dir;
+
+		Dir.MoveParentToExitsChildDirectory("Resources");
+		Dir.Move("Resources");
+
+		std::vector<GameEngineFile> Shaders = Dir.GetAllFile();
+
+		for (size_t i = 0; i < Shaders.size(); i++)
+		{
+			GameEngineTexture::Load(Shaders[i].GetFullPath());
+		}
+	}
 	// TODO::임시레벨생성
 	CreateLevel<tmpLevel>("tmpLevel");
 	CreateLevel<MapEditorLevel>("MapEditorLevel");
-	ChangeLevel("MapEditorLevel");
+	ChangeLevel("tmpLevel");
 
 	GameEngineGUI::CreateGUIWindow<MapEditorGUI>("MapEditorGUI", nullptr);
 

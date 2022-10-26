@@ -2,6 +2,7 @@
 #include <GameEngineCore/GameEngineLevel.h>
 
 // Ό³Έν :
+class TitleActor;
 class tmpLevel : public GameEngineLevel
 {
 public:
@@ -20,5 +21,7 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override;
 
+private:
+	TitleActor* TitleLogo;
 };
 
