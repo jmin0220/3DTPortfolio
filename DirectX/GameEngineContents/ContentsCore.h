@@ -38,6 +38,7 @@ protected:
 	void End() override;
 
 private:
+	void CreateKeys();
 
 };
 

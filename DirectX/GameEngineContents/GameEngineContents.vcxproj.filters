@@ -10,6 +10,18 @@
     <Filter Include="Level">
       <UniqueIdentifier>{690362c5-9421-4d50-89d9-ed74a9d5f1a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor">
+      <UniqueIdentifier>{f1bcfd31-d83d-4641-8839-3f0d9292cc76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\MapEditorLevel">
+      <UniqueIdentifier>{9ffe7f16-387b-4903-a5fb-f994f68e6944}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Global">
+      <UniqueIdentifier>{70654044-cd92-4264-ad92-d76b2da59c05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LevelGUI">
+      <UniqueIdentifier>{b39fca88-0430-4b47-a91a-8a89b0768235}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -21,6 +33,24 @@
     <ClInclude Include="tmpLevel.h">
       <Filter>Level</Filter>
     </ClInclude>
+    <ClInclude Include="MapEditorLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="ColorBox.h">
+      <Filter>Actor\MapEditorLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorPicker.h">
+      <Filter>Actor\MapEditorLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="PickableActor.h">
+      <Filter>Actor\MapEditorLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalValues.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="MapEditorGUI.h">
+      <Filter>LevelGUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -31,6 +61,24 @@
     </ClCompile>
     <ClCompile Include="tmpLevel.cpp">
       <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="MapEditorLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorBox.cpp">
+      <Filter>Actor\MapEditorLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="ActorPicker.cpp">
+      <Filter>Actor\MapEditorLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="PickableActor.cpp">
+      <Filter>Actor\MapEditorLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalValues.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="MapEditorGUI.cpp">
+      <Filter>LevelGUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
