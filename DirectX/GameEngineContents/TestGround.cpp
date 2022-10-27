@@ -1,34 +1,35 @@
 #include "PreCompile.h"
-#include "TestBox.h"
+#include "TestGround.h"
 
-TestBox::TestBox() 
+TestGround::TestGround() 
 {
 }
 
-TestBox::~TestBox() 
+TestGround::~TestGround() 
 {
 }
 
-void TestBox::Start()
+void TestGround::Start()
 {
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
 	Renderer->SetPipeLine("Color");
 	Renderer->SetMesh("Box");
 
-	ResultColor = float4(1.0f, 0.5f, 0.0f, 1.0f);
+	ResultColor = float4(0.0f, 0.5f, 0.0f, 1.0f);
 	Renderer->GetShaderResources().SetConstantBufferLink("ResultColor", ResultColor);
 
 	Collision = CreateComponent<GameEngineCollision>();
 	Collision->GetTransform().SetLocalScale({ 1, 1, 1 });
-	Collision->ChangeOrder(CollisionGroup::PhysicsPlayer);
+	Collision->ChangeOrder(CollisionGroup::PhysicsGround);
 	Collision->SetDebugSetting(CollisionType::CT_OBB, float4(0.0f, 1.0f, 0.0f, 0.5f));
 
-	GetTransform().SetWorldScale({ 100, 100, 100 });
+	GetTransform().SetWorldScale({ 1000, 10, 1000});
+	GetTransform().SetWorldPosition({ 0.0f, -100.0f, 0.0f });
 
 }
 
-void TestBox::Update(float _DeltaTime)
+void TestGround::Update(float _DeltaTime)
 {
-	int a = 0;
+	
 }
 

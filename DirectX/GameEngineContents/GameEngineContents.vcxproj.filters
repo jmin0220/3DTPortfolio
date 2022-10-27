@@ -66,9 +66,6 @@
     <ClInclude Include="TestBox.h">
       <Filter>Actor\PhysicsTest</Filter>
     </ClInclude>
-    <ClInclude Include="Cursor.h">
-      <Filter>Actor\UIActor</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -106,9 +103,6 @@
     </ClCompile>
     <ClCompile Include="TestBox.cpp">
       <Filter>Actor\PhysicsTest</Filter>
-    </ClCompile>
-    <ClCompile Include="Cursor.cpp">
-      <Filter>Actor\UIActor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

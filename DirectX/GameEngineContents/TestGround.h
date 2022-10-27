@@ -3,18 +3,18 @@
 
 // Ό³Έν :
 class GameEngineTextureRenderer;
-class TestBox : public GameEngineActor
+class TestGround : public GameEngineActor
 {
 public:
 	// constrcuter destructer
-	TestBox();
-	~TestBox();
+	TestGround();
+	~TestGround();
 
 	// delete Function
-	TestBox(const TestBox& _Other) = delete;
-	TestBox(TestBox&& _Other) noexcept = delete;
-	TestBox& operator=(const TestBox& _Other) = delete;
-	TestBox& operator=(TestBox&& _Other) noexcept = delete;
+	TestGround(const TestGround& _Other) = delete;
+	TestGround(TestGround&& _Other) noexcept = delete;
+	TestGround& operator=(const TestGround& _Other) = delete;
+	TestGround& operator=(TestGround&& _Other) noexcept = delete;
 
 	GameEngineTextureRenderer* GetRenderer()
 	{

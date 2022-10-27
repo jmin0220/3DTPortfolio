@@ -190,6 +190,7 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="TestBox.h" />
+    <ClInclude Include="TestGround.h" />
     <ClInclude Include="TitleActor.h" />
     <ClInclude Include="tmpLevel.h">
       <SubType>
@@ -231,6 +232,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TestBox.cpp" />
+    <ClCompile Include="TestGround.cpp" />
     <ClCompile Include="TitleActor.cpp" />
     <ClCompile Include="tmpLevel.cpp">
       <SubType>

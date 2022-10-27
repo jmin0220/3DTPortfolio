@@ -177,6 +177,9 @@
     <ClInclude Include="GameEngineFBXAnimation.h">
       <Filter>Resources\FBX</Filter>
     </ClInclude>
+    <ClInclude Include="GameEnginePhysics.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineActor.cpp">
@@ -345,6 +348,9 @@
     <ClCompile Include="GameEngineFBXAnimation.cpp">
       <Filter>Resources\FBX</Filter>
     </ClCompile>
+    <ClCompile Include="GameEnginePhysics.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Object">
@@ -434,6 +440,9 @@
     <Filter Include="Resources\FBX">
       <UniqueIdentifier>{fc7acf9f-14f5-4be4-8a07-77bd9cc92e77}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{ea7891cb-51f6-4589-9a77-e3ebe2820212}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="ThirdParty\bin\Release\DirectXTex.lib">
@@ -484,25 +493,11 @@
     <CopyFileToFolders Include="ThirdParty\bin\Release\libfbxsdk.lib">
       <Filter>ThirdParty\Lib\Release</Filter>
     </CopyFileToFolders>
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="ThirdParty\bin\Release\libfbxsdk-md.lib">
-      <Filter>ThirdParty\Lib\Release</Filter>
-    </Library>
-    <Library Include="ThirdParty\bin\Release\libfbxsdk-mt.lib">
-      <Filter>ThirdParty\Lib\Release</Filter>
-    </Library>
-    <Library Include="ThirdParty\bin\Release\libxml2-md.lib">
-      <Filter>ThirdParty\Lib\Release</Filter>
-    </Library>
-    <Library Include="ThirdParty\bin\Release\libxml2-mt.lib">
-      <Filter>ThirdParty\Lib\Release</Filter>
-    </Library>
-    <Library Include="ThirdParty\bin\Release\zlib-md.lib">
-      <Filter>ThirdParty\Lib\Release</Filter>
-    </Library>
-    <Library Include="ThirdParty\bin\Release\zlib-mt.lib">
-      <Filter>ThirdParty\Lib\Release</Filter>
-    </Library>
+    <CopyFileToFolders Include="ThirdParty\bin\Release\libfbxsdk-md.lib" />
+    <CopyFileToFolders Include="ThirdParty\bin\Release\libfbxsdk-mt.lib" />
+    <CopyFileToFolders Include="ThirdParty\bin\Release\libxml2-md.lib" />
+    <CopyFileToFolders Include="ThirdParty\bin\Release\libxml2-mt.lib" />
+    <CopyFileToFolders Include="ThirdParty\bin\Release\zlib-md.lib" />
+    <CopyFileToFolders Include="ThirdParty\bin\Release\zlib-mt.lib" />
   </ItemGroup>
 </Project>
