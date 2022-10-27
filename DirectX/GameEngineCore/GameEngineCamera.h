@@ -90,6 +90,8 @@ public:
 	int PushInstancingData(GameEngineMaterial* _Pipe, void* _DataPtr, int _Size);
 	int PushInstancingIndex(GameEngineMaterial* _Pipe);
 
+	float4 GetWorldPositionToScreenPosition(const float4& _Pos);
+
 protected:
 	void Start();
 
@@ -99,8 +101,6 @@ private:
 	void Render(float _DeltaTime);
 
 	void PushRenderer(GameEngineRenderer* _Renderer);
-
-	float4 GetWorldPositionToScreenPosition(const float4& _Pos);
 
 	void Release(float _DelataTime);
 
