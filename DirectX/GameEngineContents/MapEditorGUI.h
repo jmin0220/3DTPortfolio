@@ -21,6 +21,7 @@ protected:
 
 private:
 	void DebugPicking();
-	void LevelSelect();
+
+	GameEngineLevel* ConnectedLevel;
 };
 

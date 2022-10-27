@@ -2,6 +2,7 @@
 #include "MapEditorLevel.h"
 #include <GameEngineCore/CoreMinimal.h>
 
+#include "MapEditorGUI.h"
 #include "ColorBox.h"
 #include "ActorPicker.h"
 
@@ -22,6 +23,9 @@ void MapEditorLevel::Start()
 
 		ActorPicker* Picker = CreateActor<ActorPicker>();
 	}
+
+	GUI = GameEngineGUI::CreateGUIWindow<MapEditorGUI>("MapEditorGUI", this);
+	GUI->Off();
 }
 
 void MapEditorLevel::Update(float _DeltaTime)
@@ -31,3 +35,14 @@ void MapEditorLevel::Update(float _DeltaTime)
 void MapEditorLevel::End()
 {
 }
+
+void MapEditorLevel::LevelStartEvent()
+{
+	GUI->On();
+}
+
+void MapEditorLevel::LevelEndEvent()
+{
+	GUI->Off();
+}
+

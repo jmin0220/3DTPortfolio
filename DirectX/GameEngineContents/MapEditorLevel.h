@@ -20,7 +20,10 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override;
 
-private:
+	void LevelStartEvent() override;
+	void LevelEndEvent() override;
 
+private:
+	class MapEditorGUI* GUI;
 };
 

@@ -18,29 +18,13 @@ ContentsCore::~ContentsCore()
 
 void ContentsCore::Start()
 {
-	{	//리소스 읽기
-		GameEngineDirectory Dir;
-
-		Dir.MoveParentToExitsChildDirectory("Resources");
-		Dir.Move("Resources");
-
-		std::vector<GameEngineFile> Shaders = Dir.GetAllFile();
-
-		for (size_t i = 0; i < Shaders.size(); i++)
-		{
-			GameEngineTexture::Load(Shaders[i].GetFullPath());
-		}
-	}
-	// TODO::임시레벨생성
-	CreateLevel<tmpLevel>("tmpLevel");
-	CreateLevel<MapEditorLevel>("MapEditorLevel");
-	CreateLevel<PhysicsTestLevel>("PhysicsTestLevel");
-	ChangeLevel("tmpLevel");
-
-	GameEngineGUI::CreateGUIWindow<MapEditorGUI>("MapEditorGUI", nullptr);
-	GameEngineGUI::CreateGUIWindow<GameEngineStatusWindow>("GameEngineStatusWindow", nullptr); //GUI 추가 
 
 	CreateKeys();
+	LoadResources();
+	CreateLevels();
+
+	GameEngineGUI::CreateGUIWindow<GameEngineStatusWindow>("GameEngineStatusWindow", nullptr); //GUI 추가 
+
 }
 
 void ContentsCore::Update(float _DeltaTime)
@@ -54,4 +38,30 @@ void ContentsCore::End()
 void ContentsCore::CreateKeys()
 {
 	GameEngineInput::GetInst()->CreateKey("VK_LBUTTON", VK_LBUTTON);
+}
+
+// 기본적인 리소스
+void ContentsCore::LoadResources()
+{
+	GameEngineDirectory Dir;
+	Dir.MoveParentToExitsChildDirectory("Resources");
+	Dir.Move("Resources");
+	
+	// 텍스쳐 로드
+	{
+		std::vector<GameEngineFile> Files = Dir.GetAllFile();
+
+		for (size_t i = 0; i < Files.size(); i++)
+		{
+			GameEngineTexture::Load(Files[i].GetFullPath());
+		}
+	}
+}
+
+void ContentsCore::CreateLevels()
+{
+	CreateLevel<tmpLevel>("tmpLevel");
+	CreateLevel<MapEditorLevel>("MapEditorLevel");
+	CreateLevel<PhysicsTestLevel>("PhysicsTestLevel");
+	ChangeLevel("tmpLevel");
 }

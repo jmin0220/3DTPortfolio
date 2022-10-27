@@ -33,9 +33,6 @@
     <ClInclude Include="ContentsCore.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="PreCompile.h">
-      <Filter>PreCompile</Filter>
-    </ClInclude>
     <ClInclude Include="tmpLevel.h">
       <Filter>Level</Filter>
     </ClInclude>
@@ -66,13 +63,15 @@
     <ClInclude Include="TestBox.h">
       <Filter>Actor\PhysicsTest</Filter>
     </ClInclude>
+    <ClInclude Include="Cursor.h" />
+    <ClInclude Include="TestGround.h" />
+    <ClInclude Include="PreCompile.h">
+      <Filter>PreCompile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
       <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="PreCompile.cpp">
-      <Filter>PreCompile</Filter>
     </ClCompile>
     <ClCompile Include="tmpLevel.cpp">
       <Filter>Level</Filter>
@@ -103,6 +102,11 @@
     </ClCompile>
     <ClCompile Include="TestBox.cpp">
       <Filter>Actor\PhysicsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="Cursor.cpp" />
+    <ClCompile Include="TestGround.cpp" />
+    <ClCompile Include="PreCompile.cpp">
+      <Filter>PreCompile</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

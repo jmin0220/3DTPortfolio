@@ -15,10 +15,18 @@ MapEditorGUI::~MapEditorGUI()
 
 void MapEditorGUI::Initialize(GameEngineLevel* _Level)
 {
+	ConnectedLevel = _Level;
 }
 
 void MapEditorGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 {
+	if (GEngine::GetCurrentLevel() != ConnectedLevel)
+	{
+		Off();
+		return;
+	}
+	
+
 	if (true == ImGui::Button("FreeCameaOnOff"))
 	{
 		_Level->GetMainCameraActor()->FreeCameraModeOnOff();
@@ -38,7 +46,6 @@ void MapEditorGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 
 	DebugPicking();
 
-	LevelSelect();
 }
 
 void MapEditorGUI::DebugPicking()
@@ -76,22 +83,5 @@ void MapEditorGUI::DebugPicking()
 			std::string Name = "ClickedActor : " + std::to_string(Pos.x) + " | " + std::to_string(Pos.y) + " | " + std::to_string(Pos.z);
 			ImGui::Text(Name.c_str());
 		}
-	}
-}
-
-void MapEditorGUI::LevelSelect()//±è¿¹³ª-¸¸µé¾î ºÃ¾î¿ë..
-{
-	ImGui::Text("Level Select");
-
-	if (true == ImGui::Button("tmpLevel"))
-	{
-		GEngine::ChangeLevel("tmpLevel");
-	}
-
-	ImGui::SameLine();
-
-	if (true == ImGui::Button("MapEditorLevel"))
-	{
-		GEngine::ChangeLevel("MapEditorLevel");
 	}
 }

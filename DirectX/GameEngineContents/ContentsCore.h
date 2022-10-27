@@ -39,6 +39,8 @@ protected:
 
 private:
 	void CreateKeys();
+	void LoadResources();
+	void CreateLevels();
 
 };
 
