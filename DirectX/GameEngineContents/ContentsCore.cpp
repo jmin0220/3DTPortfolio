@@ -3,6 +3,7 @@
 #include "tmpLevel.h"
 #include "MapEditorLevel.h"
 #include "MapEditorGUI.h"
+#include "PhysicsTestLevel.h"
 
 #pragma comment(lib, "GameEngineBase.lib")
 
@@ -33,9 +34,11 @@ void ContentsCore::Start()
 	// TODO::임시레벨생성
 	CreateLevel<tmpLevel>("tmpLevel");
 	CreateLevel<MapEditorLevel>("MapEditorLevel");
+	CreateLevel<PhysicsTestLevel>("PhysicsTestLevel");
 	ChangeLevel("tmpLevel");
 
 	GameEngineGUI::CreateGUIWindow<MapEditorGUI>("MapEditorGUI", nullptr);
+	GameEngineGUI::CreateGUIWindow<GameEngineStatusWindow>("GameEngineStatusWindow", nullptr);
 
 	CreateKeys();
 }

@@ -179,11 +179,13 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="PhysicsTestLevel.h" />
     <ClInclude Include="PickableActor.h" />
     <ClInclude Include="PreCompile.h">
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="TestBox.h" />
     <ClInclude Include="TitleActor.h" />
     <ClInclude Include="tmpLevel.h">
       <SubType>
@@ -212,6 +214,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="PhysicsTestLevel.cpp" />
     <ClCompile Include="PickableActor.cpp" />
     <ClCompile Include="PreCompile.cpp">
       <SubType>
@@ -219,6 +222,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TestBox.cpp" />
     <ClCompile Include="TitleActor.cpp" />
     <ClCompile Include="tmpLevel.cpp">
       <SubType>

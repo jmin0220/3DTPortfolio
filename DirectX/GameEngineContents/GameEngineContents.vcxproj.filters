@@ -25,6 +25,9 @@
     <Filter Include="Actor\UIActor">
       <UniqueIdentifier>{8b26083d-d910-4336-b3ce-cffe8dafa495}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\PhysicsTest">
+      <UniqueIdentifier>{0ece61f2-354d-4303-90c5-87476bd5459a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -57,6 +60,12 @@
     <ClInclude Include="TitleActor.h">
       <Filter>Actor\UIActor</Filter>
     </ClInclude>
+    <ClInclude Include="PhysicsTestLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="TestBox.h">
+      <Filter>Actor\PhysicsTest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -88,6 +97,12 @@
     </ClCompile>
     <ClCompile Include="TitleActor.cpp">
       <Filter>Actor\UIActor</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsTestLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="TestBox.cpp">
+      <Filter>Actor\PhysicsTest</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
