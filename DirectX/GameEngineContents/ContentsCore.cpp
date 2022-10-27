@@ -38,7 +38,7 @@ void ContentsCore::Start()
 	ChangeLevel("tmpLevel");
 
 	GameEngineGUI::CreateGUIWindow<MapEditorGUI>("MapEditorGUI", nullptr);
-	GameEngineGUI::CreateGUIWindow<GameEngineStatusWindow>("GameEngineStatusWindow", nullptr);
+	GameEngineGUI::CreateGUIWindow<GameEngineStatusWindow>("GameEngineStatusWindow", nullptr); //GUI Ãß°¡ 
 
 	CreateKeys();
 }
