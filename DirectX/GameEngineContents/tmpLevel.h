@@ -4,6 +4,7 @@
 // Ό³Έν :
 class TitleActor;
 class Cursor;
+class FontActor;
 class tmpLevel : public GameEngineLevel
 {
 public:
@@ -25,5 +26,6 @@ protected:
 private:
 	TitleActor* TitleLogo;
 	Cursor* Mouse;
+	FontActor* Font;
 };
 

@@ -56,6 +56,8 @@ void ContentsCore::LoadResources()
 			GameEngineTexture::Load(Files[i].GetFullPath());
 		}
 	}
+
+	GameEngineFont::Load("Noto Sans CJK SC");//폴가이즈 폰트
 }
 
 void ContentsCore::CreateLevels()

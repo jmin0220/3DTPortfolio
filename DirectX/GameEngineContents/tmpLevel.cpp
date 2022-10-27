@@ -2,8 +2,11 @@
 #include "tmpLevel.h"
 #include "TitleActor.h"
 #include "Cursor.h"
+#include <GameEngineCore/GameEngineActor.h>
+#include "FontActor.h"
 
 tmpLevel::tmpLevel() 
+	:Font(nullptr)
 {
 }
 
@@ -18,7 +21,10 @@ void tmpLevel::Start()
 	TitleLogo->GetTransform().SetLocalPosition({ -400 + 418, 225 - 143 });
 
 	Mouse = CreateActor<Cursor>();
-	
+
+	Font = CreateActor<FontActor>();
+	Font->GetFont()->SetText("½ÃÀÛ!", "Noto Sans CJK SC");
+	Font->GetFont()->SetScreenPostion({ 825,700 });
 }
 
 void tmpLevel::Update(float _DeltaTime)

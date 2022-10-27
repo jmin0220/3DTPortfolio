@@ -68,6 +68,9 @@
     <ClInclude Include="PreCompile.h">
       <Filter>PreCompile</Filter>
     </ClInclude>
+    <ClInclude Include="FontActor.h">
+      <Filter>Actor\UIActor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -107,6 +110,9 @@
     <ClCompile Include="TestGround.cpp" />
     <ClCompile Include="PreCompile.cpp">
       <Filter>PreCompile</Filter>
+    </ClCompile>
+    <ClCompile Include="FontActor.cpp">
+      <Filter>Actor\UIActor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
