@@ -741,6 +741,7 @@
     </CopyFileToFolders>
     <CopyFileToFolders Include="ThirdParty\bin\Release\PhysXVehicle_static_64.lib">
       <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
@@ -775,6 +776,12 @@
     <CopyFileToFolders Include="ThirdParty\bin\Debug\PhysX_static_64.lib">
       <FileType>Document</FileType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="ThirdParty\bin\Release\PhysX_static_64.lib">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
     </CopyFileToFolders>
   </ItemGroup>
   <PropertyGroup Label="Globals">

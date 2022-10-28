@@ -177,9 +177,6 @@
     <ClInclude Include="GameEngineFBXRenderer.h">
       <Filter>Object\Component\Rendering\Content</Filter>
     </ClInclude>
-    <ClInclude Include="GameEnginePhysX.h">
-      <Filter>PhysX</Filter>
-    </ClInclude>
     <ClInclude Include="PreCompile.h">
       <Filter>PreCompile</Filter>
     </ClInclude>
@@ -912,9 +909,6 @@
     <ClCompile Include="GameEngineFBXRenderer.cpp">
       <Filter>Object\Component\Rendering\Content</Filter>
     </ClCompile>
-    <ClCompile Include="GameEnginePhysX.cpp">
-      <Filter>PhysX</Filter>
-    </ClCompile>
     <ClCompile Include="PreCompile.cpp">
       <Filter>PreCompile</Filter>
     </ClCompile>
@@ -1117,28 +1111,7 @@
     <CopyFileToFolders Include="ThirdParty\bin\Release\libfbxsdk.lib">
       <Filter>ThirdParty\Lib\Release</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="ThirdParty\bin\Release\libfbxsdk-md.lib">
-      <Filter>ThirdParty\Lib\Release</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="ThirdParty\bin\Release\libfbxsdk-mt.lib">
-      <Filter>ThirdParty\Lib\Release</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="ThirdParty\bin\Release\libxml2-md.lib">
-      <Filter>ThirdParty\Lib\Release</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="ThirdParty\bin\Release\libxml2-mt.lib">
-      <Filter>ThirdParty\Lib\Release</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="ThirdParty\bin\Release\zlib-md.lib">
-      <Filter>ThirdParty\Lib\Release</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="ThirdParty\bin\Release\zlib-mt.lib">
-      <Filter>ThirdParty\Lib\Release</Filter>
-    </CopyFileToFolders>
     <CopyFileToFolders Include="ThirdParty\bin\Release\PhysXVehicle_static_64.lib">
-      <Filter>ThirdParty\Lib\Release</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="ThirdParty\bin\Release\PhysX_static_64.lib">
       <Filter>ThirdParty\Lib\Release</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="ThirdParty\bin\Release\PhysXCharacterKinematic_static_64.lib">
@@ -1154,9 +1127,6 @@
       <Filter>ThirdParty\Lib\Release</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="ThirdParty\bin\Release\PhysXFoundation_static_64.lib">
-      <Filter>ThirdParty\Lib\Release</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="ThirdParty\bin\Release\PhysXGpu_64.dll">
       <Filter>ThirdParty\Lib\Release</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="ThirdParty\bin\Release\PhysXPvdSDK_static_64.lib">
@@ -1186,12 +1156,32 @@
     <CopyFileToFolders Include="ThirdParty\bin\Debug\PhysXVehicle_static_64.lib">
       <Filter>ThirdParty\Lib\Debug</Filter>
     </CopyFileToFolders>
-  </ItemGroup>
     <CopyFileToFolders Include="ThirdParty\bin\Release\libfbxsdk-md.lib" />
     <CopyFileToFolders Include="ThirdParty\bin\Release\libfbxsdk-mt.lib" />
     <CopyFileToFolders Include="ThirdParty\bin\Release\libxml2-md.lib" />
     <CopyFileToFolders Include="ThirdParty\bin\Release\libxml2-mt.lib" />
     <CopyFileToFolders Include="ThirdParty\bin\Release\zlib-md.lib" />
     <CopyFileToFolders Include="ThirdParty\bin\Release\zlib-mt.lib" />
+    <CopyFileToFolders Include="ThirdParty\bin\Release\libfbxsdk-md.lib">
+      <Filter>ThirdParty\Lib\Release</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\bin\Release\libfbxsdk-mt.lib">
+      <Filter>ThirdParty\Lib\Release</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\bin\Release\libxml2-md.lib">
+      <Filter>ThirdParty\Lib\Release</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\bin\Release\libxml2-mt.lib">
+      <Filter>ThirdParty\Lib\Release</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\bin\Release\zlib-md.lib">
+      <Filter>ThirdParty\Lib\Release</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\bin\Release\zlib-mt.lib">
+      <Filter>ThirdParty\Lib\Release</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\bin\Release\PhysX_static_64.lib">
+      <Filter>ThirdParty\Lib\Release</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>
