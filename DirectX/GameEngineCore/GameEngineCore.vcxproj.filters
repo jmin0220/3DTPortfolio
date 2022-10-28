@@ -180,6 +180,9 @@
     <ClInclude Include="GameEnginePhysics.h">
       <Filter>Physics</Filter>
     </ClInclude>
+    <ClInclude Include="GameEnginePhysX.h">
+      <Filter>PhysX</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineActor.cpp">
@@ -351,6 +354,9 @@
     <ClCompile Include="GameEnginePhysics.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
+    <ClCompile Include="GameEnginePhysX.cpp">
+      <Filter>PhysX</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Object">
@@ -443,6 +449,9 @@
     <Filter Include="Physics">
       <UniqueIdentifier>{ea7891cb-51f6-4589-9a77-e3ebe2820212}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PhysX">
+      <UniqueIdentifier>{97e2767a-0ef1-4701-8aee-879f4f985ec3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="ThirdParty\bin\Release\DirectXTex.lib">
@@ -493,11 +502,78 @@
     <CopyFileToFolders Include="ThirdParty\bin\Release\libfbxsdk.lib">
       <Filter>ThirdParty\Lib\Release</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="ThirdParty\bin\Release\libfbxsdk-md.lib" />
-    <CopyFileToFolders Include="ThirdParty\bin\Release\libfbxsdk-mt.lib" />
-    <CopyFileToFolders Include="ThirdParty\bin\Release\libxml2-md.lib" />
-    <CopyFileToFolders Include="ThirdParty\bin\Release\libxml2-mt.lib" />
-    <CopyFileToFolders Include="ThirdParty\bin\Release\zlib-md.lib" />
-    <CopyFileToFolders Include="ThirdParty\bin\Release\zlib-mt.lib" />
+    <CopyFileToFolders Include="ThirdParty\bin\Release\libfbxsdk-md.lib">
+      <Filter>ThirdParty\Lib\Release</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\bin\Release\libfbxsdk-mt.lib">
+      <Filter>ThirdParty\Lib\Release</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\bin\Release\libxml2-md.lib">
+      <Filter>ThirdParty\Lib\Release</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\bin\Release\libxml2-mt.lib">
+      <Filter>ThirdParty\Lib\Release</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\bin\Release\zlib-md.lib">
+      <Filter>ThirdParty\Lib\Release</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\bin\Release\zlib-mt.lib">
+      <Filter>ThirdParty\Lib\Release</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\bin\Debug\PhysX_static_64.lib">
+      <Filter>ThirdParty\Lib\Debug</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\bin\Debug\PhysXCharacterKinematic_static_64.lib">
+      <Filter>ThirdParty\Lib\Debug</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\bin\Debug\PhysXCommon_static_64.lib">
+      <Filter>ThirdParty\Lib\Debug</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\bin\Debug\PhysXCooking_static_64.lib">
+      <Filter>ThirdParty\Lib\Debug</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\bin\Debug\PhysXExtensions_static_64.lib">
+      <Filter>ThirdParty\Lib\Debug</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\bin\Debug\PhysXFoundation_static_64.lib">
+      <Filter>ThirdParty\Lib\Debug</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\bin\Debug\PhysXPvdSDK_static_64.lib">
+      <Filter>ThirdParty\Lib\Debug</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\bin\Debug\PhysXVehicle_static_64.lib">
+      <Filter>ThirdParty\Lib\Debug</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\bin\Release\PhysXVehicle_static_64.lib">
+      <Filter>ThirdParty\Lib\Release</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="ThirdParty\bin\Release\PhysX_static_64.lib">
+      <Filter>ThirdParty\Lib\Release</Filter>
+    </Library>
+    <Library Include="ThirdParty\bin\Release\PhysXCharacterKinematic_static_64.lib">
+      <Filter>ThirdParty\Lib\Release</Filter>
+    </Library>
+    <Library Include="ThirdParty\bin\Release\PhysXCommon_static_64.lib">
+      <Filter>ThirdParty\Lib\Release</Filter>
+    </Library>
+    <Library Include="ThirdParty\bin\Release\PhysXCooking_static_64.lib">
+      <Filter>ThirdParty\Lib\Release</Filter>
+    </Library>
+    <Library Include="ThirdParty\bin\Release\PhysXExtensions_static_64.lib">
+      <Filter>ThirdParty\Lib\Release</Filter>
+    </Library>
+    <Library Include="ThirdParty\bin\Release\PhysXFoundation_static_64.lib">
+      <Filter>ThirdParty\Lib\Release</Filter>
+    </Library>
+    <Library Include="ThirdParty\bin\Release\PhysXPvdSDK_static_64.lib">
+      <Filter>ThirdParty\Lib\Release</Filter>
+    </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ThirdParty\bin\Release\PhysXGpu_64.dll">
+      <Filter>ThirdParty\Lib\Release</Filter>
+    </None>
   </ItemGroup>
 </Project>
