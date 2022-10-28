@@ -43,3 +43,15 @@
 
 // contents
 #include <GameEngineContents/GlobalValues.h>
+
+
+// PhysX 라이브러리
+#pragma warning(disable : 4996)
+#include <GameEngineCore/ThirdParty/inc/PhysX/PxConfig.h>
+#include <GameEngineCore/ThirdParty/inc/PhysX/PxPhysicsAPI.h>
+
+#pragma comment (lib, "PhysX_static_64.lib")
+#pragma comment (lib, "PhysXCommon_static_64.lib")
+#pragma comment (lib, "PhysXExtensions_static_64.lib")
+#pragma comment (lib, "PhysXFoundation_static_64.lib")
+#pragma comment (lib, "PhysXPvdSDK_static_64.lib")

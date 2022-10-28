@@ -129,6 +129,7 @@
       <AdditionalIncludeDirectories>..\;</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PreCompile.h</PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -148,6 +149,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PreCompile.h</PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -187,10 +189,7 @@
     <ClCompile Include="GameEngineTransform_Collision.cpp" />
     <ClCompile Include="GameEngineWindow.cpp" />
     <ClCompile Include="PreCompile.cpp">
-      <SubType>
-      </SubType>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -225,10 +224,7 @@
     <ClInclude Include="magic_enum.hpp" />
     <ClInclude Include="magic_enum_format.hpp" />
     <ClInclude Include="magic_enum_fuse.hpp" />
-    <ClInclude Include="PreCompile.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
+    <ClInclude Include="PreCompile.h" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="ThirdParty\bin\fmod.dll">

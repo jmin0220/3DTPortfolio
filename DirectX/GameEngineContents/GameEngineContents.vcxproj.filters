@@ -28,6 +28,9 @@
     <Filter Include="Actor\PhysicsTest">
       <UniqueIdentifier>{0ece61f2-354d-4303-90c5-87476bd5459a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Componenet">
+      <UniqueIdentifier>{9722c581-c865-46fe-9fe2-1f65d4d5c541}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -71,6 +74,12 @@
     <ClInclude Include="FontActor.h">
       <Filter>Actor\UIActor</Filter>
     </ClInclude>
+    <ClInclude Include="LJM_PhysXHelloWorld.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysXComponenet.h">
+      <Filter>Componenet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -113,6 +122,12 @@
     </ClCompile>
     <ClCompile Include="FontActor.cpp">
       <Filter>Actor\UIActor</Filter>
+    </ClCompile>
+    <ClCompile Include="LJM_PhysXHelloWorld.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXComponenet.cpp">
+      <Filter>Componenet</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

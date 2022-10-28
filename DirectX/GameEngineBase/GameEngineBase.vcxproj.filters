@@ -84,14 +84,14 @@
     <ClCompile Include="GameEngineTransform_Collision.cpp">
       <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="PreCompile.cpp">
-      <Filter>PreCompile</Filter>
-    </ClCompile>
     <ClCompile Include="GameEngineThreadPool.cpp">
       <Filter>Thread</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineThread.cpp">
       <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="PreCompile.cpp">
+      <Filter>PreCompile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -137,9 +137,6 @@
     <ClInclude Include="GameEngineDebugObject.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="PreCompile.h">
-      <Filter>PreCompile</Filter>
-    </ClInclude>
     <ClInclude Include="magic_enum_fuse.hpp">
       <Filter>Enum</Filter>
     </ClInclude>
@@ -154,6 +151,9 @@
     </ClInclude>
     <ClInclude Include="GameEngineThread.h">
       <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="PreCompile.h">
+      <Filter>PreCompile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

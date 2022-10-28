@@ -130,6 +130,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PreCompile.h</PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -149,6 +150,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PreCompile.h</PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -179,6 +181,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="LJM_PhysXHelloWorld.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="MapEditorGUI.h">
       <SubType>
       </SubType>
@@ -188,6 +194,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="PhysicsTestLevel.h" />
+    <ClInclude Include="PhysXComponenet.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="PickableActor.h" />
     <ClInclude Include="PreCompile.h" />
     <ClInclude Include="TestBox.h" />
@@ -220,6 +230,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="LJM_PhysXHelloWorld.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="MapEditorGUI.cpp">
       <SubType>
       </SubType>
@@ -229,6 +243,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="PhysicsTestLevel.cpp" />
+    <ClCompile Include="PhysXComponenet.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="PickableActor.cpp" />
     <ClCompile Include="PreCompile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

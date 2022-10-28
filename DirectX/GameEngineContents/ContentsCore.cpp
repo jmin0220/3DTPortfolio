@@ -4,6 +4,7 @@
 #include "MapEditorLevel.h"
 #include "MapEditorGUI.h"
 #include "PhysicsTestLevel.h"
+#include "LJM_PhysXHelloWorld.h"
 
 #pragma comment(lib, "GameEngineBase.lib")
 
@@ -65,5 +66,6 @@ void ContentsCore::CreateLevels()
 	CreateLevel<tmpLevel>("tmpLevel");
 	CreateLevel<MapEditorLevel>("MapEditorLevel");
 	CreateLevel<PhysicsTestLevel>("PhysicsTestLevel");
+	// CreateLevel<LJM_PhysXHelloWorld>("LJM_PhysXHelloWorld");
 	ChangeLevel("tmpLevel");
 }
