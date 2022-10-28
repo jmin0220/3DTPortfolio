@@ -3,6 +3,8 @@
 #include <GameEngineCore/ThirdParty/inc/PhysX/PxConfig.h>
 #include <GameEngineCore/ThirdParty/inc/PhysX/PxPhysicsAPI.h>
 
+#include "TestBox.h"
+
 using namespace physx;
 
 // 설명 :
@@ -23,8 +25,10 @@ protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void End() override;
-
-
+	
+	// 물리 결과를 저장할 Actor Vector
+	std::vector<TestBox*> testBoxVector_;
+	
 	// Foundation을 생성하는데 필요한 변수
 	PxDefaultAllocator		pxDefaultAllocator;
 	PxDefaultErrorCallback	pxDefaultErrorCallback;
@@ -43,7 +47,7 @@ protected:
 	PxReal stackZ = 10.0f;
 
 	// RigidDynamic생성 - 공던지기
-	PxRigidDynamic* createDynamic(const PxTransform& t, const PxGeometry& geometry, const PxVec3& velocity = PxVec3(0));
+	PxRigidDynamic* createDynamic(const PxTransform& t, const PxVec3& velocity = PxVec3(0));
 	
 	// RigidDynamic으로 벽 쌓기
 	void createStack(const PxTransform& t, PxU32 size, PxReal halfExtent);
