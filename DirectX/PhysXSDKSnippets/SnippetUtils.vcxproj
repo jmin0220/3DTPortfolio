@@ -309,10 +309,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\apple\Documents\tmp\PhysX\physx\compiler\vc16win64\sdk_source_bin\PhysXFoundation.vcxproj">
-      <Project>{E079F69E-A1D4-3930-A8B4-0A3C62E1DBEF}</Project>
-      <Name>PhysXFoundation</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SnippetUtils.cpp" />

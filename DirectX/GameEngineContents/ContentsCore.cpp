@@ -66,6 +66,6 @@ void ContentsCore::CreateLevels()
 	CreateLevel<tmpLevel>("tmpLevel");
 	CreateLevel<MapEditorLevel>("MapEditorLevel");
 	CreateLevel<PhysicsTestLevel>("PhysicsTestLevel");
-	// CreateLevel<LJM_PhysXHelloWorld>("LJM_PhysXHelloWorld");
-	ChangeLevel("tmpLevel");
+	CreateLevel<LJM_PhysXHelloWorld>("LJM_PhysXHelloWorld");
+	ChangeLevel("LJM_PhysXHelloWorld");
 }
