@@ -28,6 +28,8 @@ protected:
 	
 	// 물리 결과를 저장할 Actor Vector
 	std::vector<TestBox*> testBoxVector_;
+
+	float4 CurDynamicPos_;
 	
 	// Foundation을 생성하는데 필요한 변수
 	PxDefaultAllocator		pxDefaultAllocator;

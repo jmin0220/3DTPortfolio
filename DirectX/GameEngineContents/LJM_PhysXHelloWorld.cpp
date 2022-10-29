@@ -22,12 +22,14 @@ LJM_PhysXHelloWorld::~LJM_PhysXHelloWorld()
 
 void LJM_PhysXHelloWorld::Start()
 {
+	//GetMainCamera()->SetProjectionMode(CAMERAPROJECTIONMODE::PersPective);
+
 	initPhysics(true);
 
 	GameEngineInput::GetInst()->CreateKey("CreateBall", VK_SPACE);
 	GameEngineInput::GetInst()->CreateKey("CreateStack", 1);
 
-	testBoxVector_.reserve(128);
+	testBoxVector_.reserve(10000);
 }
 
 void LJM_PhysXHelloWorld::Update(float _DeltaTime)
@@ -70,6 +72,13 @@ void LJM_PhysXHelloWorld::Update(float _DeltaTime)
 		const int MAX_NUM_ACTOR_SHAPES = 128;	// #define 필요
 		PxShape* shapes[MAX_NUM_ACTOR_SHAPES];
 
+
+		//std::string tmpSizeActor = "PxRigidActor  Size >> " + std::to_string(actors.size());
+		//std::string tmpSizeTestBox = "TestBoxVector Size >> " + std::to_string(testBoxVector_.size());
+		//GameEngineDebug::OutPutString(tmpSizeActor);
+		//GameEngineDebug::OutPutString(tmpSizeTestBox);
+
+
 		for (PxU32 i = 0; i < static_cast<PxU32>(actors.size()); i++)
 		{
 			std::vector<TestBox*>::iterator StartIter = testBoxVector_.begin();
@@ -79,20 +88,57 @@ void LJM_PhysXHelloWorld::Update(float _DeltaTime)
 			PX_ASSERT(nbShapes <= MAX_NUM_ACTOR_SHAPES);
 			actors[i]->getShapes(shapes, nbShapes);
 
-			float4 tmpWorldPosition = { actors[i]->getGlobalPose().p.x
-										, actors[i]->getGlobalPose().p.y
-										, actors[i]->getGlobalPose().p.z };
+			// Shape로부터 Shape의 포지션을 취득
+			// Shapes안에 내용물이 많은데, 원코드에서는 일괄적으로 0번째만 취득하고 있으므로 수정
+			const PxMat44 shapePose(PxShapeExt::getGlobalPose(*shapes[0], *actors[i]));
+			const PxGeometryHolder h = shapes[0]->getGeometry();
+
+			//float4 tmpWorldPosition = { actors[i]->getGlobalPose().p.x
+			//							, actors[i]->getGlobalPose().p.y
+			//							, actors[i]->getGlobalPose().p.z };
+
+			// shape로부터 포지션을 세팅
+			float4 tmpWorldPosition = { shapePose.getPosition().x
+									  , shapePose.getPosition().y
+									  , shapePose.getPosition().z };
+
+			
+
+			if ((*StartIter)->GetNameCopy() == "Dynamic")
+			{
+				std::string tmp = "shapePose >> x : " + std::to_string(shapePose.getPosition().x) + " / y : " + std::to_string(shapePose.getPosition().y) + " / z : " + std::to_string(shapePose.getPosition().z);
+				GameEngineDebug::OutPutString(tmp);
+			}
 
 			float4 tmpWorldScale = { 2.0f };
 
+			// TODO::shape로부터 회전값을 세팅?
 			float4 tmpWorldRotate = { actors[i]->getGlobalPose().q.x
 							, actors[i]->getGlobalPose().q.y
+
 							, actors[i]->getGlobalPose().q.z
 							, actors[i]->getGlobalPose().q.w };
 
 			(*StartIter)->GetTransform().SetWorldPosition(tmpWorldPosition);
 			(*StartIter)->GetTransform().SetWorldScale(tmpWorldScale);
 			(*StartIter)->GetTransform().SetWorldRotation(tmpWorldRotate);
+
+			
+			// 연속으로 CreateDynamic일때만 적용
+			// Dynamic을 추가로 만들면 사라지는 현상 확인용
+			if (i == static_cast<PxU32>(actors.size()) - 1)
+			{
+				std::string CurDynamicPosString = "CurDynamicPos >> x : " + std::to_string(CurDynamicPos_.x) + " / y : " + std::to_string(CurDynamicPos_.y) + " / z : " + std::to_string(CurDynamicPos_.z);
+				GameEngineDebug::OutPutString(CurDynamicPosString);
+
+				std::string tmpWorldPositionString = "NowDynamicPos >> x : " + std::to_string(tmpWorldPosition.x) + " / y : " + std::to_string(tmpWorldPosition.y) + " / z : " + std::to_string(tmpWorldPosition.z);
+				GameEngineDebug::OutPutString(tmpWorldPositionString);
+			}
+
+
+			// 직전 DynamicPosition 저장
+			CurDynamicPos_ = tmpWorldPosition;
+
 
 			++StartIter;
 		}
@@ -108,6 +154,9 @@ void LJM_PhysXHelloWorld::End()
 
 PxRigidDynamic* LJM_PhysXHelloWorld::createDynamic(const PxTransform& t, const PxVec3& velocity)
 {
+	std::string tmp = "x : " + std::to_string(velocity.x) + " / y : " + std::to_string(velocity.y) + " / z : " + std::to_string(velocity.z);
+	GameEngineDebug::OutPutString(tmp);
+
 	PxShape* shape = pxPhysics->createShape(PxBoxGeometry(2.0f, 2.0f, 2.0f), *pxMaterial);
 
 	PxTransform localTm(GetMainCameraActor()->GetTransform().GetWorldPosition().x
@@ -122,6 +171,7 @@ PxRigidDynamic* LJM_PhysXHelloWorld::createDynamic(const PxTransform& t, const P
 	pxScene->addActor(*dynamic);
 
 	TestBox* tmpTestBox = CreateActor<TestBox>();
+	tmpTestBox->SetName("Dynamic");
 
 	const PxBoxGeometry& boxGeom = static_cast<const PxBoxGeometry&>(shape->getGeometry().box());
 
@@ -142,11 +192,17 @@ PxRigidDynamic* LJM_PhysXHelloWorld::createDynamic(const PxTransform& t, const P
 
 	testBoxVector_.push_back(tmpTestBox);
 
+	std::string tmpSize = "TestBoxVector Size >> " + std::to_string(testBoxVector_.size());
+	GameEngineDebug::OutPutString(tmpSize);
+	GameEngineDebug::OutPutString("CreateDynamic");
+
 	return dynamic;
 }
 
 void LJM_PhysXHelloWorld::createStack(const PxTransform& t, PxU32 size, PxReal halfExtent)
 {
+	// 1스택에 Actor가 55개씩 생성됨
+
 	PxShape* shape = pxPhysics->createShape(PxBoxGeometry(halfExtent, halfExtent, halfExtent), *pxMaterial);
 	for (PxU32 i = 0; i < size; i++)
 	{
@@ -212,6 +268,19 @@ void LJM_PhysXHelloWorld::initPhysics(bool _interactive)
 
 	PxRigidStatic* groundPlane = PxCreatePlane(*pxPhysics, PxPlane(0, 1, 0, 0), *pxMaterial);
 	pxScene->addActor(*groundPlane);
+
+	float4 tmpWorldPosition = { groundPlane->getGlobalPose().p.x
+									  , groundPlane->getGlobalPose().p.y
+									  , groundPlane->getGlobalPose().p.z };
+
+	// Plane추가
+	float4 tmpWorldScale = { 0.0f};
+	 
+	TestBox* tmpTestBoxPlane = CreateActor<TestBox>();
+
+	tmpTestBoxPlane->GetTransform().SetWorldPosition(tmpWorldPosition);
+	tmpTestBoxPlane->GetTransform().SetWorldScale(tmpWorldScale);
+	testBoxVector_.push_back(tmpTestBoxPlane);
 
 	for (PxU32 i = 0; i < 5; i++)
 		createStack(PxTransform(PxVec3(0, 0, stackZ -= 10.0f)), 10, 2.0f);
