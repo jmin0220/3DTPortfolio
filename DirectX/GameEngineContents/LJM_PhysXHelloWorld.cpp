@@ -17,7 +17,6 @@ LJM_PhysXHelloWorld::LJM_PhysXHelloWorld()
 
 LJM_PhysXHelloWorld::~LJM_PhysXHelloWorld() 
 {
-	cleanupPhysics();
 }
 
 void LJM_PhysXHelloWorld::Start()
@@ -150,6 +149,7 @@ void LJM_PhysXHelloWorld::Update(float _DeltaTime)
 
 void LJM_PhysXHelloWorld::End()
 {
+	cleanupPhysics();
 }
 
 PxRigidDynamic* LJM_PhysXHelloWorld::createDynamic(const PxTransform& t, const PxVec3& velocity)
@@ -170,31 +170,31 @@ PxRigidDynamic* LJM_PhysXHelloWorld::createDynamic(const PxTransform& t, const P
 
 	pxScene->addActor(*dynamic);
 
-	TestBox* tmpTestBox = CreateActor<TestBox>();
-	tmpTestBox->SetName("Dynamic");
+	//TestBox* tmpTestBox = CreateActor<TestBox>();
+	//tmpTestBox->SetName("Dynamic");
 
-	const PxBoxGeometry& boxGeom = static_cast<const PxBoxGeometry&>(shape->getGeometry().box());
+	//const PxBoxGeometry& boxGeom = static_cast<const PxBoxGeometry&>(shape->getGeometry().box());
 
-	float4 tmpWorldPosition = { dynamic->getGlobalPose().p.x
-							  , dynamic->getGlobalPose().p.y
-							  , dynamic->getGlobalPose().p.z };
+	//float4 tmpWorldPosition = { dynamic->getGlobalPose().p.x
+	//						  , dynamic->getGlobalPose().p.y
+	//						  , dynamic->getGlobalPose().p.z };
 
-	float4 tmpWorldScale = { 2.0f };
+	//float4 tmpWorldScale = { 4.0f };
 
-	float4 tmpWorldRotate = { localTm.q.x
-		, localTm.q.y
-		, localTm.q.z
-		, localTm.q.w };
+	//float4 tmpWorldRotate = { localTm.q.x
+	//	, localTm.q.y
+	//	, localTm.q.z
+	//	, localTm.q.w };
 
-	tmpTestBox->GetTransform().SetWorldPosition(tmpWorldPosition);
-	tmpTestBox->GetTransform().SetWorldScale(tmpWorldScale);
-	tmpTestBox->GetTransform().SetWorldRotation(tmpWorldRotate);
+	//tmpTestBox->GetTransform().SetWorldPosition(tmpWorldPosition);
+	//tmpTestBox->GetTransform().SetWorldScale(tmpWorldScale);
+	//tmpTestBox->GetTransform().SetWorldRotation(tmpWorldRotate);
 
-	testBoxVector_.push_back(tmpTestBox);
+	//testBoxVector_.push_back(tmpTestBox);
 
-	std::string tmpSize = "TestBoxVector Size >> " + std::to_string(testBoxVector_.size());
-	GameEngineDebug::OutPutString(tmpSize);
-	GameEngineDebug::OutPutString("CreateDynamic");
+	//std::string tmpSize = "TestBoxVector Size >> " + std::to_string(testBoxVector_.size());
+	//GameEngineDebug::OutPutString(tmpSize);
+	//GameEngineDebug::OutPutString("CreateDynamic");
 
 	return dynamic;
 }
@@ -222,7 +222,7 @@ void LJM_PhysXHelloWorld::createStack(const PxTransform& t, PxU32 size, PxReal h
 									  , body->getGlobalPose().p.y
 									  , body->getGlobalPose().p.z };
 
-			float4 tmpWorldScale = { halfExtent };
+			float4 tmpWorldScale = { halfExtent * 2.0f };
 
 			float4 tmpWorldRotate = { localTm.q.x
 				, localTm.q.y
