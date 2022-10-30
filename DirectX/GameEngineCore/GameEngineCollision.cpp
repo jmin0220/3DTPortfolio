@@ -33,6 +33,7 @@ GameEngineCollision::GameEngineCollision()
 	: DebugType(CollisionType::CT_SPHERE)
 	, Color(1.0f, 0.0f, 0.0f, 0.5f)
 	, eCollisionMode(CollisionMode::Normal)
+	, BounceRatio(0.0f)
 {
 }
 

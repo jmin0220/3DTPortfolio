@@ -73,7 +73,6 @@
       <Filter>Actor\PhysicsTest</Filter>
     </ClInclude>
     <ClInclude Include="Cursor.h" />
-    <ClInclude Include="TestGround.h" />
     <ClInclude Include="PreCompile.h">
       <Filter>PreCompile</Filter>
     </ClInclude>
@@ -103,6 +102,9 @@
     </ClInclude>
     <ClInclude Include="SelectShowButton.h">
       <Filter>Actor\UIActor\HUDChilds</Filter>
+    </ClInclude>
+    <ClInclude Include="TestGround.h">
+      <Filter>Actor\PhysicsTest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -140,7 +142,6 @@
       <Filter>Actor\PhysicsTest</Filter>
     </ClCompile>
     <ClCompile Include="Cursor.cpp" />
-    <ClCompile Include="TestGround.cpp" />
     <ClCompile Include="PreCompile.cpp">
       <Filter>PreCompile</Filter>
     </ClCompile>
@@ -170,6 +171,9 @@
     </ClCompile>
     <ClCompile Include="SelectShowButton.cpp">
       <Filter>Actor\UIActor\HUDChilds</Filter>
+    </ClCompile>
+    <ClCompile Include="TestGround.cpp">
+      <Filter>Actor\PhysicsTest</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

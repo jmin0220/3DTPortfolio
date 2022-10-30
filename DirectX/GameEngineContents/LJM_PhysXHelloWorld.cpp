@@ -17,6 +17,7 @@ LJM_PhysXHelloWorld::LJM_PhysXHelloWorld()
 
 LJM_PhysXHelloWorld::~LJM_PhysXHelloWorld() 
 {
+	cleanupPhysics();
 }
 
 void LJM_PhysXHelloWorld::Start()

@@ -118,6 +118,8 @@ private:
 
 	std::set<GameEngineCollision*> CollisionCheck;
 
+	float BounceRatio;
+
 	CAMERAORDER DebugCameraOrder;
 
 	CollisionType DebugType;

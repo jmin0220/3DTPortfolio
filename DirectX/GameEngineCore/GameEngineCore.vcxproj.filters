@@ -741,6 +741,12 @@
     <ClInclude Include="ThirdParty\inc\PhysX\vehicle\PxVehicleWheels.h">
       <Filter>ThirdParty\Inc\PhysX\Vehicle</Filter>
     </ClInclude>
+    <ClInclude Include="GameEnginePhysics.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEnginePhysicsObject.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineActor.cpp">
@@ -911,6 +917,12 @@
     </ClCompile>
     <ClCompile Include="PreCompile.cpp">
       <Filter>PreCompile</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEnginePhysics.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEnginePhysicsObject.cpp">
+      <Filter>Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

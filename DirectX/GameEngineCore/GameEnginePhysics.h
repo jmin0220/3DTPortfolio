@@ -3,10 +3,19 @@
 #include "GameEngineUpdateObject.h"
 #include <list>
 #include "GameEngineTransformBase.h"
+#include "GameEngineCollision.h"
+#include "GameEngineUpdateObject.h"
 
 
-// 설명 : 게임 엔진의 물리를 담당하는 클래스 (반드시 액터가 상속받아야 함)
-class GameEnginePhysics 
+
+enum class ColliderType
+{
+	StaticCollider,
+	PlayerCollider,
+};
+
+// 설명 : 게임 엔진의 물리를 담당하는 클래스
+class GameEnginePhysics : public GameEngineCollision
 {
 
 public:
@@ -19,6 +28,11 @@ public:
 	GameEnginePhysics(GameEnginePhysics&& _Other) noexcept = delete;
 	GameEnginePhysics& operator=(const GameEnginePhysics& _Other) = delete;
 	GameEnginePhysics& operator=(GameEnginePhysics&& _Other) noexcept = delete;
+
+protected:
+
+	bool CollisionCheck(int _MyCollisionGroup);
+private:
 
 };
 
