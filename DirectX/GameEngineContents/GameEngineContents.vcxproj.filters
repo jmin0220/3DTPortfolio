@@ -31,6 +31,12 @@
     <Filter Include="Componenet">
       <UniqueIdentifier>{9722c581-c865-46fe-9fe2-1f65d4d5c541}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\UIActor\HUDParents">
+      <UniqueIdentifier>{a4b573c9-0efa-4e54-8f9b-3820a9096e0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\UIActor\HUDChilds">
+      <UniqueIdentifier>{721478e9-1860-48d1-b593-776b6cf0088c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -80,6 +86,24 @@
     <ClInclude Include="PhysXComponenet.h">
       <Filter>Componenet</Filter>
     </ClInclude>
+    <ClInclude Include="HUDUIActor.h">
+      <Filter>Actor\UIActor\HUDParents</Filter>
+    </ClInclude>
+    <ClInclude Include="NamePlate.h">
+      <Filter>Actor\UIActor\HUDChilds</Filter>
+    </ClInclude>
+    <ClInclude Include="NoneButton.h">
+      <Filter>Actor\UIActor\HUDChilds</Filter>
+    </ClInclude>
+    <ClInclude Include="NoneMoney.h">
+      <Filter>Actor\UIActor\HUDChilds</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayButton.h">
+      <Filter>Actor\UIActor\HUDChilds</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectShowButton.h">
+      <Filter>Actor\UIActor\HUDChilds</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -128,6 +152,24 @@
     </ClCompile>
     <ClCompile Include="PhysXComponenet.cpp">
       <Filter>Componenet</Filter>
+    </ClCompile>
+    <ClCompile Include="HUDUIActor.cpp">
+      <Filter>Actor\UIActor\HUDParents</Filter>
+    </ClCompile>
+    <ClCompile Include="NamePlate.cpp">
+      <Filter>Actor\UIActor\HUDChilds</Filter>
+    </ClCompile>
+    <ClCompile Include="NoneButton.cpp">
+      <Filter>Actor\UIActor\HUDChilds</Filter>
+    </ClCompile>
+    <ClCompile Include="NoneMoney.cpp">
+      <Filter>Actor\UIActor\HUDChilds</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayButton.cpp">
+      <Filter>Actor\UIActor\HUDChilds</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectShowButton.cpp">
+      <Filter>Actor\UIActor\HUDChilds</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

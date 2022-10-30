@@ -181,6 +181,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="HUDUIActor.h" />
     <ClInclude Include="LJM_PhysXHelloWorld.h">
       <SubType>
       </SubType>
@@ -193,13 +194,18 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="NamePlate.h" />
+    <ClInclude Include="NoneButton.h" />
+    <ClInclude Include="NoneMoney.h" />
     <ClInclude Include="PhysicsTestLevel.h" />
     <ClInclude Include="PhysXComponenet.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="PickableActor.h" />
+    <ClInclude Include="PlayButton.h" />
     <ClInclude Include="PreCompile.h" />
+    <ClInclude Include="SelectShowButton.h" />
     <ClInclude Include="TestBox.h" />
     <ClInclude Include="TestGround.h" />
     <ClInclude Include="TitleActor.h" />
@@ -230,6 +236,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="HUDUIActor.cpp" />
     <ClCompile Include="LJM_PhysXHelloWorld.cpp">
       <SubType>
       </SubType>
@@ -242,16 +249,21 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="NamePlate.cpp" />
+    <ClCompile Include="NoneButton.cpp" />
+    <ClCompile Include="NoneMoney.cpp" />
     <ClCompile Include="PhysicsTestLevel.cpp" />
     <ClCompile Include="PhysXComponenet.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="PickableActor.cpp" />
+    <ClCompile Include="PlayButton.cpp" />
     <ClCompile Include="PreCompile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SelectShowButton.cpp" />
     <ClCompile Include="TestBox.cpp" />
     <ClCompile Include="TestGround.cpp" />
     <ClCompile Include="TitleActor.cpp" />

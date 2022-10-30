@@ -4,6 +4,11 @@
 #include "Cursor.h"
 #include <GameEngineCore/GameEngineActor.h>
 #include "FontActor.h"
+#include "NamePlate.h"
+#include "NoneButton.h"
+#include "NoneMoney.h"
+#include "SelectShowButton.h"
+#include "PlayButton.h"
 
 tmpLevel::tmpLevel() 
 	:Font(nullptr)
@@ -20,11 +25,21 @@ void tmpLevel::Start()
 	TitleLogo->GetTransform().SetLocalPosition({ 800,-450 });
 	TitleLogo->GetTransform().SetLocalPosition({ -400 + 418, 225 - 143 });
 
-	Mouse = CreateActor<Cursor>();
-
 	Font = CreateActor<FontActor>();
 	Font->GetFont()->SetText("½ÃÀÛ!", "Noto Sans CJK SC");
 	Font->GetFont()->SetScreenPostion({ 825,700 });
+
+	Name = CreateActor<NamePlate>();
+
+	Button = CreateActor<NoneButton>();
+
+	MoneyUI = CreateActor<NoneMoney>();
+
+	ShowButton = CreateActor<SelectShowButton>();
+
+	StartButton = CreateActor<PlayButton>();
+
+	Mouse = CreateActor<Cursor>();
 }
 
 void tmpLevel::Update(float _DeltaTime)

@@ -5,6 +5,11 @@
 class TitleActor;
 class Cursor;
 class FontActor;
+class NamePlate;
+class NoneButton;
+class NoneMoney;
+class SelectShowButton;
+class PlayButton;
 class tmpLevel : public GameEngineLevel
 {
 public:
@@ -27,5 +32,10 @@ private:
 	TitleActor* TitleLogo;
 	Cursor* Mouse;
 	FontActor* Font;
+	NamePlate* Name;
+	NoneButton* Button;
+	NoneMoney* MoneyUI;
+	SelectShowButton* ShowButton;
+	PlayButton* StartButton;
 };
 

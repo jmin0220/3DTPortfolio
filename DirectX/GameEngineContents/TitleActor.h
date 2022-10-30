@@ -16,16 +16,18 @@ public:
 	TitleActor& operator=(const TitleActor& _Other) = delete;
 	TitleActor& operator=(TitleActor&& _Other) noexcept = delete;
 
-	GameEngineTextureRenderer* GetRenderer()
+	GameEngineTextureRenderer* GetLogo()
 	{
-		return Renderer;
+		return Logo;
 	}
+
 
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void End() override {};
 private:
-	GameEngineTextureRenderer* Renderer;
+	GameEngineTextureRenderer* Logo;
+	GameEngineTextureRenderer* Renderer2;
 };
 
