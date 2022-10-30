@@ -31,7 +31,9 @@ public:
 
 protected:
 
-	bool CollisionCheck(int _MyCollisionGroup);
+	GameEngineCollision* CollisionCheck(int _MyCollisionGroup);
+	float4 CollidedVector(GameEngineCollision* _Other);
+	float4 CollidedNormalVectorReturn(GameEngineCollision* _Other);
 private:
 
 };

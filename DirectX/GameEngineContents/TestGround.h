@@ -27,7 +27,7 @@ protected:
 	void End() override {};
 private:
 	GameEngineTextureRenderer* Renderer;
-	GameEngineCollision* Collision;
+	class GameEnginePhysicsObject* Collision;
 	float4 ResultColor;
 };
 

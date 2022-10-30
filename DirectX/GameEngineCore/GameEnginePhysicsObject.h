@@ -35,8 +35,30 @@ private:
 	float4 Gravity;
 	float4 Velocity;
 	float4 Force;
+	float4 CollideImpact;
 	float Mass;
 	ColliderType Type;
 	int MyCollisionGroup;
+
+public:
+	void SetGravity(float4 _Gravity)
+	{
+		Gravity = _Gravity;
+	}
+
+	void SetVelocity(float4 _Velocity)
+	{
+		Velocity = _Velocity;
+	}
+
+	void SetForce(float4 _Force)
+	{
+		Force = _Force;
+	}
+
+	void SetColliderType(ColliderType _Type)
+	{
+		Type = _Type;
+	}
 };
 
