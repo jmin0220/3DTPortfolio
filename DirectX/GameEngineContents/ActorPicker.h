@@ -8,6 +8,7 @@ public:
 	static std::set<GameEngineActor*> PickedActors;
 	static GameEngineActor* PickedActor;
 	static GameEngineActor* ClickedActor;
+	static GameEngineActor* SelectedActor;
 
 public:
 	// constrcuter destructer

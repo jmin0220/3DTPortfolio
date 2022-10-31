@@ -41,6 +41,8 @@ private:
 	void CreateKeys();
 	void LoadResources();
 	void CreateLevels();
+	void CreateShaders();
+	void LoadShaders();
 
 };
 

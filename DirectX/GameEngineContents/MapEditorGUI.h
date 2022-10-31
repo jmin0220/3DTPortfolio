@@ -23,5 +23,10 @@ private:
 	void DebugPicking();
 
 	GameEngineLevel* ConnectedLevel;
+	GameEngineActor* CurActor_;
+
+	float Scale[3];
+	float Rotate[3];
+	float Position[3];
 };
 
