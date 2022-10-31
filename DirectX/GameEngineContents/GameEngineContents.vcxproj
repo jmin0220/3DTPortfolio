@@ -161,6 +161,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ActorPicker.h" />
+    <ClInclude Include="AxisActor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ColorBox.h">
       <SubType>
       </SubType>
@@ -226,9 +230,25 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="XAxis.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="YAxis.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ZAxis.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ActorPicker.cpp" />
+    <ClCompile Include="AxisActor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ColorBox.cpp">
       <SubType>
       </SubType>
@@ -294,6 +314,18 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="TopMenu.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="XAxis.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="YAxis.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ZAxis.cpp">
       <SubType>
       </SubType>
     </ClCompile>

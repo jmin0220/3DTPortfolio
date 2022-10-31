@@ -21,10 +21,23 @@ protected:
 /////////////////////////////////////////////////////////////////////
 
 	// 전부 자식에서 호출해주어야 할 함수
-	void CreatePickingCollision(float4 Scale);
+	void CreatePickingCollision(float4 Scale,float4 Position);
 	void CheckPickingRay();
 
 	// 맵 에딧용 콜리전, 캐릭용 콜리전은 별도로 생각해야함
 	GameEngineCollision* Collision_Picking;
+
+public:
+	float4 AxisDir;
+	void SetAxisDir(float4 Dir)
+	{
+		AxisDir = Dir;
+	}
+
+	float4 GetAxisDir()
+	{
+		return AxisDir;
+	}
+
 };
 

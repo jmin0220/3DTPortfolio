@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "ActorPicker.h"
+#include "PickableActor.h"
 #include <GameEngineCore/CoreMinimal.h>
 #include <GameEngineBase/GameEngineTransform.h>
 
@@ -27,6 +28,7 @@ void ActorPicker::Start()
 
 void ActorPicker::Update(float _DeltaTime)
 {
+	CurMousePos = GetLevel()->GetMainCamera()->GetMouseWorldPosition();
 	
 	// 카메라와 동일한 위치 
 	CamPos = GetLevel()->GetMainCameraActor()->GetTransform().GetWorldPosition();
@@ -89,6 +91,7 @@ void ActorPicker::ClickCheck()
 	if (true == GameEngineInput::GetInst()->IsDown("VK_LBUTTON"))
 	{
 		ClickedActor = PickedActor;
+		PrevMousePos = CurMousePos;
 
 		if (nullptr != ClickedActor)
 		{
@@ -112,12 +115,45 @@ void ActorPicker::ClickControl()
 	{
 		return;
 	}
+	float4 MouseDir = CurMousePos - PrevMousePos;
 
-	float4 MouseDir = GetLevel()->GetMainCamera()->GetMouseWorldDir();
 
-	// 이동속도
-	MouseDir *= 300;
+	if (dynamic_cast<PickableActor*>(ClickedActor)->GetAxisDir().x == 1.0f)
+	{
+		ClickedActor->GetTransform().SetWorldPosition({ ClickedActor->GetTransform().GetWorldPosition().x + MouseDir.x ,
+													   ClickedActor->GetTransform().GetWorldPosition().y ,
+													   ClickedActor->GetTransform().GetWorldPosition().z });
 
-	// x축 이동
-	ClickedActor->GetTransform().SetWorldMove({ MouseDir.x, 0, 0 });
+
+	}
+	else if (dynamic_cast<PickableActor*>(ClickedActor)->GetAxisDir().y == 1.0f)
+	{
+		ClickedActor->GetTransform().SetWorldPosition({ ClickedActor->GetTransform().GetWorldPosition().x ,
+													   ClickedActor->GetTransform().GetWorldPosition().y + MouseDir.y,
+													   ClickedActor->GetTransform().GetWorldPosition().z });
+
+
+	}
+	else if (dynamic_cast<PickableActor*>(ClickedActor)->GetAxisDir().z == 1.0f)
+	{
+		ClickedActor->GetTransform().SetWorldPosition({ ClickedActor->GetTransform().GetWorldPosition().x ,
+													   ClickedActor->GetTransform().GetWorldPosition().y ,
+													   ClickedActor->GetTransform().GetWorldPosition().z + MouseDir.z});
+
+	}
+
+	PrevMousePos = CurMousePos;
+
+	//float4 MouseDir = GetLevel()->GetMainCamera()->GetMouseWorldDir();
+
+
+	// //이동속도
+	//MouseDir *= 300;
+
+	//// x축 이동
+
+	//ClickedActor->GetTransform().SetWorldMove({ MouseDir.x, 0, 0 });
+	
+	
+
 }

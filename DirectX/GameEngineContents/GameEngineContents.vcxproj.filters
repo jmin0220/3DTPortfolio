@@ -37,6 +37,9 @@
     <Filter Include="Actor\UIActor\HUDChilds">
       <UniqueIdentifier>{721478e9-1860-48d1-b593-776b6cf0088c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\MapEditorLevel\Axis">
+      <UniqueIdentifier>{2a8ce72d-4bbc-42f9-bd6a-01d6d556ea36}</UniqueIdentifier>
+    </Filter>
     <Filter Include="ShaderTest">
       <UniqueIdentifier>{0b497306-8f2b-4d47-8547-8f4814c88045}</UniqueIdentifier>
     </Filter>
@@ -108,6 +111,18 @@
     </ClInclude>
     <ClInclude Include="TestGround.h">
       <Filter>Actor\PhysicsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="AxisActor.h">
+      <Filter>Actor\MapEditorLevel\Axis</Filter>
+    </ClInclude>
+    <ClInclude Include="XAxis.h">
+      <Filter>Actor\MapEditorLevel\Axis</Filter>
+    </ClInclude>
+    <ClInclude Include="YAxis.h">
+      <Filter>Actor\MapEditorLevel\Axis</Filter>
+    </ClInclude>
+    <ClInclude Include="ZAxis.h">
+      <Filter>Actor\MapEditorLevel\Axis</Filter>
     </ClInclude>
     <ClInclude Include="TestWall.h">
       <Filter>Actor\PhysicsTest</Filter>
@@ -189,6 +204,18 @@
     </ClCompile>
     <ClCompile Include="TestGround.cpp">
       <Filter>Actor\PhysicsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="AxisActor.cpp">
+      <Filter>Actor\MapEditorLevel\Axis</Filter>
+    </ClCompile>
+    <ClCompile Include="XAxis.cpp">
+      <Filter>Actor\MapEditorLevel\Axis</Filter>
+    </ClCompile>
+    <ClCompile Include="YAxis.cpp">
+      <Filter>Actor\MapEditorLevel\Axis</Filter>
+    </ClCompile>
+    <ClCompile Include="ZAxis.cpp">
+      <Filter>Actor\MapEditorLevel\Axis</Filter>
     </ClCompile>
     <ClCompile Include="TopMenu.cpp">
       <Filter>Actor\UIActor\HUDChilds</Filter>

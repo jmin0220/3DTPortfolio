@@ -50,7 +50,7 @@ void ContentsCore::LoadResources()
 	GameEngineDirectory Dir;
 	Dir.MoveParentToExitsChildDirectory("Resources");
 	Dir.Move("Resources");
-	
+
 	// 텍스쳐 로드
 	{
 		std::vector<GameEngineFile> Files = Dir.GetAllFile();
@@ -62,6 +62,25 @@ void ContentsCore::LoadResources()
 	}
 
 	GameEngineFont::Load("Noto Sans CJK SC");//폴가이즈 폰트
+
+
+
+
+	//메쉬 로드
+	{
+		//GameEngineDirectory Dir;
+		//Dir.MoveParentToExitsChildDirectory("Resources");
+		//Dir.Move("Resources");
+		//Dir.Move("Mesh");
+
+
+		//{
+		//	GameEngineDirectory MeshDir = Dir;
+		//	MeshDir.Move("AxisMesh");
+		//	GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(MeshDir.PlusFilePath("Axis.FBX"));
+		//	std::vector<FBXNodeInfo> Nodes = Mesh->CheckAllNode();
+		//}
+	}
 	GameEngineFont::Load("Titan One");
 	
 }
@@ -72,7 +91,7 @@ void ContentsCore::CreateLevels()
 	CreateLevel<MapEditorLevel>("MapEditorLevel");
 	CreateLevel<PhysicsTestLevel>("PhysicsTestLevel");
 	CreateLevel<LJM_PhysXHelloWorld>("LJM_PhysXHelloWorld");
-	ChangeLevel("LJM_PhysXHelloWorld");
+	ChangeLevel("MapEditorLevel");
 }
 
 void ContentsCore::CreateShaders()

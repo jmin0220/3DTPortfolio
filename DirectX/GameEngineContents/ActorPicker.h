@@ -30,6 +30,10 @@ private:
 	GameEngineCollision* Collision_Ray;
 	float4 CamPos;
 
+	float4 PrevMousePos;
+	float4 CurMousePos;
+
+
 	void SelectPickedActor();
 	void ClickCheck();
 	void ClickControl();

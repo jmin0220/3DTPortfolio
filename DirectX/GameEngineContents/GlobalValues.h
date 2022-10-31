@@ -11,3 +11,10 @@ enum class CollisionGroup
 	Max
 };
 
+enum class Axis
+{
+	X,
+	Y,
+	Z
+};
+

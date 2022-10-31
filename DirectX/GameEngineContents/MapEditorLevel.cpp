@@ -2,6 +2,11 @@
 #include "MapEditorLevel.h"
 #include <GameEngineCore/CoreMinimal.h>
 
+#include "AxisActor.h"
+#include "XAxis.h"
+#include "YAxis.h"
+#include "ZAxis.h"
+
 #include "MapEditorGUI.h"
 #include "ColorBox.h"
 #include "ActorPicker.h"
@@ -22,6 +27,12 @@ void MapEditorLevel::Start()
 		Box->GetTransform().SetWorldPosition({ 0, 0, 300 });
 
 		ActorPicker* Picker = CreateActor<ActorPicker>();
+	}
+
+	{
+		AxisActor* Axis = CreateActor<AxisActor>();
+		Axis->GetTransform().SetWorldPosition({ 300.0f,0,300.0f });
+		Axis->SetPosition();
 	}
 
 	GUI = GameEngineGUI::CreateGUIWindow<MapEditorGUI>("MapEditorGUI", this);

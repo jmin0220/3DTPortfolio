@@ -27,7 +27,7 @@ void ColorBox::Start()
 	GetTransform().SetWorldScale({ 100, 100, 100 });
 
 	// 마우스 피킹
-	CreatePickingCollision(Collision->GetTransform().GetWorldScale());
+	CreatePickingCollision(Collision->GetTransform().GetWorldScale(), Collision->GetTransform().GetWorldPosition());
 }
 
 void ColorBox::Update(float _DeltaTime)
