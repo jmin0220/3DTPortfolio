@@ -371,16 +371,15 @@ void GameEngineFBXMesh::DrawSetWeightAndIndexSetting(FbxRenderUnit* _DrawSet, fb
 	}
 }
 
-void GameEngineFBXMesh::LoadUv(fbxsdk::FbxMesh* _Mesh, fbxsdk::FbxAMatrix _MeshMatrix, std::vector<GameEngineVertex>& _ArrVtx, int VtxId, int VertexCount, int _Index)
+void GameEngineFBXMesh::LoadUV(fbxsdk::FbxMesh* _Mesh, fbxsdk::FbxAMatrix _MeshMatrix, std::vector<GameEngineVertex>& _ArrVtx, int VtxId, int VertexCount, int _Index)
 {
+	// pMesh->GetTextureUVIndex(PolygonIndex, PositionInPolygon), VtxId, ControlPointIndex
+
 	int iCount = _Mesh->GetElementUVCount();
-
-
 
 	if (0 == iCount)
 	{
 		return;
-
 	}
 
 	float4 result;
@@ -423,7 +422,6 @@ void GameEngineFBXMesh::LoadUv(fbxsdk::FbxMesh* _Mesh, fbxsdk::FbxAMatrix _MeshM
 		{
 			result.x = static_cast<float>(pElement->GetDirectArray().GetAt(VtxId).mData[0]);
 			result.y = static_cast<float>(pElement->GetDirectArray().GetAt(VtxId).mData[1]);
-			// result.z = static_cast<float>(pElement->GetDirectArray().GetAt(VtxId).mData[2]);
 		}
 		break;
 
@@ -432,7 +430,6 @@ void GameEngineFBXMesh::LoadUv(fbxsdk::FbxMesh* _Mesh, fbxsdk::FbxAMatrix _MeshM
 			int index = pElement->GetIndexArray().GetAt(VertexCount);
 			result.x = static_cast<float>(pElement->GetDirectArray().GetAt(index).mData[0]);
 			result.y = static_cast<float>(pElement->GetDirectArray().GetAt(index).mData[1]);
-			// result.z = static_cast<float>(pElement->GetDirectArray().GetAt(index).mData[2]);
 		}
 		break;
 		default:
@@ -444,6 +441,7 @@ void GameEngineFBXMesh::LoadUv(fbxsdk::FbxMesh* _Mesh, fbxsdk::FbxAMatrix _MeshM
 	}
 
 	_ArrVtx[_Index].TEXCOORD.x = (float)result.x;
+	// _ArrVtx[_Index].TEXCOORD.y = (float)result.y;
 	_ArrVtx[_Index].TEXCOORD.y = 1.0f - (float)result.y;
 }
 
@@ -555,7 +553,7 @@ void GameEngineFBXMesh::VertexBufferCheck()
 
 				//FMeshDescription* MeshDescription = StaticMesh->GetMeshDescription(LODIndex);
 				//FStaticMeshAttributes Attributes(*MeshDescription);
-				LoadUv(pMesh, meshMatrix, VtxData, pMesh->GetTextureUVIndex(PolygonIndex, PositionInPolygon), VtxId, ControlPointIndex);
+				LoadUV(pMesh, meshMatrix, VtxData, pMesh->GetTextureUVIndex(PolygonIndex, PositionInPolygon), VtxId, ControlPointIndex);
 
 				++VtxId;
 			}
@@ -566,12 +564,117 @@ void GameEngineFBXMesh::VertexBufferCheck()
 			IdxData[materialId].push_back(IndexArray[1]);
 		}
 
+		// LoadUVInformation(pMesh, VtxData);
+
 		RenderUnit.FbxVertexMap.insert(std::make_pair(pMesh, &VtxData));
 	}
 
 	MeshInfos;
 	RenderUnitInfos;
 	int a = 0;
+
+}
+
+void GameEngineFBXMesh::LoadUVInformation(fbxsdk::FbxMesh* pMesh, std::vector<GameEngineVertex>& _ArrVtx)
+{
+	//get all UV set names
+	FbxStringList lUVSetNameList;
+	pMesh->GetUVSetNames(lUVSetNameList);
+
+	int Index = 0;
+
+	if (1 < lUVSetNameList.GetCount())
+	{
+		MsgBoxAssert("UV가 2개입니다.");
+	}
+
+	GameEngineDebug::OutPutString(" NewMesh Vertex Size : " + std::to_string(_ArrVtx.size()));
+
+	//iterating over all uv sets
+	// 여러개 있을수 있네요.
+	for (int lUVSetIndex = 0; lUVSetIndex < lUVSetNameList.GetCount(); lUVSetIndex++)
+	{
+		//get lUVSetIndex-th uv set
+		const char* lUVSetName = lUVSetNameList.GetStringAt(lUVSetIndex);
+		const FbxGeometryElementUV* lUVElement = pMesh->GetElementUV(lUVSetName);
+
+		if (!lUVElement)
+			continue;
+
+		// only support mapping mode eByPolygonVertex and eByControlPoint
+		if (lUVElement->GetMappingMode() != FbxGeometryElement::eByPolygonVertex &&
+			lUVElement->GetMappingMode() != FbxGeometryElement::eByControlPoint)
+			return;
+
+		//index array, where holds the index referenced to the uv data
+		const bool lUseIndex = lUVElement->GetReferenceMode() != FbxGeometryElement::eDirect;
+		const int lIndexCount = (lUseIndex) ? lUVElement->GetIndexArray().GetCount() : 0;
+
+		//iterating through the data by polygon
+		const int lPolyCount = pMesh->GetPolygonCount();
+
+		if (lUVElement->GetMappingMode() == FbxGeometryElement::eByControlPoint)
+		{
+			for (int lPolyIndex = 0; lPolyIndex < lPolyCount; ++lPolyIndex)
+			{
+				// build the max index array that we need to pass into MakePoly
+				const int lPolySize = pMesh->GetPolygonSize(lPolyIndex);
+				for (int lVertIndex = 0; lVertIndex < lPolySize; ++lVertIndex)
+				{
+					FbxVector2 lUVValue;
+
+					//get the index of the current vertex in control points array
+					int lPolyVertIndex = pMesh->GetPolygonVertex(lPolyIndex, lVertIndex);
+
+					//the UV index depends on the reference mode
+					int lUVIndex = lUseIndex ? lUVElement->GetIndexArray().GetAt(lPolyVertIndex) : lPolyVertIndex;
+
+					lUVValue = lUVElement->GetDirectArray().GetAt(lUVIndex);
+
+					_ArrVtx[lVertIndex].TEXCOORD.x = static_cast<float>(lUVValue.mData[0]);
+					_ArrVtx[lVertIndex].TEXCOORD.y = 1.0f - static_cast<float>(lUVValue.mData[1]);
+
+					//User TODO:
+					//Print out the value of UV(lUVValue) or log it to a file
+				}
+			}
+		}
+		else if (lUVElement->GetMappingMode() == FbxGeometryElement::eByPolygonVertex)
+		{
+			int lPolyIndexCounter = 0;
+			for (int lPolyIndex = 0; lPolyIndex < lPolyCount; ++lPolyIndex)
+			{
+				// build the max index array that we need to pass into MakePoly
+				const int lPolySize = pMesh->GetPolygonSize(lPolyIndex);
+				for (int lVertIndex = 0; lVertIndex < lPolySize; ++lVertIndex)
+				{
+					if (lPolyIndexCounter < lIndexCount)
+					{
+						FbxVector2 lUVValue;
+
+						//the UV index depends on the reference mode
+						int lUVIndex = lUseIndex ? lUVElement->GetIndexArray().GetAt(lPolyIndexCounter) : lPolyIndexCounter;
+
+						lUVValue = lUVElement->GetDirectArray().GetAt(lUVIndex);
+
+						//int VertexIndex = pMesh->GetTextureUVIndex(lPolyIndex, lVertIndex);
+
+						//_ArrVtx[VertexIndex].TEXCOORD.x = static_cast<float>(lUVValue.mData[0]);
+						//_ArrVtx[VertexIndex].TEXCOORD.y = 1.0f - static_cast<float>(lUVValue.mData[1]);
+
+						//float4 Test;
+						//Test.x = static_cast<float>(lUVValue.mData[0]);
+						//Test.y = static_cast<float>(lUVValue.mData[1]);
+						//GameEngineDebug::OutPutString(Test.ToString() + " Index : " + std::to_string(Index));
+						//++Index;
+
+						lPolyIndexCounter++;
+					}
+				}
+			}
+		}
+
+	}
 
 }
 

@@ -130,6 +130,7 @@
     </ClInclude>
     <ClInclude Include="GameEnginePhysics.h" />
     <ClInclude Include="GameEnginePhysicsObject.h" />
+    <ClInclude Include="GameEnginePhysX.h" />
     <ClInclude Include="GameEnginePixelShader.h">
       <SubType>
       </SubType>
@@ -523,6 +524,7 @@
     </ClCompile>
     <ClCompile Include="GameEnginePhysics.cpp" />
     <ClCompile Include="GameEnginePhysicsObject.cpp" />
+    <ClCompile Include="GameEnginePhysX.cpp" />
     <ClCompile Include="GameEnginePixelShader.cpp">
       <SubType>
       </SubType>

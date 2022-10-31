@@ -747,6 +747,9 @@
     <ClInclude Include="GameEnginePhysicsObject.h">
       <Filter>Physics</Filter>
     </ClInclude>
+    <ClInclude Include="GameEnginePhysX.h">
+      <Filter>PhysX</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineActor.cpp">
@@ -923,6 +926,9 @@
     </ClCompile>
     <ClCompile Include="GameEnginePhysicsObject.cpp">
       <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEnginePhysX.cpp">
+      <Filter>PhysX</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
