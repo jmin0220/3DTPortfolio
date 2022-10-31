@@ -21,7 +21,8 @@ public:
 		return Logo;
 	}
 
-
+	void FontSizeAnimation();
+	void LogoSizeAnimation();
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -29,5 +30,10 @@ protected:
 private:
 	GameEngineTextureRenderer* Logo;
 	GameEngineTextureRenderer* Renderer2;
+	GameEngineFontRenderer* Font;
+
+	float FontSize;
+	float XImageSize;
+	float YImageSize;
 };
 

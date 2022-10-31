@@ -59,6 +59,8 @@ void ContentsCore::LoadResources()
 	}
 
 	GameEngineFont::Load("Noto Sans CJK SC");//폴가이즈 폰트
+	GameEngineFont::Load("Titan One");
+	
 }
 
 void ContentsCore::CreateLevels()

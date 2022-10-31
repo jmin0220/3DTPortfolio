@@ -10,6 +10,8 @@ class NoneButton;
 class NoneMoney;
 class SelectShowButton;
 class PlayButton;
+class TopMenu;
+class CrownCount;
 class tmpLevel : public GameEngineLevel
 {
 public:
@@ -37,5 +39,7 @@ private:
 	NoneMoney* MoneyUI;
 	SelectShowButton* ShowButton;
 	PlayButton* StartButton;
+	TopMenu* Top;
+	CrownCount* Crown;
 };
 

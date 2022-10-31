@@ -22,6 +22,7 @@ protected:
 	void End() override {};
 private:
 	GameEngineUIRenderer* Button;
-
+	GameEngineUIRenderer* Key;
+	GameEngineFontRenderer* Font;
 };
 

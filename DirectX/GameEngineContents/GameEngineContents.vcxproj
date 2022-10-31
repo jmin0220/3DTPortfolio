@@ -169,6 +169,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="CrownCount.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Cursor.h">
       <SubType>
       </SubType>
@@ -213,6 +217,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="TopMenu.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ActorPicker.cpp" />
@@ -221,6 +229,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ContentsCore.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="CrownCount.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -268,6 +280,10 @@
     <ClCompile Include="TestGround.cpp" />
     <ClCompile Include="TitleActor.cpp" />
     <ClCompile Include="tmpLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TopMenu.cpp">
       <SubType>
       </SubType>
     </ClCompile>

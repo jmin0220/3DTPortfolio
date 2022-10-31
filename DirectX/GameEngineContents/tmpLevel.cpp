@@ -9,6 +9,8 @@
 #include "NoneMoney.h"
 #include "SelectShowButton.h"
 #include "PlayButton.h"
+#include "TopMenu.h"
+#include "CrownCount.h"
 
 tmpLevel::tmpLevel() 
 	:Font(nullptr)
@@ -25,9 +27,9 @@ void tmpLevel::Start()
 	TitleLogo->GetTransform().SetLocalPosition({ 800,-450 });
 	TitleLogo->GetTransform().SetLocalPosition({ -400 + 418, 225 - 143 });
 
-	Font = CreateActor<FontActor>();
-	Font->GetFont()->SetText("시작!", "Noto Sans CJK SC");
-	Font->GetFont()->SetScreenPostion({ 825,700 });
+	//Font = CreateActor<FontActor>();
+	//Font->GetFont()->SetText("시작!", "Noto Sans CJK SC");
+	//Font->GetFont()->SetScreenPostion({ 825,700 });
 
 	Name = CreateActor<NamePlate>();
 
@@ -38,6 +40,10 @@ void tmpLevel::Start()
 	ShowButton = CreateActor<SelectShowButton>();
 
 	StartButton = CreateActor<PlayButton>();
+
+	Top = CreateActor<TopMenu>();
+
+	Crown = CreateActor<CrownCount>();
 
 	Mouse = CreateActor<Cursor>();
 }

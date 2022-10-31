@@ -25,11 +25,12 @@ void NoneMoney::Start()
 	MoneyIcon->GetTransform().SetWorldPosition({ 500,405 });
 
 	MoneyNumber = CreateComponent<GameEngineFontRenderer>();
-	MoneyNumber->SetText(std::to_string(MoneyCost), "Noto Sans CJK SC");
+	MoneyNumber->ChangeCamera(CAMERAORDER::UICAMERA);
 	MoneyNumber->SetSize(20);
 	MoneyNumber->SetLeftAndRightSort(LeftAndRightSort::CENTER);
 	MoneyNumber->SetParent(MoneyCount);
 	MoneyNumber->SetScreenPostion({ 1390,28 });
+	MoneyNumber->SetText(std::to_string(MoneyCost), "Noto Sans CJK SC");
 }
 
 void NoneMoney::Update(float _DeltaTime)

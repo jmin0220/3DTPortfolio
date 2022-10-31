@@ -17,7 +17,7 @@ void NamePlate::Start()
 	Renderer->GetTransform().SetLocalScale({606 * 0.6f,166 * 0.6f});
 	Renderer->SetTexture("NamePlate.png");
 	Renderer->SetPivot(PIVOTMODE::LEFTTOP);
-	Renderer->GetTransform().SetLocalPosition({ -670,430 });
+	Renderer->GetTransform().SetLocalPosition({ -670,425 });
 
 	Font = CreateComponent<GameEngineFontRenderer>();
 	Font->ChangeCamera(CAMERAORDER::UICAMERA);
@@ -25,7 +25,7 @@ void NamePlate::Start()
 	Font->SetColor({ 1.0f,1.0f,1.0f });
 	Font->SetParent(Renderer);
 	Font->SetLeftAndRightSort(LeftAndRightSort::CENTER);
-	Font->SetScreenPostion({ 330,45 });
+	Font->SetScreenPostion({ 330,50 });
 	Font->SetText("플레이어", "Noto Sans CJK SC");
 }
 
