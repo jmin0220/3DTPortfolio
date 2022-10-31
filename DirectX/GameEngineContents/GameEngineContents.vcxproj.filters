@@ -37,6 +37,9 @@
     <Filter Include="Actor\UIActor\HUDChilds">
       <UniqueIdentifier>{721478e9-1860-48d1-b593-776b6cf0088c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ShaderTest">
+      <UniqueIdentifier>{0b497306-8f2b-4d47-8547-8f4814c88045}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -106,6 +109,9 @@
     <ClInclude Include="TestGround.h">
       <Filter>Actor\PhysicsTest</Filter>
     </ClInclude>
+    <ClInclude Include="TestActor_WaterPlane.h">
+      <Filter>ShaderTest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -174,6 +180,9 @@
     </ClCompile>
     <ClCompile Include="TestGround.cpp">
       <Filter>Actor\PhysicsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="TestActor_WaterPlane.cpp">
+      <Filter>ShaderTest</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

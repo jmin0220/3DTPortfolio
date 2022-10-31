@@ -22,8 +22,11 @@ void ContentsCore::Start()
 
 	CreateKeys();
 	LoadResources();
-	CreateLevels();
 
+	CreateShaders();
+	LoadShaders();
+
+	CreateLevels();
 	GameEngineGUI::CreateGUIWindow<GameEngineStatusWindow>("GameEngineStatusWindow", nullptr); //GUI Ãß°¡ 
 
 }
@@ -68,4 +71,26 @@ void ContentsCore::CreateLevels()
 	CreateLevel<PhysicsTestLevel>("PhysicsTestLevel");
 	CreateLevel<LJM_PhysXHelloWorld>("LJM_PhysXHelloWorld");
 	ChangeLevel("LJM_PhysXHelloWorld");
+}
+
+void ContentsCore::CreateShaders()
+{
+	GameEngineDirectory Dir;
+	Dir.MoveParentToExitsChildDirectory("ContentsShader");
+	Dir.Move("ContentsShader");
+
+	std::vector<GameEngineFile> Shaders = Dir.GetAllFile("hlsl");
+	for (size_t i = 0; i < Shaders.size(); i++)
+	{
+		GameEngineShader::AutoCompile(Shaders[i].GetFullPath());
+	}
+}
+
+void ContentsCore::LoadShaders()
+{
+	{
+		GameEngineMaterial* Material = GameEngineMaterial::Create("Water");
+		Material->SetVertexShader("WaterShader.hlsl");
+		Material->SetPixelShader("WaterShader.hlsl");
+	}
 }

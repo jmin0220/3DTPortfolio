@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{0d143cbd-f9fd-4345-acab-083421fc48de}</ProjectGuid>
-    <RootNamespace>GameEngineContents</RootNamespace>
+    <ProjectGuid>{b2af6184-9f47-4a9a-a4b4-f61c684caad7}</ProjectGuid>
+    <RootNamespace>ContentsShader</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -40,20 +40,17 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
-    <EnableUnitySupport>false</EnableUnitySupport>
-    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <EnableUnitySupport>false</EnableUnitySupport>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -73,24 +70,6 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)Bin\$(Configuration)\$(PlatformTarget)\</OutDir>
-    <IntDir>$(SolutionDir)Bin\$(Configuration)\$(PlatformTarget)\$(ProjectName)\</IntDir>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)Bin\$(Configuration)\$(PlatformTarget)\;</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)Bin\$(Configuration)\$(PlatformTarget)\</OutDir>
-    <IntDir>$(SolutionDir)Bin\$(Configuration)\$(PlatformTarget)\$(ProjectName)\</IntDir>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)Bin\$(Configuration)\$(PlatformTarget)\;</LibraryPath>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -125,12 +104,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\;../GameEngineCore/ThirdParty/inc/;</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>PreCompile.h</PrecompiledHeaderFile>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -145,12 +118,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\;../GameEngineCore/ThirdParty/inc/;</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>PreCompile.h</PrecompiledHeaderFile>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -160,125 +127,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ActorPicker.h" />
-    <ClInclude Include="ColorBox.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="ContentsCore.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="Cursor.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="FontActor.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="GlobalValues.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="HUDUIActor.h" />
-    <ClInclude Include="LJM_PhysXHelloWorld.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="MapEditorGUI.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="MapEditorLevel.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="NamePlate.h" />
-    <ClInclude Include="NoneButton.h" />
-    <ClInclude Include="NoneMoney.h" />
-    <ClInclude Include="PhysicsTestLevel.h" />
-    <ClInclude Include="PhysXComponenet.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="PickableActor.h" />
-    <ClInclude Include="PlayButton.h" />
-    <ClInclude Include="PreCompile.h" />
-    <ClInclude Include="SelectShowButton.h" />
-    <ClInclude Include="TestActor_WaterPlane.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="TestBox.h" />
-    <ClInclude Include="TestGround.h" />
-    <ClInclude Include="TitleActor.h" />
-    <ClInclude Include="tmpLevel.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="ActorPicker.cpp" />
-    <ClCompile Include="ColorBox.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="ContentsCore.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Cursor.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="FontActor.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="GlobalValues.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="HUDUIActor.cpp" />
-    <ClCompile Include="LJM_PhysXHelloWorld.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="MapEditorGUI.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="MapEditorLevel.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="NamePlate.cpp" />
-    <ClCompile Include="NoneButton.cpp" />
-    <ClCompile Include="NoneMoney.cpp" />
-    <ClCompile Include="PhysicsTestLevel.cpp" />
-    <ClCompile Include="PhysXComponenet.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="PickableActor.cpp" />
-    <ClCompile Include="PlayButton.cpp" />
-    <ClCompile Include="PreCompile.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="SelectShowButton.cpp" />
-    <ClCompile Include="TestActor_WaterPlane.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="TestBox.cpp" />
-    <ClCompile Include="TestGround.cpp" />
-    <ClCompile Include="TitleActor.cpp" />
-    <ClCompile Include="tmpLevel.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
+    <FxCompile Include="RenderOption.fx" />
+    <FxCompile Include="TransformHeader.fx" />
+    <FxCompile Include="WaterShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
