@@ -7,6 +7,7 @@
 std::set<GameEngineActor*> ActorPicker::PickedActors;
 GameEngineActor* ActorPicker::PickedActor = nullptr;	// 피킹광선 충돌시 맨 앞에있는 엑터
 GameEngineActor* ActorPicker::ClickedActor = nullptr;	// 피킹광선 충돌X여도 클릭유지 시 엑터
+GameEngineActor* ActorPicker::SelectedActor = nullptr;	// 피킹광선 충돌X여도 클릭유지 시 엑터
 
 ActorPicker::ActorPicker() 
 {
@@ -88,6 +89,11 @@ void ActorPicker::ClickCheck()
 	if (true == GameEngineInput::GetInst()->IsDown("VK_LBUTTON"))
 	{
 		ClickedActor = PickedActor;
+
+		if (nullptr != ClickedActor)
+		{
+			SelectedActor = ClickedActor;
+		}
 		return;
 	}
 

@@ -21,6 +21,9 @@ void MapEditorLevel::Start()
 		GameEngineActor* Box = CreateActor<ColorBox>();
 		Box->GetTransform().SetWorldPosition({ 0, 0, 300 });
 
+		GameEngineActor* Box2 = CreateActor<ColorBox>();
+		Box2->GetTransform().SetWorldPosition({ 200, 0, 300 });
+
 		ActorPicker* Picker = CreateActor<ActorPicker>();
 	}
 
