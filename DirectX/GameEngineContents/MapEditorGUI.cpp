@@ -60,7 +60,6 @@ void MapEditorGUI::DebugPicking()
 	{
 		// 현재 마우스 위치의 액터 = 클릭하면 선택될 예정의 액터
 		GameEngineActor* Actor = ActorPicker::PickedActor;
-
 		if (nullptr == Actor)
 		{
 			ImGui::Text("There is no Picked Actor");
@@ -73,19 +72,19 @@ void MapEditorGUI::DebugPicking()
 		}
 	}
 
-	//{
-	//	GameEngineActor* Actor = ActorPicker::ClickedActor;
-	//	if (nullptr == Actor)
-	//	{
-	//		ImGui::Text("There is no Clicked Actor");
-	//	}
-	//	else
-	//	{
-	//		float4 Pos = Actor->GetTransform().GetWorldPosition();
-	//		std::string Name = "ClickedActor : " + std::to_string(Pos.x) + " | " + std::to_string(Pos.y) + " | " + std::to_string(Pos.z);
-	//		ImGui::Text(Name.c_str());
-	//	}
-	//}
+	{
+		GameEngineActor* Actor = ActorPicker::ClickedActor;
+		if (nullptr == Actor)
+		{
+			ImGui::Text("There is no Clicked Actor");
+		}
+		else
+		{
+			float4 Pos = Actor->GetTransform().GetWorldPosition();
+			std::string Name = "ClickedActor : " + std::to_string(Pos.x) + " | " + std::to_string(Pos.y) + " | " + std::to_string(Pos.z);
+			ImGui::Text(Name.c_str());
+		}
+	}
 
 	{
 		// 클릭해서 현재 선택된 액터
@@ -135,7 +134,6 @@ void MapEditorGUI::DebugPicking()
 				CurActor_->GetTransform().SetWorldRotation({ Rotate[0], Rotate[1], Rotate[2] });
 				CurActor_->GetTransform().SetWorldPosition({ Position[0], Position[1], Position[2] });
 			}
-
 		}
 	}
 }

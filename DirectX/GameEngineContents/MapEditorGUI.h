@@ -28,7 +28,5 @@ private:
 	float Scale[3];
 	float Rotate[3];
 	float Position[3];
-
-	// 현재 액터
 };
 
