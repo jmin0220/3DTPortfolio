@@ -109,6 +109,9 @@
     <ClInclude Include="TestGround.h">
       <Filter>Actor\PhysicsTest</Filter>
     </ClInclude>
+    <ClInclude Include="TestWall.h">
+      <Filter>Actor\PhysicsTest</Filter>
+    </ClInclude>
     <ClInclude Include="TestActor_WaterPlane.h">
       <Filter>ShaderTest</Filter>
     </ClInclude>
@@ -180,9 +183,6 @@
     </ClCompile>
     <ClCompile Include="TestGround.cpp">
       <Filter>Actor\PhysicsTest</Filter>
-    </ClCompile>
-    <ClCompile Include="TestActor_WaterPlane.cpp">
-      <Filter>ShaderTest</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -29,16 +29,24 @@ public:
 		MyCollisionGroup = _Int;
 	}
 
-	void BasicDynamics(float _DeltaTime);
+
+
 
 private:
 	float4 Gravity;
 	float4 Velocity;
 	float4 Force;
-	float4 CollideImpact;
 	float Mass;
-	ColliderType Type;
 	int MyCollisionGroup;
+	bool IsCollide;
+	bool IsStatic;
+	float BoundRatio;
+	ColliderType _ColliderType;
+	CompoundType _CompoundType;
+
+	void BasicDynamics(float _DeltaTime, std::vector<GameEngineCollision*> _CollisionResults);
+	void CollisionWithGround(float _DeltaTime, GameEnginePhysicsObject* _PO);
+	void CollisionWithWall(float _DeltaTime, GameEnginePhysicsObject* _PO);
 
 public:
 	void SetGravity(float4 _Gravity)
@@ -58,7 +66,26 @@ public:
 
 	void SetColliderType(ColliderType _Type)
 	{
-		Type = _Type;
+		_ColliderType = _Type;
+	}
+
+	void SetCompoundType(CompoundType _Type)
+	{
+		_CompoundType = _Type;
+	}
+
+	void SetIsStatic(bool _boolean)
+	{
+		IsStatic = _boolean;
+	}
+
+	void SetBoundRatio(float _BoundRatio)
+	{
+		if (_BoundRatio < 0.0f)
+		{
+			MsgBoxAssert("BoundRatio를 음수로 설정하지 마시오");
+		}
+		BoundRatio = _BoundRatio;
 	}
 };
 

@@ -212,6 +212,7 @@
     </ClInclude>
     <ClInclude Include="TestBox.h" />
     <ClInclude Include="TestGround.h" />
+    <ClInclude Include="TestWall.h" />
     <ClInclude Include="TitleActor.h" />
     <ClInclude Include="tmpLevel.h">
       <SubType>
@@ -274,6 +275,7 @@
     </ClCompile>
     <ClCompile Include="TestBox.cpp" />
     <ClCompile Include="TestGround.cpp" />
+    <ClCompile Include="TestWall.cpp" />
     <ClCompile Include="TitleActor.cpp" />
     <ClCompile Include="tmpLevel.cpp">
       <SubType>

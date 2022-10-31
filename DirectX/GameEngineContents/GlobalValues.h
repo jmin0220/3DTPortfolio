@@ -6,6 +6,7 @@ enum class CollisionGroup
 	Player,
 	Map,
 	PhysicsGround,
+	PhysicsWall,
 	PhysicsPlayer,
 	Max
 };
