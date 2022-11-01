@@ -27,7 +27,7 @@ void LJM_PhysXHelloWorld::Start()
 	initPhysics(true);
 
 	GameEngineInput::GetInst()->CreateKey("CreateBall", VK_SPACE);
-	GameEngineInput::GetInst()->CreateKey("CreateStack", 1);
+	GameEngineInput::GetInst()->CreateKey("CreateStack", '1');
 
 	testBoxVector_.reserve(10000);
 }
@@ -81,8 +81,8 @@ void LJM_PhysXHelloWorld::Update(float _DeltaTime)
 
 		for (PxU32 i = 0; i < static_cast<PxU32>(actors.size()); i++)
 		{
-			std::vector<TestBox*>::iterator StartIter = testBoxVector_.begin();
-			std::vector<TestBox*>::iterator EndIter = testBoxVector_.end();
+			std::vector<PhysXTestBox*>::iterator StartIter = testBoxVector_.begin();
+			std::vector<PhysXTestBox*>::iterator EndIter = testBoxVector_.end();
 
 			const PxU32 nbShapes = actors[i]->getNbShapes();
 			PX_ASSERT(nbShapes <= MAX_NUM_ACTOR_SHAPES);
@@ -104,11 +104,11 @@ void LJM_PhysXHelloWorld::Update(float _DeltaTime)
 
 			
 
-			if ((*StartIter)->GetNameCopy() == "Dynamic")
-			{
-				std::string tmp = "shapePose >> x : " + std::to_string(shapePose.getPosition().x) + " / y : " + std::to_string(shapePose.getPosition().y) + " / z : " + std::to_string(shapePose.getPosition().z);
-				GameEngineDebug::OutPutString(tmp);
-			}
+			//if ((*StartIter)->GetNameCopy() == "Dynamic")
+			//{
+			//	std::string tmp = "shapePose >> x : " + std::to_string(shapePose.getPosition().x) + " / y : " + std::to_string(shapePose.getPosition().y) + " / z : " + std::to_string(shapePose.getPosition().z);
+			//	GameEngineDebug::OutPutString(tmp);
+			//}
 
 			float4 tmpWorldScale = { 2.0f };
 
@@ -118,6 +118,8 @@ void LJM_PhysXHelloWorld::Update(float _DeltaTime)
 
 							, actors[i]->getGlobalPose().q.z
 							, actors[i]->getGlobalPose().q.w };
+			if (testBoxVector_.size() == 0)
+				return;
 
 			(*StartIter)->GetTransform().SetWorldPosition(tmpWorldPosition);
 			(*StartIter)->GetTransform().SetWorldScale(tmpWorldScale);
@@ -171,31 +173,31 @@ PxRigidDynamic* LJM_PhysXHelloWorld::createDynamic(const PxTransform& t, const P
 
 	pxScene->addActor(*dynamic);
 
-	//TestBox* tmpTestBox = CreateActor<TestBox>();
-	//tmpTestBox->SetName("Dynamic");
+	PhysXTestBox* tmpTestBox = CreateActor<PhysXTestBox>();
+	tmpTestBox->SetName("Dynamic");
 
-	//const PxBoxGeometry& boxGeom = static_cast<const PxBoxGeometry&>(shape->getGeometry().box());
+	const PxBoxGeometry& boxGeom = static_cast<const PxBoxGeometry&>(shape->getGeometry().box());
 
-	//float4 tmpWorldPosition = { dynamic->getGlobalPose().p.x
-	//						  , dynamic->getGlobalPose().p.y
-	//						  , dynamic->getGlobalPose().p.z };
+	float4 tmpWorldPosition = { dynamic->getGlobalPose().p.x
+							  , dynamic->getGlobalPose().p.y
+							  , dynamic->getGlobalPose().p.z };
 
-	//float4 tmpWorldScale = { 4.0f };
+	float4 tmpWorldScale = { 4.0f };
 
-	//float4 tmpWorldRotate = { localTm.q.x
-	//	, localTm.q.y
-	//	, localTm.q.z
-	//	, localTm.q.w };
+	float4 tmpWorldRotate = { localTm.q.x
+		, localTm.q.y
+		, localTm.q.z
+		, localTm.q.w };
 
-	//tmpTestBox->GetTransform().SetWorldPosition(tmpWorldPosition);
-	//tmpTestBox->GetTransform().SetWorldScale(tmpWorldScale);
-	//tmpTestBox->GetTransform().SetWorldRotation(tmpWorldRotate);
+	tmpTestBox->GetTransform().SetWorldPosition(tmpWorldPosition);
+	tmpTestBox->GetTransform().SetWorldScale(tmpWorldScale);
+	tmpTestBox->GetTransform().SetWorldRotation(tmpWorldRotate);
 
-	//testBoxVector_.push_back(tmpTestBox);
+	testBoxVector_.push_back(tmpTestBox);
 
-	//std::string tmpSize = "TestBoxVector Size >> " + std::to_string(testBoxVector_.size());
-	//GameEngineDebug::OutPutString(tmpSize);
-	//GameEngineDebug::OutPutString("CreateDynamic");
+	std::string tmpSize = "TestBoxVector Size >> " + std::to_string(testBoxVector_.size());
+	GameEngineDebug::OutPutString(tmpSize);
+	GameEngineDebug::OutPutString("CreateDynamic");
 
 	return dynamic;
 }
@@ -215,26 +217,26 @@ void LJM_PhysXHelloWorld::createStack(const PxTransform& t, PxU32 size, PxReal h
 			PxRigidBodyExt::updateMassAndInertia(*body, 10.0f);
 			pxScene->addActor(*body);
 
-			TestBox* tmpTestBox = CreateActor<TestBox>();
+			//PhysXTestBox* tmpTestBox = CreateActor<PhysXTestBox>();
 
-			const PxBoxGeometry& boxGeom = static_cast<const PxBoxGeometry&>(shape->getGeometry().box());
+			//const PxBoxGeometry& boxGeom = static_cast<const PxBoxGeometry&>(shape->getGeometry().box());
 
-			float4 tmpWorldPosition = { body->getGlobalPose().p.x
-									  , body->getGlobalPose().p.y
-									  , body->getGlobalPose().p.z };
+			//float4 tmpWorldPosition = { body->getGlobalPose().p.x
+			//						  , body->getGlobalPose().p.y
+			//						  , body->getGlobalPose().p.z };
 
-			float4 tmpWorldScale = { halfExtent * 2.0f };
+			//float4 tmpWorldScale = { halfExtent * 2.0f };
 
-			float4 tmpWorldRotate = { localTm.q.x
-				, localTm.q.y
-				, localTm.q.z
-				, localTm.q.w };
+			//float4 tmpWorldRotate = { localTm.q.x
+			//	, localTm.q.y
+			//	, localTm.q.z
+			//	, localTm.q.w };
 
-			tmpTestBox->GetTransform().SetWorldPosition(tmpWorldPosition);
-			tmpTestBox->GetTransform().SetWorldScale(tmpWorldScale);
-			tmpTestBox->GetTransform().SetWorldRotation(tmpWorldRotate);
+			//tmpTestBox->GetTransform().SetWorldPosition(tmpWorldPosition);
+			//tmpTestBox->GetTransform().SetWorldScale(tmpWorldScale);
+			//tmpTestBox->GetTransform().SetWorldRotation(tmpWorldRotate);
 
-			testBoxVector_.push_back(tmpTestBox);
+			//testBoxVector_.push_back(tmpTestBox);
 		}
 	}
 	shape->release();
@@ -275,13 +277,13 @@ void LJM_PhysXHelloWorld::initPhysics(bool _interactive)
 									  , groundPlane->getGlobalPose().p.z };
 
 	// Plane√ﬂ∞°
-	float4 tmpWorldScale = { 0.0f};
-	 
-	TestBox* tmpTestBoxPlane = CreateActor<TestBox>();
+	//float4 tmpWorldScale = { 0.0f};
+	// 
+	//PhysXTestBox* tmpTestBoxPlane = CreateActor<PhysXTestBox>();
 
-	tmpTestBoxPlane->GetTransform().SetWorldPosition(tmpWorldPosition);
-	tmpTestBoxPlane->GetTransform().SetWorldScale(tmpWorldScale);
-	testBoxVector_.push_back(tmpTestBoxPlane);
+	//tmpTestBoxPlane->GetTransform().SetWorldPosition(tmpWorldPosition);
+	//tmpTestBoxPlane->GetTransform().SetWorldScale(tmpWorldScale);
+	//testBoxVector_.push_back(tmpTestBoxPlane);
 
 	for (PxU32 i = 0; i < 5; i++)
 		createStack(PxTransform(PxVec3(0, 0, stackZ -= 10.0f)), 10, 2.0f);

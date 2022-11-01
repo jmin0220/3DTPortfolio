@@ -3,7 +3,7 @@
 #include <GameEngineCore/ThirdParty/inc/PhysX/PxConfig.h>
 #include <GameEngineCore/ThirdParty/inc/PhysX/PxPhysicsAPI.h>
 
-#include "TestBox.h"
+#include "PhysXTestBox.h"
 
 using namespace physx;
 
@@ -27,7 +27,7 @@ protected:
 	void End() override;
 	
 	// 물리 결과를 저장할 Actor Vector
-	std::vector<TestBox*> testBoxVector_;
+	std::vector<PhysXTestBox*> testBoxVector_;
 
 	float4 CurDynamicPos_;
 	

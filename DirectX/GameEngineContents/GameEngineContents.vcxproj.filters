@@ -136,6 +136,9 @@
     <ClInclude Include="CrownCount.h">
       <Filter>Actor\UIActor\HUDChilds</Filter>
     </ClInclude>
+    <ClInclude Include="PhysXTestBox.h">
+      <Filter>Actor\PhysicsTest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -222,6 +225,9 @@
     </ClCompile>
     <ClCompile Include="CrownCount.cpp">
       <Filter>Actor\UIActor\HUDChilds</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXTestBox.cpp">
+      <Filter>Actor\PhysicsTest</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -37,7 +37,7 @@ void MapEditorGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 	{
 		GEngine::CollisionDebugSwitch();
 	}
-
+	ImGui::InputFloat3
 	{
 		float4 Pos = _Level->GetMainCamera()->GetTransform().GetWorldPosition();
 		std::string Name = "MainCameraWorldPos : " + std::to_string(Pos.x) + " | " + std::to_string(Pos.y) + " | " + std::to_string(Pos.z);
