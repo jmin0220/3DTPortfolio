@@ -33,8 +33,6 @@ private:
 	GameEngineFontRenderer* Font;
 
 	float FontSize;
-	float XImageSize;
-	float YImageSize;
 	bool Swap;
 };
 

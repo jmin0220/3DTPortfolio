@@ -2,9 +2,7 @@
 #include "TitleActor.h"
 
 TitleActor::TitleActor() 
-	:XImageSize(0.0f)
-	,YImageSize(0.0f)
-	,Swap(false)
+	:Swap(false)
 {
 }
 
