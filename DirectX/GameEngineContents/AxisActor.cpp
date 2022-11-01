@@ -54,6 +54,10 @@ void AxisActor::Start()
 	XAxis_ = GetLevel()->CreateActor<XAxis>();
 	YAxis_ = GetLevel()->CreateActor<YAxis>();
 	ZAxis_ = GetLevel()->CreateActor<ZAxis>();
+
+	XAxis_->SetParent(this);
+	YAxis_->SetParent(this);
+	ZAxis_->SetParent(this);
 }
 
 void AxisActor::Update(float _DeltaTime)
@@ -61,22 +65,22 @@ void AxisActor::Update(float _DeltaTime)
 	//CheckPickingRay();
 
 	//메쉬의 포지션 
-	GetTransform().SetWorldPosition({ XAxis_->GetTransform().GetWorldPosition().x,
-									  YAxis_->GetTransform().GetWorldPosition().y,
-									  ZAxis_->GetTransform().GetWorldPosition().z });
+	//GetTransform().SetWorldPosition({ XAxis_->GetTransform().GetWorldPosition().x,
+	//								  YAxis_->GetTransform().GetWorldPosition().y,
+	//								  ZAxis_->GetTransform().GetWorldPosition().z });
 
 
-	XAxis_->GetTransform().SetWorldPosition({ XAxis_->GetTransform().GetWorldPosition().x,
-											  YAxis_->GetTransform().GetWorldPosition().y,
-											  ZAxis_->GetTransform().GetWorldPosition().z });
+	//XAxis_->GetTransform().SetWorldPosition({ XAxis_->GetTransform().GetWorldPosition().x,
+	//										  YAxis_->GetTransform().GetWorldPosition().y,
+	//										  ZAxis_->GetTransform().GetWorldPosition().z });
 
-	YAxis_->GetTransform().SetWorldPosition({ XAxis_->GetTransform().GetWorldPosition().x,
-											  YAxis_->GetTransform().GetWorldPosition().y,
-											  ZAxis_->GetTransform().GetWorldPosition().z });
+	//YAxis_->GetTransform().SetWorldPosition({ XAxis_->GetTransform().GetWorldPosition().x,
+	//										  YAxis_->GetTransform().GetWorldPosition().y,
+	//										  ZAxis_->GetTransform().GetWorldPosition().z });
 
-	ZAxis_->GetTransform().SetWorldPosition({ XAxis_->GetTransform().GetWorldPosition().x,
-											  YAxis_->GetTransform().GetWorldPosition().y,
-											  ZAxis_->GetTransform().GetWorldPosition().z });
+	//ZAxis_->GetTransform().SetWorldPosition({ XAxis_->GetTransform().GetWorldPosition().x,
+	//										  YAxis_->GetTransform().GetWorldPosition().y,
+	//										  ZAxis_->GetTransform().GetWorldPosition().z });
 }
 
 void AxisActor::SetPosition()

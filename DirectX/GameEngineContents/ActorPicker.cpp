@@ -4,6 +4,8 @@
 #include <GameEngineCore/CoreMinimal.h>
 #include <GameEngineBase/GameEngineTransform.h>
 
+#include "AxisActor.h"
+
 
 std::set<GameEngineActor*> ActorPicker::PickedActors;
 GameEngineActor* ActorPicker::PickedActor = nullptr;	// 피킹광선 충돌시 맨 앞에있는 엑터
@@ -87,6 +89,15 @@ void ActorPicker::SelectPickedActor()
 
 void ActorPicker::ClickCheck()
 {
+	// 화면 밖이면 피킹X
+	float4 MouseScreenPos = GetLevel()->GetMainCamera()->GetMouseScreenPosition();
+	float ScaleX = GameEngineWindow::GetScale().ix();
+	float ScaleY = GameEngineWindow::GetScale().iy();
+	if ( ScaleX < MouseScreenPos.x || ScaleY < MouseScreenPos.y)
+	{
+		return;
+	}
+
 
 	if (true == GameEngineInput::GetInst()->IsDown("VK_LBUTTON"))
 	{
@@ -115,44 +126,46 @@ void ActorPicker::ClickControl()
 	{
 		return;
 	}
-	float4 MouseDir = CurMousePos - PrevMousePos;
+	//float4 MouseDir = CurMousePos - PrevMousePos;
 
 
-	if (dynamic_cast<PickableActor*>(ClickedActor)->GetAxisDir().x == 1.0f)
+	//if (dynamic_cast<PickableActor*>(ClickedActor)->GetAxisDir().x == 1.0f)
+	//{
+	//	ClickedActor->GetTransform().SetWorldPosition({ ClickedActor->GetTransform().GetWorldPosition().x + MouseDir.x ,
+	//												   ClickedActor->GetTransform().GetWorldPosition().y ,
+	//												   ClickedActor->GetTransform().GetWorldPosition().z });
+
+
+	//}
+	//else if (dynamic_cast<PickableActor*>(ClickedActor)->GetAxisDir().y == 1.0f)
+	//{
+	//	ClickedActor->GetTransform().SetWorldPosition({ ClickedActor->GetTransform().GetWorldPosition().x ,
+	//												   ClickedActor->GetTransform().GetWorldPosition().y + MouseDir.y,
+	//												   ClickedActor->GetTransform().GetWorldPosition().z });
+
+
+	//}
+	//else if (dynamic_cast<PickableActor*>(ClickedActor)->GetAxisDir().z == 1.0f)
+	//{
+	//	ClickedActor->GetTransform().SetWorldPosition({ ClickedActor->GetTransform().GetWorldPosition().x ,
+	//												   ClickedActor->GetTransform().GetWorldPosition().y ,
+	//												   ClickedActor->GetTransform().GetWorldPosition().z + MouseDir.z});
+
+	//}
+
+	//PrevMousePos = CurMousePos;
+
+	float4 MouseDir = GetLevel()->GetMainCamera()->GetMouseWorldDir();
+
+	 //이동속도
+	MouseDir *= 300;
+
+	// x축 이동
+	AxisActor* Axis = dynamic_cast<AxisActor*>(ClickedActor->GetParent());
+	if (nullptr != Axis)
 	{
-		ClickedActor->GetTransform().SetWorldPosition({ ClickedActor->GetTransform().GetWorldPosition().x + MouseDir.x ,
-													   ClickedActor->GetTransform().GetWorldPosition().y ,
-													   ClickedActor->GetTransform().GetWorldPosition().z });
-
-
+		Axis->GetTransform().SetWorldMove({ MouseDir.x, 0, 0 });
 	}
-	else if (dynamic_cast<PickableActor*>(ClickedActor)->GetAxisDir().y == 1.0f)
-	{
-		ClickedActor->GetTransform().SetWorldPosition({ ClickedActor->GetTransform().GetWorldPosition().x ,
-													   ClickedActor->GetTransform().GetWorldPosition().y + MouseDir.y,
-													   ClickedActor->GetTransform().GetWorldPosition().z });
-
-
-	}
-	else if (dynamic_cast<PickableActor*>(ClickedActor)->GetAxisDir().z == 1.0f)
-	{
-		ClickedActor->GetTransform().SetWorldPosition({ ClickedActor->GetTransform().GetWorldPosition().x ,
-													   ClickedActor->GetTransform().GetWorldPosition().y ,
-													   ClickedActor->GetTransform().GetWorldPosition().z + MouseDir.z});
-
-	}
-
-	PrevMousePos = CurMousePos;
-
-	//float4 MouseDir = GetLevel()->GetMainCamera()->GetMouseWorldDir();
-
-
-	// //이동속도
-	//MouseDir *= 300;
-
-	//// x축 이동
-
-	//ClickedActor->GetTransform().SetWorldMove({ MouseDir.x, 0, 0 });
 	
 	
 

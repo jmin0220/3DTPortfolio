@@ -2,6 +2,7 @@
 
 enum class CollisionGroup
 {
+	Picking,
 	Ray,
 	Player,
 	Map,
