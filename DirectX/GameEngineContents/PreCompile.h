@@ -40,6 +40,7 @@
 #include <GameEngineCore/GameEngineFont.h>
 #include <GameEngineCore/GameEngineFontRenderer.h>
 #include <GameEngineCore/GameEngineCoreDebug.h>
+#include <GameEngineCore/GameEngineFBXAnimation.h>
 
 // contents
 #include <GameEngineContents/GlobalValues.h>
