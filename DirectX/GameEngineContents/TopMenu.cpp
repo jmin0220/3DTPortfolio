@@ -101,7 +101,7 @@ void TopMenu::Update(float _DeltaTime)
 			{
 				return CollisionReturn::ContinueCheck;
 			});
-
+		
 		if (ButtonCheck == false)
 		{
 			//충돌이 아니라면 원래 사이즈로 돌아간다

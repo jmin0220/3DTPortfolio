@@ -46,6 +46,9 @@
     <Filter Include="Physics">
       <UniqueIdentifier>{605485fb-b3fc-46ec-acf2-a794a154b56c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\UIActor\LoadingActors">
+      <UniqueIdentifier>{627f84ff-59a8-49d9-9865-1d2bc14aee3e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -159,6 +162,12 @@
     <ClInclude Include="Cursor.h">
       <Filter>Actor\UIActor</Filter>
     </ClInclude>
+    <ClInclude Include="LoadingLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingActor.h">
+      <Filter>Actor\UIActor\LoadingActors</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -266,6 +275,12 @@
     </ClCompile>
     <ClCompile Include="Cursor.cpp">
       <Filter>Actor\UIActor</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingActor.cpp">
+      <Filter>Actor\UIActor\LoadingActors</Filter>
     </ClCompile>
     <ClCompile Include="PlayableObject.cpp">
       <Filter>Physics</Filter>

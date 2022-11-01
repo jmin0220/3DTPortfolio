@@ -185,6 +185,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="LoadingActor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="LoadingLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="PhysicsBase.h" />
     <ClInclude Include="PhysicsObject.h" />
     <ClInclude Include="GlobalValues.h">
@@ -278,6 +286,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="FontActor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="LoadingActor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="LoadingLevel.cpp">
       <SubType>
       </SubType>
     </ClCompile>

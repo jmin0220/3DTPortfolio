@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "ContentsCore.h"
 #include "tmpLevel.h"
+#include "LoadingLevel.h"
 #include "MapEditorLevel.h"
 #include "MapEditorGUI.h"
 #include "PhysicsTestLevel.h"
@@ -88,6 +89,7 @@ void ContentsCore::LoadResources()
 void ContentsCore::CreateLevels()
 {
 	CreateLevel<tmpLevel>("tmpLevel");
+	CreateLevel<LoadingLevel>("Loading");
 	CreateLevel<MapEditorLevel>("MapEditorLevel");
 	CreateLevel<PhysicsTestLevel>("PhysicsTestLevel");
 	CreateLevel<LJM_PhysXHelloWorld>("LJM_PhysXHelloWorld");

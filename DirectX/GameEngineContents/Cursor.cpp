@@ -24,7 +24,7 @@ void Cursor::Start()
 	ActorCollision->GetTransform().SetWorldScale({ 4.0f, 4.0f, 100.0f });
 
 	UICollision = CreateComponent<GameEngineCollision>();
-	UICollision->SetDebugSetting(CollisionType::CT_OBB2D, float4{ 0.0f,0.0f,1.0f,0.3f });
+	UICollision->SetDebugSetting(CollisionType::CT_OBB2D, float4{ 0.0f,1.0f,0.0f,0.3f });
 	UICollision->GetTransform().SetWorldScale({ 4.0f, 4.0f, 100.0f });
 	UICollision->SetUIDebugCamera();
 }
