@@ -31,6 +31,17 @@ void ActorPicker::Start()
 void ActorPicker::Update(float _DeltaTime)
 {
 	CurMousePos = GetLevel()->GetMainCamera()->GetMouseWorldPosition();
+
+	float4x4 ProjectionInvers = GetLevel()->GetMainCamera()->GetProjectionMatrix().InverseReturn();
+
+	float4x4 ViewPort;
+	ViewPort.ViewPort(GameEngineWindow::GetScale().x, GameEngineWindow::GetScale().y, 0, 0, 0, 1);
+
+	CurMousePos = CurMousePos * ViewPort;
+	CurMousePos /= CurMousePos.w;
+
+	//CurMousePos = CurMousePos * ProjectionInvers;
+
 	
 	// 카메라와 동일한 위치 
 	CamPos = GetLevel()->GetMainCameraActor()->GetTransform().GetWorldPosition();

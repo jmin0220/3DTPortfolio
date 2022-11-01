@@ -6,6 +6,8 @@
 #include "XAxis.h"
 #include "YAxis.h"
 #include "ZAxis.h"
+#include "TestRainBow.h"
+
 
 #include "MapEditorGUI.h"
 #include "ColorBox.h"
@@ -27,6 +29,14 @@ void MapEditorLevel::Start()
 		Box->GetTransform().SetWorldPosition({ 0, 0, 300 });
 
 		ActorPicker* Picker = CreateActor<ActorPicker>();
+	}
+
+
+
+	{
+		TestRainBow* RainBow = CreateActor<TestRainBow>();
+		RainBow->GetTransform().SetWorldPosition({ -200.0f,0,0 });
+
 	}
 
 	{

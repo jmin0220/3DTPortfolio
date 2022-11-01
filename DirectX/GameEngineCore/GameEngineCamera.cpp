@@ -8,6 +8,7 @@
 #include "GameEngineVertexShader.h"
 #include "GameEngineInstancing.h"
 #include "GameEngineStructuredBuffer.h"
+#include <string>
 #include <GameEngineBase/GameEngineWindow.h>
 
 
@@ -358,6 +359,8 @@ float4 GameEngineCamera::GetMouseWorldPosition()
 	Pos = Pos * ViewPort;
 	Pos = Pos * ProjectionInvers;
 	// 마우스는 뷰포트의 좌표다?
+
+	GameEngineDebug::OutPutString("x : " + std::to_string(Pos.x) + " y : " + std::to_string(Pos.y) + " z : " + std::to_string(Pos.z));
 
 	return Pos;
 }

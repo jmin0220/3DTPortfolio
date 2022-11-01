@@ -62,27 +62,27 @@ void ContentsCore::LoadResources()
 	}
 
 	GameEngineFont::Load("Noto Sans CJK SC");//폴가이즈 폰트
+	GameEngineFont::Load("Titan One");
+	
 
 
 
 
 	//메쉬 로드
 	{
-		//GameEngineDirectory Dir;
-		//Dir.MoveParentToExitsChildDirectory("Resources");
-		//Dir.Move("Resources");
-		//Dir.Move("Mesh");
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resources");
+		Dir.Move("Resources");
+		Dir.Move("Mesh");
+		Dir.Move("DoorDashMesh");
 
-
-		//{
-		//	GameEngineDirectory MeshDir = Dir;
-		//	MeshDir.Move("AxisMesh");
-		//	GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(MeshDir.PlusFilePath("Axis.FBX"));
-		//	std::vector<FBXNodeInfo> Nodes = Mesh->CheckAllNode();
-		//}
+		{
+			GameEngineDirectory MeshDir = Dir;
+			MeshDir.Move("RainBow");
+			GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(MeshDir.PlusFilePath("Rainbow.FBX"));
+			std::vector<FBXNodeInfo> Nodes = Mesh->CheckAllNode();
+		}
 	}
-	GameEngineFont::Load("Titan One");
-	
 }
 
 void ContentsCore::CreateLevels()
