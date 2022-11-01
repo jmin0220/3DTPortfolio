@@ -1,318 +1,315 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="PreCompile">
-      <UniqueIdentifier>{439c0504-814e-4f90-8507-3f4dacd0226c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core">
+    <Filter Include="00_Core">
       <UniqueIdentifier>{eee3c248-3814-48af-b1f4-f221fa7a0ee6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Level">
+    <Filter Include="01_Level">
       <UniqueIdentifier>{690362c5-9421-4d50-89d9-ed74a9d5f1a2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor">
+    <Filter Include="02_Actor">
       <UniqueIdentifier>{f1bcfd31-d83d-4641-8839-3f0d9292cc76}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\MapEditorLevel">
+    <Filter Include="02_Actor\MapEditorLevel">
       <UniqueIdentifier>{9ffe7f16-387b-4903-a5fb-f994f68e6944}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Global">
-      <UniqueIdentifier>{70654044-cd92-4264-ad92-d76b2da59c05}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="LevelGUI">
-      <UniqueIdentifier>{b39fca88-0430-4b47-a91a-8a89b0768235}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Actor\UIActor">
-      <UniqueIdentifier>{8b26083d-d910-4336-b3ce-cffe8dafa495}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Actor\PhysicsTest">
-      <UniqueIdentifier>{0ece61f2-354d-4303-90c5-87476bd5459a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Componenet">
-      <UniqueIdentifier>{9722c581-c865-46fe-9fe2-1f65d4d5c541}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Actor\UIActor\HUDParents">
-      <UniqueIdentifier>{a4b573c9-0efa-4e54-8f9b-3820a9096e0e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Actor\UIActor\HUDChilds">
-      <UniqueIdentifier>{721478e9-1860-48d1-b593-776b6cf0088c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Actor\MapEditorLevel\Axis">
+    <Filter Include="02_Actor\MapEditorLevel\Axis">
       <UniqueIdentifier>{2a8ce72d-4bbc-42f9-bd6a-01d6d556ea36}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ShaderTest">
-      <UniqueIdentifier>{0b497306-8f2b-4d47-8547-8f4814c88045}</UniqueIdentifier>
+    <Filter Include="02_Actor\UIActor">
+      <UniqueIdentifier>{8b26083d-d910-4336-b3ce-cffe8dafa495}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Physics">
-      <UniqueIdentifier>{605485fb-b3fc-46ec-acf2-a794a154b56c}</UniqueIdentifier>
+    <Filter Include="02_Actor\UIActor\HUDParents">
+      <UniqueIdentifier>{a4b573c9-0efa-4e54-8f9b-3820a9096e0e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\CamTestLevel">
+    <Filter Include="02_Actor\UIActor\HUDChilds">
+      <UniqueIdentifier>{721478e9-1860-48d1-b593-776b6cf0088c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Actor\UIActor\LoadingActors">
+      <UniqueIdentifier>{627f84ff-59a8-49d9-9865-1d2bc14aee3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Actor\PhysicsTest">
+      <UniqueIdentifier>{0ece61f2-354d-4303-90c5-87476bd5459a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Actor\CamTestLevel">
       <UniqueIdentifier>{8a75dd40-cfa2-4a2a-be3e-2623724a96da}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\UIActor\LoadingActors">
-      <UniqueIdentifier>{627f84ff-59a8-49d9-9865-1d2bc14aee3e}</UniqueIdentifier>
+    <Filter Include="99_Global">
+      <UniqueIdentifier>{70654044-cd92-4264-ad92-d76b2da59c05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98_LevelGUI">
+      <UniqueIdentifier>{b39fca88-0430-4b47-a91a-8a89b0768235}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03_Component">
+      <UniqueIdentifier>{fc00bb27-b45d-432a-8915-78d2c5244515}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97_Physics">
+      <UniqueIdentifier>{605485fb-b3fc-46ec-acf2-a794a154b56c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99_PreCompile">
+      <UniqueIdentifier>{439c0504-814e-4f90-8507-3f4dacd0226c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="999_Test">
+      <UniqueIdentifier>{5c35f4c3-adbf-45e8-b046-95b2083bc4d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="999_Test\ShaderTest">
+      <UniqueIdentifier>{0b497306-8f2b-4d47-8547-8f4814c88045}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
-      <Filter>Core</Filter>
+      <Filter>00_Core</Filter>
     </ClInclude>
     <ClInclude Include="tmpLevel.h">
-      <Filter>Level</Filter>
+      <Filter>01_Level</Filter>
     </ClInclude>
     <ClInclude Include="MapEditorLevel.h">
-      <Filter>Level</Filter>
+      <Filter>01_Level</Filter>
     </ClInclude>
     <ClInclude Include="ColorBox.h">
-      <Filter>Actor\MapEditorLevel</Filter>
+      <Filter>02_Actor\MapEditorLevel</Filter>
     </ClInclude>
     <ClInclude Include="ActorPicker.h">
-      <Filter>Actor\MapEditorLevel</Filter>
+      <Filter>02_Actor\MapEditorLevel</Filter>
     </ClInclude>
     <ClInclude Include="PickableActor.h">
-      <Filter>Actor\MapEditorLevel</Filter>
+      <Filter>02_Actor\MapEditorLevel</Filter>
     </ClInclude>
     <ClInclude Include="GlobalValues.h">
-      <Filter>Global</Filter>
+      <Filter>99_Global</Filter>
     </ClInclude>
     <ClInclude Include="MapEditorGUI.h">
-      <Filter>LevelGUI</Filter>
+      <Filter>98_LevelGUI</Filter>
     </ClInclude>
     <ClInclude Include="TitleActor.h">
-      <Filter>Actor\UIActor</Filter>
+      <Filter>02_Actor\UIActor</Filter>
     </ClInclude>
     <ClInclude Include="PhysicsTestLevel.h">
-      <Filter>Level</Filter>
+      <Filter>01_Level</Filter>
     </ClInclude>
     <ClInclude Include="TestBox.h">
-      <Filter>Actor\PhysicsTest</Filter>
+      <Filter>02_Actor\PhysicsTest</Filter>
     </ClInclude>
     <ClInclude Include="PreCompile.h">
-      <Filter>PreCompile</Filter>
+      <Filter>99_PreCompile</Filter>
     </ClInclude>
     <ClInclude Include="FontActor.h">
-      <Filter>Actor\UIActor</Filter>
+      <Filter>02_Actor\UIActor</Filter>
     </ClInclude>
     <ClInclude Include="LJM_PhysXHelloWorld.h">
-      <Filter>Level</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysXComponenet.h">
-      <Filter>Componenet</Filter>
+      <Filter>01_Level</Filter>
     </ClInclude>
     <ClInclude Include="HUDUIActor.h">
-      <Filter>Actor\UIActor\HUDParents</Filter>
+      <Filter>02_Actor\UIActor\HUDParents</Filter>
     </ClInclude>
     <ClInclude Include="NamePlate.h">
-      <Filter>Actor\UIActor\HUDChilds</Filter>
+      <Filter>02_Actor\UIActor\HUDChilds</Filter>
     </ClInclude>
     <ClInclude Include="NoneButton.h">
-      <Filter>Actor\UIActor\HUDChilds</Filter>
+      <Filter>02_Actor\UIActor\HUDChilds</Filter>
     </ClInclude>
     <ClInclude Include="NoneMoney.h">
-      <Filter>Actor\UIActor\HUDChilds</Filter>
+      <Filter>02_Actor\UIActor\HUDChilds</Filter>
     </ClInclude>
     <ClInclude Include="PlayButton.h">
-      <Filter>Actor\UIActor\HUDChilds</Filter>
+      <Filter>02_Actor\UIActor\HUDChilds</Filter>
     </ClInclude>
     <ClInclude Include="SelectShowButton.h">
-      <Filter>Actor\UIActor\HUDChilds</Filter>
+      <Filter>02_Actor\UIActor\HUDChilds</Filter>
     </ClInclude>
     <ClInclude Include="TestGround.h">
-      <Filter>Actor\PhysicsTest</Filter>
+      <Filter>02_Actor\PhysicsTest</Filter>
     </ClInclude>
     <ClInclude Include="AxisActor.h">
-      <Filter>Actor\MapEditorLevel\Axis</Filter>
+      <Filter>02_Actor\MapEditorLevel\Axis</Filter>
     </ClInclude>
     <ClInclude Include="XAxis.h">
-      <Filter>Actor\MapEditorLevel\Axis</Filter>
+      <Filter>02_Actor\MapEditorLevel\Axis</Filter>
     </ClInclude>
     <ClInclude Include="YAxis.h">
-      <Filter>Actor\MapEditorLevel\Axis</Filter>
+      <Filter>02_Actor\MapEditorLevel\Axis</Filter>
     </ClInclude>
     <ClInclude Include="ZAxis.h">
-      <Filter>Actor\MapEditorLevel\Axis</Filter>
+      <Filter>02_Actor\MapEditorLevel\Axis</Filter>
     </ClInclude>
     <ClInclude Include="TestWall.h">
-      <Filter>Actor\PhysicsTest</Filter>
+      <Filter>02_Actor\PhysicsTest</Filter>
     </ClInclude>
     <ClInclude Include="TestActor_WaterPlane.h">
-      <Filter>ShaderTest</Filter>
+      <Filter>999_Test\ShaderTest</Filter>
     </ClInclude>
     <ClInclude Include="PhysicsObject.h">
-      <Filter>Physics</Filter>
+      <Filter>97_Physics</Filter>
     </ClInclude>
     <ClInclude Include="PhysicsBase.h">
-      <Filter>Physics</Filter>
+      <Filter>97_Physics</Filter>
     </ClInclude>
     <ClInclude Include="TestPlayer.h">
-      <Filter>Actor\PhysicsTest</Filter>
+      <Filter>02_Actor\PhysicsTest</Filter>
     </ClInclude>
     <ClInclude Include="TopMenu.h">
-      <Filter>Actor\UIActor\HUDChilds</Filter>
+      <Filter>02_Actor\UIActor\HUDChilds</Filter>
     </ClInclude>
     <ClInclude Include="CrownCount.h">
-      <Filter>Actor\UIActor\HUDChilds</Filter>
+      <Filter>02_Actor\UIActor\HUDChilds</Filter>
     </ClInclude>
     <ClInclude Include="PhysXTestBox.h">
-      <Filter>Actor\PhysicsTest</Filter>
+      <Filter>02_Actor\PhysicsTest</Filter>
     </ClInclude>
     <ClInclude Include="CameraTestLevel.h">
-      <Filter>Level</Filter>
+      <Filter>01_Level</Filter>
     </ClInclude>
     <ClInclude Include="TestActor_Plane.h">
-      <Filter>Actor\CamTestLevel</Filter>
+      <Filter>02_Actor\CamTestLevel</Filter>
     </ClInclude>
     <ClInclude Include="TestActor_Character.h">
-      <Filter>Actor\CamTestLevel</Filter>
+      <Filter>02_Actor\CamTestLevel</Filter>
     </ClInclude>
     <ClInclude Include="CameraArm.h">
-      <Filter>Actor\CamTestLevel</Filter>
+      <Filter>02_Actor\CamTestLevel</Filter>
     </ClInclude>
     <ClInclude Include="PlayableObject.h">
-      <Filter>Physics</Filter>
+      <Filter>97_Physics</Filter>
     </ClInclude>
     <ClInclude Include="TestRainBow.h">
-      <Filter>Actor\MapEditorLevel</Filter>
+      <Filter>02_Actor\MapEditorLevel</Filter>
     </ClInclude>
     <ClInclude Include="Cursor.h">
-      <Filter>Actor\UIActor</Filter>
+      <Filter>02_Actor\UIActor</Filter>
     </ClInclude>
     <ClInclude Include="LoadingLevel.h">
-      <Filter>Level</Filter>
+      <Filter>01_Level</Filter>
     </ClInclude>
     <ClInclude Include="LoadingActor.h">
-      <Filter>Actor\UIActor\LoadingActors</Filter>
+      <Filter>02_Actor\UIActor\LoadingActors</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
-      <Filter>Core</Filter>
+      <Filter>00_Core</Filter>
     </ClCompile>
     <ClCompile Include="tmpLevel.cpp">
-      <Filter>Level</Filter>
+      <Filter>01_Level</Filter>
     </ClCompile>
     <ClCompile Include="MapEditorLevel.cpp">
-      <Filter>Level</Filter>
+      <Filter>01_Level</Filter>
     </ClCompile>
     <ClCompile Include="ColorBox.cpp">
-      <Filter>Actor\MapEditorLevel</Filter>
+      <Filter>02_Actor\MapEditorLevel</Filter>
     </ClCompile>
     <ClCompile Include="ActorPicker.cpp">
-      <Filter>Actor\MapEditorLevel</Filter>
+      <Filter>02_Actor\MapEditorLevel</Filter>
     </ClCompile>
     <ClCompile Include="PickableActor.cpp">
-      <Filter>Actor\MapEditorLevel</Filter>
+      <Filter>02_Actor\MapEditorLevel</Filter>
     </ClCompile>
     <ClCompile Include="GlobalValues.cpp">
-      <Filter>Global</Filter>
+      <Filter>99_Global</Filter>
     </ClCompile>
     <ClCompile Include="MapEditorGUI.cpp">
-      <Filter>LevelGUI</Filter>
+      <Filter>98_LevelGUI</Filter>
     </ClCompile>
     <ClCompile Include="TitleActor.cpp">
-      <Filter>Actor\UIActor</Filter>
+      <Filter>02_Actor\UIActor</Filter>
     </ClCompile>
     <ClCompile Include="PhysicsTestLevel.cpp">
-      <Filter>Level</Filter>
+      <Filter>01_Level</Filter>
     </ClCompile>
     <ClCompile Include="TestBox.cpp">
-      <Filter>Actor\PhysicsTest</Filter>
+      <Filter>02_Actor\PhysicsTest</Filter>
     </ClCompile>
     <ClCompile Include="PreCompile.cpp">
-      <Filter>PreCompile</Filter>
+      <Filter>99_PreCompile</Filter>
     </ClCompile>
     <ClCompile Include="FontActor.cpp">
-      <Filter>Actor\UIActor</Filter>
+      <Filter>02_Actor\UIActor</Filter>
     </ClCompile>
     <ClCompile Include="LJM_PhysXHelloWorld.cpp">
-      <Filter>Level</Filter>
-    </ClCompile>
-    <ClCompile Include="PhysXComponenet.cpp">
-      <Filter>Componenet</Filter>
+      <Filter>01_Level</Filter>
     </ClCompile>
     <ClCompile Include="HUDUIActor.cpp">
-      <Filter>Actor\UIActor\HUDParents</Filter>
+      <Filter>02_Actor\UIActor\HUDParents</Filter>
     </ClCompile>
     <ClCompile Include="NamePlate.cpp">
-      <Filter>Actor\UIActor\HUDChilds</Filter>
+      <Filter>02_Actor\UIActor\HUDChilds</Filter>
     </ClCompile>
     <ClCompile Include="NoneButton.cpp">
-      <Filter>Actor\UIActor\HUDChilds</Filter>
+      <Filter>02_Actor\UIActor\HUDChilds</Filter>
     </ClCompile>
     <ClCompile Include="NoneMoney.cpp">
-      <Filter>Actor\UIActor\HUDChilds</Filter>
+      <Filter>02_Actor\UIActor\HUDChilds</Filter>
     </ClCompile>
     <ClCompile Include="PlayButton.cpp">
-      <Filter>Actor\UIActor\HUDChilds</Filter>
+      <Filter>02_Actor\UIActor\HUDChilds</Filter>
     </ClCompile>
     <ClCompile Include="SelectShowButton.cpp">
-      <Filter>Actor\UIActor\HUDChilds</Filter>
+      <Filter>02_Actor\UIActor\HUDChilds</Filter>
     </ClCompile>
     <ClCompile Include="TestGround.cpp">
-      <Filter>Actor\PhysicsTest</Filter>
+      <Filter>02_Actor\PhysicsTest</Filter>
     </ClCompile>
     <ClCompile Include="AxisActor.cpp">
-      <Filter>Actor\MapEditorLevel\Axis</Filter>
+      <Filter>02_Actor\MapEditorLevel\Axis</Filter>
     </ClCompile>
     <ClCompile Include="XAxis.cpp">
-      <Filter>Actor\MapEditorLevel\Axis</Filter>
+      <Filter>02_Actor\MapEditorLevel\Axis</Filter>
     </ClCompile>
     <ClCompile Include="YAxis.cpp">
-      <Filter>Actor\MapEditorLevel\Axis</Filter>
+      <Filter>02_Actor\MapEditorLevel\Axis</Filter>
     </ClCompile>
     <ClCompile Include="ZAxis.cpp">
-      <Filter>Actor\MapEditorLevel\Axis</Filter>
+      <Filter>02_Actor\MapEditorLevel\Axis</Filter>
     </ClCompile>
     <ClCompile Include="TopMenu.cpp">
-      <Filter>Actor\UIActor\HUDChilds</Filter>
+      <Filter>02_Actor\UIActor\HUDChilds</Filter>
     </ClCompile>
     <ClCompile Include="CrownCount.cpp">
-      <Filter>Actor\UIActor\HUDChilds</Filter>
+      <Filter>02_Actor\UIActor\HUDChilds</Filter>
     </ClCompile>
     <ClCompile Include="PhysXTestBox.cpp">
-      <Filter>Actor\PhysicsTest</Filter>
+      <Filter>02_Actor\PhysicsTest</Filter>
     </ClCompile>
     <ClCompile Include="TestWall.cpp">
-      <Filter>Actor\PhysicsTest</Filter>
+      <Filter>02_Actor\PhysicsTest</Filter>
     </ClCompile>
     <ClCompile Include="PhysicsObject.cpp">
-      <Filter>Physics</Filter>
+      <Filter>97_Physics</Filter>
     </ClCompile>
     <ClCompile Include="PhysicsBase.cpp">
-      <Filter>Physics</Filter>
+      <Filter>97_Physics</Filter>
     </ClCompile>
     <ClCompile Include="TestPlayer.cpp">
-      <Filter>Actor\PhysicsTest</Filter>
+      <Filter>02_Actor\PhysicsTest</Filter>
     </ClCompile>
     <ClCompile Include="CameraTestLevel.cpp">
-      <Filter>Level</Filter>
+      <Filter>01_Level</Filter>
     </ClCompile>
     <ClCompile Include="TestActor_Plane.cpp">
-      <Filter>Actor\CamTestLevel</Filter>
+      <Filter>02_Actor\CamTestLevel</Filter>
     </ClCompile>
     <ClCompile Include="TestActor_WaterPlane.cpp">
-      <Filter>ShaderTest</Filter>
+      <Filter>999_Test\ShaderTest</Filter>
     </ClCompile>
     <ClCompile Include="TestActor_Character.cpp">
-      <Filter>Actor\CamTestLevel</Filter>
+      <Filter>02_Actor\CamTestLevel</Filter>
     </ClCompile>
     <ClCompile Include="CameraArm.cpp">
-      <Filter>Actor\CamTestLevel</Filter>
+      <Filter>02_Actor\CamTestLevel</Filter>
     </ClCompile>
     <ClCompile Include="TestRainBow.cpp">
-      <Filter>Actor\MapEditorLevel</Filter>
+      <Filter>02_Actor\MapEditorLevel</Filter>
     </ClCompile>
     <ClCompile Include="Cursor.cpp">
-      <Filter>Actor\UIActor</Filter>
+      <Filter>02_Actor\UIActor</Filter>
     </ClCompile>
     <ClCompile Include="LoadingLevel.cpp">
-      <Filter>Level</Filter>
+      <Filter>01_Level</Filter>
     </ClCompile>
     <ClCompile Include="LoadingActor.cpp">
-      <Filter>Actor\UIActor\LoadingActors</Filter>
+      <Filter>02_Actor\UIActor\LoadingActors</Filter>
     </ClCompile>
     <ClCompile Include="PlayableObject.cpp">
-      <Filter>Physics</Filter>
+      <Filter>97_Physics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

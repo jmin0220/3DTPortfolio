@@ -161,6 +161,7 @@ void LJM_PhysXHelloWorld::createDynamic(const PxTransform& t, const PxVec3& velo
 	PhysXTestBox* tmpTestBox = CreateActor<PhysXTestBox>();
 	tmpTestBox->CreatePhysXActors(pxScene, pxPhysics);
 
+	/*
 	//std::string tmp = "x : " + std::to_string(velocity.x) + " / y : " + std::to_string(velocity.y) + " / z : " + std::to_string(velocity.z);
 	//GameEngineDebug::OutPutString(tmp);
 
@@ -202,6 +203,7 @@ void LJM_PhysXHelloWorld::createDynamic(const PxTransform& t, const PxVec3& velo
 	//std::string tmpSize = "TestBoxVector Size >> " + std::to_string(testBoxVector_.size());
 	//GameEngineDebug::OutPutString(tmpSize);
 	//GameEngineDebug::OutPutString("CreateDynamic");
+	*/
 }
 
 void LJM_PhysXHelloWorld::createStack(const PxTransform& t, PxU32 size, PxReal halfExtent)
@@ -219,6 +221,7 @@ void LJM_PhysXHelloWorld::createStack(const PxTransform& t, PxU32 size, PxReal h
 			PxRigidBodyExt::updateMassAndInertia(*body, 10.0f);
 			pxScene->addActor(*body);
 
+			/*
 			//PhysXTestBox* tmpTestBox = CreateActor<PhysXTestBox>();
 
 			//const PxBoxGeometry& boxGeom = static_cast<const PxBoxGeometry&>(shape->getGeometry().box());
@@ -239,6 +242,7 @@ void LJM_PhysXHelloWorld::createStack(const PxTransform& t, PxU32 size, PxReal h
 			//tmpTestBox->GetTransform().SetWorldRotation(tmpWorldRotate);
 
 			//testBoxVector_.push_back(tmpTestBox);
+			*/
 		}
 	}
 	shape->release();
