@@ -13,11 +13,18 @@ TestActor_WaterPlane::~TestActor_WaterPlane()
 // "Water" 메테리얼 적용 예시
 void TestActor_WaterPlane::Start()
 {
-	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->SetMesh("Rect");
-	Renderer->GetRenderUnit().SetPipeLine("Water");
-	Renderer->GetRenderUnit().EngineShaderResourcesSetting(Renderer);
-	Renderer->GetTransform().SetWorldScale({ 300, 300, 1 });
+	Renderer_ = CreateComponent<GameEngineTextureRenderer>();
+	Renderer_->SetMesh("Rect");
+	Renderer_->GetRenderUnit().SetPipeLine("Water");
+	Renderer_->GetRenderUnit().EngineShaderResourcesSetting(Renderer_);
+	Renderer_->GetTransform().SetWorldScale({ 2000, 2000, 1 });
+
+	Collision_ = CreateComponent<GameEngineCollision>();
+	Collision_->GetTransform().SetWorldScale({ 2000, 2000, 1 });
+	Collision_->ChangeOrder(CollisionGroup::Map);
+	Collision_->SetDebugSetting(CollisionType::CT_OBB, float4(0, 0.5f, 0, 0.5f));
+
+	GetTransform().SetWorldRotation({ 90, 0, 0 });
 }
 
 void TestActor_WaterPlane::Update(float _DeltaTime)

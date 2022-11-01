@@ -41,6 +41,7 @@
 #include <GameEngineCore/GameEngineFontRenderer.h>
 #include <GameEngineCore/GameEngineCoreDebug.h>
 #include <GameEngineCore/GameEngineFBXAnimation.h>
+#include <GameEngineCore/GameEngineFBXRenderer.h>
 
 // contents
 #include <GameEngineContents/GlobalValues.h>

@@ -6,6 +6,7 @@
 #include "MapEditorGUI.h"
 #include "PhysicsTestLevel.h"
 #include "LJM_PhysXHelloWorld.h"
+#include "CameraTestLevel.h"
 
 #pragma comment(lib, "GameEngineBase.lib")
 
@@ -43,6 +44,11 @@ void ContentsCore::End()
 void ContentsCore::CreateKeys()
 {
 	GameEngineInput::GetInst()->CreateKey("VK_LBUTTON", VK_LBUTTON);
+	GameEngineInput::GetInst()->CreateKey("W", 'W');
+	GameEngineInput::GetInst()->CreateKey("A", 'A');
+	GameEngineInput::GetInst()->CreateKey("S", 'S');
+	GameEngineInput::GetInst()->CreateKey("D", 'D');
+	GameEngineInput::GetInst()->CreateKey("SpaceBar", VK_SPACE);
 }
 
 // 기본적인 리소스
@@ -93,6 +99,7 @@ void ContentsCore::CreateLevels()
 	CreateLevel<MapEditorLevel>("MapEditorLevel");
 	CreateLevel<PhysicsTestLevel>("PhysicsTestLevel");
 	CreateLevel<LJM_PhysXHelloWorld>("LJM_PhysXHelloWorld");
+	CreateLevel<CameraTestLevel>("CameraTestLevel");
 	ChangeLevel("MapEditorLevel");
 }
 

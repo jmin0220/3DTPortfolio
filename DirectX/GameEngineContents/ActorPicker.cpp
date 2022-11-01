@@ -23,7 +23,7 @@ ActorPicker::~ActorPicker()
 void ActorPicker::Start()
 {
 	Collision_Ray = CreateComponent<GameEngineCollision>();
-	Collision_Ray->GetTransform().SetWorldScale({ 0.0002f, 0.0002f, 100000 });
+	Collision_Ray->GetTransform().SetWorldScale({ 0.1f, 0.1f, 200000 });
 	Collision_Ray->ChangeOrder(CollisionGroup::Ray);
 	Collision_Ray->SetDebugSetting(CollisionType::CT_OBB, float4(1.0f, 0, 0, 0.2f));
 }
@@ -44,10 +44,11 @@ void ActorPicker::Update(float _DeltaTime)
 
 	
 	// 카메라와 동일한 위치 
-	CamPos = GetLevel()->GetMainCameraActor()->GetTransform().GetWorldPosition();
+	CamPos = GetLevel()->GetMainCameraActor()->GetTransform().GetWorldPosition() + float4(0, 0, 20);
 	GetTransform().SetWorldPosition(CamPos);
 
 	// 피킹용 콜리전(Ray) 회전
+	// -1 과 1 사이가 아니라 화면 비율에 따라 달라지는거 적용안했음
 	float4 MouseVectorFromCam = GetLevel()->GetMainCamera()->GetMouseWorldPosition();
 	float4 PickerAngle = float4(MouseVectorFromCam.y * GameEngineMath::RadianToDegree * -1,
 		MouseVectorFromCam.x * GameEngineMath::RadianToDegree,
@@ -102,8 +103,8 @@ void ActorPicker::ClickCheck()
 {
 	// 화면 밖이면 피킹X
 	float4 MouseScreenPos = GetLevel()->GetMainCamera()->GetMouseScreenPosition();
-	float ScaleX = GameEngineWindow::GetScale().ix();
-	float ScaleY = GameEngineWindow::GetScale().iy();
+	float ScaleX = GameEngineWindow::GetScale().x;
+	float ScaleY = GameEngineWindow::GetScale().y;
 	if ( ScaleX < MouseScreenPos.x || ScaleY < MouseScreenPos.y)
 	{
 		return;

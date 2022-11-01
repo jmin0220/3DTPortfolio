@@ -24,7 +24,7 @@ void TitleActor::Start()
 
 	{
 		Logo = CreateComponent<GameEngineTextureRenderer>();
-		Logo->GetTransform().SetLocalScale({ 8.36, 5.72, 1 });
+		Logo->GetTransform().SetLocalScale({ 8.36f, 5.72f, 1 });
 		Logo->SetPivot(PIVOTMODE::CENTER);
 
 		Logo->SetTexture("Logo.png");

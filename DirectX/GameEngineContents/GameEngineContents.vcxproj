@@ -165,6 +165,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="CameraArm.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="CameraTestLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ColorBox.h">
       <SubType>
       </SubType>
@@ -229,6 +237,14 @@
     <ClInclude Include="PlayButton.h" />
     <ClInclude Include="PreCompile.h" />
     <ClInclude Include="SelectShowButton.h" />
+    <ClInclude Include="TestActor_Character.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TestActor_Plane.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="TestActor_WaterPlane.h">
       <SubType>
       </SubType>
@@ -266,6 +282,14 @@
   <ItemGroup>
     <ClCompile Include="ActorPicker.cpp" />
     <ClCompile Include="AxisActor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="CameraArm.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="CameraTestLevel.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -336,6 +360,14 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="SelectShowButton.cpp" />
+    <ClCompile Include="TestActor_Character.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TestActor_Plane.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="TestActor_WaterPlane.cpp">
       <SubType>
       </SubType>

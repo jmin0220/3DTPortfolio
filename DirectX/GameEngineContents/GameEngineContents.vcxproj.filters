@@ -46,6 +46,9 @@
     <Filter Include="Physics">
       <UniqueIdentifier>{605485fb-b3fc-46ec-acf2-a794a154b56c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\CamTestLevel">
+      <UniqueIdentifier>{8a75dd40-cfa2-4a2a-be3e-2623724a96da}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Actor\UIActor\LoadingActors">
       <UniqueIdentifier>{627f84ff-59a8-49d9-9865-1d2bc14aee3e}</UniqueIdentifier>
     </Filter>
@@ -153,6 +156,18 @@
     <ClInclude Include="PhysXTestBox.h">
       <Filter>Actor\PhysicsTest</Filter>
     </ClInclude>
+    <ClInclude Include="CameraTestLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="TestActor_Plane.h">
+      <Filter>Actor\CamTestLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="TestActor_Character.h">
+      <Filter>Actor\CamTestLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraArm.h">
+      <Filter>Actor\CamTestLevel</Filter>
+    </ClInclude>
     <ClInclude Include="PlayableObject.h">
       <Filter>Physics</Filter>
     </ClInclude>
@@ -257,7 +272,6 @@
     <ClCompile Include="PhysXTestBox.cpp">
       <Filter>Actor\PhysicsTest</Filter>
     </ClCompile>
-    <ClCompile Include="TestActor_WaterPlane.cpp" />
     <ClCompile Include="TestWall.cpp">
       <Filter>Actor\PhysicsTest</Filter>
     </ClCompile>
@@ -269,6 +283,21 @@
     </ClCompile>
     <ClCompile Include="TestPlayer.cpp">
       <Filter>Actor\PhysicsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraTestLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="TestActor_Plane.cpp">
+      <Filter>Actor\CamTestLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="TestActor_WaterPlane.cpp">
+      <Filter>ShaderTest</Filter>
+    </ClCompile>
+    <ClCompile Include="TestActor_Character.cpp">
+      <Filter>Actor\CamTestLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraArm.cpp">
+      <Filter>Actor\CamTestLevel</Filter>
     </ClCompile>
     <ClCompile Include="TestRainBow.cpp">
       <Filter>Actor\MapEditorLevel</Filter>

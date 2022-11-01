@@ -22,7 +22,7 @@ protected:
 
 
 private:
-	GameEngineTextureRenderer* Renderer;
-
+	GameEngineCollision* Collision_;
+	GameEngineTextureRenderer* Renderer_;
 };
 
