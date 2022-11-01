@@ -24,12 +24,13 @@ void TestGround::Start()
 	Collision->ChangeOrder(CollisionGroup::PhysicsGround);
 	Collision->SetMyCollisionGroup(static_cast<int>(CollisionGroup::PhysicsGround));
 	Collision->SetDebugSetting(CollisionType::CT_OBB, float4(0.0f, 1.0f, 1.0f, 1.0f));
-	Collision->SetVelocity({ 0.0f, 10.0f, 0.0f });
+	Collision->SetVelocity({ 0.0f, 0.0f, 0.0f });
 	Collision->SetGravity({ 0.0f, 0.0f, 0.0f });
 	Collision->SetBoundRatio(0.0f);
 	Collision->SetCompoundType(CompoundType::Ground);
-	GetTransform().SetWorldScale({ 1000, 10, 1000});
+	GetTransform().SetWorldScale({ 3000, 100, 3000});
 	GetTransform().SetWorldPosition({ 0.0f, -100.0f, 0.0f });
+	GetTransform().SetWorldRotation({ 10.0f, 0.0f, 0.0f });
 
 	//Renderer = CreateComponent<GameEngineTextureRenderer>();
 	//Renderer->SetPipeLine("Color");

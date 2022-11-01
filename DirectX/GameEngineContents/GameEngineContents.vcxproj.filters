@@ -150,6 +150,9 @@
     <ClInclude Include="PhysXTestBox.h">
       <Filter>Actor\PhysicsTest</Filter>
     </ClInclude>
+    <ClInclude Include="PlayableObject.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
     <ClInclude Include="TestRainBow.h">
       <Filter>Actor\MapEditorLevel</Filter>
     </ClInclude>
@@ -263,6 +266,9 @@
     </ClCompile>
     <ClCompile Include="Cursor.cpp">
       <Filter>Actor\UIActor</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayableObject.cpp">
+      <Filter>Physics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

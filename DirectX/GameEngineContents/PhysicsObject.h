@@ -2,10 +2,11 @@
 #include <GameEngineBase/GameEngineNameObject.h>
 #include <list>
 #include "PhysicsBase.h"
+#include "PlayableObject.h"
 
 
 // 설명 : 게임 엔진의 물리를 담당하는 클래스
-class PhysicsObject : public PhysicsBase
+class PhysicsObject : public PhysicsBase , public PlayableObject
 {
 
 public:
@@ -43,8 +44,11 @@ private:
 	CompoundType _CompoundType;
 
 	void BasicDynamics(float _DeltaTime, std::vector<GameEngineCollision*> _CollisionResults);
+	void VelocityCal(float _DeltaTime);
 	void CollisionWithGround(float _DeltaTime, PhysicsObject* _PO);
 	void CollisionWithWall(float _DeltaTime, PhysicsObject* _PO);
+
+	bool IsPlayable;
 
 public:
 	void SetGravity(float4 _Gravity)
@@ -84,6 +88,11 @@ public:
 			MsgBoxAssert("BoundRatio를 음수로 설정하지 마시오");
 		}
 		BoundRatio = _BoundRatio;
+	}
+
+	void IsPlayableOn()
+	{
+		IsPlayable = true;
 	}
 };
 

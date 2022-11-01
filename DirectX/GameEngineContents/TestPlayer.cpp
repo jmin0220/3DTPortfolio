@@ -28,19 +28,21 @@ void TestPlayer::Start()
 	Collision->SetMyCollisionGroup(static_cast<int>(CollisionGroup::PhysicsPlayer));
 	Collision->SetDebugSetting(CollisionType::CT_OBB, float4(1.0f, 0.0f, 0.0f, 1.0f));
 	Collision->SetVelocity({ 0.0f, 0.0f, 0.0f });
-	Collision->SetGravity({ 0.0f, -98.1f, 0.0f });
+	Collision->SetGravity({ 0.0f, -981.0f, 0.0f });
 	Collision->SetIsStatic(false);
 	Collision->SetCompoundType(CompoundType::Player);
+	Collision->IsPlayableOn();
 
-	//Renderer = CreateComponent<GameEngineTextureRenderer>();
-	//Renderer->SetPipeLine("Color");
-	//Renderer->SetMesh("Box");
+	Renderer = CreateComponent<GameEngineTextureRenderer>();
+	Renderer->SetPipeLine("Color");
+	Renderer->SetMesh("Box");
 
-	//ResultColor = float4(1.0f, 0.0f, 0.0f, 0.5f);
-	//Renderer->GetShaderResources().SetConstantBufferLink("ResultColor", ResultColor);
+	ResultColor = float4(1.0f, 0.0f, 0.0f, 0.5f);
+	Renderer->GetShaderResources().SetConstantBufferLink("ResultColor", ResultColor);
 
 	GetTransform().SetWorldPosition({ 100, 100, 100 });
 	GetTransform().SetWorldScale({ 100, 100, 100 });
+
 
 }
 

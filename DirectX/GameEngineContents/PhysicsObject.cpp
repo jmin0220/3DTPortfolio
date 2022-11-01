@@ -12,6 +12,7 @@ PhysicsObject::PhysicsObject()
 	, BoundRatio(0.0f)
 	, _ColliderType(ColliderType::StaticCollider)
 	, _CompoundType(CompoundType::Ground)
+	, IsPlayable(false)
 {
 
 }
@@ -26,17 +27,20 @@ void PhysicsObject::Start()
 void PhysicsObject::Update(float _DeltaTime)
 {
 	IsCollide = false;
-
-	if (Velocity.x > 50.0f)
+	if (IsPlayable == true)
 	{
-		int a = 0;
+		InputUpdate();
 	}
+
 	std::vector<GameEngineCollision*> CollisionResults = CollisionCheck(MyCollisionGroup);
 	if (CollisionResults.size() > 0)
 	{
 		IsCollide = true;
 	}
+
+
 	BasicDynamics(_DeltaTime, CollisionResults);
+
 }
 
 void PhysicsObject::BasicDynamics(float _DeltaTime, std::vector<GameEngineCollision*> _CollisionResults)
@@ -45,9 +49,16 @@ void PhysicsObject::BasicDynamics(float _DeltaTime, std::vector<GameEngineCollis
 	float4 NewForce = Force + Gravity * Mass;
 	float4 Acceleration = NewForce / Mass;
 	Velocity += Acceleration * _DeltaTime;
-
 	//충돌기반으로 velocity를 조정한다;
+	VelocityCal(_DeltaTime);
+	float4 MovedPosition = Velocity * _DeltaTime + (NewForce / Mass) * _DeltaTime * _DeltaTime * 0.5f;
+	GetActor()->GetTransform().SetWorldMove(MovedPosition);
 
+	if (IsPlayable == true)
+	{
+		CalculateMoveVel(_DeltaTime);
+		GetActor()->GetTransform().SetWorldMove(MovementVelocity * _DeltaTime);
+	}
 	for (GameEngineCollision* Collision : _CollisionResults)
 	{
 		if (IsCollide == true && IsStatic == false)
@@ -68,19 +79,21 @@ void PhysicsObject::BasicDynamics(float _DeltaTime, std::vector<GameEngineCollis
 
 		}
 	}
+}
 
-	float4 MovedPosition = Velocity * _DeltaTime + (NewForce / Mass) * _DeltaTime * _DeltaTime * 0.5f;
-	GetActor()->GetTransform().SetWorldMove(MovedPosition);
+void PhysicsObject::VelocityCal(float _DeltaTime)
+{
+
 }
 
 void PhysicsObject::CollisionWithGround(float _DeltaTime, PhysicsObject* _PO)
 {
-
 	float4 InstGravity = Gravity;
-	float4 NewForce = Force + Gravity * Mass;
 	float4 UpVector = _PO->GetActor()->GetTransform().GetUpVector();
+	
 
 	Velocity.y *= -UpVector.y * _PO->BoundRatio;
+
 	while (true)
 	{
 		GameEngineCollision* InstGround = CollisionCheckCertainGroup(static_cast<int>(CollisionGroup::PhysicsGround));
@@ -88,14 +101,19 @@ void PhysicsObject::CollisionWithGround(float _DeltaTime, PhysicsObject* _PO)
 		{
 			break;
 		}
-		float4 InstVec = GetActor()->GetTransform().GetWorldPosition() - InstGround->GetActor()->GetTransform().GetWorldPosition();
+		//float4 InstVec = GetActor()->GetTransform().GetWorldPosition() - InstGround->GetActor()->GetTransform().GetWorldPosition();
+		//float4 Rotation = InstGround->GetActor()->GetTransform().GetLocalRotation();
+		// 
+		//TODO::위에서 박았는지 아래에서 박았는지 확인용, 일단 위에서 아래로 박는다고 가정하기
+		float4 InstVec = float4{ 0.0f, 1.0f, 0.0f };
 		if (InstVec.y > 0.0f)
 		{
-			InstVec = { 0.0f, 0.5f, 0.0f };
+			InstVec = { 0.0f, 0.05f, 0.0f };
 		}
 		else
 		{
-			InstVec = { 0.0f, -0.5f, 0.0f };
+			float4 Instfloat4 = GetActor()->GetTransform().GetWorldPosition();
+			InstVec = { 0.0f, -0.05f, 0.0f };
 		}
 		GetActor()->GetTransform().SetWorldMove(InstVec);
 	}
@@ -104,9 +122,7 @@ void PhysicsObject::CollisionWithGround(float _DeltaTime, PhysicsObject* _PO)
 
 void PhysicsObject::CollisionWithWall(float _DeltaTime, PhysicsObject* _PO)
 {
-
 	float4 InstGravity = Gravity;
-	float4 NewForce = Force + Gravity * Mass;
 	float4 UpVector = _PO->GetActor()->GetTransform().GetUpVector();
 
 	Velocity.x *= -UpVector.y * _PO->BoundRatio;

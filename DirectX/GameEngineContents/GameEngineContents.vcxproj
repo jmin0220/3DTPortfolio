@@ -217,6 +217,7 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="PickableActor.h" />
+    <ClInclude Include="PlayableObject.h" />
     <ClInclude Include="PlayButton.h" />
     <ClInclude Include="PreCompile.h" />
     <ClInclude Include="SelectShowButton.h" />
@@ -312,6 +313,7 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="PickableActor.cpp" />
+    <ClCompile Include="PlayableObject.cpp" />
     <ClCompile Include="PlayButton.cpp" />
     <ClCompile Include="PreCompile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

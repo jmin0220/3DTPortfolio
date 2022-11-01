@@ -31,12 +31,12 @@ void TestBox::Start()
 	Collision->SetIsStatic(false);
 	Collision->SetCompoundType(CompoundType::Player);
 
-	//Renderer = CreateComponent<GameEngineTextureRenderer>();
-	//Renderer->SetPipeLine("Color");
-	//Renderer->SetMesh("Box");
+	Renderer = CreateComponent<GameEngineTextureRenderer>();
+	Renderer->SetPipeLine("Color");
+	Renderer->SetMesh("Box");
 
-	//ResultColor = float4(1.0f, 0.0f, 0.0f, 0.5f);
-	//Renderer->GetShaderResources().SetConstantBufferLink("ResultColor", ResultColor);
+	ResultColor = float4(1.0f, 0.0f, 0.0f, 0.5f);
+	Renderer->GetShaderResources().SetConstantBufferLink("ResultColor", ResultColor);
 
 	GetTransform().SetWorldPosition({ 100, 100, 100 });
 	GetTransform().SetWorldScale({ 100, 100, 100 });
