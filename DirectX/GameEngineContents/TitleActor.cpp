@@ -2,9 +2,9 @@
 #include "TitleActor.h"
 
 TitleActor::TitleActor() 
-	:FontSize(0.0f)
-	,XImageSize(8.36f)
-	,YImageSize(5.72f)
+	:XImageSize(0.0f)
+	,YImageSize(0.0f)
+	,Swap(false)
 {
 }
 
@@ -37,8 +37,9 @@ void TitleActor::Start()
 		Font->ChangeCamera(CAMERAORDER::UICAMERA);
 		Font->SetLeftAndRightSort(LeftAndRightSort::CENTER);
 		Font->SetScreenPostion({ 825,700 });
-		Font->SetSize(FontSize);
+		Font->SetSize(0.0f);
 		Font->SetText("시작!", "Noto Sans CJK SC");
+		Font->Off();
 	}
 }
 
@@ -50,11 +51,27 @@ void TitleActor::Update(float _DeltaTime)
 
 void TitleActor::LogoSizeAnimation()
 {
-	if (Logo->IsUpdate() == true && Logo->GetTransform().GetLocalScale().x <= 836)
-	{
-		XImageSize += GameEngineTime::GetDeltaTime() * 3000.0f;
-		YImageSize += GameEngineTime::GetDeltaTime() * 2000.0f;
-		Logo->GetTransform().SetLocalScale({XImageSize,  YImageSize });
+	{	//뿅~커졌다가
+		if (Swap == false)
+		{
+			float4 f4CurrentScale = Logo->GetTransform().GetWorldScale();
+			float4 f4DestinationScale = { 900,600 };
+			Logo->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 10.f) });
+			if (Logo->GetTransform().GetWorldScale().x >= f4DestinationScale.x - 1.0f)
+			{
+				//제 사이즈 되려면 딜레이가 너무 커서 1정도 오차 줌
+				Swap = true;
+			}
+		}
+	}
+
+	{	//제자리로 줄어들기
+		if (Swap == true)
+		{
+			float4 f4CurrentScale = Logo->GetTransform().GetWorldScale();
+			float4 f4DestinationScale = { 836,536 };
+			Logo->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 10.f) });
+		}
 	}
 }
 
@@ -63,12 +80,11 @@ void TitleActor::FontSizeAnimation()
 	{
 		//폰트 사이즈가 30이 될때까지 0에서 점점 커진다
 
-		if (Font->IsUpdate() == true && FontSize < 30.0f)
+		if (FontSize < 30.0f && Swap==true)
 		{
 			Font->On();
 			FontSize += GameEngineTime::GetDeltaTime() * 70.0f;
 			Font->SetSize(FontSize);
 		}
-		
 	}
 }
