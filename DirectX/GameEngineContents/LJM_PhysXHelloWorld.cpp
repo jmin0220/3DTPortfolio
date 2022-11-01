@@ -149,6 +149,16 @@ void LJM_PhysXHelloWorld::Update(float _DeltaTime)
 
 		// Render End --------------------------
 	}
+
+	if (GetAccTime() >= 1.0f)
+	{
+		ReSetAccTime();
+		std::string tmpWorldPositionString = "MainCameraPos >> x : " + std::to_string(GetMainCameraActorTransform().GetWorldPosition().x)
+			+ " / y : " + std::to_string(GetMainCameraActorTransform().GetWorldPosition().y)
+			+ " / z : " + std::to_string(GetMainCameraActorTransform().GetWorldPosition().z);
+
+		GameEngineDebug::OutPutString(tmpWorldPositionString);
+	}
 }
 
 void LJM_PhysXHelloWorld::End()

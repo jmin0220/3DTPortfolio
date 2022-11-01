@@ -10,12 +10,6 @@
     <Filter Include="02_Actor">
       <UniqueIdentifier>{f1bcfd31-d83d-4641-8839-3f0d9292cc76}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02_Actor\MapEditorLevel">
-      <UniqueIdentifier>{9ffe7f16-387b-4903-a5fb-f994f68e6944}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02_Actor\MapEditorLevel\Axis">
-      <UniqueIdentifier>{2a8ce72d-4bbc-42f9-bd6a-01d6d556ea36}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02_Actor\UIActor">
       <UniqueIdentifier>{8b26083d-d910-4336-b3ce-cffe8dafa495}</UniqueIdentifier>
     </Filter>
@@ -27,12 +21,6 @@
     </Filter>
     <Filter Include="02_Actor\UIActor\LoadingActors">
       <UniqueIdentifier>{627f84ff-59a8-49d9-9865-1d2bc14aee3e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02_Actor\PhysicsTest">
-      <UniqueIdentifier>{0ece61f2-354d-4303-90c5-87476bd5459a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02_Actor\CamTestLevel">
-      <UniqueIdentifier>{8a75dd40-cfa2-4a2a-be3e-2623724a96da}</UniqueIdentifier>
     </Filter>
     <Filter Include="99_Global">
       <UniqueIdentifier>{70654044-cd92-4264-ad92-d76b2da59c05}</UniqueIdentifier>
@@ -55,25 +43,49 @@
     <Filter Include="999_Test\ShaderTest">
       <UniqueIdentifier>{0b497306-8f2b-4d47-8547-8f4814c88045}</UniqueIdentifier>
     </Filter>
+    <Filter Include="999_Test\TestLevel">
+      <UniqueIdentifier>{b171e177-3cfd-4ddf-8e97-3e776c15c500}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="999_Test\TestActor">
+      <UniqueIdentifier>{f721755f-af75-44c6-bd5a-70b518ac9275}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="999_Test\TestActor\PhysicX">
+      <UniqueIdentifier>{b5bc4d5f-1ab2-4ee2-a81a-a3288622ea9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="999_Test\TestActor\PhysicCustom">
+      <UniqueIdentifier>{5c3e6137-6493-450a-a18c-33c4b725650f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="999_Test\TestLevel\CamTestLevel">
+      <UniqueIdentifier>{8a75dd40-cfa2-4a2a-be3e-2623724a96da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Actor\MapEditorActor">
+      <UniqueIdentifier>{9ffe7f16-387b-4903-a5fb-f994f68e6944}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Actor\MapEditorActor\Axis">
+      <UniqueIdentifier>{2a8ce72d-4bbc-42f9-bd6a-01d6d556ea36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="999_Test\TestComponent">
+      <UniqueIdentifier>{deabbac1-ddd2-46a3-9580-eb08f5c2c210}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="999_Test\TestComponent\TestPhysX">
+      <UniqueIdentifier>{f2d18f40-f3b8-40bd-8cea-eab2ea5bb6ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
       <Filter>00_Core</Filter>
     </ClInclude>
-    <ClInclude Include="tmpLevel.h">
-      <Filter>01_Level</Filter>
-    </ClInclude>
     <ClInclude Include="MapEditorLevel.h">
       <Filter>01_Level</Filter>
     </ClInclude>
     <ClInclude Include="ColorBox.h">
-      <Filter>02_Actor\MapEditorLevel</Filter>
+      <Filter>02_Actor\MapEditorActor</Filter>
     </ClInclude>
     <ClInclude Include="ActorPicker.h">
-      <Filter>02_Actor\MapEditorLevel</Filter>
+      <Filter>02_Actor\MapEditorActor</Filter>
     </ClInclude>
     <ClInclude Include="PickableActor.h">
-      <Filter>02_Actor\MapEditorLevel</Filter>
+      <Filter>02_Actor\MapEditorActor</Filter>
     </ClInclude>
     <ClInclude Include="GlobalValues.h">
       <Filter>99_Global</Filter>
@@ -84,20 +96,11 @@
     <ClInclude Include="TitleActor.h">
       <Filter>02_Actor\UIActor</Filter>
     </ClInclude>
-    <ClInclude Include="PhysicsTestLevel.h">
-      <Filter>01_Level</Filter>
-    </ClInclude>
-    <ClInclude Include="TestBox.h">
-      <Filter>02_Actor\PhysicsTest</Filter>
-    </ClInclude>
     <ClInclude Include="PreCompile.h">
       <Filter>99_PreCompile</Filter>
     </ClInclude>
     <ClInclude Include="FontActor.h">
       <Filter>02_Actor\UIActor</Filter>
-    </ClInclude>
-    <ClInclude Include="LJM_PhysXHelloWorld.h">
-      <Filter>01_Level</Filter>
     </ClInclude>
     <ClInclude Include="HUDUIActor.h">
       <Filter>02_Actor\UIActor\HUDParents</Filter>
@@ -117,23 +120,17 @@
     <ClInclude Include="SelectShowButton.h">
       <Filter>02_Actor\UIActor\HUDChilds</Filter>
     </ClInclude>
-    <ClInclude Include="TestGround.h">
-      <Filter>02_Actor\PhysicsTest</Filter>
-    </ClInclude>
     <ClInclude Include="AxisActor.h">
-      <Filter>02_Actor\MapEditorLevel\Axis</Filter>
+      <Filter>02_Actor\MapEditorActor\Axis</Filter>
     </ClInclude>
     <ClInclude Include="XAxis.h">
-      <Filter>02_Actor\MapEditorLevel\Axis</Filter>
+      <Filter>02_Actor\MapEditorActor\Axis</Filter>
     </ClInclude>
     <ClInclude Include="YAxis.h">
-      <Filter>02_Actor\MapEditorLevel\Axis</Filter>
+      <Filter>02_Actor\MapEditorActor\Axis</Filter>
     </ClInclude>
     <ClInclude Include="ZAxis.h">
-      <Filter>02_Actor\MapEditorLevel\Axis</Filter>
-    </ClInclude>
-    <ClInclude Include="TestWall.h">
-      <Filter>02_Actor\PhysicsTest</Filter>
+      <Filter>02_Actor\MapEditorActor\Axis</Filter>
     </ClInclude>
     <ClInclude Include="TestActor_WaterPlane.h">
       <Filter>999_Test\ShaderTest</Filter>
@@ -144,35 +141,23 @@
     <ClInclude Include="PhysicsBase.h">
       <Filter>97_Physics</Filter>
     </ClInclude>
-    <ClInclude Include="TestPlayer.h">
-      <Filter>02_Actor\PhysicsTest</Filter>
-    </ClInclude>
     <ClInclude Include="TopMenu.h">
       <Filter>02_Actor\UIActor\HUDChilds</Filter>
     </ClInclude>
     <ClInclude Include="CrownCount.h">
       <Filter>02_Actor\UIActor\HUDChilds</Filter>
     </ClInclude>
-    <ClInclude Include="PhysXTestBox.h">
-      <Filter>02_Actor\PhysicsTest</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraTestLevel.h">
-      <Filter>01_Level</Filter>
-    </ClInclude>
     <ClInclude Include="TestActor_Plane.h">
-      <Filter>02_Actor\CamTestLevel</Filter>
+      <Filter>999_Test\TestLevel\CamTestLevel</Filter>
     </ClInclude>
     <ClInclude Include="TestActor_Character.h">
-      <Filter>02_Actor\CamTestLevel</Filter>
+      <Filter>999_Test\TestLevel\CamTestLevel</Filter>
     </ClInclude>
     <ClInclude Include="CameraArm.h">
-      <Filter>02_Actor\CamTestLevel</Filter>
+      <Filter>999_Test\TestLevel\CamTestLevel</Filter>
     </ClInclude>
     <ClInclude Include="PlayableObject.h">
       <Filter>97_Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="TestRainBow.h">
-      <Filter>02_Actor\MapEditorLevel</Filter>
     </ClInclude>
     <ClInclude Include="Cursor.h">
       <Filter>02_Actor\UIActor</Filter>
@@ -183,25 +168,55 @@
     <ClInclude Include="LoadingActor.h">
       <Filter>02_Actor\UIActor\LoadingActors</Filter>
     </ClInclude>
+    <ClInclude Include="CameraTestLevel.h">
+      <Filter>999_Test\TestLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="LJM_PhysXHelloWorld.h">
+      <Filter>999_Test\TestLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsTestLevel.h">
+      <Filter>999_Test\TestLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="tmpLevel.h">
+      <Filter>999_Test\TestLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysXTestBox.h">
+      <Filter>999_Test\TestActor\PhysicX</Filter>
+    </ClInclude>
+    <ClInclude Include="TestBox.h">
+      <Filter>999_Test\TestActor\PhysicCustom</Filter>
+    </ClInclude>
+    <ClInclude Include="TestGround.h">
+      <Filter>999_Test\TestActor\PhysicCustom</Filter>
+    </ClInclude>
+    <ClInclude Include="TestPlayer.h">
+      <Filter>999_Test\TestActor\PhysicCustom</Filter>
+    </ClInclude>
+    <ClInclude Include="TestWall.h">
+      <Filter>999_Test\TestActor\PhysicCustom</Filter>
+    </ClInclude>
+    <ClInclude Include="TestRainBow.h">
+      <Filter>999_Test\TestActor</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicXComponent.h">
+      <Filter>999_Test\TestComponent\TestPhysX</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
       <Filter>00_Core</Filter>
     </ClCompile>
-    <ClCompile Include="tmpLevel.cpp">
-      <Filter>01_Level</Filter>
-    </ClCompile>
     <ClCompile Include="MapEditorLevel.cpp">
       <Filter>01_Level</Filter>
     </ClCompile>
     <ClCompile Include="ColorBox.cpp">
-      <Filter>02_Actor\MapEditorLevel</Filter>
+      <Filter>02_Actor\MapEditorActor</Filter>
     </ClCompile>
     <ClCompile Include="ActorPicker.cpp">
-      <Filter>02_Actor\MapEditorLevel</Filter>
+      <Filter>02_Actor\MapEditorActor</Filter>
     </ClCompile>
     <ClCompile Include="PickableActor.cpp">
-      <Filter>02_Actor\MapEditorLevel</Filter>
+      <Filter>02_Actor\MapEditorActor</Filter>
     </ClCompile>
     <ClCompile Include="GlobalValues.cpp">
       <Filter>99_Global</Filter>
@@ -212,20 +227,11 @@
     <ClCompile Include="TitleActor.cpp">
       <Filter>02_Actor\UIActor</Filter>
     </ClCompile>
-    <ClCompile Include="PhysicsTestLevel.cpp">
-      <Filter>01_Level</Filter>
-    </ClCompile>
-    <ClCompile Include="TestBox.cpp">
-      <Filter>02_Actor\PhysicsTest</Filter>
-    </ClCompile>
     <ClCompile Include="PreCompile.cpp">
       <Filter>99_PreCompile</Filter>
     </ClCompile>
     <ClCompile Include="FontActor.cpp">
       <Filter>02_Actor\UIActor</Filter>
-    </ClCompile>
-    <ClCompile Include="LJM_PhysXHelloWorld.cpp">
-      <Filter>01_Level</Filter>
     </ClCompile>
     <ClCompile Include="HUDUIActor.cpp">
       <Filter>02_Actor\UIActor\HUDParents</Filter>
@@ -245,20 +251,17 @@
     <ClCompile Include="SelectShowButton.cpp">
       <Filter>02_Actor\UIActor\HUDChilds</Filter>
     </ClCompile>
-    <ClCompile Include="TestGround.cpp">
-      <Filter>02_Actor\PhysicsTest</Filter>
-    </ClCompile>
     <ClCompile Include="AxisActor.cpp">
-      <Filter>02_Actor\MapEditorLevel\Axis</Filter>
+      <Filter>02_Actor\MapEditorActor\Axis</Filter>
     </ClCompile>
     <ClCompile Include="XAxis.cpp">
-      <Filter>02_Actor\MapEditorLevel\Axis</Filter>
+      <Filter>02_Actor\MapEditorActor\Axis</Filter>
     </ClCompile>
     <ClCompile Include="YAxis.cpp">
-      <Filter>02_Actor\MapEditorLevel\Axis</Filter>
+      <Filter>02_Actor\MapEditorActor\Axis</Filter>
     </ClCompile>
     <ClCompile Include="ZAxis.cpp">
-      <Filter>02_Actor\MapEditorLevel\Axis</Filter>
+      <Filter>02_Actor\MapEditorActor\Axis</Filter>
     </ClCompile>
     <ClCompile Include="TopMenu.cpp">
       <Filter>02_Actor\UIActor\HUDChilds</Filter>
@@ -266,38 +269,23 @@
     <ClCompile Include="CrownCount.cpp">
       <Filter>02_Actor\UIActor\HUDChilds</Filter>
     </ClCompile>
-    <ClCompile Include="PhysXTestBox.cpp">
-      <Filter>02_Actor\PhysicsTest</Filter>
-    </ClCompile>
-    <ClCompile Include="TestWall.cpp">
-      <Filter>02_Actor\PhysicsTest</Filter>
-    </ClCompile>
     <ClCompile Include="PhysicsObject.cpp">
       <Filter>97_Physics</Filter>
     </ClCompile>
     <ClCompile Include="PhysicsBase.cpp">
       <Filter>97_Physics</Filter>
     </ClCompile>
-    <ClCompile Include="TestPlayer.cpp">
-      <Filter>02_Actor\PhysicsTest</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraTestLevel.cpp">
-      <Filter>01_Level</Filter>
-    </ClCompile>
     <ClCompile Include="TestActor_Plane.cpp">
-      <Filter>02_Actor\CamTestLevel</Filter>
+      <Filter>999_Test\TestLevel\CamTestLevel</Filter>
     </ClCompile>
     <ClCompile Include="TestActor_WaterPlane.cpp">
       <Filter>999_Test\ShaderTest</Filter>
     </ClCompile>
     <ClCompile Include="TestActor_Character.cpp">
-      <Filter>02_Actor\CamTestLevel</Filter>
+      <Filter>999_Test\TestLevel\CamTestLevel</Filter>
     </ClCompile>
     <ClCompile Include="CameraArm.cpp">
-      <Filter>02_Actor\CamTestLevel</Filter>
-    </ClCompile>
-    <ClCompile Include="TestRainBow.cpp">
-      <Filter>02_Actor\MapEditorLevel</Filter>
+      <Filter>999_Test\TestLevel\CamTestLevel</Filter>
     </ClCompile>
     <ClCompile Include="Cursor.cpp">
       <Filter>02_Actor\UIActor</Filter>
@@ -310,6 +298,39 @@
     </ClCompile>
     <ClCompile Include="PlayableObject.cpp">
       <Filter>97_Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraTestLevel.cpp">
+      <Filter>999_Test\TestLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="LJM_PhysXHelloWorld.cpp">
+      <Filter>999_Test\TestLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsTestLevel.cpp">
+      <Filter>999_Test\TestLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="tmpLevel.cpp">
+      <Filter>999_Test\TestLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXTestBox.cpp">
+      <Filter>999_Test\TestActor\PhysicX</Filter>
+    </ClCompile>
+    <ClCompile Include="TestBox.cpp">
+      <Filter>999_Test\TestActor\PhysicCustom</Filter>
+    </ClCompile>
+    <ClCompile Include="TestGround.cpp">
+      <Filter>999_Test\TestActor\PhysicCustom</Filter>
+    </ClCompile>
+    <ClCompile Include="TestPlayer.cpp">
+      <Filter>999_Test\TestActor\PhysicCustom</Filter>
+    </ClCompile>
+    <ClCompile Include="TestWall.cpp">
+      <Filter>999_Test\TestActor\PhysicCustom</Filter>
+    </ClCompile>
+    <ClCompile Include="TestRainBow.cpp">
+      <Filter>999_Test\TestActor</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicXComponent.cpp">
+      <Filter>999_Test\TestComponent\TestPhysX</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

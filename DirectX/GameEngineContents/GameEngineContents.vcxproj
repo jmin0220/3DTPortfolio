@@ -224,6 +224,10 @@
     <ClInclude Include="NoneButton.h" />
     <ClInclude Include="NoneMoney.h" />
     <ClInclude Include="PhysicsTestLevel.h" />
+    <ClInclude Include="PhysicXComponent.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="PhysXTestBox.h">
       <SubType>
       </SubType>
@@ -340,6 +344,10 @@
     <ClCompile Include="NoneButton.cpp" />
     <ClCompile Include="NoneMoney.cpp" />
     <ClCompile Include="PhysicsTestLevel.cpp" />
+    <ClCompile Include="PhysicXComponent.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="PhysXTestBox.cpp">
       <SubType>
       </SubType>

@@ -3,6 +3,8 @@
 #include <GameEngineCore/ThirdParty/inc/PhysX/PxConfig.h>
 #include <GameEngineCore/ThirdParty/inc/PhysX/PxPhysicsAPI.h>
 
+#include "PhysicXComponent.h"
+
 // 설명 :
 class PhysXTestBox : public GameEngineActor
 {
@@ -21,19 +23,12 @@ public:
 
 protected:
 	void Start() override;
-	void Update(float _DeltaTime) override;
-	void End() override {};
 
 private:
 	GameEngineTextureRenderer* Renderer;
 	float4 ResultColor;
 
-	// Phys액터 생성에 필요한 정보
-	//physx::PxPhysics* pxPhysics_;
-	//physx::PxScene* pxScene_;
-
-	physx::PxMaterial* material_;
-	physx::PxShape* shape_;
-	physx::PxRigidDynamic* dynamic_;
+	// TODO::오브젝트의 종류에 따라서 각기 다른 Component를 제공해야할수 있음
+	PhysicXComponent* physicXComponent_;
 };
 
