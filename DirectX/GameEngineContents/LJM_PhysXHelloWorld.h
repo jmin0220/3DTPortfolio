@@ -27,7 +27,7 @@ protected:
 	void End() override;
 	
 	// 물리 결과를 저장할 Actor Vector
-	std::vector<PhysXTestBox*> testBoxVector_;
+	// std::vector<PhysXTestBox*> testBoxVector_;
 
 	float4 CurDynamicPos_;
 	
@@ -49,7 +49,7 @@ protected:
 	PxReal stackZ = 10.0f;
 
 	// RigidDynamic생성 - 공던지기
-	PxRigidDynamic* createDynamic(const PxTransform& t, const PxVec3& velocity = PxVec3(0));
+	void createDynamic(const PxTransform& t, const PxVec3& velocity = PxVec3(0));
 	
 	// RigidDynamic으로 벽 쌓기
 	void createStack(const PxTransform& t, PxU32 size, PxReal halfExtent);

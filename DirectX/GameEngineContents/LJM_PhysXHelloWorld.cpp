@@ -29,7 +29,7 @@ void LJM_PhysXHelloWorld::Start()
 	GameEngineInput::GetInst()->CreateKey("CreateBall", VK_SPACE);
 	GameEngineInput::GetInst()->CreateKey("CreateStack", '1');
 
-	testBoxVector_.reserve(10000);
+	//testBoxVector_.reserve(10000);
 }
 
 void LJM_PhysXHelloWorld::Update(float _DeltaTime)
@@ -81,8 +81,8 @@ void LJM_PhysXHelloWorld::Update(float _DeltaTime)
 
 		for (PxU32 i = 0; i < static_cast<PxU32>(actors.size()); i++)
 		{
-			std::vector<PhysXTestBox*>::iterator StartIter = testBoxVector_.begin();
-			std::vector<PhysXTestBox*>::iterator EndIter = testBoxVector_.end();
+			//std::vector<PhysXTestBox*>::iterator StartIter = testBoxVector_.begin();
+			//std::vector<PhysXTestBox*>::iterator EndIter = testBoxVector_.end();
 
 			const PxU32 nbShapes = actors[i]->getNbShapes();
 			PX_ASSERT(nbShapes <= MAX_NUM_ACTOR_SHAPES);
@@ -118,31 +118,32 @@ void LJM_PhysXHelloWorld::Update(float _DeltaTime)
 
 							, actors[i]->getGlobalPose().q.z
 							, actors[i]->getGlobalPose().q.w };
-			if (testBoxVector_.size() == 0)
-				return;
 
-			(*StartIter)->GetTransform().SetWorldPosition(tmpWorldPosition);
-			(*StartIter)->GetTransform().SetWorldScale(tmpWorldScale);
-			(*StartIter)->GetTransform().SetWorldRotation(tmpWorldRotate);
+			//if (testBoxVector_.size() == 0)
+			//	return;
+
+			//(*StartIter)->GetTransform().SetWorldPosition(tmpWorldPosition);
+			//(*StartIter)->GetTransform().SetWorldScale(tmpWorldScale);
+			//(*StartIter)->GetTransform().SetWorldRotation(tmpWorldRotate);
 
 			
 			// 연속으로 CreateDynamic일때만 적용
 			// Dynamic을 추가로 만들면 사라지는 현상 확인용
-			if (i == static_cast<PxU32>(actors.size()) - 1)
-			{
-				std::string CurDynamicPosString = "CurDynamicPos >> x : " + std::to_string(CurDynamicPos_.x) + " / y : " + std::to_string(CurDynamicPos_.y) + " / z : " + std::to_string(CurDynamicPos_.z);
-				GameEngineDebug::OutPutString(CurDynamicPosString);
+			//if (i == static_cast<PxU32>(actors.size()) - 1)
+			//{
+			//	std::string CurDynamicPosString = "CurDynamicPos >> x : " + std::to_string(CurDynamicPos_.x) + " / y : " + std::to_string(CurDynamicPos_.y) + " / z : " + std::to_string(CurDynamicPos_.z);
+			//	GameEngineDebug::OutPutString(CurDynamicPosString);
 
-				std::string tmpWorldPositionString = "NowDynamicPos >> x : " + std::to_string(tmpWorldPosition.x) + " / y : " + std::to_string(tmpWorldPosition.y) + " / z : " + std::to_string(tmpWorldPosition.z);
-				GameEngineDebug::OutPutString(tmpWorldPositionString);
-			}
+			//	std::string tmpWorldPositionString = "NowDynamicPos >> x : " + std::to_string(tmpWorldPosition.x) + " / y : " + std::to_string(tmpWorldPosition.y) + " / z : " + std::to_string(tmpWorldPosition.z);
+			//	GameEngineDebug::OutPutString(tmpWorldPositionString);
+			//}
 
 
 			// 직전 DynamicPosition 저장
 			CurDynamicPos_ = tmpWorldPosition;
 
 
-			++StartIter;
+			//++StartIter;
 		}
 
 
@@ -155,51 +156,52 @@ void LJM_PhysXHelloWorld::End()
 	cleanupPhysics();
 }
 
-PxRigidDynamic* LJM_PhysXHelloWorld::createDynamic(const PxTransform& t, const PxVec3& velocity)
+void LJM_PhysXHelloWorld::createDynamic(const PxTransform& t, const PxVec3& velocity)
 {
-	std::string tmp = "x : " + std::to_string(velocity.x) + " / y : " + std::to_string(velocity.y) + " / z : " + std::to_string(velocity.z);
-	GameEngineDebug::OutPutString(tmp);
-
-	PxShape* shape = pxPhysics->createShape(PxBoxGeometry(2.0f, 2.0f, 2.0f), *pxMaterial);
-
-	PxTransform localTm(GetMainCameraActor()->GetTransform().GetWorldPosition().x
-		, GetMainCameraActor()->GetTransform().GetWorldPosition().y
-		, GetMainCameraActor()->GetTransform().GetWorldPosition().z);
-
-	PxRigidDynamic* dynamic = pxPhysics->createRigidDynamic(localTm);
-	dynamic->attachShape(*shape);
-	dynamic->setAngularDamping(0.5f);
-	dynamic->setLinearVelocity(velocity);
-
-	pxScene->addActor(*dynamic);
-
 	PhysXTestBox* tmpTestBox = CreateActor<PhysXTestBox>();
-	tmpTestBox->SetName("Dynamic");
+	tmpTestBox->CreatePhysXActors(pxScene, pxPhysics);
 
-	const PxBoxGeometry& boxGeom = static_cast<const PxBoxGeometry&>(shape->getGeometry().box());
+	//std::string tmp = "x : " + std::to_string(velocity.x) + " / y : " + std::to_string(velocity.y) + " / z : " + std::to_string(velocity.z);
+	//GameEngineDebug::OutPutString(tmp);
 
-	float4 tmpWorldPosition = { dynamic->getGlobalPose().p.x
-							  , dynamic->getGlobalPose().p.y
-							  , dynamic->getGlobalPose().p.z };
+	//PxShape* shape = pxPhysics->createShape(PxBoxGeometry(2.0f, 2.0f, 2.0f), *pxMaterial);
 
-	float4 tmpWorldScale = { 4.0f };
+	//PxTransform localTm(GetMainCameraActor()->GetTransform().GetWorldPosition().x
+	//	, GetMainCameraActor()->GetTransform().GetWorldPosition().y
+	//	, GetMainCameraActor()->GetTransform().GetWorldPosition().z);
 
-	float4 tmpWorldRotate = { localTm.q.x
-		, localTm.q.y
-		, localTm.q.z
-		, localTm.q.w };
+	//PxRigidDynamic* dynamic = pxPhysics->createRigidDynamic(localTm);
+	//dynamic->attachShape(*shape);
+	//dynamic->setAngularDamping(0.5f);
+	//dynamic->setLinearVelocity(velocity);
 
-	tmpTestBox->GetTransform().SetWorldPosition(tmpWorldPosition);
-	tmpTestBox->GetTransform().SetWorldScale(tmpWorldScale);
-	tmpTestBox->GetTransform().SetWorldRotation(tmpWorldRotate);
+	//pxScene->addActor(*dynamic);
 
-	testBoxVector_.push_back(tmpTestBox);
+	//PhysXTestBox* tmpTestBox = CreateActor<PhysXTestBox>();
+	//tmpTestBox->SetName("Dynamic");
 
-	std::string tmpSize = "TestBoxVector Size >> " + std::to_string(testBoxVector_.size());
-	GameEngineDebug::OutPutString(tmpSize);
-	GameEngineDebug::OutPutString("CreateDynamic");
+	//const PxBoxGeometry& boxGeom = static_cast<const PxBoxGeometry&>(shape->getGeometry().box());
 
-	return dynamic;
+	//float4 tmpWorldPosition = { dynamic->getGlobalPose().p.x
+	//						  , dynamic->getGlobalPose().p.y
+	//						  , dynamic->getGlobalPose().p.z };
+
+	//float4 tmpWorldScale = { 4.0f };
+
+	//float4 tmpWorldRotate = { localTm.q.x
+	//	, localTm.q.y
+	//	, localTm.q.z
+	//	, localTm.q.w };
+
+	//tmpTestBox->GetTransform().SetWorldPosition(tmpWorldPosition);
+	//tmpTestBox->GetTransform().SetWorldScale(tmpWorldScale);
+	//tmpTestBox->GetTransform().SetWorldRotation(tmpWorldRotate);
+
+	//testBoxVector_.push_back(tmpTestBox);
+
+	//std::string tmpSize = "TestBoxVector Size >> " + std::to_string(testBoxVector_.size());
+	//GameEngineDebug::OutPutString(tmpSize);
+	//GameEngineDebug::OutPutString("CreateDynamic");
 }
 
 void LJM_PhysXHelloWorld::createStack(const PxTransform& t, PxU32 size, PxReal halfExtent)
@@ -285,8 +287,8 @@ void LJM_PhysXHelloWorld::initPhysics(bool _interactive)
 	//tmpTestBoxPlane->GetTransform().SetWorldScale(tmpWorldScale);
 	//testBoxVector_.push_back(tmpTestBoxPlane);
 
-	for (PxU32 i = 0; i < 5; i++)
-		createStack(PxTransform(PxVec3(0, 0, stackZ -= 10.0f)), 10, 2.0f);
+	//for (PxU32 i = 0; i < 5; i++)
+		//createStack(PxTransform(PxVec3(0, 0, stackZ -= 10.0f)), 10, 2.0f);
 }
 
 
