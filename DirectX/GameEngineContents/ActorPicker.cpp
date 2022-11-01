@@ -167,6 +167,7 @@ void ActorPicker::ClickControl()
 		Axis->GetTransform().SetWorldMove({ MouseDir.x, 0, 0 });
 	}
 	
-	
+	// Box ÀÌµ¿ Test
+	ClickedActor->GetTransform().SetWorldMove({ MouseDir.x, 0, 0 });
 
 }

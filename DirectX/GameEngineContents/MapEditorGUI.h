@@ -21,6 +21,8 @@ protected:
 
 private:
 	void DebugPicking();
+	void UpdateData();
+	bool IsChange_;
 
 	GameEngineLevel* ConnectedLevel;
 	GameEngineActor* CurActor_;
