@@ -27,10 +27,6 @@ void tmpLevel::Start()
 	TitleLogo->GetTransform().SetLocalPosition({ 800,-450 });
 	TitleLogo->GetTransform().SetLocalPosition({ -400 + 418, 225 - 143 });
 
-	//Font = CreateActor<FontActor>();
-	//Font->GetFont()->SetText("½ÃÀÛ!", "Noto Sans CJK SC");
-	//Font->GetFont()->SetScreenPostion({ 825,700 });
-
 	Name = CreateActor<NamePlate>();
 
 	Button = CreateActor<NoneButton>();

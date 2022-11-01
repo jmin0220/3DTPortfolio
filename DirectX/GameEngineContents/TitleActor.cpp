@@ -54,7 +54,7 @@ void TitleActor::LogoSizeAnimation()
 		{
 			float4 f4CurrentScale = Logo->GetTransform().GetWorldScale();
 			float4 f4DestinationScale = { 900,600 };
-			Logo->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 10.f) });
+			Logo->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 15.f) });
 			if (Logo->GetTransform().GetWorldScale().x >= f4DestinationScale.x - 1.0f)
 			{
 				//제 사이즈 되려면 딜레이가 너무 커서 1정도 오차 줌
@@ -68,7 +68,7 @@ void TitleActor::LogoSizeAnimation()
 		{
 			float4 f4CurrentScale = Logo->GetTransform().GetWorldScale();
 			float4 f4DestinationScale = { 836,536 };
-			Logo->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 10.f) });
+			Logo->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 15.f) });
 		}
 	}
 }

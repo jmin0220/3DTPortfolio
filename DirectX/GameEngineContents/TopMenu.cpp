@@ -1,7 +1,9 @@
 #include "PreCompile.h"
 #include "TopMenu.h"
+#include "GlobalValues.h"
 
 TopMenu::TopMenu() 
+	:ButtonCheck(false)
 {
 }
 
@@ -34,6 +36,13 @@ void TopMenu::Start()
 	Panel1->SetTexture("UI_select_panel.png");
 	Panel1->SetPivot(PIVOTMODE::CENTER);
 	Panel1->GetTransform().SetLocalPosition({ -135,413 });
+
+	PanelCol1 = CreateComponent<GameEngineCollision>();
+	PanelCol1->SetDebugSetting(CollisionType::CT_OBB2D, float4{ 0.0f,1.0f,0.0f,0.3f });
+	PanelCol1->GetTransform().SetWorldScale({ 70.0f,48.8f, 1.0f });
+	PanelCol1->ChangeOrder(UICOLLISION::Button);
+	PanelCol1->GetTransform().SetLocalPosition({ -135,415 });
+	PanelCol1->SetUIDebugCamera();
 
 	Panel2 = CreateComponent<GameEngineUIRenderer>();
 	Panel2->GetTransform().SetLocalScale({ 100 * 0.7f,74 * 0.7f });
@@ -80,5 +89,34 @@ void TopMenu::Start()
 
 void TopMenu::Update(float _DeltaTime)
 {
+	{
+		PanelCol1->IsCollision(CollisionType::CT_OBB2D, UICOLLISION::Mouse, CollisionType::CT_OBB2D,
+			std::bind(&TopMenu::ButtonOn, this, std::placeholders::_1, std::placeholders::_2));
+	}
+	
+	{
+		//이 조건문 성훈님 Pikable 코드 베껴 적음..[=]이게 뭔지 모름 ㅎ; 람다식..?함수포인터..? 암튼 해서 true false를 받음
+		ButtonCheck = PanelCol1->IsCollision(CollisionType::CT_OBB, CollisionGroup::Ray, CollisionType::CT_OBB,
+			[=](GameEngineCollision* _This, GameEngineCollision* _Other)
+			{
+				return CollisionReturn::ContinueCheck;
+			});
+
+		if (ButtonCheck == false)
+		{
+			//충돌이 아니라면 원래 사이즈로 돌아간다
+			float4 f4CurrentScale = Panel1->GetTransform().GetWorldScale();
+			float4 f4DestinationScale = { 70,51.8 };
+			Panel1->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 15.f) });
+		}
+	}
 }
 
+CollisionReturn TopMenu::ButtonOn(GameEngineCollision* _This, GameEngineCollision* _Other)
+{
+	//충돌하면 약간 버튼이 늘어남
+	float4 f4CurrentScale = Panel1->GetTransform().GetWorldScale();
+	float4 f4DestinationScale = { 80,51.8 };
+	Panel1->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 15.f) });
+	return CollisionReturn::ContinueCheck;
+}

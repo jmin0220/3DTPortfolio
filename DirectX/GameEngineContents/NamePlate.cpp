@@ -26,7 +26,7 @@ void NamePlate::Start()
 	Font->SetParent(Renderer);
 	Font->SetLeftAndRightSort(LeftAndRightSort::CENTER);
 	Font->SetScreenPostion({ 330,50 });
-	Font->SetText("플레이어", "Noto Sans CJK SC");
+	Font->SetText("FallGuy", "Noto Sans CJK SC");
 }
 
 void NamePlate::Update(float _DeltaTime)
