@@ -741,12 +741,6 @@
     <ClInclude Include="ThirdParty\inc\PhysX\vehicle\PxVehicleWheels.h">
       <Filter>ThirdParty\Inc\PhysX\Vehicle</Filter>
     </ClInclude>
-    <ClInclude Include="GameEnginePhysics.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="GameEnginePhysicsObject.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
     <ClInclude Include="GameEnginePhysX.h">
       <Filter>PhysX</Filter>
     </ClInclude>
@@ -921,12 +915,6 @@
     <ClCompile Include="PreCompile.cpp">
       <Filter>PreCompile</Filter>
     </ClCompile>
-    <ClCompile Include="GameEnginePhysics.cpp">
-      <Filter>Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="GameEnginePhysicsObject.cpp">
-      <Filter>Physics</Filter>
-    </ClCompile>
     <ClCompile Include="GameEnginePhysX.cpp">
       <Filter>PhysX</Filter>
     </ClCompile>
@@ -1018,9 +1006,6 @@
     </Filter>
     <Filter Include="Resources\FBX">
       <UniqueIdentifier>{fc7acf9f-14f5-4be4-8a07-77bd9cc92e77}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Physics">
-      <UniqueIdentifier>{ea7891cb-51f6-4589-9a77-e3ebe2820212}</UniqueIdentifier>
     </Filter>
     <Filter Include="PhysX">
       <UniqueIdentifier>{97e2767a-0ef1-4701-8aee-879f4f985ec3}</UniqueIdentifier>

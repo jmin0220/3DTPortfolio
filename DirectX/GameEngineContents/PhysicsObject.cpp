@@ -1,12 +1,8 @@
 #include "PreCompile.h"
-#include "GameEnginePhysicsObject.h"
-#include "GameEngineLevel.h"
-#include "GameEngineComponent.h"
-#include "GameEngineTransformComponent.h"
+#include "PhysicsObject.h"
 #include <GameEngineContents/GlobalValues.h>
-#include "GameEngineCollision.h"
 
-GameEnginePhysicsObject::GameEnginePhysicsObject()
+PhysicsObject::PhysicsObject()
 	: Gravity(float4{0.0f, -9.810f, 0.0f})
 	, Velocity({0.0f, 0.0f, 0.0f})
 	, Mass(1.0f)
@@ -20,14 +16,14 @@ GameEnginePhysicsObject::GameEnginePhysicsObject()
 
 }
 
-GameEnginePhysicsObject::~GameEnginePhysicsObject()
+PhysicsObject::~PhysicsObject()
 {
 }
 
-void GameEnginePhysicsObject::Start()
+void PhysicsObject::Start()
 {
 }
-void GameEnginePhysicsObject::Update(float _DeltaTime)
+void PhysicsObject::Update(float _DeltaTime)
 {
 	IsCollide = false;
 
@@ -43,9 +39,9 @@ void GameEnginePhysicsObject::Update(float _DeltaTime)
 	BasicDynamics(_DeltaTime, CollisionResults);
 }
 
-void GameEnginePhysicsObject::BasicDynamics(float _DeltaTime, std::vector<GameEngineCollision*> _CollisionResults)
+void PhysicsObject::BasicDynamics(float _DeltaTime, std::vector<GameEngineCollision*> _CollisionResults)
 {
-	float4 GetPosition = GetTransform().GetWorldPosition();
+	float4 GetPosition = GetActor()->GetTransform().GetWorldPosition();
 	float4 NewForce = Force + Gravity * Mass;
 	float4 Acceleration = NewForce / Mass;
 	Velocity += Acceleration * _DeltaTime;
@@ -56,7 +52,7 @@ void GameEnginePhysicsObject::BasicDynamics(float _DeltaTime, std::vector<GameEn
 	{
 		if (IsCollide == true && IsStatic == false)
 		{
-			GameEnginePhysicsObject* CollisionPO = dynamic_cast<GameEnginePhysicsObject*> (Collision);
+			PhysicsObject* CollisionPO = dynamic_cast<PhysicsObject*> (Collision);
 			CompoundType InstCompoundType = CollisionPO->_CompoundType;
 			switch (InstCompoundType)
 			{
@@ -74,15 +70,15 @@ void GameEnginePhysicsObject::BasicDynamics(float _DeltaTime, std::vector<GameEn
 	}
 
 	float4 MovedPosition = Velocity * _DeltaTime + (NewForce / Mass) * _DeltaTime * _DeltaTime * 0.5f;
-	GetTransform().SetWorldMove(MovedPosition);
+	GetActor()->GetTransform().SetWorldMove(MovedPosition);
 }
 
-void GameEnginePhysicsObject::CollisionWithGround(float _DeltaTime, GameEnginePhysicsObject* _PO)
+void PhysicsObject::CollisionWithGround(float _DeltaTime, PhysicsObject* _PO)
 {
 
 	float4 InstGravity = Gravity;
 	float4 NewForce = Force + Gravity * Mass;
-	float4 UpVector = _PO->GetTransform().GetUpVector();
+	float4 UpVector = _PO->GetActor()->GetTransform().GetUpVector();
 
 	Velocity.y *= -UpVector.y * _PO->BoundRatio;
 	while (true)
@@ -92,7 +88,7 @@ void GameEnginePhysicsObject::CollisionWithGround(float _DeltaTime, GameEnginePh
 		{
 			break;
 		}
-		float4 InstVec = GetTransform().GetWorldPosition() - InstGround->GetTransform().GetWorldPosition();
+		float4 InstVec = GetActor()->GetTransform().GetWorldPosition() - InstGround->GetActor()->GetTransform().GetWorldPosition();
 		if (InstVec.y > 0.0f)
 		{
 			InstVec = { 0.0f, 0.5f, 0.0f };
@@ -101,17 +97,17 @@ void GameEnginePhysicsObject::CollisionWithGround(float _DeltaTime, GameEnginePh
 		{
 			InstVec = { 0.0f, -0.5f, 0.0f };
 		}
-		GetTransform().SetWorldMove(InstVec);
+		GetActor()->GetTransform().SetWorldMove(InstVec);
 	}
 
 }
 
-void GameEnginePhysicsObject::CollisionWithWall(float _DeltaTime, GameEnginePhysicsObject* _PO)
+void PhysicsObject::CollisionWithWall(float _DeltaTime, PhysicsObject* _PO)
 {
 
 	float4 InstGravity = Gravity;
 	float4 NewForce = Force + Gravity * Mass;
-	float4 UpVector = _PO->GetTransform().GetUpVector();
+	float4 UpVector = _PO->GetActor()->GetTransform().GetUpVector();
 
 	Velocity.x *= -UpVector.y * _PO->BoundRatio;
 	while (true)
@@ -121,7 +117,7 @@ void GameEnginePhysicsObject::CollisionWithWall(float _DeltaTime, GameEnginePhys
 		{
 			break;
 		}
-		float4 InstVec = GetTransform().GetWorldPosition() - InstGround->GetTransform().GetWorldPosition();
+		float4 InstVec = GetActor()->GetTransform().GetWorldPosition() - InstGround->GetActor()->GetTransform().GetWorldPosition();
 		if (InstVec.x > 0.0f)
 		{
 			InstVec = { 0.5f, 0.0f, 0.0f };
@@ -130,11 +126,11 @@ void GameEnginePhysicsObject::CollisionWithWall(float _DeltaTime, GameEnginePhys
 		{
 			InstVec = { -0.5f, 0.0f, 0.0f };
 		}
-		GetTransform().SetWorldMove(InstVec);
+		GetActor()->GetTransform().SetWorldMove(InstVec);
 	}
 
 }
 
-void GameEnginePhysicsObject::End()
+void PhysicsObject::End()
 {
 }

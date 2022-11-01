@@ -1,10 +1,8 @@
 #pragma once
 #include <GameEngineBase/GameEngineNameObject.h>
-#include "GameEngineUpdateObject.h"
+
 #include <list>
-#include "GameEngineTransformBase.h"
-#include "GameEngineCollision.h"
-#include "GameEngineUpdateObject.h"
+
 
 
 
@@ -24,19 +22,19 @@ enum class CompoundType
 };
 
 // 설명 : 게임 엔진의 물리를 담당하는 클래스
-class GameEnginePhysics : public GameEngineCollision
+class PhysicsBase : public GameEngineCollision
 {
 
 public:
 	// constrcuter destructer
-	GameEnginePhysics();
-	virtual ~GameEnginePhysics();
+	PhysicsBase();
+	virtual ~PhysicsBase();
 
 	// delete Function
-	GameEnginePhysics(const GameEnginePhysics& _Other) = delete;
-	GameEnginePhysics(GameEnginePhysics&& _Other) noexcept = delete;
-	GameEnginePhysics& operator=(const GameEnginePhysics& _Other) = delete;
-	GameEnginePhysics& operator=(GameEnginePhysics&& _Other) noexcept = delete;
+	PhysicsBase(const PhysicsBase& _Other) = delete;
+	PhysicsBase(PhysicsBase&& _Other) noexcept = delete;
+	PhysicsBase& operator=(const PhysicsBase& _Other) = delete;
+	PhysicsBase& operator=(PhysicsBase&& _Other) noexcept = delete;
 
 protected:
 

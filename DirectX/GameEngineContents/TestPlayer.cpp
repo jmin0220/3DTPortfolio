@@ -1,24 +1,25 @@
 #include "PreCompile.h"
-#include "TestBox.h"
+#include "TestPlayer.h"
 #include "PhysicsObject.h"
 #include <GameEngineCore/GameEngineUpdateObject.h>
 
-TestBox::TestBox() 
+TestPlayer::TestPlayer() 
 {
 }
 
-TestBox::~TestBox() 
+TestPlayer::~TestPlayer() 
 {
 }
 
-void TestBox::Start()
+void TestPlayer::Start()
 {
-	//Renderer = CreateComponent<GameEngineTextureRenderer>();
-	//Renderer->SetPipeLine("Color");
-	//Renderer->SetMesh("Box");
-
-	//ResultColor = float4(1.0f, 0.5f, 0.0f, 1.0f);
-	//Renderer->GetShaderResources().SetConstantBufferLink("ResultColor", ResultColor);
+	if (GameEngineInput::GetInst()->IsKey("MoveRight") == false)
+	{
+		GameEngineInput::GetInst()->CreateKey("MoveRight", VK_RIGHT);
+		GameEngineInput::GetInst()->CreateKey("MoveLeft", VK_LEFT);
+		GameEngineInput::GetInst()->CreateKey("MoveForward", VK_UP);
+		GameEngineInput::GetInst()->CreateKey("MoveBackward", VK_DOWN);
+	}
 
 	Collision = CreateComponent<PhysicsObject>();
 
@@ -26,7 +27,7 @@ void TestBox::Start()
 	Collision->ChangeOrder(CollisionGroup::PhysicsPlayer);
 	Collision->SetMyCollisionGroup(static_cast<int>(CollisionGroup::PhysicsPlayer));
 	Collision->SetDebugSetting(CollisionType::CT_OBB, float4(1.0f, 0.0f, 0.0f, 1.0f));
-	Collision->SetVelocity({ 300.0f, 100.0f, 10.0f });
+	Collision->SetVelocity({ 0.0f, 0.0f, 0.0f });
 	Collision->SetGravity({ 0.0f, -98.1f, 0.0f });
 	Collision->SetIsStatic(false);
 	Collision->SetCompoundType(CompoundType::Player);
@@ -43,7 +44,7 @@ void TestBox::Start()
 
 }
 
-void TestBox::Update(float _DeltaTime)
+void TestPlayer::Update(float _DeltaTime)
 {
 }
 

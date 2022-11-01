@@ -1,25 +1,23 @@
 #pragma once
 #include <GameEngineBase/GameEngineNameObject.h>
-#include "GameEngineUpdateObject.h"
 #include <list>
-#include "GameEngineTransformBase.h"
-#include "GameEnginePhysics.h"
+#include "PhysicsBase.h"
 
 
 // 설명 : 게임 엔진의 물리를 담당하는 클래스
-class GameEnginePhysicsObject : public GameEnginePhysics
+class PhysicsObject : public PhysicsBase
 {
 
 public:
 	// constrcuter destructer
-	GameEnginePhysicsObject();
-	virtual ~GameEnginePhysicsObject();
+	PhysicsObject();
+	virtual ~PhysicsObject();
 
 	// delete Function
-	GameEnginePhysicsObject(const GameEnginePhysicsObject& _Other) = delete;
-	GameEnginePhysicsObject(GameEnginePhysicsObject&& _Other) noexcept = delete;
-	GameEnginePhysicsObject& operator=(const GameEnginePhysicsObject& _Other) = delete;
-	GameEnginePhysicsObject& operator=(GameEnginePhysicsObject&& _Other) noexcept = delete;
+	PhysicsObject(const PhysicsObject& _Other) = delete;
+	PhysicsObject(PhysicsObject&& _Other) noexcept = delete;
+	PhysicsObject& operator=(const PhysicsObject& _Other) = delete;
+	PhysicsObject& operator=(PhysicsObject&& _Other) noexcept = delete;
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void End() override;
@@ -45,8 +43,8 @@ private:
 	CompoundType _CompoundType;
 
 	void BasicDynamics(float _DeltaTime, std::vector<GameEngineCollision*> _CollisionResults);
-	void CollisionWithGround(float _DeltaTime, GameEnginePhysicsObject* _PO);
-	void CollisionWithWall(float _DeltaTime, GameEnginePhysicsObject* _PO);
+	void CollisionWithGround(float _DeltaTime, PhysicsObject* _PO);
+	void CollisionWithWall(float _DeltaTime, PhysicsObject* _PO);
 
 public:
 	void SetGravity(float4 _Gravity)

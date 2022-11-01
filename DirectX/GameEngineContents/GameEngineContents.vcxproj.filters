@@ -43,6 +43,9 @@
     <Filter Include="ShaderTest">
       <UniqueIdentifier>{0b497306-8f2b-4d47-8547-8f4814c88045}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{605485fb-b3fc-46ec-acf2-a794a154b56c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -129,6 +132,15 @@
     </ClInclude>
     <ClInclude Include="TestActor_WaterPlane.h">
       <Filter>ShaderTest</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsObject.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsBase.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="TestPlayer.h">
+      <Filter>Actor\PhysicsTest</Filter>
     </ClInclude>
     <ClInclude Include="TopMenu.h">
       <Filter>Actor\UIActor\HUDChilds</Filter>
@@ -227,6 +239,19 @@
       <Filter>Actor\UIActor\HUDChilds</Filter>
     </ClCompile>
     <ClCompile Include="PhysXTestBox.cpp">
+      <Filter>Actor\PhysicsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="TestActor_WaterPlane.cpp" />
+    <ClCompile Include="TestWall.cpp">
+      <Filter>Actor\PhysicsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsObject.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsBase.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="TestPlayer.cpp">
       <Filter>Actor\PhysicsTest</Filter>
     </ClCompile>
   </ItemGroup>

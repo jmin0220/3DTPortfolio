@@ -1,20 +1,17 @@
 #include "PreCompile.h"
-#include "GameEnginePhysics.h"
-#include "GameEngineLevel.h"
-#include "GameEngineComponent.h"
-#include "GameEngineTransformComponent.h"
+#include "PhysicsBase.h"
 #include <GameEngineContents/GlobalValues.h>
 
-GameEnginePhysics::GameEnginePhysics()
+PhysicsBase::PhysicsBase()
 {
 
 }
 
-GameEnginePhysics::~GameEnginePhysics()
+PhysicsBase::~PhysicsBase()
 {
 }
 
-std::vector<GameEngineCollision*> GameEnginePhysics::CollisionCheck(int _MyCollisionGroup)
+std::vector<GameEngineCollision*> PhysicsBase::CollisionCheck(int _MyCollisionGroup)
 {
 	GameEngineCollision* InstColCollisionResult = nullptr;
 	std::vector<GameEngineCollision*> InstColCollisionResults;
@@ -39,7 +36,7 @@ std::vector<GameEngineCollision*> GameEnginePhysics::CollisionCheck(int _MyColli
 	return InstColCollisionResults;
 }
 
-GameEngineCollision* GameEnginePhysics::CollisionCheckCertainGroup(int _Group)
+GameEngineCollision* PhysicsBase::CollisionCheckCertainGroup(int _Group)
 {
 	GameEngineCollision* InstColCollisionResult = nullptr;
 	bool IsCollide = false;
@@ -54,12 +51,12 @@ GameEngineCollision* GameEnginePhysics::CollisionCheckCertainGroup(int _Group)
 	return InstColCollisionResult;
 }
 
-float4 GameEnginePhysics::CollidedVector(GameEngineCollision* _Other)
+float4 PhysicsBase::CollidedVector(GameEngineCollision* _Other)
 {
-	return  GetTransform().GetWorldPosition() - _Other->GetTransform().GetWorldPosition();
+	return  GetActor()->GetTransform().GetWorldPosition() - _Other->GetActor()->GetTransform().GetWorldPosition();
 }
 
-float4 GameEnginePhysics::CollidedNormalVectorReturn(GameEngineCollision* _Other)
+float4 PhysicsBase::CollidedNormalVectorReturn(GameEngineCollision* _Other)
 {
 	return CollidedVector(_Other).Normalize3DReturn();
 }

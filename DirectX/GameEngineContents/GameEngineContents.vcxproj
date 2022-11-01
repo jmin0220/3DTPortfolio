@@ -185,6 +185,8 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="PhysicsBase.h" />
+    <ClInclude Include="PhysicsObject.h" />
     <ClInclude Include="GlobalValues.h">
       <SubType>
       </SubType>
@@ -224,6 +226,7 @@
     </ClInclude>
     <ClInclude Include="TestBox.h" />
     <ClInclude Include="TestGround.h" />
+    <ClInclude Include="TestPlayer.h" />
     <ClInclude Include="TestWall.h" />
     <ClInclude Include="TitleActor.h" />
     <ClInclude Include="tmpLevel.h">
@@ -273,6 +276,8 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="PhysicsBase.cpp" />
+    <ClCompile Include="PhysicsObject.cpp" />
     <ClCompile Include="GlobalValues.cpp">
       <SubType>
       </SubType>
@@ -315,6 +320,7 @@
     </ClCompile>
     <ClCompile Include="TestBox.cpp" />
     <ClCompile Include="TestGround.cpp" />
+    <ClCompile Include="TestPlayer.cpp" />
     <ClCompile Include="TestWall.cpp" />
     <ClCompile Include="TitleActor.cpp" />
     <ClCompile Include="tmpLevel.cpp">

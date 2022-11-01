@@ -3,18 +3,18 @@
 
 // Ό³Έν :
 class GameEngineTextureRenderer;
-class TestWall : public GameEngineActor
+class TestPlayer : public GameEngineActor
 {
 public:
 	// constrcuter destructer
-	TestWall();
-	~TestWall();
+	TestPlayer();
+	~TestPlayer();
 
 	// delete Function
-	TestWall(const TestWall& _Other) = delete;
-	TestWall(TestWall&& _Other) noexcept = delete;
-	TestWall& operator=(const TestWall& _Other) = delete;
-	TestWall& operator=(TestWall&& _Other) noexcept = delete;
+	TestPlayer(const TestPlayer& _Other) = delete;
+	TestPlayer(TestPlayer&& _Other) noexcept = delete;
+	TestPlayer& operator=(const TestPlayer& _Other) = delete;
+	TestPlayer& operator=(TestPlayer&& _Other) noexcept = delete;
 
 	GameEngineTextureRenderer* GetRenderer()
 	{
@@ -27,8 +27,8 @@ protected:
 	void End() override {};
 private:
 	GameEngineTextureRenderer* Renderer;
-	class PhysicsObject* Wall;
-	class PhysicsObject* Wall2;
+	class PhysicsObject* Collision;
 	float4 ResultColor;
+	GameEngineStateManager MoveFSM;
 };
 
