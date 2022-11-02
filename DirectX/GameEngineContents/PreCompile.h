@@ -45,6 +45,7 @@
 
 // contents
 #include <GameEngineContents/GlobalValues.h>
+#include <GameEngineContents/CustomableGUI.h>
 
 
 // PhysX 라이브러리

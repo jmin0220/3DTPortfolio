@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "TestActor_Character.h"
+#include <GameEngineCore/CoreMinimal.h>
 
 #include "CameraArm.h"
 
@@ -58,6 +59,8 @@ void TestActor_Character::Start()
 		FBXRenderer_->SetFBXMesh("Character.FBX", "Texture");
 		FBXRenderer_->GetTransform().SetWorldScale({ 100, 100, 100 });
 	}
+
+
 }
 
 void TestActor_Character::Update(float _DeltaTime)
@@ -129,3 +132,4 @@ void TestActor_Character::RotateCharacterForward()
 	float4 Target = MoveDir_;
 	float YAxisDegree = acosf(float4::DotProduct3D(Forward, Target.Normalize3DReturn()))* GameEngineMath::RadianToDegree;
 }
+

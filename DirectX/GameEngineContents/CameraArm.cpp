@@ -17,6 +17,11 @@ void CameraArm::Start()
 	ArmCollision_ = CreateComponent<GameEngineCollision>();
 	ArmCollision_->GetTransform().SetWorldScale({ 50, 50, 200 });
 	ArmCollision_->SetDebugSetting(CollisionType::CT_OBB, float4(0.0f, 0.0f, 0.8f, 0.5f));
+
+	// DEBUG GUI사용
+	GUI = GameEngineGUI::CreateGUIWindow<CustomableGUI>("CustomableGUI", nullptr);
+	GUI->On();
+	GUI->SetGUIDebugFunc([=]() {GuIDebugFunc(); });
 }
 
 void CameraArm::SetFollowCamera(GameEngineCameraActor* _Camera, GameEngineActor* _Character)
@@ -77,6 +82,12 @@ void CameraArm::CameraLookPlayer()
 	// 카메라로부터 캐릭터로 향하는 방향벡터
 	float4 Target = (PosCharacter_ - ArmCollision_->GetTransform().GetWorldPosition());
 
+
+	// 디버깅용
+	{
+		DebugValue = acosf(float4::DotProduct3D(Forward, Target.Normalize3DReturn())) * GameEngineMath::RadianToDegree;
+	}
+
 	// 내적
 	float XAngle = acosf(float4::DotProduct3D(Forward, Target.Normalize3DReturn())) * GameEngineMath::RadianToDegree;
 
@@ -87,17 +98,38 @@ void CameraArm::CameraLookPlayer()
 
 }
 
-// 마우스가 화면 가로축 끝에 있으면 입력할 값이 부족한 문제 있음
+// Y축 돌리기
 void CameraArm::HorizontalOrbitCamera()
 {
 
 	GetTransform().SetAddWorldRotation({ 0, MouseMove_.x, 0 });
 }
 
+// X축 돌리기
 void CameraArm::VerticalOrbitCamera()
 {
-
+	ArmCollision_->GetTransform().SetLocalMove({ 0, MouseMove_.y, 0 });
 	
-	//GetTransform().SetAddWorldRotation({ MouseMove_.y, 0, 0});
 }
 
+
+// DEBUG GUI
+void CameraArm::GuIDebugFunc()
+{
+	if (true == ImGui::Button("FreeCameaOnOff"))
+	{
+		GetLevel()->GetMainCameraActor()->FreeCameraModeOnOff();
+	}
+
+	ImGui::SameLine();
+	if (true == ImGui::Button("CollisionDebugSwtich"))
+	{
+		GEngine::CollisionDebugSwitch();
+	}
+
+	{
+		float4 Pos = DebugValue;
+		std::string Name = "TargetDegree : " + std::to_string(Pos.x) + " | " + std::to_string(Pos.y) + " | " + std::to_string(Pos.z) + " | " + std::to_string(Pos.w);
+		ImGui::Text(Name.c_str());
+	}
+}

@@ -55,9 +55,6 @@
     <Filter Include="999_Test\TestActor\PhysicCustom">
       <UniqueIdentifier>{5c3e6137-6493-450a-a18c-33c4b725650f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="999_Test\TestLevel\CamTestLevel">
-      <UniqueIdentifier>{8a75dd40-cfa2-4a2a-be3e-2623724a96da}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02_Actor\MapEditorActor">
       <UniqueIdentifier>{9ffe7f16-387b-4903-a5fb-f994f68e6944}</UniqueIdentifier>
     </Filter>
@@ -69,6 +66,9 @@
     </Filter>
     <Filter Include="999_Test\TestComponent\TestPhysX">
       <UniqueIdentifier>{f2d18f40-f3b8-40bd-8cea-eab2ea5bb6ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="999_Test\TestActor\CameraTest">
+      <UniqueIdentifier>{8a75dd40-cfa2-4a2a-be3e-2623724a96da}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -148,13 +148,13 @@
       <Filter>02_Actor\UIActor\HUDChilds</Filter>
     </ClInclude>
     <ClInclude Include="TestActor_Plane.h">
-      <Filter>999_Test\TestLevel\CamTestLevel</Filter>
+      <Filter>999_Test\TestActor\CameraTest</Filter>
     </ClInclude>
     <ClInclude Include="TestActor_Character.h">
-      <Filter>999_Test\TestLevel\CamTestLevel</Filter>
+      <Filter>999_Test\TestActor\CameraTest</Filter>
     </ClInclude>
     <ClInclude Include="CameraArm.h">
-      <Filter>999_Test\TestLevel\CamTestLevel</Filter>
+      <Filter>999_Test\TestActor\CameraTest</Filter>
     </ClInclude>
     <ClInclude Include="PlayableObject.h">
       <Filter>97_Physics</Filter>
@@ -200,6 +200,9 @@
     </ClInclude>
     <ClInclude Include="PhysicXComponent.h">
       <Filter>999_Test\TestComponent\TestPhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomableGUI.h">
+      <Filter>98_LevelGUI</Filter>
     </ClInclude>
     <ClInclude Include="PhysicXStackComponent.h">
       <Filter>999_Test\TestComponent\TestPhysX</Filter>
@@ -282,16 +285,16 @@
       <Filter>97_Physics</Filter>
     </ClCompile>
     <ClCompile Include="TestActor_Plane.cpp">
-      <Filter>999_Test\TestLevel\CamTestLevel</Filter>
+      <Filter>999_Test\TestActor\CameraTest</Filter>
     </ClCompile>
     <ClCompile Include="TestActor_WaterPlane.cpp">
       <Filter>999_Test\ShaderTest</Filter>
     </ClCompile>
     <ClCompile Include="TestActor_Character.cpp">
-      <Filter>999_Test\TestLevel\CamTestLevel</Filter>
+      <Filter>999_Test\TestActor\CameraTest</Filter>
     </ClCompile>
     <ClCompile Include="CameraArm.cpp">
-      <Filter>999_Test\TestLevel\CamTestLevel</Filter>
+      <Filter>999_Test\TestActor\CameraTest</Filter>
     </ClCompile>
     <ClCompile Include="Cursor.cpp">
       <Filter>02_Actor\UIActor</Filter>
@@ -337,6 +340,9 @@
     </ClCompile>
     <ClCompile Include="PhysicXComponent.cpp">
       <Filter>999_Test\TestComponent\TestPhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomableGUI.cpp">
+      <Filter>98_LevelGUI</Filter>
     </ClCompile>
     <ClCompile Include="PhysicXStackComponent.cpp">
       <Filter>999_Test\TestComponent\TestPhysX</Filter>

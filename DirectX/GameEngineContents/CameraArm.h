@@ -46,5 +46,10 @@ private:
 	float4 PrevMouseInput_;
 	float4 CurMouseInput_;
 	float4 MouseMove_;
+
+	// µð¹ö±ë
+	void GuIDebugFunc();
+	class CustomableGUI* GUI;
+	float4 DebugValue;
 };
 
