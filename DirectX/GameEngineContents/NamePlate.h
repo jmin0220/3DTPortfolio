@@ -22,7 +22,7 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override {};
 private:
-	GameEngineUIRenderer* Renderer;
-	GameEngineFontRenderer* Font;
+	GameEngineUIRenderer* Renderer_;
+	GameEngineFontRenderer* Font_;
 };
 

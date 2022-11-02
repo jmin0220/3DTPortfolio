@@ -24,9 +24,9 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override {};
 private:
-	GameEngineTextureRenderer* BG;
-	GameEngineTextureRenderer* Games[5];
-	GameEngineUIRenderer* Game;
-	float Time;
+	GameEngineTextureRenderer* BG_;
+	GameEngineTextureRenderer* Games_[5];
+	GameEngineUIRenderer* Game_;
+	float Time_;
 };
 

@@ -22,25 +22,25 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override {};
 private:
-	GameEngineUIRenderer* BG;
-	GameEngineUIRenderer* LeftKey;
-	GameEngineUIRenderer* RightKey;
+	GameEngineUIRenderer* BG_;
+	GameEngineUIRenderer* LeftKey_;
+	GameEngineUIRenderer* RightKey_;
 
-	GameEngineUIRenderer* Panel1;
-	GameEngineUIRenderer* Panel2;
-	GameEngineUIRenderer* Panel3;
-	GameEngineUIRenderer* Panel4;
+	GameEngineUIRenderer* Panel1_;
+	GameEngineUIRenderer* Panel2_;
+	GameEngineUIRenderer* Panel3_;
+	GameEngineUIRenderer* Panel4_;
 
-	GameEngineCollision* PanelCol1;
-	GameEngineCollision* PanelCol2;
-	GameEngineCollision* PanelCol3;
-	GameEngineCollision* PanelCol4;
+	GameEngineCollision* PanelCol1_;
+	GameEngineCollision* PanelCol2_;
+	GameEngineCollision* PanelCol3_;
+	GameEngineCollision* PanelCol4_;
 
-	GameEngineUIRenderer* Home;
-	GameEngineUIRenderer* Event;
-	GameEngineUIRenderer* Custom;
-	GameEngineUIRenderer* Store;
+	GameEngineUIRenderer* Home_;
+	GameEngineUIRenderer* Event_;
+	GameEngineUIRenderer* Custom_;
+	GameEngineUIRenderer* Store_;
 
-	bool ButtonCheck;
+	bool ButtonCheck_;
 };
 

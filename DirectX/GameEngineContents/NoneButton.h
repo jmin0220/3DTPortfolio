@@ -18,17 +18,17 @@ public:
 
 	GameEngineUIRenderer* GetOpenParty()
 	{
-		return OpenParty;
+		return OpenParty_;
 	}
 
 	GameEngineUIRenderer* GetMenu()
 	{
-		return Menu;
+		return Menu_;
 	}
 
 	GameEngineUIRenderer* GetMoney()
 	{
-		return Money;
+		return Money_;
 	}
 
 protected:
@@ -37,13 +37,12 @@ protected:
 	void End() override {};
 
 private:
-	GameEngineUIRenderer* OpenParty;
-	GameEngineUIRenderer* Tab;
+	GameEngineUIRenderer* OpenParty_;
+	GameEngineUIRenderer* Tab_;
 
-	GameEngineUIRenderer* Menu;
-	GameEngineUIRenderer* Money;
-	GameEngineUIRenderer* Renderer4;
+	GameEngineUIRenderer* Menu_;
+	GameEngineUIRenderer* Money_;
 
-	GameEngineFontRenderer* F_OpenParty;
+	GameEngineFontRenderer* F_OpenParty_;
 };
 

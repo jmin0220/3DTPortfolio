@@ -2,7 +2,7 @@
 #include "TitleActor.h"
 
 TitleActor::TitleActor() 
-	:Swap(false)
+	:Swap_(false)
 {
 }
 
@@ -13,22 +13,22 @@ TitleActor::~TitleActor()
 void TitleActor::Start()
 {
 	{
-		Logo = CreateComponent<GameEngineTextureRenderer>();
-		Logo->GetTransform().SetWorldScale({ 0, 0 });
-		Logo->GetTransform().SetWorldPosition({ 0, 70 });
-		Logo->SetPivot(PIVOTMODE::CENTER);
+		Logo_ = CreateComponent<GameEngineTextureRenderer>();
+		Logo_->GetTransform().SetWorldScale({ 0.0f, 0.0f });
+		Logo_->GetTransform().SetWorldPosition({ 0.0f, 70.0f });
+		Logo_->SetPivot(PIVOTMODE::CENTER);
 
-		Logo->SetTexture("Logo.png");
+		Logo_->SetTexture("Logo.png");
 	}
 
 	{
-		Font = CreateComponent<GameEngineFontRenderer>();
-		Font->ChangeCamera(CAMERAORDER::UICAMERA);
-		Font->SetLeftAndRightSort(LeftAndRightSort::CENTER);
-		Font->SetScreenPostion({ 825,700 });
-		Font->SetSize(0.0f);
-		Font->SetText("시작!", "Noto Sans CJK SC");
-		Font->Off();
+		Font_ = CreateComponent<GameEngineFontRenderer>();
+		Font_->ChangeCamera(CAMERAORDER::UICAMERA);
+		Font_->SetLeftAndRightSort(LeftAndRightSort::CENTER);
+		Font_->SetScreenPostion({ 825.0f,700.0f });
+		Font_->SetSize(0.0f);
+		Font_->SetText("시작!", "Noto Sans CJK SC");
+		Font_->Off();
 	}
 }
 
@@ -40,34 +40,34 @@ void TitleActor::Update(float _DeltaTime)
 
 void TitleActor::LevelStartEvent()
 {
-	Logo->GetTransform().SetWorldScale({ 0,0 });
-	Swap = false;
-	FontSize = 0.0f;
-	Font->Off();
+	Logo_->GetTransform().SetWorldScale({ 0.0f,0.0f });
+	Swap_ = false;
+	FontSize_ = 0.0f;
+	Font_->Off();
 }
 
 void TitleActor::LogoSizeAnimation()
 {
 	{	//뿅~커졌다가
-		if (Swap == false)
+		if (Swap_ == false)
 		{
-			float4 f4CurrentScale = Logo->GetTransform().GetWorldScale();
-			float4 f4DestinationScale = { 900,600 };
-			Logo->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 15.f) });
-			if (Logo->GetTransform().GetWorldScale().x >= f4DestinationScale.x - 1.0f)
+			float4 f4CurrentScale = Logo_->GetTransform().GetWorldScale();
+			float4 f4DestinationScale = { 900.0f,600.0f };
+			Logo_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 15.f) });
+			if (Logo_->GetTransform().GetWorldScale().x >= f4DestinationScale.x - 1.0f)
 			{
 				//제 사이즈 되려면 딜레이가 너무 커서 1정도 오차 줌
-				Swap = true;
+				Swap_ = true;
 			}
 		}
 	}
 
 	{	//제자리로 줄어들기
-		if (Swap == true)
+		if (Swap_ == true)
 		{
-			float4 f4CurrentScale = Logo->GetTransform().GetWorldScale();
-			float4 f4DestinationScale = { 836,536 };
-			Logo->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 15.f) });
+			float4 f4CurrentScale = Logo_->GetTransform().GetWorldScale();
+			float4 f4DestinationScale = { 836.0f,536.0f };
+			Logo_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 15.f) });
 		}
 	}
 }
@@ -75,11 +75,11 @@ void TitleActor::LogoSizeAnimation()
 void TitleActor::FontSizeAnimation()
 {
 	{
-		if (FontSize < 30.0f && Swap==true)
+		if (FontSize_ < 30.0f && Swap_==true)
 		{
-			Font->On();
-			FontSize += GameEngineTime::GetDeltaTime() * 70.0f;
-			Font->SetSize(FontSize);
+			Font_->On();
+			FontSize_ += GameEngineTime::GetDeltaTime() * 70.0f;
+			Font_->SetSize(FontSize_);
 		}
 	}
 }

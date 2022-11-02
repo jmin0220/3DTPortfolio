@@ -11,26 +11,26 @@ NoneButton::~NoneButton()
 
 void NoneButton::Start()
 {
-	OpenParty = CreateComponent<GameEngineUIRenderer>();
-	OpenParty->SetTexture("OpenParty.png");
-	OpenParty->GetTransform().SetWorldScale({230,60});
-	OpenParty->SetPivot(PIVOTMODE::LEFTBOT);
-	OpenParty->GetTransform().SetLocalPosition({ -800,-450 });
+	OpenParty_ = CreateComponent<GameEngineUIRenderer>();
+	OpenParty_->SetTexture("OpenParty.png");
+	OpenParty_->GetTransform().SetWorldScale({230.0f, 60.0f });
+	OpenParty_->SetPivot(PIVOTMODE::LEFTBOT);
+	OpenParty_->GetTransform().SetLocalPosition({ -800.0f,-450.0f });
 
-	Tab = CreateComponent<GameEngineUIRenderer>();
-	Tab->SetTexture("tab.png");
-	Tab->GetTransform().SetLocalScale({ 95 * 0.5f, 55 * 0.5f });
-	Tab->GetTransform().SetLocalPosition({ -770, -425 });
-	Tab->SetPivot(PIVOTMODE::LEFT);
+	Tab_ = CreateComponent<GameEngineUIRenderer>();
+	Tab_->SetTexture("tab.png");
+	Tab_->GetTransform().SetLocalScale({ 95 * 0.5f, 55 * 0.5f });
+	Tab_->GetTransform().SetLocalPosition({ -770.0f, -425.0f });
+	Tab_->SetPivot(PIVOTMODE::LEFT);
 
-	F_OpenParty = CreateComponent<GameEngineFontRenderer>();
-	F_OpenParty->SetParent(OpenParty);
-	F_OpenParty->ChangeCamera(CAMERAORDER::UICAMERA);
-	F_OpenParty->SetColor({ 1.0f,1.0f,1.0f, 0.9f });
-	F_OpenParty->SetSize(20.0f);
-	F_OpenParty->SetLeftAndRightSort(LeftAndRightSort::CENTER);
-	F_OpenParty->SetScreenPostion({ 120.0f ,860.0f});
-	F_OpenParty->SetText("파티 열기", "Noto Sans CJK SC");
+	F_OpenParty_ = CreateComponent<GameEngineFontRenderer>();
+	F_OpenParty_->SetParent(OpenParty_);
+	F_OpenParty_->ChangeCamera(CAMERAORDER::UICAMERA);
+	F_OpenParty_->SetColor({ 1.0f,1.0f,1.0f, 0.9f });
+	F_OpenParty_->SetSize(20.0f);
+	F_OpenParty_->SetLeftAndRightSort(LeftAndRightSort::CENTER);
+	F_OpenParty_->SetScreenPostion({ 120.0f ,860.0f});
+	F_OpenParty_->SetText("파티 열기", "Noto Sans CJK SC");
 }
 
 void NoneButton::Update(float _DeltaTime)

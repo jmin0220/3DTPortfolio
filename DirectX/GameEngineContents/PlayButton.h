@@ -21,8 +21,8 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override {};
 private:
-	GameEngineUIRenderer* Button;
-	GameEngineUIRenderer* Key;
-	GameEngineFontRenderer* Font;
+	GameEngineUIRenderer* Button_;
+	GameEngineUIRenderer* Key_;
+	GameEngineFontRenderer* Font_;
 };
 

@@ -19,7 +19,7 @@ public:
 
 	int GetMoneyCost() //µ∑ ¥ı«œ±‚¿ß«ÿ ≤®≥ªæµ∂ß
 	{
-		return MoneyCost;
+		return MoneyCost_;
 	}
 
 protected:
@@ -27,9 +27,9 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override {};
 private:
-	GameEngineUIRenderer* MoneyCount;
-	GameEngineUIRenderer* MoneyIcon;
-	GameEngineFontRenderer* MoneyNumber;
-	int MoneyCost;
+	GameEngineUIRenderer* MoneyCount_;
+	GameEngineUIRenderer* MoneyIcon_;
+	GameEngineFontRenderer* MoneyNumber_;
+	int MoneyCost_;
 };
 

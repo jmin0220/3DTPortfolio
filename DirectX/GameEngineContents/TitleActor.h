@@ -16,15 +16,6 @@ public:
 	TitleActor& operator=(const TitleActor& _Other) = delete;
 	TitleActor& operator=(TitleActor&& _Other) noexcept = delete;
 
-	GameEngineTextureRenderer* GetLogo()
-	{
-		return Logo;
-	}
-
-	GameEngineFontRenderer* GetFont()
-	{
-		return Font;
-	}
 
 	void FontSizeAnimation();
 	void LogoSizeAnimation();
@@ -36,10 +27,10 @@ protected:
 	void LevelStartEvent() override;
 
 private:
-	GameEngineTextureRenderer* Logo;
-	GameEngineFontRenderer* Font;
+	GameEngineTextureRenderer* Logo_;
+	GameEngineFontRenderer* Font_;
 
-	float FontSize;
-	bool Swap;
+	float FontSize_;
+	bool Swap_;
 };
 

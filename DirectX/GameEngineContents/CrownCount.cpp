@@ -11,40 +11,40 @@ CrownCount::~CrownCount()
 
 void CrownCount::Start()
 {
-	CurrentCrownCount = 0;
-	RewardCrownCount = 1;
+	CurrentCrownCount_ = 0;
+	RewardCrownCount_ = 1;
 
-	Renderer = CreateComponent<GameEngineUIRenderer>();
-	Renderer->GetTransform().SetLocalScale({ 194*0.5f,264 * 0.5f });
-	Renderer->SetTexture("CrownReward.png");
-	Renderer->SetPivot(PIVOTMODE::CENTER);
-	Renderer->GetTransform().SetLocalPosition({ -735,380 });
+	Renderer_ = CreateComponent<GameEngineUIRenderer>();
+	Renderer_->GetTransform().SetLocalScale({ 194*0.5f,264 * 0.5f });
+	Renderer_->SetTexture("CrownReward.png");
+	Renderer_->SetPivot(PIVOTMODE::CENTER);
+	Renderer_->GetTransform().SetLocalPosition({ -735.0f, 380.0f });
 
-	Face = CreateComponent<GameEngineUIRenderer>();
-	Face->GetTransform().SetLocalScale({ 111 * 0.5f,111 * 0.5f });
-	Face->SetTexture("PlayerLevelFace.png");
-	Face->SetPivot(PIVOTMODE::CENTER);
-	Face->GetTransform().SetLocalPosition({ -735,380 });
+	Face_ = CreateComponent<GameEngineUIRenderer>();
+	Face_->GetTransform().SetLocalScale({ 111 * 0.5f,111 * 0.5f });
+	Face_->SetTexture("PlayerLevelFace.png");
+	Face_->SetPivot(PIVOTMODE::CENTER);
+	Face_->GetTransform().SetLocalPosition({ -735.0f, 380.0f });
 
-	CountBG = CreateComponent<GameEngineUIRenderer>();
-	CountBG->GetTransform().SetLocalScale({ 111 ,34 });
-	CountBG->SetTexture("CrownBG.png");
-	CountBG->SetPivot(PIVOTMODE::CENTER);
-	CountBG->GetTransform().SetLocalPosition({ -735,335 });
+	CountBG_ = CreateComponent<GameEngineUIRenderer>();
+	CountBG_->GetTransform().SetLocalScale({ 111.0f ,34.0f });
+	CountBG_->SetTexture("CrownBG.png");
+	CountBG_->SetPivot(PIVOTMODE::CENTER);
+	CountBG_->GetTransform().SetLocalPosition({ -735.0f, 335.0f });
 
-	Icon = CreateComponent<GameEngineUIRenderer>();
-	Icon->GetTransform().SetLocalScale({ 69*0.7f ,68 * 0.7f });
-	Icon->SetTexture("UI_CrownIcon.png");
-	Icon->SetPivot(PIVOTMODE::CENTER);
-	Icon->GetTransform().SetLocalPosition({ -765,335 });
+	Icon_ = CreateComponent<GameEngineUIRenderer>();
+	Icon_->GetTransform().SetLocalScale({ 69*0.7f ,68 * 0.7f });
+	Icon_->SetTexture("UI_CrownIcon.png");
+	Icon_->SetPivot(PIVOTMODE::CENTER);
+	Icon_->GetTransform().SetLocalPosition({ -765.0f, 335.0f });
 
-	Font = CreateComponent<GameEngineFontRenderer>();
-	Font->ChangeCamera(CAMERAORDER::UICAMERA);
-	Font->SetSize(20.0f);
-	Font->SetLeftAndRightSort(LeftAndRightSort::CENTER);
-	Font->SetColor({ 1.0f,1.0f,1.0f });
-	Font->SetScreenPostion({ 87,103 });
-	Font->SetText(std::to_string(CurrentCrownCount)+"/" + std::to_string(RewardCrownCount),"Titan One");
+	Font_ = CreateComponent<GameEngineFontRenderer>();
+	Font_->ChangeCamera(CAMERAORDER::UICAMERA);
+	Font_->SetSize(20.0f);
+	Font_->SetLeftAndRightSort(LeftAndRightSort::CENTER);
+	Font_->SetColor({ 1.0f,1.0f,1.0f });
+	Font_->SetScreenPostion({ 87.0f, 103.0f });
+	Font_->SetText(std::to_string(CurrentCrownCount_)+"/" + std::to_string(RewardCrownCount_),"Titan One");
 }
 
 void CrownCount::Update(float _DeltaTime)

@@ -2,8 +2,8 @@
 #include "NamePlate.h"
 
 NamePlate::NamePlate() 
-	:Renderer(nullptr)
-	,Font(nullptr)
+	:Renderer_(nullptr)
+	,Font_(nullptr)
 {
 }
 
@@ -13,20 +13,20 @@ NamePlate::~NamePlate()
 
 void NamePlate::Start()
 {
-	Renderer = CreateComponent<GameEngineUIRenderer>();
-	Renderer->GetTransform().SetLocalScale({606 * 0.6f,166 * 0.6f});
-	Renderer->SetTexture("NamePlate.png");
-	Renderer->SetPivot(PIVOTMODE::LEFTTOP);
-	Renderer->GetTransform().SetLocalPosition({ -670,425 });
+	Renderer_ = CreateComponent<GameEngineUIRenderer>();
+	Renderer_->GetTransform().SetLocalScale({606 * 0.6f,166 * 0.6f});
+	Renderer_->SetTexture("NamePlate.png");
+	Renderer_->SetPivot(PIVOTMODE::LEFTTOP);
+	Renderer_->GetTransform().SetLocalPosition({ -670.0f,425.0f });
 
-	Font = CreateComponent<GameEngineFontRenderer>();
-	Font->ChangeCamera(CAMERAORDER::UICAMERA);
-	Font->SetSize(30.0f);
-	Font->SetColor({ 1.0f,1.0f,1.0f });
-	Font->SetParent(Renderer);
-	Font->SetLeftAndRightSort(LeftAndRightSort::CENTER);
-	Font->SetScreenPostion({ 330,50 });
-	Font->SetText("FallGuy", "Noto Sans CJK SC");
+	Font_ = CreateComponent<GameEngineFontRenderer>();
+	Font_->ChangeCamera(CAMERAORDER::UICAMERA);
+	Font_->SetSize(30.0f);
+	Font_->SetColor({ 1.0f,1.0f,1.0f });
+	Font_->SetParent(Renderer_);
+	Font_->SetLeftAndRightSort(LeftAndRightSort::CENTER);
+	Font_->SetScreenPostion({ 330.0f, 50.0f });
+	Font_->SetText("FallGuy", "Noto Sans CJK SC");
 }
 
 void NamePlate::Update(float _DeltaTime)

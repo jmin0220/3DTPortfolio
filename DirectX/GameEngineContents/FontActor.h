@@ -18,7 +18,7 @@ public:
 
 	GameEngineFontRenderer* GetFont()
 	{
-		return Font;
+		return Font_;
 	}
 
 protected:
@@ -26,6 +26,6 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override {};
 private:
-	GameEngineFontRenderer* Font;
+	GameEngineFontRenderer* Font_;
 };
 

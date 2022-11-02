@@ -11,22 +11,22 @@ PlayButton::~PlayButton()
 
 void PlayButton::Start()
 {
-	Button = CreateComponent<GameEngineUIRenderer>();
-	Button->SetTexture("Play.png");
-	Button->GetTransform().SetWorldScale({ 350, 110});
-	Button->GetTransform().SetWorldPosition({ 600,-380 });
+	Button_ = CreateComponent<GameEngineUIRenderer>();
+	Button_->SetTexture("Play.png");
+	Button_->GetTransform().SetWorldScale({ 350.0f, 110.0f });
+	Button_->GetTransform().SetWorldPosition({ 600.0f,-380.0f });
 
-	Key = CreateComponent<GameEngineUIRenderer>();
-	Key->SetTexture("Spacebar.png");
-	Key->GetTransform().SetWorldScale({ 114 * 0.5f, 55 * 0.5f });
-	Key->GetTransform().SetWorldPosition({ 600,-420 });
+	Key_ = CreateComponent<GameEngineUIRenderer>();
+	Key_->SetTexture("Spacebar.png");
+	Key_->GetTransform().SetWorldScale({ 114 * 0.5f, 55 * 0.5f });
+	Key_->GetTransform().SetWorldPosition({ 600.0f,-420.0f });
 
-	Font = CreateComponent<GameEngineFontRenderer>();
-	Font->ChangeCamera(CAMERAORDER::UICAMERA);
-	Font->SetText("플레이", "Noto Sans CJK SC");
-	Font->SetSize(25.0f);
-	Font->SetLeftAndRightSort(LeftAndRightSort::CENTER);
-	Font->SetScreenPostion({ 1400,805 });
+	Font_ = CreateComponent<GameEngineFontRenderer>();
+	Font_->ChangeCamera(CAMERAORDER::UICAMERA);
+	Font_->SetText("플레이", "Noto Sans CJK SC");
+	Font_->SetSize(25.0f);
+	Font_->SetLeftAndRightSort(LeftAndRightSort::CENTER);
+	Font_->SetScreenPostion({ 1400.0f,805.0f });
 }
 
 void PlayButton::Update(float _DeltaTime)

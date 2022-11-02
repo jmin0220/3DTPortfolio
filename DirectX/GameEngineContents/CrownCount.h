@@ -20,13 +20,13 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override {};
 private:
-	GameEngineUIRenderer* Renderer;
-	GameEngineUIRenderer* Face;
-	GameEngineUIRenderer* CountBG;
-	GameEngineUIRenderer* Icon;
-	GameEngineFontRenderer* Font;
+	GameEngineUIRenderer* Renderer_;
+	GameEngineUIRenderer* Face_;
+	GameEngineUIRenderer* CountBG_;
+	GameEngineUIRenderer* Icon_;
+	GameEngineFontRenderer* Font_;
 
-	int CurrentCrownCount;
-	int RewardCrownCount;
+	int CurrentCrownCount_;
+	int RewardCrownCount_;
 };
 

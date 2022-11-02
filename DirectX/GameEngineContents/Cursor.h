@@ -18,17 +18,17 @@ public:
 
 	GameEngineTextureRenderer* GetMouse()
 	{
-		return MouseImage;
+		return MouseImage_;
 	}
 
 	float4 GetCursorPos1()
 	{
-		return MainCursorPos;
+		return MainCursorPos_;
 	}
 
 	float4 GetCursorPos2()
 	{
-		return UICursorPos;
+		return UICursorPos_;
 	}
 
 	bool MainHit(GameEngineCollision* _This, GameEngineCollision* _Other);
@@ -41,11 +41,11 @@ private:
 	void Update(float _DeltaTime);
 	void End() {}
 
-	GameEngineTextureRenderer* MouseImage;
-	GameEngineCameraActor* Camera;
-	float4 MainCursorPos;
-	float4 UICursorPos;
-	GameEngineCollision* ActorCollision;
-	GameEngineCollision* UICollision;
+	GameEngineTextureRenderer* MouseImage_;
+	GameEngineCameraActor* Camera_;
+	float4 MainCursorPos_;
+	float4 UICursorPos_;
+	GameEngineCollision* ActorCollision_;
+	GameEngineCollision* UICollision_;
 };
 
