@@ -28,11 +28,7 @@ private:
 private:
 	// FBX 캐릭터
 	GameEngineFBXRenderer* FBXRenderer_;
-
-	// 큐브 캐릭터
-	GameEngineTextureRenderer* BoxRenderer_;
 	GameEngineCollision* Collision_;
-	float4 BoxColor_;
 
 	// 카메라 암
 	class CameraArm* CameraArm_;

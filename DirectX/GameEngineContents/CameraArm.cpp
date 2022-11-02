@@ -26,9 +26,14 @@ void CameraArm::SetFollowCamera(GameEngineCameraActor* _Camera, GameEngineActor*
 
 	Camera_ = _Camera;
 	Character_ = _Character;
-	ArmVector_ = float4(0, 200, -1000);
+	ArmVector_ = float4(0, 600, -2000);
 
 	ArmCollision_->GetTransform().SetLocalPosition(ArmVector_);
+}
+
+void CameraArm::SetArmLength(float _Depth, float _Height)
+{
+	ArmVector_ = float4(0, _Height, _Depth);
 }
 
 void CameraArm::Update(float _DeltaTime)
@@ -38,16 +43,21 @@ void CameraArm::Update(float _DeltaTime)
 		return;
 	}
 
+	// 마우스입력
+	CurMouseInput_ = Camera_->GetCameraComponent()->GetMouseScreenPosition();
+	MouseMove_ = CurMouseInput_ - PrevMouseInput_;
+
 	PosCameraArm_ = ArmCollision_->GetTransform().GetWorldPosition();
 	PosCharacter_ = Character_->GetTransform().GetWorldPosition();
 
-	// 마우스입력
 	PosCharacter_ = Character_->GetTransform().GetWorldPosition();
 
 	CameraLookPlayer();
-	HorizontalOrbitCamera(_DeltaTime);
+	HorizontalOrbitCamera();
+	VerticalOrbitCamera();
 
-
+	// 마우스 입력
+	PrevMouseInput_ = CurMouseInput_;
 }
 
 // 필요없을 예정
@@ -59,7 +69,7 @@ void CameraArm::FollowCharacterPosition()
 
 void CameraArm::CameraLookPlayer()
 {
-	//Camera_->GetTransform().SetWorldPosition(PosCameraArm_);
+	Camera_->GetTransform().SetWorldPosition(PosCameraArm_);
 
 	// 카메라 방향벡터
 	float4 Forward = ArmCollision_->GetTransform().GetForwardVector().Normalize3DReturn();
@@ -73,22 +83,21 @@ void CameraArm::CameraLookPlayer()
 	// 카메라 암의 회전각
 	float4 Rot = GetTransform().GetLocalRotation();
 
-	//Camera_->GetTransform().SetWorldRotation({ XAngle, Rot.y, 0 });
+	Camera_->GetTransform().SetWorldRotation({ XAngle, Rot.y, 0 });
 
 }
 
 // 마우스가 화면 가로축 끝에 있으면 입력할 값이 부족한 문제 있음
-void CameraArm::HorizontalOrbitCamera(float _DeltaTime)
+void CameraArm::HorizontalOrbitCamera()
 {
-	CurMouseInput = Camera_->GetCameraComponent()->GetMouseScreenPosition();
-	
-	float Rot = CurMouseInput.x - PrevMouseInput.x;
-	GetTransform().SetLocalRotate({ 0, Rot, 0 });
 
-	PrevMouseInput = CurMouseInput;
+	GetTransform().SetAddWorldRotation({ 0, MouseMove_.x, 0 });
 }
 
 void CameraArm::VerticalOrbitCamera()
 {
+
+	
+	//GetTransform().SetAddWorldRotation({ MouseMove_.y, 0, 0});
 }
 

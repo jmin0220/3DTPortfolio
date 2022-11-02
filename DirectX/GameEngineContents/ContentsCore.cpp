@@ -51,7 +51,8 @@ void ContentsCore::CreateKeys()
 	GameEngineInput::GetInst()->CreateKey("SpaceBar", VK_SPACE);
 }
 
-// 기본적인 리소스
+// 기본적인 리소스(UI, 로비, ...)
+// 스테이지의 메쉬들은 각각의 OnEvent에서 로드해야됨
 void ContentsCore::LoadResources()
 {
 	GameEngineDirectory Dir;

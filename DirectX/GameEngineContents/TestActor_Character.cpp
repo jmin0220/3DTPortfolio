@@ -15,27 +15,49 @@ TestActor_Character::~TestActor_Character()
 
 void TestActor_Character::Start()
 {
-	// 캐릭터 메쉬 로드 테스트용
-	FBXRenderer_ = CreateComponent<GameEngineFBXRenderer>();
-
 	// 기본적인 정육면체
-	float4 BoxSize = float4(100, 100, 100);
-	BoxRenderer_ = CreateComponent<GameEngineTextureRenderer>();
-	BoxRenderer_->SetMesh("Box");
-	BoxRenderer_->SetPipeLine("Color");
-	BoxColor_ = float4(0.0f, 0.7f, 0.7f, 0.9f);
-	BoxRenderer_->GetShaderResources().SetConstantBufferLink("ResultColor", BoxColor_);
-	BoxRenderer_->GetTransform().SetWorldScale(BoxSize);
+	float4 BoxSize = float4(100, 200, 100);
 
 	Collision_ = CreateComponent<GameEngineCollision>();
 	Collision_->ChangeOrder(CollisionGroup::Player);
 	Collision_->SetDebugSetting(CollisionType::CT_OBB, float4(1.0f, 0.0f, 0.0f, 0.5f));
 	Collision_->GetTransform().SetWorldScale(BoxSize);
+	Collision_->GetTransform().SetLocalMove({ 0, 100, 0 });
 
 	// 카메라 암
 	CameraArm_ = GetLevel()->CreateActor<CameraArm>();
 	CameraArm_->SetFollowCamera(GetLevel()->GetMainCameraActor(), this);
 
+
+	// 캐릭터 메쉬 로드 테스트용
+	FBXRenderer_ = CreateComponent<GameEngineFBXRenderer>();
+
+	// 캐릭터 텍스쳐 로드
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resources");
+		Dir.Move("Resources/Mesh/Character");
+
+		std::vector<GameEngineFile> Files = Dir.GetAllFile(".png");
+
+		for (size_t i = 0; i < Files.size(); i++)
+		{
+			GameEngineTexture::Load(Files[i].GetFullPath());
+		}
+	}
+
+	// 메쉬 로드
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resources");
+		Dir.Move("Resources/Mesh/Character");
+		
+		GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(Dir.PlusFilePath("Character.FBX"));
+		std::vector<FBXNodeInfo> Nodes = Mesh->CheckAllNode();
+
+		FBXRenderer_->SetFBXMesh("Character.FBX", "Texture");
+		FBXRenderer_->GetTransform().SetWorldScale({ 100, 100, 100 });
+	}
 }
 
 void TestActor_Character::Update(float _DeltaTime)
@@ -43,8 +65,6 @@ void TestActor_Character::Update(float _DeltaTime)
 	PlayerInputController();
 	ApplyGravity();
 	GetTransform().SetWorldMove(MoveDir_ * MoveSpeed * _DeltaTime);
-
-	// 움직이는 방향으로 몸체 회전
 
 }
 

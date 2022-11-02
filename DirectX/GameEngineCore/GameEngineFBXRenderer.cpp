@@ -60,7 +60,16 @@ void GameEngineFBXRenderer::SetFBXMesh(const std::string& _Name, std::string _Pi
 	{
 		const FbxExMaterialSettingData& MatData = FBXMesh->GetMaterialSettingData(Index, _SubSetIndex);
 
-		RenderUnit.ShaderResources.SetTexture("DiffuseTexture", MatData.DifTextureName);
+		// TODO::나중에 해야던다
+		if (0 != MatData.DifTextureName.compare(""))
+		{
+			RenderUnit.ShaderResources.SetTexture("DiffuseTexture", MatData.DifTextureName);
+		}
+		else
+		{
+			RenderUnit.ShaderResources.SetTexture("DiffuseTexture", "CH_CaveMan_AM.png");
+		}
+
 	}
 
 	RenderUnit.SetRenderer(this);

@@ -6,6 +6,7 @@ class CameraArm : public GameEngineActor
 {
 public:
 	void SetFollowCamera(GameEngineCameraActor* _Camera, GameEngineActor* _Character);
+	void SetArmLength(float _Depth, float _Height);
 
 public:
 	// constrcuter destructer
@@ -26,7 +27,7 @@ protected:
 private:
 	void FollowCharacterPosition();
 	void CameraLookPlayer();
-	void HorizontalOrbitCamera(float _DeltaTime);
+	void HorizontalOrbitCamera();
 	void VerticalOrbitCamera();
 
 private:
@@ -42,7 +43,8 @@ private:
 	GameEngineCollision* ArmCollision_;
 
 	// MouseÈ¸Àü
-	float4 PrevMouseInput;
-	float4 CurMouseInput;
+	float4 PrevMouseInput_;
+	float4 CurMouseInput_;
+	float4 MouseMove_;
 };
 
