@@ -25,9 +25,18 @@ void LoadingActor::Start()
 void LoadingActor::Update(float _DeltaTime)
 {
 	Time_ += GameEngineTime::GetDeltaTime();
+	float Speed = 1000.0f;
+
 	for (int i = 0; i < 5; i++)
 	{
-		Games_[i]->GetTransform().SetWorldPosition({ (800.0f * i) - (Time_ * 1000.0f) , 0.0f });
+		Games_[i]->GetTransform().SetWorldMove({ -Speed * GameEngineTime::GetDeltaTime() , 0.0f, 0.0f });
+		
+		LastGamesPos_ = Games_[4]->GetTransform().GetWorldPosition().x + 780.0f;//맨 마지막 그림 끝좌표 가져온다(오차 땜에 -20)
+
+		if (Games_[i]->GetTransform().GetWorldPosition().x <= -800.0f)
+		{
+			Games_[i]->GetTransform().SetWorldPosition({LastGamesPos_ + (i*800.0f), 0.0f});
+		}
 	}
 }
 
@@ -42,5 +51,7 @@ void LoadingActor::CreateGames()
 		Games_[i]->GetTransform().SetWorldPosition({ (800.0f * i) , 0.0f });
 
 		//i번째의 그림의 x좌표가 -800에 도달하면 i+10(마지막번호)뒤로 붙인다
+
+		
 	}
 }

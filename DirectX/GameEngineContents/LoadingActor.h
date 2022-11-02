@@ -27,6 +27,7 @@ private:
 	GameEngineTextureRenderer* BG_;
 	GameEngineTextureRenderer* Games_[5];
 	GameEngineUIRenderer* Game_;
+	float LastGamesPos_;
 	float Time_;
 };
 
