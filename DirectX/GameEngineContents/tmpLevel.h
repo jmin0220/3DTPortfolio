@@ -30,6 +30,9 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override;
 
+	void LevelStartEvent() override;
+	void LevelEndEvent() override;
+
 private:
 	TitleActor* TitleLogo;
 	Cursor* Mouse;
@@ -41,5 +44,7 @@ private:
 	PlayButton* StartButton;
 	TopMenu* Top;
 	CrownCount* Crown;
+
+	bool Swap;
 };
 

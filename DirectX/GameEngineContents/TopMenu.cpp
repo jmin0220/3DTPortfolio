@@ -99,16 +99,18 @@ void TopMenu::Update(float _DeltaTime)
 		ButtonCheck = PanelCol1->IsCollision(CollisionType::CT_OBB, CollisionGroup::Ray, CollisionType::CT_OBB,
 			[=](GameEngineCollision* _This, GameEngineCollision* _Other)
 			{
-				return CollisionReturn::ContinueCheck;
+				return CollisionReturn::Break;
 			});
-		
+		int a = 0;
 		if (ButtonCheck == false)
 		{
 			//충돌이 아니라면 원래 사이즈로 돌아간다
 			float4 f4CurrentScale = Panel1->GetTransform().GetWorldScale();
 			float4 f4DestinationScale = { 70,51.8 };
 			Panel1->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 15.f) });
+			a = 100;
 		}
+		int b = a;
 	}
 }
 
@@ -116,7 +118,7 @@ CollisionReturn TopMenu::ButtonOn(GameEngineCollision* _This, GameEngineCollisio
 {
 	//충돌하면 약간 버튼이 늘어남
 	float4 f4CurrentScale = Panel1->GetTransform().GetWorldScale();
-	float4 f4DestinationScale = { 80,51.8 };
+	float4 f4DestinationScale = { 90,51.8 };
 	Panel1->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 15.f) });
-	return CollisionReturn::ContinueCheck;
+	return CollisionReturn::Break;
 }

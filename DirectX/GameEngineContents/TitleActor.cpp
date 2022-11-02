@@ -13,18 +13,9 @@ TitleActor::~TitleActor()
 void TitleActor::Start()
 {
 	{
-		Renderer2 = CreateComponent<GameEngineTextureRenderer>();
-		Renderer2->GetTransform().SetLocalScale({ 1600, 900, 1 });
-		Renderer2->SetPivot(PIVOTMODE::CENTER);
-		Renderer2->GetTransform().SetLocalPosition({ -18,-82 });
-				
-		Renderer2->SetTexture("LobbySketch.png");
-		Renderer2->Off();
-	}
-
-	{
 		Logo = CreateComponent<GameEngineTextureRenderer>();
-		Logo->GetTransform().SetLocalScale({ 8.36f, 5.72f, 1 });
+		Logo->GetTransform().SetWorldScale({ 0, 0 });
+		Logo->GetTransform().SetWorldPosition({ 0, 70 });
 		Logo->SetPivot(PIVOTMODE::CENTER);
 
 		Logo->SetTexture("Logo.png");
@@ -45,6 +36,14 @@ void TitleActor::Update(float _DeltaTime)
 {
 	LogoSizeAnimation();
 	FontSizeAnimation();
+}
+
+void TitleActor::LevelStartEvent()
+{
+	Logo->GetTransform().SetWorldScale({ 0,0 });
+	Swap = false;
+	FontSize = 0.0f;
+	Font->Off();
 }
 
 void TitleActor::LogoSizeAnimation()
@@ -76,8 +75,6 @@ void TitleActor::LogoSizeAnimation()
 void TitleActor::FontSizeAnimation()
 {
 	{
-		//폰트 사이즈가 30이 될때까지 0에서 점점 커진다
-
 		if (FontSize < 30.0f && Swap==true)
 		{
 			Font->On();

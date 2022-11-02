@@ -14,6 +14,7 @@
 
 tmpLevel::tmpLevel() 
 	:Font(nullptr)
+	,Swap(false)
 {
 }
 
@@ -24,8 +25,6 @@ tmpLevel::~tmpLevel()
 void tmpLevel::Start()
 {
 	TitleLogo = CreateActor<TitleActor>();
-	TitleLogo->GetTransform().SetLocalPosition({ 800,-450 });
-	TitleLogo->GetTransform().SetLocalPosition({ -400 + 418, 225 - 143 });
 
 	Name = CreateActor<NamePlate>();
 
@@ -46,8 +45,19 @@ void tmpLevel::Start()
 
 void tmpLevel::Update(float _DeltaTime)
 {
+	TitleLogo->FontSizeAnimation();//뒤늦게 들어오기땜에 Update에 있어야함
 }
 
 void tmpLevel::End()
 {
 }
+
+void tmpLevel::LevelStartEvent()
+{
+	TitleLogo->LogoSizeAnimation();
+}
+
+void tmpLevel::LevelEndEvent()
+{
+}
+

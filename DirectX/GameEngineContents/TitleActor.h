@@ -21,15 +21,22 @@ public:
 		return Logo;
 	}
 
+	GameEngineFontRenderer* GetFont()
+	{
+		return Font;
+	}
+
 	void FontSizeAnimation();
 	void LogoSizeAnimation();
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void End() override {};
+
+	void LevelStartEvent() override;
+
 private:
 	GameEngineTextureRenderer* Logo;
-	GameEngineTextureRenderer* Renderer2;
 	GameEngineFontRenderer* Font;
 
 	float FontSize;

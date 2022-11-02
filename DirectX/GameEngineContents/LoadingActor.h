@@ -18,6 +18,7 @@ public:
 	LoadingActor& operator=(LoadingActor&& _Other) noexcept = delete;
 	
 	void CreateGames();
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
