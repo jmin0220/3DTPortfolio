@@ -201,6 +201,12 @@
     <ClInclude Include="PhysicXComponent.h">
       <Filter>999_Test\TestComponent\TestPhysX</Filter>
     </ClInclude>
+    <ClInclude Include="PhysicXStackComponent.h">
+      <Filter>999_Test\TestComponent\TestPhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysXTestStackBox.h">
+      <Filter>999_Test\TestActor\PhysicX</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -331,6 +337,12 @@
     </ClCompile>
     <ClCompile Include="PhysicXComponent.cpp">
       <Filter>999_Test\TestComponent\TestPhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicXStackComponent.cpp">
+      <Filter>999_Test\TestComponent\TestPhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXTestStackBox.cpp">
+      <Filter>999_Test\TestActor\PhysicX</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

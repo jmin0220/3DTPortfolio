@@ -228,7 +228,15 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="PhysicXStackComponent.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="PhysXTestBox.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="PhysXTestStackBox.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -348,7 +356,15 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="PhysicXStackComponent.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="PhysXTestBox.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="PhysXTestStackBox.cpp">
       <SubType>
       </SubType>
     </ClCompile>

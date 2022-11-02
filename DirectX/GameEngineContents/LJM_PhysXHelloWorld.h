@@ -3,7 +3,6 @@
 #include <GameEngineCore/ThirdParty/inc/PhysX/PxConfig.h>
 #include <GameEngineCore/ThirdParty/inc/PhysX/PxPhysicsAPI.h>
 
-#include "PhysXTestBox.h"
 
 using namespace physx;
 
@@ -26,9 +25,6 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override;
 	
-	// 물리 결과를 저장할 Actor Vector
-	// std::vector<PhysXTestBox*> testBoxVector_;
-
 	float4 CurDynamicPos_;
 	
 	// Foundation을 생성하는데 필요한 변수
