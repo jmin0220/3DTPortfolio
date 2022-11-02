@@ -21,11 +21,17 @@ protected:
 
 private:
 	void DebugPicking();
+	void LoadSave();
 	void UpdateData();
+	
+	void Load();
+	void Save();
+	
 	bool IsChange_;
 
 	GameEngineLevel* ConnectedLevel;
 	GameEngineActor* CurActor_;
+	std::vector<GameEngineActor*> ActorVector_;
 
 	float Scale[3];
 	float Rotate[3];

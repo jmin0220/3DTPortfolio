@@ -46,6 +46,7 @@ void MapEditorGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 	{
 		GameEngineActor* Box = GEngine::GetCurrentLevel()->CreateActor<ColorBox>();
 		Box->GetTransform().SetWorldPosition({ 0, 0, 300 });
+		ActorVector_.push_back(Box);
 
 		ActorPicker::SelectedActor = Box;
 	}
@@ -54,7 +55,37 @@ void MapEditorGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 		std::string Name = "MainCameraWorldPos : " + std::to_string(Pos.x) + " | " + std::to_string(Pos.y) + " | " + std::to_string(Pos.z);
 		ImGui::Text(Name.c_str());
 	}
+	
+	/*ImGui::BeginChild("mesh", ImVec2(200, 100), true);
+	ImGui::EndChild();
 
+	ImGui::SameLine();*/
+
+	static int Num = 0;
+	ImGui::BeginChild("MeshList", ImVec2(200, 100), true);
+	if (0 == ActorVector_.size())
+	{
+		if (ImGui::Selectable("Null", Num == 0))
+		{
+			Num = 0;
+		}
+	}
+	else
+	{
+		for (int i = 0; i < ActorVector_.size(); ++i)
+		{
+			std::string Temp = "CreateBox";
+			
+			if (ImGui::Selectable((Temp + std::to_string(i)).c_str(), Num == i))
+			{
+				Num = i;
+				ActorPicker::SelectedActor = ActorVector_[i];
+			}
+		}
+	}
+	ImGui::EndChild();
+
+	LoadSave();
 	DebugPicking();
 
 }
@@ -148,6 +179,21 @@ void MapEditorGUI::DebugPicking()
 	}
 }
 
+void MapEditorGUI::LoadSave()
+{
+	if (true == ImGui::Button("Load"))
+	{
+		Load();
+	}
+
+	ImGui::SameLine();
+
+	if (true == ImGui::Button("Save"))
+	{
+		Save();
+	}
+}
+
 void MapEditorGUI::UpdateData()
 {
 	if (nullptr == CurActor_ || true == IsChange_)
@@ -170,4 +216,12 @@ void MapEditorGUI::UpdateData()
 	Position[0] = { Pos.x };
 	Position[1] = { Pos.y };
 	Position[2] = { Pos.z };
+}
+
+void MapEditorGUI::Load()
+{	
+}
+
+void MapEditorGUI::Save()
+{
 }
