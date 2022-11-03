@@ -67,6 +67,9 @@
     <Filter Include="999_Test\TestComponent\TestPhysX">
       <UniqueIdentifier>{f2d18f40-f3b8-40bd-8cea-eab2ea5bb6ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="999_Test\TestLevel\PhysXTest">
+      <UniqueIdentifier>{41834d66-8f8c-46e1-bbe3-a9329e237bf2}</UniqueIdentifier>
+    </Filter>
     <Filter Include="999_Test\TestActor\CameraTest">
       <UniqueIdentifier>{8a75dd40-cfa2-4a2a-be3e-2623724a96da}</UniqueIdentifier>
     </Filter>
@@ -171,9 +174,6 @@
     <ClInclude Include="CameraTestLevel.h">
       <Filter>999_Test\TestLevel</Filter>
     </ClInclude>
-    <ClInclude Include="LJM_PhysXHelloWorld.h">
-      <Filter>999_Test\TestLevel</Filter>
-    </ClInclude>
     <ClInclude Include="PhysicsTestLevel.h">
       <Filter>999_Test\TestLevel</Filter>
     </ClInclude>
@@ -208,6 +208,15 @@
       <Filter>999_Test\TestComponent\TestPhysX</Filter>
     </ClInclude>
     <ClInclude Include="PhysXTestStackBox.h">
+      <Filter>999_Test\TestActor\PhysicX</Filter>
+    </ClInclude>
+    <ClInclude Include="LJM_PhysXHelloWorld.h">
+      <Filter>999_Test\TestLevel\PhysXTest</Filter>
+    </ClInclude>
+    <ClInclude Include="LJM_PhysXPlayerTest.h">
+      <Filter>999_Test\TestLevel\PhysXTest</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysXTestPlayer.h">
       <Filter>999_Test\TestActor\PhysicX</Filter>
     </ClInclude>
   </ItemGroup>
@@ -311,9 +320,6 @@
     <ClCompile Include="CameraTestLevel.cpp">
       <Filter>999_Test\TestLevel</Filter>
     </ClCompile>
-    <ClCompile Include="LJM_PhysXHelloWorld.cpp">
-      <Filter>999_Test\TestLevel</Filter>
-    </ClCompile>
     <ClCompile Include="PhysicsTestLevel.cpp">
       <Filter>999_Test\TestLevel</Filter>
     </ClCompile>
@@ -348,6 +354,15 @@
       <Filter>999_Test\TestComponent\TestPhysX</Filter>
     </ClCompile>
     <ClCompile Include="PhysXTestStackBox.cpp">
+      <Filter>999_Test\TestActor\PhysicX</Filter>
+    </ClCompile>
+    <ClCompile Include="LJM_PhysXHelloWorld.cpp">
+      <Filter>999_Test\TestLevel\PhysXTest</Filter>
+    </ClCompile>
+    <ClCompile Include="LJM_PhysXPlayerTest.cpp">
+      <Filter>999_Test\TestLevel\PhysXTest</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXTestPlayer.cpp">
       <Filter>999_Test\TestActor\PhysicX</Filter>
     </ClCompile>
   </ItemGroup>

@@ -88,7 +88,7 @@ void GameEngineStatusWindow::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 			GameEngineCore::ChangeLevel(Pair.first);
 		}
 
-		ImGui::SameLine();
+		//ImGui::SameLine();
 	}
 
 	ImGui::NewLine();

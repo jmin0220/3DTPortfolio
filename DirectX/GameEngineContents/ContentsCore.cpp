@@ -6,6 +6,7 @@
 #include "MapEditorGUI.h"
 #include "PhysicsTestLevel.h"
 #include "LJM_PhysXHelloWorld.h"
+#include "LJM_PhysXPlayerTest.h"
 #include "CameraTestLevel.h"
 
 #pragma comment(lib, "GameEngineBase.lib")
@@ -72,7 +73,20 @@ void ContentsCore::LoadResources()
 	GameEngineFont::Load("Noto Sans CJK SC");//폴가이즈 폰트
 	GameEngineFont::Load("Titan One");
 	
+	// TODO::테스트용 임시코드
+	// 캐릭터 텍스쳐 로드
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resources");
+		Dir.Move("Resources/Mesh/Character");
 
+		std::vector<GameEngineFile> Files = Dir.GetAllFile(".png");
+
+		for (size_t i = 0; i < Files.size(); i++)
+		{
+			GameEngineTexture::Load(Files[i].GetFullPath());
+		}
+	}
 
 
 
@@ -100,6 +114,7 @@ void ContentsCore::CreateLevels()
 	CreateLevel<MapEditorLevel>("MapEditorLevel");
 	CreateLevel<PhysicsTestLevel>("PhysicsTestLevel");
 	CreateLevel<LJM_PhysXHelloWorld>("LJM_PhysXHelloWorld");
+	CreateLevel<LJM_PhysXPlayerTest>("LJM_PhysXPlayerTest");
 	CreateLevel<CameraTestLevel>("CameraTestLevel");
 	ChangeLevel("MapEditorLevel");
 }
