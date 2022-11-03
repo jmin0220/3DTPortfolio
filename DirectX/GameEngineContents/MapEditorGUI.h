@@ -32,6 +32,7 @@ private:
 	GameEngineLevel* ConnectedLevel;
 	GameEngineActor* CurActor_;
 	std::vector<GameEngineActor*> ActorVector_;
+	std::string SelectFolderTexture_;
 
 	float Scale[3];
 	float Rotate[3];

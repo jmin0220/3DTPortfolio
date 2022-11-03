@@ -56,10 +56,40 @@ void MapEditorGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 		ImGui::Text(Name.c_str());
 	}
 	
-	/*ImGui::BeginChild("mesh", ImVec2(200, 100), true);
+	if (true == ImGui::Button("ResLoad"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resources");
+		Dir.Move("Resources");
+		Dir.Move("Mesh");
+
+		std::string Path = GameEngineGUI::OpenFolderDlg(GameEngineString::AnsiToUTF8Return("폴더 매쉬 로드"), Dir.GetFullPath());
+
+		if (false == Path.empty())
+		{
+			SelectFolderTexture_ = GameEnginePath::GetFileName(Path);
+
+			//Dir.Move(SelectFolderTexture_);
+			
+			/*GameEngineDirectory MeshDir = Dir;
+			MeshDir.Move(SelectFolderTexture_);
+			GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(MeshDir.PlusFilePath(SelectFolderTexture_ + ".FBX"));*/
+			
+			//GameEngineFBXMesh::Load(MeshDir.PlusFilePath("Character.FBX"))
+			// 매쉬 로드 후 생성
+			// json 파일로 출력 save, Load
+		}
+	}
+
+	ImGui::BeginChild("MeshLoad", ImVec2(200, 100), true);
 	ImGui::EndChild();
 
-	ImGui::SameLine();*/
+	if (false == SelectFolderTexture_.empty())
+	{
+
+	}
+
+	ImGui::SameLine();
 
 	static int Num = 0;
 	ImGui::BeginChild("MeshList", ImVec2(200, 100), true);
