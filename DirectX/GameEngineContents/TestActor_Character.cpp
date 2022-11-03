@@ -34,26 +34,18 @@ void TestActor_Character::Start()
 	FBXRenderer_ = CreateComponent<GameEngineFBXRenderer>();
 
 
-		std::vector<GameEngineFile> Files = Dir.GetAllFile(".png");
-
-		for (size_t i = 0; i < Files.size(); i++)
-		{
-			GameEngineTexture::Load(Files[i].GetFullPath());
-		}
-	}
-
 	// 메쉬 로드
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExitsChildDirectory("Resources");
-		Dir.Move("Resources/Mesh/Character");
-		
-		GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(Dir.PlusFilePath("Character.FBX"));
-		std::vector<FBXNodeInfo> Nodes = Mesh->CheckAllNode();
+	//{
+	//	GameEngineDirectory Dir;
+	//	Dir.MoveParentToExitsChildDirectory("Resources");
+	//	Dir.Move("Resources/Mesh/Character");
+	//	
+	//	GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(Dir.PlusFilePath("Character.FBX"));
+	//	std::vector<FBXNodeInfo> Nodes = Mesh->CheckAllNode();
 
-		FBXRenderer_->SetFBXMesh("Character.FBX", "Texture");
-		FBXRenderer_->GetTransform().SetWorldScale({ 100, 100, 100 });
-	}
+	//	FBXRenderer_->SetFBXMesh("Character.FBX", "Texture");
+	//	FBXRenderer_->GetTransform().SetWorldScale({ 100, 100, 100 });
+	//}
 }
 
 void TestActor_Character::Update(float _DeltaTime)
