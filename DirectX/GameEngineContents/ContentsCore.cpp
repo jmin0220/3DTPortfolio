@@ -82,8 +82,6 @@ void ContentsCore::LoadResources()
 		Dir.MoveParentToExitsChildDirectory("Resources");
 		Dir.Move("Resources");
 		Dir.Move("Games");
-	GameEngineFont::Load("Noto Sans CJK SC");//폴가이즈 폰트
-	GameEngineFont::Load("Titan One");
 
 	// TODO::테스트용 임시코드
 	// 캐릭터 텍스쳐 로드
