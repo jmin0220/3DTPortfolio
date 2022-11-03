@@ -11,6 +11,7 @@
 #include "PlayButton.h"
 #include "TopMenu.h"
 #include "CrownCount.h"
+#include "StartGameTitleActor.h"
 
 tmpLevel::tmpLevel() 
 	:Font(nullptr)
@@ -39,6 +40,8 @@ void tmpLevel::Start()
 	Top = CreateActor<TopMenu>();
 
 	Crown = CreateActor<CrownCount>();
+
+	Startbar_ = CreateActor<StartGameTitleActor>();
 
 	Mouse = CreateActor<Cursor>();
 }

@@ -67,6 +67,9 @@
     <Filter Include="999_Test\TestComponent\TestPhysX">
       <UniqueIdentifier>{f2d18f40-f3b8-40bd-8cea-eab2ea5bb6ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02_Actor\UIActor\InGameUI">
+      <UniqueIdentifier>{5c680959-11ae-41e0-b570-c7bc5e857171}</UniqueIdentifier>
+    </Filter>
     <Filter Include="999_Test\TestLevel\PhysXTest">
       <UniqueIdentifier>{41834d66-8f8c-46e1-bbe3-a9329e237bf2}</UniqueIdentifier>
     </Filter>
@@ -222,6 +225,9 @@
     <ClInclude Include="TestMapActor.h">
       <Filter>999_Test\TestActor</Filter>
     </ClInclude>
+    <ClInclude Include="StartGameTitleActor.h">
+      <Filter>02_Actor\UIActor\InGameUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -370,6 +376,9 @@
     </ClCompile>
     <ClCompile Include="TestMapActor.cpp">
       <Filter>999_Test\TestActor</Filter>
+    </ClCompile>
+    <ClCompile Include="StartGameTitleActor.cpp">
+      <Filter>02_Actor\UIActor\InGameUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

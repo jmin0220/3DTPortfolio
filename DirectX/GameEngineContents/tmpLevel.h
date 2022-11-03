@@ -12,6 +12,7 @@ class SelectShowButton;
 class PlayButton;
 class TopMenu;
 class CrownCount;
+class StartGameTitleActor;
 class tmpLevel : public GameEngineLevel
 {
 public:
@@ -44,6 +45,7 @@ private:
 	PlayButton* StartButton;
 	TopMenu* Top;
 	CrownCount* Crown;
+	StartGameTitleActor* Startbar_;
 
 	bool Swap;
 };

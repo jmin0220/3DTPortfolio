@@ -56,20 +56,32 @@ void ContentsCore::CreateKeys()
 // 스테이지의 메쉬들은 각각의 OnEvent에서 로드해야됨
 void ContentsCore::LoadResources()
 {
-	GameEngineDirectory Dir;
-	Dir.MoveParentToExitsChildDirectory("Resources");
-	Dir.Move("Resources");
-
-	// 텍스쳐 로드
 	{
-		std::vector<GameEngineFile> Files = Dir.GetAllFile();
+		//스프라이트
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resources");
+		Dir.Move("Resources");
 
-		for (size_t i = 0; i < Files.size(); i++)
+		// 텍스쳐 로드
 		{
-			GameEngineTexture::Load(Files[i].GetFullPath());
+			std::vector<GameEngineFile> Files = Dir.GetAllFile();
+
+			for (size_t i = 0; i < Files.size(); i++)
+			{
+				GameEngineTexture::Load(Files[i].GetFullPath());
+			}
 		}
+
+		GameEngineFont::Load("Noto Sans CJK SC");//폴가이즈 폰트
+		GameEngineFont::Load("Titan One");
 	}
 
+	{
+		//게임 설명샷
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resources");
+		Dir.Move("Resources");
+		Dir.Move("Games");
 	GameEngineFont::Load("Noto Sans CJK SC");//폴가이즈 폰트
 	GameEngineFont::Load("Titan One");
 
@@ -85,6 +97,16 @@ void ContentsCore::LoadResources()
 		for (size_t i = 0; i < Files.size(); i++)
 		{
 			GameEngineTexture::Load(Files[i].GetFullPath());
+		}
+	}
+		// 텍스쳐 로드
+		{
+			std::vector<GameEngineFile> Files = Dir.GetAllFile();
+
+			for (size_t i = 0; i < Files.size(); i++)
+			{
+				GameEngineTexture::Load(Files[i].GetFullPath());
+			}
 		}
 	}
 

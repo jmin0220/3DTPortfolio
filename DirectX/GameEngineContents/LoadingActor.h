@@ -26,8 +26,13 @@ protected:
 private:
 	GameEngineTextureRenderer* BG_;
 	GameEngineTextureRenderer* Games_[5];
-	GameEngineUIRenderer* Game_;
+	GameEngineTextureRenderer* Game_;
+	GameEngineUIRenderer* Exit_;
+	GameEngineUIRenderer* ExitButton_;
+	GameEngineFontRenderer* Font_;
+	GameEngineFontRenderer* ExitFont_;
 	float LastGamesPos_;
 	float Time_;
+	int RandomNum_;
 };
 
