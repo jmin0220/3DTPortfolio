@@ -67,7 +67,7 @@ void GameEngineFBXRenderer::SetFBXMesh(const std::string& _Name, std::string _Pi
 		}
 		else
 		{
-			RenderUnit.ShaderResources.SetTexture("DiffuseTexture", "CH_CaveMan_AM.png");
+			RenderUnit.ShaderResources.SetTexture("DiffuseTexture", "CH_Tanager_AM.png");
 		}
 
 	}

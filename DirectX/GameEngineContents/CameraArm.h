@@ -24,6 +24,9 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override {};
 
+	void OnEvent() override;
+	void OffEvent() override;
+
 private:
 	void FollowCharacterPosition();
 	void CameraLookPlayer();
@@ -36,11 +39,11 @@ private:
 
 	// ArmVector : 최초 카메라 피벗위치
 	float4 ArmVector_;
-	float4 PosCameraArm_;
+	float4 PosCamHolder_;
 	float4 PosCharacter_;
 
 	// 카메라를 고정시키는 위치(벽에 부딪히는 용도)
-	GameEngineCollision* ArmCollision_;
+	GameEngineCollision* CamHolderCollision_;
 
 	// Mouse회전
 	float4 PrevMouseInput_;

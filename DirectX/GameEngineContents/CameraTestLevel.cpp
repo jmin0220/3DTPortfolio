@@ -21,12 +21,7 @@ void CameraTestLevel::Start()
 		GetMainCameraActor()->GetTransform().SetWorldMove({ 0, 200, -3000 });
 	}
 
-	GEngine::CollisionDebugOff();
 
-	TestActor_WaterPlane* Floor = CreateActor<TestActor_WaterPlane>();
-
-	Player_ = CreateActor<TestActor_Character>();
-	Player_->GetTransform().SetWorldPosition({ 0, 300, 0 });
 
 
 }
@@ -42,11 +37,43 @@ void CameraTestLevel::End()
 
 void CameraTestLevel::LevelStartEvent()
 {
+	// 로드 겹치면 에러 발생
+	// 캐릭터 텍스쳐 로드
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resources");
+		Dir.Move("Resources/Mesh/Character");
 
+		std::vector<GameEngineFile> Files = Dir.GetAllFile(".png");
+
+		for (size_t i = 0; i < Files.size(); i++)
+		{
+			GameEngineTexture::Load(Files[i].GetFullPath());
+		}
+	}
+
+	// 메쉬 로드
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resources");
+		Dir.Move("Resources/Mesh/Character");
+
+		GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(Dir.PlusFilePath("Character.FBX"));
+		std::vector<FBXNodeInfo> Nodes = Mesh->CheckAllNode();
+	}
+
+	
+	GEngine::CollisionDebugOff();
+
+	Floor_ = CreateActor<TestActor_WaterPlane>();
+
+	Player_ = CreateActor<TestActor_Character>();
+	Player_->GetTransform().SetWorldPosition({ 0, 300, 0 });
 }
 
 void CameraTestLevel::LevelEndEvent()
 {
-
+	Player_->Death();
+	Floor_->Death();
 }
 

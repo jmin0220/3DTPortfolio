@@ -14,5 +14,8 @@
     </FxCompile>
     <FxCompile Include="RenderOption.fx" />
     <FxCompile Include="TransformHeader.fx" />
+    <FxCompile Include="TextureCustom.hlsl">
+      <Filter>Texture</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

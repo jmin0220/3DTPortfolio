@@ -36,5 +36,7 @@ private:
 	// 정보
 	float4 MoveDir_;
 
+	// 쉐이더 이용해보기
+	float4 TexPosPivot_;
 };
 

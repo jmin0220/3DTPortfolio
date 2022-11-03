@@ -26,6 +26,7 @@ protected:
 private:
 
 private:
+	class TestActor_WaterPlane* Floor_;
 	GameEngineActor* Player_;
 };
 

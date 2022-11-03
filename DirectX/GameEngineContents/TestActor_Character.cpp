@@ -28,38 +28,15 @@ void TestActor_Character::Start()
 	// 카메라 암
 	CameraArm_ = GetLevel()->CreateActor<CameraArm>();
 	CameraArm_->SetFollowCamera(GetLevel()->GetMainCameraActor(), this);
-
+	CameraArm_->On();
 
 	// 캐릭터 메쉬 로드 테스트용
 	FBXRenderer_ = CreateComponent<GameEngineFBXRenderer>();
 
-	// 캐릭터 텍스쳐 로드
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExitsChildDirectory("Resources");
-		Dir.Move("Resources/Mesh/Character");
 
-		std::vector<GameEngineFile> Files = Dir.GetAllFile(".png");
 
-		for (size_t i = 0; i < Files.size(); i++)
-		{
-			GameEngineTexture::Load(Files[i].GetFullPath());
-		}
-	}
-
-	// 메쉬 로드
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExitsChildDirectory("Resources");
-		Dir.Move("Resources/Mesh/Character");
-		
-		GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(Dir.PlusFilePath("Character.FBX"));
-		std::vector<FBXNodeInfo> Nodes = Mesh->CheckAllNode();
-
-		FBXRenderer_->SetFBXMesh("Character.FBX", "Texture");
-		FBXRenderer_->GetTransform().SetWorldScale({ 100, 100, 100 });
-	}
-
+	FBXRenderer_->SetFBXMesh("Character.FBX", "TextureCustom");
+	FBXRenderer_->GetTransform().SetWorldScale({ 100, 100, 100 });
 
 }
 
@@ -73,6 +50,7 @@ void TestActor_Character::Update(float _DeltaTime)
 
 void TestActor_Character::End()
 {
+	CameraArm_->Off();
 }
 
 void TestActor_Character::PlayerInputController()

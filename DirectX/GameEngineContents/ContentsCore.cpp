@@ -124,4 +124,10 @@ void ContentsCore::LoadShaders()
 		Material->SetVertexShader("WaterShader.hlsl");
 		Material->SetPixelShader("WaterShader.hlsl");
 	}
+
+	{
+		GameEngineMaterial* Material = GameEngineMaterial::Create("TextureCustom");
+		Material->SetVertexShader("TextureCustom.hlsl");
+		Material->SetPixelShader("TextureCustom.hlsl");
+	}
 }
