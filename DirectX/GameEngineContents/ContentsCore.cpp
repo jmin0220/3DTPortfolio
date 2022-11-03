@@ -72,7 +72,7 @@ void ContentsCore::LoadResources()
 
 	GameEngineFont::Load("Noto Sans CJK SC");//폴가이즈 폰트
 	GameEngineFont::Load("Titan One");
-	
+
 	// TODO::테스트용 임시코드
 	// 캐릭터 텍스쳐 로드
 	{
@@ -102,6 +102,21 @@ void ContentsCore::LoadResources()
 			GameEngineDirectory MeshDir = Dir;
 			MeshDir.Move("RainBow");
 			GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(MeshDir.PlusFilePath("Rainbow.FBX"));
+			std::vector<FBXNodeInfo> Nodes = Mesh->CheckAllNode();
+		}
+
+	}
+
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resources");
+		Dir.Move("Resources");
+		Dir.Move("Mesh");
+
+		{
+			GameEngineDirectory MeshDir = Dir;
+			MeshDir.Move("TestMap");
+			GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(MeshDir.PlusFilePath("TestMap.FBX"));
 			std::vector<FBXNodeInfo> Nodes = Mesh->CheckAllNode();
 		}
 	}

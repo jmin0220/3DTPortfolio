@@ -271,6 +271,10 @@
     </ClInclude>
     <ClInclude Include="TestBox.h" />
     <ClInclude Include="TestGround.h" />
+    <ClInclude Include="TestMapActor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="TestPlayer.h" />
     <ClInclude Include="TestRainBow.h">
       <SubType>
@@ -414,6 +418,10 @@
     </ClCompile>
     <ClCompile Include="TestBox.cpp" />
     <ClCompile Include="TestGround.cpp" />
+    <ClCompile Include="TestMapActor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="TestPlayer.cpp" />
     <ClCompile Include="TestRainBow.cpp">
       <SubType>

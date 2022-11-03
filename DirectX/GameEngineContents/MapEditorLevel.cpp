@@ -7,6 +7,7 @@
 #include "YAxis.h"
 #include "ZAxis.h"
 #include "TestRainBow.h"
+#include "TestMapActor.h"
 
 
 #include "MapEditorGUI.h"
@@ -33,9 +34,16 @@ void MapEditorLevel::Start()
 
 
 
+	//{
+	//	TestRainBow* RainBow = CreateActor<TestRainBow>();
+	//	RainBow->GetTransform().SetWorldPosition({ -200.0f,0,0 });
+
+	//}
+
+
 	{
-		TestRainBow* RainBow = CreateActor<TestRainBow>();
-		RainBow->GetTransform().SetWorldPosition({ -200.0f,0,0 });
+		TestMapActor* TestMap = CreateActor<TestMapActor>();
+		TestMap->GetTransform().SetWorldPosition({ 0,0,0 });
 
 	}
 

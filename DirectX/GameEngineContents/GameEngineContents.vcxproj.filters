@@ -219,6 +219,9 @@
     <ClInclude Include="PhysXTestPlayer.h">
       <Filter>999_Test\TestActor\PhysicX</Filter>
     </ClInclude>
+    <ClInclude Include="TestMapActor.h">
+      <Filter>999_Test\TestActor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -364,6 +367,9 @@
     </ClCompile>
     <ClCompile Include="PhysXTestPlayer.cpp">
       <Filter>999_Test\TestActor\PhysicX</Filter>
+    </ClCompile>
+    <ClCompile Include="TestMapActor.cpp">
+      <Filter>999_Test\TestActor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
