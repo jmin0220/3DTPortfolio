@@ -228,6 +228,9 @@
     <ClInclude Include="StartGameTitleActor.h">
       <Filter>02_Actor\UIActor\InGameUI</Filter>
     </ClInclude>
+    <ClInclude Include="GoalTipActor.h">
+      <Filter>02_Actor\UIActor\InGameUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -378,6 +381,9 @@
       <Filter>999_Test\TestActor</Filter>
     </ClCompile>
     <ClCompile Include="StartGameTitleActor.cpp">
+      <Filter>02_Actor\UIActor\InGameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GoalTipActor.cpp">
       <Filter>02_Actor\UIActor\InGameUI</Filter>
     </ClCompile>
   </ItemGroup>
