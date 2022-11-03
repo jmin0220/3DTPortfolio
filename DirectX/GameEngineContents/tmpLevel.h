@@ -14,6 +14,7 @@ class TopMenu;
 class CrownCount;
 class StartGameTitleActor;
 class GoalTipActor;
+class CountDown;
 class tmpLevel : public GameEngineLevel
 {
 public:
@@ -48,6 +49,7 @@ private:
 	CrownCount* Crown;
 	StartGameTitleActor* Startbar_;
 	GoalTipActor* Tip_;
+	CountDown* CountDownActor_;
 
 	bool Swap;
 };

@@ -231,6 +231,9 @@
     <ClInclude Include="GoalTipActor.h">
       <Filter>02_Actor\UIActor\InGameUI</Filter>
     </ClInclude>
+    <ClInclude Include="CountDown.h">
+      <Filter>02_Actor\UIActor\InGameUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -384,6 +387,9 @@
       <Filter>02_Actor\UIActor\InGameUI</Filter>
     </ClCompile>
     <ClCompile Include="GoalTipActor.cpp">
+      <Filter>02_Actor\UIActor\InGameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CountDown.cpp">
       <Filter>02_Actor\UIActor\InGameUI</Filter>
     </ClCompile>
   </ItemGroup>

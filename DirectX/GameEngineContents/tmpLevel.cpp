@@ -13,6 +13,7 @@
 #include "CrownCount.h"
 #include "StartGameTitleActor.h"
 #include "GoalTipActor.h"
+#include "CountDown.h"
 
 tmpLevel::tmpLevel() 
 	:Font(nullptr)
@@ -46,6 +47,8 @@ void tmpLevel::Start()
 	
 	Tip_ = CreateActor<GoalTipActor>();
 
+	CountDownActor_ = CreateActor<CountDown>();
+
 	Mouse = CreateActor<Cursor>();
 	
 }
@@ -53,6 +56,7 @@ void tmpLevel::Start()
 void tmpLevel::Update(float _DeltaTime)
 {
 	TitleLogo->FontSizeAnimation();//뒤늦게 들어오기땜에 Update에 있어야함
+	CountDownActor_->CountDownStart();
 }
 
 void tmpLevel::End()
@@ -62,6 +66,7 @@ void tmpLevel::End()
 void tmpLevel::LevelStartEvent()
 {
 	TitleLogo->LogoSizeAnimation();
+	
 }
 
 void tmpLevel::LevelEndEvent()

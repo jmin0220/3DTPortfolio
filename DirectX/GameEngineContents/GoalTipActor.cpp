@@ -21,7 +21,7 @@ void GoalTipActor::Start()
 	Font_->SetSize(30.0f);
 	Font_->ChangeCamera(CAMERAORDER::UICAMERA);
 	Font_->SetLeftAndRightSort(LeftAndRightSort::CENTER);
-	Font_->SetText("결승선에 도달하세요", "Noto Sans CJK SC");
+	Font_->SetText("결승선에 도달하세요!", "Noto Sans CJK SC");
 	Font_->SetScreenPostion({ 210.0f, 70.0f });
 
 }
