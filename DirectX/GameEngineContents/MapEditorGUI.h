@@ -1,6 +1,13 @@
 #pragma once
 #include <GameEngineCore/GameEngineGUI.h>
 
+struct SpawnedObject
+{
+	std::string Name_;
+	std::string Dir_;
+	GameEngineActor* Actor_;
+};
+
 // 설명 :
 class MapEditorGUI : public GameEngineGUIWindow
 {
@@ -20,7 +27,7 @@ protected:
 	void OnGUI(GameEngineLevel* _Level, float _DeltaTime) override;
 
 private:
-	void DebugPicking();
+	void ActorPicking();
 	void LoadSave();
 	void UpdateData();
 	
@@ -31,11 +38,20 @@ private:
 
 	GameEngineLevel* ConnectedLevel;
 	GameEngineActor* CurActor_;
-	std::vector<GameEngineActor*> ActorVector_;
+
 	std::string SelectFolderTexture_;
 
-	float Scale[3];
-	float Rotate[3];
 	float Position[3];
+	float Rotate[3];
+	float Scale[3];
+
+	// ResLoad클릭시 폴더리스트
+	std::vector<GameEngineDirectory> Folders_;
+
+	// 폴더안 FBX들
+	std::vector<GameEngineFile> FBXFiles_;
+
+	// 소환 된 액터
+	std::vector<SpawnedObject> SpawnedObjects_;
 };
 

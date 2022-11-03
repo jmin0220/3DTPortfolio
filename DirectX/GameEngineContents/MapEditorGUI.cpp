@@ -5,6 +5,9 @@
 #include "ActorPicker.h"
 #include "ColorBox.h"
 
+const float SliderFloatMin = -100000;
+const float SliderFloatMax = 100000;
+
 MapEditorGUI::MapEditorGUI()
 	: IsChange_(false)
 {
@@ -28,11 +31,11 @@ void MapEditorGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 		return;
 	}
 
-
 	if (true == ImGui::Button("FreeCameaOnOff"))
 	{
 		_Level->GetMainCameraActor()->FreeCameraModeOnOff();
 	}
+
 
 	ImGui::SameLine();
 	if (true == ImGui::Button("CollisionDebugSwtich"))
@@ -40,87 +43,129 @@ void MapEditorGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 		GEngine::CollisionDebugSwitch();
 	}
 
-	ImGui::SameLine();
-	//ImGui::InputFloat3;
-	if (true == ImGui::Button("CreateBox"))
-	{
-		GameEngineActor* Box = GEngine::GetCurrentLevel()->CreateActor<ColorBox>();
-		Box->GetTransform().SetWorldPosition({ 0, 0, 300 });
-		ActorVector_.push_back(Box);
 
-		ActorPicker::SelectedActor = Box;
-	}
 	{
 		float4 Pos = _Level->GetMainCamera()->GetTransform().GetWorldPosition();
 		std::string Name = "MainCameraWorldPos : " + std::to_string(Pos.x) + " | " + std::to_string(Pos.y) + " | " + std::to_string(Pos.z);
 		ImGui::Text(Name.c_str());
 	}
 	
-	if (true == ImGui::Button("ResLoad"))
+	////////////////////////////////////////////////////
+	//		LoadFBXs 클릭
+	////////////////////////////////////////////////////
+	
+
+	if (true == ImGui::Button("LoadFBXs"))
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExitsChildDirectory("Resources");
 		Dir.Move("Resources");
 		Dir.Move("Mesh");
+		
 
-		std::string Path = GameEngineGUI::OpenFolderDlg(GameEngineString::AnsiToUTF8Return("폴더 매쉬 로드"), Dir.GetFullPath());
-
-		if (false == Path.empty())
+		std::string Path = GameEngineGUI::OpenFolderDlg(GameEngineString::AnsiToUTF8Return("폴더 로드"), Dir.GetFullPath());
+		if (0 == Path.compare(""))
 		{
-			SelectFolderTexture_ = GameEnginePath::GetFileName(Path);
+			return;
+		}
+		GameEngineDirectory FolderDir = Path.c_str();
 
-			//Dir.Move(SelectFolderTexture_);
-			
-			/*GameEngineDirectory MeshDir = Dir;
-			MeshDir.Move(SelectFolderTexture_);
-			GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(MeshDir.PlusFilePath(SelectFolderTexture_ + ".FBX"));*/
-			
-			//GameEngineFBXMesh::Load(MeshDir.PlusFilePath("Character.FBX"))
-			// 매쉬 로드 후 생성
-			// json 파일로 출력 save, Load
+
+		// 경로 새로받아오기
+		Folders_.clear();
+		FBXFiles_.clear();
+		Folders_ = FolderDir.GetRecursiveAllDirectory();
+
+		for (GameEngineDirectory& Folder : Folders_)
+		{
+			for (GameEngineFile& File : Folder.GetAllFile(".FBX"))
+			{
+				FBXFiles_.push_back(File);
+			}
 		}
 	}
 
+	// 폴더의 FBX파일 리스트 출력
+	static int FileIdx = 0;
 	ImGui::BeginChild("MeshLoad", ImVec2(200, 100), true);
-	ImGui::EndChild();
-
-	if (false == SelectFolderTexture_.empty())
+	if (0 == FBXFiles_.size())
 	{
-
-	}
-
-	ImGui::SameLine();
-
-	static int Num = 0;
-	ImGui::BeginChild("MeshList", ImVec2(200, 100), true);
-	if (0 == ActorVector_.size())
-	{
-		if (ImGui::Selectable("Null", Num == 0))
+		if (ImGui::Selectable("Null", FileIdx == 0))
 		{
-			Num = 0;
+			FileIdx = 0;
 		}
 	}
 	else
 	{
-		for (int i = 0; i < ActorVector_.size(); ++i)
+		for (int i = 0; i < FBXFiles_.size(); ++i)
 		{
-			std::string Temp = "CreateBox";
-			
-			if (ImGui::Selectable((Temp + std::to_string(i)).c_str(), Num == i))
+			std::string FolderName = FBXFiles_[i].GetFileName();
+			if (ImGui::Selectable(FolderName.c_str(), FileIdx == i))
 			{
-				Num = i;
-				ActorPicker::SelectedActor = ActorVector_[i];
+				FileIdx = i;
 			}
 		}
 	}
 	ImGui::EndChild();
 
-	LoadSave();
-	DebugPicking();
 
+	// 선택한 FBX 스폰버튼
+	ImGui::SameLine();
+	if (true == ImGui::Button("SpawnFBX"))
+	{
+		if (FBXFiles_.size() == 0)
+		{
+			return;
+		}
+		SpawnedObject NewObj;
+		std::string Extention = FBXFiles_[FileIdx].GetExtension();
+		std::string Name = FBXFiles_[FileIdx].GetFileName();
+		NewObj.Name_ = Name.substr(0, Name.size() - Extention.size());
+		
+		NewObj.Dir_ = FBXFiles_[FileIdx].GetFullPath();
+		NewObj.Actor_ = ConnectedLevel->CreateActor<ColorBox>();
+
+		NewObj.Actor_->GetTransform().SetWorldPosition({ 0, 0, 0});
+		
+		SpawnedObjects_.push_back(NewObj);
+		ActorPicker::SelectedActor = NewObj.Actor_;
+	}
+
+	////////////////////////////////////////////////////
+	//		스폰된 FBX 리스트
+	////////////////////////////////////////////////////
+
+	ImGui::SameLine();
+	static int SpawnedIdx = 0;
+	ImGui::BeginChild("Spawned", ImVec2(200, 100), true);
+	if (0 == SpawnedObjects_.size())
+	{
+		if (ImGui::Selectable("Null", SpawnedIdx == 0))
+		{
+			SpawnedIdx = 0;
+		}
+	}
+	else
+	{
+		for (int i = 0; i < SpawnedObjects_.size(); ++i)
+		{
+			std::string Name = SpawnedObjects_[i].Name_;
+
+			if (ImGui::Selectable((std::to_string(i) + "_" + Name ).c_str(), SpawnedIdx == i))
+			{
+				SpawnedIdx = i;
+				ActorPicker::SelectedActor = SpawnedObjects_[i].Actor_;
+			}
+		}
+	}
+	ImGui::EndChild();
+
+
+	LoadSave();
+	ActorPicking();
 }
 
-void MapEditorGUI::DebugPicking()
+void MapEditorGUI::ActorPicking()
 {
 	ImGui::Text("");
 	{
@@ -184,9 +229,10 @@ void MapEditorGUI::DebugPicking()
 
 			std::string Name = "SelectedActor : ";
 			ImGui::Text(Name.c_str());
-			ImGui::InputFloat3("Scale", Scale);
-			ImGui::InputFloat3("Rotation", Rotate);
+			
 			ImGui::InputFloat3("Position", Position);
+			ImGui::InputFloat3("Rotation", Rotate);
+			ImGui::InputFloat3("Scale", Scale);
 
 			if (false == IsChange_)
 			{
@@ -199,9 +245,9 @@ void MapEditorGUI::DebugPicking()
 			{
 				if (true == ImGui::Button("Setting"))
 				{
-					CurActor_->GetTransform().SetWorldScale({ Scale[0], Scale[1], Scale[2] });
-					CurActor_->GetTransform().SetWorldRotation({ Rotate[0], Rotate[1], Rotate[2] });
 					CurActor_->GetTransform().SetWorldPosition({ Position[0], Position[1], Position[2] });
+					CurActor_->GetTransform().SetWorldRotation({ Rotate[0], Rotate[1], Rotate[2] });
+					CurActor_->GetTransform().SetWorldScale({ Scale[0], Scale[1], Scale[2] });
 					IsChange_ = false;
 				}
 			}
@@ -231,21 +277,23 @@ void MapEditorGUI::UpdateData()
 		return;
 	}
 
-	float4 Size = CurActor_->GetTransform().GetWorldScale();
-	float4 Rot = CurActor_->GetTransform().GetLocalRotation();
 	float4 Pos = CurActor_->GetTransform().GetWorldPosition();
+	float4 Rot = CurActor_->GetTransform().GetLocalRotation();
+	float4 Size = CurActor_->GetTransform().GetWorldScale();
 
-	Scale[0] = { Size.x };
-	Scale[1] = { Size.y };
-	Scale[2] = { Size.z };
+	Position[0] = { Pos.x };
+	Position[1] = { Pos.y };
+	Position[2] = { Pos.z };
 
 	Rotate[0] = { Rot.x };
 	Rotate[1] = { Rot.y };
 	Rotate[2] = { Rot.z };
 
-	Position[0] = { Pos.x };
-	Position[1] = { Pos.y };
-	Position[2] = { Pos.z };
+	Scale[0] = { Size.x };
+	Scale[1] = { Size.y };
+	Scale[2] = { Size.z };
+
+
 }
 
 void MapEditorGUI::Load()
