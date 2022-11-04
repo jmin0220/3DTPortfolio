@@ -21,6 +21,6 @@ protected:
 	void LevelStartEvent() override;
 
 private:
-	GameEngineFBXRenderer* FbxRenderer_;
+	GameEngineFBXStaticRenderer* FbxRenderer_;
 };
 

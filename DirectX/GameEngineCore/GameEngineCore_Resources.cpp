@@ -45,6 +45,11 @@ void EngineInputLayOut()
 	GameEngineVertex::LayOut.AddInputLayOut("POSITION", DXGI_FORMAT::DXGI_FORMAT_R32G32B32A32_FLOAT, 0); // 16
 	GameEngineVertex::LayOut.AddInputLayOut("TEXCOORD", DXGI_FORMAT::DXGI_FORMAT_R32G32B32A32_FLOAT, 0); // 32
 	GameEngineVertex::LayOut.AddInputLayOut("COLOR", DXGI_FORMAT::DXGI_FORMAT_R32G32B32A32_FLOAT, 0); // 48
+	GameEngineVertex::LayOut.AddInputLayOut("NORMAL", DXGI_FORMAT::DXGI_FORMAT_R32G32B32A32_FLOAT, 0); // 48
+	GameEngineVertex::LayOut.AddInputLayOut("BINORMAL", DXGI_FORMAT::DXGI_FORMAT_R32G32B32A32_FLOAT, 0); // 48
+	GameEngineVertex::LayOut.AddInputLayOut("TANGENT", DXGI_FORMAT::DXGI_FORMAT_R32G32B32A32_FLOAT, 0); // 48
+	GameEngineVertex::LayOut.AddInputLayOut("BLENDWEIGHT", DXGI_FORMAT::DXGI_FORMAT_R32G32B32A32_FLOAT, 0); // 48
+	GameEngineVertex::LayOut.AddInputLayOut("BLENDINDICES", DXGI_FORMAT::DXGI_FORMAT_R32G32B32A32_SINT, 0); // 48
 	GameEngineVertex::LayOut.OffsetReset();
 
 	// 인스턴싱 데이터용을 넣어줍니다.
@@ -140,9 +145,11 @@ void EngineSubSetting()
 		//BOOL MultisampleEnable = TRUE;
 		//BOOL AntialiasedLineEnable = FALSE;
 
-		D3D11_RASTERIZER_DESC Desc = { D3D11_FILL_SOLID, D3D11_CULL_NONE, FALSE,
-			D3D11_DEFAULT_DEPTH_BIAS, D3D11_DEFAULT_DEPTH_BIAS_CLAMP,
-			D3D11_DEFAULT_SLOPE_SCALED_DEPTH_BIAS, TRUE, FALSE, TRUE, FALSE };
+		//D3D11_RASTERIZER_DESC Desc = { D3D11_FILL_SOLID, D3D11_CULL_NONE, FALSE,
+		//	D3D11_DEFAULT_DEPTH_BIAS, D3D11_DEFAULT_DEPTH_BIAS_CLAMP,
+		//	D3D11_DEFAULT_SLOPE_SCALED_DEPTH_BIAS, TRUE, FALSE, TRUE, FALSE };
+
+		D3D11_RASTERIZER_DESC Desc = { D3D11_FILL_SOLID, D3D11_CULL_NONE };
 
 		GameEngineRasterizer::Create("EngineRasterizer", Desc);
 	}
@@ -279,6 +286,13 @@ void EngineRenderingPipeLine()
 		NewPipe->SetPixelShader("TextureAtlas.hlsl");
 		// NewPipe->InstancingSetting();
 	}
+
+	{
+		GameEngineMaterial* NewPipe = GameEngineMaterial::Create("TextureAnimation");
+		NewPipe->SetVertexShader("TextureAnimation.hlsl");
+		NewPipe->SetPixelShader("TextureAnimation.hlsl");
+	}
+
 
 	{
 		GameEngineMaterial* NewPipe = GameEngineMaterial::Create("3DDebug");

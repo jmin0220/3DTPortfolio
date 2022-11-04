@@ -27,7 +27,7 @@ private:
 
 private:
 	// FBX 캐릭터
-	GameEngineFBXRenderer* FBXRenderer_;
+	GameEngineFBXStaticRenderer* FBXRenderer_;
 	GameEngineCollision* Collision_;
 
 	// 카메라 암

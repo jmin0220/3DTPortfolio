@@ -12,7 +12,7 @@ TestMapActor::~TestMapActor()
 void TestMapActor::Start()
 {
 	{
-		GameEngineFBXRenderer* Renderer = CreateComponent<GameEngineFBXRenderer>();
+		GameEngineFBXStaticRenderer* Renderer = CreateComponent<GameEngineFBXStaticRenderer>();
 		Renderer->SetFBXMesh("TestMap.FBX", "Texture");
 		Renderer->GetTransform().SetWorldScale({ 50.0f,50.0f, 50.0f });
 		// Renderer->SetFBXMesh("Monster3.FBX", "Texture");

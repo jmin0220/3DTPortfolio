@@ -107,8 +107,6 @@ void ContentsCore::LoadResources()
 
 		// 메쉬 로드
 		GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(Dir.PlusFilePath("Character.FBX"));
-		std::vector<FBXNodeInfo> Nodes = Mesh->CheckAllNode();
-
 	}
 	
 
@@ -124,7 +122,6 @@ void ContentsCore::LoadResources()
 			GameEngineDirectory MeshDir = Dir;
 			MeshDir.Move("RainBow");
 			GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(MeshDir.PlusFilePath("Rainbow.FBX"));
-			std::vector<FBXNodeInfo> Nodes = Mesh->CheckAllNode();
 		}
 
 	}
@@ -139,7 +136,6 @@ void ContentsCore::LoadResources()
 			GameEngineDirectory MeshDir = Dir;
 			MeshDir.Move("TestMap");
 			GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(MeshDir.PlusFilePath("TestMap.FBX"));
-			std::vector<FBXNodeInfo> Nodes = Mesh->CheckAllNode();
 		}
 	}
 }

@@ -42,6 +42,8 @@
 #include <GameEngineCore/GameEngineCoreDebug.h>
 #include <GameEngineCore/GameEngineFBXAnimation.h>
 #include <GameEngineCore/GameEngineFBXRenderer.h>
+#include <GameEngineCore/GameEngineFBXStaticRenderer.h>
+#include <GameEngineCore/GameEngineFBXAnimationRenderer.h>
 
 // contents
 #include <GameEngineContents/GlobalValues.h>

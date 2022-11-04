@@ -31,8 +31,23 @@ void TestActor_Character::Start()
 	CameraArm_->On();
 
 	// 캐릭터 메쉬 로드 테스트용
-	FBXRenderer_ = CreateComponent<GameEngineFBXRenderer>();
+	FBXRenderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
 	FBXRenderer_->SetFBXMesh("Character.FBX", "TextureCustom");
+
+	// DiffuesTexture직접 씌어주기
+	{
+		std::vector<std::vector<GameEngineRenderUnit>>& Units = FBXRenderer_->GetAllRenderUnit();
+
+		for (std::vector<GameEngineRenderUnit>& UnitSet : Units)
+		{
+			for (GameEngineRenderUnit& Unit : UnitSet)
+			{
+				Unit.ShaderResources.SetTexture("DiffuseTexture", "CH_Tanager_AM.png");
+			}
+		}
+	}
+	
+
 	FBXRenderer_->GetTransform().SetWorldScale({ 100, 100, 100 });
 
 }

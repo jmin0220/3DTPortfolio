@@ -12,7 +12,7 @@ PhysXTestPlayer::~PhysXTestPlayer()
 void PhysXTestPlayer::Start()
 {
 	// 캐릭터 메쉬 로드 테스트용
-	FbxRenderer_ = CreateComponent<GameEngineFBXRenderer>();
+	FbxRenderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
 
 }
 

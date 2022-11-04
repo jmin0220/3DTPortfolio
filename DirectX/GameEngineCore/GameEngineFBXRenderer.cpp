@@ -22,7 +22,10 @@ void GameEngineFBXRenderer::SetFBXMesh(const std::string& _Name, std::string _Pi
 	}
 }
 
-void GameEngineFBXRenderer::SetFBXMesh(const std::string& _Name, std::string _PipeLine, size_t Index, size_t _SubSetIndex /*= 0*/)
+void GameEngineFBXRenderer::SetFBXMesh(const std::string& _Name, 
+	std::string _Material,
+	size_t Index, 
+	size_t _SubSetIndex /*= 0*/)
 {
 	GameEngineFBXMesh* FindFBXMesh = GameEngineFBXMesh::Find(_Name);
 
@@ -49,9 +52,9 @@ void GameEngineFBXRenderer::SetFBXMesh(const std::string& _Name, std::string _Pi
 			Unit[i].resize(FBXMesh->GetSubSetCount(i));
 		}
 	}
-
+	
 	GameEngineRenderUnit& RenderUnit = Unit[Index][_SubSetIndex];
-	RenderUnit.SetPipeLine(_PipeLine);
+	RenderUnit.SetPipeLine(_Material);
 
 	GameEngineMesh* FbxMesh = FBXMesh->GetGameEngineMesh(Index, _SubSetIndex);
 	RenderUnit.SetMesh(FbxMesh);
@@ -60,16 +63,10 @@ void GameEngineFBXRenderer::SetFBXMesh(const std::string& _Name, std::string _Pi
 	{
 		const FbxExMaterialSettingData& MatData = FBXMesh->GetMaterialSettingData(Index, _SubSetIndex);
 
-		// TODO::나중에 해야던다
-		if (0 != MatData.DifTextureName.compare(""))
+		if (nullptr != GameEngineTexture::Find(MatData.DifTextureName))
 		{
 			RenderUnit.ShaderResources.SetTexture("DiffuseTexture", MatData.DifTextureName);
 		}
-		else
-		{
-			RenderUnit.ShaderResources.SetTexture("DiffuseTexture", "CH_Tanager_AM.png");
-		}
-
 	}
 
 	RenderUnit.SetRenderer(this);
@@ -89,9 +86,4 @@ void GameEngineFBXRenderer::Render(float _DeltaTime)
 			Unit[UnitIndex][SubSetIndex].Render(_DeltaTime);
 		}
 	}
-}
-
-void GameEngineFBXRenderer::CreateAnimation(const std::string& _AnimationName, const std::string& _MeshFBX, const std::string& _AnimationFBX)
-{
-
 }

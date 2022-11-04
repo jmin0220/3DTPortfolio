@@ -80,6 +80,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameEngineFBXAnimationRenderer.h" />
     <ClInclude Include="GameEngineFBXMesh.h">
       <SubType>
       </SubType>
@@ -88,6 +89,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameEngineFBXStaticRenderer.h" />
     <ClInclude Include="GameEngineFolderTexture.h">
       <SubType>
       </SubType>
@@ -472,6 +474,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineFBXAnimationRenderer.cpp" />
     <ClCompile Include="GameEngineFBXMesh.cpp">
       <SubType>
       </SubType>
@@ -480,6 +483,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineFBXStaticRenderer.cpp" />
     <ClCompile Include="GameEngineFolderTexture.cpp">
       <SubType>
       </SubType>

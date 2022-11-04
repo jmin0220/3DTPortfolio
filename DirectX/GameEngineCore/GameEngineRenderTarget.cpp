@@ -108,7 +108,7 @@ void GameEngineRenderTarget::CreateRenderTargetTexture(float4 _Size, DXGI_FORMAT
 	NewData.Width = _Size.uix();
 	NewData.Height = _Size.uiy();
 	NewData.Format = _Format;
-	NewData.SampleDesc.Count = 1;//선생님이 4로했더니 UI가 호로롱 날라감
+	NewData.SampleDesc.Count = 1;
 	NewData.SampleDesc.Quality = 0;
 	NewData.MipLevels = 1;
 	NewData.Usage = D3D11_USAGE::D3D11_USAGE_DEFAULT;
