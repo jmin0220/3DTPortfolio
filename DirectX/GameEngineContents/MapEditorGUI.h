@@ -30,6 +30,12 @@ private:
 	void ActorPicking();
 	void LoadSave();
 	void UpdateData();
+
+	void OnClickLoad();
+	void ShowLoadedList();
+	void OnClickSpawn();
+	void ShowSpawnedList();
+
 	
 	void Load();
 	void Save();

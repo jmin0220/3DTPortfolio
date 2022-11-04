@@ -8,6 +8,9 @@
 const float SliderFloatMin = -100000;
 const float SliderFloatMax = 100000;
 
+static int FileIdx = 0;
+static int SpawnedIdx = 0;
+
 MapEditorGUI::MapEditorGUI()
 	: IsChange_(false)
 {
@@ -43,123 +46,23 @@ void MapEditorGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 		GEngine::CollisionDebugSwitch();
 	}
 
-
 	{
 		float4 Pos = _Level->GetMainCamera()->GetTransform().GetWorldPosition();
 		std::string Name = "MainCameraWorldPos : " + std::to_string(Pos.x) + " | " + std::to_string(Pos.y) + " | " + std::to_string(Pos.z);
 		ImGui::Text(Name.c_str());
 	}
 	
-	////////////////////////////////////////////////////
-	//		LoadFBXs 클릭
-	////////////////////////////////////////////////////
-	
+	// 로드 버튼 클릭
+	OnClickLoad();
 
-	if (true == ImGui::Button("LoadFBXs"))
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExitsChildDirectory("Resources");
-		Dir.Move("Resources");
-		Dir.Move("Mesh");
-		
+	// 로드버튼 밑에 리스트
+	ShowLoadedList();
 
-		std::string Path = GameEngineGUI::OpenFolderDlg(GameEngineString::AnsiToUTF8Return("폴더 로드"), Dir.GetFullPath());
-		if (0 == Path.compare(""))
-		{
-			return;
-		}
-		GameEngineDirectory FolderDir = Path.c_str();
+	// 스폰 버튼 클릭
+	OnClickSpawn();
 
-
-		// 경로 새로받아오기
-		Folders_.clear();
-		FBXFiles_.clear();
-		Folders_ = FolderDir.GetRecursiveAllDirectory();
-
-		for (GameEngineDirectory& Folder : Folders_)
-		{
-			for (GameEngineFile& File : Folder.GetAllFile(".FBX"))
-			{
-				FBXFiles_.push_back(File);
-			}
-		}
-	}
-
-	// 폴더의 FBX파일 리스트 출력
-	static int FileIdx = 0;
-	ImGui::BeginChild("MeshLoad", ImVec2(200, 100), true);
-	if (0 == FBXFiles_.size())
-	{
-		if (ImGui::Selectable("Null", FileIdx == 0))
-		{
-			FileIdx = 0;
-		}
-	}
-	else
-	{
-		for (int i = 0; i < FBXFiles_.size(); ++i)
-		{
-			std::string FolderName = FBXFiles_[i].GetFileName();
-			if (ImGui::Selectable(FolderName.c_str(), FileIdx == i))
-			{
-				FileIdx = i;
-			}
-		}
-	}
-	ImGui::EndChild();
-
-
-	// 선택한 FBX 스폰버튼
-	ImGui::SameLine();
-	if (true == ImGui::Button("SpawnFBX"))
-	{
-		if (FBXFiles_.size() == 0)
-		{
-			return;
-		}
-		SpawnedObject NewObj;
-		std::string Extention = FBXFiles_[FileIdx].GetExtension();
-		std::string Name = FBXFiles_[FileIdx].GetFileName();
-		NewObj.Name_ = Name.substr(0, Name.size() - Extention.size());
-		
-		NewObj.Dir_ = FBXFiles_[FileIdx].GetFullPath();
-		NewObj.Actor_ = ConnectedLevel->CreateActor<ColorBox>();
-
-		NewObj.Actor_->GetTransform().SetWorldPosition({ 0, 0, 0});
-		
-		SpawnedObjects_.push_back(NewObj);
-		ActorPicker::SelectedActor = NewObj.Actor_;
-	}
-
-	////////////////////////////////////////////////////
-	//		스폰된 FBX 리스트
-	////////////////////////////////////////////////////
-
-	ImGui::SameLine();
-	static int SpawnedIdx = 0;
-	ImGui::BeginChild("Spawned", ImVec2(200, 100), true);
-	if (0 == SpawnedObjects_.size())
-	{
-		if (ImGui::Selectable("Null", SpawnedIdx == 0))
-		{
-			SpawnedIdx = 0;
-		}
-	}
-	else
-	{
-		for (int i = 0; i < SpawnedObjects_.size(); ++i)
-		{
-			std::string Name = SpawnedObjects_[i].Name_;
-
-			if (ImGui::Selectable((std::to_string(i) + "_" + Name ).c_str(), SpawnedIdx == i))
-			{
-				SpawnedIdx = i;
-				ActorPicker::SelectedActor = SpawnedObjects_[i].Actor_;
-			}
-		}
-	}
-	ImGui::EndChild();
-
+	// 스폰한 엑터 리스트
+	ShowSpawnedList();
 
 	LoadSave();
 	ActorPicking();
@@ -294,6 +197,120 @@ void MapEditorGUI::UpdateData()
 	Scale[2] = { Size.z };
 
 
+}
+
+void MapEditorGUI::OnClickLoad()
+{
+
+	if (true == ImGui::Button("LoadFBXs"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("Resources");
+		Dir.Move("Resources");
+		Dir.Move("Mesh");
+
+
+		std::string Path = GameEngineGUI::OpenFolderDlg(GameEngineString::AnsiToUTF8Return("폴더 로드"), Dir.GetFullPath());
+		if (0 == Path.compare(""))
+		{
+			return;
+		}
+		GameEngineDirectory FolderDir = Path.c_str();
+
+
+		// 경로 새로받아오기
+		Folders_.clear();
+		FBXFiles_.clear();
+		Folders_ = FolderDir.GetRecursiveAllDirectory();
+
+		for (GameEngineDirectory& Folder : Folders_)
+		{
+			for (GameEngineFile& File : Folder.GetAllFile(".FBX"))
+			{
+				FBXFiles_.push_back(File);
+			}
+		}
+	}
+}
+
+// 폴더의 FBX파일 리스트 출력
+void MapEditorGUI::ShowLoadedList()
+{
+
+	ImGui::BeginChild("MeshLoad", ImVec2(200, 100), true);
+	if (0 == FBXFiles_.size())
+	{
+		if (ImGui::Selectable("Null", FileIdx == 0))
+		{
+			FileIdx = 0;
+		}
+	}
+	else
+	{
+		for (int i = 0; i < FBXFiles_.size(); ++i)
+		{
+			std::string FolderName = FBXFiles_[i].GetFileName();
+			if (ImGui::Selectable(FolderName.c_str(), FileIdx == i))
+			{
+				FileIdx = i;
+			}
+		}
+	}
+	ImGui::EndChild();
+}
+
+// 선택한 FBX 스폰버튼
+void MapEditorGUI::OnClickSpawn()
+{
+	ImGui::SameLine();
+	if (true == ImGui::Button("SpawnFBX"))
+	{
+		if (FBXFiles_.size() == 0)
+		{
+			return;
+		}
+		SpawnedObject NewObj;
+		std::string Extention = FBXFiles_[FileIdx].GetExtension();
+		std::string Name = FBXFiles_[FileIdx].GetFileName();
+		NewObj.Name_ = Name.substr(0, Name.size() - Extention.size());
+
+		NewObj.Dir_ = FBXFiles_[FileIdx].GetFullPath();
+		NewObj.Actor_ = ConnectedLevel->CreateActor<ColorBox>();
+
+		NewObj.Actor_->GetTransform().SetWorldPosition({ 0, 0, 0 });
+
+		SpawnedObjects_.push_back(NewObj);
+		ActorPicker::SelectedActor = NewObj.Actor_;
+	}
+}
+
+// 스폰된 FBX리스트
+void MapEditorGUI::ShowSpawnedList()
+{
+	ImGui::SameLine();
+
+	ImGui::BeginChild("Spawned", ImVec2(200, 100), true);
+	if (0 == SpawnedObjects_.size())
+	{
+		if (ImGui::Selectable("Null", SpawnedIdx == 0))
+		{
+			SpawnedIdx = 0;
+		}
+	}
+	else
+	{
+		for (int i = 0; i < SpawnedObjects_.size(); ++i)
+		{
+			std::string Name = SpawnedObjects_[i].Name_;
+
+			if (ImGui::Selectable((std::to_string(i) + "_" + Name).c_str(), SpawnedIdx == i))
+			{
+				SpawnedIdx = i;
+				ActorPicker::SelectedActor = SpawnedObjects_[i].Actor_;
+			}
+		}
+	}
+	ImGui::EndChild();
 }
 
 void MapEditorGUI::Load()
