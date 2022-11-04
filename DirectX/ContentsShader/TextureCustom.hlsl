@@ -25,13 +25,18 @@ Output TextureCustom_VS(Input _Input)
     return NewOutPut;
 }
 
+cbuffer TexPivot : register(b0)
+{
+    float4 Pivot;
+}
+
 Texture2D DiffuseTexture : register(t0);
 SamplerState LINEARWRAP : register(s0);
 
 float4 TextureCustom_PS(Output _Input) : SV_Target0
 {
     float2 TexPos = _Input.Tex.xy;
-    TexPos.y += -0.22f;
+    TexPos.xy += Pivot.xy;
     
     float4 Color = DiffuseTexture.Sample(LINEARWRAP, TexPos);
     

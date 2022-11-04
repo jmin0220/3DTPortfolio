@@ -36,7 +36,10 @@ private:
 	// 정보
 	float4 MoveDir_;
 
-	// 쉐이더 이용해보기
-	float4 TexPosPivot_;
+	// 쉐이더 상수버퍼 이용해보기
+	float4 TexPivot_;
+	float DragXY[2];
+	void OnGUIFunc();
+	CustomableGUI* GUI;
 };
 

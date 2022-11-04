@@ -11,6 +11,7 @@ const float SliderFloatMax = 100000;
 static int FileIdx = 0;
 static int SpawnedIdx = 0;
 
+
 MapEditorGUI::MapEditorGUI()
 	: IsChange_(false)
 {
@@ -63,6 +64,9 @@ void MapEditorGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 
 	// 스폰한 엑터 리스트
 	ShowSpawnedList();
+
+	// 스폰한 엑터에 카메라
+	FollowCameraToSpawned(_DeltaTime);
 
 	LoadSave();
 	ActorPicking();
@@ -262,7 +266,6 @@ void MapEditorGUI::ShowLoadedList()
 // 선택한 FBX 스폰버튼
 void MapEditorGUI::OnClickSpawn()
 {
-	ImGui::SameLine();
 	if (true == ImGui::Button("SpawnFBX"))
 	{
 		if (FBXFiles_.size() == 0)
@@ -287,8 +290,6 @@ void MapEditorGUI::OnClickSpawn()
 // 스폰된 FBX리스트
 void MapEditorGUI::ShowSpawnedList()
 {
-	ImGui::SameLine();
-
 	ImGui::BeginChild("Spawned", ImVec2(200, 100), true);
 	if (0 == SpawnedObjects_.size())
 	{
@@ -305,6 +306,7 @@ void MapEditorGUI::ShowSpawnedList()
 
 			if (ImGui::Selectable((std::to_string(i) + "_" + Name).c_str(), SpawnedIdx == i))
 			{
+				CamFollowMode_ = true;
 				SpawnedIdx = i;
 				ActorPicker::SelectedActor = SpawnedObjects_[i].Actor_;
 			}
@@ -313,10 +315,61 @@ void MapEditorGUI::ShowSpawnedList()
 	ImGui::EndChild();
 }
 
+void MapEditorGUI::FollowCameraToSpawned(float _DeltaTime)
+{
+	if (SpawnedObjects_.size() == 0)
+	{
+		return;
+	}
+	
+	if (false == CamFollowMode_)
+	{
+		return;
+	}
+
+	// 키보드로 카메라 움직이면 추적모드 취소
+	if (true == WASDInputCheck())
+	{
+		CamFollowMode_ = false;
+		return;
+	}
+
+	// 한번 클릭했을 때만 쫒아가야 한다
+	float4 ObjPos = SpawnedObjects_[SpawnedIdx].Actor_->GetTransform().GetWorldPosition();
+	ObjPos += float4(0, 400, -1000);
+
+	float4 CamMovePos = float4::Lerp(ConnectedLevel->GetMainCameraActor()->GetTransform().GetWorldPosition(), ObjPos, _DeltaTime * 25.0f);
+	ConnectedLevel->GetMainCameraActor()->GetTransform().SetWorldPosition(CamMovePos);
+	ConnectedLevel->GetMainCameraActor()->GetTransform().SetLocalRotation({ 20, 0, 0 });
+}
+
 void MapEditorGUI::Load()
 {	
 }
 
 void MapEditorGUI::Save()
 {
+}
+
+bool MapEditorGUI::WASDInputCheck()
+{
+	if (GameEngineInput::GetInst()->IsDown("W"))
+	{
+		return true;
+	}
+
+	if (GameEngineInput::GetInst()->IsDown("A"))
+	{
+		return true;
+	}
+
+	if (GameEngineInput::GetInst()->IsDown("S"))
+	{
+		return true;
+	}
+
+	if (GameEngineInput::GetInst()->IsDown("D"))
+	{
+		return true;
+	}
 }

@@ -41,10 +41,10 @@ void MapEditorLevel::Start()
 	//}
 
 
-	//{
-	//	TestMapActor* TestMap = CreateActor<TestMapActor>();
-	//	TestMap->GetTransform().SetWorldPosition({ 0,0,0 });
-	//}
+	{
+		TestMapActor* TestMap = CreateActor<TestMapActor>();
+		TestMap->GetTransform().SetWorldPosition({ 0,0,0 });
+	}
 
 	{
 		AxisActor* Axis = CreateActor<AxisActor>();

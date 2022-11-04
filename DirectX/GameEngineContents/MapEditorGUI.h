@@ -35,12 +35,14 @@ private:
 	void ShowLoadedList();
 	void OnClickSpawn();
 	void ShowSpawnedList();
-
+	void FollowCameraToSpawned(float _DeltaTime);
+	bool WASDInputCheck();
 	
 	void Load();
 	void Save();
 	
 	bool IsChange_;
+	bool CamFollowMode_;
 
 	GameEngineLevel* ConnectedLevel;
 	GameEngineActor* CurActor_;

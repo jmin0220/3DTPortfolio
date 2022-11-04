@@ -43,10 +43,18 @@ void TestActor_Character::Start()
 			for (GameEngineRenderUnit& Unit : UnitSet)
 			{
 				Unit.ShaderResources.SetTexture("DiffuseTexture", "CH_Tanager_AM.png");
+				
+				if (true == Unit.ShaderResources.IsConstantBuffer("TexPivot"))
+				{
+					Unit.ShaderResources.SetConstantBufferLink("TexPivot", TexPivot_);
+				}
 			}
 		}
 	}
-	
+
+	// GUI
+	GUI = GameEngineGUI::CreateGUIWindow<CustomableGUI>("CustomableGUI", nullptr);
+	GUI->SetGUIDebugFunc([=]() {OnGUIFunc(); });
 
 	FBXRenderer_->GetTransform().SetWorldScale({ 100, 100, 100 });
 
@@ -122,4 +130,13 @@ void TestActor_Character::RotateCharacterForward()
 	float4 Target = MoveDir_;
 	float YAxisDegree = acosf(float4::DotProduct3D(Forward, Target.Normalize3DReturn()))* GameEngineMath::RadianToDegree;
 }
+
+void TestActor_Character::OnGUIFunc()
+{
+	ImGui::DragFloat2("TEX PIVOT", (float*)&DragXY, 0.02f, 0.0f, 1.0f);
+	ImGui::TextWrapped("(Click and drag to scroll)");
+	TexPivot_.x = DragXY[0];
+	TexPivot_.y = DragXY[1];
+}
+
 

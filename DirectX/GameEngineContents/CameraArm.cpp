@@ -27,8 +27,8 @@ void CameraArm::Start()
 
 	// DEBUG GUI»ç¿ë
 	GUI = GameEngineGUI::CreateGUIWindow<CustomableGUI>("CustomableGUI", nullptr);
-	GUI->Off();
 	GUI->SetGUIDebugFunc([=]() {GuIDebugFunc(); });
+	GUI->Off();
 }
 
 void CameraArm::SetFollowCamera(GameEngineCameraActor* _Camera, GameEngineActor* _Character)
@@ -152,4 +152,6 @@ void CameraArm::GuIDebugFunc()
 		std::string Name = "TargetDegree : " + std::to_string(Pos.x) + " | " + std::to_string(Pos.y) + " | " + std::to_string(Pos.z) + " | " + std::to_string(Pos.w);
 		ImGui::Text(Name.c_str());
 	}
+
+
 }
