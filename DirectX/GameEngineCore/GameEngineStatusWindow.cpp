@@ -76,7 +76,6 @@ void GameEngineStatusWindow::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 
 	if (true == ImGui::Button("FreeCameaOnOff"))
 	{
-		// ;
 		GEngine::GetCurrentLevel()->GetMainCameraActor()->FreeCameraModeOnOff();
 	}
 

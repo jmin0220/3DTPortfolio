@@ -1019,9 +1019,6 @@
     <Filter Include="Resources\FBX">
       <UniqueIdentifier>{fc7acf9f-14f5-4be4-8a07-77bd9cc92e77}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PhysX">
-      <UniqueIdentifier>{97e2767a-0ef1-4701-8aee-879f4f985ec3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ThirdParty\Inc\PhysX">
       <UniqueIdentifier>{72f6345a-2d37-42c6-ab2b-2749756693af}</UniqueIdentifier>
     </Filter>

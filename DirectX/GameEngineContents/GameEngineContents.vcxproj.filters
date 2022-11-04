@@ -49,9 +49,6 @@
     <Filter Include="999_Test\TestActor">
       <UniqueIdentifier>{f721755f-af75-44c6-bd5a-70b518ac9275}</UniqueIdentifier>
     </Filter>
-    <Filter Include="999_Test\TestActor\PhysicX">
-      <UniqueIdentifier>{b5bc4d5f-1ab2-4ee2-a81a-a3288622ea9e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="999_Test\TestActor\PhysicCustom">
       <UniqueIdentifier>{5c3e6137-6493-450a-a18c-33c4b725650f}</UniqueIdentifier>
     </Filter>
@@ -75,6 +72,18 @@
     </Filter>
     <Filter Include="999_Test\TestActor\CameraTest">
       <UniqueIdentifier>{8a75dd40-cfa2-4a2a-be3e-2623724a96da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="999_Test\PhysXTest">
+      <UniqueIdentifier>{121ebdec-8c0f-47f6-aca6-2b414247d4eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="999_Test\PhysXTest\Level">
+      <UniqueIdentifier>{0487190e-719b-43cb-87a3-ccf99cfce636}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="999_Test\PhysXTest\Actor">
+      <UniqueIdentifier>{22697330-775d-4bd0-ab2c-dfc8ba87c337}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="999_Test\PhysXTest\Actor\CCT">
+      <UniqueIdentifier>{8fbaf3f4-f78c-401b-adca-3e9f0693b080}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -183,9 +192,6 @@
     <ClInclude Include="tmpLevel.h">
       <Filter>999_Test\TestLevel</Filter>
     </ClInclude>
-    <ClInclude Include="PhysXTestBox.h">
-      <Filter>999_Test\TestActor\PhysicX</Filter>
-    </ClInclude>
     <ClInclude Include="TestBox.h">
       <Filter>999_Test\TestActor\PhysicCustom</Filter>
     </ClInclude>
@@ -210,17 +216,26 @@
     <ClInclude Include="PhysicXStackComponent.h">
       <Filter>999_Test\TestComponent\TestPhysX</Filter>
     </ClInclude>
-    <ClInclude Include="PhysXTestStackBox.h">
-      <Filter>999_Test\TestActor\PhysicX</Filter>
-    </ClInclude>
     <ClInclude Include="LJM_PhysXHelloWorld.h">
-      <Filter>999_Test\TestLevel\PhysXTest</Filter>
+      <Filter>999_Test\PhysXTest\Level</Filter>
     </ClInclude>
     <ClInclude Include="LJM_PhysXPlayerTest.h">
-      <Filter>999_Test\TestLevel\PhysXTest</Filter>
+      <Filter>999_Test\PhysXTest\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysXTestBox.h">
+      <Filter>999_Test\PhysXTest\Actor</Filter>
     </ClInclude>
     <ClInclude Include="PhysXTestPlayer.h">
-      <Filter>999_Test\TestActor\PhysicX</Filter>
+      <Filter>999_Test\PhysXTest\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysXTestStackBox.h">
+      <Filter>999_Test\PhysXTest\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="CCTActor.h">
+      <Filter>999_Test\PhysXTest\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\SampleAllocator.h">
+      <Filter>999_Test\PhysXTest\Actor\CCT</Filter>
     </ClInclude>
     <ClInclude Include="TestMapActor.h">
       <Filter>999_Test\TestActor</Filter>
@@ -341,9 +356,6 @@
     <ClCompile Include="tmpLevel.cpp">
       <Filter>999_Test\TestLevel</Filter>
     </ClCompile>
-    <ClCompile Include="PhysXTestBox.cpp">
-      <Filter>999_Test\TestActor\PhysicX</Filter>
-    </ClCompile>
     <ClCompile Include="TestBox.cpp">
       <Filter>999_Test\TestActor\PhysicCustom</Filter>
     </ClCompile>
@@ -368,17 +380,26 @@
     <ClCompile Include="PhysicXStackComponent.cpp">
       <Filter>999_Test\TestComponent\TestPhysX</Filter>
     </ClCompile>
-    <ClCompile Include="PhysXTestStackBox.cpp">
-      <Filter>999_Test\TestActor\PhysicX</Filter>
-    </ClCompile>
     <ClCompile Include="LJM_PhysXHelloWorld.cpp">
-      <Filter>999_Test\TestLevel\PhysXTest</Filter>
+      <Filter>999_Test\PhysXTest\Level</Filter>
     </ClCompile>
     <ClCompile Include="LJM_PhysXPlayerTest.cpp">
-      <Filter>999_Test\TestLevel\PhysXTest</Filter>
+      <Filter>999_Test\PhysXTest\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXTestBox.cpp">
+      <Filter>999_Test\PhysXTest\Actor</Filter>
     </ClCompile>
     <ClCompile Include="PhysXTestPlayer.cpp">
-      <Filter>999_Test\TestActor\PhysicX</Filter>
+      <Filter>999_Test\PhysXTest\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXTestStackBox.cpp">
+      <Filter>999_Test\PhysXTest\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="CCTActor.cpp">
+      <Filter>999_Test\PhysXTest\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysX\SampleAllocator.cpp">
+      <Filter>999_Test\PhysXTest\Actor\CCT</Filter>
     </ClCompile>
     <ClCompile Include="TestMapActor.cpp">
       <Filter>999_Test\TestActor</Filter>
