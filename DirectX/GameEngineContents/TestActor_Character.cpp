@@ -17,7 +17,7 @@ TestActor_Character::~TestActor_Character()
 void TestActor_Character::Start()
 {
 	// 기본적인 정육면체
-	float4 BoxSize = float4(100, 200, 100);
+	float4 BoxSize(100, 200, 100);
 
 	Collision_ = CreateComponent<GameEngineCollision>();
 	Collision_->ChangeOrder(CollisionGroup::Player);
@@ -32,20 +32,9 @@ void TestActor_Character::Start()
 
 	// 캐릭터 메쉬 로드 테스트용
 	FBXRenderer_ = CreateComponent<GameEngineFBXRenderer>();
+	FBXRenderer_->SetFBXMesh("Character.FBX", "TextureCustom");
+	FBXRenderer_->GetTransform().SetWorldScale({ 100, 100, 100 });
 
-
-	// 메쉬 로드
-	//{
-	//	GameEngineDirectory Dir;
-	//	Dir.MoveParentToExitsChildDirectory("Resources");
-	//	Dir.Move("Resources/Mesh/Character");
-	//	
-	//	GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(Dir.PlusFilePath("Character.FBX"));
-	//	std::vector<FBXNodeInfo> Nodes = Mesh->CheckAllNode();
-
-	//	FBXRenderer_->SetFBXMesh("Character.FBX", "Texture");
-	//	FBXRenderer_->GetTransform().SetWorldScale({ 100, 100, 100 });
-	//}
 }
 
 void TestActor_Character::Update(float _DeltaTime)

@@ -36,33 +36,7 @@ void CameraTestLevel::End()
 }
 
 void CameraTestLevel::LevelStartEvent()
-{
-	// 로드 겹치면 에러 발생
-	// 캐릭터 텍스쳐 로드
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExitsChildDirectory("Resources");
-		Dir.Move("Resources/Mesh/Character");
-
-		std::vector<GameEngineFile> Files = Dir.GetAllFile(".png");
-
-		for (size_t i = 0; i < Files.size(); i++)
-		{
-			GameEngineTexture::Load(Files[i].GetFullPath());
-		}
-	}
-
-	// 메쉬 로드
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExitsChildDirectory("Resources");
-		Dir.Move("Resources/Mesh/Character");
-
-		GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(Dir.PlusFilePath("Character.FBX"));
-		std::vector<FBXNodeInfo> Nodes = Mesh->CheckAllNode();
-	}
-
-	
+{	
 	GEngine::CollisionDebugOff();
 
 	Floor_ = CreateActor<TestActor_WaterPlane>();

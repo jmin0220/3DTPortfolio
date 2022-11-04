@@ -83,6 +83,14 @@ void ContentsCore::LoadResources()
 		Dir.Move("Resources");
 		Dir.Move("Games");
 
+		std::vector<GameEngineFile> Files = Dir.GetAllFile();
+
+		for (size_t i = 0; i < Files.size(); i++)
+		{
+			GameEngineTexture::Load(Files[i].GetFullPath());
+		}
+	}
+
 	// TODO::테스트용 임시코드
 	// 캐릭터 텍스쳐 로드
 	{
@@ -96,19 +104,13 @@ void ContentsCore::LoadResources()
 		{
 			GameEngineTexture::Load(Files[i].GetFullPath());
 		}
+
+		// 메쉬 로드
+		GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(Dir.PlusFilePath("Character.FBX"));
+		std::vector<FBXNodeInfo> Nodes = Mesh->CheckAllNode();
+
 	}
-		// 텍스쳐 로드
-		{
-			std::vector<GameEngineFile> Files = Dir.GetAllFile();
-
-			for (size_t i = 0; i < Files.size(); i++)
-			{
-				GameEngineTexture::Load(Files[i].GetFullPath());
-			}
-		}
-	}
-
-
+	
 
 	//메쉬 로드
 	{
