@@ -222,7 +222,13 @@
     <ClInclude Include="imstb_truetype.h" />
     <ClInclude Include="portable-file-dialogs.h" />
     <ClInclude Include="PreCompile.h" />
+    <ClInclude Include="ThirdParty\inc\allocator.h" />
+    <ClInclude Include="ThirdParty\inc\assertions.h" />
+    <ClInclude Include="ThirdParty\inc\config.h" />
     <ClInclude Include="ThirdParty\inc\DirectXTex.h" />
+    <ClInclude Include="ThirdParty\inc\forwards.h" />
+    <ClInclude Include="ThirdParty\inc\json.h" />
+    <ClInclude Include="ThirdParty\inc\json_features.h" />
     <ClInclude Include="ThirdParty\inc\PhysX\characterkinematic\PxBoxController.h" />
     <ClInclude Include="ThirdParty\inc\PhysX\characterkinematic\PxCapsuleController.h" />
     <ClInclude Include="ThirdParty\inc\PhysX\characterkinematic\PxController.h" />
@@ -410,6 +416,10 @@
     <ClInclude Include="ThirdParty\inc\PhysX\vehicle\PxVehicleUtilSetup.h" />
     <ClInclude Include="ThirdParty\inc\PhysX\vehicle\PxVehicleUtilTelemetry.h" />
     <ClInclude Include="ThirdParty\inc\PhysX\vehicle\PxVehicleWheels.h" />
+    <ClInclude Include="ThirdParty\inc\reader.h" />
+    <ClInclude Include="ThirdParty\inc\value.h" />
+    <ClInclude Include="ThirdParty\inc\version.h" />
+    <ClInclude Include="ThirdParty\inc\writer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineActor.cpp">
@@ -787,6 +797,24 @@
     <CopyFileToFolders Include="ThirdParty\bin\Release\PhysX_static_64.lib">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <FileType>Document</FileType>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="ThirdParty\bin\Release\jsoncpp.lib">
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="ThirdParty\bin\Debug\jsoncpp.lib">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="ThirdParty\bin\Debug\jsoncpp.dll">
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </CopyFileToFolders>
   </ItemGroup>
   <PropertyGroup Label="Globals">

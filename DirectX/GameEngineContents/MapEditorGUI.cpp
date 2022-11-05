@@ -1,6 +1,9 @@
 #include "PreCompile.h"
 #include "MapEditorGUI.h"
 #include <GameEngineCore/CoreMinimal.h>
+#include <iostream>
+#include <fstream>
+#include <GameEngineCore/ThirdParty/inc/json.h>
 
 #include "ActorPicker.h"
 #include "ColorBox.h"
@@ -34,6 +37,13 @@ void MapEditorGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 		Off();
 		return;
 	}
+
+	//// 키와 값을 가져오기
+	//for (auto const& tmpactor : ActorMap_)
+	//{
+	//	std::string a = tmpactor.first;
+	//	GameEngineActor* b = tmpactor.second;
+	//}
 
 	if (true == ImGui::Button("FreeCameaOnOff"))
 	{
@@ -174,6 +184,7 @@ void MapEditorGUI::LoadSave()
 	if (true == ImGui::Button("Save"))
 	{
 		Save();
+		jsonWrite();
 	}
 }
 
@@ -372,4 +383,113 @@ bool MapEditorGUI::WASDInputCheck()
 	{
 		return true;
 	}
+}
+
+// JSON생성 코드
+using namespace std;
+// MeshDataSave
+void MapEditorGUI::jsonWrite() {
+	GameEngineDirectory Dir;
+	Dir.MoveParentToExitsChildDirectory("Resources");
+	Dir.Move("Resources");
+	Dir.Move("Mesh");
+	
+	ofstream json_file;
+	json_file.open(Dir.GetFullPath() + "\\jsontest.json");
+
+	Json::Value Object;
+
+	for (auto& Mesh : SpawnedObjects_)
+	{
+		Json::Value MeshData;
+		MeshData["Mesh"]["Name"] = Mesh.Name_;
+
+		Json::Value PosData;
+		PosData.append(Mesh.Actor_->GetTransform().GetWorldPosition().x);
+		PosData.append(Mesh.Actor_->GetTransform().GetWorldPosition().y);
+		PosData.append(Mesh.Actor_->GetTransform().GetWorldPosition().z);
+
+		Json::Value SizeData;
+		SizeData.append(Mesh.Actor_->GetTransform().GetWorldScale().x);
+		SizeData.append(Mesh.Actor_->GetTransform().GetWorldScale().y);
+		SizeData.append(Mesh.Actor_->GetTransform().GetWorldScale().z);
+
+		Json::Value RotData;
+		RotData.append(Mesh.Actor_->GetTransform().GetLocalRotation().x);
+		RotData.append(Mesh.Actor_->GetTransform().GetLocalRotation().y);
+		RotData.append(Mesh.Actor_->GetTransform().GetLocalRotation().z);
+
+		Json::Value NameTransform;
+		NameTransform["Pos"] = PosData;
+		NameTransform["Size"] = SizeData;
+		NameTransform["Rot"] = RotData;
+
+		MeshData["Mesh"]["Transform"] = NameTransform;
+
+
+		static int j = 0;
+		Object["Object" + std::to_string(j++)] = MeshData;
+
+	}
+		Json::StreamWriterBuilder builder;
+		builder["commentStyle"] = "None";
+		builder["indentation"] = "    ";  // Tab
+
+		unique_ptr<Json::StreamWriter> writer(builder.newStreamWriter());
+		// 알파벳 순으로 write 된다.
+		//writer->write(MeshData, &cout);
+		writer->write(Object, &json_file);
+		cout << endl;  // add lf and flush
+	json_file.close();
+}
+
+// MeshDataLoad
+void MapEditorGUI::jsonRead() {
+	ifstream json_dir("C:\\Users\\user\\Desktop\\JSONTest\\jsontest.json");
+	Json::CharReaderBuilder builder;
+	builder["collectComments"] = false;
+	Json::Value value;
+
+	JSONCPP_STRING errs;
+	bool ok = parseFromStream(builder, json_dir, &value, &errs);
+
+	if (ok == true)
+	{
+		cout << "CPU: " << value["CPU"] << endl;
+		cout << "Program Python: " << value["Program"]["Python"] << endl;
+		cout << "Computer Cable: " << value["Computer"]["Cable"] << endl;
+		cout << "Computer Cable[0]: " << value["Computer"]["Cable"][0] << endl;
+		cout << endl;
+
+		cout << "Computer Number Int(as int): " << value["Computer"]["Number"].get("Int", -1).asInt() << endl;
+		// "Int" 값이 없으면 -1 반환.
+		cout << "Computer Number Int(as int): " << value["Computer"]["Number"]["Int"].asInt() << endl;
+		// "Int" 값이 없으면 0 반환.
+		cout << "Computer Number Double(as double): " << value["Computer"]["Number"].get("Double", -1).asDouble() << endl;
+		// "Double" 값이 없으면 -1 반환.
+		cout << "Computer Number Double(as string): " << value["Computer"]["Number"].get("Double", "Empty").asString() << endl;
+		// "Double" 값이 없으면 Empty 반환.
+		cout << "Computer Number Bool(as bool): " << value["Computer"]["Number"].get("Bool", false).asBool() << endl;
+		// "Bool" 값이 없으면 false 반환.
+		cout << endl;
+
+		cout << "Root size: " << value.size() << endl;
+		cout << "Program size: " << value["Program"].size() << endl;
+		cout << "Computer Cable size: " << value["Computer"]["Cable"].size() << endl;
+		cout << endl;
+
+		int size = value["Computer"]["Cable"].size();
+		// size() 값을 for 문에서 그대로 비교하면 warning C4018가 발생 한다.
+		for (int i = 0; i < size; i++)
+			cout << "Computer Cable: " << value["Computer"]["Cable"][i] << endl;
+		cout << endl;
+
+		for (auto i : value["Computer"]["Cable"])
+			cout << "Computer Cable: " << i << endl;
+	}
+	else
+	{
+		cout << "Parse failed." << endl;
+	}
+
 }

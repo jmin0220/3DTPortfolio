@@ -741,14 +741,41 @@
     <ClInclude Include="ThirdParty\inc\PhysX\vehicle\PxVehicleWheels.h">
       <Filter>ThirdParty\Inc\PhysX\Vehicle</Filter>
     </ClInclude>
-    <ClInclude Include="GameEnginePhysX.h">
-      <Filter>PhysX</Filter>
-    </ClInclude>
     <ClInclude Include="GameEngineFBXAnimationRenderer.h">
       <Filter>Object\Component\Rendering\Content</Filter>
     </ClInclude>
     <ClInclude Include="GameEngineFBXStaticRenderer.h">
       <Filter>Object\Component\Rendering\Content</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\inc\allocator.h">
+      <Filter>ThirdParty\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\inc\assertions.h">
+      <Filter>ThirdParty\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\inc\config.h">
+      <Filter>ThirdParty\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\inc\forwards.h">
+      <Filter>ThirdParty\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\inc\json.h">
+      <Filter>ThirdParty\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\inc\json_features.h">
+      <Filter>ThirdParty\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\inc\reader.h">
+      <Filter>ThirdParty\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\inc\value.h">
+      <Filter>ThirdParty\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\inc\version.h">
+      <Filter>ThirdParty\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\inc\writer.h">
+      <Filter>ThirdParty\Inc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -920,9 +947,6 @@
     </ClCompile>
     <ClCompile Include="PreCompile.cpp">
       <Filter>PreCompile</Filter>
-    </ClCompile>
-    <ClCompile Include="GameEnginePhysX.cpp">
-      <Filter>PhysX</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineFBXAnimationRenderer.cpp">
       <Filter>Object\Component\Rendering\Content</Filter>
@@ -1194,6 +1218,15 @@
     </CopyFileToFolders>
     <CopyFileToFolders Include="ThirdParty\bin\Release\PhysX_static_64.lib">
       <Filter>ThirdParty\Lib\Release</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\bin\Release\jsoncpp.lib">
+      <Filter>ThirdParty\Lib\Release</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\bin\Debug\jsoncpp.lib">
+      <Filter>ThirdParty\Lib\Debug</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\bin\Debug\jsoncpp.dll">
+      <Filter>ThirdParty\Lib\Debug</Filter>
     </CopyFileToFolders>
   </ItemGroup>
 </Project>

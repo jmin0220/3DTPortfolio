@@ -41,6 +41,9 @@ private:
 	void Load();
 	void Save();
 	
+	void jsonWrite();
+	void jsonRead();
+
 	bool IsChange_;
 	bool CamFollowMode_;
 
