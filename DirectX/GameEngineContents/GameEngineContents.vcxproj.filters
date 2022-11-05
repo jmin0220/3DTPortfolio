@@ -231,9 +231,6 @@
     <ClInclude Include="PhysXTestStackBox.h">
       <Filter>999_Test\PhysXTest\Actor</Filter>
     </ClInclude>
-    <ClInclude Include="CCTActor.h">
-      <Filter>999_Test\PhysXTest\Actor</Filter>
-    </ClInclude>
     <ClInclude Include="PhysX\SampleAllocator.h">
       <Filter>999_Test\PhysXTest\Actor\CCT</Filter>
     </ClInclude>
@@ -248,6 +245,12 @@
     </ClInclude>
     <ClInclude Include="CountDown.h">
       <Filter>02_Actor\UIActor\InGameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleCCTJump.h">
+      <Filter>999_Test\PhysXTest\Actor\CCT</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysXCCTActorComponent.h">
+      <Filter>999_Test\TestComponent\TestPhysX</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -395,9 +398,6 @@
     <ClCompile Include="PhysXTestStackBox.cpp">
       <Filter>999_Test\PhysXTest\Actor</Filter>
     </ClCompile>
-    <ClCompile Include="CCTActor.cpp">
-      <Filter>999_Test\PhysXTest\Actor</Filter>
-    </ClCompile>
     <ClCompile Include="PhysX\SampleAllocator.cpp">
       <Filter>999_Test\PhysXTest\Actor\CCT</Filter>
     </ClCompile>
@@ -412,6 +412,12 @@
     </ClCompile>
     <ClCompile Include="CountDown.cpp">
       <Filter>02_Actor\UIActor\InGameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleCCTJump.cpp">
+      <Filter>999_Test\PhysXTest\Actor\CCT</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXCCTActorComponent.cpp">
+      <Filter>999_Test\TestComponent\TestPhysX</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
