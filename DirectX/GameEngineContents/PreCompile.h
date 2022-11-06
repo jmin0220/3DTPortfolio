@@ -60,4 +60,5 @@
 #pragma comment (lib, "PhysXExtensions_static_64.lib")
 #pragma comment (lib, "PhysXFoundation_static_64.lib")
 #pragma comment (lib, "PhysXPvdSDK_static_64.lib")
+#pragma comment (lib, "PhysXCharacterKinematic_static_64.lib")
 #pragma comment (lib, "jsoncpp.lib")

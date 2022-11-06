@@ -146,7 +146,7 @@ void ContentsCore::CreateLevels()
 	CreateLevel<LoadingLevel>("Loading");
 	CreateLevel<MapEditorLevel>("MapEditorLevel");
 	CreateLevel<PhysicsTestLevel>("PhysicsTestLevel");
-	CreateLevel<LJM_PhysXHelloWorld>("LJM_PhysXHelloWorld");
+	//CreateLevel<LJM_PhysXHelloWorld>("LJM_PhysXHelloWorld");
 	CreateLevel<LJM_PhysXPlayerTest>("LJM_PhysXPlayerTest");
 	CreateLevel<CameraTestLevel>("CameraTestLevel");
 	ChangeLevel("MapEditorLevel");

@@ -21,6 +21,8 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override;
 
+	void LevelStartEvent() override;
+
 	physx::PxScene* Scene_;
 	physx::PxPhysics* Physics_;
 	physx::PxFoundation* pxFoundation = NULL;

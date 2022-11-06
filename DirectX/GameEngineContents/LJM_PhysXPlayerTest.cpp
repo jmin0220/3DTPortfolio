@@ -2,9 +2,9 @@
 #include "LJM_PhysXPlayerTest.h"
 #include "PhysXTestPlayer.h"
 
-#include <GameEngineCore/ThirdParty/inc/PhysX/PxConfig.h>
-#include <GameEngineCore/ThirdParty/inc/PhysX/PxPhysicsAPI.h>
-#include <PhysX/characterkinematic/PxControllerManager.h>
+//#include <GameEngineCore/ThirdParty/inc/PhysX/PxConfig.h>
+//#include <GameEngineCore/ThirdParty/inc/PhysX/PxPhysicsAPI.h>
+//#include <PhysX/characterkinematic/PxControllerManager.h>
 #include <PhysXSDKSnippets/SnippetPVD.h>
 
 LJM_PhysXPlayerTest::LJM_PhysXPlayerTest() 
@@ -33,8 +33,15 @@ void LJM_PhysXPlayerTest::End()
 {
 }
 
+void LJM_PhysXPlayerTest::LevelStartEvent()
+{
+	initPhysics(true);
+}
+
 void LJM_PhysXPlayerTest::initPhysics(bool _interactive)
 {
+	// PsFoundation.cpp (165) : invalid operation : Foundation object exists already. Only one instance per process can be created.
+	// 프로그램 하나에 1개의 Foundation만 생성 가능한가?
 	pxFoundation = PxCreateFoundation(PX_PHYSICS_VERSION, pxDefaultAllocator, pxDefaultErrorCallback);
 	pxPvd = PxCreatePvd(*pxFoundation);
 	physx::PxPvdTransport* transport = physx::PxDefaultPvdSocketTransportCreate(PVD_HOST, 5425, 10);
@@ -65,8 +72,8 @@ void LJM_PhysXPlayerTest::initPhysics(bool _interactive)
 	physx::PxRigidStatic* groundPlane = physx::PxCreatePlane(*Physics_, physx::PxPlane(0, 1, 0, 0), *PlaneMat_);
 	Scene_->addActor(*groundPlane);
 
-	// TODO::참조할수 없는 뭐시깽이
-	//CtrManager_ = PxCreateControllerManager(*Scene_);
+	CtrManager_ = PxCreateControllerManager(*Scene_);
+
 	// 지오메트리가 겹치는 경우 자동으로 복구될 수 있는 모드
 	// TODO::일반적인 경우에는 필요하지 않을 수 있음
 	CtrManager_->setOverlapRecoveryModule(true);
