@@ -14,7 +14,7 @@ void XAxis::Start()
 	{
 		// 마우스 피킹
 		CreatePickingCollision({ 125.0f, 25.0f, 25.0f }, { 50.0f,0,0 });
-		Collision_Picking->ChangeOrder(CollisionGroup::Picking);
+		Collision_Picking->ChangeOrder(CollisionGroup::Axis);
 	}
 
 	float4 Dir = { 1.0f,0,0,0 };

@@ -26,6 +26,7 @@ protected:
 
 	// 맵 에딧용 콜리전, 캐릭용 콜리전은 별도로 생각해야함
 	GameEngineCollision* Collision_Picking;
+	static GameEngineCollision* CurPicking_Collision;
 
 public:
 	float4 AxisDir;
@@ -39,5 +40,14 @@ public:
 		return AxisDir;
 	}
 
+	int GetCollisionOrder()
+	{
+		return Collision_Picking->GetOrder();
+	}
+
+	static GameEngineCollision* GetCurPickingCol()
+	{
+		return CurPicking_Collision;
+	}
 };
 

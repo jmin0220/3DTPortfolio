@@ -4,6 +4,8 @@
 
 #include "ActorPicker.h"
 
+GameEngineCollision* PickableActor::CurPicking_Collision = nullptr;
+
 PickableActor::PickableActor() 
 {
 }
@@ -32,6 +34,21 @@ void PickableActor::CheckPickingRay()
 	bool Pickable = Collision_Picking->IsCollision(CollisionType::CT_OBB, CollisionGroup::Ray, CollisionType::CT_OBB,
 		[=](GameEngineCollision* _This, GameEngineCollision* _Other)
 		{
+			if (true == GameEngineInput::GetInst()->IsDown("VK_LBUTTON"))
+			{
+				if (CurPicking_Collision == nullptr)
+				{
+					CurPicking_Collision = _This;
+				}
+
+				//다른 액터의 콜리전이 선택됐다면.
+				if (CurPicking_Collision != _This)
+				{
+					CurPicking_Collision->On();
+					CurPicking_Collision = _This;
+				}
+			}
+
 			ActorPicker::PickedActors.insert(this);
 
 			return CollisionReturn::ContinueCheck;

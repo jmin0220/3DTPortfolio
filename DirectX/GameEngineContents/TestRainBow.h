@@ -1,9 +1,9 @@
 #pragma once
 #include <GameEngineCore/CoreMinimal.h>
-
+#include "PickableActor.h"
 
 // Ό³Έν :
-class TestRainBow	:	public GameEngineActor
+class TestRainBow	:	public PickableActor
 {
 public:
 	// constrcuter destructer

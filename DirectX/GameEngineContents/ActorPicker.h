@@ -32,10 +32,13 @@ private:
 
 	float4 PrevMousePos;
 	float4 CurMousePos;
+	float4 CurActorPos;
+	class AxisActor* Axis;
 
 
 	void SelectPickedActor();
 	void ClickCheck();
-	void ClickControl();
+	void ClickAxisControl();
+	void ClickPickableActor();
 };
 

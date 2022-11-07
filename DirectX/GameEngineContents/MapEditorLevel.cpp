@@ -26,19 +26,21 @@ void MapEditorLevel::Start()
 {
 	// 피킹 예시
 	{
-		GameEngineActor* Box = CreateActor<ColorBox>();
-		Box->GetTransform().SetWorldPosition({ 0, 0, 300 });
+		//GameEngineActor* Box = CreateActor<ColorBox>();
+		//Box->GetTransform().SetWorldPosition({ 0, 0, 300 });
 
 		ActorPicker* Picker = CreateActor<ActorPicker>();
 	}
 
 
 
-	//{
-	//	TestRainBow* RainBow = CreateActor<TestRainBow>();
-	//	RainBow->GetTransform().SetWorldPosition({ -200.0f,0,0 });
+	{
+		TestRainBow* RainBow = CreateActor<TestRainBow>();
+		RainBow->GetTransform().SetWorldPosition({ -200,0,0 });
 
-	//}
+		TestRainBow* RainBow2 = CreateActor<TestRainBow>();
+		RainBow2->GetTransform().SetWorldPosition({ -200, 200,0 });
+	}
 
 
 	{
@@ -46,11 +48,11 @@ void MapEditorLevel::Start()
 		TestMap->GetTransform().SetWorldPosition({ 0,0,0 });
 	}
 
-	{
-		AxisActor* Axis = CreateActor<AxisActor>();
-		Axis->GetTransform().SetWorldPosition({ 300.0f,0,300.0f });
-		Axis->SetPosition();
-	}
+	//{
+	//	AxisActor* Axis = CreateActor<AxisActor>();
+	//	Axis->GetTransform().SetWorldPosition({ 200,0,0 });
+	//	Axis->SetPosition();
+	//}
 
 	GUI = GameEngineGUI::CreateGUIWindow<MapEditorGUI>("MapEditorGUI", this);
 	GUI->Off();
