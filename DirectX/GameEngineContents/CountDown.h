@@ -16,7 +16,7 @@ public:
 	CountDown& operator=(CountDown&& _Other) noexcept = delete;
 
 	void CountDownStart();
-
+	void PopEnd();
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -28,6 +28,13 @@ private:
 	GameEngineUIRenderer* Two_;
 	GameEngineUIRenderer* One_;
 	GameEngineUIRenderer* Go_;
+	GameEngineUIRenderer* PopAni1_;
+	GameEngineUIRenderer* PopAni2_;
+	GameEngineUIRenderer* PopAni3_;
+	GameEngineUIRenderer* PopAni4_;
+	GameEngineUIRenderer* PopAni5_;
+	GameEngineUIRenderer* PopAni6_;
+
 	bool IsThreePop_;
 	bool IsTwoPop_;
 	bool IsOnePop_;
@@ -37,5 +44,6 @@ private:
 	bool IsTwoEnd_;
 	bool IsOneEnd_;
 	bool IsGoEnd_;
+	bool IsAniOn_;
 };
 

@@ -7,6 +7,7 @@ CountDown::CountDown()
 	,IsOnePop_(false)
 	,IsThreeEnd_(false)
 	,IsOneEnd_(false)
+	,IsAniOn_(false)
 {
 }
 
@@ -51,6 +52,83 @@ void CountDown::Start()
 		Go_->SetPivot(PIVOTMODE::CENTER);
 		Go_->SetTexture("countdown_sequence_GO.png");
 	}
+
+	{
+		GameEngineTexture::Cut("Pop_Frames.png", 5, 1);
+
+		PopAni1_ = CreateComponent<GameEngineUIRenderer>();
+		PopAni1_->GetTransform().SetWorldScale({ 26.0f, 101.0f });
+		PopAni1_->GetTransform().SetWorldPosition({ -150.0f, 200.0f });
+		PopAni1_->GetTransform().SetWorldRotation({ 0.0f, 0.0f, 35.0f, 0.0f });
+		PopAni1_->SetPivot(PIVOTMODE::CENTER);
+		PopAni1_->SetTexture("Pop_Frames.png");
+
+		PopAni2_ = CreateComponent<GameEngineUIRenderer>();
+		PopAni2_->GetTransform().SetWorldScale({ 26.0f, 101.0f });
+		PopAni2_->GetTransform().SetWorldPosition({ -150.0f, -200.0f });
+		PopAni2_->GetTransform().SetWorldRotation({ -180.0f, 0.0f, 35.0f, 0.0f });
+		PopAni2_->SetPivot(PIVOTMODE::CENTER);
+		PopAni2_->SetTexture("Pop_Frames.png");
+
+		PopAni3_ = CreateComponent<GameEngineUIRenderer>();
+		PopAni3_->GetTransform().SetWorldScale({ 26.0f, 101.0f });
+		PopAni3_->GetTransform().SetWorldPosition({ -300.0f, 0.0f });
+		PopAni3_->GetTransform().SetWorldRotation({ 0.0f, 0.0f, 90.0f, 0.0f });
+		PopAni3_->SetPivot(PIVOTMODE::CENTER);
+		PopAni3_->SetTexture("Pop_Frames.png");
+
+		PopAni4_ = CreateComponent<GameEngineUIRenderer>();
+		PopAni4_->GetTransform().SetWorldScale({ 26.0f, 101.0f });
+		PopAni4_->GetTransform().SetWorldPosition({ 300.0f, 0.0f });
+		PopAni4_->GetTransform().SetWorldRotation({ 0.0f, 0.0f, -90.0f, 0.0f });
+		PopAni4_->SetPivot(PIVOTMODE::CENTER);
+		PopAni4_->SetTexture("Pop_Frames.png");
+
+		PopAni5_ = CreateComponent<GameEngineUIRenderer>();
+		PopAni5_->GetTransform().SetWorldScale({ 26.0f, 101.0f });
+		PopAni5_->GetTransform().SetWorldPosition({ 150.0f, 200.0f });
+		PopAni5_->GetTransform().SetWorldRotation({ 0.0f, 0.0f, -35.0f, 0.0f });
+		PopAni5_->SetPivot(PIVOTMODE::CENTER);
+		PopAni5_->SetTexture("Pop_Frames.png");
+
+		PopAni6_ = CreateComponent<GameEngineUIRenderer>();
+		PopAni6_->GetTransform().SetWorldScale({ 26.0f, 101.0f });
+		PopAni6_->GetTransform().SetWorldPosition({ 150.0f, -200.0f });
+		PopAni6_->GetTransform().SetWorldRotation({ -180.0f, 0.0f, -35.0f, 0.0f });
+		PopAni6_->SetPivot(PIVOTMODE::CENTER);
+		PopAni6_->SetTexture("Pop_Frames.png");
+
+		std::vector<unsigned int> Five = { 0, 1, 2, 3, 4 };
+		PopAni1_->CreateFrameAnimationCutTexture("Pop", FrameAnimation_DESC("Pop_Frames.png", Five, 0.1f, false));
+		PopAni1_->ChangeFrameAnimation("Pop");
+		PopAni1_->Off();
+		PopAni1_->AnimationBindEnd("Pop", std::bind(&CountDown::PopEnd, this));
+
+		PopAni2_->CreateFrameAnimationCutTexture("Pop", FrameAnimation_DESC("Pop_Frames.png", Five, 0.1f, false));
+		PopAni2_->ChangeFrameAnimation("Pop");
+		PopAni2_->Off();
+		PopAni2_->AnimationBindEnd("Pop", std::bind(&CountDown::PopEnd, this));
+
+		PopAni3_->CreateFrameAnimationCutTexture("Pop", FrameAnimation_DESC("Pop_Frames.png", Five, 0.1f, false));
+		PopAni3_->ChangeFrameAnimation("Pop");
+		PopAni3_->Off();
+		PopAni3_->AnimationBindEnd("Pop", std::bind(&CountDown::PopEnd, this));
+
+		PopAni4_->CreateFrameAnimationCutTexture("Pop", FrameAnimation_DESC("Pop_Frames.png", Five, 0.1f, false));
+		PopAni4_->ChangeFrameAnimation("Pop");
+		PopAni4_->Off();
+		PopAni4_->AnimationBindEnd("Pop", std::bind(&CountDown::PopEnd, this));
+
+		PopAni5_->CreateFrameAnimationCutTexture("Pop", FrameAnimation_DESC("Pop_Frames.png", Five, 0.1f, false));
+		PopAni5_->ChangeFrameAnimation("Pop");
+		PopAni5_->Off();
+		PopAni5_->AnimationBindEnd("Pop", std::bind(&CountDown::PopEnd, this));
+
+		PopAni6_->CreateFrameAnimationCutTexture("Pop", FrameAnimation_DESC("Pop_Frames.png", Five, 0.1f, false));
+		PopAni6_->ChangeFrameAnimation("Pop");
+		PopAni6_->Off();
+		PopAni6_->AnimationBindEnd("Pop", std::bind(&CountDown::PopEnd, this));
+	}
 }
 
 void CountDown::Update(float _DeltaTime)
@@ -63,22 +141,33 @@ void CountDown::LevelStartEvent()
 	IsThreePop_ = false;
 	IsThreeEnd_ = false;
 	Three_->GetTransform().SetWorldScale({ 0.0f, 0.0f });
+	Three_->GetTransform().SetWorldRotation({ 0,0,0,0 });
 	Three_->On();
 
 	IsTwoPop_ = false;
 	IsTwoEnd_ = false;
 	Two_->GetTransform().SetWorldScale({ 0.0f, 0.0f });
+	Two_->GetTransform().SetWorldRotation({ 0,0,0,0 });
 	Two_->On();
 
 	IsOnePop_ = false;
 	IsOneEnd_ = false;
 	One_->GetTransform().SetWorldScale({ 0.0f, 0.0f });
+	One_->GetTransform().SetWorldRotation({ 0,0,0,0 });
 	One_->On();
 
 	IsGoPop_ = false;
 	IsGoEnd_ = false;
 	Go_->GetTransform().SetWorldScale({ 0.0f, 0.0f });
 	Go_->On();
+
+	IsAniOn_ = false;
+	PopAni1_->CurAnimationReset();
+	PopAni2_->CurAnimationReset();
+	PopAni3_->CurAnimationReset();
+	PopAni4_->CurAnimationReset();
+	PopAni5_->CurAnimationReset();
+	PopAni6_->CurAnimationReset();
 }
 
 void CountDown::CountDownStart()
@@ -113,7 +202,9 @@ void CountDown::CountDownStart()
 		}
 		
 		if (IsThreePop_ == false && IsThreeEnd_ == true)
-		{
+		{	
+			//제 사이즈 후 0으로 작아지기
+			Three_->GetTransform().SetAddWorldRotation({ 0,0,GameEngineTime::GetDeltaTime() * -2000.0f,0});
 			float4 f4CurrentScale = Three_->GetTransform().GetWorldScale();
 			float4 f4DestinationScale = { 0.0f,0.0f };
 			Three_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 10.f) });
@@ -151,6 +242,7 @@ void CountDown::CountDownStart()
 
 		if (IsTwoPop_ == false && IsTwoEnd_ == true)
 		{
+			Two_->GetTransform().SetAddWorldRotation({ 0,0,GameEngineTime::GetDeltaTime() * -2000.0f,0 });
 			float4 f4CurrentScale = Two_->GetTransform().GetWorldScale();
 			float4 f4DestinationScale = { 0.0f,0.0f };
 			Two_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 10.f) });
@@ -188,6 +280,7 @@ void CountDown::CountDownStart()
 
 		if (IsOnePop_ == false && IsOneEnd_ == true)
 		{
+			One_->GetTransform().SetAddWorldRotation({ 0,0,GameEngineTime::GetDeltaTime() * -2000.0f,0 });
 			float4 f4CurrentScale = One_->GetTransform().GetWorldScale();
 			float4 f4DestinationScale = { 0.0f,0.0f };
 			One_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 10.f) });
@@ -199,6 +292,19 @@ void CountDown::CountDownStart()
 		if (IsGoPop_ == false && IsOneEnd_ == true && IsGoEnd_ == false && One_->GetTransform().GetWorldScale().x <= 1.0f) //3이 끝낫을때 시작해야하니 체크항목 하나 더 추가
 		{
 			One_->Off();
+
+			if (IsAniOn_ == false)
+			{
+				PopAni1_->On();
+				PopAni2_->On();
+				PopAni3_->On();
+				PopAni4_->On();
+				PopAni5_->On();
+				PopAni6_->On();
+				IsAniOn_ = true;
+			}
+			//PopAni1_->ChangeFrameAnimation("Pop");
+
 			float4 f4CurrentScale = Go_->GetTransform().GetWorldScale();
 			float4 f4DestinationScale = { 472.0f, 250.0f };
 			Go_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 10.f) });
@@ -235,4 +341,14 @@ void CountDown::CountDownStart()
 			}
 		}
 	}
+}
+
+void CountDown::PopEnd()
+{
+	PopAni1_->Off();
+	PopAni2_->Off();
+	PopAni3_->Off();
+	PopAni4_->Off();
+	PopAni5_->Off();
+	PopAni6_->Off();
 }
