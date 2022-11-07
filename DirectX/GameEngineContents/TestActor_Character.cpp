@@ -51,25 +51,11 @@ void TestActor_Character::Start()
 			}
 		}
 	}
+	FBXRenderer_->GetTransform().SetWorldScale({ 100, 100, 100 });
 
 	// GUI
 	GUI = GameEngineGUI::CreateGUIWindow<CustomableGUI>("CustomableGUI", nullptr);
 	GUI->SetGUIDebugFunc([=]() {OnGUIFunc(); });
-
-	FBXRenderer_->GetTransform().SetWorldScale({ 100, 100, 100 });
-	// 메쉬 로드
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExitsChildDirectory("Resources");
-		Dir.Move("Resources/Mesh/Character");
-		
-		GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(Dir.PlusFilePath("Character.FBX"));
-		std::vector<FBXNodeInfo> Nodes = Mesh->CheckAllNode();
-
-		FBXRenderer_->SetFBXMesh("Character.FBX", "Texture");
-		FBXRenderer_->GetTransform().SetWorldScale({ 100, 100, 100 });
-
-	}
 
 
 }
