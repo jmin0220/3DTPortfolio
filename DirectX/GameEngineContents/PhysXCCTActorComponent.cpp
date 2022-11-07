@@ -4,6 +4,8 @@
 static physx::PxPhysics* physics_ = nullptr;
 static physx::PxScene* scene_ = nullptr;
 
+physx::PxReal PhysXCCTActorComponent::PhysxGravity_ = -9.81f;	// 중력치
+
 PhysXCCTActorComponent::PhysXCCTActorComponent() 
 {
 }
@@ -17,6 +19,14 @@ void PhysXCCTActorComponent::Start()
 {
 	// 부모의 정보의 저장
 	ParentActor_ = static_cast<GameEngineActor*>(GetParent());
+
+	if (false == GameEngineInput::GetInst()->IsKey("forward00"))
+	{
+		GameEngineInput::GetInst()->CreateKey("forward00", VK_UP);
+		GameEngineInput::GetInst()->CreateKey("moveleft00", VK_LEFT);
+		GameEngineInput::GetInst()->CreateKey("moveright00", VK_RIGHT);
+		GameEngineInput::GetInst()->CreateKey("backward00", VK_DOWN);
+	}
 }
 
 void PhysXCCTActorComponent::Update(float _DeltaTime)
@@ -25,6 +35,39 @@ void PhysXCCTActorComponent::Update(float _DeltaTime)
 	{
 		return;
 	}
+
+	physx::PxVec3 tmpVec3(0.0f);
+
+	if (GameEngineInput::GetInst()->IsPress("forward00"))
+	{
+		tmpVec3 = physx::PxVec3(0.0f, 0.0f, -300.0f * GameEngineTime::GetDeltaTime());
+	}
+	if (GameEngineInput::GetInst()->IsPress("moveleft00"))
+	{
+		tmpVec3 = physx::PxVec3(-300.0f * GameEngineTime::GetDeltaTime(), 0.0f, 0.0f);
+	}
+	if (GameEngineInput::GetInst()->IsPress("moveright00"))
+	{
+		tmpVec3 = physx::PxVec3(300.0f * GameEngineTime::GetDeltaTime(), 0.0f, 0.0f);
+	}
+	if (GameEngineInput::GetInst()->IsPress("backward00"))
+	{
+		tmpVec3 = physx::PxVec3(0.0f, 0.0f, 300.0f * GameEngineTime::GetDeltaTime());
+	}
+
+	// 플레이어의 현재 y축 위치에 따라 낙하 속도를 설정
+	//const physx::PxF32 heightDelta = ControlledActor_->mJump.getHeight(GameEngineTime::GetDeltaTime());
+	//float dy;
+	//if (heightDelta != 0.0f)
+	//	dy = heightDelta;
+	//else
+	//	dy = PhysxGravity_ * GameEngineTime::GetDeltaTime();
+
+	//tmpVec3.y += dy;
+
+	const physx::PxControllerFilters filters(nullptr, ControlledActor_->mQueryFilterCallback, nullptr);
+
+	ControlledActor_->getController()->move(tmpVec3, 0.0f, GameEngineTime::GetDeltaTime(), filters, nullptr);
 
 	// PhysX Actor의 상태에 맞춰서 부모의 Transform정보를 갱신
 	float4 tmpWorldPos = { static_cast<float>(ControlledActor_->getFootPosition().x)

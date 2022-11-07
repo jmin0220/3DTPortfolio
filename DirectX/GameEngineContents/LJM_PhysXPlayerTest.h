@@ -47,6 +47,18 @@ protected:
 
 	void cleanupPhysics(bool _Interactive = true);
 
+
+	////////////////////// 물리 인터랙션 테스트용
+
+	physx::PxReal stackZ = 10.0f;
+
+
+	// RigidDynamic생성 - 공던지기
+	void createDynamic(const physx::PxTransform& t, const physx::PxVec3& velocity = physx::PxVec3(0));
+
+	// RigidDynamic으로 벽 쌓기
+	void createStack(const physx::PxTransform& t, physx::PxU32 size, physx::PxReal halfExtent);
+
 private:
 	PhysXTestPlayer* Player_;
 };

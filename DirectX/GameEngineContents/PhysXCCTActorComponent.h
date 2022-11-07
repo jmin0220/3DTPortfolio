@@ -37,11 +37,13 @@ protected:
 	physx::PxShape* shape_;
 	physx::PxRigidDynamic* dynamic_;
 
+	static physx::PxReal PhysxGravity_;
+
 	//physx::PxController* Controller_;
 	////physx::PxControllerDesc ControllerDesc_;
 	//physx::PxCapsuleControllerDesc CapsuleCtrDesc_;
 
-
+public:
 	// PxController Description
 	struct ControlledActorDesc
 	{
@@ -80,7 +82,7 @@ protected:
 
 		const SampleCCTJump::Jump& getJump() const { return mJump; }
 
-	protected:
+	// protected:
 		physx::PxPhysics*					physics_;
 		physx::PxScene*						Scene_;
 		physx::PxControllerShapeType::Enum	mType;
@@ -92,8 +94,13 @@ protected:
 
 		physx::PxController*				mController;
 		physx::PxReal						mControllerRadius;
+
+		// move함수를 위한 객체
+		physx::PxQueryFilterCallback*		mQueryFilterCallback;
 	};
 
+
+protected:
 	ControlledActor* ControlledActor_;
 	ControlledActorDesc ControlledActorDesc_;
 

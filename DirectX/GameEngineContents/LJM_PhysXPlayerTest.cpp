@@ -2,6 +2,11 @@
 #include "LJM_PhysXPlayerTest.h"
 #include "PhysXTestPlayer.h"
 
+#include "PhysXTestBox.h"
+#include "PhysXTestStackBox.h"
+#include <GameEngineCore/ThirdParty/inc/PhysX/PxConfig.h>
+#include <GameEngineCore/ThirdParty/inc/PhysX/PxPhysicsAPI.h>
+
 //#include <GameEngineCore/ThirdParty/inc/PhysX/PxConfig.h>
 //#include <GameEngineCore/ThirdParty/inc/PhysX/PxPhysicsAPI.h>
 //#include <PhysX/characterkinematic/PxControllerManager.h>
@@ -24,12 +29,34 @@ LJM_PhysXPlayerTest::~LJM_PhysXPlayerTest()
 void LJM_PhysXPlayerTest::Start()
 {
 	Player_ = CreateActor<PhysXTestPlayer>();
+
+	GameEngineInput::GetInst()->CreateKey("CreateBall", VK_SPACE);
+	GameEngineInput::GetInst()->CreateKey("CreateStack", '1');
 }
 
 void LJM_PhysXPlayerTest::Update(float _DeltaTime)
 {
 	// 물리연산 업데이트
 	stepPhysics(true);
+
+
+	if (true == GameEngineInput::GetInst()->IsDown("CreateBall"))
+	{
+		physx::PxTransform tmpTransform(GetMainCameraActor()->GetTransform().GetWorldPosition().x
+			, GetMainCameraActor()->GetTransform().GetWorldPosition().y
+			, GetMainCameraActor()->GetTransform().GetWorldPosition().z);
+
+		physx::PxVec3 tmpVec3(GetMainCameraActorTransform().GetLocalRotation().x
+			, GetMainCameraActorTransform().GetLocalRotation().y
+			, 1.0f);
+
+		createDynamic(tmpTransform, tmpVec3 * 200.0f);
+	}
+
+	if (true == GameEngineInput::GetInst()->IsDown("CreateStack"))
+	{
+		createStack(physx::PxTransform(physx::PxVec3(0, 0, stackZ -= 10.0f)), 10, 2.0f);
+	}
 }
 
 void LJM_PhysXPlayerTest::End()
@@ -87,8 +114,36 @@ void LJM_PhysXPlayerTest::initPhysics(bool _interactive)
 
 void LJM_PhysXPlayerTest::stepPhysics(bool _Interactive)
 {
+	Scene_->simulate(1.0f / 60.0f);
+	Scene_->fetchResults(true);
 }
 
 void LJM_PhysXPlayerTest::cleanupPhysics(bool _Interactive)
 {
+}
+
+
+
+void LJM_PhysXPlayerTest::createDynamic(const physx::PxTransform& t, const physx::PxVec3& velocity)
+{
+	PhysXTestBox* tmpTestBox = CreateActor<PhysXTestBox>();
+	tmpTestBox->GetTransform().SetWorldPosition({ 0.0f, 100.0f, 2000.0f });
+	tmpTestBox->CreatePhysXActors(Scene_, Physics_);
+}
+
+void LJM_PhysXPlayerTest::createStack(const physx::PxTransform& t, physx::PxU32 size, physx::PxReal halfExtent)
+{
+	// 1스택에 Actor가 55개씩 생성됨
+	for (physx::PxU32 i = 0; i < size; i++)
+	{
+		for (physx::PxU32 j = 0; j < size - i; j++)
+		{
+
+			PhysXTestStackBox* tmpTestStackBox = CreateActor<PhysXTestStackBox>();
+			// 액터의 포지션을 먼저 조정한 후에 RigidDynamic을 생성★
+			tmpTestStackBox->GetTransform().SetWorldPosition({ (j * 2.0f - (size - i)) * halfExtent, (i * 2.0f + 1.0f) * halfExtent, t.p.z });
+			tmpTestStackBox->CreatePhysXActors(Scene_, Physics_);
+		}
+	}
+	//shape->release();
 }

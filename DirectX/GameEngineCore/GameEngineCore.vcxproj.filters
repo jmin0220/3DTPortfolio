@@ -1228,5 +1228,8 @@
     <CopyFileToFolders Include="ThirdParty\bin\Debug\jsoncpp.dll">
       <Filter>ThirdParty\Lib\Debug</Filter>
     </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\bin\Release\jsoncpp.dll">
+      <Filter>ThirdParty\Lib\Release</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>
