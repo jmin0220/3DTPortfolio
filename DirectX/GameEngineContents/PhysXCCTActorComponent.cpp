@@ -27,6 +27,11 @@ void PhysXCCTActorComponent::Start()
 		GameEngineInput::GetInst()->CreateKey("moveright00", VK_RIGHT);
 		GameEngineInput::GetInst()->CreateKey("backward00", VK_DOWN);
 	}
+
+
+	// GUI
+	GUI = GameEngineGUI::CreateGUIWindow<CustomableGUI>("CustomableGUI", nullptr);
+	GUI->SetGUIDebugFunc([=]() {OnGUIFunc(); });
 }
 
 void PhysXCCTActorComponent::Update(float _DeltaTime)
@@ -40,19 +45,19 @@ void PhysXCCTActorComponent::Update(float _DeltaTime)
 
 	if (GameEngineInput::GetInst()->IsPress("forward00"))
 	{
-		tmpVec3 = physx::PxVec3(0.0f, 0.0f, -300.0f * GameEngineTime::GetDeltaTime());
+		tmpVec3 = physx::PxVec3(0.0f, 0.0f, -200.0f * GameEngineTime::GetDeltaTime());
 	}
 	if (GameEngineInput::GetInst()->IsPress("moveleft00"))
 	{
-		tmpVec3 = physx::PxVec3(-300.0f * GameEngineTime::GetDeltaTime(), 0.0f, 0.0f);
+		tmpVec3 = physx::PxVec3(-200.0f * GameEngineTime::GetDeltaTime(), 0.0f, 0.0f);
 	}
 	if (GameEngineInput::GetInst()->IsPress("moveright00"))
 	{
-		tmpVec3 = physx::PxVec3(300.0f * GameEngineTime::GetDeltaTime(), 0.0f, 0.0f);
+		tmpVec3 = physx::PxVec3(200.0f * GameEngineTime::GetDeltaTime(), 0.0f, 0.0f);
 	}
 	if (GameEngineInput::GetInst()->IsPress("backward00"))
 	{
-		tmpVec3 = physx::PxVec3(0.0f, 0.0f, 300.0f * GameEngineTime::GetDeltaTime());
+		tmpVec3 = physx::PxVec3(0.0f, 0.0f, 200.0f * GameEngineTime::GetDeltaTime());
 	}
 
 	// 플레이어의 현재 y축 위치에 따라 낙하 속도를 설정
@@ -107,8 +112,8 @@ void PhysXCCTActorComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::Px
 	ControlledActorDesc_.mStepOffset = 0.05f;
 	ControlledActorDesc_.mInvisibleWallHeight = 0.0f;
 	ControlledActorDesc_.mMaxJumpHeight = 0.0f;
-	ControlledActorDesc_.mRadius = 1.0f;
-	ControlledActorDesc_.mHeight = 10.0f;
+	ControlledActorDesc_.mRadius = 20.0f;
+	ControlledActorDesc_.mHeight = 70.0f;
 	ControlledActorDesc_.mReportCallback = nullptr;
 	ControlledActorDesc_.mBehaviorCallback = nullptr;
 	//CapsuleCtrDesc_.radius = 1.0f;
@@ -310,4 +315,22 @@ void PhysXCCTActorComponent::defaultCCTInteraction(const physx::PxControllerShap
 			::addForceAtLocalPos(*actor, hit.dir * hit.length * 1000.0f, localPos, physx::PxForceMode::eACCELERATION);
 		}
 	}
+}
+
+
+
+void PhysXCCTActorComponent::OnGUIFunc()
+{
+	if (nullptr == ControlledActor_)
+		return;
+
+	std::string FootPositionStr = "FootPosition >> x : " + std::to_string(ControlledActor_->getFootPosition().x)
+		+ ", y : " + std::to_string(ControlledActor_->getFootPosition().y)
+		+ ", z : " + std::to_string(ControlledActor_->getFootPosition().z);
+
+	physx::PxF32 heightDelta = ControlledActor_->mJump.getHeight(GameEngineTime::GetDeltaTime());
+	std::string JumpHeight =      "JumpHeight   >> x : " + std::to_string(heightDelta);
+
+	ImGui::Text(FootPositionStr.c_str());
+	ImGui::Text(JumpHeight.c_str());
 }

@@ -108,6 +108,8 @@ protected:
 	void defaultCCTInteraction(const physx::PxControllerShapeHit& hit);
 
 private:
-
+	// 디버그용 GUI
+	void OnGUIFunc();
+	CustomableGUI* GUI;
 };
 
