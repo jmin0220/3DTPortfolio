@@ -177,6 +177,7 @@ void MapEditorGUI::LoadSave()
 	if (true == ImGui::Button("Load"))
 	{
 		Load();
+		jsonRead();
 	}
 
 	ImGui::SameLine();
@@ -445,51 +446,51 @@ void MapEditorGUI::jsonWrite() {
 
 // MeshDataLoad
 void MapEditorGUI::jsonRead() {
-	ifstream json_dir("C:\\Users\\user\\Desktop\\JSONTest\\jsontest.json");
+	GameEngineDirectory Dir;
+	Dir.MoveParentToExitsChildDirectory("Resources");
+	Dir.Move("Resources");
+	Dir.Move("Mesh");
+
+	ifstream json_dir(Dir.GetFullPath() + "\\jsontest.json");
+	
 	Json::CharReaderBuilder builder;
 	builder["collectComments"] = false;
 	Json::Value value;
 
 	JSONCPP_STRING errs;
 	bool ok = parseFromStream(builder, json_dir, &value, &errs);
-
-	if (ok == true)
+	if (ok == false)
 	{
-		cout << "CPU: " << value["CPU"] << endl;
-		cout << "Program Python: " << value["Program"]["Python"] << endl;
-		cout << "Computer Cable: " << value["Computer"]["Cable"] << endl;
-		cout << "Computer Cable[0]: " << value["Computer"]["Cable"][0] << endl;
-		cout << endl;
-
-		cout << "Computer Number Int(as int): " << value["Computer"]["Number"].get("Int", -1).asInt() << endl;
-		// "Int" 값이 없으면 -1 반환.
-		cout << "Computer Number Int(as int): " << value["Computer"]["Number"]["Int"].asInt() << endl;
-		// "Int" 값이 없으면 0 반환.
-		cout << "Computer Number Double(as double): " << value["Computer"]["Number"].get("Double", -1).asDouble() << endl;
-		// "Double" 값이 없으면 -1 반환.
-		cout << "Computer Number Double(as string): " << value["Computer"]["Number"].get("Double", "Empty").asString() << endl;
-		// "Double" 값이 없으면 Empty 반환.
-		cout << "Computer Number Bool(as bool): " << value["Computer"]["Number"].get("Bool", false).asBool() << endl;
-		// "Bool" 값이 없으면 false 반환.
-		cout << endl;
-
-		cout << "Root size: " << value.size() << endl;
-		cout << "Program size: " << value["Program"].size() << endl;
-		cout << "Computer Cable size: " << value["Computer"]["Cable"].size() << endl;
-		cout << endl;
-
-		int size = value["Computer"]["Cable"].size();
-		// size() 값을 for 문에서 그대로 비교하면 warning C4018가 발생 한다.
-		for (int i = 0; i < size; i++)
-			cout << "Computer Cable: " << value["Computer"]["Cable"][i] << endl;
-		cout << endl;
-
-		for (auto i : value["Computer"]["Cable"])
-			cout << "Computer Cable: " << i << endl;
+		return;
 	}
-	else
+	
+	int j = 0;
+	while (Json::nullValue != value["Object" + std::to_string(j)])
 	{
-		cout << "Parse failed." << endl;
-	}
+		Json::Value Mesh = value["Object" + std::to_string(j)]["Mesh"];
 
+		/*GameEngineDebug::OutPutString("Name: " + Mesh["Name"].toStyledString());
+		GameEngineDebug::OutPutString("Pos: " + Mesh["Transform"]["Pos"][0].toStyledString());
+		GameEngineDebug::OutPutString("Size: " + Mesh["Transform"]["Size"].toStyledString());
+		GameEngineDebug::OutPutString("Rot: " + Mesh["Transform"]["Rot"].toStyledString());*/
+
+		float4 Pos = { Mesh["Transform"]["Pos"][0].asFloat() , Mesh["Transform"]["Pos"][1].asFloat() , Mesh["Transform"]["Pos"][2].asFloat(), Mesh["Transform"]["Pos"][3].asFloat() };
+		float4 Size = { Mesh["Transform"]["Size"][0].asFloat() , Mesh["Transform"]["Size"][1].asFloat() , Mesh["Transform"]["Size"][2].asFloat(), Mesh["Transform"]["Size"][3].asFloat() };
+		float4 Rot = { Mesh["Transform"]["Rot"][0].asFloat() , Mesh["Transform"]["Rot"][1].asFloat() , Mesh["Transform"]["Rot"][2].asFloat(), Mesh["Transform"]["Rot"][3].asFloat() };
+		
+		SpawnedObject NewObj;
+		NewObj.Name_ = Mesh["Name"].toStyledString();
+
+		//NewObj.Dir_ = FBXFiles_[FileIdx].GetFullPath();
+		NewObj.Actor_ = ConnectedLevel->CreateActor<ColorBox>();
+
+		NewObj.Actor_->GetTransform().SetWorldPosition(Pos);
+		NewObj.Actor_->GetTransform().SetWorldScale(Size);
+		NewObj.Actor_->GetTransform().SetLocalRotation(Rot);
+
+		SpawnedObjects_.push_back(NewObj);
+		ActorPicker::SelectedActor = NewObj.Actor_;
+
+		j++;
+	}
 }
