@@ -8,6 +8,7 @@
 #include "ActorPicker.h"
 #include "ColorBox.h"
 
+
 const float SliderFloatMin = -100000;
 const float SliderFloatMax = 100000;
 
@@ -72,11 +73,12 @@ void MapEditorGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 	// 스폰 버튼 클릭
 	OnClickSpawn();
 
+	// 스폰한 엑터에 카메라
+	FollowCameraToSpawned(_DeltaTime);
+
 	// 스폰한 엑터 리스트
 	ShowSpawnedList();
 
-	// 스폰한 엑터에 카메라
-	FollowCameraToSpawned(_DeltaTime);
 
 	LoadSave();
 	ActorPicking();
@@ -325,6 +327,19 @@ void MapEditorGUI::ShowSpawnedList()
 		}
 	}
 	ImGui::EndChild();
+
+	ImGui::SameLine();
+	bool PushRemove = ImGui::Button("Remove");
+	if (true == PushRemove && 0 != SpawnedObjects_.size())
+	{
+		SpawnedObjects_[SpawnedIdx].Actor_->Death();
+		SpawnedObjects_.erase(SpawnedObjects_.begin() + SpawnedIdx);
+		
+		if (SpawnedIdx != 0)
+		{
+			SpawnedIdx--;
+		}
+	}
 }
 
 void MapEditorGUI::FollowCameraToSpawned(float _DeltaTime)
@@ -384,6 +399,8 @@ bool MapEditorGUI::WASDInputCheck()
 	{
 		return true;
 	}
+
+	return false;
 }
 
 // JSON생성 코드
