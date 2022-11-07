@@ -41,9 +41,13 @@ private:
 	float4 ArmVector_;
 	float4 PosCamHolder_;
 	float4 PosCharacter_;
+	float4 PosHead_;
 
 	// 카메라를 고정시키는 위치(벽에 부딪히는 용도)
 	GameEngineCollision* CamHolderCollision_;
+	GameEngineCollision* CamAxisX_;
+	GameEngineCollision* CamAxisY_;
+
 
 	// Mouse회전
 	float4 PrevMouseInput_;

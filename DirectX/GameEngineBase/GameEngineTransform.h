@@ -203,6 +203,10 @@ public:
 	{
 		return Data.LocalRotation;
 	}
+	inline float4 GetWorldRotation() const
+	{
+		return Data.WorldRotation;
+	}
 	inline float4 GetLocalPosition() const
 	{
 		return Data.LocalPosition;

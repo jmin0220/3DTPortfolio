@@ -15,7 +15,10 @@ LJM_PhysXPlayerTest::~LJM_PhysXPlayerTest()
 {
 	// To release all created character controllers at once, either release the manager object itself
 	// , or use the following function if you intend to keep using the manager
-	CtrManager_->purgeControllers();
+	if (nullptr != CtrManager_)
+	{
+		CtrManager_->purgeControllers();
+	}
 }
 
 void LJM_PhysXPlayerTest::Start()

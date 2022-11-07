@@ -9,6 +9,7 @@
 // LPARAM lParam
 
 std::function<LRESULT(HWND, UINT, WPARAM, LPARAM)> GameEngineWindow::MessageCallBack = nullptr;
+bool GameEngineWindow::CurAppActivated_;
 
 LRESULT CALLBACK GameEngineWindow::MessageProcess(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -45,6 +46,21 @@ LRESULT CALLBACK GameEngineWindow::MessageProcess(HWND hWnd, UINT message, WPARA
     case WM_MOUSEWHEEL:
     {
         GameEngineInput::GetInst()->WheelValue = (SHORT)HIWORD(wParam);
+        break;
+    }
+    // 앱 활성화 여부(윈도우스크린, Imgui)
+    case WM_ACTIVATE:
+    {
+        if (WA_INACTIVE == LOWORD(wParam))
+        {
+            // 비활성화
+            CurAppActivated_ = false;
+        }
+        else
+        {
+            // 활성화
+            CurAppActivated_ = true;
+        }
         break;
     }
     default:

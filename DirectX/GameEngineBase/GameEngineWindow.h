@@ -82,5 +82,13 @@ private:
 
 	static LRESULT CALLBACK MessageProcess(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
+
+	// 앱 활성화 여부
+	static bool CurAppActivated_;
+public:
+	bool IsMouseCurApp()
+	{
+		return CurAppActivated_;
+	}
 };
 
