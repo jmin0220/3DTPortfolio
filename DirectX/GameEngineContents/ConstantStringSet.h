@@ -1,5 +1,8 @@
 #pragma once
 
+// 사이즈 배율
+#define SIZE_MAGNIFICATION_RATIO 100.0f, 100.0f, 100.0f
+
 // 디렉토리
 #define DIR_RESOURCES "Resources"
 #define DIR_GAMES "Games"
@@ -9,7 +12,6 @@
 #define DIR_CHARACTER "Character"
 #define DIR_DOORDASH_MESH "DoorDashMesh"
 #define DIR_RAINBOW "RainBow"
-
 
 // 테스트용은 분리
 #define DIR_TESTMAP "TestMap"
