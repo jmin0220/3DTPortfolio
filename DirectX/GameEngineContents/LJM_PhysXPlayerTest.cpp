@@ -98,10 +98,16 @@ void LJM_PhysXPlayerTest::initPhysics(bool _interactive)
 	}
 
 	// 임시발판 생성
-	PlaneMat_ = Physics_->createMaterial(0.5f, 0.5f, 0.6f);
-	physx::PxRigidStatic* groundPlane = physx::PxCreatePlane(*Physics_, physx::PxPlane(0, 1, 0, 0), *PlaneMat_);
-	Scene_->addActor(*groundPlane);
+	PlaneMat_ = Physics_->createMaterial(0.5f, 0.5f, 0.1f);
+	//physx::PxRigidStatic* groundPlane = physx::PxCreatePlane(*Physics_, physx::PxPlane(0, 1, 0, 0), *PlaneMat_);
+	//Scene_->addActor(*groundPlane);
+	physx::PxTransform	boxPose = physx::PxTransform(physx::PxVec3(0.0f, -1.0f, 0.0f));
+	const physx::PxVec3 boxSize = physx::PxVec3(500.0f, 1.0f, 500.0f);
+	const physx::PxReal density(0.0f);
+	physx::PxRigidActor* box = createRigidActor(*Scene_, *Physics_, boxPose, physx::PxBoxGeometry(boxSize), *PlaneMat_, NULL, &density, NULL, 0);
 
+
+	// 컨트롤러 매니저 생성(ControlledActor 생성을 위해서)
 	CtrManager_ = PxCreateControllerManager(*Scene_);
 
 	// 지오메트리가 겹치는 경우 자동으로 복구될 수 있는 모드
@@ -120,6 +126,41 @@ void LJM_PhysXPlayerTest::stepPhysics(bool _Interactive)
 
 void LJM_PhysXPlayerTest::cleanupPhysics(bool _Interactive)
 {
+}
+
+physx::PxRigidActor* LJM_PhysXPlayerTest::createRigidActor(physx::PxScene& scene, physx::PxPhysics& physics, const physx::PxTransform& pose, const physx::PxGeometry& geometry, physx::PxMaterial& material, const physx::PxFilterData* fd, const physx::PxReal* density, const physx::PxReal* mass, physx::PxU32 flags)
+{
+	const bool isDynamic = (density && *density) || (mass && *mass);
+
+	physx::PxRigidActor* actor = isDynamic ? static_cast<physx::PxRigidActor*>(physics.createRigidDynamic(pose))
+		: static_cast<physx::PxRigidActor*>(physics.createRigidStatic(pose));
+	if (!actor)
+		return NULL;
+
+	physx::PxShape* shape = physx::PxRigidActorExt::createExclusiveShape(*actor, geometry, material);
+	if (!shape)
+	{
+		actor->release();
+		return NULL;
+	}
+
+	if (fd)
+		shape->setSimulationFilterData(*fd);
+
+	if (isDynamic)
+	{
+		physx::PxRigidDynamic* body = static_cast<physx::PxRigidDynamic*>(actor);
+		{
+			if (density)
+				physx::PxRigidBodyExt::updateMassAndInertia(*body, *density);
+			else
+				physx::PxRigidBodyExt::setMassAndUpdateInertia(*body, *mass);
+		}
+	}
+
+	scene.addActor(*actor);
+
+	return actor;
 }
 
 

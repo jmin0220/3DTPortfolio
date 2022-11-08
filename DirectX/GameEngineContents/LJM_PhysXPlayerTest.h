@@ -47,6 +47,9 @@ protected:
 
 	void cleanupPhysics(bool _Interactive = true);
 
+	physx::PxRigidActor* createRigidActor(physx::PxScene& scene, physx::PxPhysics& physics,
+		const physx::PxTransform& pose, const physx::PxGeometry& geometry, physx::PxMaterial& material,
+		const physx::PxFilterData* fd, const physx::PxReal* density, const physx::PxReal* mass, physx::PxU32 flags);
 
 	////////////////////// 물리 인터랙션 테스트용
 

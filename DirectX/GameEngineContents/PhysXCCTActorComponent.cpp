@@ -4,7 +4,7 @@
 static physx::PxPhysics* physics_ = nullptr;
 static physx::PxScene* scene_ = nullptr;
 
-physx::PxReal PhysXCCTActorComponent::PhysxGravity_ = -9.81f;	// 중력치
+physx::PxReal PhysXCCTActorComponent::PhysxGravity_ = -98.1f;	// 중력치
 
 PhysXCCTActorComponent::PhysXCCTActorComponent() 
 {
@@ -61,14 +61,14 @@ void PhysXCCTActorComponent::Update(float _DeltaTime)
 	}
 
 	// 플레이어의 현재 y축 위치에 따라 낙하 속도를 설정
-	//const physx::PxF32 heightDelta = ControlledActor_->mJump.getHeight(GameEngineTime::GetDeltaTime());
-	//float dy;
-	//if (heightDelta != 0.0f)
-	//	dy = heightDelta;
-	//else
-	//	dy = PhysxGravity_ * GameEngineTime::GetDeltaTime();
+	const physx::PxF32 heightDelta = ControlledActor_->mJump.getHeight(GameEngineTime::GetDeltaTime());
+	float dy;
+	if (heightDelta != 0.0f)
+		dy = heightDelta;
+	else
+		dy = PhysxGravity_ * GameEngineTime::GetDeltaTime();
 
-	//tmpVec3.y += dy;
+	tmpVec3.y += dy;
 
 	const physx::PxControllerFilters filters(nullptr, ControlledActor_->mQueryFilterCallback, nullptr);
 
@@ -99,14 +99,8 @@ void PhysXCCTActorComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::Px
 		, ParentActor_->GetTransform().GetWorldPosition().z);
 
 
-	// 초기 포지션
-	physx::PxExtendedVec3 mControllerInitialPosition(
-		ParentActor_->GetTransform().GetWorldPosition().x,
-		ParentActor_->GetTransform().GetWorldPosition().y, 
-		ParentActor_->GetTransform().GetWorldPosition().z);
 	
 	ControlledActorDesc_.mType = physx::PxControllerShapeType::eCAPSULE;
-	ControlledActorDesc_.mPosition = mControllerInitialPosition;
 	ControlledActorDesc_.mSlopeLimit = 0.0f;
 	ControlledActorDesc_.mContactOffset = 0.01f;
 	ControlledActorDesc_.mStepOffset = 0.05f;
@@ -118,6 +112,15 @@ void PhysXCCTActorComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::Px
 	ControlledActorDesc_.mBehaviorCallback = nullptr;
 	//CapsuleCtrDesc_.radius = 1.0f;
 	//CapsuleCtrDesc_.height = 10.0f;
+
+
+	// 초기 포지션
+	physx::PxExtendedVec3 mControllerInitialPosition(
+		ParentActor_->GetTransform().GetWorldPosition().x,
+		ParentActor_->GetTransform().GetWorldPosition().y + ControlledActorDesc_.mHeight + 5.0f,
+		ParentActor_->GetTransform().GetWorldPosition().z);
+
+	ControlledActorDesc_.mPosition = mControllerInitialPosition;
 
 	//// 경사로를 오를때 판정
 	//CapsuleCtrDesc_.climbingMode = physx::PxCapsuleClimbingMode::eEASY;
