@@ -177,6 +177,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ConstantStringSet.h" />
     <ClInclude Include="ContentsCore.h">
       <SubType>
       </SubType>

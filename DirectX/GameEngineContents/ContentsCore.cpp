@@ -59,8 +59,8 @@ void ContentsCore::LoadResources()
 	{
 		//스프라이트
 		GameEngineDirectory Dir;
-		Dir.MoveParentToExitsChildDirectory("Resources");
-		Dir.Move("Resources");
+		Dir.MoveParentToExitsChildDirectory(DIR_RESOURCES);
+		Dir.Move(DIR_RESOURCES);
 
 		// 텍스쳐 로드
 		{
@@ -72,16 +72,16 @@ void ContentsCore::LoadResources()
 			}
 		}
 
-		GameEngineFont::Load("Noto Sans CJK SC");//폴가이즈 폰트
-		GameEngineFont::Load("Titan One");
+		GameEngineFont::Load(FONT_NOTO_SANS_CJK_SC);//폴가이즈 폰트
+		GameEngineFont::Load(FONT_TITAN_ONE);
 	}
 
 	{
 		//게임 설명샷
 		GameEngineDirectory Dir;
-		Dir.MoveParentToExitsChildDirectory("Resources");
-		Dir.Move("Resources");
-		Dir.Move("Games");
+		Dir.MoveParentToExitsChildDirectory(DIR_RESOURCES);
+		Dir.Move(DIR_RESOURCES);
+		Dir.Move(DIR_GAMES);
 
 		std::vector<GameEngineFile> Files = Dir.GetAllFile();
 
@@ -95,10 +95,12 @@ void ContentsCore::LoadResources()
 	// 캐릭터 텍스쳐 로드
 	{
 		GameEngineDirectory Dir;
-		Dir.MoveParentToExitsChildDirectory("Resources");
-		Dir.Move("Resources/Mesh/Character");
+		Dir.MoveParentToExitsChildDirectory(DIR_RESOURCES);
+		Dir.Move(DIR_RESOURCES);
+		Dir.Move(DIR_MESH);
+		Dir.Move(DIR_CHARACTER);
 
-		std::vector<GameEngineFile> Files = Dir.GetAllFile(".png");
+		std::vector<GameEngineFile> Files = Dir.GetAllFile(EXT_PNG);
 
 		for (size_t i = 0; i < Files.size(); i++)
 		{
@@ -106,50 +108,50 @@ void ContentsCore::LoadResources()
 		}
 
 		// 메쉬 로드
-		GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(Dir.PlusFilePath("Character.FBX"));
+		GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(Dir.PlusFilePath(FBX_NAME_CHARACTER));
 	}
 	
 
 	//메쉬 로드
 	{
 		GameEngineDirectory Dir;
-		Dir.MoveParentToExitsChildDirectory("Resources");
-		Dir.Move("Resources");
-		Dir.Move("Mesh");
-		Dir.Move("DoorDashMesh");
+		Dir.MoveParentToExitsChildDirectory(DIR_RESOURCES);
+		Dir.Move(DIR_RESOURCES);
+		Dir.Move(DIR_MESH);
+		Dir.Move(DIR_DOORDASH_MESH);
 
 		{
 			GameEngineDirectory MeshDir = Dir;
-			MeshDir.Move("RainBow");
-			GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(MeshDir.PlusFilePath("Rainbow.FBX"));
+			MeshDir.Move(DIR_RAINBOW);
+			GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(MeshDir.PlusFilePath(FBX_NAME_RAINBOW));
 		}
 
 	}
 
 	{
 		GameEngineDirectory Dir;
-		Dir.MoveParentToExitsChildDirectory("Resources");
-		Dir.Move("Resources");
-		Dir.Move("Mesh");
+		Dir.MoveParentToExitsChildDirectory(DIR_RESOURCES);
+		Dir.Move(DIR_RESOURCES);
+		Dir.Move(DIR_MESH);
 
 		{
 			GameEngineDirectory MeshDir = Dir;
-			MeshDir.Move("TestMap");
-			GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(MeshDir.PlusFilePath("TestMap.FBX"));
+			MeshDir.Move(DIR_TESTMAP);
+			GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(MeshDir.PlusFilePath(FBX_NAME_TESTMAP));
 		}
 	}
 }
 
 void ContentsCore::CreateLevels()
 {
-	CreateLevel<tmpLevel>("tmpLevel");
-	CreateLevel<LoadingLevel>("Loading");
-	CreateLevel<MapEditorLevel>("MapEditorLevel");
-	CreateLevel<PhysicsTestLevel>("PhysicsTestLevel");
-	//CreateLevel<LJM_PhysXHelloWorld>("LJM_PhysXHelloWorld");
-	CreateLevel<LJM_PhysXPlayerTest>("LJM_PhysXPlayerTest");
-	CreateLevel<CameraTestLevel>("CameraTestLevel");
-	ChangeLevel("MapEditorLevel");
+	CreateLevel<tmpLevel>(LEVEL_NAME_TMP);
+	CreateLevel<LoadingLevel>(LEVEL_NAME_LOADING);
+	CreateLevel<MapEditorLevel>(LEVEL_NAME_MAP_EDITER);
+	CreateLevel<PhysicsTestLevel>(LEVEL_NAME_PHYSICS_TEST);
+	//CreateLevel<LJM_PhysXHelloWorld>(LEVEL_NAME_PHYSX_HELLOWORLD);
+	CreateLevel<LJM_PhysXPlayerTest>(LEVEL_NAME_PHYSX_PLAYER_TEST);
+	CreateLevel<CameraTestLevel>(LEVEL_NAME_CAMERA_TEST);
+	ChangeLevel(LEVEL_NAME_MAP_EDITER);
 }
 
 void ContentsCore::CreateShaders()

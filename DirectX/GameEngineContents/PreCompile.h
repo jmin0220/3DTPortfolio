@@ -49,6 +49,8 @@
 #include <GameEngineContents/GlobalValues.h>
 #include <GameEngineContents/CustomableGUI.h>
 
+// global
+#include "ConstantStringSet.h"
 
 // PhysX 라이브러리
 #pragma warning(disable : 4996)
