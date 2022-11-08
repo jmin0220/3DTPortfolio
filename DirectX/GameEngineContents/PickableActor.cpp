@@ -14,7 +14,7 @@ PickableActor::~PickableActor()
 {
 }
 
-void PickableActor::CreatePickingCollision(float4 Scale,float4 Position)
+void PickableActor::CreatePickingCollision(float4 Scale = {100.0f,100.0f,100.0f}, float4 Position = {0,0,0})
 {
 	Collision_Picking = CreateComponent<GameEngineCollision>();
 	Collision_Picking->GetTransform().SetWorldScale(Scale);
