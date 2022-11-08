@@ -4,10 +4,13 @@
 #include <iostream>
 #include <fstream>
 #include <GameEngineCore/ThirdParty/inc/json.h>
+#include <GameEngineBase/magic_enum.hpp>
 
 #include "ActorPicker.h"
 #include "ColorBox.h"
-
+#include "TestRainBow.h"
+#include "AxisActor.h"
+#include "TestActor_Character.h"
 
 const float SliderFloatMin = -100000;
 const float SliderFloatMax = 100000;
@@ -179,7 +182,6 @@ void MapEditorGUI::LoadSave()
 	if (true == ImGui::Button("Load"))
 	{
 		Load();
-		jsonRead();
 	}
 
 	ImGui::SameLine();
@@ -187,7 +189,6 @@ void MapEditorGUI::LoadSave()
 	if (true == ImGui::Button("Save"))
 	{
 		Save();
-		jsonWrite();
 	}
 }
 
@@ -223,9 +224,11 @@ void MapEditorGUI::OnClickLoad()
 	if (true == ImGui::Button("LoadFBXs"))
 	{
 		GameEngineDirectory Dir;
-		Dir.MoveParentToExitsChildDirectory("Resources");
-		Dir.Move("Resources");
-		Dir.Move("Mesh");
+		Dir.MoveParentToExitsChildDirectory(DIR_RESOURCES);
+		Dir.Move(DIR_RESOURCES);
+		Dir.Move(DIR_LEVELS);
+		Dir.Move(DIR_TESTLEVEL);
+		//Dir.Move(DIR_MESH);
 
 
 		std::string Path = GameEngineGUI::OpenFolderDlg(GameEngineString::AnsiToUTF8Return("폴더 로드"), Dir.GetFullPath());
@@ -292,7 +295,55 @@ void MapEditorGUI::OnClickSpawn()
 		NewObj.Name_ = Name.substr(0, Name.size() - Extention.size());
 
 		NewObj.Dir_ = FBXFiles_[FileIdx].GetFullPath();
-		NewObj.Actor_ = ConnectedLevel->CreateActor<ColorBox>();
+		
+		//NewObj.Actor_ = ConnectedLevel->CreateActor<ColorBox>();
+
+		//CurMesh = MeshEnum::Rainbow;
+		//std::string_view Meshname = magic_enum::enum_name(CurMesh);
+		//if (Meshname == NewObj.Name_)
+		//{
+
+		//	int a = 0;
+		//}
+		
+		std::map<std::string, MeshEnum> MeshEnumMap_;
+		MeshEnum tmpEnum = MeshEnum::START;
+
+		for (int i = 0; i < static_cast<int>(MeshEnum::END); i++)
+		{
+			std::string tmp = magic_enum::enum_name(tmpEnum).data();
+			MeshEnumMap_[tmp] = (MeshEnum)i;
+			tmpEnum = (MeshEnum)((int)tmpEnum + 1);
+		}
+
+		switch ((*MeshEnumMap_.find(NewObj.Name_)).second)
+		{
+		case MeshEnum::axis:
+		{
+			NewObj.Actor_ = ConnectedLevel->CreateActor<AxisActor>();
+		}
+			break;
+		case MeshEnum::Character:
+		{
+			NewObj.Actor_ = ConnectedLevel->CreateActor<TestActor_Character>();
+		}
+			break;
+		case MeshEnum::Rainbow:
+		{
+			NewObj.Actor_ = ConnectedLevel->CreateActor<TestRainBow>();
+		}
+			break;
+		case MeshEnum::TestMap:
+		{
+			int a = 0;
+		}
+			break;
+		default:
+		{
+			int a = 0;
+		}
+			break;
+		}
 
 		NewObj.Actor_->GetTransform().SetWorldPosition({ 0, 0, 0 });
 
@@ -372,10 +423,72 @@ void MapEditorGUI::FollowCameraToSpawned(float _DeltaTime)
 
 void MapEditorGUI::Load()
 {	
+	GameEngineDirectory LoadDir;
+	LoadDir.MoveParentToExitsChildDirectory(DIR_RESOURCES);
+	LoadDir.Move(DIR_RESOURCES);
+	LoadDir.Move(DIR_MESH);
+	
+	OPENFILENAME ofn = {};
+
+	ofn.lStructSize = sizeof(OPENFILENAME);
+	ofn.hwndOwner = GameEngineWindow::GetHWND();
+	wchar_t szName[256] = {};
+	std::string LoadPath(LoadDir.GetFullPath());
+#ifdef _DEBUG
+	ofn.lpstrFile = (LPSTR)szName;
+	ofn.lpstrInitialDir = (LPSTR)(LoadPath.c_str());
+#else
+	ofn.lpstrFile = (LPWSTR)szName;
+	ofn.lpstrInitialDir = (LPWSTR)strTileFolder.c_str();
+#endif // DEBUG
+
+	ofn.nMaxFile = sizeof(szName);
+	ofn.lpstrFilter = "ALL\0*.*\0json\0*.json"; 
+	ofn.nFilterIndex = 0;
+	ofn.lpstrFileTitle = nullptr;
+	ofn.nMaxFileTitle = 0;
+
+	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+	if (TRUE == GetSaveFileName(&ofn))
+	{
+		std::filesystem::path p(ofn.lpstrFile);
+		LoadData(LoadPath, p.filename().string());
+	}
 }
 
 void MapEditorGUI::Save()
 {
+	GameEngineDirectory SaveDir;
+	SaveDir.MoveParentToExitsChildDirectory(DIR_RESOURCES);
+	SaveDir.Move(DIR_RESOURCES);
+	SaveDir.Move(DIR_MESH);
+	
+	OPENFILENAME ofn = {};
+
+	ofn.lStructSize = sizeof(OPENFILENAME);
+	ofn.hwndOwner = GameEngineWindow::GetHWND();
+	wchar_t szName[256] = {};
+	std::string SavePath(SaveDir.GetFullPath());
+#ifdef _DEBUG
+	ofn.lpstrFile = (LPSTR)szName;
+	ofn.lpstrInitialDir = (LPSTR)(SavePath.c_str());
+#else
+	ofn.lpstrFile = (LPWSTR)szName;
+	ofn.lpstrInitialDir = (LPWSTR)strTileFolder.c_str();
+#endif // DEBUG               
+	ofn.nMaxFile = sizeof(szName);
+	ofn.lpstrFilter = "ALL\0*.*\0json\0*.json";
+	ofn.lpstrFileTitle = nullptr;
+	ofn.nMaxFileTitle = 0;
+
+	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+	if (TRUE == GetSaveFileName(&ofn))
+	{
+		std::filesystem::path p(ofn.lpstrFile);
+		SaveData(SavePath, p.filename().string() + ".json");
+	}
 }
 
 bool MapEditorGUI::WASDInputCheck()
@@ -406,14 +519,10 @@ bool MapEditorGUI::WASDInputCheck()
 // JSON생성 코드
 using namespace std;
 // MeshDataSave
-void MapEditorGUI::jsonWrite() {
-	GameEngineDirectory Dir;
-	Dir.MoveParentToExitsChildDirectory("Resources");
-	Dir.Move("Resources");
-	Dir.Move("Mesh");
-	
+void MapEditorGUI::SaveData(const std::string& _FilePath, const std::string& _FileName)
+{
 	ofstream json_file;
-	json_file.open(Dir.GetFullPath() + "\\jsontest.json");
+	json_file.open(_FilePath + "\\" + _FileName);
 
 	Json::Value Object;
 
@@ -462,13 +571,9 @@ void MapEditorGUI::jsonWrite() {
 }
 
 // MeshDataLoad
-void MapEditorGUI::jsonRead() {
-	GameEngineDirectory Dir;
-	Dir.MoveParentToExitsChildDirectory("Resources");
-	Dir.Move("Resources");
-	Dir.Move("Mesh");
-
-	ifstream json_dir(Dir.GetFullPath() + "\\jsontest.json");
+void MapEditorGUI::LoadData(const std::string& _FilePath, const std::string& _FileName)
+{
+	ifstream json_dir(_FilePath + "\\" + _FileName);
 	
 	Json::CharReaderBuilder builder;
 	builder["collectComments"] = false;
@@ -486,20 +591,54 @@ void MapEditorGUI::jsonRead() {
 	{
 		Json::Value Mesh = value["Object" + std::to_string(j)]["Mesh"];
 
-		/*GameEngineDebug::OutPutString("Name: " + Mesh["Name"].toStyledString());
-		GameEngineDebug::OutPutString("Pos: " + Mesh["Transform"]["Pos"][0].toStyledString());
-		GameEngineDebug::OutPutString("Size: " + Mesh["Transform"]["Size"].toStyledString());
-		GameEngineDebug::OutPutString("Rot: " + Mesh["Transform"]["Rot"].toStyledString());*/
-
 		float4 Pos = { Mesh["Transform"]["Pos"][0].asFloat() , Mesh["Transform"]["Pos"][1].asFloat() , Mesh["Transform"]["Pos"][2].asFloat(), Mesh["Transform"]["Pos"][3].asFloat() };
 		float4 Size = { Mesh["Transform"]["Size"][0].asFloat() , Mesh["Transform"]["Size"][1].asFloat() , Mesh["Transform"]["Size"][2].asFloat(), Mesh["Transform"]["Size"][3].asFloat() };
 		float4 Rot = { Mesh["Transform"]["Rot"][0].asFloat() , Mesh["Transform"]["Rot"][1].asFloat() , Mesh["Transform"]["Rot"][2].asFloat(), Mesh["Transform"]["Rot"][3].asFloat() };
 		
 		SpawnedObject NewObj;
-		NewObj.Name_ = Mesh["Name"].toStyledString();
+		NewObj.Name_ = Mesh["Name"].asCString();
 
 		//NewObj.Dir_ = FBXFiles_[FileIdx].GetFullPath();
-		NewObj.Actor_ = ConnectedLevel->CreateActor<ColorBox>();
+		//NewObj.Actor_ = ConnectedLevel->CreateActor<ColorBox>();
+
+		std::map<std::string, MeshEnum> MeshEnumMap_;
+		MeshEnum tmpEnum = MeshEnum::START;
+
+		for (int i = 0; i < static_cast<int>(MeshEnum::END); i++)
+		{
+			std::string tmp = magic_enum::enum_name(tmpEnum).data();
+			MeshEnumMap_[tmp] = (MeshEnum)i;
+			tmpEnum = (MeshEnum)((int)tmpEnum + 1);
+		}
+
+		switch ((*MeshEnumMap_.find(NewObj.Name_)).second)
+		{
+		case MeshEnum::axis:
+		{
+			NewObj.Actor_ = ConnectedLevel->CreateActor<AxisActor>();
+		}
+		break;
+		case MeshEnum::Character:
+		{
+			NewObj.Actor_ = ConnectedLevel->CreateActor<TestActor_Character>();
+		}
+		break;
+		case MeshEnum::Rainbow:
+		{
+			NewObj.Actor_ = ConnectedLevel->CreateActor<TestRainBow>();
+		}
+		break;
+		case MeshEnum::TestMap:
+		{
+			int a = 0;
+		}
+		break;
+		default:
+		{
+			int a = 0;
+		}
+		break;
+		}
 
 		NewObj.Actor_->GetTransform().SetWorldPosition(Pos);
 		NewObj.Actor_->GetTransform().SetWorldScale(Size);

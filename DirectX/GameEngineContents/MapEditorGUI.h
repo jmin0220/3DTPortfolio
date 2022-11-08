@@ -8,6 +8,16 @@ struct SpawnedObject
 	GameEngineActor* Actor_;
 };
 
+enum class MeshEnum
+{
+	START,	// 가장 시작
+	axis,
+	Character,
+	Rainbow,
+	TestMap,
+	END, // 가장 마지막
+};
+
 // 설명 :
 class MapEditorGUI : public GameEngineGUIWindow
 {
@@ -41,14 +51,16 @@ private:
 	void Load();
 	void Save();
 	
-	void jsonWrite();
-	void jsonRead();
+	void LoadData(const std::string& _FilePath, const std::string& _FileName);
+	void SaveData(const std::string& _FilePath, const std::string& _FileName);
 
 	bool IsChange_;
 	bool CamFollowMode_;
 
 	GameEngineLevel* ConnectedLevel;
 	GameEngineActor* CurActor_;
+
+	MeshEnum CurMesh;
 
 	std::string SelectFolderTexture_;
 

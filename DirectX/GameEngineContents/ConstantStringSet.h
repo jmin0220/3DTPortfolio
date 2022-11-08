@@ -3,6 +3,8 @@
 // 디렉토리
 #define DIR_RESOURCES "Resources"
 #define DIR_GAMES "Games"
+#define DIR_LEVELS "Levels"
+#define DIR_TESTLEVEL "TestLevel"
 #define DIR_MESH "Mesh"
 #define DIR_CHARACTER "Character"
 #define DIR_DOORDASH_MESH "DoorDashMesh"
