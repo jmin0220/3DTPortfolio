@@ -17,5 +17,8 @@
     <FxCompile Include="TextureCustom.hlsl">
       <Filter>Texture</Filter>
     </FxCompile>
+    <FxCompile Include="TextureLoop.hlsl">
+      <Filter>Texture</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

@@ -14,6 +14,10 @@
 #include "StartGameTitleActor.h"
 #include "GoalTipActor.h"
 #include "CountDown.h"
+#include "SuccessCount.h"
+#include "GameSuccess.h"
+#include "TestActor.h"
+#include "RoundEnd.h"
 
 tmpLevel::tmpLevel() 
 	:Font(nullptr)
@@ -47,7 +51,16 @@ void tmpLevel::Start()
 	
 	Tip_ = CreateActor<GoalTipActor>();
 
+	GameSuccess_ = CreateActor<GameSuccess>();
+
 	CountDownActor_ = CreateActor<CountDown>();
+
+	Success_ = CreateActor<SuccessCount>();
+
+	RoundEnd_ = CreateActor<RoundEnd>();
+
+	Test_ = CreateActor<TestActor>();
+	Test_->GetTransform().SetWorldPosition({ 300, 300 });
 
 	Mouse = CreateActor<Cursor>();
 	

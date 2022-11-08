@@ -15,6 +15,10 @@ class CrownCount;
 class StartGameTitleActor;
 class GoalTipActor;
 class CountDown;
+class SuccessCount;
+class GameSuccess;
+class TestActor;
+class RoundEnd;
 class tmpLevel : public GameEngineLevel
 {
 public:
@@ -50,6 +54,11 @@ private:
 	StartGameTitleActor* Startbar_;
 	GoalTipActor* Tip_;
 	CountDown* CountDownActor_;
+	SuccessCount* Success_;
+	GameSuccess* GameSuccess_;
+	RoundEnd* RoundEnd_;
+
+	TestActor* Test_;
 
 	bool Swap;
 };

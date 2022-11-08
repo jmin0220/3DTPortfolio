@@ -85,6 +85,9 @@
     <Filter Include="999_Test\PhysXTest\Actor\CCT">
       <UniqueIdentifier>{8fbaf3f4-f78c-401b-adca-3e9f0693b080}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02_Actor\TestActor">
+      <UniqueIdentifier>{2da968e8-d512-4a34-ae99-e7d17d5d04ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -251,6 +254,18 @@
     </ClInclude>
     <ClInclude Include="PhysXCCTActorComponent.h">
       <Filter>999_Test\TestComponent\TestPhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="SuccessCount.h">
+      <Filter>02_Actor\UIActor\InGameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSuccess.h">
+      <Filter>02_Actor\UIActor\InGameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="TestActor.h">
+      <Filter>02_Actor\TestActor</Filter>
+    </ClInclude>
+    <ClInclude Include="RoundEnd.h">
+      <Filter>02_Actor\UIActor\InGameUI</Filter>
     </ClInclude>
     <ClInclude Include="ConstantStringSet.h">
       <Filter>99_Global</Filter>
@@ -421,6 +436,18 @@
     </ClCompile>
     <ClCompile Include="PhysXCCTActorComponent.cpp">
       <Filter>999_Test\TestComponent\TestPhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="SuccessCount.cpp">
+      <Filter>02_Actor\UIActor\InGameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSuccess.cpp">
+      <Filter>02_Actor\UIActor\InGameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="TestActor.cpp">
+      <Filter>02_Actor\TestActor</Filter>
+    </ClCompile>
+    <ClCompile Include="RoundEnd.cpp">
+      <Filter>02_Actor\UIActor\InGameUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -174,4 +174,10 @@ void ContentsCore::LoadShaders()
 		Material->SetVertexShader("TextureCustom.hlsl");
 		Material->SetPixelShader("TextureCustom.hlsl");
 	}
+
+	{
+		GameEngineMaterial* Material = GameEngineMaterial::Create("TextureLoop");
+		Material->SetVertexShader("TextureLoop.hlsl");
+		Material->SetPixelShader("TextureLoop.hlsl");
+	}
 }
