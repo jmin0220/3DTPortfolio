@@ -56,34 +56,34 @@ void ContentsCore::CreateKeys()
 // 스테이지의 메쉬들은 각각의 OnEvent에서 로드해야됨
 void ContentsCore::LoadResources()
 {
+	//1. 폰트 
+	//2. 스프라이트
+	//3. Games
+	//3. 캐릭터
+	//4. 무지개
+	//5. 테스트 맵
+	
+
+
+	GameEngineDirectory Dir;
+	Dir.MoveParentToExitsChildDirectory("Resources");
+	Dir.Move("Resources");
+
+	// 폰트
 	{
-		//스프라이트
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExitsChildDirectory(DIR_RESOURCES);
-		Dir.Move(DIR_RESOURCES);
+		GameEngineDirectory FontDir(Dir);
+		FontDir.Move("Font");
 
-		// 텍스쳐 로드
-		{
-			std::vector<GameEngineFile> Files = Dir.GetAllFile();
-
-			for (size_t i = 0; i < Files.size(); i++)
-			{
-				GameEngineTexture::Load(Files[i].GetFullPath());
-			}
-		}
-
-		GameEngineFont::Load(FONT_NOTO_SANS_CJK_SC);//폴가이즈 폰트
+		GameEngineFont::Load(FONT_NOTO_SANS_CJK_SC);
 		GameEngineFont::Load(FONT_TITAN_ONE);
 	}
 
+	// 스프라이트
 	{
-		//게임 설명샷
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExitsChildDirectory(DIR_RESOURCES);
-		Dir.Move(DIR_RESOURCES);
-		Dir.Move(DIR_GAMES);
+		GameEngineDirectory SpriteDir(Dir);
+		SpriteDir.Move("UI");
 
-		std::vector<GameEngineFile> Files = Dir.GetAllFile();
+		std::vector<GameEngineFile> Files = SpriteDir.GetAllFile(".png");
 
 		for (size_t i = 0; i < Files.size(); i++)
 		{
@@ -91,55 +91,49 @@ void ContentsCore::LoadResources()
 		}
 	}
 
-	// TODO::테스트용 임시코드
-	// 캐릭터 텍스쳐 로드
+	// 맵 선택화면들
 	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExitsChildDirectory(DIR_RESOURCES);
-		Dir.Move(DIR_RESOURCES);
-		Dir.Move(DIR_MESH);
-		Dir.Move(DIR_CHARACTER);
+		GameEngineDirectory GamesDir(Dir);
+		GamesDir.Move("Games");
 
-		std::vector<GameEngineFile> Files = Dir.GetAllFile(EXT_PNG);
+		std::vector<GameEngineFile> Files = GamesDir.GetAllFile(".png");
 
 		for (size_t i = 0; i < Files.size(); i++)
 		{
 			GameEngineTexture::Load(Files[i].GetFullPath());
 		}
-
-		// 메쉬 로드
-		GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(Dir.PlusFilePath(FBX_NAME_CHARACTER));
 	}
-	
 
-	//메쉬 로드
+	// 캐릭터
 	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExitsChildDirectory(DIR_RESOURCES);
-		Dir.Move(DIR_RESOURCES);
-		Dir.Move(DIR_MESH);
-		Dir.Move(DIR_DOORDASH_MESH);
+		GameEngineDirectory CharacterDir(Dir);
+		CharacterDir.Move("Levels\\TestLevel\\Character");
 
+		std::vector<GameEngineFile> Files = CharacterDir.GetAllFile(".png");
+		for (size_t i = 0; i < Files.size(); i++)
 		{
-			GameEngineDirectory MeshDir = Dir;
-			MeshDir.Move(DIR_RAINBOW);
-			GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(MeshDir.PlusFilePath(FBX_NAME_RAINBOW));
+			GameEngineTexture::Load(Files[i].GetFullPath());
 		}
 
+		GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(CharacterDir.PlusFilePath(FBX_NAME_CHARACTER));
 	}
 
+	// 무지개
 	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExitsChildDirectory(DIR_RESOURCES);
-		Dir.Move(DIR_RESOURCES);
-		Dir.Move(DIR_MESH);
+		GameEngineDirectory RainbowDir(Dir);
+		RainbowDir.Move("Levels\\TestLevel\\DoorDashMesh\\RainBow");
 
-		{
-			GameEngineDirectory MeshDir = Dir;
-			MeshDir.Move(DIR_TESTMAP);
-			GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(MeshDir.PlusFilePath(FBX_NAME_TESTMAP));
-		}
+		GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(RainbowDir.PlusFilePath(FBX_NAME_RAINBOW));
 	}
+
+	// 테스트맵
+	{
+		GameEngineDirectory TestMapDir(Dir);
+		TestMapDir.Move("Levels\\TestLevel\\TestMap");
+
+		GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(TestMapDir.PlusFilePath(FBX_NAME_TESTMAP));
+	}
+
 }
 
 void ContentsCore::CreateLevels()

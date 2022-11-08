@@ -32,7 +32,7 @@ void TestActor_Character::Start()
 
 	// 캐릭터 메쉬 로드 테스트용
 	FBXRenderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
-	FBXRenderer_->SetFBXMesh("Character.FBX", "TextureCustom");
+	FBXRenderer_->SetFBXMesh(FBX_NAME_CHARACTER, "TextureCustom");
 
 	// DiffuesTexture직접 씌어주기
 	{

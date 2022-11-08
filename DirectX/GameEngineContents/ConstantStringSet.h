@@ -11,6 +11,8 @@
 
 // 테스트용은 분리
 #define DIR_TESTMAP "TestMap"
+#define DIR_TESTCHARACTER "TestCharacter"
+#define FBX_NAME_TESTCHARACTER "TestCharacter.FBX"
 
 // 폰트
 #define FONT_NOTO_SANS_CJK_SC "Noto Sans CJK SC"
@@ -23,7 +25,6 @@
 // FBX
 #define FBX_NAME_CHARACTER "Character.FBX"
 #define FBX_NAME_RAINBOW "Rainbow.FBX"
-
 #define FBX_NAME_TESTMAP "TestMap.FBX"
 
 
