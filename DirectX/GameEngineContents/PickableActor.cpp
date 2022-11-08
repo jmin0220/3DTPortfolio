@@ -6,7 +6,7 @@
 
 GameEngineCollision* PickableActor::CurPicking_Collision = nullptr;
 
-PickableActor::PickableActor() 
+PickableActor::PickableActor()
 {
 }
 
@@ -44,7 +44,12 @@ void PickableActor::CheckPickingRay()
 				//다른 액터의 콜리전이 선택됐다면.
 				if (CurPicking_Collision != _This)
 				{
-					CurPicking_Collision->On();
+					if (_This->GetOrder() == static_cast<int>(CollisionGroup::Picking))
+					{
+						CurPicking_Collision->On();
+					}
+
+
 					CurPicking_Collision = _This;
 				}
 			}

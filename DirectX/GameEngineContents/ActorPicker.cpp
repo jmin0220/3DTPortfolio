@@ -12,6 +12,7 @@ std::set<GameEngineActor*> ActorPicker::PickedActors;
 GameEngineActor* ActorPicker::PickedActor = nullptr;	// 피킹광선 충돌시 맨 앞에있는 엑터
 GameEngineActor* ActorPicker::ClickedActor = nullptr;	// 피킹광선 충돌X여도 클릭유지 시 엑터
 GameEngineActor* ActorPicker::SelectedActor = nullptr;	// 피킹광선 충돌X여도 최종클릭 엑터
+GameEngineActor* ActorPicker::CurActor = nullptr;       // axis축을 제외한 현재 선택된 액터
 
 ActorPicker::ActorPicker() 
 {
@@ -59,16 +60,23 @@ void ActorPicker::Update(float _DeltaTime)
 
 	// 마우스 조작
 	//현재 클릭한 액터의 콜리전타입 확인
-	if (dynamic_cast<PickableActor*>(ClickedActor)->GetCurPickingCol() != nullptr)
+	if (CurActor != nullptr)
 	{
-		if (dynamic_cast<PickableActor*>(ClickedActor)->GetCurPickingCol()->GetOrder() == static_cast<int>(CollisionGroup::Axis))
+		if (dynamic_cast<PickableActor*>(ClickedActor)->GetCurPickingCol() != nullptr)
 		{
-			ClickAxisControl();
+			if (dynamic_cast<PickableActor*>(ClickedActor)->GetCurPickingCol()->GetOrder() == static_cast<int>(CollisionGroup::Axis))
+			{
+				ClickAxisControl();
+			}
+			else if (dynamic_cast<PickableActor*>(ClickedActor)->GetCurPickingCol()->GetOrder() == static_cast<int>(CollisionGroup::Picking))
+			{
+				ClickPickableActor();
+			}
 		}
-		else if (dynamic_cast<PickableActor*>(ClickedActor)->GetCurPickingCol()->GetOrder() == static_cast<int>(CollisionGroup::Picking))
-		{
-			ClickPickableActor();
-		}
+	}
+	else
+	{
+		UnSelect();
 	}
 }
 
@@ -101,6 +109,24 @@ void ActorPicker::SelectPickedActor()
 	PickedActor = Nearest;
 	Nearest = nullptr;
 
+
+
+}
+
+void ActorPicker::UnSelect()
+{
+	//여기까지왔는데 PickedActor가 nullptr 이라는건 처음에 아무것도 클릭하지않았거나 허공을 클릭했다는 뜻
+	if (PickedActor == nullptr)
+	{
+		//SelectedActor가 null이면 처음시작이거나 허공을 이미 클릭한 상태
+		if (SelectedActor == nullptr)
+		{
+			return;
+		}
+
+		dynamic_cast<PickableActor*>(SelectedActor)->GetPickingCol()->On();
+		Axis->Off();
+	}
 }
 
 
@@ -117,11 +143,34 @@ void ActorPicker::ClickCheck()
 
 	if (true == GameEngineInput::GetInst()->IsDown("VK_LBUTTON"))
 	{
+
 		ClickedActor = PickedActor;
-		PrevMousePos = CurMousePos;
+
+
+		if (ClickedActor != nullptr)
+		{
+			if (dynamic_cast<PickableActor*>(ClickedActor)->GetPickingCol()->GetOrder() == static_cast<int>(CollisionGroup::Axis))
+			{
+				return;
+			}
+		}
+
+
+		CurActor = ClickedActor;
 
 		if (nullptr != ClickedActor)
 		{
+			if (SelectedActor != nullptr)
+			{
+
+				dynamic_cast<PickableActor*>(SelectedActor)->GetPickingCol()->On();
+
+
+			}
+
+
+
+
 			SelectedActor = ClickedActor;
 		}
 
@@ -131,7 +180,9 @@ void ActorPicker::ClickCheck()
 
 	if (true == GameEngineInput::GetInst()->IsFree("VK_LBUTTON"))
 	{
+
 		ClickedActor = nullptr;
+		
 		return;
 	}
 
@@ -139,9 +190,9 @@ void ActorPicker::ClickCheck()
 
 void ActorPicker::ClickPickableActor()
 {
+	PickableActor::GetCurPickingCol()->Off();
 	Axis->GetTransform().SetWorldPosition(PickableActor::GetCurPickingCol()->GetActor()->GetTransform().GetWorldPosition());
 	Axis->On();
-	PickableActor::GetCurPickingCol()->Off();
 }
 
 // x축 이동만 간단히 구현해봄
@@ -151,10 +202,6 @@ void ActorPicker::ClickAxisControl()
 	{
 		return;
 	}
-
-
-
-
 
 
 	float4 MouseDir = GetLevel()->GetMainCamera()->GetMouseWorldDir();
@@ -178,11 +225,13 @@ void ActorPicker::ClickAxisControl()
 	if (AxisVector->GetAxisDir().x >= 1.0f)
 	{
 		dynamic_cast<AxisActor*>(ClickedActor->GetParent())->GetTransform().SetWorldMove({ MouseDir.x,0,0 });
+		CurActor->GetTransform().SetWorldMove({ MouseDir.x,0,0 });
 
 	}
 	if (AxisVector->GetAxisDir().y >= 1.0f)
 	{
 		dynamic_cast<AxisActor*>(ClickedActor->GetParent())->GetTransform().SetWorldMove({ 0,MouseDir.y,0 });
+		CurActor->GetTransform().SetWorldMove({ 0,MouseDir.y,0 });
 
 	}
 	//일단은 한뱡향으로만
@@ -190,9 +239,8 @@ void ActorPicker::ClickAxisControl()
 	if (AxisVector->GetAxisDir().z >= 1.0f)
 	{
 		dynamic_cast<AxisActor*>(ClickedActor->GetParent())->GetTransform().SetWorldMove({ 0,0,MouseDir.x });
+		CurActor->GetTransform().SetWorldMove({ 0,0,MouseDir.x });
 
 	}
-
-	PickableActor::GetCurPickingCol()->GetActor()->GetTransform().SetWorldMove(MouseDir);
 
 }

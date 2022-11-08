@@ -26,6 +26,7 @@ protected:
 
 	// 맵 에딧용 콜리전, 캐릭용 콜리전은 별도로 생각해야함
 	GameEngineCollision* Collision_Picking;
+	GameEngineCollision* PrevActorCol;
 	static GameEngineCollision* CurPicking_Collision;
 
 public:
@@ -48,6 +49,11 @@ public:
 	static GameEngineCollision* GetCurPickingCol()
 	{
 		return CurPicking_Collision;
+	}
+
+	GameEngineCollision* GetPickingCol()
+	{
+		return Collision_Picking;
 	}
 };
 

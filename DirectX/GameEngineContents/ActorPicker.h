@@ -9,6 +9,7 @@ public:
 	static GameEngineActor* PickedActor;
 	static GameEngineActor* ClickedActor;
 	static GameEngineActor* SelectedActor;
+	static GameEngineActor* CurActor;
 
 public:
 	// constrcuter destructer
@@ -37,6 +38,7 @@ private:
 
 
 	void SelectPickedActor();
+	void UnSelect();
 	void ClickCheck();
 	void ClickAxisControl();
 	void ClickPickableActor();
