@@ -5,6 +5,8 @@
 class PickableActor : public GameEngineActor
 {
 public:
+	static GameEngineCollision* CurPicking_Collision;
+
 	// constrcuter destructer
 	PickableActor();
 	~PickableActor();
@@ -27,7 +29,7 @@ protected:
 	// 맵 에딧용 콜리전, 캐릭용 콜리전은 별도로 생각해야함
 	GameEngineCollision* Collision_Picking;
 	GameEngineCollision* PrevActorCol;
-	static GameEngineCollision* CurPicking_Collision;
+
 
 public:
 	float4 AxisDir;
