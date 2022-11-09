@@ -442,8 +442,8 @@ void MapEditorGUI::Load()
 	ofn.hwndOwner = GameEngineWindow::GetHWND();
 	wchar_t szName[256] = {};
 	std::string LoadPath(LoadDir.GetFullPath());
-	ofn.lpstrFile = (LPSTR)szName;
-	ofn.lpstrInitialDir = (LPSTR)LoadPath.c_str();
+	ofn.lpstrFile = (LPWSTR)szName;
+	ofn.lpstrInitialDir = (LPCWSTR)LoadPath.c_str();
 
 	ofn.nMaxFile = sizeof(szName);
 	//ofn.lpstrFilter = "ALL\0*.*\0json\0*.json"; 
@@ -473,8 +473,8 @@ void MapEditorGUI::Save()
 	ofn.hwndOwner = GameEngineWindow::GetHWND();
 	wchar_t szName[256] = {};
 	std::string SavePath(SaveDir.GetFullPath());
-	ofn.lpstrFile = (LPSTR)szName;
-	ofn.lpstrInitialDir = (LPSTR)SavePath.c_str();
+	ofn.lpstrFile = (LPWSTR)szName;
+	ofn.lpstrInitialDir = (LPCWSTR)SavePath.c_str();
 
 	ofn.nMaxFile = sizeof(szName);
 	//ofn.lpstrFilter = "ALL\0*.*\0json\0*.json";
