@@ -56,6 +56,8 @@
 #pragma warning(disable : 4996)
 #include <GameEngineCore/ThirdParty/inc/PhysX/PxConfig.h>
 #include <GameEngineCore/ThirdParty/inc/PhysX/PxPhysicsAPI.h>
+#include <PhysXSDKSnippets/SnippetUtils.h>
+#include <PhysXSDKSnippets/SnippetPVD.h>
 
 #pragma comment (lib, "PhysX_static_64.lib")
 #pragma comment (lib, "PhysXCommon_static_64.lib")

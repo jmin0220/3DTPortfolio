@@ -7,6 +7,7 @@
 #include "PhysicsTestLevel.h"
 #include "LJM_PhysXHelloWorld.h"
 #include "LJM_PhysXPlayerTest.h"
+#include "LJM_PhysXBoxGeometryTest.h"
 #include "CameraTestLevel.h"
 
 #pragma comment(lib, "GameEngineBase.lib")
@@ -145,7 +146,8 @@ void ContentsCore::CreateLevels()
 	CreateLevel<MapEditorLevel>(LEVEL_NAME_MAP_EDITER);
 	CreateLevel<PhysicsTestLevel>(LEVEL_NAME_PHYSICS_TEST);
 	//CreateLevel<LJM_PhysXHelloWorld>(LEVEL_NAME_PHYSX_HELLOWORLD);
-	CreateLevel<LJM_PhysXPlayerTest>(LEVEL_NAME_PHYSX_PLAYER_TEST);
+	//CreateLevel<LJM_PhysXPlayerTest>(LEVEL_NAME_PHYSX_PLAYER_TEST);
+	//CreateLevel<LJM_PhysXBoxGeometryTest>(LEVEL_NAME_PHYSX_BOX_GEOMETRY_TEST);
 	CreateLevel<CameraTestLevel>(LEVEL_NAME_CAMERA_TEST);
 	ChangeLevel(LEVEL_NAME_MAP_EDITER);
 }

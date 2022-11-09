@@ -4,13 +4,6 @@
 
 #include "PhysXTestBox.h"
 #include "PhysXTestStackBox.h"
-#include <GameEngineCore/ThirdParty/inc/PhysX/PxConfig.h>
-#include <GameEngineCore/ThirdParty/inc/PhysX/PxPhysicsAPI.h>
-
-//#include <GameEngineCore/ThirdParty/inc/PhysX/PxConfig.h>
-//#include <GameEngineCore/ThirdParty/inc/PhysX/PxPhysicsAPI.h>
-//#include <PhysX/characterkinematic/PxControllerManager.h>
-#include <PhysXSDKSnippets/SnippetPVD.h>
 
 LJM_PhysXPlayerTest::LJM_PhysXPlayerTest() 
 {
@@ -126,6 +119,16 @@ void LJM_PhysXPlayerTest::stepPhysics(bool _Interactive)
 
 void LJM_PhysXPlayerTest::cleanupPhysics(bool _Interactive)
 {
+	PX_RELEASE(Scene_);
+	PX_RELEASE(pxDefaultCpuDispatcher);
+	PX_RELEASE(Physics_);
+	if (pxPvd)
+	{
+		physx::PxPvdTransport* transport = pxPvd->getTransport();
+		pxPvd->release();	pxPvd = NULL;
+		PX_RELEASE(transport);
+	}
+	PX_RELEASE(pxFoundation);
 }
 
 physx::PxRigidActor* LJM_PhysXPlayerTest::createRigidActor(physx::PxScene& scene, physx::PxPhysics& physics, const physx::PxTransform& pose, const physx::PxGeometry& geometry, physx::PxMaterial& material, const physx::PxFilterData* fd, const physx::PxReal* density, const physx::PxReal* mass, physx::PxU32 flags)

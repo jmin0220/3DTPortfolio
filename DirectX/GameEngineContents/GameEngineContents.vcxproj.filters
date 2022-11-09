@@ -82,6 +82,12 @@
     <Filter Include="999_Test\PhysXTest\Actor\CCT">
       <UniqueIdentifier>{8fbaf3f4-f78c-401b-adca-3e9f0693b080}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03_Component\PhysX">
+      <UniqueIdentifier>{ff59e6ba-08ec-478f-be7d-61ea8f1031cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Actor\PhysXActor">
+      <UniqueIdentifier>{5d3b5f64-c28d-412c-b934-2dfabcbfd98a}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02_Actor\TestActor">
       <UniqueIdentifier>{2da968e8-d512-4a34-ae99-e7d17d5d04ca}</UniqueIdentifier>
     </Filter>
@@ -285,6 +291,15 @@
     <ClInclude Include="ZAxisRot.h">
       <Filter>02_Actor\MapEditorActor\AxisRotate</Filter>
     </ClInclude>
+    <ClInclude Include="PhysXBoxGeometryComponent.h">
+      <Filter>03_Component\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="VirtualPhysXActor.h">
+      <Filter>02_Actor\PhysXActor</Filter>
+    </ClInclude>
+    <ClInclude Include="LJM_PhysXBoxGeometryTest.h">
+      <Filter>999_Test\PhysXTest\Level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -475,6 +490,15 @@
     </ClCompile>
     <ClCompile Include="ZAxisRot.cpp">
       <Filter>02_Actor\MapEditorActor\AxisRotate</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXBoxGeometryComponent.cpp">
+      <Filter>03_Component\PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="VirtualPhysXActor.cpp">
+      <Filter>02_Actor\PhysXActor</Filter>
+    </ClCompile>
+    <ClCompile Include="LJM_PhysXBoxGeometryTest.cpp">
+      <Filter>999_Test\PhysXTest\Level</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

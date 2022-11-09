@@ -32,9 +32,6 @@ protected:
 	physx::PxPvd* pxPvd = NULL;
 	physx::PxDefaultCpuDispatcher* pxDefaultCpuDispatcher = NULL;
 
-	ControlledActor*			mActor;
-
-
 	// Foundation을 생성하는데 필요한 변수
 	physx::PxDefaultAllocator		pxDefaultAllocator;
 	physx::PxDefaultErrorCallback	pxDefaultErrorCallback;

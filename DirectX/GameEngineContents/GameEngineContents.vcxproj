@@ -211,6 +211,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="LJM_PhysXBoxGeometryTest.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="LJM_PhysXPlayerTest.h">
       <SubType>
       </SubType>
@@ -251,6 +255,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="PhysicXStackComponent.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="PhysXBoxGeometryComponent.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -329,6 +337,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="VirtualPhysXActor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="XAxis.h">
       <SubType>
       </SubType>
@@ -396,6 +408,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="LJM_PhysXBoxGeometryTest.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="LJM_PhysXPlayerTest.cpp">
       <SubType>
       </SubType>
@@ -436,6 +452,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="PhysicXStackComponent.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="PhysXBoxGeometryComponent.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -514,6 +534,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="TopMenu.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="VirtualPhysXActor.cpp">
       <SubType>
       </SubType>
     </ClCompile>

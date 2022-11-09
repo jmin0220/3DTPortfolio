@@ -44,3 +44,5 @@
 //Axis Mode
 #define AXIS_MOVE "Axis_Move"
 #define AXIS_ROTATE "Axis_Rotate"
+#define LEVEL_NAME_PHYSX_BOX_GEOMETRY_TEST "LJM_PhysXBoxGeometryTest"
+#define LEVEL_NAME_CAMERA_TEST "CameraTestLevel"
