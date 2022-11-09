@@ -21,6 +21,9 @@
 #pragma comment(lib, "d3dcompiler")
 #pragma comment(lib, "dxguid")
 
+// json 라이브러리
+#pragma comment (lib, "jsoncpp.lib")
+
 // base
 #include <GameEngineBase/GameEngineDebug.h>
 #include <GameEngineBase/GameEngineInput.h>
@@ -65,4 +68,3 @@
 #pragma comment (lib, "PhysXFoundation_static_64.lib")
 #pragma comment (lib, "PhysXPvdSDK_static_64.lib")
 #pragma comment (lib, "PhysXCharacterKinematic_static_64.lib")
-#pragma comment (lib, "jsoncpp.lib")

@@ -14,7 +14,7 @@ public:
 	PhysicXStackComponent& operator=(const PhysicXStackComponent& _Other) = delete;
 	PhysicXStackComponent& operator=(PhysicXStackComponent&& _Other) noexcept = delete;
 
-	void CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics);
+	void CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics, physx::PxVec3 _GeoMetryScale = physx::PxVec3(2.0f));
 
 protected:
 	void Start() override;

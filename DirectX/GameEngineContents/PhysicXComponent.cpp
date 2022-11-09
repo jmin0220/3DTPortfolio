@@ -9,7 +9,7 @@ PhysicXComponent::~PhysicXComponent()
 {
 }
 
-void PhysicXComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics)
+void PhysicXComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics, physx::PxVec3 _GeoMetryScale)
 {
 	// 부모 액터로부터 위치 생성
 	physx::PxTransform localTm(ParentActor_->GetTransform().GetWorldPosition().x
@@ -27,7 +27,7 @@ void PhysicXComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysic
 
 	// 충돌체의 종류
 	//dynamic_ = _physics->createRigidDynamic(physx::PxTransform(0.0f, 0.0f, 0.0f));
-	dynamic_ = physx::PxCreateDynamic(*_physics, physx::PxTransform(0.0f, 0.0f, 0.0f), physx::PxBoxGeometry(2.0f, 2.0f, 2.0f), *material_, 10.0f);
+	dynamic_ = physx::PxCreateDynamic(*_physics, physx::PxTransform(0.0f, 0.0f, 0.0f), physx::PxBoxGeometry(_GeoMetryScale), *material_, 10.0f);
 	//dynamic_->attachShape(*shape_);
 
 	// 임시 값
@@ -42,7 +42,7 @@ void PhysicXComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysic
 
 void PhysicXComponent::Start()
 {
-	// 부모의 정보의 저장
+	// 부모의 정보 저장
 	ParentActor_ = static_cast<GameEngineActor*>(GetParent());
 }
 
@@ -60,12 +60,6 @@ void PhysicXComponent::Update(float _DeltaTime)
 	ParentActor_->GetTransform().SetWorldPosition(tmpWorldPos);
 	ParentActor_->GetTransform().SetWorldRotation(tmpWorldRot);
 
-	
-
-	//std::string tmpWorldPositionString = "NowDynamicPos >> x : " + std::to_string(tmpWorldPos.x) + " / y : " + std::to_string(tmpWorldPos.y) + " / z : " + std::to_string(tmpWorldPos.z);
-	//GameEngineDebug::OutPutString(tmpWorldPositionString);
-	//std::string tmpWorlRotateString = "NowDynamicRot >> x : " + std::to_string(tmpWorldRot.x) + " / y : " + std::to_string(tmpWorldRot.y) + " / z : " + std::to_string(tmpWorldRot.z);
-	//GameEngineDebug::OutPutString(tmpWorlRotateString);
 }
 
 void PhysicXComponent::End()

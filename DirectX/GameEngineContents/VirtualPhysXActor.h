@@ -14,12 +14,12 @@ public:
 	VirtualPhysXActor& operator=(const VirtualPhysXActor& _Other) = delete;
 	VirtualPhysXActor& operator=(VirtualPhysXActor&& _Other) noexcept = delete;
 
-protected:
-	void CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics);
 
+protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 
+	virtual void CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics) = 0;
 private:
 
 };

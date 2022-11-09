@@ -9,7 +9,7 @@ PhysicXStackComponent::~PhysicXStackComponent()
 {
 }
 
-void PhysicXStackComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics)
+void PhysicXStackComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics, physx::PxVec3 _GeoMetryScale)
 {
 	// 부모 액터로부터 위치 생성
 	physx::PxTransform localTm(ParentActor_->GetTransform().GetWorldPosition().x
@@ -21,7 +21,7 @@ void PhysicXStackComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::PxP
 
 	// 충돌체의 형태
 	// 충돌체의 크기는 절반의 크기를 설정하므로 실제 Renderer의 스케일은 충돌체의 2배로 설정되어야 함
-	shape_ = _physics->createShape(physx::PxBoxGeometry(2.0f, 2.0f, 2.0f), *material_);
+	shape_ = _physics->createShape(physx::PxBoxGeometry(_GeoMetryScale), *material_);
 
 	ParentActor_->GetTransform().SetWorldScale({ 4.0f, 4.0f, 4.0f });
 
@@ -48,6 +48,12 @@ void PhysicXStackComponent::Start()
 
 void PhysicXStackComponent::Update(float _DeltaTime)
 {
+	// TODO::디버그용 임시코드
+	//if (nullptr == dynamic_)
+	//{
+	//	return;
+	//}
+
 	// PhysX Actor의 상태에 맞춰서 부모의 Transform정보를 갱신
 	float4 tmpWorldPos = { dynamic_->getGlobalPose().p.x
 	,dynamic_->getGlobalPose().p.y

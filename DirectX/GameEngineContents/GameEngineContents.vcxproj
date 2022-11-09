@@ -258,11 +258,19 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="PhysXActor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="PhysXBoxGeometryComponent.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="PhysXCCTActorComponent.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="PhysXLevel.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -338,6 +346,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="VirtualPhysXActor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="VirtualPhysXLevel.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -455,11 +467,19 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="PhysXActor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="PhysXBoxGeometryComponent.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="PhysXCCTActorComponent.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="PhysXLevel.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -538,6 +558,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="VirtualPhysXActor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="VirtualPhysXLevel.cpp">
       <SubType>
       </SubType>
     </ClCompile>

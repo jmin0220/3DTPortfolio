@@ -64,9 +64,6 @@
     <Filter Include="02_Actor\UIActor\InGameUI">
       <UniqueIdentifier>{5c680959-11ae-41e0-b570-c7bc5e857171}</UniqueIdentifier>
     </Filter>
-    <Filter Include="999_Test\TestLevel\PhysXTest">
-      <UniqueIdentifier>{41834d66-8f8c-46e1-bbe3-a9329e237bf2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="999_Test\TestActor\CameraTest">
       <UniqueIdentifier>{8a75dd40-cfa2-4a2a-be3e-2623724a96da}</UniqueIdentifier>
     </Filter>
@@ -82,9 +79,6 @@
     <Filter Include="999_Test\PhysXTest\Actor\CCT">
       <UniqueIdentifier>{8fbaf3f4-f78c-401b-adca-3e9f0693b080}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03_Component\PhysX">
-      <UniqueIdentifier>{ff59e6ba-08ec-478f-be7d-61ea8f1031cf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02_Actor\PhysXActor">
       <UniqueIdentifier>{5d3b5f64-c28d-412c-b934-2dfabcbfd98a}</UniqueIdentifier>
     </Filter>
@@ -96,6 +90,24 @@
     </Filter>
     <Filter Include="02_Actor\MapEditorActor\AxisRotate">
       <UniqueIdentifier>{b20c84d9-0fda-4d76-a3c3-785e0b894d79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="990_Tutorial">
+      <UniqueIdentifier>{bc618791-6fc6-4067-bdbb-3e502ece5a65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="990_Tutorial\PhysX">
+      <UniqueIdentifier>{f76fde66-2f47-44df-b819-d80da5a78214}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="990_Tutorial\PhysX\Level">
+      <UniqueIdentifier>{9c1ac09e-3a63-46e8-b2ed-b6b9afa2a911}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="990_Tutorial\PhysX\Actor">
+      <UniqueIdentifier>{d5884fc9-782f-4097-8b87-576203e61199}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01_Level\PhysXLevel">
+      <UniqueIdentifier>{f733993a-9854-4dfa-8003-ace94c262d65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03_Component\PhysXComponent">
+      <UniqueIdentifier>{ff59e6ba-08ec-478f-be7d-61ea8f1031cf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -292,13 +304,22 @@
       <Filter>02_Actor\MapEditorActor\AxisRotate</Filter>
     </ClInclude>
     <ClInclude Include="PhysXBoxGeometryComponent.h">
-      <Filter>03_Component\PhysX</Filter>
+      <Filter>03_Component\PhysXComponent</Filter>
     </ClInclude>
     <ClInclude Include="VirtualPhysXActor.h">
       <Filter>02_Actor\PhysXActor</Filter>
     </ClInclude>
     <ClInclude Include="LJM_PhysXBoxGeometryTest.h">
       <Filter>999_Test\PhysXTest\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysXLevel.h">
+      <Filter>990_Tutorial\PhysX\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysXActor.h">
+      <Filter>990_Tutorial\PhysX\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="VirtualPhysXLevel.h">
+      <Filter>01_Level\PhysXLevel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -492,13 +513,22 @@
       <Filter>02_Actor\MapEditorActor\AxisRotate</Filter>
     </ClCompile>
     <ClCompile Include="PhysXBoxGeometryComponent.cpp">
-      <Filter>03_Component\PhysX</Filter>
+      <Filter>03_Component\PhysXComponent</Filter>
     </ClCompile>
     <ClCompile Include="VirtualPhysXActor.cpp">
       <Filter>02_Actor\PhysXActor</Filter>
     </ClCompile>
     <ClCompile Include="LJM_PhysXBoxGeometryTest.cpp">
       <Filter>999_Test\PhysXTest\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXLevel.cpp">
+      <Filter>990_Tutorial\PhysX\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXActor.cpp">
+      <Filter>990_Tutorial\PhysX\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="VirtualPhysXLevel.cpp">
+      <Filter>01_Level\PhysXLevel</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

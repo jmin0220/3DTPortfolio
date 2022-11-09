@@ -39,6 +39,7 @@
 #define LEVEL_NAME_PHYSICS_TEST "PhysicsTestLevel"
 #define LEVEL_NAME_PHYSX_HELLOWORLD "LJM_PhysXHelloWorld"
 #define LEVEL_NAME_PHYSX_PLAYER_TEST "LJM_PhysXPlayerTest"
+#define LEVEL_NAME_PHYSX_BOX_GEOMETRY_TEST "LJM_PhysXBoxGeometryTest"
 #define LEVEL_NAME_CAMERA_TEST "CameraTestLevel"
 
 //Axis Mode
