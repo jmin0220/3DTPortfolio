@@ -141,6 +141,8 @@ void MapEditorGUI::ActorPicking()
 		//	//  scale = size;
 		//}
 
+
+
 		if (nullptr == CurActor_)
 		{
 			ImGui::Text("There is no Selected Actor");
@@ -155,6 +157,12 @@ void MapEditorGUI::ActorPicking()
 			ImGui::InputFloat3("Position", Position);
 			ImGui::InputFloat3("Rotation", Rotate);
 			ImGui::InputFloat3("Scale", Scale);
+
+			//회전 슬라이더 추가 * 실시간 회전
+			{
+				ImGui::SliderFloat3("RotRealTime", Rotate, -360.0f, 360.0f);
+				CurActor_->GetTransform().SetWorldRotation({ Rotate[0], Rotate[1], Rotate[2] });
+			}
 
 			if (false == IsChange_)
 			{

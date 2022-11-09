@@ -11,7 +11,9 @@ struct RenderOption
     float DeltaTime = 0.0f;
     float SumDeltaTime = 0.0f;
 	int IsAnimation = 0;
-	int Temp1;
+	int Temp1 = 1;
+	bool IsRot = false;
+	float4 RenderPos;
 };
 
 // 랜더타겟이 세팅되어 있다면 이녀석으로 그릴수가 있다.

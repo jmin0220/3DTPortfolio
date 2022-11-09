@@ -40,3 +40,7 @@
 #define LEVEL_NAME_PHYSX_HELLOWORLD "LJM_PhysXHelloWorld"
 #define LEVEL_NAME_PHYSX_PLAYER_TEST "LJM_PhysXPlayerTest"
 #define LEVEL_NAME_CAMERA_TEST "CameraTestLevel"
+
+//Axis Mode
+#define AXIS_MOVE "Axis_Move"
+#define AXIS_ROTATE "Axis_Rotate"

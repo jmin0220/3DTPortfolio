@@ -8,7 +8,6 @@
     <FxCompile Include="DebugTexture.hlsl">
       <Filter>Debug</Filter>
     </FxCompile>
-    <FxCompile Include="RenderOption.fx" />
     <FxCompile Include="TargetMerge.hlsl">
       <Filter>TargetEffect</Filter>
     </FxCompile>
@@ -27,6 +26,7 @@
     <FxCompile Include="TextureAnimation.hlsl">
       <Filter>Object</Filter>
     </FxCompile>
+    <FxCompile Include="RenderOption.fx" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debug">

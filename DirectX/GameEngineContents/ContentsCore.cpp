@@ -49,6 +49,8 @@ void ContentsCore::CreateKeys()
 	GameEngineInput::GetInst()->CreateKey("A", 'A');
 	GameEngineInput::GetInst()->CreateKey("S", 'S');
 	GameEngineInput::GetInst()->CreateKey("D", 'D');
+	GameEngineInput::GetInst()->CreateKey(AXIS_MOVE, 'Q');
+	GameEngineInput::GetInst()->CreateKey(AXIS_ROTATE, 'E');
 	GameEngineInput::GetInst()->CreateKey("SpaceBar", VK_SPACE);
 }
 
@@ -179,5 +181,13 @@ void ContentsCore::LoadShaders()
 		GameEngineMaterial* Material = GameEngineMaterial::Create("TextureLoop");
 		Material->SetVertexShader("TextureLoop.hlsl");
 		Material->SetPixelShader("TextureLoop.hlsl");
+	}
+
+	{
+		GameEngineMaterial* Material = GameEngineMaterial::Create("CustomColor");
+		Material->SetVertexShader("CustomColor.hlsl");
+		Material->SetPixelShader("CustomColor.hlsl");
+
+
 	}
 }

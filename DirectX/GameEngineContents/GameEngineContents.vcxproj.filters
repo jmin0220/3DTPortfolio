@@ -55,9 +55,6 @@
     <Filter Include="02_Actor\MapEditorActor">
       <UniqueIdentifier>{9ffe7f16-387b-4903-a5fb-f994f68e6944}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02_Actor\MapEditorActor\Axis">
-      <UniqueIdentifier>{2a8ce72d-4bbc-42f9-bd6a-01d6d556ea36}</UniqueIdentifier>
-    </Filter>
     <Filter Include="999_Test\TestComponent">
       <UniqueIdentifier>{deabbac1-ddd2-46a3-9580-eb08f5c2c210}</UniqueIdentifier>
     </Filter>
@@ -87,6 +84,12 @@
     </Filter>
     <Filter Include="02_Actor\TestActor">
       <UniqueIdentifier>{2da968e8-d512-4a34-ae99-e7d17d5d04ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Actor\MapEditorActor\AxisMove">
+      <UniqueIdentifier>{2a8ce72d-4bbc-42f9-bd6a-01d6d556ea36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Actor\MapEditorActor\AxisRotate">
+      <UniqueIdentifier>{b20c84d9-0fda-4d76-a3c3-785e0b894d79}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -139,16 +142,16 @@
       <Filter>02_Actor\UIActor\HUDChilds</Filter>
     </ClInclude>
     <ClInclude Include="AxisActor.h">
-      <Filter>02_Actor\MapEditorActor\Axis</Filter>
+      <Filter>02_Actor\MapEditorActor\AxisMove</Filter>
     </ClInclude>
     <ClInclude Include="XAxis.h">
-      <Filter>02_Actor\MapEditorActor\Axis</Filter>
+      <Filter>02_Actor\MapEditorActor\AxisMove</Filter>
     </ClInclude>
     <ClInclude Include="YAxis.h">
-      <Filter>02_Actor\MapEditorActor\Axis</Filter>
+      <Filter>02_Actor\MapEditorActor\AxisMove</Filter>
     </ClInclude>
     <ClInclude Include="ZAxis.h">
-      <Filter>02_Actor\MapEditorActor\Axis</Filter>
+      <Filter>02_Actor\MapEditorActor\AxisMove</Filter>
     </ClInclude>
     <ClInclude Include="TestActor_WaterPlane.h">
       <Filter>999_Test\ShaderTest</Filter>
@@ -270,6 +273,18 @@
     <ClInclude Include="ConstantStringSet.h">
       <Filter>99_Global</Filter>
     </ClInclude>
+    <ClInclude Include="AxisActorRot.h">
+      <Filter>02_Actor\MapEditorActor\AxisRotate</Filter>
+    </ClInclude>
+    <ClInclude Include="XAxisRot.h">
+      <Filter>02_Actor\MapEditorActor\AxisRotate</Filter>
+    </ClInclude>
+    <ClInclude Include="YAxisRot.h">
+      <Filter>02_Actor\MapEditorActor\AxisRotate</Filter>
+    </ClInclude>
+    <ClInclude Include="ZAxisRot.h">
+      <Filter>02_Actor\MapEditorActor\AxisRotate</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -321,16 +336,16 @@
       <Filter>02_Actor\UIActor\HUDChilds</Filter>
     </ClCompile>
     <ClCompile Include="AxisActor.cpp">
-      <Filter>02_Actor\MapEditorActor\Axis</Filter>
+      <Filter>02_Actor\MapEditorActor\AxisMove</Filter>
     </ClCompile>
     <ClCompile Include="XAxis.cpp">
-      <Filter>02_Actor\MapEditorActor\Axis</Filter>
+      <Filter>02_Actor\MapEditorActor\AxisMove</Filter>
     </ClCompile>
     <ClCompile Include="YAxis.cpp">
-      <Filter>02_Actor\MapEditorActor\Axis</Filter>
+      <Filter>02_Actor\MapEditorActor\AxisMove</Filter>
     </ClCompile>
     <ClCompile Include="ZAxis.cpp">
-      <Filter>02_Actor\MapEditorActor\Axis</Filter>
+      <Filter>02_Actor\MapEditorActor\AxisMove</Filter>
     </ClCompile>
     <ClCompile Include="TopMenu.cpp">
       <Filter>02_Actor\UIActor\HUDChilds</Filter>
@@ -448,6 +463,18 @@
     </ClCompile>
     <ClCompile Include="RoundEnd.cpp">
       <Filter>02_Actor\UIActor\InGameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="AxisActorRot.cpp">
+      <Filter>02_Actor\MapEditorActor\AxisRotate</Filter>
+    </ClCompile>
+    <ClCompile Include="XAxisRot.cpp">
+      <Filter>02_Actor\MapEditorActor\AxisRotate</Filter>
+    </ClCompile>
+    <ClCompile Include="YAxisRot.cpp">
+      <Filter>02_Actor\MapEditorActor\AxisRotate</Filter>
+    </ClCompile>
+    <ClCompile Include="ZAxisRot.cpp">
+      <Filter>02_Actor\MapEditorActor\AxisRotate</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

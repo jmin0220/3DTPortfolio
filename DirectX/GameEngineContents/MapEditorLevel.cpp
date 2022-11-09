@@ -3,9 +3,7 @@
 #include <GameEngineCore/CoreMinimal.h>
 
 #include "AxisActor.h"
-#include "XAxis.h"
-#include "YAxis.h"
-#include "ZAxis.h"
+#include "AxisActorRot.h"
 #include "TestRainBow.h"
 #include "TestMapActor.h"
 
@@ -47,6 +45,16 @@ void MapEditorLevel::Start()
 		TestMapActor* TestMap = CreateActor<TestMapActor>();
 		TestMap->GetTransform().SetWorldPosition({ 0,0,0 });
 	}
+
+
+	{
+		AxisActorRot* AxisRot = CreateActor<AxisActorRot>();
+		AxisRot->SetPosition();
+		AxisRot->GetTransform().SetWorldPosition({ 300.0f,0,0 });
+
+
+	}
+
 
 	//{
 	//	AxisActor* Axis = CreateActor<AxisActor>();

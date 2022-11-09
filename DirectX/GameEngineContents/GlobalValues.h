@@ -13,12 +13,12 @@ enum class CollisionGroup
 	Max
 };
 
-enum class Axis
+enum class AxisMode
 {
-	X,
-	Y,
-	Z
+	Move,
+	Rotate
 };
+
 
 enum class UICOLLISION //김예나 작성
 {

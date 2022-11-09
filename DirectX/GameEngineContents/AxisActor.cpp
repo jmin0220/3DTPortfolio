@@ -20,7 +20,7 @@ void AxisActor::Start()
 		XRenderer = CreateComponent<GameEngineTextureRenderer>();
 		XRenderer->GetTransform().SetWorldScale({ 125.0f,25.0f,25.0f });
 		XRenderer->GetTransform().SetWorldPosition({ 50.0f,0,0 });
-		XRenderer->SetPipeLine("Color");
+		XRenderer->SetPipeLine("CustomColor");
 		XRenderer->SetMesh("Box");
 
 		XResultColor = float4(1.0f, 0.0f, 0.0f, 0.5f);
@@ -29,9 +29,9 @@ void AxisActor::Start()
 
 	{
 		YRenderer = CreateComponent<GameEngineTextureRenderer>();
-		YRenderer->GetTransform().SetWorldScale({ 25.0f,100.0f,25.0f });
+		YRenderer->GetTransform().SetWorldScale({ 25.0f,125.0f,25.0f });
 		YRenderer->GetTransform().SetWorldPosition({ 0.0f,50.0f,0 });
-		YRenderer->SetPipeLine("Color");
+		YRenderer->SetPipeLine("CustomColor");
 		YRenderer->SetMesh("Box");
 
 		YResultColor = float4(0.0f, 1.0f, 0.0f, 0.5f);
@@ -40,9 +40,9 @@ void AxisActor::Start()
 
 	{
 		ZRenderer = CreateComponent<GameEngineTextureRenderer>();
-		ZRenderer->GetTransform().SetWorldScale({ 25.0f,25.0f,100.0f });
+		ZRenderer->GetTransform().SetWorldScale({ 25.0f,25.0f,125.0f });
 		ZRenderer->GetTransform().SetWorldPosition({ 0.0f,0,-50.0f });
-		ZRenderer->SetPipeLine("Color");
+		ZRenderer->SetPipeLine("CustomColor");
 		ZRenderer->SetMesh("Box");
 
 		ZResultColor = float4(0.0f, 0.0f, 1.0f, 0.5f);

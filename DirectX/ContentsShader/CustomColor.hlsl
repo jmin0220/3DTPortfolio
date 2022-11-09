@@ -56,7 +56,17 @@ cbuffer ResultColor : register(b8)
 
 float4 Color_PS(Output _Input) : SV_Target0
 {
-
+    //if (IsRot == true)
+    //{
+    //    float4 Pos = { _Input.Pos.x, _Input.Pos.y, 0, 0 };
+    //    float len = length(Pos - RenderPos);
+        
+    //    if (len <= 100.0f)
+    //    {
+            
+    //    }
+    //}
+    
     
     return Color;
 }
