@@ -585,6 +585,7 @@ public:
 	Bone* FindBone(size_t MeshIndex, size_t _BoneIndex);
 	Bone* FindBone(size_t MeshIndex, std::string _Name);
 
+	GameEngineStructuredBuffer* GetAnimationStructuredBuffer(size_t _Index);
 
 protected:
 	// 매쉬가 있어
@@ -594,7 +595,7 @@ protected:
 	std::vector<FbxRenderUnitInfo> RenderUnitInfos;
 
 	std::vector<std::vector<Bone>> AllBones; // 본정보체
-	std::vector<std::shared_ptr<GameEngineStructuredBuffer>> AllBoneStructuredBuffers; // 본정보체
+	std::vector<GameEngineStructuredBuffer*> AllBoneStructuredBuffers; // 본정보체
 
 	std::vector<std::map<std::string, Bone*>> AllFindMap;
 	std::vector<std::vector<FbxClusterData>> ClusterData;

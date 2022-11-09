@@ -30,6 +30,11 @@ public:
 
 public:
 	FBXRendererAnimation() 
+		: CurFrameTime(0.0f)
+		, FrameTime(0.0f) // 0.1
+		, CurFrame(0)
+		, Start(0)
+		, End(0)
 	{
 		int a = 0;
 	}

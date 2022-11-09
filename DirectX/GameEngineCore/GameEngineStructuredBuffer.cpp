@@ -169,7 +169,7 @@ void GameEngineStructuredBuffer::VSSetting(int _BindPoint)
 {
 	if (nullptr == ShaderResourceView)
 	{
-		MsgBoxAssert("존재하지 않는 텍스처를 사용할 수 없습니다.");
+		MsgBoxAssert("존재하지 않는 스트럭처드 버퍼를 사용할 수 없습니다.");
 	}
 
 	GameEngineDevice::GetContext()->VSSetShaderResources(_BindPoint, 1, &ShaderResourceView);

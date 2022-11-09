@@ -98,9 +98,8 @@ void FBXRendererAnimation::Update(float _DeltaTime)
 				// 다음프레임의 정보가 필요한데
 				FbxExBoneFrameData& NextData = FBXAnimationData->AniFrameData[MeshIndex][i].BoneMatData[NextFrame];
 
-
 				// 블랜드를 하기 위해서는 필요하다.
-				// 로컬 스케일
+				// 로컬 스케일??????????? 이걸통해서 할수 있습니다.
 				AnimationBoneData[i].Scale = float4::Lerp(CurData.S, NextData.S, CurFrameTime);
 				// 로컬 쿼터니온
 				AnimationBoneData[i].RotQuaternion = float4::SLerpQuaternion(CurData.Q, NextData.Q, CurFrameTime);
@@ -120,6 +119,7 @@ void FBXRendererAnimation::Update(float _DeltaTime)
 				//AnimationBoneData[i].RotEuler *= GameEngineMath::RadianToDegree;
 
 				AnimationBoneMatrix[i] = BoneData->BonePos.Offset * Mat;
+				//AnimationBoneMatrix[i].Transpose();
 			}
 		}
 
@@ -199,12 +199,22 @@ GameEngineRenderUnit* GameEngineFBXAnimationRenderer::SetFBXMesh(const std::stri
 	// 이때 스트럭처드 버퍼를 세팅할거냐.
 	if (Unit->ShaderResources.IsStructuredBuffer("ArrAniMationMatrix"))
 	{
-		int a = 0;
-		// Unit->ShaderResources.GetStructuredBuffer();
-		// 어? 크기가 나의 본 개수를 다 포함시킬수 없네?
-		// 리사이즈
+		GameEngineStructuredBufferSetter* AnimationBuffer = Unit->ShaderResources.GetStructuredBuffer("ArrAniMationMatrix");
 
-		// Unit->ShaderResources.GetStructuredBuffer()->Res = GetFBXMesh()->GetStructBuffer();
+		// ?? _MeshIndex
+		AnimationBuffer->Res = GetFBXMesh()->GetAnimationStructuredBuffer(_MeshIndex);
+
+		if (nullptr == AnimationBuffer->Res)
+		{
+			MsgBoxAssert("애니메이션용 스트럭처드 버퍼가 존재하지 않습니다.");
+			return Unit;
+		}
+
+		// 링크를 걸어준것.
+		AnimationBuffer->SetData = &AnimationBoneMatrixs[_MeshIndex][0];
+		AnimationBuffer->Size = AnimationBoneMatrixs[_MeshIndex].size() * sizeof(float4x4);
+		AnimationBuffer->Bind();
+
 	}
 
 	return Unit;
