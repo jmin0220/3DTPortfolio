@@ -76,6 +76,7 @@ void GameEngineStatusWindow::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 
 	if (true == ImGui::Button("FreeCameaOnOff"))
 	{
+		// ;
 		GEngine::GetCurrentLevel()->GetMainCameraActor()->FreeCameraModeOnOff();
 	}
 
@@ -87,7 +88,7 @@ void GameEngineStatusWindow::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 			GameEngineCore::ChangeLevel(Pair.first);
 		}
 
-		//ImGui::SameLine();
+		ImGui::SameLine();
 	}
 
 	ImGui::NewLine();
@@ -108,7 +109,7 @@ void GameEngineStatusWindow::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 
 				if (true == ImGui::ImageButton(static_cast<ImTextureID>(_View), { Scale.x, Scale.y }))
 				{
-					GameEngineImageShotWindow* NewWindow = GameEngineGUI::CreateGUIWindow<GameEngineImageShotWindow>("ImageShot", nullptr);
+					std::shared_ptr<GameEngineImageShotWindow> NewWindow = GameEngineGUI::CreateGUIWindow<GameEngineImageShotWindow>("ImageShot", nullptr);
 					NewWindow->RenderTextureSetting(static_cast<ImTextureID>(_View), { GameEngineWindow::GetScale().x ,GameEngineWindow::GetScale().y } );
 				}
 			}

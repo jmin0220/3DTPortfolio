@@ -98,13 +98,24 @@ void FBXRendererAnimation::Update(float _DeltaTime)
 				// 다음프레임의 정보가 필요한데
 				FbxExBoneFrameData& NextData = FBXAnimationData->AniFrameData[MeshIndex][i].BoneMatData[NextFrame];
 
-				// 블랜드를 하기 위해서는 필요하다.
-				// 로컬 스케일??????????? 이걸통해서 할수 있습니다.
+				// 애니메이션이 바뀌는 순간 한번은 저장해야 한다.
 				AnimationBoneData[i].Scale = float4::Lerp(CurData.S, NextData.S, CurFrameTime);
 				// 로컬 쿼터니온
 				AnimationBoneData[i].RotQuaternion = float4::SLerpQuaternion(CurData.Q, NextData.Q, CurFrameTime);
 				// 로컬 포지션
 				AnimationBoneData[i].Pos = float4::Lerp(CurData.T, NextData.T, CurFrameTime);
+				// 새롭게 바뀐 애니메이션
+
+				// 애니메이션이 바뀌는 순간 한번은 저장해야 한다.
+				//PrevAnimation[i].Scale;
+				//PrevAnimation[i].RotQuaternion;
+				//PrevAnimation[i].Pos;
+
+				//AnimationBoneData[i].Scale;
+				//AnimationBoneData[i].RotQuaternion;
+				//AnimationBoneData[i].Pos;
+
+				// float4::Lerp(PrevAnimation[i].Scale, AnimationBoneData[i].Scale, 0.0);
 
 				size_t Size = sizeof(float4x4);
 				// 자신의 원본행렬과 곱해준다 큰 의미는 없다.
@@ -133,7 +144,7 @@ void FBXRendererAnimation::Reset()
 
 void GameEngineFBXAnimationRenderer::SetFBXMesh(const std::string& _Name, std::string _Material)
 {
-	GameEngineMaterial* Mat = GameEngineMaterial::Find(_Material);
+	std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Find(_Material);
 
 	if (nullptr == Mat)
 	{
@@ -153,7 +164,7 @@ void GameEngineFBXAnimationRenderer::SetFBXMesh(const std::string& _Name, std::s
 
 GameEngineRenderUnit* GameEngineFBXAnimationRenderer::SetFBXMesh(const std::string& _Name, std::string _Material, size_t _MeshIndex, size_t _SubSetIndex /*= 0*/)
 {
-	GameEngineMaterial* Mat = GameEngineMaterial::Find(_Material);
+	std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Find(_Material);
 
 	if (nullptr == Mat)
 	{
@@ -167,7 +178,7 @@ GameEngineRenderUnit* GameEngineFBXAnimationRenderer::SetFBXMesh(const std::stri
 		return nullptr;
 	}
 
-	GameEngineFBXMesh* FindFBXMesh = GameEngineFBXMesh::Find(_Name);
+	std::shared_ptr<GameEngineFBXMesh> FindFBXMesh = GameEngineFBXMesh::Find(_Name);
 
 	if (nullptr == FindFBXMesh)
 	{
@@ -238,7 +249,7 @@ void GameEngineFBXAnimationRenderer::CreateFBXAnimation(const std::string& _Anim
 		return;
 	}
 
-	GameEngineFBXAnimation* Animation = GameEngineFBXAnimation::Find(_AnimationFBX);
+	std::shared_ptr<GameEngineFBXAnimation> Animation = GameEngineFBXAnimation::Find(_AnimationFBX);
 
 	if (nullptr == Animation)
 	{

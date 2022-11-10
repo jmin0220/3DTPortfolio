@@ -11,7 +11,8 @@ GameEngineFBX::GameEngineFBX()
 	IOSetting(nullptr),
 	Importer(nullptr),
 	Scene(nullptr),
-	RootNode(nullptr)
+	RootNode(nullptr),
+	Manager(nullptr)
 {
 }
 
