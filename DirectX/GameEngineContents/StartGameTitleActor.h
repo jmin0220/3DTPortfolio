@@ -29,12 +29,12 @@ protected:
 
 	void LevelStartEvent() override;
 private:
-	GameEngineUIRenderer* GreenTitle_;
-	GameEngineUIRenderer* WhiteTitle_;
-	GameEngineUIRenderer* BlackTitle_;
-	GameEngineUIRenderer* GameIcon_;
-	GameEngineFontRenderer* TitleFont_;
-	GameEngineFontRenderer* SubTitleFont_;
+	std::shared_ptr<GameEngineUIRenderer> GreenTitle_;
+	std::shared_ptr<GameEngineUIRenderer> WhiteTitle_;
+	std::shared_ptr<GameEngineUIRenderer> BlackTitle_;
+	std::shared_ptr<GameEngineUIRenderer> GameIcon_;
+	std::shared_ptr<GameEngineFontRenderer> TitleFont_;
+	std::shared_ptr<GameEngineFontRenderer> SubTitleFont_;
 	bool Swap_;
 	bool IsFirstAniEnd_;
 	bool IsSecondAniEnd_;

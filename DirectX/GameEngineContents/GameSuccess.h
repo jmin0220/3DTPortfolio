@@ -28,12 +28,12 @@ protected:
 
 	void LevelStartEvent() override;
 private:
-	GameEngineUIRenderer* SetRenderer_;
-	GameEngineUIRenderer* SideCircle1_;
-	GameEngineUIRenderer* SideCircle2_;
-	GameEngineUIRenderer* SideCircle3_;
-	GameEngineUIRenderer* SideCircle4_;
-	GameEngineUIRenderer* Text_;
+	std::shared_ptr<GameEngineUIRenderer> SetRenderer_;
+	std::shared_ptr<GameEngineUIRenderer> SideCircle1_;
+	std::shared_ptr<GameEngineUIRenderer> SideCircle2_;
+	std::shared_ptr<GameEngineUIRenderer> SideCircle3_;
+	std::shared_ptr<GameEngineUIRenderer> SideCircle4_;
+	std::shared_ptr<GameEngineUIRenderer> Text_;
 
 	bool IsPop_;
 	bool IsOut_;

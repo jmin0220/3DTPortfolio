@@ -22,7 +22,7 @@ protected:
 
 	//void LevelStartEvent() override;
 private:
-	GameEngineUIRenderer* Renderer_;
-	GameEngineFontRenderer* Font_;
+	std::shared_ptr<GameEngineUIRenderer> Renderer_;
+	std::shared_ptr<GameEngineFontRenderer> Font_;
 };
 

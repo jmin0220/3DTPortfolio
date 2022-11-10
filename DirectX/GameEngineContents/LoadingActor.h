@@ -24,13 +24,13 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override {};
 private:
-	GameEngineTextureRenderer* BG_;
-	GameEngineTextureRenderer* Games_[5];
-	GameEngineTextureRenderer* Game_;
-	GameEngineUIRenderer* Exit_;
-	GameEngineUIRenderer* ExitButton_;
-	GameEngineFontRenderer* Font_;
-	GameEngineFontRenderer* ExitFont_;
+	std::shared_ptr<GameEngineTextureRenderer> BG_;
+	std::shared_ptr<GameEngineTextureRenderer> Games_[5];
+	std::shared_ptr<GameEngineTextureRenderer> Game_;
+	std::shared_ptr<GameEngineUIRenderer> Exit_;
+	std::shared_ptr<GameEngineUIRenderer> ExitButton_;
+	std::shared_ptr<GameEngineFontRenderer> Font_;
+	std::shared_ptr<GameEngineFontRenderer> ExitFont_;
 	float LastGamesPos_;
 	float Time_;
 	int RandomNum_;

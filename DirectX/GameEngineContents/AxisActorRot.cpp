@@ -31,8 +31,7 @@ void AxisActorRot::Start()
 
 		XResultColor = float4(1.0f, 0.0f, 0.0f, 0.5f);
 		Option.RenderPos = XRenderer->GetTransform().GetWorldPosition();
-		XRenderer->GetShaderResources().SetConstantBufferLink("ResultColor", XResultColor);
-		//XRenderer->GetShaderResources().SetConstantBufferLink("RenderOption", Option);
+		XRenderer->GetShaderResources().SetConstantBufferLink("AxisData", Option);
 
 	}
 
@@ -44,8 +43,7 @@ void AxisActorRot::Start()
 
 		YResultColor = float4(0.0f, 1.0f, 0.0f, 0.5f);
 		Option.RenderPos = YRenderer->GetTransform().GetWorldPosition();
-		YRenderer->GetShaderResources().SetConstantBufferLink("ResultColor", YResultColor);
-	//	YRenderer->GetShaderResources().SetConstantBufferLink("RenderOption", Option);
+		YRenderer->GetShaderResources().SetConstantBufferLink("AxisData", Option);
 
 
 	}
@@ -58,8 +56,7 @@ void AxisActorRot::Start()
 
 		ZResultColor = float4(0.0f, 0.0f, 1.0f, 0.5f);
 		Option.RenderPos = ZRenderer->GetTransform().GetWorldPosition();
-		ZRenderer->GetShaderResources().SetConstantBufferLink("ResultColor", ZResultColor);
-	//	ZRenderer->GetShaderResources().SetConstantBufferLink("RenderOption", Option);
+		ZRenderer->GetShaderResources().SetConstantBufferLink("AxisData", Option);
 
 
 	}

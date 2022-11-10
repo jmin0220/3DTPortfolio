@@ -38,7 +38,7 @@ void PhysXBoxGeometryComponent::CreatePhysXActors(physx::PxScene* _Scene, physx:
 void PhysXBoxGeometryComponent::Start()
 {
 	// 부모의 정보의 저장
-	ParentActor_ = static_cast<GameEngineActor*>(GetParent());
+	ParentActor_ = dynamic_cast<GameEngineActor*>(GetParent());
 }
 
 void PhysXBoxGeometryComponent::Update(float _DeltaTime)

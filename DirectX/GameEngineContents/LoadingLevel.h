@@ -24,5 +24,5 @@ protected:
 	void LevelStartEvent() override;
 	void LevelEndEvent() override;
 private:
-	LoadingActor* Loadings;
+	std::shared_ptr<LoadingActor> Loadings;
 };

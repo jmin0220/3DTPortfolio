@@ -27,9 +27,9 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override {};
 private:
-	GameEngineUIRenderer* MoneyCount_;
-	GameEngineUIRenderer* MoneyIcon_;
-	GameEngineFontRenderer* MoneyNumber_;
+	std::shared_ptr<GameEngineUIRenderer> MoneyCount_;
+	std::shared_ptr<GameEngineUIRenderer> MoneyIcon_;
+	std::shared_ptr<GameEngineFontRenderer> MoneyNumber_;
 	int MoneyCost_;
 };
 

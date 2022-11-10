@@ -38,10 +38,10 @@ public:
 
 protected:
 
-	std::vector<GameEngineCollision*> CollisionCheck(int _MyCollisionGroup);
-	GameEngineCollision* CollisionCheckCertainGroup(int _Group);
-	float4 CollidedVector(GameEngineCollision* _Other);
-	float4 CollidedNormalVectorReturn(GameEngineCollision* _Other);
+	std::vector<std::shared_ptr<GameEngineCollision>> CollisionCheck(int _MyCollisionGroup);
+	std::shared_ptr<GameEngineCollision> CollisionCheckCertainGroup(int _Group);
+	float4 CollidedVector(std::shared_ptr<GameEngineCollision> _Other);
+	float4 CollidedNormalVectorReturn(std::shared_ptr<GameEngineCollision> _Other);
 private:
 
 };

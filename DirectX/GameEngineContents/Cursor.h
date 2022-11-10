@@ -16,7 +16,7 @@ public:
 	Cursor& operator=(const Cursor& _Other) = delete;
 	Cursor& operator=(Cursor&& _Other) noexcept = delete;
 
-	GameEngineTextureRenderer* GetMouse()
+	std::shared_ptr<GameEngineTextureRenderer> GetMouse()
 	{
 		return MouseImage_;
 	}
@@ -31,8 +31,8 @@ public:
 		return UICursorPos_;
 	}
 
-	bool MainHit(GameEngineCollision* _This, GameEngineCollision* _Other);
-	bool UIHit(GameEngineCollision* _This, GameEngineCollision* _Other);
+	bool MainHit(std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other);
+	bool UIHit(std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other);
 
 protected:
 
@@ -41,11 +41,11 @@ private:
 	void Update(float _DeltaTime);
 	void End() {}
 
-	GameEngineTextureRenderer* MouseImage_;
+	std::shared_ptr<GameEngineTextureRenderer> MouseImage_;
 	GameEngineCameraActor* Camera_;
 	float4 MainCursorPos_;
 	float4 UICursorPos_;
-	GameEngineCollision* ActorCollision_;
-	GameEngineCollision* UICollision_;
+	std::shared_ptr<GameEngineCollision> ActorCollision_;
+	std::shared_ptr<GameEngineCollision> UICollision_;
 };
 

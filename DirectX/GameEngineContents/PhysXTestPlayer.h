@@ -24,7 +24,7 @@ protected:
 	void LevelStartEvent() override;
 
 private:
-	GameEngineFBXStaticRenderer* FbxRenderer_;
-	PhysXCCTActorComponent* CCTActorComponent_;
+	std::shared_ptr<GameEngineFBXStaticRenderer> FbxRenderer_;
+	std::shared_ptr<PhysXCCTActorComponent> CCTActorComponent_;
 };
 

@@ -16,17 +16,17 @@ public:
 	NoneButton& operator=(const NoneButton& _Other) = delete;
 	NoneButton& operator=(NoneButton&& _Other) noexcept = delete;
 
-	GameEngineUIRenderer* GetOpenParty()
+	std::shared_ptr<GameEngineUIRenderer> GetOpenParty()
 	{
 		return OpenParty_;
 	}
 
-	GameEngineUIRenderer* GetMenu()
+	std::shared_ptr<GameEngineUIRenderer> GetMenu()
 	{
 		return Menu_;
 	}
 
-	GameEngineUIRenderer* GetMoney()
+	std::shared_ptr<GameEngineUIRenderer> GetMoney()
 	{
 		return Money_;
 	}
@@ -37,12 +37,12 @@ protected:
 	void End() override {};
 
 private:
-	GameEngineUIRenderer* OpenParty_;
-	GameEngineUIRenderer* Tab_;
+	std::shared_ptr<GameEngineUIRenderer> OpenParty_;
+	std::shared_ptr<GameEngineUIRenderer> Tab_;
 
-	GameEngineUIRenderer* Menu_;
-	GameEngineUIRenderer* Money_;
+	std::shared_ptr<GameEngineUIRenderer> Menu_;
+	std::shared_ptr<GameEngineUIRenderer> Money_;
 
-	GameEngineFontRenderer* F_OpenParty_;
+	std::shared_ptr<GameEngineFontRenderer> F_OpenParty_;
 };
 

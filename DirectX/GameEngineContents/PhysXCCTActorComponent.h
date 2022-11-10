@@ -24,6 +24,7 @@ public:
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
+	void End() override {}
 
 	// 이 컴포넌트를 가지고 있는 Parent에 대한 정보
 	GameEngineActor* ParentActor_;
@@ -110,6 +111,6 @@ protected:
 private:
 	// 디버그용 GUI
 	void OnGUIFunc();
-	CustomableGUI* GUI;
+	std::shared_ptr<CustomableGUI> GUI;
 };
 

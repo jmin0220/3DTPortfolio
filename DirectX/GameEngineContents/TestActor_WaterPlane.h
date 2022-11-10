@@ -22,7 +22,7 @@ protected:
 
 
 private:
-	GameEngineCollision* Collision_;
-	GameEngineTextureRenderer* Renderer_;
+	std::shared_ptr<GameEngineCollision> Collision_;
+	std::shared_ptr<GameEngineTextureRenderer> Renderer_;
 };
 

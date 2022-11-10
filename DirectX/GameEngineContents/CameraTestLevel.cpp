@@ -33,6 +33,7 @@ void CameraTestLevel::Update(float _DeltaTime)
 
 void CameraTestLevel::End()
 {
+
 }
 
 void CameraTestLevel::LevelStartEvent()
@@ -43,10 +44,10 @@ void CameraTestLevel::LevelStartEvent()
 	ContentsCore::GetInst()->LoadLevelResource(LEVELS::CAMERA_TEST);
 
 	// ¿¢ÅÍ »ý¼º
-	GameEngineActor* Floor = CreateActor<TestActor_WaterPlane>();
+	std::shared_ptr<GameEngineActor> Floor = CreateActor<TestActor_WaterPlane>();
 	Actors_.push_back(Floor);
 
-	GameEngineActor* Player = CreateActor<TestActor_Character>();
+	std::shared_ptr<GameEngineActor> Player = CreateActor<TestActor_Character>();
 	Player->GetTransform().SetWorldPosition({ 0, 300, 0 });
 	Actors_.push_back(Player);
 }
@@ -54,7 +55,7 @@ void CameraTestLevel::LevelStartEvent()
 void CameraTestLevel::LevelEndEvent()
 {
 	// ¿¢ÅÍ Á¦°Å
-	for (GameEngineActor* Actor : Actors_)
+	for (std::shared_ptr<GameEngineActor> Actor : Actors_)
 	{
 		Actor->Death();
 	}

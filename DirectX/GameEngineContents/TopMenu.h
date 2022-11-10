@@ -16,30 +16,30 @@ public:
 	TopMenu& operator=(const TopMenu& _Other) = delete;
 	TopMenu& operator=(TopMenu&& _Other) noexcept = delete;
 
-	CollisionReturn ButtonOn(GameEngineCollision* _This, GameEngineCollision* _Other);
+	CollisionReturn ButtonOn(std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other);
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void End() override {};
 private:
-	GameEngineUIRenderer* BG_;
-	GameEngineUIRenderer* LeftKey_;
-	GameEngineUIRenderer* RightKey_;
+	std::shared_ptr<GameEngineUIRenderer> BG_;
+	std::shared_ptr<GameEngineUIRenderer> LeftKey_;
+	std::shared_ptr<GameEngineUIRenderer> RightKey_;
 
-	GameEngineUIRenderer* Panel1_;
-	GameEngineUIRenderer* Panel2_;
-	GameEngineUIRenderer* Panel3_;
-	GameEngineUIRenderer* Panel4_;
+	std::shared_ptr<GameEngineUIRenderer> Panel1_;
+	std::shared_ptr<GameEngineUIRenderer> Panel2_;
+	std::shared_ptr<GameEngineUIRenderer> Panel3_;
+	std::shared_ptr<GameEngineUIRenderer> Panel4_;
 
-	GameEngineCollision* PanelCol1_;
-	GameEngineCollision* PanelCol2_;
-	GameEngineCollision* PanelCol3_;
-	GameEngineCollision* PanelCol4_;
+	std::shared_ptr<GameEngineCollision> PanelCol1_;
+	std::shared_ptr<GameEngineCollision> PanelCol2_;
+	std::shared_ptr<GameEngineCollision> PanelCol3_;
+	std::shared_ptr<GameEngineCollision> PanelCol4_;
 
-	GameEngineUIRenderer* Home_;
-	GameEngineUIRenderer* Event_;
-	GameEngineUIRenderer* Custom_;
-	GameEngineUIRenderer* Store_;
+	std::shared_ptr<GameEngineUIRenderer> Home_;
+	std::shared_ptr<GameEngineUIRenderer> Event_;
+	std::shared_ptr<GameEngineUIRenderer> Custom_;
+	std::shared_ptr<GameEngineUIRenderer> Store_;
 
 	bool ButtonCheck_;
 };

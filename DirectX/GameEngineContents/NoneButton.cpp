@@ -24,7 +24,7 @@ void NoneButton::Start()
 	Tab_->SetPivot(PIVOTMODE::LEFT);
 
 	F_OpenParty_ = CreateComponent<GameEngineFontRenderer>();
-	F_OpenParty_->SetParent(OpenParty_);
+	F_OpenParty_->SetParent(OpenParty_.get());
 	F_OpenParty_->ChangeCamera(CAMERAORDER::UICAMERA);
 	F_OpenParty_->SetColor({ 1.0f,1.0f,1.0f, 0.9f });
 	F_OpenParty_->SetSize(20.0f);

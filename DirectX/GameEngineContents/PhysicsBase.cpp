@@ -11,10 +11,10 @@ PhysicsBase::~PhysicsBase()
 {
 }
 
-std::vector<GameEngineCollision*> PhysicsBase::CollisionCheck(int _MyCollisionGroup)
+std::vector<std::shared_ptr<GameEngineCollision>> PhysicsBase::CollisionCheck(int _MyCollisionGroup)
 {
-	GameEngineCollision* InstColCollisionResult = nullptr;
-	std::vector<GameEngineCollision*> InstColCollisionResults;
+	std::shared_ptr<GameEngineCollision> InstColCollisionResult = nullptr;
+	std::vector<std::shared_ptr<GameEngineCollision>> InstColCollisionResults;
 	bool IsCollide = false;
 
 	for (int i = 0; i < static_cast<int>(CollisionGroup::Max); i++)
@@ -23,7 +23,7 @@ std::vector<GameEngineCollision*> PhysicsBase::CollisionCheck(int _MyCollisionGr
 		if (i != _MyCollisionGroup)
 		{
 			bool CollisionResult = IsCollision(CollisionType::CT_OBB, i, CollisionType::CT_OBB, 
-				[&InstColCollisionResult, &IsCollide, &InstColCollisionResults](GameEngineCollision* _This, GameEngineCollision* _Other)->CollisionReturn
+				[&InstColCollisionResult, &IsCollide, &InstColCollisionResults](std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other)->CollisionReturn
 				{
 					InstColCollisionResult = _Other;
 					InstColCollisionResults.push_back(_Other);
@@ -36,12 +36,12 @@ std::vector<GameEngineCollision*> PhysicsBase::CollisionCheck(int _MyCollisionGr
 	return InstColCollisionResults;
 }
 
-GameEngineCollision* PhysicsBase::CollisionCheckCertainGroup(int _Group)
+std::shared_ptr<GameEngineCollision> PhysicsBase::CollisionCheckCertainGroup(int _Group)
 {
-	GameEngineCollision* InstColCollisionResult = nullptr;
+	std::shared_ptr<GameEngineCollision> InstColCollisionResult = nullptr;
 	bool IsCollide = false;
 	bool CollisionResult = IsCollision(CollisionType::CT_OBB, _Group, CollisionType::CT_OBB,
-		[&InstColCollisionResult, &IsCollide](GameEngineCollision* _This, GameEngineCollision* _Other)->CollisionReturn
+		[&InstColCollisionResult, &IsCollide](std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other)->CollisionReturn
 		{
 			InstColCollisionResult = _Other;
 			IsCollide = true;
@@ -51,12 +51,12 @@ GameEngineCollision* PhysicsBase::CollisionCheckCertainGroup(int _Group)
 	return InstColCollisionResult;
 }
 
-float4 PhysicsBase::CollidedVector(GameEngineCollision* _Other)
+float4 PhysicsBase::CollidedVector(std::shared_ptr<GameEngineCollision> _Other)
 {
 	return  GetActor()->GetTransform().GetWorldPosition() - _Other->GetActor()->GetTransform().GetWorldPosition();
 }
 
-float4 PhysicsBase::CollidedNormalVectorReturn(GameEngineCollision* _Other)
+float4 PhysicsBase::CollidedNormalVectorReturn(std::shared_ptr<GameEngineCollision> _Other)
 {
 	return CollidedVector(_Other).Normalize3DReturn();
 }

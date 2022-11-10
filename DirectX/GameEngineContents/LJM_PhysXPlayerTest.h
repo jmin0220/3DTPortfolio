@@ -61,6 +61,6 @@ protected:
 	void createStack(const physx::PxTransform& t, physx::PxU32 size, physx::PxReal halfExtent);
 
 private:
-	PhysXTestPlayer* Player_;
+	std::shared_ptr<PhysXTestPlayer> Player_;
 };
 

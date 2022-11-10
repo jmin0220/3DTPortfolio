@@ -21,9 +21,9 @@ protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 private:
-	GameEngineCollision* Collision;
+	std::shared_ptr<GameEngineCollision> Collision;
 public:
-	GameEngineCollision* GetCollision()
+	std::shared_ptr<GameEngineCollision> GetCollision()
 	{
 		return Collision;
 	}

@@ -27,17 +27,17 @@ protected:
 
 
 private:
-	GameEngineTextureRenderer* XRenderer;
-	GameEngineTextureRenderer* YRenderer;
-	GameEngineTextureRenderer* ZRenderer;
+	std::shared_ptr<GameEngineTextureRenderer> XRenderer;
+	std::shared_ptr<GameEngineTextureRenderer> YRenderer;
+	std::shared_ptr<GameEngineTextureRenderer> ZRenderer;
 
-	float4 XResultColor;
-	float4 YResultColor;
-	float4 ZResultColor;
+	AxisRotOption XAxisOption;
+	AxisRotOption YAxisOption;
+	AxisRotOption ZAxisOption;
 
-	XAxis* XAxis_;
-	YAxis* YAxis_;
-	ZAxis* ZAxis_;
+	std::shared_ptr<XAxis> XAxis_;
+	std::shared_ptr<YAxis> YAxis_;
+	std::shared_ptr<ZAxis> ZAxis_;
 
 public:
 	void SetPosition();

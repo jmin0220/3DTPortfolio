@@ -1,16 +1,7 @@
-// #include "myshader.hlsli"
-
-// SV_POSITION 시맨틱
-// 그래픽카드에게 이녀석은 이런 부류니까 니가 자동으로 처리하는 녀석이 있으면 하고.
-
-// t1
-
-// Create("TransformData");
-#include "RenderOption.fx"
 #include "TransformHeader.fx"
+#include "RenderOption.fx"
 
-// cbuffer Color : 
-// TestColor;
+
 struct Input
 {
     float4 Pos : POSITION;
@@ -22,23 +13,6 @@ struct Output
     float4 PosLocal : POSITION;
 };
 
-//cbuffer ResultColor : register(b2)
-//{
-//    float4 PlusColor;
-//    float4 MultyplyColor;
-//}
-
-
-
-// 1000
-// 0100
-// 2010
-// 0301
-
-// 1020
-// 0103
-// 0010
-// 0001
 
 Output Color_VS(Input _Input)
 {
@@ -49,24 +23,19 @@ Output Color_VS(Input _Input)
     return NewOutPut;
 }
 
-cbuffer ResultColor : register(b8)
+cbuffer AxisData : register(b8)
 {
+    float4 RenderPos;
     float4 Color;
+    bool IsRot;
 }
 
 float4 Color_PS(Output _Input) : SV_Target0
 {
-    //if (IsRot == true)
-    //{
-    //    float4 Pos = { _Input.Pos.x, _Input.Pos.y, 0, 0 };
-    //    float len = length(Pos - RenderPos);
-        
-    //    if (len <= 100.0f)
-    //    {
-            
-    //    }
-    //}
-    
+    if (true == IsRot)
+    {
+        clip(-1);
+    }
     
     return Color;
 }

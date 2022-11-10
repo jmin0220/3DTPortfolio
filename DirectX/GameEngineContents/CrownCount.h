@@ -20,11 +20,11 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override {};
 private:
-	GameEngineUIRenderer* Renderer_;
-	GameEngineUIRenderer* Face_;
-	GameEngineUIRenderer* CountBG_;
-	GameEngineUIRenderer* Icon_;
-	GameEngineFontRenderer* Font_;
+	std::shared_ptr<GameEngineUIRenderer> Renderer_;
+	std::shared_ptr<GameEngineUIRenderer> Face_;
+	std::shared_ptr<GameEngineUIRenderer> CountBG_;
+	std::shared_ptr<GameEngineUIRenderer> Icon_;
+	std::shared_ptr<GameEngineFontRenderer> Font_;
 
 	int CurrentCrownCount_;
 	int RewardCrownCount_;

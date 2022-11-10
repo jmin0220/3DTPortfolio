@@ -32,7 +32,7 @@ void PhysicsObject::Update(float _DeltaTime)
 		InputUpdate();
 	}
 
-	std::vector<GameEngineCollision*> CollisionResults = CollisionCheck(MyCollisionGroup);
+	std::vector<std::shared_ptr<GameEngineCollision>> CollisionResults = CollisionCheck(MyCollisionGroup);
 	if (CollisionResults.size() > 0)
 	{
 		IsCollide = true;
@@ -43,7 +43,7 @@ void PhysicsObject::Update(float _DeltaTime)
 
 }
 
-void PhysicsObject::BasicDynamics(float _DeltaTime, std::vector<GameEngineCollision*> _CollisionResults)
+void PhysicsObject::BasicDynamics(float _DeltaTime, std::vector<std::shared_ptr<GameEngineCollision>> _CollisionResults)
 {
 	float4 GetPosition = GetActor()->GetTransform().GetWorldPosition();
 	float4 NewForce = Force + Gravity * Mass;
@@ -59,11 +59,11 @@ void PhysicsObject::BasicDynamics(float _DeltaTime, std::vector<GameEngineCollis
 		CalculateMoveVel(_DeltaTime);
 		GetActor()->GetTransform().SetWorldMove(MovementVelocity * _DeltaTime);
 	}
-	for (GameEngineCollision* Collision : _CollisionResults)
+	for (std::shared_ptr<GameEngineCollision> Collision : _CollisionResults)
 	{
 		if (IsCollide == true && IsStatic == false)
 		{
-			PhysicsObject* CollisionPO = dynamic_cast<PhysicsObject*> (Collision);
+			std::shared_ptr<PhysicsObject> CollisionPO = std::dynamic_pointer_cast<PhysicsObject>(Collision);
 			CompoundType InstCompoundType = CollisionPO->_CompoundType;
 			switch (InstCompoundType)
 			{
@@ -86,7 +86,7 @@ void PhysicsObject::VelocityCal(float _DeltaTime)
 
 }
 
-void PhysicsObject::CollisionWithGround(float _DeltaTime, PhysicsObject* _PO)
+void PhysicsObject::CollisionWithGround(float _DeltaTime, std::shared_ptr<PhysicsObject> _PO)
 {
 	float4 InstGravity = Gravity;
 	float4 UpVector = _PO->GetActor()->GetTransform().GetUpVector();
@@ -96,7 +96,7 @@ void PhysicsObject::CollisionWithGround(float _DeltaTime, PhysicsObject* _PO)
 
 	while (true)
 	{
-		GameEngineCollision* InstGround = CollisionCheckCertainGroup(static_cast<int>(CollisionGroup::PhysicsGround));
+		std::shared_ptr<GameEngineCollision> InstGround = CollisionCheckCertainGroup(static_cast<int>(CollisionGroup::PhysicsGround));
 		if (InstGround == nullptr)
 		{
 			break;
@@ -120,7 +120,7 @@ void PhysicsObject::CollisionWithGround(float _DeltaTime, PhysicsObject* _PO)
 
 }
 
-void PhysicsObject::CollisionWithWall(float _DeltaTime, PhysicsObject* _PO)
+void PhysicsObject::CollisionWithWall(float _DeltaTime, std::shared_ptr<PhysicsObject> _PO)
 {
 	float4 InstGravity = Gravity;
 	float4 UpVector = _PO->GetActor()->GetTransform().GetUpVector();
@@ -128,7 +128,7 @@ void PhysicsObject::CollisionWithWall(float _DeltaTime, PhysicsObject* _PO)
 	Velocity.x *= -UpVector.y * _PO->BoundRatio;
 	while (true)
 	{
-		GameEngineCollision* InstGround = CollisionCheckCertainGroup(static_cast<int>(CollisionGroup::PhysicsWall));
+		std::shared_ptr<GameEngineCollision> InstGround = CollisionCheckCertainGroup(static_cast<int>(CollisionGroup::PhysicsWall));
 		if (InstGround == nullptr)
 		{
 			break;

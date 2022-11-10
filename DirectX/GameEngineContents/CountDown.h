@@ -24,16 +24,16 @@ protected:
 
 	void LevelStartEvent() override;
 private:
-	GameEngineUIRenderer* Three_;
-	GameEngineUIRenderer* Two_;
-	GameEngineUIRenderer* One_;
-	GameEngineUIRenderer* Go_;
-	GameEngineUIRenderer* PopAni1_;
-	GameEngineUIRenderer* PopAni2_;
-	GameEngineUIRenderer* PopAni3_;
-	GameEngineUIRenderer* PopAni4_;
-	GameEngineUIRenderer* PopAni5_;
-	GameEngineUIRenderer* PopAni6_;
+	std::shared_ptr<GameEngineUIRenderer> Three_;
+	std::shared_ptr<GameEngineUIRenderer> Two_;
+	std::shared_ptr<GameEngineUIRenderer> One_;
+	std::shared_ptr<GameEngineUIRenderer> Go_;
+	std::shared_ptr<GameEngineUIRenderer> PopAni1_;
+	std::shared_ptr<GameEngineUIRenderer> PopAni2_;
+	std::shared_ptr<GameEngineUIRenderer> PopAni3_;
+	std::shared_ptr<GameEngineUIRenderer> PopAni4_;
+	std::shared_ptr<GameEngineUIRenderer> PopAni5_;
+	std::shared_ptr<GameEngineUIRenderer> PopAni6_;
 
 	bool IsThreePop_;
 	bool IsTwoPop_;

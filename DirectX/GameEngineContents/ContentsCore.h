@@ -19,10 +19,6 @@ public:
 private:
 	static std::shared_ptr<ContentsCore> Inst_;
 
-	std::vector<class GameEngineTexture*> LevelTextures_;
-	std::vector<class GameEngineFBXMesh*> LevelMeshes_;
-	std::vector<class GameEngineFBXAnimation*> LevelAnimations_;
-
 	// ~饭骇 府家胶 包府
 
 public:

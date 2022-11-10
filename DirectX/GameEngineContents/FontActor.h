@@ -16,7 +16,7 @@ public:
 	FontActor& operator=(const FontActor& _Other) = delete;
 	FontActor& operator=(FontActor&& _Other) noexcept = delete;
 
-	GameEngineFontRenderer* GetFont()
+	std::shared_ptr<GameEngineFontRenderer> GetFont()
 	{
 		return Font_;
 	}
@@ -26,6 +26,6 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override {};
 private:
-	GameEngineFontRenderer* Font_;
+	std::shared_ptr<GameEngineFontRenderer> Font_;
 };
 

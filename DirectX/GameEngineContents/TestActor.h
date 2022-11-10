@@ -19,6 +19,6 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override {};
 private:
-	GameEngineUIRenderer* Renderer_;
+	std::shared_ptr<GameEngineUIRenderer> Renderer_;
 };
 

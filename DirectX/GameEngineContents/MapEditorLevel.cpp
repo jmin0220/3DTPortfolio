@@ -44,22 +44,22 @@ void MapEditorLevel::LevelStartEvent()
 	ContentsCore::GetInst()->LoadLevelResource(LEVELS::MAP_EDITOR);
 
 	// 엑터 생성
-	GameEngineActor* Picker = CreateActor<ActorPicker>();
+	std::shared_ptr<GameEngineActor> Picker = CreateActor<ActorPicker>();
 
-	AxisActorRot* AxisRot = CreateActor<AxisActorRot>();
+	std::shared_ptr<AxisActorRot> AxisRot = CreateActor<AxisActorRot>();
 	AxisRot->SetPosition();
 	AxisRot->GetTransform().SetWorldPosition({ 300.0f,0,0 });
 
 	// 테스트용 엑터(추후 삭제해야함)
-	GameEngineActor* RainBow = CreateActor<TestRainBow>();
+	std::shared_ptr<GameEngineActor> RainBow = CreateActor<TestRainBow>();
 	RainBow->GetTransform().SetWorldPosition({ -200,0,0 });
 	Actors_.push_back(RainBow);
 
-	GameEngineActor* RainBow2 = CreateActor<TestRainBow>();
+	std::shared_ptr<GameEngineActor> RainBow2 = CreateActor<TestRainBow>();
 	RainBow2->GetTransform().SetWorldPosition({ -200, 200,0 });
 	Actors_.push_back(RainBow2);
 
-	GameEngineActor* TestMap = CreateActor<TestMapActor>();
+	std::shared_ptr<GameEngineActor> TestMap = CreateActor<TestMapActor>();
 	TestMap->GetTransform().SetWorldPosition({ 0,0,0 });
 	Actors_.push_back(TestMap);
 
@@ -70,7 +70,7 @@ void MapEditorLevel::LevelEndEvent()
 	GUI_->Off();
 
 	// 엑터 제거
-	for (GameEngineActor* Actor : Actors_)
+	for (std::shared_ptr<GameEngineActor> Actor : Actors_)
 	{
 		Actor->Death();
 	}

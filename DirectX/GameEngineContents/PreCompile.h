@@ -49,11 +49,11 @@
 #include <GameEngineCore/GameEngineFBXAnimationRenderer.h>
 
 // contents
-#include <GameEngineContents/GlobalValues.h>
 #include <GameEngineContents/CustomableGUI.h>
 #include <GameEngineContents/ContentsCore.h>
 
 // global
+#include <GameEngineContents/GlobalValues.h>
 #include "ConstantStringSet.h"
 
 // PhysX 라이브러리

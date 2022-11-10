@@ -145,7 +145,7 @@ void LJM_PhysXHelloWorld::End()
 
 void LJM_PhysXHelloWorld::createDynamic(const PxTransform& t, const PxVec3& velocity)
 {
-	PhysXTestBox* tmpTestBox = CreateActor<PhysXTestBox>();
+	std::shared_ptr<PhysXTestBox> tmpTestBox = CreateActor<PhysXTestBox>();
 	tmpTestBox->GetTransform().SetWorldPosition({ 0.0f, 100.0f, 2000.0f });
 	tmpTestBox->CreatePhysXActors(pxScene
 		, pxPhysics);
@@ -159,7 +159,7 @@ void LJM_PhysXHelloWorld::createStack(const PxTransform& t, PxU32 size, PxReal h
 		for (PxU32 j = 0; j < size - i; j++)
 		{
 
-			PhysXTestStackBox* tmpTestStackBox = CreateActor<PhysXTestStackBox>();
+			std::shared_ptr<PhysXTestStackBox> tmpTestStackBox = CreateActor<PhysXTestStackBox>();
 			// 액터의 포지션을 먼저 조정한 후에 RigidDynamic을 생성★
 			tmpTestStackBox->GetTransform().SetWorldPosition({ (j * 2.0f - (size - i)) * halfExtent, (i * 2.0f + 1.0f) * halfExtent, t.p.z });
 			tmpTestStackBox->CreatePhysXActors(pxScene, pxPhysics);

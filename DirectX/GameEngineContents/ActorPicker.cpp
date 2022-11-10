@@ -8,11 +8,11 @@
 #include "AxisActor.h"
 
 
-std::set<GameEngineActor*> ActorPicker::PickedActors;
-GameEngineActor* ActorPicker::PickedActor = nullptr;	// 피킹광선 충돌시 맨 앞에있는 엑터
-GameEngineActor* ActorPicker::ClickedActor = nullptr;	// 피킹광선 충돌X여도 클릭유지 시 엑터
-GameEngineActor* ActorPicker::SelectedActor = nullptr;	// 피킹광선 충돌X여도 최종클릭 엑터
-GameEngineActor* ActorPicker::CurActor = nullptr;       // axis축을 제외한 현재 선택된 액터
+std::set<std::shared_ptr<GameEngineActor>> ActorPicker::PickedActors;
+std::shared_ptr<GameEngineActor> ActorPicker::PickedActor = nullptr;	// 피킹광선 충돌시 맨 앞에있는 엑터
+std::shared_ptr<GameEngineActor> ActorPicker::ClickedActor = nullptr;	// 피킹광선 충돌X여도 클릭유지 시 엑터
+std::shared_ptr<GameEngineActor> ActorPicker::SelectedActor = nullptr;	// 피킹광선 충돌X여도 최종클릭 엑터
+std::shared_ptr<GameEngineActor> ActorPicker::CurActor = nullptr;       // axis축을 제외한 현재 선택된 액터
 
 ActorPicker::ActorPicker() 
 {
@@ -28,7 +28,6 @@ void ActorPicker::Start()
 	Collision_Ray->GetTransform().SetWorldScale({ 0.1f, 0.1f, 200000 });
 	Collision_Ray->ChangeOrder(CollisionGroup::Ray);
 	Collision_Ray->SetDebugSetting(CollisionType::CT_OBB, float4(1.0f, 0, 0, 0.2f));
-
 
 	Axis = GetLevel()->CreateActor<AxisActor>();
 	Axis->SetPosition();
@@ -62,13 +61,13 @@ void ActorPicker::Update(float _DeltaTime)
 	//현재 클릭한 액터의 콜리전타입 확인
 	if (CurActor != nullptr)
 	{
-		if (dynamic_cast<PickableActor*>(ClickedActor)->GetCurPickingCol() != nullptr)
+		if (std::dynamic_pointer_cast<PickableActor>(ClickedActor)->GetCurPickingCol() != nullptr)
 		{
-			if (dynamic_cast<PickableActor*>(ClickedActor)->GetCurPickingCol()->GetOrder() == static_cast<int>(CollisionGroup::Axis))
+			if (std::dynamic_pointer_cast<PickableActor>(ClickedActor)->GetCurPickingCol()->GetOrder() == static_cast<int>(CollisionGroup::Axis))
 			{
 				ClickAxisControl();
 			}
-			else if (dynamic_cast<PickableActor*>(ClickedActor)->GetCurPickingCol()->GetOrder() == static_cast<int>(CollisionGroup::Picking))
+			else if (std::dynamic_pointer_cast<PickableActor>(ClickedActor)->GetCurPickingCol()->GetOrder() == static_cast<int>(CollisionGroup::Picking))
 			{
 				ClickPickableActor();
 			}
@@ -94,8 +93,8 @@ void ActorPicker::SelectPickedActor()
 		return;
 	}
 
-	GameEngineActor* Nearest = nullptr;
-	for (GameEngineActor* Actor : PickedActors)
+	std::shared_ptr<GameEngineActor> Nearest = nullptr;
+	for (std::shared_ptr<GameEngineActor> Actor : PickedActors)
 	{
 		if (nullptr == Nearest)
 		{
@@ -124,7 +123,7 @@ void ActorPicker::UnSelect()
 			return;
 		}
 
-		dynamic_cast<PickableActor*>(SelectedActor)->GetPickingCol()->On();
+		std::dynamic_pointer_cast<PickableActor>(SelectedActor)->GetPickingCol()->On();
 		Axis->Off();
 	}
 }
@@ -149,7 +148,7 @@ void ActorPicker::ClickCheck()
 
 		if (ClickedActor != nullptr)
 		{
-			if (dynamic_cast<PickableActor*>(ClickedActor)->GetPickingCol()->GetOrder() == static_cast<int>(CollisionGroup::Axis))
+			if (std::dynamic_pointer_cast<PickableActor>(ClickedActor)->GetPickingCol()->GetOrder() == static_cast<int>(CollisionGroup::Axis))
 			{
 				return;
 			}
@@ -163,7 +162,7 @@ void ActorPicker::ClickCheck()
 			if (SelectedActor != nullptr)
 			{
 
-				dynamic_cast<PickableActor*>(SelectedActor)->GetPickingCol()->On();
+				std::dynamic_pointer_cast<PickableActor>(SelectedActor)->GetPickingCol()->On();
 
 
 			}
@@ -220,7 +219,7 @@ void ActorPicker::ClickAxisControl()
 	MouseDir *= CamZ;
 
 
-	PickableActor* AxisVector = dynamic_cast<PickableActor*>(ClickedActor);
+	std::shared_ptr<PickableActor> AxisVector = std::dynamic_pointer_cast<PickableActor>(ClickedActor);
 
 	if (AxisVector->GetAxisDir().x >= 1.0f)
 	{

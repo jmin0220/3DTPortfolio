@@ -25,8 +25,8 @@ void CameraArm::Start()
 	CamAxisX_ = CreateComponent<GameEngineCollision>();
 	CamAxisY_ = CreateComponent<GameEngineCollision>();
 
-	CamHolderCollision_->SetParent(CamAxisX_);
-	CamAxisX_->SetParent(CamAxisY_);
+	CamHolderCollision_->SetParent(CamAxisX_.get());
+	CamAxisX_->SetParent(CamAxisY_.get());
 	CamAxisY_->SetParent(this);
 
 	CamAxisY_->GetTransform().SetWorldScale({ 1200, 1200, 1200 });
@@ -44,10 +44,10 @@ void CameraArm::Start()
 	GUI->Off();
 }
 
-void CameraArm::SetFollowCamera(GameEngineCameraActor* _Camera, GameEngineActor* _Character)
+void CameraArm::SetFollowCamera(GameEngineCameraActor* _Camera, std::shared_ptr<GameEngineActor> _Character)
 {
 	// 카메라 암 엑터와 캐릭터를 연결
-	SetParent(_Character);
+	SetParent(_Character.get());
 	Camera_ = _Camera;
 	Character_ = _Character;
 

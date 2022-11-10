@@ -46,7 +46,7 @@ void MapEditorGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 	//for (auto const& tmpactor : ActorMap_)
 	//{
 	//	std::string a = tmpactor.first;
-	//	GameEngineActor* b = tmpactor.second;
+	//	std::shared_ptr<GameEngineActor> b = tmpactor.second;
 	//}
 
 	if (true == ImGui::Button("FreeCameaOnOff"))
@@ -98,7 +98,7 @@ void MapEditorGUI::ActorPicking()
 
 	{
 		// 현재 마우스 위치의 액터 = 클릭하면 선택될 예정의 액터
-		GameEngineActor* Actor = ActorPicker::PickedActor;
+		std::shared_ptr<GameEngineActor> Actor = ActorPicker::PickedActor;
 		if (nullptr == Actor)
 		{
 			ImGui::Text("There is no Picked Actor");
@@ -112,7 +112,7 @@ void MapEditorGUI::ActorPicking()
 	}
 
 	{
-		GameEngineActor* Actor = ActorPicker::ClickedActor;
+		std::shared_ptr<GameEngineActor> Actor = ActorPicker::ClickedActor;
 		if (nullptr == Actor)
 		{
 			ImGui::Text("There is no Clicked Actor");

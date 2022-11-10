@@ -41,24 +41,24 @@ protected:
 	void LevelEndEvent() override;
 
 private:
-	TitleActor* TitleLogo;
-	Cursor* Mouse;
-	FontActor* Font;
-	NamePlate* Name;
-	NoneButton* Button;
-	NoneMoney* MoneyUI;
-	SelectShowButton* ShowButton;
-	PlayButton* StartButton;
-	TopMenu* Top;
-	CrownCount* Crown;
-	StartGameTitleActor* Startbar_;
-	GoalTipActor* Tip_;
-	CountDown* CountDownActor_;
-	SuccessCount* Success_;
-	GameSuccess* GameSuccess_;
-	RoundEnd* RoundEnd_;
+	std::shared_ptr<TitleActor> TitleLogo;
+	std::shared_ptr<Cursor> Mouse;
+	std::shared_ptr<FontActor> Font;
+	std::shared_ptr<NamePlate> Name;
+	std::shared_ptr<NoneButton> Button;
+	std::shared_ptr<NoneMoney> MoneyUI;
+	std::shared_ptr<SelectShowButton> ShowButton;
+	std::shared_ptr<PlayButton> StartButton;
+	std::shared_ptr<TopMenu> Top;
+	std::shared_ptr<CrownCount> Crown;
+	std::shared_ptr<StartGameTitleActor> Startbar_;
+	std::shared_ptr<GoalTipActor> Tip_;
+	std::shared_ptr<CountDown> CountDownActor_;
+	std::shared_ptr<SuccessCount> Success_;
+	std::shared_ptr<GameSuccess> GameSuccess_;
+	std::shared_ptr<RoundEnd> RoundEnd_;
 
-	TestActor* Test_;
+	std::shared_ptr<TestActor> Test_;
 
 	bool Swap;
 };

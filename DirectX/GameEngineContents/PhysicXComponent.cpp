@@ -43,7 +43,7 @@ void PhysicXComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysic
 void PhysicXComponent::Start()
 {
 	// 부모의 정보 저장
-	ParentActor_ = static_cast<GameEngineActor*>(GetParent());
+	ParentActor_ = dynamic_cast<GameEngineActor*>(GetParent());
 }
 
 void PhysicXComponent::Update(float _DeltaTime)

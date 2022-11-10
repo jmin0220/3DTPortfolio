@@ -26,7 +26,7 @@ protected:
 	void CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics) override;
 
 private:
-	PhysicXStackComponent* PhysicXStackComponent_;
+	std::shared_ptr<PhysicXStackComponent> PhysicXStackComponent_;
 
 };
 

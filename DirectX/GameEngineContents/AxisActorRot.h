@@ -2,16 +2,13 @@
 #include <GameEngineCore/CoreMinimal.h>
 #include "PickableActor.h"
 
-
-
-
 // 설명 :
 class XAxisRot;
 class YAxisRot;
 class ZAxisRot;
 class GlobalValues;
 // 축 메쉬
-class AxisActorRot :	public GameEngineActor
+class AxisActorRot : public GameEngineActor
 {
 public:
 	// constrcuter destructer
@@ -31,19 +28,19 @@ protected:
 
 
 private:
-	GameEngineTextureRenderer* XRenderer;
-	GameEngineTextureRenderer* YRenderer;
-	GameEngineTextureRenderer* ZRenderer;
+	std::shared_ptr<GameEngineTextureRenderer> XRenderer;
+	std::shared_ptr<GameEngineTextureRenderer> YRenderer;
+	std::shared_ptr<GameEngineTextureRenderer> ZRenderer;
 
 	float4 XResultColor;
 	float4 YResultColor;
 	float4 ZResultColor;
 
-	XAxisRot* XAxisRot_;
-	YAxisRot* YAxisRot_;
-	ZAxisRot* ZAxisRot_;
+	std::shared_ptr<XAxisRot> XAxisRot_;
+	std::shared_ptr<YAxisRot> YAxisRot_;
+	std::shared_ptr<ZAxisRot> ZAxisRot_;
 
-	RenderOption Option;
+	AxisRotOption Option;
 
 public:
 	void SetPosition();

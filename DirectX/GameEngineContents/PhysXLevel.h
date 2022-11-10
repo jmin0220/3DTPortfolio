@@ -25,7 +25,7 @@ protected:
 	void LevelStartEvent() override;
 	void LevelEndEvent() override;
 
-	PhysXActor* PhysXActor_;
+	std::shared_ptr<PhysXActor> PhysXActor_;
 private:
 
 };

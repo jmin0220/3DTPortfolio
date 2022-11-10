@@ -97,7 +97,7 @@ void TopMenu::Update(float _DeltaTime)
 	{
 		//이 조건문 성훈님 Pikable 코드 베껴 적음..[=]이게 뭔지 모름 ㅎ; 람다식..?함수포인터..? 암튼 해서 true false를 받음
 		ButtonCheck_ = PanelCol1_->IsCollision(CollisionType::CT_OBB, CollisionGroup::Ray, CollisionType::CT_OBB,
-			[=](GameEngineCollision* _This, GameEngineCollision* _Other)
+			[=](std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other)
 			{
 				return CollisionReturn::Break;
 			});
@@ -112,7 +112,7 @@ void TopMenu::Update(float _DeltaTime)
 	}
 }
 
-CollisionReturn TopMenu::ButtonOn(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn TopMenu::ButtonOn(std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other)
 {
 	//충돌하면 약간 버튼이 늘어남
 	float4 f4CurrentScale = Panel1_->GetTransform().GetWorldScale();

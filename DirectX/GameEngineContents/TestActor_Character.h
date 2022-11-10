@@ -27,19 +27,21 @@ private:
 
 private:
 	// FBX 캐릭터
-	GameEngineFBXStaticRenderer* FBXRenderer_;
-	GameEngineCollision* Collision_;
+	std::shared_ptr<GameEngineFBXStaticRenderer> FBXRenderer_;
+	std::shared_ptr<GameEngineCollision> Collision_;
 
 	// 카메라 암
-	class CameraArm* CameraArm_;
+	std::shared_ptr<class CameraArm> CameraArm_;
 
 	// 정보
 	float4 MoveDir_;
 
 	// 쉐이더 상수버퍼 이용해보기
 	float4 TexPivot_;
+	float4 FBXLocation_;
 	float DragXY[2];
+	float LocationXYZ[3];
 	void OnGUIFunc();
-	CustomableGUI* GUI;
+	std::shared_ptr<CustomableGUI> GUI;
 };
 

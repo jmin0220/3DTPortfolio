@@ -25,10 +25,10 @@ protected:
 	void Start() override;
 
 private:
-	GameEngineTextureRenderer* Renderer;
+	std::shared_ptr<GameEngineTextureRenderer> Renderer;
 	float4 ResultColor;
 
 	// TODO::오브젝트의 종류에 따라서 각기 다른 Component를 제공해야할수 있음
-	PhysicXComponent* physicXComponent_;
+	std::shared_ptr<PhysicXComponent> physicXComponent_;
 };
 

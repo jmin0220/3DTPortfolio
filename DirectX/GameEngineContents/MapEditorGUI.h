@@ -5,7 +5,7 @@ struct SpawnedObject
 {
 	std::string Name_;
 	std::string Dir_;
-	GameEngineActor* Actor_;
+	std::shared_ptr<GameEngineActor> Actor_;
 };
 
 enum class MeshEnum
@@ -58,7 +58,7 @@ private:
 	bool CamFollowMode_;
 
 	GameEngineLevel* ConnectedLevel;
-	GameEngineActor* CurActor_;
+	std::shared_ptr<GameEngineActor> CurActor_;
 
 	MeshEnum CurMesh;
 

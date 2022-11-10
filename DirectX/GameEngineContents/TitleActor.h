@@ -27,8 +27,8 @@ protected:
 	void LevelStartEvent() override;
 
 private:
-	GameEngineTextureRenderer* Logo_;
-	GameEngineFontRenderer* Font_;
+	std::shared_ptr<GameEngineTextureRenderer> Logo_;
+	std::shared_ptr<GameEngineFontRenderer> Font_;
 
 	float FontSize_;
 	bool Swap_;

@@ -23,7 +23,7 @@ void NamePlate::Start()
 	Font_->ChangeCamera(CAMERAORDER::UICAMERA);
 	Font_->SetSize(30.0f);
 	Font_->SetColor({ 1.0f,1.0f,1.0f });
-	Font_->SetParent(Renderer_);
+	Font_->SetParent(Renderer_.get());
 	Font_->SetLeftAndRightSort(LeftAndRightSort::CENTER);
 	Font_->SetScreenPostion({ 330.0f, 50.0f });
 	Font_->SetText("FallGuy", "Noto Sans CJK SC");

@@ -43,10 +43,10 @@ private:
 	ColliderType _ColliderType;
 	CompoundType _CompoundType;
 
-	void BasicDynamics(float _DeltaTime, std::vector<GameEngineCollision*> _CollisionResults);
+	void BasicDynamics(float _DeltaTime, std::vector<std::shared_ptr<GameEngineCollision>> _CollisionResults);
 	void VelocityCal(float _DeltaTime);
-	void CollisionWithGround(float _DeltaTime, PhysicsObject* _PO);
-	void CollisionWithWall(float _DeltaTime, PhysicsObject* _PO);
+	void CollisionWithGround(float _DeltaTime, std::shared_ptr<PhysicsObject> _PO);
+	void CollisionWithWall(float _DeltaTime, std::shared_ptr<PhysicsObject> _PO);
 
 	bool IsPlayable;
 

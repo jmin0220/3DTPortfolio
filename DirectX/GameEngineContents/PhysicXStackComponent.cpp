@@ -42,7 +42,7 @@ void PhysicXStackComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::PxP
 void PhysicXStackComponent::Start()
 {
 	// 부모의 정보의 저장
-	ParentActor_ = static_cast<GameEngineActor*>(GetParent());
+	ParentActor_ = dynamic_cast<GameEngineActor*>(GetParent());
 
 	//std::string tmpStackPosition = "StackPosition >> x : " + std::to_string(ParentActor_->GetTransform().GetWorldPosition().x)
 	//									   + " / y : " + std::to_string(ParentActor_->GetTransform().GetWorldPosition().y);

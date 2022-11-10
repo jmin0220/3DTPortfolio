@@ -23,11 +23,11 @@ private:
 	int MaxCount_;
 	int CurrentCount_;
 	
-	GameEngineFontRenderer* MaxFont_;
-	GameEngineFontRenderer* CurrentFont_;
-	GameEngineFontRenderer* SlashFont_;
-	GameEngineFontRenderer* SuccessFont_;
+	std::shared_ptr<GameEngineFontRenderer> MaxFont_;
+	std::shared_ptr<GameEngineFontRenderer> CurrentFont_;
+	std::shared_ptr<GameEngineFontRenderer> SlashFont_;
+	std::shared_ptr<GameEngineFontRenderer> SuccessFont_;
 	
-	GameEngineUIRenderer* Renderer_;
+	std::shared_ptr<GameEngineUIRenderer> Renderer_;
 };
 

@@ -21,8 +21,8 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override {};
 private:
-	GameEngineUIRenderer* Button_;
-	GameEngineUIRenderer* Key_;
-	GameEngineFontRenderer* Font_;
+	std::shared_ptr<GameEngineUIRenderer> Button_;
+	std::shared_ptr<GameEngineUIRenderer> Key_;
+	std::shared_ptr<GameEngineFontRenderer> Font_;
 };
 

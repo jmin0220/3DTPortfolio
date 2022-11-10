@@ -185,7 +185,7 @@ physx::PxRigidActor* LJM_PhysXPlayerTest::createRigidActor(physx::PxScene& scene
 
 void LJM_PhysXPlayerTest::createDynamic(const physx::PxTransform& t, const physx::PxVec3& velocity)
 {
-	PhysXTestBox* tmpTestBox = CreateActor<PhysXTestBox>();
+	std::shared_ptr<PhysXTestBox> tmpTestBox = CreateActor<PhysXTestBox>();
 	tmpTestBox->GetTransform().SetWorldPosition({ 0.0f, 100.0f, 2000.0f });
 	tmpTestBox->CreatePhysXActors(Scene_, Physics_);
 }
@@ -198,7 +198,7 @@ void LJM_PhysXPlayerTest::createStack(const physx::PxTransform& t, physx::PxU32 
 		for (physx::PxU32 j = 0; j < size - i; j++)
 		{
 
-			PhysXTestStackBox* tmpTestStackBox = CreateActor<PhysXTestStackBox>();
+			std::shared_ptr<PhysXTestStackBox> tmpTestStackBox = CreateActor<PhysXTestStackBox>();
 			// 액터의 포지션을 먼저 조정한 후에 RigidDynamic을 생성★
 			tmpTestStackBox->GetTransform().SetWorldPosition({ (j * 2.0f - (size - i)) * halfExtent, (i * 2.0f + 1.0f) * halfExtent, t.p.z });
 			tmpTestStackBox->CreatePhysXActors(Scene_, Physics_);

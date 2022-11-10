@@ -39,10 +39,10 @@ void PhysicsTestLevel::LevelStartEvent()
 {
 
 
-	//GameEngineActor* Box = CreateActor<TestBox>();
-	GameEngineActor* Player = CreateActor<TestPlayer>();
-	GameEngineActor* Ground = CreateActor<TestGround>();
-	GameEngineActor* Wall = CreateActor<TestWall>();
+	//std::shared_ptr<GameEngineActor> Box = CreateActor<TestBox>();
+	std::shared_ptr<GameEngineActor> Player = CreateActor<TestPlayer>();
+	std::shared_ptr<GameEngineActor> Ground = CreateActor<TestGround>();
+	std::shared_ptr<GameEngineActor> Wall = CreateActor<TestWall>();
 }
 
 void PhysicsTestLevel::LevelEndEvent()

@@ -26,7 +26,7 @@ protected:
 private:
 
 private:
-	class TestActor_WaterPlane* Floor_;
-	std::vector<GameEngineActor*> Actors_;
+	std::shared_ptr<class TestActor_WaterPlane> Floor_;
+	std::vector<std::shared_ptr<GameEngineActor>> Actors_;
 };
 

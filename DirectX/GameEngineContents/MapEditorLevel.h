@@ -24,7 +24,7 @@ protected:
 	void LevelEndEvent() override;
 
 private:
-	class MapEditorGUI* GUI_;
-	std::vector<GameEngineActor*> Actors_;
+	std::shared_ptr<class MapEditorGUI> GUI_;
+	std::vector<std::shared_ptr<GameEngineActor>> Actors_;
 };
 

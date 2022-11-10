@@ -84,8 +84,7 @@ void ContentsCore::LoadCommonResources()
 			std::vector<GameEngineFile> Files = Folder.GetAllFile(EXT_PNG);
 			for (GameEngineFile& File : Files)
 			{
-				GameEngineTexture* Texture = GameEngineTexture::Load(File.GetFullPath());
-				LevelTextures_.push_back(Texture);
+				std::shared_ptr<GameEngineTexture>Texture = GameEngineTexture::Load(File.GetFullPath());
 			}
 		}
 	}
@@ -125,25 +124,25 @@ void ContentsCore::CreateShaders()
 void ContentsCore::LoadShaders()
 {
 	{
-		GameEngineMaterial* Material = GameEngineMaterial::Create("Water");
+		std::shared_ptr<GameEngineMaterial> Material = GameEngineMaterial::Create("Water");
 		Material->SetVertexShader("WaterShader.hlsl");
 		Material->SetPixelShader("WaterShader.hlsl");
 	}
 
 	{
-		GameEngineMaterial* Material = GameEngineMaterial::Create("TextureCustom");
+		std::shared_ptr<GameEngineMaterial> Material = GameEngineMaterial::Create("TextureCustom");
 		Material->SetVertexShader("TextureCustom.hlsl");
 		Material->SetPixelShader("TextureCustom.hlsl");
 	}
 
 	{
-		GameEngineMaterial* Material = GameEngineMaterial::Create("TextureLoop");
+		std::shared_ptr<GameEngineMaterial> Material = GameEngineMaterial::Create("TextureLoop");
 		Material->SetVertexShader("TextureLoop.hlsl");
 		Material->SetPixelShader("TextureLoop.hlsl");
 	}
 
 	{
-		GameEngineMaterial* Material = GameEngineMaterial::Create("CustomColor");
+		std::shared_ptr<GameEngineMaterial> Material = GameEngineMaterial::Create("CustomColor");
 		Material->SetVertexShader("CustomColor.hlsl");
 		Material->SetPixelShader("CustomColor.hlsl");
 	}
@@ -267,8 +266,7 @@ void ContentsCore::LevelAllResourceLoad(GameEngineDirectory& _LevelDir)
 			std::vector<GameEngineFile> Files = Dir.GetAllFile(EXT_PNG);
 			for (GameEngineFile& File : Files)
 			{
-				GameEngineTexture* Texture = GameEngineTexture::Load(File.GetFullPath());
-				LevelTextures_.push_back(Texture);
+				std::shared_ptr<GameEngineTexture> Texture = GameEngineTexture::Load(File.GetFullPath());
 			}
 		}
 
@@ -277,11 +275,9 @@ void ContentsCore::LevelAllResourceLoad(GameEngineDirectory& _LevelDir)
 			std::vector<GameEngineFile> Files = Dir.GetAllFile(EXT_FBX);
 			for (GameEngineFile& File : Files)
 			{
-				GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(File.GetFullPath());
-				LevelMeshes_.push_back(Mesh);
+				std::shared_ptr<GameEngineFBXMesh> Mesh = GameEngineFBXMesh::Load(File.GetFullPath());
 
-				GameEngineFBXAnimation* Anim = GameEngineFBXAnimation::Load(File.GetFullPath());
-				LevelAnimations_.push_back(Anim);
+				std::shared_ptr<GameEngineFBXAnimation> Anim = GameEngineFBXAnimation::Load(File.GetFullPath());
 			}
 		}
 	}

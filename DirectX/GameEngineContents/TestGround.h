@@ -16,7 +16,7 @@ public:
 	TestGround& operator=(const TestGround& _Other) = delete;
 	TestGround& operator=(TestGround&& _Other) noexcept = delete;
 
-	GameEngineTextureRenderer* GetRenderer()
+	std::shared_ptr<GameEngineTextureRenderer> GetRenderer()
 	{
 		return Renderer;
 	}
@@ -26,8 +26,8 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override {};
 private:
-	GameEngineTextureRenderer* Renderer;
-	class PhysicsObject* Collision;
+	std::shared_ptr<GameEngineTextureRenderer> Renderer;
+	std::shared_ptr<class PhysicsObject> Collision;
 	float4 ResultColor;
 };
 

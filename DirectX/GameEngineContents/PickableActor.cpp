@@ -4,7 +4,7 @@
 
 #include "ActorPicker.h"
 
-GameEngineCollision* PickableActor::CurPicking_Collision = nullptr;
+std::shared_ptr<GameEngineCollision> PickableActor::CurPicking_Collision = nullptr;
 
 PickableActor::PickableActor()
 {
@@ -32,7 +32,7 @@ void PickableActor::CheckPickingRay()
 	}
 
 	bool Pickable = Collision_Picking->IsCollision(CollisionType::CT_OBB, CollisionGroup::Ray, CollisionType::CT_OBB,
-		[=](GameEngineCollision* _This, GameEngineCollision* _Other)
+		[=](std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other)
 		{
 			if (true == GameEngineInput::GetInst()->IsDown("VK_LBUTTON"))
 			{
@@ -54,13 +54,13 @@ void PickableActor::CheckPickingRay()
 				}
 			}
 
-			ActorPicker::PickedActors.insert(this);
+			ActorPicker::PickedActors.insert(std::dynamic_pointer_cast<GameEngineActor>(shared_from_this()));
 
 			return CollisionReturn::ContinueCheck;
 		});
 
 	if (false == Pickable)
 	{
-		ActorPicker::PickedActors.erase(this);
+		ActorPicker::PickedActors.erase(std::dynamic_pointer_cast<GameEngineActor>(shared_from_this()));
 	}
 }

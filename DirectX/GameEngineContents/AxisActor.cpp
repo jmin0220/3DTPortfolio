@@ -23,8 +23,8 @@ void AxisActor::Start()
 		XRenderer->SetPipeLine("CustomColor");
 		XRenderer->SetMesh("Box");
 
-		XResultColor = float4(1.0f, 0.0f, 0.0f, 0.5f);
-		XRenderer->GetShaderResources().SetConstantBufferLink("ResultColor", XResultColor);
+		XAxisOption.Color = float4(1.0f, 0.0f, 0.0f, 0.5f);
+		XRenderer->GetShaderResources().SetConstantBufferLink("AxisData", XAxisOption);
 	}
 
 	{
@@ -34,8 +34,8 @@ void AxisActor::Start()
 		YRenderer->SetPipeLine("CustomColor");
 		YRenderer->SetMesh("Box");
 
-		YResultColor = float4(0.0f, 1.0f, 0.0f, 0.5f);
-		YRenderer->GetShaderResources().SetConstantBufferLink("ResultColor", YResultColor);
+		YAxisOption.Color = float4(0.0f, 1.0f, 0.0f, 0.5f);
+		YRenderer->GetShaderResources().SetConstantBufferLink("AxisData", YAxisOption);
 	}
 
 	{
@@ -45,8 +45,8 @@ void AxisActor::Start()
 		ZRenderer->SetPipeLine("CustomColor");
 		ZRenderer->SetMesh("Box");
 
-		ZResultColor = float4(0.0f, 0.0f, 1.0f, 0.5f);
-		ZRenderer->GetShaderResources().SetConstantBufferLink("ResultColor", ZResultColor);
+		ZAxisOption.Color = float4(0.0f, 0.0f, 1.0f, 0.5f);
+		ZRenderer->GetShaderResources().SetConstantBufferLink("AxisData", ZAxisOption);
 	}
 	//GetTransform().SetWorldRotation({ -10.0f, 20.0f, 0.0f });
 

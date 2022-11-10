@@ -21,8 +21,8 @@ protected:
 	void End() override;
 
 private:
-	GameEngineTextureRenderer* Renderer;
-	GameEngineCollision* Collision;
+	std::shared_ptr<GameEngineTextureRenderer> Renderer;
+	std::shared_ptr<GameEngineCollision> Collision;
 	float4 ResultColor;
 
 };
