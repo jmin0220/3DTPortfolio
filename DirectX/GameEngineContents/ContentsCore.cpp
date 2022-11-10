@@ -12,8 +12,11 @@
 #include "CameraTestLevel.h"
 
 #pragma comment(lib, "GameEngineBase.lib")
+#include <GameEngineCore/GameEngineRes.h>
 
-ContentsCore::ContentsCore() 
+std::shared_ptr<ContentsCore> ContentsCore::Inst_ = std::make_shared<ContentsCore>();
+
+ContentsCore::ContentsCore()
 	: GameEngineCore()
 {
 }
@@ -26,12 +29,11 @@ void ContentsCore::Start()
 {
 
 	CreateKeys();
-	LoadResources();
-
 	CreateShaders();
 	LoadShaders();
-
+	LoadCommonResources();
 	CreateLevels();
+
 	GameEngineGUI::CreateGUIWindow<GameEngineStatusWindow>("GameEngineStatusWindow", nullptr); //GUI 추가 
 
 }
@@ -58,17 +60,8 @@ void ContentsCore::CreateKeys()
 
 // 기본적인 리소스(UI, 로비, ...)
 // 스테이지의 메쉬들은 각각의 OnEvent에서 로드해야됨
-void ContentsCore::LoadResources()
+void ContentsCore::LoadCommonResources()
 {
-	//1. 폰트 
-	//2. 스프라이트
-	//3. Games
-	//3. 캐릭터
-	//4. 무지개
-	//5. 테스트 맵
-	
-
-
 	GameEngineDirectory Dir;
 	Dir.MoveParentToExitsChildDirectory("Resources");
 	Dir.Move("Resources");
@@ -82,60 +75,19 @@ void ContentsCore::LoadResources()
 		GameEngineFont::Load(FONT_TITAN_ONE);
 	}
 
-	// 스프라이트
+	// Texture2D
 	{
-		GameEngineDirectory SpriteDir(Dir);
-		SpriteDir.Move("UI");
-
-		std::vector<GameEngineFile> Files = SpriteDir.GetAllFile(".png");
-
-		for (size_t i = 0; i < Files.size(); i++)
+		GameEngineDirectory TextureDir(Dir);
+		TextureDir.Move("Texture2D");
+		for (GameEngineDirectory& Folder : TextureDir.GetRecursiveAllDirectory())
 		{
-			GameEngineTexture::Load(Files[i].GetFullPath());
+			std::vector<GameEngineFile> Files = Folder.GetAllFile(EXT_PNG);
+			for (GameEngineFile& File : Files)
+			{
+				GameEngineTexture* Texture = GameEngineTexture::Load(File.GetFullPath());
+				LevelTextures_.push_back(Texture);
+			}
 		}
-	}
-
-	// 맵 선택화면들
-	{
-		GameEngineDirectory GamesDir(Dir);
-		GamesDir.Move("Games");
-
-		std::vector<GameEngineFile> Files = GamesDir.GetAllFile(".png");
-
-		for (size_t i = 0; i < Files.size(); i++)
-		{
-			GameEngineTexture::Load(Files[i].GetFullPath());
-		}
-	}
-
-	// 캐릭터
-	{
-		GameEngineDirectory CharacterDir(Dir);
-		CharacterDir.Move("Levels\\TestLevel\\Character");
-
-		std::vector<GameEngineFile> Files = CharacterDir.GetAllFile(".png");
-		for (size_t i = 0; i < Files.size(); i++)
-		{
-			GameEngineTexture::Load(Files[i].GetFullPath());
-		}
-
-		GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(CharacterDir.PlusFilePath(FBX_NAME_CHARACTER));
-	}
-
-	// 무지개
-	{
-		GameEngineDirectory RainbowDir(Dir);
-		RainbowDir.Move("Levels\\TestLevel\\DoorDashMesh\\RainBow");
-
-		GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(RainbowDir.PlusFilePath(FBX_NAME_RAINBOW));
-	}
-
-	// 테스트맵
-	{
-		GameEngineDirectory TestMapDir(Dir);
-		TestMapDir.Move("Levels\\TestLevel\\TestMap");
-
-		GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(TestMapDir.PlusFilePath(FBX_NAME_TESTMAP));
 	}
 
 }
@@ -154,7 +106,7 @@ void ContentsCore::CreateLevels()
 	// PhysX 튜토리얼 레벨
 	CreateLevel<PhysXLevel>("PhysXLevel");
 
-	ChangeLevel(LEVEL_NAME_MAP_EDITER);
+	ChangeLevel(LEVEL_NAME_TMP);
 }
 
 void ContentsCore::CreateShaders()
@@ -194,7 +146,143 @@ void ContentsCore::LoadShaders()
 		GameEngineMaterial* Material = GameEngineMaterial::Create("CustomColor");
 		Material->SetVertexShader("CustomColor.hlsl");
 		Material->SetPixelShader("CustomColor.hlsl");
+	}
+}
+
+//////////////////////////////////////////////////////
+//	레벨 리소스 로딩 (메쉬)
+//////////////////////////////////////////////////////
+
+// 현재레벨 종료시, 종류별 리소스 해제
+void ContentsCore::ReleaseCurLevelResource()
+{
+	//GameEngineRes<GameEngineFBXMesh>::ResourcesDestroy();
+	//GameEngineRes<GameEngineFBXAnimation>::ResourcesDestroy();
+
+	GameEngineFBXMesh::ResourcesDestroy();
+	GameEngineFBXAnimation::ResourcesDestroy();
+}
+
+void ContentsCore::LoadLevelResource(LEVELS _LEVEL)
+{
+	GameEngineDirectory Dir;
+	Dir.MoveParentToExitsChildDirectory(DIR_RESOURCES);
+	Dir.Move(DIR_RESOURCES);
+
+	switch (_LEVEL)
+	{
+	case LEVELS::LOBBY:
+		break;
+	case LEVELS::LOADING:
+		break;
 
 
+		// 임시/테스트 레벨
+	case LEVELS::CAMERA_TEST:
+		Dir.Move(DIR_TESTLEVEL_CAMERA);
+		ResLoadCameraTest(Dir);
+		break;
+	case LEVELS::PHYSX_TEST:
+		Dir.Move(DIR_TESTLEVEL_PHYSX);
+		ResLoadCameraTest(Dir);
+		break;
+	case LEVELS::PHYSICS_TEST:
+		Dir.Move(DIR_TESTLEVEL_PHISICS);
+		ResLoadCameraTest(Dir);
+		break;
+		// Editor GUI에서 리소스 로드 해주기 때문에 임시용도
+	case LEVELS::MAP_EDITOR:
+		Dir.Move(DIR_TESTLEVEL_MAPEDITOR);
+		ResLoadMapEditor(Dir);
+		break;
+	default:
+		break;
+	}
+}
+
+
+/////////////////////////////////////////////////////////
+// # 리소스 로드
+// - 레벨 폴더 안, 모든 폴더 순회 
+// - 텍스쳐는 레벨 모든 경로에서 중복시 오류
+// - 레벨 안에서 중복된 FBX는 오류, 레벨이 다르면 상관없음
+// 
+//  
+// # LevelAllResourceLoad
+// - 디렉토리의 모든 리소스 로드
+// - 개별적으로 리소스 선택하여 로드하고 싶으면 주석처리
+/////////////////////////////////////////////////////////
+
+
+// 게임 레벨
+void ContentsCore::ResLoadLobby(GameEngineDirectory& _Dir)
+{
+	LevelAllResourceLoad(_Dir);
+}
+
+void ContentsCore::ResLoadLoading(GameEngineDirectory& _Dir)
+{
+	LevelAllResourceLoad(_Dir);
+}
+
+
+// 임시/테스트 레벨
+void ContentsCore::ResLoadTmpTest(GameEngineDirectory& _Dir)
+{
+	LevelAllResourceLoad(_Dir);
+}
+
+void ContentsCore::ResLoadMapEditor(GameEngineDirectory& _Dir)
+{
+	LevelAllResourceLoad(_Dir);
+}
+
+
+void ContentsCore::ResLoadCameraTest(GameEngineDirectory& _Dir)
+{
+	LevelAllResourceLoad(_Dir);
+}
+
+void ContentsCore::ResLoadPhysXTest(GameEngineDirectory& _Dir)
+{
+	LevelAllResourceLoad(_Dir);
+}
+
+void ContentsCore::ResLoadPhysicsTest(GameEngineDirectory& _Dir)
+{
+	LevelAllResourceLoad(_Dir);
+}
+
+
+void ContentsCore::LevelAllResourceLoad(GameEngineDirectory& _LevelDir)
+{
+	std::vector<GameEngineDirectory> LevelFolders = _LevelDir.GetRecursiveAllDirectory();
+
+	for (GameEngineDirectory& Folder : LevelFolders)
+	{
+		GameEngineDirectory Dir(Folder.GetFullPath());
+
+		// PNG
+		{
+			std::vector<GameEngineFile> Files = Dir.GetAllFile(EXT_PNG);
+			for (GameEngineFile& File : Files)
+			{
+				GameEngineTexture* Texture = GameEngineTexture::Load(File.GetFullPath());
+				LevelTextures_.push_back(Texture);
+			}
+		}
+
+		// Mesh & Animation
+		{
+			std::vector<GameEngineFile> Files = Dir.GetAllFile(EXT_FBX);
+			for (GameEngineFile& File : Files)
+			{
+				GameEngineFBXMesh* Mesh = GameEngineFBXMesh::Load(File.GetFullPath());
+				LevelMeshes_.push_back(Mesh);
+
+				GameEngineFBXAnimation* Anim = GameEngineFBXAnimation::Load(File.GetFullPath());
+				LevelAnimations_.push_back(Anim);
+			}
+		}
 	}
 }

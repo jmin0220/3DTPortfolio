@@ -5,18 +5,16 @@
 
 // 디렉토리
 #define DIR_RESOURCES "Resources"
-#define DIR_GAMES "Games"
+#define DIR_GAMES "Texture2D\\Games"
 #define DIR_LEVELS "Levels"
-#define DIR_TESTLEVEL "TestLevel"
-#define DIR_MESH "Mesh"
-#define DIR_CHARACTER "Character"
-#define DIR_DOORDASH_MESH "DoorDashMesh"
-#define DIR_RAINBOW "RainBow"
+#define DIR_TESTLEVELS "Levels\\TestLevels"
+#define DIR_JSONTEST "JsonTest"
 
 // 테스트용은 분리
-#define DIR_TESTMAP "TestMap"
-#define DIR_TESTCHARACTER "TestCharacter"
-#define FBX_NAME_TESTCHARACTER "TestCharacter.FBX"
+#define DIR_TESTLEVEL_CAMERA "Levels\\TestLevels\\CameraTestLevel"
+#define DIR_TESTLEVEL_PHYSX "Levels\\TestLevels\\PhysXTestLevel"
+#define DIR_TESTLEVEL_PHISICS "Levels\\TestLevels\\PhysicsTestLevel"
+#define DIR_TESTLEVEL_MAPEDITOR "Levels\\TestLevels\\MapEditorLevel"
 
 // 폰트
 #define FONT_NOTO_SANS_CJK_SC "Noto Sans CJK SC"
@@ -24,6 +22,7 @@
 
 // 확장자
 #define EXT_PNG ".png"
+#define EXT_FBX ".fbx"
 
 
 // FBX

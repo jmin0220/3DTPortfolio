@@ -22,6 +22,7 @@ protected:
 	void End() override;
 
 	void LevelStartEvent() override;
+	void LevelEndEvent() override;
 
 	physx::PxScene* Scene_;
 	physx::PxPhysics* Physics_;

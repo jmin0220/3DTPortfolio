@@ -234,8 +234,6 @@ void MapEditorGUI::OnClickLoad()
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExitsChildDirectory(DIR_RESOURCES);
 		Dir.Move(DIR_RESOURCES);
-		Dir.Move(DIR_LEVELS);
-		Dir.Move(DIR_TESTLEVEL);
 		//Dir.Move(DIR_MESH);
 
 
@@ -422,7 +420,7 @@ void MapEditorGUI::FollowCameraToSpawned(float _DeltaTime)
 
 	// 한번 클릭했을 때만 쫒아가야 한다
 	float4 ObjPos = SpawnedObjects_[SpawnedIdx].Actor_->GetTransform().GetWorldPosition();
-	ObjPos += float4(0, 400, -1000);
+	ObjPos += float4(0, 200, -500);
 
 	float4 CamMovePos = float4::Lerp(ConnectedLevel->GetMainCameraActor()->GetTransform().GetWorldPosition(), ObjPos, _DeltaTime * 25.0f);
 	ConnectedLevel->GetMainCameraActor()->GetTransform().SetWorldPosition(CamMovePos);
@@ -434,7 +432,7 @@ void MapEditorGUI::Load()
 	GameEngineDirectory LoadDir;
 	LoadDir.MoveParentToExitsChildDirectory(DIR_RESOURCES);
 	LoadDir.Move(DIR_RESOURCES);
-	LoadDir.Move(DIR_MESH);
+	LoadDir.Move(DIR_JSONTEST);
 	
 	OPENFILENAME ofn = {};
 
@@ -465,7 +463,7 @@ void MapEditorGUI::Save()
 	GameEngineDirectory SaveDir;
 	SaveDir.MoveParentToExitsChildDirectory(DIR_RESOURCES);
 	SaveDir.Move(DIR_RESOURCES);
-	SaveDir.Move(DIR_MESH);
+	SaveDir.Move(DIR_JSONTEST);
 	
 	OPENFILENAME ofn = {};
 

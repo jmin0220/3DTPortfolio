@@ -38,16 +38,29 @@ void CameraTestLevel::End()
 void CameraTestLevel::LevelStartEvent()
 {	
 	GEngine::CollisionDebugOff();
+	
+	// 리소스 로드
+	ContentsCore::GetInst()->LoadLevelResource(LEVELS::CAMERA_TEST);
 
-	Floor_ = CreateActor<TestActor_WaterPlane>();
+	// 엑터 생성
+	GameEngineActor* Floor = CreateActor<TestActor_WaterPlane>();
+	Actors_.push_back(Floor);
 
-	Player_ = CreateActor<TestActor_Character>();
-	Player_->GetTransform().SetWorldPosition({ 0, 300, 0 });
+	GameEngineActor* Player = CreateActor<TestActor_Character>();
+	Player->GetTransform().SetWorldPosition({ 0, 300, 0 });
+	Actors_.push_back(Player);
 }
 
 void CameraTestLevel::LevelEndEvent()
 {
-	Player_->Death();
-	Floor_->Death();
+	// 엑터 제거
+	for (GameEngineActor* Actor : Actors_)
+	{
+		Actor->Death();
+	}
+
+	// 리소스 해제
+	ContentsCore::GetInst()->ReleaseCurLevelResource();
+
 }
 

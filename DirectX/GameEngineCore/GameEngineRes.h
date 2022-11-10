@@ -91,6 +91,8 @@ public:
 		{
 			delete Res.second;
 		}
+		
+		NamedRes.clear();
 	}
 
 protected:

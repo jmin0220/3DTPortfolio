@@ -21,7 +21,7 @@ LJM_PhysXPlayerTest::~LJM_PhysXPlayerTest()
 
 void LJM_PhysXPlayerTest::Start()
 {
-	Player_ = CreateActor<PhysXTestPlayer>();
+
 
 	GameEngineInput::GetInst()->CreateKey("CreateBall", VK_SPACE);
 	GameEngineInput::GetInst()->CreateKey("CreateStack", '1');
@@ -58,7 +58,22 @@ void LJM_PhysXPlayerTest::End()
 
 void LJM_PhysXPlayerTest::LevelStartEvent()
 {
+
+	// 府家胶 肺靛
+	ContentsCore::GetInst()->LoadLevelResource(LEVELS::PHYSX_TEST);
+
+	Player_ = CreateActor<PhysXTestPlayer>();
+
+
 	initPhysics(true);
+}
+
+void LJM_PhysXPlayerTest::LevelEndEvent()
+{
+	Player_->Death();
+
+	// 府家胶 秦力
+	ContentsCore::GetInst()->ReleaseCurLevelResource();
 }
 
 void LJM_PhysXPlayerTest::initPhysics(bool _interactive)

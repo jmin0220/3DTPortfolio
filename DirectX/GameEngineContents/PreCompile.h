@@ -51,6 +51,7 @@
 // contents
 #include <GameEngineContents/GlobalValues.h>
 #include <GameEngineContents/CustomableGUI.h>
+#include <GameEngineContents/ContentsCore.h>
 
 // global
 #include "ConstantStringSet.h"

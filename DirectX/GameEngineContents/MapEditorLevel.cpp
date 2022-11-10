@@ -22,48 +22,10 @@ MapEditorLevel::~MapEditorLevel()
 
 void MapEditorLevel::Start()
 {
-	// 피킹 예시
-	{
-		//GameEngineActor* Box = CreateActor<ColorBox>();
-		//Box->GetTransform().SetWorldPosition({ 0, 0, 300 });
-
-		ActorPicker* Picker = CreateActor<ActorPicker>();
-	}
+	GUI_ = GameEngineGUI::CreateGUIWindow<MapEditorGUI>("MapEditorGUI", this);
+	GUI_->Off();
 
 
-
-	{
-		TestRainBow* RainBow = CreateActor<TestRainBow>();
-		RainBow->GetTransform().SetWorldPosition({ -200,0,0 });
-
-		TestRainBow* RainBow2 = CreateActor<TestRainBow>();
-		RainBow2->GetTransform().SetWorldPosition({ -200, 200,0 });
-	}
-
-
-	{
-		TestMapActor* TestMap = CreateActor<TestMapActor>();
-		TestMap->GetTransform().SetWorldPosition({ 0,0,0 });
-	}
-
-
-	{
-		AxisActorRot* AxisRot = CreateActor<AxisActorRot>();
-		AxisRot->SetPosition();
-		AxisRot->GetTransform().SetWorldPosition({ 300.0f,0,0 });
-
-
-	}
-
-
-	//{
-	//	AxisActor* Axis = CreateActor<AxisActor>();
-	//	Axis->GetTransform().SetWorldPosition({ 200,0,0 });
-	//	Axis->SetPosition();
-	//}
-
-	GUI = GameEngineGUI::CreateGUIWindow<MapEditorGUI>("MapEditorGUI", this);
-	GUI->Off();
 }
 
 void MapEditorLevel::Update(float _DeltaTime)
@@ -76,11 +38,44 @@ void MapEditorLevel::End()
 
 void MapEditorLevel::LevelStartEvent()
 {
-	GUI->On();
+	GUI_->On();
+
+	// 리소스 로드
+	ContentsCore::GetInst()->LoadLevelResource(LEVELS::MAP_EDITOR);
+
+	// 엑터 생성
+	GameEngineActor* Picker = CreateActor<ActorPicker>();
+
+	AxisActorRot* AxisRot = CreateActor<AxisActorRot>();
+	AxisRot->SetPosition();
+	AxisRot->GetTransform().SetWorldPosition({ 300.0f,0,0 });
+
+	// 테스트용 엑터(추후 삭제해야함)
+	GameEngineActor* RainBow = CreateActor<TestRainBow>();
+	RainBow->GetTransform().SetWorldPosition({ -200,0,0 });
+	Actors_.push_back(RainBow);
+
+	GameEngineActor* RainBow2 = CreateActor<TestRainBow>();
+	RainBow2->GetTransform().SetWorldPosition({ -200, 200,0 });
+	Actors_.push_back(RainBow2);
+
+	GameEngineActor* TestMap = CreateActor<TestMapActor>();
+	TestMap->GetTransform().SetWorldPosition({ 0,0,0 });
+	Actors_.push_back(TestMap);
+
 }
 
 void MapEditorLevel::LevelEndEvent()
 {
-	GUI->Off();
+	GUI_->Off();
+
+	// 엑터 제거
+	for (GameEngineActor* Actor : Actors_)
+	{
+		Actor->Death();
+	}
+
+	// 리소스 해제
+	ContentsCore::GetInst()->ReleaseCurLevelResource();
 }
 
