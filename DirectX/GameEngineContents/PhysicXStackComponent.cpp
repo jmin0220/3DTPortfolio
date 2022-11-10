@@ -28,6 +28,9 @@ void PhysicXStackComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::PxP
 	// 충돌체의 종류
 	dynamic_ = _physics->createRigidDynamic(localTm);
 	dynamic_->attachShape(*shape_);
+	// 중력이 적용되지 않도록
+	dynamic_->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, true);
+
 
 	// RigidDynamic의 밀도를 설정
 	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 10.0f);
