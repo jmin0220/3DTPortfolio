@@ -1069,11 +1069,23 @@ bool GameEngineFBXMesh::ImportBone()
 			Manager->CreateMissingBindPoses(Scene);
 			if (RetrievePoseFromBindPose(Scene, MeshNodeArray, PoseArray) == false)
 			{
-				MsgBoxAssert("Recreating bind pose failed.");
+				// MsgBoxAssert("Recreating bind pose failed.");
 			}
 		}
 
 		BuildSkeletonSystem(Scene, ClusterArray[Clusterindex], SortedLinks);
+
+		std::map<fbxsdk::FbxNode*, std::set<fbxsdk::FbxCluster*>> ClusterSet;
+
+		for (int ClusterIndex = 0; ClusterIndex < ClusterArray.size(); ClusterIndex++)
+		{
+			for (size_t i = 0; i < ClusterArray[ClusterIndex].size(); i++)
+			{
+				fbxsdk::FbxCluster* Cluster = ClusterArray[ClusterIndex][i];
+				ClusterSet[Cluster->GetLink()].insert(ClusterArray[ClusterIndex][i]);;
+			}
+		}
+
 
 		// 본이 없다는 이야기.
 		if (SortedLinks.size() == 0)
@@ -1202,16 +1214,40 @@ bool GameEngineFBXMesh::ImportBone()
 
 				if (!GlobalLinkFoundFlag)
 				{
-					for (int ClusterIndex = 0; ClusterIndex < ClusterArray.size(); ClusterIndex++)
+
+					std::map<fbxsdk::FbxNode*, std::set<fbxsdk::FbxCluster*>>::iterator FindIter = ClusterSet.find(Link);
+
+					if (FindIter != ClusterSet.end())
 					{
-						fbxsdk::FbxCluster* Cluster = ClusterArray[0][ClusterIndex];
-						if (Link == Cluster->GetLink())
+						for (fbxsdk::FbxCluster* Cluster : FindIter->second)
 						{
 							Cluster->GetTransformLinkMatrix(GlobalsPerLink[static_cast<int>(LinkIndex)]);
 							GlobalLinkFoundFlag = true;
 							break;
 						}
 					}
+
+					//for (int ClusterIndex = 0; ClusterIndex < ClusterArray.size(); ClusterIndex++)
+					//{
+					//	//fbxsdk::FbxCluster* Cluster = ClusterArray[0][ClusterIndex];
+					//	//if (Link == Cluster->GetLink())
+					//	//{
+					//	//	Cluster->GetTransformLinkMatrix(GlobalsPerLink[static_cast<int>(LinkIndex)]);
+					//	//	GlobalLinkFoundFlag = true;
+					//	//	break;
+					//	//}
+
+					//	for (size_t i = 0; i < ClusterArray[ClusterIndex].size(); i++)
+					//	{
+					//		fbxsdk::FbxCluster* Cluster = ClusterArray[ClusterIndex][i];
+					//		if (Link == Cluster->GetLink())
+					//		{
+					//			Cluster->GetTransformLinkMatrix(GlobalsPerLink[static_cast<int>(LinkIndex)]);
+					//			GlobalLinkFoundFlag = true;
+					//			break;
+					//		}
+					//	}
+					//}
 				}
 			}
 
@@ -1545,7 +1581,8 @@ bool GameEngineFBXMesh::RetrievePoseFromBindPose(fbxsdk::FbxScene* pScene, const
 							std::string ErrorString = Status.GetErrorString();
 							std::string CurrentName = Current->GetName();
 
-							MsgBoxAssertString(ErrorString + "_" + CurrentName);
+							break;
+							//MsgBoxAssertString(ErrorString + "_" + CurrentName);
 						}
 					}
 				}
