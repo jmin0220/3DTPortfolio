@@ -11,11 +11,13 @@
 #include "PhysXLevel.h"
 #include "CameraTestLevel.h"
 #include "ScaleTestLevel.h"
+#include "GameManagerGUI.h"
 
 #pragma comment(lib, "GameEngineBase.lib")
 #include <GameEngineCore/GameEngineRes.h>
 
 std::shared_ptr<ContentsCore> ContentsCore::Inst_ = std::make_shared<ContentsCore>();
+std::vector<GameEngineLevel*> ContentsCore::Levels_;
 
 ContentsCore::ContentsCore()
 	: GameEngineCore()
@@ -35,8 +37,8 @@ void ContentsCore::Start()
 	LoadCommonResources();
 	CreateLevels();
 
-	GameEngineGUI::CreateGUIWindow<GameEngineStatusWindow>("GameEngineStatusWindow", nullptr); //GUI 추가 
-
+	//GameEngineGUI::CreateGUIWindow<GameEngineStatusWindow>("GameEngineStatusWindow", nullptr); //GUI 추가 
+	GameEngineGUI::CreateGUIWindow<GameManagerGUI>("GameManager", nullptr);
 }
 
 void ContentsCore::Update(float _DeltaTime)
@@ -94,18 +96,36 @@ void ContentsCore::LoadCommonResources()
 
 void ContentsCore::CreateLevels()
 {
-	CreateLevel<tmpLevel>(LEVEL_NAME_TMP);
-	CreateLevel<LoadingLevel>(LEVEL_NAME_LOADING);
-	CreateLevel<MapEditorLevel>(LEVEL_NAME_MAP_EDITER);
+	{
+		GameEngineLevel* Level = CreateLevel<tmpLevel>(LEVEL_NAME_TMP);
+		Levels_.push_back(Level);
+	}
+	{
+		GameEngineLevel* Level = CreateLevel<LoadingLevel>(LEVEL_NAME_LOADING);
+		Levels_.push_back(Level);
+	}
+	{
+		GameEngineLevel* Level = CreateLevel<MapEditorLevel>(LEVEL_NAME_MAP_EDITER);
+		Levels_.push_back(Level);
+	}
+	{
+		GameEngineLevel* Level = CreateLevel<CameraTestLevel>(LEVEL_NAME_CAMERA_TEST);
+		Levels_.push_back(Level);
+	}
+	{
+		GameEngineLevel* Level = CreateLevel<PhysXLevel>("PhysXLevel");
+		Levels_.push_back(Level);
+	}
+	{
+		GameEngineLevel* Level = CreateLevel<ScaleTestLevel>(LEVEL_NAME_SCALE_TEST);
+		Levels_.push_back(Level);
+	}
+	
 	//CreateLevel<PhysicsTestLevel>(LEVEL_NAME_PHYSICS_TEST);
 	//CreateLevel<LJM_PhysXHelloWorld>(LEVEL_NAME_PHYSX_HELLOWORLD);
 	//CreateLevel<LJM_PhysXPlayerTest>(LEVEL_NAME_PHYSX_PLAYER_TEST);
 	//CreateLevel<LJM_PhysXBoxGeometryTest>(LEVEL_NAME_PHYSX_BOX_GEOMETRY_TEST);
-	CreateLevel<ScaleTestLevel>(LEVEL_NAME_SCALE_TEST);
-	CreateLevel<CameraTestLevel>(LEVEL_NAME_CAMERA_TEST);
 
-	// PhysX 튜토리얼 레벨
-	CreateLevel<PhysXLevel>("PhysXLevel");
 
 	ChangeLevel(LEVEL_NAME_TMP);
 }

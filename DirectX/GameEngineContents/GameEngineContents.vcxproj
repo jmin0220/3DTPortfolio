@@ -203,6 +203,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameManagerGUI.h" />
     <ClInclude Include="GameSuccess.h">
       <SubType>
       </SubType>
@@ -414,6 +415,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameManagerGUI.cpp" />
     <ClCompile Include="GameSuccess.cpp">
       <SubType>
       </SubType>

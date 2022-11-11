@@ -6,6 +6,7 @@
 // 설명 : 프로그램 자체를 시작하게 한다.
 class ContentsCore : public GameEngineCore
 {
+	friend class GameManagerGUI;
 	// 레벨 리소스 관리
 public:
 	static std::shared_ptr<ContentsCore> GetInst()
@@ -59,6 +60,8 @@ private:
 	void CreateShaders();
 	void LoadShaders();
 	void LoadCommonResources();
+
+	static std::vector<GameEngineLevel*> Levels_;
 
 	// 레벨별 리소스
 private:
