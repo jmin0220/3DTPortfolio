@@ -321,6 +321,9 @@
     <ClInclude Include="VirtualPhysXLevel.h">
       <Filter>01_Level\PhysXLevel</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerActor.h">
+      <Filter>02_Actor</Filter>
+    </ClInclude>
     <ClInclude Include="TestCharacterAnimation.h">
       <Filter>999_Test\TestActor</Filter>
     </ClInclude>
@@ -538,6 +541,9 @@
     </ClCompile>
     <ClCompile Include="VirtualPhysXLevel.cpp">
       <Filter>01_Level\PhysXLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerActor.cpp">
+      <Filter>02_Actor</Filter>
     </ClCompile>
     <ClCompile Include="GameManagerGUI.cpp">
       <Filter>98_LevelGUI</Filter>

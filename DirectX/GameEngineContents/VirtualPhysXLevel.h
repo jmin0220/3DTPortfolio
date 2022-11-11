@@ -2,6 +2,7 @@
 #include <GameEngineCore/GameEngineLevel.h>
 
 // 설명 :
+class PlayerActor;
 class VirtualPhysXLevel : public GameEngineLevel
 {
 public:
@@ -32,6 +33,9 @@ protected:
 
 	void LevelStartEvent() override;
 	void LevelEndEvent() override;
+
+	// 컨트롤 가능한 플레이어
+	std::shared_ptr<PlayerActor> Player_;
 
 private:
 	static physx::PxScene* Scene_;

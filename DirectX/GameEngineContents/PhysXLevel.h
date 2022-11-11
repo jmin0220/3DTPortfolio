@@ -4,6 +4,7 @@
 
 // 물리를 사용해야 하는 Scene은 GameEngineLevel대신
 // VirtualPhysXLevel을 상속 받을 것
+class PlayerActor;
 class PhysXLevel : public VirtualPhysXLevel
 {
 public:
@@ -26,6 +27,8 @@ protected:
 	void LevelEndEvent() override;
 
 	std::shared_ptr<PhysXActor> PhysXActor_;
+
+
 private:
 
 };

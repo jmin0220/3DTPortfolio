@@ -15,13 +15,17 @@ public:
 	PhysXBoxGeometryComponent& operator=(const PhysXBoxGeometryComponent& _Other) = delete;
 	PhysXBoxGeometryComponent& operator=(PhysXBoxGeometryComponent&& _Other) noexcept = delete;
 
-	void CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics);
+	void CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics, physx::PxVec3 _GeoMetryScale = physx::PxVec3(2.0f));
 
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 
 private:
+	// Phys액터 생성에 필요한 정보
+	physx::PxPhysics* physics_;
+	physx::PxScene* scene_;
+
 	physx::PxMaterial* material_;
 	physx::PxShape* shape_;
 	physx::PxRigidDynamic* dynamic_;

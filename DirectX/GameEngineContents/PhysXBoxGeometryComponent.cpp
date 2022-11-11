@@ -9,7 +9,7 @@ PhysXBoxGeometryComponent::~PhysXBoxGeometryComponent()
 {
 }
 
-void PhysXBoxGeometryComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics)
+void PhysXBoxGeometryComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics, physx::PxVec3 _GeoMetryScale)
 {
 	// 부모 액터로부터 위치 생성
 	physx::PxTransform localTm(ParentActor_->GetTransform().GetWorldPosition().x
@@ -22,11 +22,14 @@ void PhysXBoxGeometryComponent::CreatePhysXActors(physx::PxScene* _Scene, physx:
 	// 충돌체의 형태
 	// 충돌체의 크기는 절반의 크기를 설정하므로 실제 Renderer의 스케일은 충돌체의 2배로 설정되어야 함
 	// TODO::부모 액터의 RenderUnit으로부터 Mesh의 Scale 과 WorldScale의 연산의 결과를 지오메트리의 Scale로 세팅해야함.
-	shape_ = _physics->createShape(physx::PxBoxGeometry(2.0f, 2.0f, 2.0f), *material_);
+	shape_ = _physics->createShape(physx::PxBoxGeometry(_GeoMetryScale), *material_);
 
 	// 충돌체의 종류
 	dynamic_ = _physics->createRigidDynamic(localTm);
 	dynamic_->attachShape(*shape_);
+	// 중력이 적용되지 않도록
+	// TODO::RigidStatic으로 변경해야
+	dynamic_->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, true);
 
 	// RigidDynamic의 밀도를 설정
 	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 10.0f);

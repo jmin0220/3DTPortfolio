@@ -7,6 +7,7 @@ static physx::PxScene* scene_ = nullptr;
 physx::PxReal PhysXCCTActorComponent::PhysxGravity_ = -98.1f;	// Áß·ÂÄ¡
 
 PhysXCCTActorComponent::PhysXCCTActorComponent() 
+	: ControlledActor_(nullptr)
 {
 }
 

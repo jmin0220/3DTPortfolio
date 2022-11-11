@@ -18,7 +18,7 @@ void PhysXActor::Start()
 void PhysXActor::LevelStartEvent()
 {
 	// 1. 사용할 PhysX컴포넌트를 Create
-	PhysicXStackComponent_ = CreateComponent<PhysicXStackComponent>();
+	PhysXBoxGeometry_ = CreateComponent<PhysXBoxGeometryComponent>();
 
 	// 2. 현재 Actor의 포지션을 설정
 	this->GetTransform().SetWorldPosition({ 0.0f });
@@ -37,5 +37,5 @@ void PhysXActor::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _ph
 	// Tip..3번째 매개변수인 GeometryScale은 액터가 가질 물리강체의 크기
 	// PhysX의 Geometry는 절반의 값을 가지고 만들어지므로, 실제 메쉬가 가진 RenderUnit의 Scale과 WorldScale값을 곱한값의 절반을 넣어줘야함.
 	// TODO::RenderUnit의 Scale값만 넣어주면 되게 개선예정
-	PhysicXStackComponent_->CreatePhysXActors(_Scene, _physics, physx::PxVec3(10.0f, 10.0f, 10.0f));
+	PhysXBoxGeometry_->CreatePhysXActors(_Scene, _physics, physx::PxVec3(10.0f, 10.0f, 10.0f));
 }

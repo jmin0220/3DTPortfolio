@@ -1,6 +1,6 @@
 #pragma once
 #include "VirtualPhysXActor.h"
-#include "PhysicXStackComponent.h"
+#include "PhysXBoxGeometryComponent.h"
 
 // 물리를 사용해야하는 Actor는 GameEngineActor대신
 // VirtualPhysXActor를 상속
@@ -26,7 +26,7 @@ protected:
 	void CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics) override;
 
 private:
-	std::shared_ptr<PhysicXStackComponent> PhysicXStackComponent_;
+	std::shared_ptr<PhysXBoxGeometryComponent> PhysXBoxGeometry_;
 
 };
 

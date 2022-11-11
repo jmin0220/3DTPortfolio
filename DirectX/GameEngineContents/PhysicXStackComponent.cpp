@@ -7,6 +7,7 @@ PhysicXStackComponent::PhysicXStackComponent()
 
 PhysicXStackComponent::~PhysicXStackComponent() 
 {
+	
 }
 
 void PhysicXStackComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics, physx::PxVec3 _GeoMetryScale)
@@ -23,14 +24,11 @@ void PhysicXStackComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::PxP
 	// 충돌체의 크기는 절반의 크기를 설정하므로 실제 Renderer의 스케일은 충돌체의 2배로 설정되어야 함
 	shape_ = _physics->createShape(physx::PxBoxGeometry(_GeoMetryScale), *material_);
 
-	ParentActor_->GetTransform().SetWorldScale({ 4.0f, 4.0f, 4.0f });
-
 	// 충돌체의 종류
 	dynamic_ = _physics->createRigidDynamic(localTm);
 	dynamic_->attachShape(*shape_);
 	// 중력이 적용되지 않도록
 	dynamic_->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, true);
-
 
 	// RigidDynamic의 밀도를 설정
 	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 10.0f);
@@ -43,6 +41,8 @@ void PhysicXStackComponent::Start()
 {
 	// 부모의 정보의 저장
 	ParentActor_ = std::dynamic_pointer_cast<GameEngineActor>(GetParent());
+
+	//ParentActor_ = std::static_pointer_cast<GameEngineActor>(GetParent());
 
 	//std::string tmpStackPosition = "StackPosition >> x : " + std::to_string(ParentActor_->GetTransform().GetWorldPosition().x)
 	//									   + " / y : " + std::to_string(ParentActor_->GetTransform().GetWorldPosition().y);

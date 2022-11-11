@@ -1,10 +1,12 @@
 #include "PreCompile.h"
 #include "VirtualPhysXLevel.h"
+#include "PlayerActor.h"
 
 physx::PxScene* VirtualPhysXLevel::Scene_ = nullptr;
 physx::PxPhysics* VirtualPhysXLevel::Physics_ = nullptr;
 
 VirtualPhysXLevel::VirtualPhysXLevel() 
+	: Player_(nullptr)
 {
 }
 
@@ -81,6 +83,12 @@ void VirtualPhysXLevel::initPhysics(bool _interactive)
 	// TODO::일반적인 경우에는 필요하지 않을 수 있음
 	CtrManager_->setOverlapRecoveryModule(true);
 	CtrManager_->setPreciseSweeps(true);
+
+	// 플레이어가 존재하면 생성
+	if (nullptr != Player_)
+	{
+		Player_->CreatePhysXActors(Scene_, Physics_, CtrManager_);
+	}
 }
 
 // PhysX 업데이트
