@@ -10,6 +10,7 @@
 #include "LJM_PhysXBoxGeometryTest.h"
 #include "PhysXLevel.h"
 #include "CameraTestLevel.h"
+#include "ScaleTestLevel.h"
 
 #pragma comment(lib, "GameEngineBase.lib")
 #include <GameEngineCore/GameEngineRes.h>
@@ -21,7 +22,7 @@ ContentsCore::ContentsCore()
 {
 }
 
-ContentsCore::~ContentsCore() 
+ContentsCore::~ContentsCore()
 {
 }
 
@@ -100,6 +101,7 @@ void ContentsCore::CreateLevels()
 	//CreateLevel<LJM_PhysXHelloWorld>(LEVEL_NAME_PHYSX_HELLOWORLD);
 	//CreateLevel<LJM_PhysXPlayerTest>(LEVEL_NAME_PHYSX_PLAYER_TEST);
 	//CreateLevel<LJM_PhysXBoxGeometryTest>(LEVEL_NAME_PHYSX_BOX_GEOMETRY_TEST);
+	CreateLevel<ScaleTestLevel>(LEVEL_NAME_SCALE_TEST);
 	CreateLevel<CameraTestLevel>(LEVEL_NAME_CAMERA_TEST);
 
 	// PhysX 튜토리얼 레벨
@@ -192,6 +194,10 @@ void ContentsCore::LoadLevelResource(LEVELS _LEVEL)
 		// Editor GUI에서 리소스 로드 해주기 때문에 임시용도
 	case LEVELS::MAP_EDITOR:
 		Dir.Move(DIR_TESTLEVEL_MAPEDITOR);
+		ResLoadMapEditor(Dir);
+		break;
+	case LEVELS::SCALE_TEST:
+		Dir.Move(DIR_TESTLEVEL_SCALETEST);
 		ResLoadMapEditor(Dir);
 		break;
 	default:

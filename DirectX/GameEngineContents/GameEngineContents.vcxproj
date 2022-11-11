@@ -299,6 +299,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ScaleTestLevel.h" />
     <ClInclude Include="SelectShowButton.h" />
     <ClInclude Include="StartGameTitleActor.h">
       <SubType>
@@ -325,6 +326,7 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="TestBox.h" />
+    <ClInclude Include="TestCharacterAnimation.h" />
     <ClInclude Include="TestGround.h" />
     <ClInclude Include="TestMapActor.h">
       <SubType>
@@ -511,6 +513,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="ScaleTestLevel.cpp" />
     <ClCompile Include="SelectShowButton.cpp" />
     <ClCompile Include="StartGameTitleActor.cpp">
       <SubType>
@@ -537,6 +540,7 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="TestBox.cpp" />
+    <ClCompile Include="TestCharacterAnimation.cpp" />
     <ClCompile Include="TestGround.cpp" />
     <ClCompile Include="TestMapActor.cpp">
       <SubType>

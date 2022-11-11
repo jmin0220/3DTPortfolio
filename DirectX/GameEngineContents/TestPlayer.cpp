@@ -44,6 +44,7 @@ void TestPlayer::Start()
 	GetTransform().SetWorldScale({ 100, 100, 100 });
 
 
+
 }
 
 void TestPlayer::Update(float _DeltaTime)

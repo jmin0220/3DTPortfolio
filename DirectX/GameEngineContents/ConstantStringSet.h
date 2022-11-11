@@ -15,6 +15,7 @@
 #define DIR_TESTLEVEL_PHYSX "Levels\\TestLevels\\PhysXTestLevel"
 #define DIR_TESTLEVEL_PHISICS "Levels\\TestLevels\\PhysicsTestLevel"
 #define DIR_TESTLEVEL_MAPEDITOR "Levels\\TestLevels\\MapEditorLevel"
+#define DIR_TESTLEVEL_SCALETEST "Levels\\TestLevels\\ScaleTestLevel"
 
 // ÆùÆ®
 #define FONT_NOTO_SANS_CJK_SC "Noto Sans CJK SC"
@@ -27,7 +28,12 @@
 
 // FBX
 #define FBX_NAME_CHARACTER "Character.FBX"
+#define FBX_NAME_CHARACTER_RUN "Character_Run.FBX"
+#define FBX_NAME_CHARACTER_VICTORY "Character_Victory_Gasp.FBX"
+
 #define FBX_NAME_RAINBOW "Rainbow.FBX"
+#define FBX_NAME_HEXAGONWALL "HexagonWall.FBX"
+#define FBX_NAME_HEXAGONFLOOR "HexagonFloor.FBX"
 #define FBX_NAME_TESTMAP "TestMap.FBX"
 
 
@@ -46,3 +52,5 @@
 #define AXIS_ROTATE "Axis_Rotate"
 #define LEVEL_NAME_PHYSX_BOX_GEOMETRY_TEST "LJM_PhysXBoxGeometryTest"
 #define LEVEL_NAME_CAMERA_TEST "CameraTestLevel"
+#define LEVEL_NAME_CAMERA_TEST "CameraTestLevel"
+#define LEVEL_NAME_SCALE_TEST "ScaleTestLevel"

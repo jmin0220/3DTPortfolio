@@ -321,6 +321,12 @@
     <ClInclude Include="VirtualPhysXLevel.h">
       <Filter>01_Level\PhysXLevel</Filter>
     </ClInclude>
+    <ClInclude Include="TestCharacterAnimation.h">
+      <Filter>999_Test\TestActor</Filter>
+    </ClInclude>
+    <ClInclude Include="ScaleTestLevel.h">
+      <Filter>999_Test\TestLevel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -529,6 +535,12 @@
     </ClCompile>
     <ClCompile Include="VirtualPhysXLevel.cpp">
       <Filter>01_Level\PhysXLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="TestCharacterAnimation.cpp">
+      <Filter>999_Test\TestActor</Filter>
+    </ClCompile>
+    <ClCompile Include="ScaleTestLevel.cpp">
+      <Filter>999_Test\TestLevel</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
