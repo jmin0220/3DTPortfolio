@@ -18,7 +18,7 @@ PhysXCCTActorComponent::~PhysXCCTActorComponent()
 void PhysXCCTActorComponent::Start()
 {
 	// 부모의 정보의 저장
-	ParentActor_ = dynamic_cast<GameEngineActor*>(GetParent());
+	ParentActor_ = std::dynamic_pointer_cast<GameEngineActor>(GetParent());
 
 	if (false == GameEngineInput::GetInst()->IsKey("forward00"))
 	{

@@ -67,9 +67,9 @@ void AxisActorRot::Start()
 	YAxisRot_ = GetLevel()->CreateActor<YAxisRot>();
 	ZAxisRot_ = GetLevel()->CreateActor<ZAxisRot>();
 
-	XAxisRot_->SetParent(this);
-	YAxisRot_->SetParent(this);
-	ZAxisRot_->SetParent(this);
+	XAxisRot_->SetParent(shared_from_this());
+	YAxisRot_->SetParent(shared_from_this());
+	ZAxisRot_->SetParent(shared_from_this());
 }
 
 void AxisActorRot::Update(float _DeltaTime)

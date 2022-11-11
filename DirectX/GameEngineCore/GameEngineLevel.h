@@ -3,6 +3,7 @@
 #include "GameEngineUpdateObject.h"
 #include <list>
 #include <map>
+#include "GameEngineActor.h"
 
 enum class CAMERAORDER
 {
@@ -58,11 +59,11 @@ public:
 		return Cameras[static_cast<int>(CAMERAORDER::UICAMERA)];
 	}
 
-	GameEngineCameraActor* GetMainCameraActor();
+	std::shared_ptr<GameEngineCameraActor> GetMainCameraActor();
 
 	GameEngineTransform& GetMainCameraActorTransform();
 
-	GameEngineCameraActor* GetUICameraActor();
+	std::shared_ptr<GameEngineCameraActor> GetUICameraActor();
 
 	GameEngineTransform& GetUICameraActorTransform();
 

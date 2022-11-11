@@ -223,13 +223,13 @@ void ActorPicker::ClickAxisControl()
 
 	if (AxisVector->GetAxisDir().x >= 1.0f)
 	{
-		dynamic_cast<AxisActor*>(ClickedActor->GetParent())->GetTransform().SetWorldMove({ MouseDir.x,0,0 });
+		std::dynamic_pointer_cast<AxisActor>(ClickedActor->GetParent())->GetTransform().SetWorldMove({ MouseDir.x,0,0 });
 		CurActor->GetTransform().SetWorldMove({ MouseDir.x,0,0 });
 
 	}
 	if (AxisVector->GetAxisDir().y >= 1.0f)
 	{
-		dynamic_cast<AxisActor*>(ClickedActor->GetParent())->GetTransform().SetWorldMove({ 0,MouseDir.y,0 });
+		std::dynamic_pointer_cast<AxisActor>(ClickedActor->GetParent())->GetTransform().SetWorldMove({ 0,MouseDir.y,0 });
 		CurActor->GetTransform().SetWorldMove({ 0,MouseDir.y,0 });
 
 	}
@@ -237,7 +237,7 @@ void ActorPicker::ClickAxisControl()
 	//TODO :: 카메라 회전방향에 따른 z값 변경
 	if (AxisVector->GetAxisDir().z >= 1.0f)
 	{
-		dynamic_cast<AxisActor*>(ClickedActor->GetParent())->GetTransform().SetWorldMove({ 0,0,MouseDir.x });
+		std::dynamic_pointer_cast<AxisActor>(ClickedActor->GetParent())->GetTransform().SetWorldMove({ 0,0,MouseDir.x });
 		CurActor->GetTransform().SetWorldMove({ 0,0,MouseDir.x });
 
 	}

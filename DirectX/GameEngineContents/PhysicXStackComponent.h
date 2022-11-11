@@ -31,7 +31,7 @@ private:
 	physx::PxRigidDynamic* dynamic_;
 
 	// 이 컴포넌트를 가지고 있는 Parent에 대한 정보
-	GameEngineActor* ParentActor_;
+	std::shared_ptr<GameEngineActor> ParentActor_;
 
 };
 

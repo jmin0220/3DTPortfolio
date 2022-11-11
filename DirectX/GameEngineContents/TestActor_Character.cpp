@@ -22,9 +22,9 @@ void TestActor_Character::Start()
 	float4 BoxSize(100, 200, 100);
 	DragXY[0] = 0;
 	DragXY[1] = 0;
-	LocationXYZ[0] = -407;
-	LocationXYZ[1] = 460;
-	LocationXYZ[2] = 1636;
+	LocationXYZ[0] = 0;
+	LocationXYZ[1] = 0;
+	LocationXYZ[2] = 0;
 	FBXLocation_ = float4::ZERO;
 
 
@@ -84,38 +84,38 @@ void TestActor_Character::Update(float _DeltaTime)
 
 void TestActor_Character::End()
 {
-	CameraArm_->Off();
+	//CameraArm_->Off();
 }
 
 void TestActor_Character::PlayerInputController()
 {
 	MoveDir_ = float4::ZERO;
 
-	//if (true == GameEngineInput::GetInst()->IsPress("W"))
-	//{
-	//	// 카메라가 바라보는 방향을 앞으로
-	//	MoveDir_ += GetLevel()->GetMainCameraActor()->GetTransform().GetForwardVector();
-	//}
+	if (true == GameEngineInput::GetInst()->IsPress("W"))
+	{
+		// 카메라가 바라보는 방향을 앞으로
+		MoveDir_ += GetLevel()->GetMainCameraActor()->GetTransform().GetForwardVector();
+	}
 
-	//if (true == GameEngineInput::GetInst()->IsPress("A"))
-	//{
-	//	MoveDir_ += float4(-1.0f, 0.0f, 0.0f, 0.0f);
-	//}
+	if (true == GameEngineInput::GetInst()->IsPress("A"))
+	{
+		MoveDir_ += float4(-1.0f, 0.0f, 0.0f, 0.0f);
+	}
 
-	//if (true == GameEngineInput::GetInst()->IsPress("S"))
-	//{
-	//	MoveDir_ += float4(0.0f, 0.0f, -1.0f, 0.0f);
-	//}
+	if (true == GameEngineInput::GetInst()->IsPress("S"))
+	{
+		MoveDir_ += float4(0.0f, 0.0f, -1.0f, 0.0f);
+	}
 
-	//if (true == GameEngineInput::GetInst()->IsPress("D"))
-	//{
-	//	MoveDir_ += float4(1.0f, 0.0f, 0.0f, 0.0f);
-	//}
+	if (true == GameEngineInput::GetInst()->IsPress("D"))
+	{
+		MoveDir_ += float4(1.0f, 0.0f, 0.0f, 0.0f);
+	}
 
-	//if (true == GameEngineInput::GetInst()->IsPress("SpaceBar"))
-	//{
-	//	GetTransform().SetWorldMove({ 0, 10, 0 });
-	//}
+	if (true == GameEngineInput::GetInst()->IsPress("SpaceBar"))
+	{
+		GetTransform().SetWorldMove({ 0, 10, 0 });
+	}
 }
 
 void TestActor_Character::ApplyGravity()

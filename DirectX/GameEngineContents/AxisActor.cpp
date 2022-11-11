@@ -55,9 +55,9 @@ void AxisActor::Start()
 	YAxis_ = GetLevel()->CreateActor<YAxis>();
 	ZAxis_ = GetLevel()->CreateActor<ZAxis>();
 
-	XAxis_->SetParent(this);
-	YAxis_->SetParent(this);
-	ZAxis_->SetParent(this);
+	XAxis_->SetParent(shared_from_this());
+	YAxis_->SetParent(shared_from_this());
+	ZAxis_->SetParent(shared_from_this());
 }
 
 void AxisActor::Update(float _DeltaTime)

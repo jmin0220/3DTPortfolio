@@ -5,7 +5,7 @@
 class CameraArm : public GameEngineActor
 {
 public:
-	void SetFollowCamera(GameEngineCameraActor* _Camera, std::shared_ptr<GameEngineActor> _Character);
+	void SetFollowCamera(std::shared_ptr<GameEngineCameraActor> _Camera, std::shared_ptr<GameEngineActor> _Character);
 	void SetArmLength(float _Depth, float _Height);
 
 public:
@@ -22,7 +22,7 @@ public:
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
-	void End() override {};
+	void End() override;
 
 	void OnEvent() override;
 	void OffEvent() override;
@@ -34,7 +34,7 @@ private:
 	void VerticalOrbitCamera();
 
 private:
-	GameEngineCameraActor* Camera_;
+	std::shared_ptr<GameEngineCameraActor> Camera_;
 	std::shared_ptr<GameEngineActor> Character_;
 
 	// ArmVector : 최초 카메라 피벗위치

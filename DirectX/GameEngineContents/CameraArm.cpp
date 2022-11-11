@@ -25,9 +25,9 @@ void CameraArm::Start()
 	CamAxisX_ = CreateComponent<GameEngineCollision>();
 	CamAxisY_ = CreateComponent<GameEngineCollision>();
 
-	CamHolderCollision_->SetParent(CamAxisX_.get());
-	CamAxisX_->SetParent(CamAxisY_.get());
-	CamAxisY_->SetParent(this);
+	CamHolderCollision_->SetParent(std::dynamic_pointer_cast<GameEngineUpdateObject>(CamAxisX_));
+	CamAxisX_->SetParent(CamAxisY_);
+	CamAxisY_->SetParent(shared_from_this());
 
 	CamAxisY_->GetTransform().SetWorldScale({ 1200, 1200, 1200 });
 	CamAxisY_->SetDebugSetting(CollisionType::CT_OBB, float4(0, 1.0f, 0, 0.2f));
@@ -44,12 +44,13 @@ void CameraArm::Start()
 	GUI->Off();
 }
 
-void CameraArm::SetFollowCamera(GameEngineCameraActor* _Camera, std::shared_ptr<GameEngineActor> _Character)
+void CameraArm::SetFollowCamera(std::shared_ptr<GameEngineCameraActor> _Camera, std::shared_ptr<GameEngineActor> _Character)
 {
 	// 카메라 암 엑터와 캐릭터를 연결
-	SetParent(_Character.get());
+	SetParent(_Character);
+	//SetParent(std::dynamic_pointer_cast<GameEngineUpdateObject>(_Character));
 	Camera_ = _Camera;
-	Character_ = _Character;
+	//Character_ = _Character;
 
 	// 카메라 암 피벗 정도
 	ArmVector_ = DEFAULT_ARMVEC;
@@ -72,7 +73,7 @@ void CameraArm::Update(float _DeltaTime)
 		return;
 	}
 
-	if (nullptr == Camera_ || nullptr == Character_)
+	if (nullptr == Camera_ )
 	{
 		return;
 	}
@@ -82,7 +83,7 @@ void CameraArm::Update(float _DeltaTime)
 	MouseMove_ = CurMouseInput_ - PrevMouseInput_;
 
 	PosCamHolder_ = CamHolderCollision_->GetTransform().GetWorldPosition();
-	PosCharacter_ = Character_->GetTransform().GetWorldPosition();
+	PosCharacter_ = GetTransform().GetWorldPosition();
 
 	Camera_->GetTransform().SetWorldPosition(PosCamHolder_);
 
@@ -92,6 +93,10 @@ void CameraArm::Update(float _DeltaTime)
 
 	// 마우스 입력
 	PrevMouseInput_ = CurMouseInput_;
+}
+
+void CameraArm::End()
+{
 }
 
 void CameraArm::OnEvent()

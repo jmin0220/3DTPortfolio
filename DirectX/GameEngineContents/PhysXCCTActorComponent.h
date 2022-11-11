@@ -27,7 +27,7 @@ protected:
 	void End() override {}
 
 	// 이 컴포넌트를 가지고 있는 Parent에 대한 정보
-	GameEngineActor* ParentActor_;
+	std::shared_ptr<GameEngineActor> ParentActor_;
 
 	// Phys액터 생성에 필요한 정보
 	physx::PxScene* Scene_;

@@ -28,7 +28,7 @@ void NoneMoney::Start()
 	MoneyNumber_->ChangeCamera(CAMERAORDER::UICAMERA);
 	MoneyNumber_->SetSize(20.0f);
 	MoneyNumber_->SetLeftAndRightSort(LeftAndRightSort::CENTER);
-	MoneyNumber_->SetParent(MoneyCount_.get());
+	MoneyNumber_->SetParent(MoneyCount_);
 	MoneyNumber_->SetScreenPostion({ 1390.0f,28.0f });
 	MoneyNumber_->SetText(std::to_string(MoneyCost_), "Noto Sans CJK SC");
 }
