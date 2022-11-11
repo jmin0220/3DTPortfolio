@@ -75,6 +75,7 @@ private:
 	void ResLoadPhysXTest(GameEngineDirectory& _Dir);
 	void ResLoadPhysicsTest(GameEngineDirectory& _Dir);
 	void ResLoadMapEditor(GameEngineDirectory& _Dir);
+	void ResScaleTest(GameEngineDirectory& _Dir);
 
 	void LevelAllResourceLoad(GameEngineDirectory& _LevelDir);
 };

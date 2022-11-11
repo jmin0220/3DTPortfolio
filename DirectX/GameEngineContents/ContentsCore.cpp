@@ -218,7 +218,7 @@ void ContentsCore::LoadLevelResource(LEVELS _LEVEL)
 		break;
 	case LEVELS::SCALE_TEST:
 		Dir.Move(DIR_TESTLEVEL_SCALETEST);
-		ResLoadMapEditor(Dir);
+		ResScaleTest(Dir);
 		break;
 	default:
 		break;
@@ -258,6 +258,11 @@ void ContentsCore::ResLoadTmpTest(GameEngineDirectory& _Dir)
 }
 
 void ContentsCore::ResLoadMapEditor(GameEngineDirectory& _Dir)
+{
+	LevelAllResourceLoad(_Dir);
+}
+
+void ContentsCore::ResScaleTest(GameEngineDirectory& _Dir)
 {
 	LevelAllResourceLoad(_Dir);
 }
