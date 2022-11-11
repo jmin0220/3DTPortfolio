@@ -84,7 +84,7 @@ void PhysXCCTActorComponent::Update(float _DeltaTime)
 	//,dynamic_->getGlobalPose().q.y
 	//, dynamic_->getGlobalPose().q.z };
 
-	ParentActor_->GetTransform().SetWorldPosition(tmpWorldPos);
+	ParentActor_.lock()->GetTransform().SetWorldPosition(tmpWorldPos);
 	//ParentActor_->GetTransform().SetWorldRotation(tmpWorldRot);
 }
 
@@ -95,9 +95,9 @@ void PhysXCCTActorComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::Px
 	CtrManager_ = _Manager;
 
 	// 부모 액터로부터 위치 생성
-	physx::PxTransform localTm(ParentActor_->GetTransform().GetWorldPosition().x
-		, ParentActor_->GetTransform().GetWorldPosition().y
-		, ParentActor_->GetTransform().GetWorldPosition().z);
+	physx::PxTransform localTm(ParentActor_.lock()->GetTransform().GetWorldPosition().x
+		, ParentActor_.lock()->GetTransform().GetWorldPosition().y
+		, ParentActor_.lock()->GetTransform().GetWorldPosition().z);
 
 
 	
@@ -117,9 +117,9 @@ void PhysXCCTActorComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::Px
 
 	// 초기 포지션
 	physx::PxExtendedVec3 mControllerInitialPosition(
-		ParentActor_->GetTransform().GetWorldPosition().x,
-		ParentActor_->GetTransform().GetWorldPosition().y + ControlledActorDesc_.mHeight + 5.0f,
-		ParentActor_->GetTransform().GetWorldPosition().z);
+		ParentActor_.lock()->GetTransform().GetWorldPosition().x,
+		ParentActor_.lock()->GetTransform().GetWorldPosition().y + ControlledActorDesc_.mHeight + 5.0f,
+		ParentActor_.lock()->GetTransform().GetWorldPosition().z);
 
 	ControlledActorDesc_.mPosition = mControllerInitialPosition;
 

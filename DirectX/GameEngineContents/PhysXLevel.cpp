@@ -48,7 +48,7 @@ void PhysXLevel::LevelEndEvent()
 {
 	VirtualPhysXLevel::LevelEndEvent();
 
-	Player_->Death();
+	//Player_->Death();
 
 	// 리소스 해제
 	ContentsCore::GetInst()->ReleaseCurLevelResource();

@@ -12,9 +12,9 @@ PhysXBoxGeometryComponent::~PhysXBoxGeometryComponent()
 void PhysXBoxGeometryComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics, physx::PxVec3 _GeoMetryScale)
 {
 	// 부모 액터로부터 위치 생성
-	physx::PxTransform localTm(ParentActor_->GetTransform().GetWorldPosition().x
-		, ParentActor_->GetTransform().GetWorldPosition().y
-		, ParentActor_->GetTransform().GetWorldPosition().z);
+	physx::PxTransform localTm(ParentActor_.lock()->GetTransform().GetWorldPosition().x
+		, ParentActor_.lock()->GetTransform().GetWorldPosition().y
+		, ParentActor_.lock()->GetTransform().GetWorldPosition().z);
 
 	// 마찰, 탄성계수
 	material_ = _physics->createMaterial(0.5f, 0.5f, 0.6f);
@@ -55,6 +55,6 @@ void PhysXBoxGeometryComponent::Update(float _DeltaTime)
 	,dynamic_->getGlobalPose().q.y
 	, dynamic_->getGlobalPose().q.z };
 
-	ParentActor_->GetTransform().SetWorldPosition(tmpWorldPos);
-	ParentActor_->GetTransform().SetWorldRotation(tmpWorldRot);
+	ParentActor_.lock()->GetTransform().SetWorldPosition(tmpWorldPos);
+	ParentActor_.lock()->GetTransform().SetWorldRotation(tmpWorldRot);
 }
