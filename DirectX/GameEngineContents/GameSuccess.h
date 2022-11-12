@@ -37,5 +37,7 @@ private:
 
 	bool IsPop_;
 	bool IsOut_;
+
+	float4 SlicePos_;
 };
 

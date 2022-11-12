@@ -313,3 +313,11 @@ void ContentsCore::LevelAllResourceLoad(GameEngineDirectory& _LevelDir)
 		}
 	}
 }
+
+	{
+		//±è¿¹³ª ½¦ÀÌ´õ Å×½ºÆ®
+		GameEngineMaterial* Material = GameEngineMaterial::Create("RtoLSlice");
+		Material->SetVertexShader("RtoLSlice.hlsl");
+		Material->SetPixelShader("RtoLSlice.hlsl");
+	}
+}

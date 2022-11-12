@@ -14,11 +14,40 @@ GameSuccess::~GameSuccess()
 
 void GameSuccess::Start()
 {
+	SlicePos_ = float4(0, 0, 0, 0);
 	SetRenderer_ = CreateComponent<GameEngineUIRenderer>();
+	//SetRenderer_->GetRenderUnit().SetPipeLine("TextureLoop");
+	SetRenderer_->GetRenderUnit().SetPipeLine("RtoLSlice");
+
 	SetRenderer_->GetTransform().SetWorldScale({ 2048.0f, 336.0f });
-	SetRenderer_->GetTransform().SetWorldPosition({ -1024.0f, 0.0f });
+	SetRenderer_->GetTransform().SetWorldPosition({ 0.0f, 0.0f });
 	SetRenderer_->SetPivot(PIVOTMODE::LEFT);
-	SetRenderer_->SetTexture("round-over-set.png");
+	SetRenderer_->SetTexture("round-over-border-set.png");
+
+	SetRenderer_->GetRenderUnit().EngineShaderResourcesSetting(SetRenderer_);
+
+	if (true == SetRenderer_->GetRenderUnit().ShaderResources.IsConstantBuffer("SliceData"))
+	{
+		SetRenderer_->GetRenderUnit().ShaderResources.SetConstantBufferLink("SliceData", SlicePos_);
+	}
+
+
+	CrownRenderer_ = CreateComponent<GameEngineUIRenderer>();
+	CrownRenderer_->GetTransform().SetWorldScale({ 2048.0f, 336.0f });
+	CrownRenderer_->GetTransform().SetWorldPosition({ 0.0f, 3.0f });
+	CrownRenderer_->SetPivot(PIVOTMODE::LEFT);
+	CrownRenderer_->SetTexture("round-over-white.png");
+
+	CrownRenderer_->GetRenderUnit().SetPipeLine("TextureLoop");
+	CrownRenderer_->GetRenderUnit().EngineShaderResourcesSetting(CrownRenderer_);
+	CrownRenderer_->GetRenderUnit().ShaderResources.SetTexture("Tex", "crown-pattern-blue.png");
+	if (true == CrownRenderer_->GetRenderUnit().ShaderResources.IsConstantBuffer("SliceData"))
+	{
+		CrownRenderer_->GetRenderUnit().ShaderResources.SetConstantBufferLink("SliceData", SlicePos_);
+	}
+	
+	CrownRenderer_->GetRenderUnit().ShaderResources.SetTexture("Mask", "round-over-white.png");
+	
 
 	SideCircle1_ = CreateComponent<GameEngineUIRenderer>();
 	SideCircle1_->GetTransform().SetWorldScale({ 459.0f, 141.0f });
@@ -55,12 +84,15 @@ void GameSuccess::Start()
 
 void GameSuccess::LevelStartEvent()
 {
+	SlicePos_ = float4(1, 0, 0, 0);
+
 	Text_->GetPixelData().MulColor.a = 0.0f;
 	IsPop_ = false;
 	IsOut_ = false;
 	PopUpTime_ = 0.0f;
 
 	SetRenderer_->GetTransform().SetWorldScale({ 2048.0f, 336.0f });
+	CrownRenderer_->GetTransform().SetWorldScale({ 2048.0f, 336.0f });
 	SideCircle1_->GetTransform().SetWorldScale({ 459.0f, 141.0f });
 	SideCircle2_->GetTransform().SetWorldScale({ 300.0f, 92.0f });
 	SideCircle3_->GetTransform().SetWorldScale({ 400.0f, 140.0f });
@@ -75,6 +107,11 @@ void GameSuccess::Update(float _DeltaTime)
 	//일정 시간 후 Circle렌더러들 X가 0으로 Lerp되서 사라지고 글자도 0으로 줄어들어 사라진다
 	//SetRenderer_->GetPixelData().Slice;????
 	UIOff();
+
+	if (IsOut_ == true)
+	{
+		SlicePos_.x -= 0.1f;
+	}
 }
 
 void GameSuccess::AlphaSet()
@@ -135,10 +172,15 @@ void GameSuccess::UIOff()
 		SideCircle4_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale2, f4DestinationScale2, GameEngineTime::GetDeltaTime() * 4.f) });
 
 		//판자
-		float4 f4CurrentScale3 = SetRenderer_->GetTransform().GetWorldScale();
-		float4 f4DestinationScale3 = { 0.0f, 336.0f };
-
-		SetRenderer_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale3, f4DestinationScale3, GameEngineTime::GetDeltaTime() * 10.f) });
+		//float4 f4CurrentScale3 = SetRenderer_->GetTransform().GetWorldScale();
+		//float4 f4DestinationScale3 = { 0.0f, 336.0f };
+		//
+		//SetRenderer_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale3, f4DestinationScale3, GameEngineTime::GetDeltaTime() * 10.f) });
+		//
+		//float4 f4CurrentScale5 = CrownRenderer_->GetTransform().GetWorldScale();
+		//float4 f4DestinationScale5 = { 0.0f, 336.0f };
+		//
+		//CrownRenderer_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale5, f4DestinationScale5, GameEngineTime::GetDeltaTime() * 10.f) });
 
 		IsOut_ = true;
 		//글자

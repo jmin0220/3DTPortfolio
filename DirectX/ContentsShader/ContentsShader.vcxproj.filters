@@ -18,6 +18,9 @@
     <FxCompile Include="TextureLoop.hlsl">
       <Filter>Texture</Filter>
     </FxCompile>
+    <FxCompile Include="RtoLSlice.hlsl">
+      <Filter>Texture</Filter>
+    </FxCompile>
     <FxCompile Include="CustomColor.hlsl">
       <Filter>Texture</Filter>
     </FxCompile>

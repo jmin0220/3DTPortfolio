@@ -74,7 +74,7 @@ void tmpLevel::LevelStartEvent()
 
 	Success_ = CreateActor<SuccessCount>();
 
-	RoundEnd_ = CreateActor<RoundEnd>();
+	//RoundEnd_ = CreateActor<RoundEnd>();
 
 	Test_ = CreateActor<TestActor>();
 
