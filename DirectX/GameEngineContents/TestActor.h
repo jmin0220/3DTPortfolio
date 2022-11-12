@@ -22,5 +22,6 @@ protected:
 	void LevelStartEvent() override;
 private:
 	std::shared_ptr<GameEngineUIRenderer> Renderer_;
+	float4 SlicePos_;
 };
 

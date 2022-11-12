@@ -29,6 +29,7 @@ protected:
 	void LevelStartEvent() override;
 private:
 	std::shared_ptr<GameEngineUIRenderer> SetRenderer_;
+	std::shared_ptr<GameEngineUIRenderer> CrownRenderer_;
 	std::shared_ptr<GameEngineUIRenderer> SideCircle1_;
 	std::shared_ptr<GameEngineUIRenderer> SideCircle2_;
 	std::shared_ptr<GameEngineUIRenderer> SideCircle3_;

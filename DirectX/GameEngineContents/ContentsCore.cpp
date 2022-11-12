@@ -168,6 +168,13 @@ void ContentsCore::LoadShaders()
 		Material->SetVertexShader("CustomColor.hlsl");
 		Material->SetPixelShader("CustomColor.hlsl");
 	}
+
+	{
+		//±è¿¹³ª ½¦ÀÌ´õ Å×½ºÆ®
+		std::shared_ptr<GameEngineMaterial> Material = GameEngineMaterial::Create("RtoLSlice");
+		Material->SetVertexShader("RtoLSlice.hlsl");
+		Material->SetPixelShader("RtoLSlice.hlsl");
+	}
 }
 
 //////////////////////////////////////////////////////
@@ -311,13 +318,5 @@ void ContentsCore::LevelAllResourceLoad(GameEngineDirectory& _LevelDir)
 				std::shared_ptr<GameEngineFBXAnimation> Anim = GameEngineFBXAnimation::Load(File.GetFullPath());
 			}
 		}
-	}
-}
-
-	{
-		//±è¿¹³ª ½¦ÀÌ´õ Å×½ºÆ®
-		GameEngineMaterial* Material = GameEngineMaterial::Create("RtoLSlice");
-		Material->SetVertexShader("RtoLSlice.hlsl");
-		Material->SetPixelShader("RtoLSlice.hlsl");
 	}
 }
