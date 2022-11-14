@@ -342,6 +342,9 @@
     <ClInclude Include="ShaderTutorialLevel.h">
       <Filter>990_Tutorial\Shader\Level</Filter>
     </ClInclude>
+    <ClInclude Include="GameFail.h">
+      <Filter>02_Actor\UIActor\InGameUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -565,6 +568,9 @@
     </ClCompile>
     <ClCompile Include="ShaderTutorialLevel.cpp">
       <Filter>990_Tutorial\Shader\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFail.cpp">
+      <Filter>02_Actor\UIActor\InGameUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

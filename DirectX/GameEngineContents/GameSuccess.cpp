@@ -1,10 +1,11 @@
 #include "PreCompile.h"
 #include "GameSuccess.h"
+#include "RoundEnd.h"
 
-GameSuccess::GameSuccess() 
+GameSuccess::GameSuccess()
 	:IsPop_(false)
-	,PopUpTime_(0.0f)
-	,IsOut_(false)
+	, PopUpTime_(0.0f)
+	, IsOut_(false)
 {
 }
 
@@ -91,6 +92,8 @@ void GameSuccess::LevelStartEvent()
 	IsOut_ = false;
 	PopUpTime_ = 0.0f;
 
+	Text_->On();
+
 	SetRenderer_->GetTransform().SetWorldScale({ 2048.0f, 336.0f });
 	CrownRenderer_->GetTransform().SetWorldScale({ 2048.0f, 336.0f });
 	SideCircle1_->GetTransform().SetWorldScale({ 459.0f, 141.0f });
@@ -112,6 +115,7 @@ void GameSuccess::Update(float _DeltaTime)
 	{
 		SlicePos_.x -= 0.1f;
 	}
+
 }
 
 void GameSuccess::AlphaSet()
@@ -170,17 +174,6 @@ void GameSuccess::UIOff()
 		float4 f4DestinationScale2 = { 0.0f,70.0f };
 
 		SideCircle4_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale2, f4DestinationScale2, GameEngineTime::GetDeltaTime() * 4.f) });
-
-		//판자
-		//float4 f4CurrentScale3 = SetRenderer_->GetTransform().GetWorldScale();
-		//float4 f4DestinationScale3 = { 0.0f, 336.0f };
-		//
-		//SetRenderer_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale3, f4DestinationScale3, GameEngineTime::GetDeltaTime() * 10.f) });
-		//
-		//float4 f4CurrentScale5 = CrownRenderer_->GetTransform().GetWorldScale();
-		//float4 f4DestinationScale5 = { 0.0f, 336.0f };
-		//
-		//CrownRenderer_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale5, f4DestinationScale5, GameEngineTime::GetDeltaTime() * 10.f) });
 
 		IsOut_ = true;
 		//글자

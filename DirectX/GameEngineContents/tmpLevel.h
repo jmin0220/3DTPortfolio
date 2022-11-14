@@ -19,6 +19,7 @@ class SuccessCount;
 class GameSuccess;
 class TestActor;
 class RoundEnd;
+class GameFail;
 class tmpLevel : public GameEngineLevel
 {
 public:
@@ -57,6 +58,7 @@ private:
 	std::shared_ptr<SuccessCount> Success_;
 	std::shared_ptr<GameSuccess> GameSuccess_;
 	std::shared_ptr<RoundEnd> RoundEnd_;
+	std::shared_ptr<GameFail> GameFail_;
 
 	std::shared_ptr<TestActor> Test_;
 

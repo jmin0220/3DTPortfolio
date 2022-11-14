@@ -18,6 +18,7 @@
 #include "GameSuccess.h"
 #include "TestActor.h"
 #include "RoundEnd.h"
+#include "GameFail.h"
 
 tmpLevel::tmpLevel() 
 	:Font(nullptr)
@@ -74,15 +75,18 @@ void tmpLevel::LevelStartEvent()
 
 	Success_ = CreateActor<SuccessCount>();
 
-	//RoundEnd_ = CreateActor<RoundEnd>();
+	RoundEnd_ = CreateActor<RoundEnd>();
+	RoundEnd_->GetTransform().SetWorldPosition({ 0.0f,-200.0f });
 
-	Test_ = CreateActor<TestActor>();
+	GameFail_ = CreateActor<GameFail>();
+	GameFail_->GetTransform().SetWorldPosition({ 0.0f,200.0f });
+
+	//Test_ = CreateActor<TestActor>();
 
 	Mouse = CreateActor<Cursor>();
 
 
 	// ¿¢ÅÍ ÃÊ±âÈ­
-	Test_->GetTransform().SetWorldPosition({ 300, 300 });
 	TitleLogo->LogoSizeAnimation();
 	
 }
@@ -116,9 +120,9 @@ void tmpLevel::LevelEndEvent()
 
 	Success_->Death();
 
-	//RoundEnd_->Death();
+	RoundEnd_->Death();
 
-	Test_->Death();
+	//Test_->Death();
 
 	Mouse->Death();
 }
