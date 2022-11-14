@@ -40,9 +40,6 @@
     <Filter Include="999_Test">
       <UniqueIdentifier>{5c35f4c3-adbf-45e8-b046-95b2083bc4d8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="999_Test\ShaderTest">
-      <UniqueIdentifier>{0b497306-8f2b-4d47-8547-8f4814c88045}</UniqueIdentifier>
-    </Filter>
     <Filter Include="999_Test\TestLevel">
       <UniqueIdentifier>{b171e177-3cfd-4ddf-8e97-3e776c15c500}</UniqueIdentifier>
     </Filter>
@@ -109,6 +106,15 @@
     <Filter Include="03_Component\PhysXComponent">
       <UniqueIdentifier>{ff59e6ba-08ec-478f-be7d-61ea8f1031cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="990_Tutorial\Shader">
+      <UniqueIdentifier>{84fe2d52-26f4-4dde-8639-367a2c8109db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="990_Tutorial\Shader\Level">
+      <UniqueIdentifier>{ff8e81d4-1f1c-440c-bb51-ea16ba03faef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="990_Tutorial\Shader\Actor">
+      <UniqueIdentifier>{0b497306-8f2b-4d47-8547-8f4814c88045}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -172,7 +178,7 @@
       <Filter>02_Actor\MapEditorActor\AxisMove</Filter>
     </ClInclude>
     <ClInclude Include="TestActor_WaterPlane.h">
-      <Filter>999_Test\ShaderTest</Filter>
+      <Filter>990_Tutorial\Shader\Actor</Filter>
     </ClInclude>
     <ClInclude Include="PhysicsObject.h">
       <Filter>97_Physics</Filter>
@@ -333,6 +339,9 @@
     <ClInclude Include="GameManagerGUI.h">
       <Filter>98_LevelGUI</Filter>
     </ClInclude>
+    <ClInclude Include="ShaderTutorialLevel.h">
+      <Filter>990_Tutorial\Shader\Level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -411,7 +420,7 @@
       <Filter>999_Test\TestActor\CameraTest</Filter>
     </ClCompile>
     <ClCompile Include="TestActor_WaterPlane.cpp">
-      <Filter>999_Test\ShaderTest</Filter>
+      <Filter>990_Tutorial\Shader\Actor</Filter>
     </ClCompile>
     <ClCompile Include="TestActor_Character.cpp">
       <Filter>999_Test\TestActor\CameraTest</Filter>
@@ -553,6 +562,9 @@
     </ClCompile>
     <ClCompile Include="ScaleTestLevel.cpp">
       <Filter>999_Test\TestLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderTutorialLevel.cpp">
+      <Filter>990_Tutorial\Shader\Level</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

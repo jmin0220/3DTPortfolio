@@ -11,6 +11,7 @@
 #include "PhysXLevel.h"
 #include "CameraTestLevel.h"
 #include "ScaleTestLevel.h"
+#include "ShaderTutorialLevel.h"
 #include "GameManagerGUI.h"
 
 #pragma comment(lib, "GameEngineBase.lib")
@@ -118,6 +119,11 @@ void ContentsCore::CreateLevels()
 	}
 	{
 		GameEngineLevel* Level = CreateLevel<ScaleTestLevel>(LEVEL_NAME_SCALE_TEST);
+		Levels_.push_back(Level);
+	}
+
+	{
+		GameEngineLevel* Level = CreateLevel<ShaderTutorialLevel>(LEVEL_NAME_SHADER_TUTORIAL);
 		Levels_.push_back(Level);
 	}
 	

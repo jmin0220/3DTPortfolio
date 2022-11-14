@@ -24,6 +24,16 @@ void GameManagerGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 	ImGui::Text(Name.c_str());
 
 
+	if (true == ImGui::Button("CollisionDebugSwtich"))
+	{
+		GEngine::CollisionDebugSwitch();
+	}
+	ImGui::SameLine();
+	if (true == ImGui::Button("FreeCameaOnOff"))
+	{
+		GEngine::GetCurrentLevel()->GetMainCameraActor()->FreeCameraModeOnOff();
+	}
+
 	ImGui::Text("Level Select");
 	for (GameEngineLevel* Level : ContentsCore::Levels_)
 	{

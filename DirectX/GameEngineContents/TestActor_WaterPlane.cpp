@@ -10,7 +10,7 @@ TestActor_WaterPlane::~TestActor_WaterPlane()
 {
 }
 
-// "Water" 메테리얼 적용 예시
+// "Water" 메테리얼(렌더링 파이프라인) 적용 예시
 void TestActor_WaterPlane::Start()
 {
 	Renderer_ = CreateComponent<GameEngineTextureRenderer>();

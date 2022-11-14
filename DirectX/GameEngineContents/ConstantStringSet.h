@@ -46,6 +46,7 @@
 #define LEVEL_NAME_PHYSX_PLAYER_TEST "LJM_PhysXPlayerTest"
 #define LEVEL_NAME_PHYSX_BOX_GEOMETRY_TEST "LJM_PhysXBoxGeometryTest"
 #define LEVEL_NAME_CAMERA_TEST "CameraTestLevel"
+#define LEVEL_NAME_SHADER_TUTORIAL "ShaderTutorialLevel"
 
 //Axis Mode
 #define AXIS_MOVE "Axis_Move"
