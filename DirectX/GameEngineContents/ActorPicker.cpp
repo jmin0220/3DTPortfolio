@@ -177,10 +177,10 @@ void ActorPicker::ClickCheck()
 		return;
 	}
 
-	if (true == GameEngineInput::GetInst()->IsFree("VK_LBUTTON"))
+	if (true == GameEngineInput::GetInst()->IsUp("VK_LBUTTON"))
 	{
 
-		ClickedActor.lock() = nullptr;
+		ClickedActor.reset();
 		
 		return;
 	}

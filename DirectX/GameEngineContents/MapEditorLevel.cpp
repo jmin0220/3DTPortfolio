@@ -46,10 +46,6 @@ void MapEditorLevel::LevelStartEvent()
 	// 엑터 생성
 	std::shared_ptr<GameEngineActor> Picker = CreateActor<ActorPicker>();
 
-	std::shared_ptr<AxisActorRot> AxisRot = CreateActor<AxisActorRot>();
-	AxisRot->SetPosition();
-	AxisRot->GetTransform().SetWorldPosition({ 300.0f,0,0 });
-
 	// 테스트용 엑터(추후 삭제해야함)
 	std::shared_ptr<GameEngineActor> RainBow = CreateActor<TestRainBow>();
 	RainBow->GetTransform().SetWorldPosition({ -200,0,0 });
