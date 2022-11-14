@@ -19,10 +19,20 @@ void PhysXBoxGeometryComponent::CreatePhysXActors(physx::PxScene* _Scene, physx:
 	// 마찰, 탄성계수
 	material_ = _physics->createMaterial(0.5f, 0.5f, 0.6f);
 
+	// TODO::배율을 적용할 경우 이쪽 코드를 사용
+	//float4 tmpMagnification = { SIZE_MAGNIFICATION_RATIO };
+	//physx::PxVec3 tmpGeoMetryScale(_GeoMetryScale.x * tmpMagnification.x * 0.5f, 
+	//							   _GeoMetryScale.y * tmpMagnification.y * 0.5f, 
+	//							   _GeoMetryScale.z * tmpMagnification.z * 0.5f);
+
+	physx::PxVec3 tmpGeoMetryScale(_GeoMetryScale.x * 0.5f,
+								   _GeoMetryScale.y * 0.5f,
+								   _GeoMetryScale.z * 0.5f);
+
 	// 충돌체의 형태
 	// 충돌체의 크기는 절반의 크기를 설정하므로 실제 Renderer의 스케일은 충돌체의 2배로 설정되어야 함
 	// TODO::부모 액터의 RenderUnit으로부터 Mesh의 Scale 과 WorldScale의 연산의 결과를 지오메트리의 Scale로 세팅해야함.
-	shape_ = _physics->createShape(physx::PxBoxGeometry(_GeoMetryScale), *material_);
+	shape_ = _physics->createShape(physx::PxBoxGeometry(tmpGeoMetryScale), *material_);
 
 	// 충돌체의 종류
 	dynamic_ = _physics->createRigidDynamic(localTm);

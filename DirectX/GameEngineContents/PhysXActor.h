@@ -27,6 +27,7 @@ protected:
 
 private:
 	std::shared_ptr<PhysXBoxGeometryComponent> PhysXBoxGeometry_;
+	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer_;
 
 };
 

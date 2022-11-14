@@ -44,6 +44,8 @@ void TestActor_Character::Start()
 	FBXRenderer_->SetFBXMesh("Character.FBX", "TextureCustom");
 	
 	//DiffuesTexture직접 씌어주기
+
+
 	{
 		std::vector<std::vector<GameEngineRenderUnit>>& Units = FBXRenderer_->GetAllRenderUnit();
 
