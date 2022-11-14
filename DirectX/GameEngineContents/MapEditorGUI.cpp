@@ -98,28 +98,28 @@ void MapEditorGUI::ActorPicking()
 
 	{
 		// 현재 마우스 위치의 액터 = 클릭하면 선택될 예정의 액터
-		std::shared_ptr<GameEngineActor> Actor = ActorPicker::PickedActor;
-		if (nullptr == Actor)
+		std::weak_ptr<GameEngineActor> Actor = ActorPicker::PickedActor.lock();
+		if (nullptr == Actor.lock())
 		{
 			ImGui::Text("There is no Picked Actor");
 		}
 		else
 		{
-			float4 Pos = Actor->GetTransform().GetWorldPosition();
+			float4 Pos = Actor.lock()->GetTransform().GetWorldPosition();
 			std::string Name = "PickedActor : " + std::to_string(Pos.x) + " | " + std::to_string(Pos.y) + " | " + std::to_string(Pos.z);
 			ImGui::Text(Name.c_str());
 		}
 	}
 
 	{
-		std::shared_ptr<GameEngineActor> Actor = ActorPicker::ClickedActor;
-		if (nullptr == Actor)
+		std::weak_ptr<GameEngineActor> Actor = ActorPicker::ClickedActor.lock();
+		if (nullptr == Actor.lock())
 		{
 			ImGui::Text("There is no Clicked Actor");
 		}
 		else
 		{
-			float4 Pos = Actor->GetTransform().GetWorldPosition();
+			float4 Pos = Actor.lock()->GetTransform().GetWorldPosition();
 			std::string Name = "ClickedActor : " + std::to_string(Pos.x) + " | " + std::to_string(Pos.y) + " | " + std::to_string(Pos.z);
 			ImGui::Text(Name.c_str());
 		}
@@ -127,7 +127,7 @@ void MapEditorGUI::ActorPicking()
 
 	{
 		// 클릭해서 현재 선택된 액터
-		if (CurActor_ != ActorPicker::SelectedActor)
+		if (CurActor_.lock() != ActorPicker::SelectedActor.lock())
 		{
 			CurActor_ = ActorPicker::SelectedActor;
 
@@ -143,7 +143,7 @@ void MapEditorGUI::ActorPicking()
 
 
 
-		if (nullptr == CurActor_)
+		if (nullptr == CurActor_.lock())
 		{
 			ImGui::Text("There is no Selected Actor");
 		}
@@ -161,7 +161,7 @@ void MapEditorGUI::ActorPicking()
 			//회전 슬라이더 추가 * 실시간 회전
 			{
 				ImGui::SliderFloat3("RotRealTime", Rotate, -360.0f, 360.0f);
-				CurActor_->GetTransform().SetWorldRotation({ Rotate[0], Rotate[1], Rotate[2] });
+				CurActor_.lock()->GetTransform().SetWorldRotation({ Rotate[0], Rotate[1], Rotate[2] });
 			}
 
 			if (false == IsChange_)
@@ -175,9 +175,9 @@ void MapEditorGUI::ActorPicking()
 			{
 				if (true == ImGui::Button("Setting"))
 				{
-					CurActor_->GetTransform().SetWorldPosition({ Position[0], Position[1], Position[2] });
-					CurActor_->GetTransform().SetWorldRotation({ Rotate[0], Rotate[1], Rotate[2] });
-					CurActor_->GetTransform().SetWorldScale({ Scale[0], Scale[1], Scale[2] });
+					CurActor_.lock()->GetTransform().SetWorldPosition({ Position[0], Position[1], Position[2] });
+					CurActor_.lock()->GetTransform().SetWorldRotation({ Rotate[0], Rotate[1], Rotate[2] });
+					CurActor_.lock()->GetTransform().SetWorldScale({ Scale[0], Scale[1], Scale[2] });
 					IsChange_ = false;
 				}
 			}
@@ -202,14 +202,14 @@ void MapEditorGUI::LoadSave()
 
 void MapEditorGUI::UpdateData()
 {
-	if (nullptr == CurActor_ || true == IsChange_)
+	if (nullptr == CurActor_.lock() || true == IsChange_)
 	{
 		return;
 	}
 
-	float4 Pos = CurActor_->GetTransform().GetWorldPosition();
-	float4 Rot = CurActor_->GetTransform().GetLocalRotation();
-	float4 Size = CurActor_->GetTransform().GetWorldScale();
+	float4 Pos = CurActor_.lock()->GetTransform().GetWorldPosition();
+	float4 Rot = CurActor_.lock()->GetTransform().GetLocalRotation();
+	float4 Size = CurActor_.lock()->GetTransform().GetWorldScale();
 
 	Position[0] = { Pos.x };
 	Position[1] = { Pos.y };
@@ -351,7 +351,7 @@ void MapEditorGUI::OnClickSpawn()
 			break;
 		}
 
-		NewObj.Actor_->GetTransform().SetWorldPosition({ 0, 0, 0 });
+		NewObj.Actor_.lock()->GetTransform().SetWorldPosition({ 0, 0, 0 });
 
 		SpawnedObjects_.push_back(NewObj);
 		ActorPicker::SelectedActor = NewObj.Actor_;
@@ -389,7 +389,7 @@ void MapEditorGUI::ShowSpawnedList()
 	bool PushRemove = ImGui::Button("Remove");
 	if (true == PushRemove && 0 != SpawnedObjects_.size())
 	{
-		SpawnedObjects_[SpawnedIdx].Actor_->Death();
+		SpawnedObjects_[SpawnedIdx].Actor_.lock()->Death();
 		SpawnedObjects_.erase(SpawnedObjects_.begin() + SpawnedIdx);
 		
 		if (SpawnedIdx != 0)
@@ -419,7 +419,7 @@ void MapEditorGUI::FollowCameraToSpawned(float _DeltaTime)
 	}
 
 	// 한번 클릭했을 때만 쫒아가야 한다
-	float4 ObjPos = SpawnedObjects_[SpawnedIdx].Actor_->GetTransform().GetWorldPosition();
+	float4 ObjPos = SpawnedObjects_[SpawnedIdx].Actor_.lock()->GetTransform().GetWorldPosition();
 	ObjPos += float4(0, 200, -500);
 
 	float4 CamMovePos = float4::Lerp(ConnectedLevel->GetMainCameraActor()->GetTransform().GetWorldPosition(), ObjPos, _DeltaTime * 25.0f);
@@ -529,19 +529,19 @@ void MapEditorGUI::SaveData(const std::string& _FilePath, const std::string& _Fi
 		MeshData["Mesh"]["Name"] = Mesh.Name_;
 
 		Json::Value PosData;
-		PosData.append(Mesh.Actor_->GetTransform().GetWorldPosition().x);
-		PosData.append(Mesh.Actor_->GetTransform().GetWorldPosition().y);
-		PosData.append(Mesh.Actor_->GetTransform().GetWorldPosition().z);
+		PosData.append(Mesh.Actor_.lock()->GetTransform().GetWorldPosition().x);
+		PosData.append(Mesh.Actor_.lock()->GetTransform().GetWorldPosition().y);
+		PosData.append(Mesh.Actor_.lock()->GetTransform().GetWorldPosition().z);
 
 		Json::Value SizeData;
-		SizeData.append(Mesh.Actor_->GetTransform().GetWorldScale().x);
-		SizeData.append(Mesh.Actor_->GetTransform().GetWorldScale().y);
-		SizeData.append(Mesh.Actor_->GetTransform().GetWorldScale().z);
+		SizeData.append(Mesh.Actor_.lock()->GetTransform().GetWorldScale().x);
+		SizeData.append(Mesh.Actor_.lock()->GetTransform().GetWorldScale().y);
+		SizeData.append(Mesh.Actor_.lock()->GetTransform().GetWorldScale().z);
 
 		Json::Value RotData;
-		RotData.append(Mesh.Actor_->GetTransform().GetLocalRotation().x);
-		RotData.append(Mesh.Actor_->GetTransform().GetLocalRotation().y);
-		RotData.append(Mesh.Actor_->GetTransform().GetLocalRotation().z);
+		RotData.append(Mesh.Actor_.lock()->GetTransform().GetLocalRotation().x);
+		RotData.append(Mesh.Actor_.lock()->GetTransform().GetLocalRotation().y);
+		RotData.append(Mesh.Actor_.lock()->GetTransform().GetLocalRotation().z);
 
 		Json::Value NameTransform;
 		NameTransform["Pos"] = PosData;
@@ -637,9 +637,9 @@ void MapEditorGUI::LoadData(const std::string& _FilePath, const std::string& _Fi
 		break;
 		}
 
-		NewObj.Actor_->GetTransform().SetWorldPosition(Pos);
-		NewObj.Actor_->GetTransform().SetWorldScale(Size);
-		NewObj.Actor_->GetTransform().SetLocalRotation(Rot);
+		NewObj.Actor_.lock()->GetTransform().SetWorldPosition(Pos);
+		NewObj.Actor_.lock()->GetTransform().SetWorldScale(Size);
+		NewObj.Actor_.lock()->GetTransform().SetLocalRotation(Rot);
 
 		SpawnedObjects_.push_back(NewObj);
 		ActorPicker::SelectedActor = NewObj.Actor_;

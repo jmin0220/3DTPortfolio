@@ -116,7 +116,7 @@ void tmpLevel::LevelEndEvent()
 
 	Success_->Death();
 
-	RoundEnd_->Death();
+	//RoundEnd_->Death();
 
 	Test_->Death();
 

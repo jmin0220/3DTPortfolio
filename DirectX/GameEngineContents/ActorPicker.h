@@ -6,10 +6,10 @@ class ActorPicker : public GameEngineActor
 {
 public:
 	static std::set<std::shared_ptr<GameEngineActor>> PickedActors;
-	static std::shared_ptr<GameEngineActor> PickedActor;
-	static std::shared_ptr<GameEngineActor> ClickedActor;
-	static std::shared_ptr<GameEngineActor> SelectedActor;
-	static std::shared_ptr<GameEngineActor> CurActor;
+	static std::weak_ptr<GameEngineActor> PickedActor;
+	static std::weak_ptr<GameEngineActor> ClickedActor;
+	static std::weak_ptr<GameEngineActor> SelectedActor;
+	static std::weak_ptr<GameEngineActor> CurActor;
 
 public:
 	// constrcuter destructer
@@ -28,13 +28,13 @@ protected:
 	void End() override;
 
 private:
-	std::shared_ptr<GameEngineCollision> Collision_Ray;
+	std::weak_ptr<GameEngineCollision> Collision_Ray;
 	float4 CamPos;
 
 	float4 PrevMousePos;
 	float4 CurMousePos;
 	float4 CurActorPos;
-	std::shared_ptr<class AxisActor> Axis;
+	std::weak_ptr<class AxisActor> Axis;
 
 
 	void SelectPickedActor();

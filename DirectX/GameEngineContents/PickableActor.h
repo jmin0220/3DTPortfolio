@@ -12,7 +12,7 @@ struct AxisRotOption
 class PickableActor : public GameEngineActor
 {
 public:
-	static std::shared_ptr<GameEngineCollision> CurPicking_Collision;
+	static std::weak_ptr<GameEngineCollision> CurPicking_Collision;
 
 	// constrcuter destructer
 	PickableActor();
@@ -34,8 +34,8 @@ protected:
 	void CheckPickingRay();
 
 	// 맵 에딧용 콜리전, 캐릭용 콜리전은 별도로 생각해야함
-	std::shared_ptr<GameEngineCollision> Collision_Picking;
-	std::shared_ptr<GameEngineCollision> PrevActorCol;
+	std::weak_ptr<GameEngineCollision> Collision_Picking;
+	std::weak_ptr<GameEngineCollision> PrevActorCol;
 
 
 public:
@@ -52,15 +52,15 @@ public:
 
 	int GetCollisionOrder()
 	{
-		return Collision_Picking->GetOrder();
+		return Collision_Picking.lock()->GetOrder();
 	}
 
-	static std::shared_ptr<GameEngineCollision> GetCurPickingCol()
+	static std::weak_ptr<GameEngineCollision> GetCurPickingCol()
 	{
 		return CurPicking_Collision;
 	}
 
-	std::shared_ptr<GameEngineCollision> GetPickingCol()
+	std::weak_ptr<GameEngineCollision> GetPickingCol()
 	{
 		return Collision_Picking;
 	}
