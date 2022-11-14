@@ -31,6 +31,11 @@ private:
 	std::shared_ptr<GameEngineTextureRenderer> YRenderer;
 	std::shared_ptr<GameEngineTextureRenderer> ZRenderer;
 
+
+	float4 XRendererColor;
+	float4 YRendererColor;
+	float4 ZRendererColor;
+
 	AxisRotOption XAxisOption;
 	AxisRotOption YAxisOption;
 	AxisRotOption ZAxisOption;

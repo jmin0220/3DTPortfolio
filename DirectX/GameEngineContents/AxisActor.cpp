@@ -20,33 +20,33 @@ void AxisActor::Start()
 		XRenderer = CreateComponent<GameEngineTextureRenderer>();
 		XRenderer->GetTransform().SetWorldScale({ 125.0f,25.0f,25.0f });
 		XRenderer->GetTransform().SetWorldPosition({ 50.0f,0,0 });
-		XRenderer->SetPipeLine("CustomColor");
-		XRenderer->SetMesh("Box");
+		XRenderer->SetPipeLine("Color");
+		//XRenderer->SetMesh("Box");
 
-		XAxisOption.Color = float4(1.0f, 0.0f, 0.0f, 0.5f);
-		XRenderer->GetShaderResources().SetConstantBufferLink("AxisData", XAxisOption);
+		XRendererColor = float4(1.0f, 0.0f, 0.0f, 0.5f);
+		XRenderer->GetShaderResources().SetConstantBufferLink("ResultColor", XRendererColor);
 	}
 
 	{
 		YRenderer = CreateComponent<GameEngineTextureRenderer>();
 		YRenderer->GetTransform().SetWorldScale({ 25.0f,125.0f,25.0f });
 		YRenderer->GetTransform().SetWorldPosition({ 0.0f,50.0f,0 });
-		YRenderer->SetPipeLine("CustomColor");
-		YRenderer->SetMesh("Box");
+		YRenderer->SetPipeLine("Color");
+		//YRenderer->SetMesh("Box");
 
-		YAxisOption.Color = float4(0.0f, 1.0f, 0.0f, 0.5f);
-		YRenderer->GetShaderResources().SetConstantBufferLink("AxisData", YAxisOption);
+		YRendererColor = float4(0.0f, 1.0f, 0.0f, 0.5f);
+		YRenderer->GetShaderResources().SetConstantBufferLink("ResultColor", YRendererColor);
 	}
 
 	{
 		ZRenderer = CreateComponent<GameEngineTextureRenderer>();
 		ZRenderer->GetTransform().SetWorldScale({ 25.0f,25.0f,125.0f });
 		ZRenderer->GetTransform().SetWorldPosition({ 0.0f,0,-50.0f });
-		ZRenderer->SetPipeLine("CustomColor");
-		ZRenderer->SetMesh("Box");
+		ZRenderer->SetPipeLine("Color");
+		//ZRenderer->SetMesh("Box");
 
-		ZAxisOption.Color = float4(0.0f, 0.0f, 1.0f, 0.5f);
-		ZRenderer->GetShaderResources().SetConstantBufferLink("AxisData", ZAxisOption);
+		ZRendererColor = float4(0.0f, 0.0f, 1.0f, 0.5f);
+		ZRenderer->GetShaderResources().SetConstantBufferLink("ResultColor", ZRendererColor);
 	}
 	//GetTransform().SetWorldRotation({ -10.0f, 20.0f, 0.0f });
 

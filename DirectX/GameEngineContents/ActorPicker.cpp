@@ -209,11 +209,11 @@ void ActorPicker::ClickAxisControl()
 	 //이동속도
 	if (GetLevel()->GetMainCamera()->GetTransform().GetWorldPosition().z <= 0)
 	{
-		CamZ = GetLevel()->GetMainCamera()->GetTransform().GetWorldPosition().z * -1;
+		CamZ = GetLevel()->GetMainCameraActor()->GetTransform().GetWorldPosition().z * -1;
 	}
 	else
 	{
-		CamZ = GetLevel()->GetMainCamera()->GetTransform().GetWorldPosition().z;
+		CamZ = GetLevel()->GetMainCameraActor()->GetTransform().GetWorldPosition().z;
 	}
 
 	MouseDir *= CamZ;

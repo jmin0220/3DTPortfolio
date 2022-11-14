@@ -8,6 +8,7 @@ std::weak_ptr<GameEngineCollision> PickableActor::CurPicking_Collision;
 
 PickableActor::PickableActor()
 {
+
 }
 
 PickableActor::~PickableActor() 
