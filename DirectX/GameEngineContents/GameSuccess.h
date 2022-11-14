@@ -2,6 +2,7 @@
 #include <GameEngineCore/GameEngineActor.h>
 
 // Ό³Έν :
+class RoundEnd;
 class GameSuccess : public GameEngineActor
 {
 public:
@@ -27,6 +28,7 @@ protected:
 	void End() override {};
 
 	void LevelStartEvent() override;
+
 private:
 	std::shared_ptr<GameEngineUIRenderer> SetRenderer_;
 	std::shared_ptr<GameEngineUIRenderer> CrownRenderer_;

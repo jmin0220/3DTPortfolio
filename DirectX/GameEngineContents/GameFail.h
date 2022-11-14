@@ -2,21 +2,21 @@
 #include <GameEngineCore/GameEngineActor.h>
 
 // Ό³Έν :
-class RoundEnd : public GameEngineActor
+class GameFail : public GameEngineActor
 {
 public:
 	// constrcuter destructer
-	RoundEnd();
-	~RoundEnd();
+	GameFail();
+	~GameFail();
 
 	// delete Function
-	RoundEnd(const RoundEnd& _Other) = delete;
-	RoundEnd(RoundEnd&& _Other) noexcept = delete;
-	RoundEnd& operator=(const RoundEnd& _Other) = delete;
-	RoundEnd& operator=(RoundEnd&& _Other) noexcept = delete;
+	GameFail(const GameFail& _Other) = delete;
+	GameFail(GameFail&& _Other) noexcept = delete;
+	GameFail& operator=(const GameFail& _Other) = delete;
+	GameFail& operator=(GameFail&& _Other) noexcept = delete;
 
-	void StartAnimation();
-	void EndAnimation();
+	void TextRendererPop();
+	void AlphaSet();
 
 protected:
 	void Start() override;
@@ -33,9 +33,11 @@ private:
 	std::shared_ptr<GameEngineUIRenderer> SideCircle4_;
 	std::shared_ptr<GameEngineUIRenderer> Text_;
 
-	bool Pop_;
+	bool IsPop_;
 	bool IsOut_;
+	bool IsBoing_;
 	float PopUpTime_;
+
 	float4 SlicePos_;
 };
 
