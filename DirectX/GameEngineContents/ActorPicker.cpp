@@ -89,7 +89,7 @@ void ActorPicker::SelectPickedActor()
 {
 	if (0 == PickedActors.size())
 	{
-		PickedActor.lock() = nullptr;
+		PickedActor.reset();
 		return;
 	}
 
@@ -142,7 +142,6 @@ void ActorPicker::ClickCheck()
 
 	if (true == GameEngineInput::GetInst()->IsDown("VK_LBUTTON"))
 	{
-
 		ClickedActor = PickedActor;
 
 
@@ -179,7 +178,7 @@ void ActorPicker::ClickCheck()
 
 	if (true == GameEngineInput::GetInst()->IsUp("VK_LBUTTON"))
 	{
-
+		ClickedActor.lock() = nullptr;
 		ClickedActor.reset();
 		
 		return;
