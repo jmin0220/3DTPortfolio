@@ -566,6 +566,17 @@ public:
 		return RenderUnitInfos.size();
 	}
 
+	FbxRenderUnitInfo* GetRenderUnit(size_t _Index)
+	{
+		if (RenderUnitInfos.size() <= _Index)
+		{
+			MsgBoxAssert("랜더 유니트 정보의 인덱스를 초과했습니다.");
+			return nullptr;
+		}
+
+		return &RenderUnitInfos[_Index];
+	}
+
 	size_t GetSubSetCount(size_t _RenderUnitIndex)
 	{
 		return RenderUnitInfos[_RenderUnitIndex].Indexs.size();
