@@ -1,11 +1,12 @@
 #pragma once
 #include <GameEngineCore/GameEngineGUI.h>
+#include "PickableActor.h"
 
 struct SpawnedObject
 {
 	std::string Name_;
 	std::string Dir_;
-	std::weak_ptr<GameEngineActor> Actor_;
+	std::weak_ptr<PickableActor> Actor_;
 };
 
 enum class MeshEnum

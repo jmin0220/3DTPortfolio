@@ -311,7 +311,8 @@ void MapEditorGUI::OnClickSpawn()
 
 		//	int a = 0;
 		//}
-		
+		NewObj.Actor_ = ConnectedLevel->CreateActor<PickableActor>();
+
 		std::map<std::string, MeshEnum> MeshEnumMap_;
 		MeshEnum tmpEnum = MeshEnum::START;
 
@@ -326,17 +327,21 @@ void MapEditorGUI::OnClickSpawn()
 		{
 		case MeshEnum::axis:
 		{
-			NewObj.Actor_ = ConnectedLevel->CreateActor<AxisActor>();
+			std::shared_ptr<GameEngineFBXStaticRenderer> Renderer = NewObj.Actor_.lock()->CreateComponent<GameEngineFBXStaticRenderer>();
+			Renderer->SetFBXMesh("Rainbow.FBX", "Texture");
+			//Renderer = ConnectedLevel->CreateActor<AxisActor>();
 		}
 			break;
 		case MeshEnum::Character:
 		{
-			NewObj.Actor_ = ConnectedLevel->CreateActor<TestActor_Character>();
+			//NewObj.Actor_ = ConnectedLevel->CreateActor<TestActor_Character>();
 		}
 			break;
 		case MeshEnum::Rainbow:
 		{
-			NewObj.Actor_ = ConnectedLevel->CreateActor<TestRainBow>();
+			std::shared_ptr<GameEngineFBXStaticRenderer> Renderer = NewObj.Actor_.lock()->CreateComponent<GameEngineFBXStaticRenderer>();
+			Renderer->SetFBXMesh("Rainbow.FBX", "Texture");
+			//NewObj.Actor_.lock()->GetPickingCol();
 		}
 			break;
 		case MeshEnum::TestMap:
@@ -612,17 +617,17 @@ void MapEditorGUI::LoadData(const std::string& _FilePath, const std::string& _Fi
 		{
 		case MeshEnum::axis:
 		{
-			NewObj.Actor_ = ConnectedLevel->CreateActor<AxisActor>();
+			//NewObj.Actor_ = ConnectedLevel->CreateActor<AxisActor>();
 		}
 		break;
 		case MeshEnum::Character:
 		{
-			NewObj.Actor_ = ConnectedLevel->CreateActor<TestActor_Character>();
+			//NewObj.Actor_ = ConnectedLevel->CreateActor<TestActor_Character>();
 		}
 		break;
 		case MeshEnum::Rainbow:
 		{
-			NewObj.Actor_ = ConnectedLevel->CreateActor<TestRainBow>();
+			//NewObj.Actor_ = ConnectedLevel->CreateActor<TestRainBow>();
 		}
 		break;
 		case MeshEnum::TestMap:
