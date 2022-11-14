@@ -9,12 +9,15 @@ PhysXBoxGeometryComponent::~PhysXBoxGeometryComponent()
 {
 }
 
-void PhysXBoxGeometryComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics, physx::PxVec3 _GeoMetryScale)
+void PhysXBoxGeometryComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics, physx::PxVec3 _GeoMetryScale, float4 _GeoMetryRot)
 {
+	float4 tmpQuat = _GeoMetryRot.DegreeRotationToQuaternionReturn();
+
 	// 부모 액터로부터 위치 생성
-	physx::PxTransform localTm(ParentActor_.lock()->GetTransform().GetWorldPosition().x
+	physx::PxTransform localTm(physx::PxVec3(ParentActor_.lock()->GetTransform().GetWorldPosition().x
 		, ParentActor_.lock()->GetTransform().GetWorldPosition().y
-		, ParentActor_.lock()->GetTransform().GetWorldPosition().z);
+		, ParentActor_.lock()->GetTransform().GetWorldPosition().z),
+		physx::PxQuat(tmpQuat.x, tmpQuat.y, tmpQuat.z, tmpQuat.w));
 
 	// 마찰, 탄성계수
 	material_ = _physics->createMaterial(0.5f, 0.5f, 0.6f);
