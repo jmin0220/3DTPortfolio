@@ -11,19 +11,19 @@ XAxisRot::~XAxisRot()
 
 void XAxisRot::Start()
 {
-	{
-		// 마우스 피킹
-		CreatePickingCollision({ 125.0f, 25.0f, 25.0f }, { 0.0f,0,0 });
-		Collision_Picking.lock()->ChangeOrder(CollisionGroup::Axis);
-	}
+	//{
+	//	// 마우스 피킹
+	//	CreatePickingCollision({ 125.0f, 25.0f, 25.0f }, { 0.0f,0,0 });
+	//	Collision_Picking.lock()->ChangeOrder(CollisionGroup::Axis);
+	//}
 
-	float4 Dir = { 1.0f,0,0,0 };
+	//float4 Dir = { 1.0f,0,0,0 };
 
-	SetAxisDir(Dir);
+	//SetAxisDir(Dir);
 }
 
 void XAxisRot::Update(float _DeltaTime)
 {
-	CheckPickingRay();
+	//CheckPickingRay();
 }
 

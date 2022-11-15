@@ -6,13 +6,14 @@
 #include <GameEngineBase/GameEngineTransform.h>
 
 #include "AxisActor.h"
+#include "ActorAxis.h"
 
 
-std::set<std::shared_ptr<GameEngineActor>> ActorPicker::PickedActors;
-std::weak_ptr<GameEngineActor> ActorPicker::PickedActor;	// 피킹광선 충돌시 맨 앞에있는 엑터
-std::weak_ptr<GameEngineActor> ActorPicker::ClickedActor;	// 피킹광선 충돌X여도 클릭유지 시 엑터
-std::weak_ptr<GameEngineActor> ActorPicker::SelectedActor;	// 피킹광선 충돌X여도 최종클릭 엑터
-std::weak_ptr<GameEngineActor> ActorPicker::CurActor;       // axis축을 제외한 현재 선택된 액터
+std::set<std::shared_ptr<PickableActor>> ActorPicker::PickedActors;
+std::shared_ptr<PickableActor> ActorPicker::PickedActor;	// 피킹광선 충돌시 맨 앞에있는 엑터
+std::shared_ptr<PickableActor> ActorPicker::ClickedActor;	// 피킹광선 충돌X여도 클릭유지 시 엑터
+std::shared_ptr<PickableActor> ActorPicker::SelectedActor;	// 피킹광선 충돌X여도 최종클릭 엑터
+//std::weak_ptr<GameEngineActor> ActorPicker::CurActor;       // axis축을 제외한 현재 선택된 액터
 
 ActorPicker::ActorPicker() 
 {
@@ -24,22 +25,21 @@ ActorPicker::~ActorPicker()
 
 void ActorPicker::Start()
 {
-	Collision_Ray = CreateComponent<GameEngineCollision>();
-	Collision_Ray.lock()->GetTransform().SetWorldScale({0.1f, 0.1f, 200000});
-	Collision_Ray.lock()->ChangeOrder(CollisionGroup::Ray);
-	Collision_Ray.lock()->SetDebugSetting(CollisionType::CT_OBB, float4(1.0f, 0, 0, 0.2f));
+	Collision_Ray_ = CreateComponent<GameEngineCollision>();
+	Collision_Ray_->GetTransform().SetWorldScale({0.1f, 0.1f, 200000});
+	Collision_Ray_->ChangeOrder(CollisionGroup::Ray);
+	Collision_Ray_->SetDebugSetting(CollisionType::CT_OBB, float4(1.0f, 0, 0, 0.2f));
 
-	Axis = GetLevel()->CreateActor<AxisActor>();
-	Axis.lock()->SetPosition();
-	Axis.lock()->Off();
+	Axis_ = GetLevel()->CreateActor<ActorAxis>();
+	Axis_->SetParent(shared_from_this());
 }
 
 void ActorPicker::Update(float _DeltaTime)
 {
 	
 	// 카메라와 동일한 위치 
-	CamPos = GetLevel()->GetMainCameraActor()->GetTransform().GetWorldPosition() + GetLevel()->GetMainCameraActor()->GetTransform().GetForwardVector() * 20.0f;
-	GetTransform().SetWorldPosition(CamPos);
+	CamPos_ = GetLevel()->GetMainCameraActor()->GetTransform().GetWorldPosition() + GetLevel()->GetMainCameraActor()->GetTransform().GetForwardVector() * 20.0f;
+	GetTransform().SetWorldPosition(CamPos_);
 
 	// 피킹용 콜리전(Ray) 회전
 	// -1 과 1 사이가 아니라 화면 비율에 따라 달라지는거 적용안했음
@@ -59,24 +59,26 @@ void ActorPicker::Update(float _DeltaTime)
 
 	// 마우스 조작
 	//현재 클릭한 액터의 콜리전타입 확인
-	if (CurActor.lock() != nullptr)
-	{
-		if (std::dynamic_pointer_cast<PickableActor>(ClickedActor.lock())->GetCurPickingCol().lock() != nullptr)
-		{
-			if (std::dynamic_pointer_cast<PickableActor>(ClickedActor.lock())->GetCurPickingCol().lock()->GetOrder() == static_cast<int>(CollisionGroup::Axis))
-			{
-				ClickAxisControl();
-			}
-			else if (std::dynamic_pointer_cast<PickableActor>(ClickedActor.lock())->GetCurPickingCol().lock()->GetOrder() == static_cast<int>(CollisionGroup::Picking))
-			{
-				ClickPickableActor();
-			}
-		}
-	}
-	else
-	{
-		UnSelect();
-	}
+	//if (CurActor.lock() != nullptr)
+	//{
+	//	if (std::dynamic_pointer_cast<PickableActor>(ClickedActor.lock())->GetCurPickingCol().lock() != nullptr)
+	//	{
+	//		if (std::dynamic_pointer_cast<PickableActor>(ClickedActor.lock())->GetCurPickingCol().lock()->GetOrder() == static_cast<int>(CollisionGroup::Axis))
+	//		{
+	//			ClickAxisControl();
+	//		}
+	//		else if (std::dynamic_pointer_cast<PickableActor>(ClickedActor.lock())->GetCurPickingCol().lock()->GetOrder() == static_cast<int>(CollisionGroup::Picking))
+	//		{
+	//			ClickPickableActor();
+	//		}
+	//	}
+	//}
+	//else
+	//{
+	//	UnSelect();
+	//}
+
+
 }
 
 void ActorPicker::End()
@@ -93,20 +95,20 @@ void ActorPicker::SelectPickedActor()
 		return;
 	}
 
-	std::weak_ptr<GameEngineActor> Nearest;
-	for (std::weak_ptr<GameEngineActor> Actor : PickedActors)
+	std::shared_ptr<PickableActor> Nearest;
+	for (std::shared_ptr<PickableActor> Actor : PickedActors)
 	{
-		if (nullptr == Nearest.lock())
+		if (nullptr == Nearest)
 		{
 			Nearest = Actor;
 		}
 		else
 		{
-			Nearest = Nearest.lock()->GetTransform().GetWorldPosition().z < Actor.lock()->GetTransform().GetWorldPosition().z ? Nearest : Actor;
+			Nearest = Nearest->GetTransform().GetWorldPosition().z < Actor->GetTransform().GetWorldPosition().z ? Nearest : Actor;
 		}
 	}
 	PickedActor = Nearest;
-	Nearest.lock() = nullptr;
+	Nearest.reset();
 
 
 
@@ -115,16 +117,16 @@ void ActorPicker::SelectPickedActor()
 void ActorPicker::UnSelect()
 {
 	//여기까지왔는데 PickedActor가 nullptr 이라는건 처음에 아무것도 클릭하지않았거나 허공을 클릭했다는 뜻
-	if (PickedActor.lock() == nullptr)
+	if (PickedActor == nullptr)
 	{
 		//SelectedActor가 null이면 처음시작이거나 허공을 이미 클릭한 상태
-		if (SelectedActor.lock() == nullptr)
+		if (SelectedActor == nullptr)
 		{
 			return;
 		}
 
-		std::dynamic_pointer_cast<PickableActor>(SelectedActor.lock())->GetPickingCol().lock()->On();
-		Axis.lock()->Off();
+		//std::dynamic_pointer_cast<PickableActor>(SelectedActor.lock())->GetPickingCol().lock()->On();
+		//Axis.lock()->Off();
 	}
 }
 
@@ -140,37 +142,53 @@ void ActorPicker::ClickCheck()
 		return;
 	}
 
+	// 클릭했음
 	if (true == GameEngineInput::GetInst()->IsDown("VK_LBUTTON"))
 	{
-		ClickedActor = PickedActor;
-
-
-		if (ClickedActor.lock() != nullptr)
+		// 허공을 클릭 Axis를 클릭
+		if (nullptr == PickedActor)
 		{
-			if (std::dynamic_pointer_cast<PickableActor>(ClickedActor.lock())->GetPickingCol().lock()->GetOrder() == static_cast<int>(CollisionGroup::Axis))
-			{
-				return;
-			}
+			Axis_->Off();
+			SelectedActor.reset();
 		}
-
-
-		CurActor = ClickedActor;
-
-		if (nullptr != ClickedActor.lock())
+		// 엑터를 클릭함
+		else
 		{
-			if (SelectedActor.lock() != nullptr)
-			{
-
-				std::dynamic_pointer_cast<PickableActor>(SelectedActor.lock())->GetPickingCol().lock()->On();
-
-
-			}
-
-
-
-
+			ClickedActor = PickedActor;
 			SelectedActor = ClickedActor;
+			Axis_->On();
 		}
+		
+
+
+		//ClickedActor = PickedActor;
+
+		//if (ClickedActor.lock() != nullptr)
+		//{
+		//	//if (std::dynamic_pointer_cast<PickableActor>(ClickedActor.lock())->GetPickingCol().lock()->GetOrder() == static_cast<int>(CollisionGroup::Axis))
+		//	//{
+		//	//	return;
+		//	//}
+		//}
+
+
+		////CurActor = ClickedActor;
+
+		//if (nullptr != ClickedActor.lock())
+		//{
+		//	if (SelectedActor.lock() != nullptr)
+		//	{
+
+		//		//std::dynamic_pointer_cast<PickableActor>(SelectedActor.lock())->GetPickingCol().lock()->On();
+
+
+		//	}
+
+
+
+
+		//	SelectedActor = ClickedActor;
+		//}
 
 
 		return;
@@ -178,7 +196,6 @@ void ActorPicker::ClickCheck()
 
 	if (true == GameEngineInput::GetInst()->IsUp("VK_LBUTTON"))
 	{
-		ClickedActor.lock() = nullptr;
 		ClickedActor.reset();
 		
 		return;
@@ -188,15 +205,15 @@ void ActorPicker::ClickCheck()
 
 void ActorPicker::ClickPickableActor()
 {
-	PickableActor::GetCurPickingCol().lock()->Off();
-	Axis.lock()->GetTransform().SetWorldPosition(PickableActor::GetCurPickingCol().lock()->GetActor()->GetTransform().GetWorldPosition());
-	Axis.lock()->On();
+	//PickableActor::GetCurPickingCol().lock()->Off();
+	//Axis.lock()->GetTransform().SetWorldPosition(PickableActor::GetCurPickingCol().lock()->GetActor()->GetTransform().GetWorldPosition());
+	//Axis.lock()->On();
 }
 
 // x축 이동만 간단히 구현해봄
 void ActorPicker::ClickAxisControl()
 {
-	if (nullptr == ClickedActor.lock())
+	if (nullptr == ClickedActor)
 	{
 		return;
 	}
@@ -205,7 +222,8 @@ void ActorPicker::ClickAxisControl()
 	float4 MouseDir = GetLevel()->GetMainCamera()->GetMouseWorldDir();
 
 	float CamZ = 0;
-	 //이동속도
+
+	// 이동속도 : TODO 이거 고쳐야됨
 	if (GetLevel()->GetMainCamera()->GetTransform().GetWorldPosition().z <= 0)
 	{
 		CamZ = GetLevel()->GetMainCameraActor()->GetTransform().GetWorldPosition().z * -1;
@@ -218,27 +236,26 @@ void ActorPicker::ClickAxisControl()
 	MouseDir *= CamZ;
 
 
-	std::shared_ptr<PickableActor> AxisVector = std::dynamic_pointer_cast<PickableActor>(ClickedActor.lock());
+	std::shared_ptr<PickableActor> AxisVector = std::dynamic_pointer_cast<PickableActor>(ClickedActor);
 
-	if (AxisVector->GetAxisDir().x >= 1.0f)
-	{
-		std::dynamic_pointer_cast<AxisActor>(ClickedActor.lock()->GetParent())->GetTransform().SetWorldMove({ MouseDir.x,0,0 });
-		CurActor.lock()->GetTransform().SetWorldMove({ MouseDir.x,0,0 });
+	//if (AxisVector->GetAxisDir().x >= 1.0f)
+	//{
+	//	std::dynamic_pointer_cast<AxisActor>(ClickedActor.lock()->GetParent())->GetTransform().SetWorldMove({ MouseDir.x,0,0 });
+	//	CurActor.lock()->GetTransform().SetWorldMove({ MouseDir.x,0,0 });
 
-	}
-	if (AxisVector->GetAxisDir().y >= 1.0f)
-	{
-		std::dynamic_pointer_cast<AxisActor>(ClickedActor.lock()->GetParent())->GetTransform().SetWorldMove({ 0,MouseDir.y,0 });
-		CurActor.lock()->GetTransform().SetWorldMove({ 0,MouseDir.y,0 });
+	//}
+	//if (AxisVector->GetAxisDir().y >= 1.0f)
+	//{
+	//	std::dynamic_pointer_cast<AxisActor>(ClickedActor.lock()->GetParent())->GetTransform().SetWorldMove({ 0,MouseDir.y,0 });
+	//	CurActor.lock()->GetTransform().SetWorldMove({ 0,MouseDir.y,0 });
 
-	}
-	//일단은 한뱡향으로만
-	//TODO :: 카메라 회전방향에 따른 z값 변경
-	if (AxisVector->GetAxisDir().z >= 1.0f)
-	{
-		std::dynamic_pointer_cast<AxisActor>(ClickedActor.lock()->GetParent())->GetTransform().SetWorldMove({ 0,0,MouseDir.x });
-		CurActor.lock()->GetTransform().SetWorldMove({ 0,0,MouseDir.x });
+	//}
+	////일단은 한뱡향으로만
+	//if (AxisVector->GetAxisDir().z >= 1.0f)
+	//{
+	//	std::dynamic_pointer_cast<AxisActor>(ClickedActor.lock()->GetParent())->GetTransform().SetWorldMove({ 0,0,MouseDir.x });
+	//	CurActor.lock()->GetTransform().SetWorldMove({ 0,0,MouseDir.x });
 
-	}
+	//}
 
 }

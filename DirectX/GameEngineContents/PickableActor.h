@@ -1,18 +1,31 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
 
-struct AxisRotOption
-{
-	float4 RenderPos;
-	float4 Color;
-	bool IsRot;
-};
 
 // 설명 :
 class PickableActor : public GameEngineActor
 {
 public:
-	static std::weak_ptr<GameEngineCollision> CurPicking_Collision;
+
+	// ★★★ CreateActor<PickableActor> 후에 무조건 호출해줘야함 ★★★
+	void SetStaticMesh(const std::string& _FBX, const std::string& _Texture = "");
+
+	// Axis용
+	void SetAxisMove(float4 _Color, float4 _Scale);
+	void SetAxisRot(float4 _Color, float4 _Scale);
+
+	void CollisionOnOff()
+	{
+		Collision_Picking->OnOffSwitch();
+	}
+
+	bool IsAxis()
+	{
+		return IsAxis_;
+	}
+
+public:
+	static std::shared_ptr<GameEngineCollision> CurPicking_Collision;
 
 	// constrcuter destructer
 	PickableActor();
@@ -29,40 +42,47 @@ protected:
 //	엑터 피킹
 /////////////////////////////////////////////////////////////////////
 
-	// 전부 자식에서 호출해주어야 할 함수
-	void CreatePickingCollision(float4 Scale,float4 Position);
+	// 피킹 레이저와 닿았는지 여부 체크
 	void CheckPickingRay();
+	void CheckSelected();
 
 	// 맵 에딧용 콜리전, 캐릭용 콜리전은 별도로 생각해야함
-	std::weak_ptr<GameEngineCollision> Collision_Picking;
-	std::weak_ptr<GameEngineCollision> PrevActorCol;
+	std::shared_ptr<GameEngineCollision> Collision_Picking;
+	std::shared_ptr<GameEngineFBXStaticRenderer> FBXRenderer_;
+	std::shared_ptr<GameEngineCollision> PrevActorCol;
 
+	void Start() override;
+	void Update(float _DeltaTime) override;
 
-public:
-	float4 AxisDir;
-	void SetAxisDir(float4 Dir)
-	{
-		AxisDir = Dir;
-	}
+private:
+	bool IsAxis_;
 
-	float4 GetAxisDir()
-	{
-		return AxisDir;
-	}
+// .feat 희상형
+//public:
+	//float4 AxisDir;
+	//void SetAxisDir(float4 Dir)
+	//{
+	//	AxisDir = Dir;
+	//}
 
-	int GetCollisionOrder()
-	{
-		return Collision_Picking.lock()->GetOrder();
-	}
+	//float4 GetAxisDir()
+	//{
+	//	return AxisDir;
+	//}
 
-	static std::weak_ptr<GameEngineCollision> GetCurPickingCol()
-	{
-		return CurPicking_Collision;
-	}
+	//int GetCollisionOrder()
+	//{
+	//	return Collision_Picking.lock()->GetOrder();
+	//}
 
-	std::weak_ptr<GameEngineCollision> GetPickingCol()
-	{
-		return Collision_Picking;
-	}
+	//static std::weak_ptr<GameEngineCollision> GetCurPickingCol()
+	//{
+	//	return CurPicking_Collision;
+	//}
+
+	//std::weak_ptr<GameEngineCollision> GetPickingCol()
+	//{
+	//	return Collision_Picking;
+	//}
 };
 

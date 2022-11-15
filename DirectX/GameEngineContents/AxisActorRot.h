@@ -28,19 +28,19 @@ protected:
 
 
 private:
-	std::shared_ptr<GameEngineTextureRenderer> XRenderer;
-	std::shared_ptr<GameEngineTextureRenderer> YRenderer;
-	std::shared_ptr<GameEngineTextureRenderer> ZRenderer;
+	std::shared_ptr<GameEngineTextureRenderer> XRenderer_;
+	std::shared_ptr<GameEngineTextureRenderer> YRenderer_;
+	std::shared_ptr<GameEngineTextureRenderer> ZRenderer_;
 
 	float4 XResultColor;
 	float4 YResultColor;
 	float4 ZResultColor;
 
-	std::shared_ptr<XAxisRot> XAxisRot_;
-	std::shared_ptr<YAxisRot> YAxisRot_;
-	std::shared_ptr<ZAxisRot> ZAxisRot_;
+	std::shared_ptr<PickableActor> XAxisRot_;
+	std::shared_ptr<PickableActor> YAxisRot_;
+	std::shared_ptr<PickableActor> ZAxisRot_;
 
-	AxisRotOption Option;
+	//AxisRotOption Option;
 
 public:
 	void SetPosition();

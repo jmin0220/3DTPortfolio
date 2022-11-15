@@ -161,6 +161,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ActorPicker.h" />
+    <ClInclude Include="ActorAxis.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="AxisActor.h">
       <SubType>
       </SubType>
@@ -386,6 +390,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ActorPicker.cpp" />
+    <ClCompile Include="ActorAxis.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="AxisActor.cpp">
       <SubType>
       </SubType>

@@ -23,6 +23,12 @@ enum class MeshEnum
 class MapEditorGUI : public GameEngineGUIWindow
 {
 public:
+	void ReleaseResources()
+	{
+		SpawnedObjects_.clear();
+	}
+
+public:
 	// constrcuter destructer
 	MapEditorGUI();
 	~MapEditorGUI();

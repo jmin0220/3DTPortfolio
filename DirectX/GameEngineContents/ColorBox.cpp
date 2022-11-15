@@ -27,14 +27,14 @@ void ColorBox::Start()
 	GetTransform().SetWorldScale({ 100, 100, 100 });
 
 	// 마우스 피킹
-	CreatePickingCollision(Collision->GetTransform().GetWorldScale(), Collision->GetTransform().GetWorldPosition());
+	//CreatePickingCollision(Collision->GetTransform().GetWorldScale(), Collision->GetTransform().GetWorldPosition());
 }
 
 void ColorBox::Update(float _DeltaTime)
 {
 
 	// 마우스 피킹
-	CheckPickingRay();
+	//CheckPickingRay();
 }
 
 void ColorBox::End()

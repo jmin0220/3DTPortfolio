@@ -16,71 +16,60 @@ AxisActor::~AxisActor()
 
 void AxisActor::Start()
 {
-	{
-		XRenderer = CreateComponent<GameEngineTextureRenderer>();
-		XRenderer->GetTransform().SetWorldScale({ 125.0f,25.0f,25.0f });
-		XRenderer->GetTransform().SetWorldPosition({ 50.0f,0,0 });
-		XRenderer->SetPipeLine("Color");
-		//XRenderer->SetMesh("Box");
+	//{
+	//	XRenderer_ = CreateComponent<GameEngineTextureRenderer>();
+	//	XRenderer_->GetTransform().SetWorldScale({ 125.0f,25.0f,25.0f });
+	//	XRenderer_->GetTransform().SetWorldPosition({ 50.0f,0,0 });
+	//	XRenderer_->SetPipeLine("Color");
+	//	//XRenderer->SetMesh("Box");
 
-		XRendererColor = float4(1.0f, 0.0f, 0.0f, 0.5f);
-		XRenderer->GetShaderResources().SetConstantBufferLink("ResultColor", XRendererColor);
-	}
+	//	XRendererColor = float4(1.0f, 0.0f, 0.0f, 0.5f);
+	//	XRenderer_->GetShaderResources().SetConstantBufferLink("ResultColor", XRendererColor);
+	//}
 
-	{
-		YRenderer = CreateComponent<GameEngineTextureRenderer>();
-		YRenderer->GetTransform().SetWorldScale({ 25.0f,125.0f,25.0f });
-		YRenderer->GetTransform().SetWorldPosition({ 0.0f,50.0f,0 });
-		YRenderer->SetPipeLine("Color");
-		//YRenderer->SetMesh("Box");
+	//
+	//{
+	//	YRenderer_ = CreateComponent<GameEngineTextureRenderer>();
+	//	YRenderer_->GetTransform().SetWorldScale({ 25.0f,125.0f,25.0f });
+	//	YRenderer_->GetTransform().SetWorldPosition({ 0.0f,50.0f,0 });
+	//	YRenderer_->SetPipeLine("Color");
+	//	//YRenderer->SetMesh("Box");
 
-		YRendererColor = float4(0.0f, 1.0f, 0.0f, 0.5f);
-		YRenderer->GetShaderResources().SetConstantBufferLink("ResultColor", YRendererColor);
-	}
+	//	YRendererColor = float4(0.0f, 1.0f, 0.0f, 0.5f);
+	//	YRenderer_->GetShaderResources().SetConstantBufferLink("ResultColor", YRendererColor);
+	//}
 
-	{
-		ZRenderer = CreateComponent<GameEngineTextureRenderer>();
-		ZRenderer->GetTransform().SetWorldScale({ 25.0f,25.0f,125.0f });
-		ZRenderer->GetTransform().SetWorldPosition({ 0.0f,0,-50.0f });
-		ZRenderer->SetPipeLine("Color");
-		//ZRenderer->SetMesh("Box");
+	//{
+	//	ZRenderer_ = CreateComponent<GameEngineTextureRenderer>();
+	//	ZRenderer_->GetTransform().SetWorldScale({ 25.0f,25.0f,125.0f });
+	//	ZRenderer_->GetTransform().SetWorldPosition({ 0.0f,0,-50.0f });
+	//	ZRenderer_->SetPipeLine("Color");
+	//	//ZRenderer->SetMesh("Box");
 
-		ZRendererColor = float4(0.0f, 0.0f, 1.0f, 0.5f);
-		ZRenderer->GetShaderResources().SetConstantBufferLink("ResultColor", ZRendererColor);
-	}
-	//GetTransform().SetWorldRotation({ -10.0f, 20.0f, 0.0f });
+	//	ZRendererColor = float4(0.0f, 0.0f, 1.0f, 0.5f);
+	//	ZRenderer_->GetShaderResources().SetConstantBufferLink("ResultColor", ZRendererColor);
+	//}
 
 
-	XAxis_ = GetLevel()->CreateActor<XAxis>();
-	YAxis_ = GetLevel()->CreateActor<YAxis>();
-	ZAxis_ = GetLevel()->CreateActor<ZAxis>();
-
+	XAxis_ = GetLevel()->CreateActor<PickableActor>();
+	XAxis_->SetAxisMove({ 1.0f, 0.0f, 0.0f, 1.0f }, { 125.0f, 25.0f, 25.0f });
 	XAxis_->SetParent(shared_from_this());
+	XAxis_->GetTransform().SetLocalPosition({ 50.0f, 0.0f , 0.0f });
+
+	YAxis_ = GetLevel()->CreateActor<PickableActor>();
+	YAxis_->SetAxisMove({ 0.0f, 1.0f, 0.0f, 1.0f }, { 25.0f,125.0f,25.0f });
 	YAxis_->SetParent(shared_from_this());
+	YAxis_->GetTransform().SetLocalPosition({ 0.0f, 50.0f, 0.0f });
+
+	ZAxis_ = GetLevel()->CreateActor<PickableActor>();
+	ZAxis_->SetAxisMove({ 0.0f, 0.0f, 1.0f, 1.0f }, { 25.0f,25.0f,125.0f });
 	ZAxis_->SetParent(shared_from_this());
+	ZAxis_->GetTransform().SetLocalPosition({ 0.0f, 0.0f, 50.0f });
 }
 
 void AxisActor::Update(float _DeltaTime)
 {
-	//CheckPickingRay();
-
-	//메쉬의 포지션 
-	//GetTransform().SetWorldPosition({ XAxis_->GetTransform().GetWorldPosition().x,
-	//								  YAxis_->GetTransform().GetWorldPosition().y,
-	//								  ZAxis_->GetTransform().GetWorldPosition().z });
-
-
-	//XAxis_->GetTransform().SetWorldPosition({ XAxis_->GetTransform().GetWorldPosition().x,
-	//										  YAxis_->GetTransform().GetWorldPosition().y,
-	//										  ZAxis_->GetTransform().GetWorldPosition().z });
-
-	//YAxis_->GetTransform().SetWorldPosition({ XAxis_->GetTransform().GetWorldPosition().x,
-	//										  YAxis_->GetTransform().GetWorldPosition().y,
-	//										  ZAxis_->GetTransform().GetWorldPosition().z });
-
-	//ZAxis_->GetTransform().SetWorldPosition({ XAxis_->GetTransform().GetWorldPosition().x,
-	//										  YAxis_->GetTransform().GetWorldPosition().y,
-	//										  ZAxis_->GetTransform().GetWorldPosition().z });
+	
 }
 
 void AxisActor::SetPosition()

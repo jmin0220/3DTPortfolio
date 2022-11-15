@@ -1,11 +1,6 @@
 #pragma once
-#include <GameEngineCore/CoreMinimal.h>
 #include "PickableActor.h"
 
-// 설명 :
-class XAxis;
-class YAxis;
-class ZAxis;
 // 축 메쉬
 class AxisActor	:	public GameEngineActor
 {
@@ -23,26 +18,24 @@ public:
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
-	//void End() override;
-
 
 private:
-	std::shared_ptr<GameEngineTextureRenderer> XRenderer;
-	std::shared_ptr<GameEngineTextureRenderer> YRenderer;
-	std::shared_ptr<GameEngineTextureRenderer> ZRenderer;
-
 
 	float4 XRendererColor;
 	float4 YRendererColor;
 	float4 ZRendererColor;
 
-	AxisRotOption XAxisOption;
-	AxisRotOption YAxisOption;
-	AxisRotOption ZAxisOption;
+	//AxisRotOption XAxisOption;
+	//AxisRotOption YAxisOption;
+	//AxisRotOption ZAxisOption;
 
-	std::shared_ptr<XAxis> XAxis_;
-	std::shared_ptr<YAxis> YAxis_;
-	std::shared_ptr<ZAxis> ZAxis_;
+	std::shared_ptr<GameEngineTextureRenderer> XRenderer_;
+	std::shared_ptr<GameEngineTextureRenderer> YRenderer_;
+	std::shared_ptr<GameEngineTextureRenderer> ZRenderer_;
+
+	std::shared_ptr<class PickableActor> XAxis_;
+	std::shared_ptr<class PickableActor> YAxis_;
+	std::shared_ptr<class PickableActor> ZAxis_;
 
 public:
 	void SetPosition();

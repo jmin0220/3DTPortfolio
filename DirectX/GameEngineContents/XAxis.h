@@ -1,10 +1,8 @@
 #pragma once
-#include <GameEngineCore/CoreMinimal.h>
-#include "AxisActor.h"
 
 // 설명 :
 // 실제로 Pick이 되는 X
-class XAxis	:	public PickableActor
+class XAxis	: public GameEngineActor
 {
 public:
 	// constrcuter destructer

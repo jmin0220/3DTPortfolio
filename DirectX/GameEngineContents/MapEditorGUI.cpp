@@ -98,7 +98,7 @@ void MapEditorGUI::ActorPicking()
 
 	{
 		// 현재 마우스 위치의 액터 = 클릭하면 선택될 예정의 액터
-		std::weak_ptr<GameEngineActor> Actor = ActorPicker::PickedActor.lock();
+		std::weak_ptr<GameEngineActor> Actor = ActorPicker::PickedActor;
 		if (nullptr == Actor.lock())
 		{
 			ImGui::Text("There is no Picked Actor");
@@ -112,7 +112,7 @@ void MapEditorGUI::ActorPicking()
 	}
 
 	{
-		std::weak_ptr<GameEngineActor> Actor = ActorPicker::ClickedActor.lock();
+		std::weak_ptr<GameEngineActor> Actor = ActorPicker::ClickedActor;
 		if (nullptr == Actor.lock())
 		{
 			ImGui::Text("There is no Clicked Actor");
@@ -127,19 +127,18 @@ void MapEditorGUI::ActorPicking()
 
 	{
 		// 클릭해서 현재 선택된 액터
-		if (CurActor_.lock() != ActorPicker::SelectedActor.lock())
+		if (nullptr != ActorPicker::SelectedActor)
 		{
 			CurActor_ = ActorPicker::SelectedActor;
 
 			// TODO::Root를 수정하는 경우에만 유효
 			UpdateData();
 		}
-		// 같은 액터인 경우
-		//else
-		//{
-		//	// if(Scale != size)
-		//	//  scale = size;
-		//}
+		else
+		{
+			CurActor_.reset();
+		}
+
 
 
 
@@ -175,7 +174,7 @@ void MapEditorGUI::ActorPicking()
 			{
 				if (true == ImGui::Button("Setting"))
 				{
-					CurActor_.lock()->GetTransform().SetWorldPosition({ Position[0], Position[1], Position[2] });
+					CurActor_.lock()->GetTransform().SetWorldPosition({Position[0], Position[1], Position[2]});
 					CurActor_.lock()->GetTransform().SetWorldRotation({ Rotate[0], Rotate[1], Rotate[2] });
 					CurActor_.lock()->GetTransform().SetWorldScale({ Scale[0], Scale[1], Scale[2] });
 					IsChange_ = false;
@@ -311,7 +310,10 @@ void MapEditorGUI::OnClickSpawn()
 
 		//	int a = 0;
 		//}
+
+		// 1. PickableActor 소환 후
 		NewObj.Actor_ = ConnectedLevel->CreateActor<PickableActor>();
+		
 
 		std::map<std::string, MeshEnum> MeshEnumMap_;
 		MeshEnum tmpEnum = MeshEnum::START;
@@ -339,9 +341,8 @@ void MapEditorGUI::OnClickSpawn()
 			break;
 		case MeshEnum::Rainbow:
 		{
-			std::shared_ptr<GameEngineFBXStaticRenderer> Renderer = NewObj.Actor_.lock()->CreateComponent<GameEngineFBXStaticRenderer>();
-			Renderer->SetFBXMesh("Rainbow.FBX", "Texture");
-			//NewObj.Actor_.lock()->GetPickingCol();
+			// 2. 메쉬 세팅해준더
+			NewObj.Actor_.lock()->SetStaticMesh("Rainbow.FBX");
 		}
 			break;
 		case MeshEnum::TestMap:
@@ -359,7 +360,7 @@ void MapEditorGUI::OnClickSpawn()
 		NewObj.Actor_.lock()->GetTransform().SetWorldPosition({ 0, 0, 0 });
 
 		SpawnedObjects_.push_back(NewObj);
-		ActorPicker::SelectedActor = NewObj.Actor_;
+		ActorPicker::SelectedActor = NewObj.Actor_.lock();
 	}
 }
 
@@ -384,7 +385,7 @@ void MapEditorGUI::ShowSpawnedList()
 			{
 				CamFollowMode_ = true;
 				SpawnedIdx = i;
-				ActorPicker::SelectedActor = SpawnedObjects_[i].Actor_;
+				ActorPicker::SelectedActor = SpawnedObjects_[i].Actor_.lock();
 			}
 		}
 	}
@@ -647,7 +648,7 @@ void MapEditorGUI::LoadData(const std::string& _FilePath, const std::string& _Fi
 		NewObj.Actor_.lock()->GetTransform().SetLocalRotation(Rot);
 
 		SpawnedObjects_.push_back(NewObj);
-		ActorPicker::SelectedActor = NewObj.Actor_;
+		ActorPicker::SelectedActor = NewObj.Actor_.lock();
 
 		j++;
 	}

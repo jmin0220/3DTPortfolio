@@ -27,7 +27,14 @@ void TestCharacterAnimation::Start()
 		FbxExMaterialSettingData Data = Renderer->GetFBXMesh()->GetMaterialSettingData(0,0);
 	//	Renderer->GetTransform().SetWorldScale({ 10.0f, 10.0f, 10.0f });
 
-		Renderer->GetFBXMesh()->GetRenderUnit(0);
+		std::vector<std::vector<GameEngineRenderUnit>>& UnitSet = Renderer->GetAllRenderUnit();
+		for (std::vector<GameEngineRenderUnit>& Units : UnitSet)
+		{
+			for (GameEngineRenderUnit& Unit : Units)
+			{
+				Unit.ShaderResources.SetTexture("DiffuseTexture", "CH_Tanager_AM.png");
+			}
+		}
 	}
 
 	//

@@ -3,7 +3,7 @@
 #include "PickableActor.h"
 
 // Ό³Έν :
-class TestRainBow	:	public PickableActor
+class TestRainBow	:	public GameEngineActor
 {
 public:
 	// constrcuter destructer

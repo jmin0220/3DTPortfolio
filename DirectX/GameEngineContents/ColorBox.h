@@ -2,7 +2,7 @@
 #include "PickableActor.h"
 
 // Ό³Έν :
-class ColorBox : public PickableActor
+class ColorBox : public GameEngineActor
 {
 public:
 	// constrcuter destructer

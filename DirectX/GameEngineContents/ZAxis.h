@@ -1,9 +1,7 @@
 #pragma once
-#include <GameEngineCore/CoreMinimal.h>
-#include "AxisActor.h"
 
 // Ό³Έν :
-class ZAxis	:	public PickableActor
+class ZAxis	: public GameEngineActor
 {
 public:
 	// constrcuter destructer

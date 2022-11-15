@@ -3,7 +3,7 @@
 #include "AxisActor.h"
 
 // Ό³Έν :
-class ZAxisRot	:	public PickableActor
+class ZAxisRot	:	public GameEngineActor
 {
 public:
 	// constrcuter destructer

@@ -115,6 +115,9 @@
     <Filter Include="990_Tutorial\Shader\Actor">
       <UniqueIdentifier>{0b497306-8f2b-4d47-8547-8f4814c88045}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02_Actor\MapEditorActor\Axis">
+      <UniqueIdentifier>{1bcbcb36-9fa2-4841-ae5a-e036fe466adf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -345,6 +348,9 @@
     <ClInclude Include="GameFail.h">
       <Filter>02_Actor\UIActor\InGameUI</Filter>
     </ClInclude>
+    <ClInclude Include="ActorAxis.h">
+      <Filter>02_Actor\MapEditorActor\Axis</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -568,6 +574,9 @@
     </ClCompile>
     <ClCompile Include="ShaderTutorialLevel.cpp">
       <Filter>990_Tutorial\Shader\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="ActorAxis.cpp">
+      <Filter>02_Actor\MapEditorActor\Axis</Filter>
     </ClCompile>
     <ClCompile Include="GameFail.cpp">
       <Filter>02_Actor\UIActor\InGameUI</Filter>

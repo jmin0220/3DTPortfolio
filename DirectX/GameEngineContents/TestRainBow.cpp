@@ -23,12 +23,12 @@ void TestRainBow::Start()
 
 	{
 		// 마우스 피킹
-		CreatePickingCollision({ 30.0f, 30.0f, 30.0f }, { 0.0f,0,0.0f });
+		//CreatePickingCollision({ 30.0f, 30.0f, 30.0f }, { 0.0f,0,0.0f });
 	}
 }
 
 void TestRainBow::Update(float _DeltaTime)
 {
-	CheckPickingRay();
+	//CheckPickingRay();
 }
 

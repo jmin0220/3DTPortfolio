@@ -1,15 +1,16 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
 
-// 설명 : MapEditor레벨 전용으로 객체를 여러개 생성하면 안됨
+
+class PickableActor;
 class ActorPicker : public GameEngineActor
 {
 public:
-	static std::set<std::shared_ptr<GameEngineActor>> PickedActors;
-	static std::weak_ptr<GameEngineActor> PickedActor;
-	static std::weak_ptr<GameEngineActor> ClickedActor;
-	static std::weak_ptr<GameEngineActor> SelectedActor;
-	static std::weak_ptr<GameEngineActor> CurActor;
+	static std::set<std::shared_ptr<PickableActor>> PickedActors;
+	static std::shared_ptr<PickableActor> PickedActor;
+	static std::shared_ptr<PickableActor> ClickedActor;
+	static std::shared_ptr<PickableActor> SelectedActor;
+	//static std::weak_ptr<GameEngineActor> CurActor;
 
 public:
 	// constrcuter destructer
@@ -28,13 +29,14 @@ protected:
 	void End() override;
 
 private:
-	std::weak_ptr<GameEngineCollision> Collision_Ray;
-	float4 CamPos;
+	std::shared_ptr<GameEngineCollision> Collision_Ray_;
+	float4 CamPos_;
 
-	float4 PrevMousePos;
-	float4 CurMousePos;
-	float4 CurActorPos;
-	std::weak_ptr<class AxisActor> Axis;
+	float4 PrevMousePos_;
+	float4 CurMousePos_;
+	float4 CurActorPos_;
+
+	std::shared_ptr<class ActorAxis> Axis_;
 
 
 	void SelectPickedActor();

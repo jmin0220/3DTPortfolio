@@ -4,7 +4,7 @@
 
 // 설명 :
 // 실제로 Pick이 되는 X
-class XAxisRot	:	public PickableActor
+class XAxisRot	:	public GameEngineActor
 {
 public:
 	// constrcuter destructer
