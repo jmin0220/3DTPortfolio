@@ -126,9 +126,13 @@ void ContentsCore::CreateLevels()
 		GameEngineLevel* Level = CreateLevel<ShaderTutorialLevel>(LEVEL_NAME_SHADER_TUTORIAL);
 		Levels_.push_back(Level);
 	}
+
+	//{
+	//	GameEngineLevel* Level = CreateLevel<LJM_PhysXHelloWorld>(LEVEL_NAME_PHYSX_HELLOWORLD);
+	//	Levels_.push_back(Level);
+	//}
 	
 	//CreateLevel<PhysicsTestLevel>(LEVEL_NAME_PHYSICS_TEST);
-	//CreateLevel<LJM_PhysXHelloWorld>(LEVEL_NAME_PHYSX_HELLOWORLD);
 	//CreateLevel<LJM_PhysXPlayerTest>(LEVEL_NAME_PHYSX_PLAYER_TEST);
 	//CreateLevel<LJM_PhysXBoxGeometryTest>(LEVEL_NAME_PHYSX_BOX_GEOMETRY_TEST);
 

@@ -29,6 +29,7 @@ private:
 	physx::PxMaterial* material_;
 	physx::PxShape* shape_;
 	physx::PxRigidDynamic* dynamic_;
+	physx::PxRigidStatic* rigidStatic_;
 
 	// 이 컴포넌트를 가지고 있는 Parent에 대한 정보
 	std::weak_ptr<GameEngineActor> ParentActor_;

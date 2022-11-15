@@ -38,17 +38,24 @@ void PhysXBoxGeometryComponent::CreatePhysXActors(physx::PxScene* _Scene, physx:
 	shape_ = _physics->createShape(physx::PxBoxGeometry(tmpGeoMetryScale), *material_);
 
 	// 충돌체의 종류
-	dynamic_ = _physics->createRigidDynamic(localTm);
-	dynamic_->attachShape(*shape_);
-	// 중력이 적용되지 않도록
-	// TODO::RigidStatic으로 변경해야
-	dynamic_->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, true);
+	//dynamic_ = _physics->createRigidDynamic(localTm);
+	//dynamic_->attachShape(*shape_);
+	//// 중력이 적용되지 않도록
+	//// TODO::RigidStatic으로 변경해야
+	//dynamic_->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, true);
 
-	// RigidDynamic의 밀도를 설정
-	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 10.0f);
+	//// RigidDynamic의 밀도를 설정
+	//physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 10.0f);
+
+	//// Scene에 액터 추가
+	//_Scene->addActor(*dynamic_);
+
+	// 충돌체의 종류
+	rigidStatic_ = _physics->createRigidStatic(localTm);
+	rigidStatic_->attachShape(*shape_);
 
 	// Scene에 액터 추가
-	_Scene->addActor(*dynamic_);
+	_Scene->addActor(*rigidStatic_);
 }
 
 void PhysXBoxGeometryComponent::Start()
@@ -59,14 +66,15 @@ void PhysXBoxGeometryComponent::Start()
 
 void PhysXBoxGeometryComponent::Update(float _DeltaTime)
 {
+	// TODO::static은 변경되지 않으니 Update할 필요가 없을지도
 	// PhysX Actor의 상태에 맞춰서 부모의 Transform정보를 갱신
-	float4 tmpWorldPos = { dynamic_->getGlobalPose().p.x
-	,dynamic_->getGlobalPose().p.y
-	, dynamic_->getGlobalPose().p.z };
+	float4 tmpWorldPos = { rigidStatic_->getGlobalPose().p.x
+	, rigidStatic_->getGlobalPose().p.y
+	, rigidStatic_->getGlobalPose().p.z };
 
-	float4 tmpWorldRot = { dynamic_->getGlobalPose().q.x
-	,dynamic_->getGlobalPose().q.y
-	, dynamic_->getGlobalPose().q.z };
+	float4 tmpWorldRot = { rigidStatic_->getGlobalPose().q.x
+	, rigidStatic_->getGlobalPose().q.y
+	, rigidStatic_->getGlobalPose().q.z };
 
 	ParentActor_.lock()->GetTransform().SetWorldPosition(tmpWorldPos);
 	ParentActor_.lock()->GetTransform().SetWorldRotation(tmpWorldRot);
