@@ -13,6 +13,7 @@
 #include "ScaleTestLevel.h"
 #include "ShaderTutorialLevel.h"
 #include "GameManagerGUI.h"
+#include "StageTestLevel.h"
 
 #pragma comment(lib, "GameEngineBase.lib")
 #include <GameEngineCore/GameEngineRes.h>
@@ -126,7 +127,10 @@ void ContentsCore::CreateLevels()
 		GameEngineLevel* Level = CreateLevel<ShaderTutorialLevel>(LEVEL_NAME_SHADER_TUTORIAL);
 		Levels_.push_back(Level);
 	}
-
+	{
+		GameEngineLevel* Level = CreateLevel<StageTestLevel>("StageTestLevel");
+		Levels_.push_back(Level);
+	}
 	//{
 	//	GameEngineLevel* Level = CreateLevel<LJM_PhysXHelloWorld>(LEVEL_NAME_PHYSX_HELLOWORLD);
 	//	Levels_.push_back(Level);
@@ -235,6 +239,11 @@ void ContentsCore::LoadLevelResource(LEVELS _LEVEL)
 		break;
 	case LEVELS::SCALE_TEST:
 		Dir.Move(DIR_TESTLEVEL_SCALETEST);
+		ResScaleTest(Dir);
+		break;
+	// 확인을 위해 DIR_TESTLEVEL_MAPEDITOR 그대로 사용, 추후 각 스테이지에 맞게 로드 필요
+	case LEVELS::STAGE1_TEST:
+		Dir.Move(DIR_TESTLEVEL_MAPEDITOR);
 		ResScaleTest(Dir);
 		break;
 	default:

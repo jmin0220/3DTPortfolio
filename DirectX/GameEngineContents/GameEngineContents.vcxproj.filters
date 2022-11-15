@@ -354,6 +354,12 @@
     <ClInclude Include="ActorAxis.h">
       <Filter>02_Actor\MapEditorActor\Axis</Filter>
     </ClInclude>
+    <ClInclude Include="StageTestLevel.h">
+      <Filter>999_Test\TestLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="StageParentLevel.h">
+      <Filter>01_Level</Filter>
+    </ClInclude>
     <ClInclude Include="HexAGoneLevel.h">
       <Filter>01_Level\Stage04_Hex-A-Gone</Filter>
     </ClInclude>
@@ -589,6 +595,12 @@
     </ClCompile>
     <ClCompile Include="GameFail.cpp">
       <Filter>02_Actor\UIActor\InGameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="StageTestLevel.cpp">
+      <Filter>999_Test\TestLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="StageParentLevel.cpp">
+      <Filter>01_Level</Filter>
     </ClCompile>
     <ClCompile Include="HexAGoneLevel.cpp">
       <Filter>01_Level\Stage04_Hex-A-Gone</Filter>

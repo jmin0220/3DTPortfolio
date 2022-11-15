@@ -326,6 +326,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="StageParentLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="StageTestLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="StartGameTitleActor.h">
       <SubType>
       </SubType>
@@ -562,6 +570,14 @@
     <ClCompile Include="ScaleTestLevel.cpp" />
     <ClCompile Include="SelectShowButton.cpp" />
     <ClCompile Include="ShaderTutorialLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="StageParentLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="StageTestLevel.cpp">
       <SubType>
       </SubType>
     </ClCompile>
