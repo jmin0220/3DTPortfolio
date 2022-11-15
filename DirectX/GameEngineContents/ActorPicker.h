@@ -10,7 +10,6 @@ public:
 	static std::shared_ptr<PickableActor> PickedActor;
 	static std::shared_ptr<PickableActor> ClickedActor;
 	static std::shared_ptr<PickableActor> SelectedActor;
-	//static std::weak_ptr<GameEngineActor> CurActor;
 
 public:
 	// constrcuter destructer
@@ -40,9 +39,8 @@ private:
 
 
 	void SelectPickedActor();
-	void UnSelect();
 	void ClickCheck();
 	void ClickAxisControl();
-	void ClickPickableActor();
+	bool CheckFront(float4 _Forward, float4 _Target);
 };
 

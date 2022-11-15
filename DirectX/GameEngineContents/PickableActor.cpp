@@ -125,13 +125,14 @@ void PickableActor::SetStaticMesh(const std::string& _FBX, const std::string& _T
 	}
 }
 
-void PickableActor::SetAxisMove(float4 _Color, float4 _Scale)
+void PickableActor::SetAxisMove(float4 _Color, float4 _Scale, float4 _MoveDir)
 {
 	IsAxis_ = true;
+	MoveDir_ = _MoveDir;
 
 	Collision_Picking = CreateComponent<GameEngineCollision>();
 	Collision_Picking->GetTransform().SetLocalScale(_Scale);
-	Collision_Picking->SetDebugSetting(CollisionType::CT_OBB, float4(0.0f, 1.0f, 0.0f, 0.25f));
+	Collision_Picking->SetDebugSetting(CollisionType::CT_OBB, _Color);
 	Collision_Picking->ChangeOrder(CollisionGroup::Picking);
 
 }
@@ -140,9 +141,10 @@ void PickableActor::SetAxisMove(float4 _Color, float4 _Scale)
 void PickableActor::SetAxisRot(float4 _Color, float4 _Scale)
 {
 	IsAxis_ = true;
+	//MoveDir_ = _MoveDir;
 
 	Collision_Picking = CreateComponent<GameEngineCollision>();
 	Collision_Picking->GetTransform().SetLocalScale(_Scale);
-	Collision_Picking->SetDebugSetting(CollisionType::CT_OBB, float4(0.0f, 1.0f, 0.0f, 0.25f));
+	Collision_Picking->SetDebugSetting(CollisionType::CT_OBB, _Color);
 	Collision_Picking->ChangeOrder(CollisionGroup::Picking);
 }

@@ -11,17 +11,17 @@ public:
 	void SetStaticMesh(const std::string& _FBX, const std::string& _Texture = "");
 
 	// Axis¿ë
-	void SetAxisMove(float4 _Color, float4 _Scale);
+	void SetAxisMove(float4 _Color, float4 _Scale, float4 _MoveDir);
 	void SetAxisRot(float4 _Color, float4 _Scale);
-
-	void CollisionOnOff()
-	{
-		Collision_Picking->OnOffSwitch();
-	}
 
 	bool IsAxis()
 	{
 		return IsAxis_;
+	}
+
+	float4 GetMoveDir()
+	{
+		return MoveDir_;
 	}
 
 public:
@@ -56,6 +56,7 @@ protected:
 
 private:
 	bool IsAxis_;
+	float4 MoveDir_;
 
 // .feat Èñ»óÇü
 //public:

@@ -16,7 +16,10 @@ ActorAxis::~ActorAxis()
 void ActorAxis::Start()
 {
 	AxisMove_ = GetLevel()->CreateActor<AxisActor>();
+	AxisMove_->SetParent(shared_from_this());
+
 	AxisRot_ = GetLevel()->CreateActor<AxisActorRot>();
+	AxisRot_->SetParent(shared_from_this());
 
 	StateManager_.CreateStateMember("IdleMode"
 		, std::bind(&ActorAxis::IdleModeUpdate, this, std::placeholders::_1, std::placeholders::_2)
@@ -37,6 +40,10 @@ void ActorAxis::Start()
 
 void ActorAxis::Update(float _DeltaTime)
 {
+	if (nullptr != ActorPicker::SelectedActor.get())
+	{
+		GetTransform().SetWorldPosition(ActorPicker::SelectedActor.get()->GetTransform().GetWorldPosition());
+	}
 
 	StateManager_.Update(_DeltaTime);
 
@@ -75,7 +82,6 @@ void ActorAxis::MoveModeStart(const StateInfo& _Info)
 	AxisMove_->On();
 	AxisRot_->Off();
 
-	GetTransform().SetWorldPosition(ActorPicker::SelectedActor->GetTransform().GetWorldPosition());
 }
 
 void ActorAxis::MoveModeUpdate(float _DeltaTime, const StateInfo& _Info)
@@ -92,7 +98,7 @@ void ActorAxis::MoveModeUpdate(float _DeltaTime, const StateInfo& _Info)
 		return;
 	}
 
-	//AxisMove_->GetTransform().SetWorldPosition(ActorPicker::SelectedActor.get()->GetTransform().GetWorldPosition());
+	
 
 }
 
@@ -115,4 +121,5 @@ void ActorAxis::RotModeUpdate(float _DeltaTime, const StateInfo& _Info)
 		StateManager_.ChangeState("RotMode");
 		return;
 	}
+
 }

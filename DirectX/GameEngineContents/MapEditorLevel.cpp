@@ -48,6 +48,8 @@ void MapEditorLevel::LevelStartEvent()
 
 	std::shared_ptr<TestMapActor> TestMap = CreateActor<TestMapActor>();
 	
+	std::shared_ptr<PickableActor> act = CreateActor<PickableActor>();
+	act->SetStaticMesh("Rainbow.FBX");
 }
 
 void MapEditorLevel::LevelEndEvent()

@@ -13,7 +13,6 @@ std::set<std::shared_ptr<PickableActor>> ActorPicker::PickedActors;
 std::shared_ptr<PickableActor> ActorPicker::PickedActor;	// 피킹광선 충돌시 맨 앞에있는 엑터
 std::shared_ptr<PickableActor> ActorPicker::ClickedActor;	// 피킹광선 충돌X여도 클릭유지 시 엑터
 std::shared_ptr<PickableActor> ActorPicker::SelectedActor;	// 피킹광선 충돌X여도 최종클릭 엑터
-//std::weak_ptr<GameEngineActor> ActorPicker::CurActor;       // axis축을 제외한 현재 선택된 액터
 
 ActorPicker::ActorPicker() 
 {
@@ -31,7 +30,6 @@ void ActorPicker::Start()
 	Collision_Ray_->SetDebugSetting(CollisionType::CT_OBB, float4(1.0f, 0, 0, 0.2f));
 
 	Axis_ = GetLevel()->CreateActor<ActorAxis>();
-	Axis_->SetParent(shared_from_this());
 }
 
 void ActorPicker::Update(float _DeltaTime)
@@ -57,28 +55,7 @@ void ActorPicker::Update(float _DeltaTime)
 	// 피킹 오브젝트 클릭체크
 	ClickCheck();
 
-	// 마우스 조작
-	//현재 클릭한 액터의 콜리전타입 확인
-	//if (CurActor.lock() != nullptr)
-	//{
-	//	if (std::dynamic_pointer_cast<PickableActor>(ClickedActor.lock())->GetCurPickingCol().lock() != nullptr)
-	//	{
-	//		if (std::dynamic_pointer_cast<PickableActor>(ClickedActor.lock())->GetCurPickingCol().lock()->GetOrder() == static_cast<int>(CollisionGroup::Axis))
-	//		{
-	//			ClickAxisControl();
-	//		}
-	//		else if (std::dynamic_pointer_cast<PickableActor>(ClickedActor.lock())->GetCurPickingCol().lock()->GetOrder() == static_cast<int>(CollisionGroup::Picking))
-	//		{
-	//			ClickPickableActor();
-	//		}
-	//	}
-	//}
-	//else
-	//{
-	//	UnSelect();
-	//}
-
-
+	ClickAxisControl();
 }
 
 void ActorPicker::End()
@@ -110,26 +87,7 @@ void ActorPicker::SelectPickedActor()
 	PickedActor = Nearest;
 	Nearest.reset();
 
-
-
 }
-
-void ActorPicker::UnSelect()
-{
-	//여기까지왔는데 PickedActor가 nullptr 이라는건 처음에 아무것도 클릭하지않았거나 허공을 클릭했다는 뜻
-	if (PickedActor == nullptr)
-	{
-		//SelectedActor가 null이면 처음시작이거나 허공을 이미 클릭한 상태
-		if (SelectedActor == nullptr)
-		{
-			return;
-		}
-
-		//std::dynamic_pointer_cast<PickableActor>(SelectedActor.lock())->GetPickingCol().lock()->On();
-		//Axis.lock()->Off();
-	}
-}
-
 
 void ActorPicker::ClickCheck()
 {
@@ -145,51 +103,34 @@ void ActorPicker::ClickCheck()
 	// 클릭했음
 	if (true == GameEngineInput::GetInst()->IsDown("VK_LBUTTON"))
 	{
-		// 허공을 클릭 Axis를 클릭
-		if (nullptr == PickedActor)
+		if (nullptr == SelectedActor)
 		{
 			Axis_->Off();
+		}
+
+		// 허공을 클릭
+		if (nullptr == PickedActor)
+		{
 			SelectedActor.reset();
 		}
-		// 엑터를 클릭함
+		// 엑터를 클릭함 -> 엑터/Axis 구분
 		else
 		{
 			ClickedActor = PickedActor;
-			SelectedActor = ClickedActor;
-			Axis_->On();
+			
+			// Axis클릭
+			if (true == ClickedActor->IsAxis())
+			{
+				return;
+			}
+			// 새로운 엑터 클릭
+			else
+			{
+				SelectedActor = ClickedActor;
+				Axis_->On();
+			}
+	
 		}
-		
-
-
-		//ClickedActor = PickedActor;
-
-		//if (ClickedActor.lock() != nullptr)
-		//{
-		//	//if (std::dynamic_pointer_cast<PickableActor>(ClickedActor.lock())->GetPickingCol().lock()->GetOrder() == static_cast<int>(CollisionGroup::Axis))
-		//	//{
-		//	//	return;
-		//	//}
-		//}
-
-
-		////CurActor = ClickedActor;
-
-		//if (nullptr != ClickedActor.lock())
-		//{
-		//	if (SelectedActor.lock() != nullptr)
-		//	{
-
-		//		//std::dynamic_pointer_cast<PickableActor>(SelectedActor.lock())->GetPickingCol().lock()->On();
-
-
-		//	}
-
-
-
-
-		//	SelectedActor = ClickedActor;
-		//}
-
 
 		return;
 	}
@@ -203,14 +144,6 @@ void ActorPicker::ClickCheck()
 
 }
 
-void ActorPicker::ClickPickableActor()
-{
-	//PickableActor::GetCurPickingCol().lock()->Off();
-	//Axis.lock()->GetTransform().SetWorldPosition(PickableActor::GetCurPickingCol().lock()->GetActor()->GetTransform().GetWorldPosition());
-	//Axis.lock()->On();
-}
-
-// x축 이동만 간단히 구현해봄
 void ActorPicker::ClickAxisControl()
 {
 	if (nullptr == ClickedActor)
@@ -218,44 +151,56 @@ void ActorPicker::ClickAxisControl()
 		return;
 	}
 
-
 	float4 MouseDir = GetLevel()->GetMainCamera()->GetMouseWorldDir();
 
-	float CamZ = 0;
+	// 이동속도
+	float CamZ = ClickedActor->GetTransform().GetWorldPosition().z
+		- GetLevel()->GetMainCameraActor()->GetTransform().GetWorldPosition().z;
 
-	// 이동속도 : TODO 이거 고쳐야됨
-	if (GetLevel()->GetMainCamera()->GetTransform().GetWorldPosition().z <= 0)
+
+
+	float4 MoveVec = float4::ZERO;
+	bool IsFront;
+	
+	std::shared_ptr<PickableActor> ClickedAxis = std::dynamic_pointer_cast<PickableActor>(ClickedActor);
+	if (ClickedAxis->GetMoveDir().x > 0)
 	{
-		CamZ = GetLevel()->GetMainCameraActor()->GetTransform().GetWorldPosition().z * -1;
+		IsFront = CheckFront(ClickedActor->GetTransform().GetForwardVector(),
+			GetLevel()->GetMainCameraActor()->GetTransform().GetWorldPosition().Normalize3DReturn());
+
+		MoveVec.x = IsFront ? CamZ : CamZ;
+		MoveVec *= MouseDir.x;
 	}
-	else
+	else if (ClickedAxis->GetMoveDir().y > 0)
 	{
-		CamZ = GetLevel()->GetMainCameraActor()->GetTransform().GetWorldPosition().z;
+		IsFront = CheckFront(ClickedActor->GetTransform().GetForwardVector(),
+			GetLevel()->GetMainCameraActor()->GetTransform().GetWorldPosition().Normalize3DReturn());
+
+		MoveVec.y = IsFront ? CamZ * -1 : CamZ;
+		MoveVec *= MouseDir.y;
+	}
+	else if (ClickedAxis->GetMoveDir().z > 0)
+	{
+		float4 ActorPos = ClickedActor->GetTransform().GetWorldPosition();
+		float4 CamPos = GetLevel()->GetMainCameraActor()->GetTransform().GetWorldPosition();
+		IsFront = CheckFront(ClickedActor->GetTransform().GetRightVector(),
+			(ActorPos - CamPos).Normalize3DReturn());
+
+		float Reverse = ActorPos.z - CamPos.z > 0 ? -1 : 1;
+
+		MoveVec.z = IsFront ? CamZ : CamZ * -1;
+		MoveVec *= MouseDir.x * Reverse;
 	}
 
-	MouseDir *= CamZ;
+	SelectedActor->GetTransform().SetWorldMove(MoveVec);
 
 
-	std::shared_ptr<PickableActor> AxisVector = std::dynamic_pointer_cast<PickableActor>(ClickedActor);
+}
 
-	//if (AxisVector->GetAxisDir().x >= 1.0f)
-	//{
-	//	std::dynamic_pointer_cast<AxisActor>(ClickedActor.lock()->GetParent())->GetTransform().SetWorldMove({ MouseDir.x,0,0 });
-	//	CurActor.lock()->GetTransform().SetWorldMove({ MouseDir.x,0,0 });
-
-	//}
-	//if (AxisVector->GetAxisDir().y >= 1.0f)
-	//{
-	//	std::dynamic_pointer_cast<AxisActor>(ClickedActor.lock()->GetParent())->GetTransform().SetWorldMove({ 0,MouseDir.y,0 });
-	//	CurActor.lock()->GetTransform().SetWorldMove({ 0,MouseDir.y,0 });
-
-	//}
-	////일단은 한뱡향으로만
-	//if (AxisVector->GetAxisDir().z >= 1.0f)
-	//{
-	//	std::dynamic_pointer_cast<AxisActor>(ClickedActor.lock()->GetParent())->GetTransform().SetWorldMove({ 0,0,MouseDir.x });
-	//	CurActor.lock()->GetTransform().SetWorldMove({ 0,0,MouseDir.x });
-
-	//}
-
+// 정규화된 벡터 필요
+bool ActorPicker::CheckFront(float4 _Forward, float4 _Target)
+{
+	// 엑터의 앞인지 뒤인지 판단(내적)
+	float Angle = acosf(float4::DotProduct3D(_Forward, _Target)) * GameEngineMath::RadianToDegree;
+	return Angle < 90 ? true : false;
 }
