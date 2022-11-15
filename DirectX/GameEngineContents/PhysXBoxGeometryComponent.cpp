@@ -37,7 +37,7 @@ void PhysXBoxGeometryComponent::CreatePhysXActors(physx::PxScene* _Scene, physx:
 	// TODO::부모 액터의 RenderUnit으로부터 Mesh의 Scale 과 WorldScale의 연산의 결과를 지오메트리의 Scale로 세팅해야함.
 	shape_ = _physics->createShape(physx::PxBoxGeometry(tmpGeoMetryScale), *material_);
 
-	// 충돌체의 종류
+	//// 충돌체의 종류
 	//dynamic_ = _physics->createRigidDynamic(localTm);
 	//dynamic_->attachShape(*shape_);
 	//// 중력이 적용되지 않도록
@@ -68,14 +68,14 @@ void PhysXBoxGeometryComponent::Update(float _DeltaTime)
 {
 	// TODO::static은 변경되지 않으니 Update할 필요가 없을지도
 	// PhysX Actor의 상태에 맞춰서 부모의 Transform정보를 갱신
-	float4 tmpWorldPos = { rigidStatic_->getGlobalPose().p.x
-	, rigidStatic_->getGlobalPose().p.y
-	, rigidStatic_->getGlobalPose().p.z };
+	//float4 tmpWorldPos = { rigidStatic_->getGlobalPose().p.x
+	//, rigidStatic_->getGlobalPose().p.y
+	//, rigidStatic_->getGlobalPose().p.z };
 
-	float4 tmpWorldRot = { rigidStatic_->getGlobalPose().q.x
-	, rigidStatic_->getGlobalPose().q.y
-	, rigidStatic_->getGlobalPose().q.z };
+	//float4 tmpWorldRot = { rigidStatic_->getGlobalPose().q.x
+	//, rigidStatic_->getGlobalPose().q.y
+	//, rigidStatic_->getGlobalPose().q.z };
 
-	ParentActor_.lock()->GetTransform().SetWorldPosition(tmpWorldPos);
-	ParentActor_.lock()->GetTransform().SetWorldRotation(tmpWorldRot);
+	//ParentActor_.lock()->GetTransform().SetWorldPosition(tmpWorldPos);
+	//ParentActor_.lock()->GetTransform().SetWorldRotation(tmpWorldRot);
 }

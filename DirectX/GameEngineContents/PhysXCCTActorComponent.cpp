@@ -14,6 +14,8 @@ PhysXCCTActorComponent::PhysXCCTActorComponent()
 PhysXCCTActorComponent::~PhysXCCTActorComponent() 
 {
 	//Controller_->release();
+	delete ControlledActor_;
+	ControlledActor_ = nullptr;
 }
 
 void PhysXCCTActorComponent::Start()
@@ -131,8 +133,6 @@ void PhysXCCTActorComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::Px
 
 	ControlledActor_ = new ControlledActor(physics_, Scene_);
 	ControlledActor_->init(ControlledActorDesc_, CtrManager_);
-	// Scene에 액터 추가
-	// _Scene->addActor(*dynamic_);
 }
 
 
@@ -224,6 +224,9 @@ physx::PxController* PhysXCCTActorComponent::ControlledActor::init(const Control
 // the position of the bottom of the CCT's shape.
 physx::PxExtendedVec3 PhysXCCTActorComponent::ControlledActor::getFootPosition() const
 {
+	if (nullptr == mController)
+		return physx::PxExtendedVec3();
+
 	return mController->getFootPosition();
 }
 

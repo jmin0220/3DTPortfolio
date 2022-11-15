@@ -351,6 +351,9 @@
     <ClInclude Include="ActorAxis.h">
       <Filter>02_Actor\MapEditorActor\Axis</Filter>
     </ClInclude>
+    <ClInclude Include="PhysXPendulaComponent.h">
+      <Filter>999_Test\TestComponent\TestPhysX</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -580,6 +583,9 @@
     </ClCompile>
     <ClCompile Include="GameFail.cpp">
       <Filter>02_Actor\UIActor\InGameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXPendulaComponent.cpp">
+      <Filter>999_Test\TestComponent\TestPhysX</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
