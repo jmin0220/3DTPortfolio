@@ -15,7 +15,7 @@ GameSuccess::~GameSuccess()
 
 void GameSuccess::Start()
 {
-	SlicePos_ = float4(0, 0, 0, 0);
+	SlicePos_ = float4(1, 0, 0, 0);
 	SetRenderer_ = CreateComponent<GameEngineUIRenderer>();
 	//SetRenderer_->GetRenderUnit().SetPipeLine("TextureLoop");
 	SetRenderer_->GetRenderUnit().SetPipeLine("RtoLSlice");
