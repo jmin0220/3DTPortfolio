@@ -28,7 +28,9 @@
 
 // FBX
 #define FBX_NAME_CHARACTER "Character.FBX"
-#define FBX_NAME_CHARACTER_RUN "Character_Run.FBX"
+#define FBX_NAME_CHARACTER_IDLE "Character_Idle_A.FBX"
+#define FBX_NAME_CHARACTER_WALK "Character_Walk_A.FBX"
+#define FBX_NAME_CHARACTER_RUN "Character_Run_A.FBX"
 #define FBX_NAME_CHARACTER_VICTORY "Character_Victory_Gasp.FBX"
 
 #define FBX_NAME_RAINBOW "Rainbow.FBX"

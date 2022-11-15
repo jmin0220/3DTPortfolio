@@ -13,34 +13,50 @@ void TestCharacterAnimation::Start()
 {
 	//GameEngineTime::GetInst()->SetTimeScale();
 	{
-		std::shared_ptr<GameEngineFBXAnimationRenderer> Renderer = CreateComponent<GameEngineFBXAnimationRenderer>();
-		Renderer->SetFBXMesh(FBX_NAME_CHARACTER_RUN, "TextureAnimation");
-		Renderer->CreateFBXAnimation("Run", FBX_NAME_CHARACTER_RUN);
-		//Renderer->CreateFBXAnimation("Vic", FBX_NAME_CHARACTER_VICTORY);
-		Renderer->ChangeAnimation("Run");
-		GetTransform().SetWorldScale({SIZE_MAGNIFICATION_RATIO});
-		std::vector<std::vector<GameEngineRenderUnit>> Units = Renderer->GetAllRenderUnit();
-		Units[0][0].ShaderResources.SetTexture("DiffuseTexture", "CH_Tanager_AM.png");
-		Units[1][0].ShaderResources.SetTexture("DiffuseTexture", "CH_Tanager_AM.png");
-		Units[2][0].ShaderResources.SetTexture("DiffuseTexture", "CH_Tanager_AM.png");
-		Units[3][0].ShaderResources.SetTexture("DiffuseTexture", "CH_Tanager_AM.png");
-		FbxExMaterialSettingData Data = Renderer->GetFBXMesh()->GetMaterialSettingData(0,0);
-	//	Renderer->GetTransform().SetWorldScale({ 10.0f, 10.0f, 10.0f });
+		Renderer = CreateComponent<GameEngineFBXAnimationRenderer>();
+		Renderer->SetFBXMesh("TestIdle.fbx", "TextureAnimation");
+		Renderer->CreateFBXAnimation("Idle", "TestIdle.fbx");
+		Renderer->CreateFBXAnimation("Walk", "TestWalk.fbx");
+		Renderer->CreateFBXAnimation("Run", "TestRun.fbx");
+		Renderer->ChangeAnimation("Idle");
+		GetTransform().SetWorldScale({ SIZE_MAGNIFICATION_RATIO });
+	}
 
-		std::vector<std::vector<GameEngineRenderUnit>>& UnitSet = Renderer->GetAllRenderUnit();
-		for (std::vector<GameEngineRenderUnit>& Units : UnitSet)
+	{
+		std::vector<std::vector<GameEngineRenderUnit>>& RenderUnits = Renderer->GetAllRenderUnit();
+		for (std::vector<GameEngineRenderUnit>& RenderUnit : RenderUnits)
 		{
-			for (GameEngineRenderUnit& Unit : Units)
+			for (GameEngineRenderUnit& Unit : RenderUnit)
 			{
 				Unit.ShaderResources.SetTexture("DiffuseTexture", "CH_Tanager_AM.png");
 			}
 		}
 	}
+	if (GameEngineInput::GetInst()->IsKey("1") == false)
+	{
+		GameEngineInput::GetInst()->CreateKey("1", '1');
+		GameEngineInput::GetInst()->CreateKey("2", '2');
+		GameEngineInput::GetInst()->CreateKey("3", '3');
+		GameEngineInput::GetInst()->CreateKey("4", '4');
+		GameEngineInput::GetInst()->CreateKey("5", '5');
+	}
 
-	//
 }
 
 void TestCharacterAnimation::Update(float _DeltaTime)
 {
+	if (GameEngineInput::GetInst()->IsDown("1") == true)
+	{
+		Renderer->ChangeAnimation("Idle");
+	}
+
+	if (GameEngineInput::GetInst()->IsDown("2") == true)
+	{
+		Renderer->ChangeAnimation("Walk");
+	}
+	if (GameEngineInput::GetInst()->IsDown("3") == true)
+	{
+		Renderer->ChangeAnimation("Run");
+	}
 }
 
