@@ -3,11 +3,14 @@
 
 CountDown::CountDown() 
 	:IsThreePop_(false)
-	,IsTwoPop_(false)
-	,IsOnePop_(false)
 	,IsThreeEnd_(false)
+	,IsTwoPop_(false)
+	,IsTwoEnd_(false)
+	,IsOnePop_(false)
 	,IsOneEnd_(false)
 	,IsAniOn_(false)
+	,IsGoEnd_(false)
+	,IsGoPop_(false)
 {
 }
 

@@ -1,9 +1,9 @@
 #pragma once
-#include "HUDUIActor.h"
+#include <GameEngineCore/GameEngineActor.h>
 
 // 설명 : 쇼 선택 버튼(마우스 상호작용함)
 class GameEngineUIRenderer;
-class SelectShowButton : public HUDUIActor
+class SelectShowButton : public GameEngineActor
 {
 public:
 	// constrcuter destructer

@@ -220,6 +220,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="InGameSetUI.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="HexAGoneLevel.h">
       <SubType>
       </SubType>
@@ -240,13 +244,17 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="LobbyPlayer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="PhysicsBase.h" />
     <ClInclude Include="PhysicsObject.h" />
     <ClInclude Include="GlobalValues.h">
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="HUDUIActor.h" />
+    <ClInclude Include="LobbySetUI.h" />
     <ClInclude Include="LJM_PhysXHelloWorld.h">
       <SubType>
       </SubType>
@@ -372,7 +380,11 @@
     </ClInclude>
     <ClInclude Include="TestWall.h" />
     <ClInclude Include="TitleActor.h" />
-    <ClInclude Include="tmpLevel.h">
+    <ClInclude Include="LobbyLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TitleLevel.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -464,6 +476,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="InGameSetUI.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="HexAGoneLevel.cpp">
       <SubType>
       </SubType>
@@ -484,13 +500,17 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="LobbyPlayer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="PhysicsBase.cpp" />
     <ClCompile Include="PhysicsObject.cpp" />
     <ClCompile Include="GlobalValues.cpp">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="HUDUIActor.cpp" />
+    <ClCompile Include="LobbySetUI.cpp" />
     <ClCompile Include="LJM_PhysXHelloWorld.cpp">
       <SubType>
       </SubType>
@@ -619,7 +639,11 @@
     </ClCompile>
     <ClCompile Include="TestWall.cpp" />
     <ClCompile Include="TitleActor.cpp" />
-    <ClCompile Include="tmpLevel.cpp">
+    <ClCompile Include="LobbyLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TitleLevel.cpp">
       <SubType>
       </SubType>
     </ClCompile>

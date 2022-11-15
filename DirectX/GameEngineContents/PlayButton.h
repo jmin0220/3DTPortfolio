@@ -1,9 +1,9 @@
 #pragma once
-#include "HUDUIActor.h"
+#include <GameEngineCore/GameEngineActor.h>
 
 // 설명 : 플레이 버튼
 class GameEngineUIRenderer;
-class PlayButton : public HUDUIActor
+class PlayButton : public GameEngineActor
 {
 public:
 	// constrcuter destructer

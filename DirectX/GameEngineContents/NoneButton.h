@@ -1,9 +1,9 @@
 #pragma once
-#include "HUDUIActor.h"
+#include <GameEngineCore/GameEngineActor.h>
 
 // 설명 : 마우스나 버튼 반응 없은 랜더러용 ui
 class GameEngineUIRenderer;
-class NoneButton : public HUDUIActor
+class NoneButton : public GameEngineActor
 {
 public:
 	// constrcuter destructer

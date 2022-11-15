@@ -1,10 +1,10 @@
 #pragma once
-#include "HUDUIActor.h"
+#include <GameEngineCore/GameEngineActor.h>
 
 // 설명 : 이름 판
 class GameEngineUIRenderer;
 class FontActor;
-class NamePlate : public HUDUIActor
+class NamePlate : public GameEngineActor
 {
 public:
 	// constrcuter destructer

@@ -1,8 +1,8 @@
 #pragma once
-#include "HUDUIActor.h"
+#include <GameEngineCore/GameEngineActor.h>
 // 설명 : 로비에 크라운 획득 개수 ui
 class GameEngineUIRenderer;
-class CrownCount : public HUDUIActor
+class CrownCount : public GameEngineActor
 {
 public:
 	// constrcuter destructer

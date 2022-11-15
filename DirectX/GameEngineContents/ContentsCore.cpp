@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "ContentsCore.h"
-#include "tmpLevel.h"
+#include "TitleLevel.h"
+#include "LobbyLevel.h"
 #include "LoadingLevel.h"
 #include "MapEditorLevel.h"
 #include "MapEditorGUI.h"
@@ -99,7 +100,11 @@ void ContentsCore::LoadCommonResources()
 void ContentsCore::CreateLevels()
 {
 	{
-		GameEngineLevel* Level = CreateLevel<tmpLevel>(LEVEL_NAME_TMP);
+		GameEngineLevel* Level = CreateLevel<TitleLevel>(LEVEL_NAME_TITLE);
+		Levels_.push_back(Level);
+	}
+	{
+		GameEngineLevel* Level = CreateLevel<LobbyLevel>(LEVEL_NAME_LOBBY);
 		Levels_.push_back(Level);
 	}
 	{

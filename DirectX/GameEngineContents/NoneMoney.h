@@ -1,10 +1,10 @@
 #pragma once
-#include "HUDUIActor.h"
+#include <GameEngineCore/GameEngineActor.h>
 
 // 설명 : 로비에 화폐 ui
 class GameEngineUIRenderer;
 class GameEngineFontRenderer;
-class NoneMoney : public HUDUIActor
+class NoneMoney : public GameEngineActor
 {
 public:
 	// constrcuter destructer

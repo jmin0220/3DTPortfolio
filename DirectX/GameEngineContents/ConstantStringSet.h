@@ -40,7 +40,8 @@
 
 
 // Level
-#define LEVEL_NAME_TMP "tmpLevel"
+#define LEVEL_NAME_TITLE "TitleLevel"
+#define LEVEL_NAME_LOBBY "LobbyLevel"
 #define LEVEL_NAME_LOADING "Loading"
 #define LEVEL_NAME_MAP_EDITER "MapEditorLevel"
 #define LEVEL_NAME_PHYSICS_TEST "PhysicsTestLevel"

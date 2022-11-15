@@ -1,9 +1,9 @@
 #pragma once
-#include "HUDUIActor.h"
+#include <GameEngineCore/GameEngineActor.h>
 
 // 설명 : 상단 메뉴
 class GameEngineUIRenderer;
-class TopMenu : public HUDUIActor
+class TopMenu : public GameEngineActor
 {
 public:
 	// constrcuter destructer
