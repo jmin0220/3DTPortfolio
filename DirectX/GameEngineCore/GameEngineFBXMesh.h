@@ -19,7 +19,7 @@ public:
 };
 
 
-class FbxExMaterialSettingData
+class FbxExMaterialSettingData : public GameEngineSerializer
 {
 public:
 	std::string Name;
@@ -40,39 +40,38 @@ public:
 	std::string SpcTextureName; // 텍스처경로
 
 public:
-	void Write(GameEngineFile* _File) const
+	void Write(GameEngineFile& _File) override
 	{
-		_File->Write(Name);
-		_File->Write(AmbColor); // 빛
-		_File->Write(SpcColor); // 빛
-		_File->Write(EmvColor); // 빛
-		_File->Write(SpecularPower);
-		_File->Write(TransparencyFactor);
-		_File->Write(Shininess);
-		_File->Write(DifTexturePath);	// 텍스처
-		_File->Write(NorTexturePath); // 텍스처
-		_File->Write(SpcTexturePath); // 텍스처
-		_File->Write(DifTextureName);	// 텍스처
-		_File->Write(NorTextureName); // 텍스처
-		_File->Write(SpcTextureName); // 텍스처
-
+		_File.Write(Name);
+		_File.Write(AmbColor); // 빛
+		_File.Write(SpcColor); // 빛
+		_File.Write(EmvColor); // 빛
+		_File.Write(SpecularPower);
+		_File.Write(TransparencyFactor);
+		_File.Write(Shininess);
+		_File.Write(DifTexturePath);	// 텍스처
+		_File.Write(NorTexturePath); // 텍스처
+		_File.Write(SpcTexturePath); // 텍스처
+		_File.Write(DifTextureName);	// 텍스처
+		_File.Write(NorTextureName); // 텍스처
+		_File.Write(SpcTextureName); // 텍스처
 	}
 
-	void Read(GameEngineFile* _File)
+	void Read(GameEngineFile& _File) override
 	{
-		_File->Read(Name);
-		_File->Read(AmbColor); // 빛
-		_File->Read(SpcColor); // 빛
-		_File->Read(EmvColor); // 빛
-		_File->Read(SpecularPower);
-		_File->Read(TransparencyFactor);
-		_File->Read(Shininess);
-		_File->Read(DifTexturePath);	// 텍스처
-		_File->Read(NorTexturePath); // 텍스처
-		_File->Read(SpcTexturePath); // 텍스처
-		_File->Read(DifTextureName);	// 텍스처
-		_File->Read(NorTextureName); // 텍스처
-		_File->Read(SpcTextureName); // 텍스처
+		_File.Read(Name);
+		_File.Read(AmbColor); // 빛
+		_File.Read(SpcColor); // 빛
+		_File.Read(EmvColor); // 빛
+		_File.Read(SpecularPower);
+		_File.Read(TransparencyFactor);
+		_File.Read(Shininess);
+		_File.Read(DifTexturePath);	// 텍스처
+		_File.Read(NorTexturePath); // 텍스처
+		_File.Read(SpcTexturePath); // 텍스처
+		_File.Read(DifTextureName);	// 텍스처
+		_File.Read(NorTextureName); // 텍스처
+		_File.Read(SpcTextureName); // 텍스처
 	}
 
 
@@ -81,22 +80,18 @@ public:
 	~FbxExMaterialSettingData() {}
 };
 
-struct FbxExMeshInfo
+struct FbxExMeshInfo : public GameEngineSerializer
 {
-	std::string Name;
 	fbxsdk::FbxMesh* Mesh;
+	std::string Name;
 	bool bTriangulated;
-
 	unsigned __int64 UniqueId;
 	int FaceNum;
 	int VertexNum;
 	int MaterialNum;
-
-	// 애니메이션과 연결되는 매쉬인가?
 	bool bIsSkeletalMesh;
 	std::string SkeletonRoot;
 	int SkeletonElemNum;
-
 	bool bIsLodGroup;
 	std::string LODGroupName;
 	int LodLevel;
@@ -118,11 +113,46 @@ struct FbxExMeshInfo
 		LodLevel = -1;
 		MorphNum = 0;
 	}
+
+	void Write(GameEngineFile& _File) override
+	{
+		_File.Write(Name);
+		_File.Write(bTriangulated);
+		_File.Write(UniqueId			);
+		_File.Write(FaceNum				);
+		_File.Write(VertexNum			);
+		_File.Write(MaterialNum			);
+		_File.Write(bIsSkeletalMesh		);
+		_File.Write(SkeletonRoot		);
+		_File.Write(SkeletonElemNum		);
+		_File.Write(bIsLodGroup			);
+		_File.Write(LODGroupName		);
+		_File.Write(LodLevel			);
+		_File.Write(MorphNum			);
+
+	}
+
+	void Read(GameEngineFile& _File) override
+	{
+		_File.Read(Name);
+		_File.Read(bTriangulated);
+		_File.Read(UniqueId);
+		_File.Read(FaceNum);
+		_File.Read(VertexNum);
+		_File.Read(MaterialNum);
+		_File.Read(bIsSkeletalMesh);
+		_File.Read(SkeletonRoot);
+		_File.Read(SkeletonElemNum);
+		_File.Read(bIsLodGroup);
+		_File.Read(LODGroupName);
+		_File.Read(LodLevel);
+		_File.Read(MorphNum);
+	}
 };
 
 // 사람
 // 대검
-struct FbxRenderUnitInfo
+struct FbxRenderUnitInfo : public GameEngineSerializer
 {
 public:
 	int VectorIndex;
@@ -193,6 +223,49 @@ public:
 		//}
 
 	}
+
+	void Write(GameEngineFile& _File) override
+	{
+		//int VectorIndex;
+		//int IsLodLv;
+		//bool IsLod;
+		//float4 MinBoundBox;
+		//float4 MaxBoundBox;
+		//float4 BoundScaleBox;
+		//std::map<FbxMesh*, std::vector<GameEngineVertex>*> FbxVertexMap;
+		//std::map<FbxMesh*, std::map<int, std::vector<FbxExIW>>> MapWI;
+		//std::vector<GameEngineVertex> Vertexs;
+		//std::vector<std::vector<unsigned int>> Indexs;
+		//std::vector<FbxExMaterialSettingData> MaterialData;
+		//std::shared_ptr<GameEngineVertexBuffer> VertexBuffer;
+		//std::vector< std::shared_ptr<GameEngineIndexBuffer>> IndexBuffers;
+		//std::vector<std::shared_ptr<GameEngineMesh>> Meshs;
+
+		_File.Write(VectorIndex);
+		_File.Write(IsLodLv);
+		_File.Write(IsLod);
+		_File.Write(MinBoundBox);
+		_File.Write(MaxBoundBox);
+		_File.Write(BoundScaleBox);
+		_File.Write(Vertexs);
+		_File.Write(Indexs);
+		_File.Write(MaterialData);
+
+	}
+
+	void Read(GameEngineFile& _File) override 
+	{
+		_File.Read(VectorIndex);
+		_File.Read(IsLodLv);
+		_File.Read(IsLod);
+		_File.Read(MinBoundBox);
+		_File.Read(MaxBoundBox);
+		_File.Read(BoundScaleBox);
+		_File.Read(Vertexs);
+		_File.Read(Indexs);
+		_File.Read(MaterialData);
+
+	}
 };
 
 
@@ -217,40 +290,40 @@ struct JointPos
 	float YSize;
 	float ZSize;
 
-	void Write(GameEngineFile* _File) const
+	void Write(GameEngineFile& _File) const
 	{
-		_File->Write(Scale);
-		_File->Write(Rotation); // 쿼터니온.
-		_File->Write(Translation);
-		_File->Write(GlobalScale);
-		_File->Write(GlobalRotation);
-		_File->Write(GlobalTranslation);
-		_File->Write(Offset);
-		_File->Write(SotredOffset);
-		_File->Write(Local);
-		_File->Write(Global);
-		_File->Write(Length);
-		_File->Write(XSize);
-		_File->Write(YSize);
-		_File->Write(ZSize);
+		_File.Write(Scale);
+		_File.Write(Rotation); // 쿼터니온.
+		_File.Write(Translation);
+		_File.Write(GlobalScale);
+		_File.Write(GlobalRotation);
+		_File.Write(GlobalTranslation);
+		_File.Write(Offset);
+		_File.Write(SotredOffset);
+		_File.Write(Local);
+		_File.Write(Global);
+		_File.Write(Length);
+		_File.Write(XSize);
+		_File.Write(YSize);
+		_File.Write(ZSize);
 	}
 
-	void Read(GameEngineFile* _File)
+	void Read(GameEngineFile& _File)
 	{
-		_File->Read(Scale);
-		_File->Read(Rotation); // 쿼터니온.
-		_File->Read(Translation);
-		_File->Read(GlobalScale);
-		_File->Read(GlobalRotation);
-		_File->Read(GlobalTranslation);
-		_File->Read(Offset);
-		_File->Read(SotredOffset);
-		_File->Read(Local);
-		_File->Read(Global);
-		_File->Read(Length);
-		_File->Read(XSize);
-		_File->Read(YSize);
-		_File->Read(ZSize);
+		_File.Read(Scale);
+		_File.Read(Rotation); // 쿼터니온.
+		_File.Read(Translation);
+		_File.Read(GlobalScale);
+		_File.Read(GlobalRotation);
+		_File.Read(GlobalTranslation);
+		_File.Read(Offset);
+		_File.Read(SotredOffset);
+		_File.Read(Local);
+		_File.Read(Global);
+		_File.Read(Length);
+		_File.Read(XSize);
+		_File.Read(YSize);
+		_File.Read(ZSize);
 	}
 
 	void BuildMatrix()
@@ -490,7 +563,7 @@ public:
 
 
 
-struct Bone
+struct Bone : public GameEngineSerializer
 {
 	std::string Name;
 
@@ -510,24 +583,24 @@ struct Bone
 		BonePos.Reset();
 	}
 
-	void Write(GameEngineFile* _File) const
+	void Write(GameEngineFile& _File) override
 	{
-		_File->Write(Name);
-		_File->Write(Flags);
-		_File->Write(NumChildren);
-		_File->Write(Index);
-		_File->Write(ParentIndex);
-		_File->Write(BonePos);
+		_File.Write(Name);
+		_File.Write(Flags);
+		_File.Write(NumChildren);
+		_File.Write(Index);
+		_File.Write(ParentIndex);
+		_File.Write(BonePos);
 	}
 
-	void Read(GameEngineFile* _File)
+	void Read(GameEngineFile& _File) override
 	{
-		_File->Read(Name);
-		_File->Read(Flags);
-		_File->Read(NumChildren);
-		_File->Read(Index);
-		_File->Read(ParentIndex);
-		_File->Read(BonePos);
+		_File.Read(Name);
+		_File.Read(Flags);
+		_File.Read(NumChildren);
+		_File.Read(Index);
+		_File.Read(ParentIndex);
+		_File.Read(BonePos);
 	}
 };
 
@@ -599,14 +672,17 @@ public:
 
 	std::shared_ptr<GameEngineStructuredBuffer> GetAnimationStructuredBuffer(size_t _Index);
 
+	void UserLoad(const std::string_view& _Path/*GameEngineFile& _File*/);
+	void UserSave(const std::string_view& _Path/*GameEngineFile& _File*/);
+
 protected:
 	// 매쉬가 있어
 	std::vector<FbxExMeshInfo> MeshInfos;
 
 	// 매쉬의 버텍스가 이렇이렇게 되어있어.
 	std::vector<FbxRenderUnitInfo> RenderUnitInfos;
-
 	std::vector<std::vector<Bone>> AllBones; // 본정보체
+
 	std::vector<std::shared_ptr<GameEngineStructuredBuffer>> AllBoneStructuredBuffers; // 본정보체
 
 	std::vector<std::map<std::string, Bone*>> AllFindMap;

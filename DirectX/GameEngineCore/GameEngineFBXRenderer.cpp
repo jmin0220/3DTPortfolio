@@ -77,7 +77,7 @@ GameEngineRenderUnit* GameEngineFBXRenderer::SetFBXMesh(const std::string& _Name
 
 		if (nullptr != GameEngineTexture::Find(MatData.DifTextureName))
 		{
-			RenderUnit.ShaderResources.SetTexture("DiffuseTexture", "CH_Tanager_AM.png");
+			RenderUnit.ShaderResources.SetTexture("DiffuseTexture", MatData.DifTextureName);
 		}
 	}
 

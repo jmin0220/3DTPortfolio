@@ -137,7 +137,7 @@ void ContentsCore::CreateLevels()
 	//CreateLevel<LJM_PhysXBoxGeometryTest>(LEVEL_NAME_PHYSX_BOX_GEOMETRY_TEST);
 
 
-	ChangeLevel(LEVEL_NAME_MAP_EDITER);
+	ChangeLevel(LEVEL_NAME_TMP);
 }
 
 void ContentsCore::CreateShaders()
