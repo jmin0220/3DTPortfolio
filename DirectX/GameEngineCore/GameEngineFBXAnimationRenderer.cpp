@@ -27,7 +27,7 @@ void FBXRendererAnimation::Init(int _Index)
 	FBXAnimationData = Aniamtion->GetAnimationData(_Index);
 	Start = 0;
 	End = static_cast<unsigned int>(FBXAnimationData->TimeEndCount);
-	FrameTime = 0.02f;
+	FrameTime = 0.016777f;
 
 }
 
