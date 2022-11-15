@@ -118,6 +118,9 @@
     <Filter Include="02_Actor\MapEditorActor\Axis">
       <UniqueIdentifier>{1bcbcb36-9fa2-4841-ae5a-e036fe466adf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01_Level\Stage04_Hex-A-Gone">
+      <UniqueIdentifier>{19790645-1ec0-40bb-ac30-d5486d3992f5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -351,6 +354,9 @@
     <ClInclude Include="ActorAxis.h">
       <Filter>02_Actor\MapEditorActor\Axis</Filter>
     </ClInclude>
+    <ClInclude Include="HexAGoneLevel.h">
+      <Filter>01_Level\Stage04_Hex-A-Gone</Filter>
+    </ClInclude>
     <ClInclude Include="PhysXPendulaComponent.h">
       <Filter>999_Test\TestComponent\TestPhysX</Filter>
     </ClInclude>
@@ -583,6 +589,9 @@
     </ClCompile>
     <ClCompile Include="GameFail.cpp">
       <Filter>02_Actor\UIActor\InGameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="HexAGoneLevel.cpp">
+      <Filter>01_Level\Stage04_Hex-A-Gone</Filter>
     </ClCompile>
     <ClCompile Include="PhysXPendulaComponent.cpp">
       <Filter>999_Test\TestComponent\TestPhysX</Filter>

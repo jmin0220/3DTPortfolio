@@ -38,6 +38,7 @@ enum class LEVELS
 	//PLAY_STAGE_???,
 	//PLAY_STAGE_???,
 	//GAMEOVER
+	STAGE04_HEX_A_GONE,
 
 
 	// 테스트용

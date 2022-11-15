@@ -24,6 +24,7 @@ void MapEditorLevel::Start()
 	GUI_->Off();
 
 
+
 }
 
 void MapEditorLevel::Update(float _DeltaTime)
@@ -44,6 +45,8 @@ void MapEditorLevel::LevelStartEvent()
 
 	// ¿¢ÅÍ »ý¼º
 	std::shared_ptr<GameEngineActor> Picker = CreateActor<ActorPicker>();
+
+	std::shared_ptr<TestMapActor> TestMap = CreateActor<TestMapActor>();
 	
 }
 
