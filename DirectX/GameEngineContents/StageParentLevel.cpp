@@ -19,20 +19,25 @@ StageParentLevel::~StageParentLevel()
 
 void StageParentLevel::Start()
 {
+	VirtualPhysXLevel::Start();
 }
 void StageParentLevel::Update(float _DeltaTime)
 {
+	VirtualPhysXLevel::Update(_DeltaTime);
 }
 void StageParentLevel::End()
 {
+	VirtualPhysXLevel::End();
 }
 
 void StageParentLevel::LevelStartEvent()
 {
+	VirtualPhysXLevel::LevelStartEvent();
 	LevelStartLoad();
 }
 void StageParentLevel::LevelEndEvent()
 {
+	VirtualPhysXLevel::LevelEndEvent();
 	ContentsCore::GetInst()->ReleaseCurLevelResource();
 }
 
