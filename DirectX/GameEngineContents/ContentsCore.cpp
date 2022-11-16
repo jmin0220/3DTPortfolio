@@ -54,14 +54,15 @@ void ContentsCore::End()
 
 void ContentsCore::CreateKeys()
 {
-	GameEngineInput::GetInst()->CreateKey("VK_LBUTTON", VK_LBUTTON);
-	GameEngineInput::GetInst()->CreateKey("W", 'W');
-	GameEngineInput::GetInst()->CreateKey("A", 'A');
-	GameEngineInput::GetInst()->CreateKey("S", 'S');
-	GameEngineInput::GetInst()->CreateKey("D", 'D');
+	GameEngineInput::GetInst()->CreateKey(KEY_MOUSELEFT, VK_LBUTTON);
+	GameEngineInput::GetInst()->CreateKey(KEY_MOUSERIGHT, VK_RBUTTON);
+	GameEngineInput::GetInst()->CreateKey(KEY_W, 'W');
+	GameEngineInput::GetInst()->CreateKey(KEY_A, 'A');
+	GameEngineInput::GetInst()->CreateKey(KEY_S, 'S');
+	GameEngineInput::GetInst()->CreateKey(KEY_D, 'D');
 	GameEngineInput::GetInst()->CreateKey(AXIS_MOVE, 'Q');
 	GameEngineInput::GetInst()->CreateKey(AXIS_ROTATE, 'E');
-	GameEngineInput::GetInst()->CreateKey("SpaceBar", VK_SPACE);
+	GameEngineInput::GetInst()->CreateKey(KEY_SPACEBAR, VK_SPACE);
 }
 
 // 기본적인 리소스(UI, 로비, ...)

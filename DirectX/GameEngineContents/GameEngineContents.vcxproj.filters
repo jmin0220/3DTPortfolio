@@ -647,5 +647,8 @@
     <ClCompile Include="PhysXPendulaComponent.cpp">
       <Filter>999_Test\TestComponent\TestPhysX</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerActor_State.cpp">
+      <Filter>02_Actor</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

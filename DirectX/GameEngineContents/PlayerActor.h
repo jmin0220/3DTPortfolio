@@ -27,5 +27,31 @@ private:
 	std::shared_ptr<GameEngineFBXStaticRenderer> FbxRenderer_;
 	std::shared_ptr<PhysXCCTActorComponent> CCTActorComponent_;
 
+	// 카메라 암
+	std::shared_ptr<class CameraArm> CameraArm_;
+	std::shared_ptr<class GameEngineCameraActor> CamActor_;
+
+	// FSM
+private:
+	GameEngineStateManager PlayerStateManager_;
+
+	void CreateFSMStates();
+
+	// 상태 예시
+	void IdleStart(const StateInfo& _Info);
+	void IdleUpdate(float _DeltaTime, const StateInfo& _Info);
+	void IdleEnd(const StateInfo& _Info);
+
+	void RunStart(const StateInfo& _Info);
+	void RunUpdate(float _DeltaTime, const StateInfo& _Info);
+	void RunEnd(const StateInfo& _Info);
+
+	void JumpStart(const StateInfo& _Info);
+	void JumpUpdate(float _DeltaTime, const StateInfo& _Info);
+	void JumpEnd(const StateInfo& _Info);
+
+	// 입력
+	void InputController();
+	float4 MoveDir_;
 };
 

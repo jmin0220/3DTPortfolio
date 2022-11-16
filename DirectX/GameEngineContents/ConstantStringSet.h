@@ -58,3 +58,13 @@
 #define LEVEL_NAME_CAMERA_TEST "CameraTestLevel"
 #define LEVEL_NAME_CAMERA_TEST "CameraTestLevel"
 #define LEVEL_NAME_SCALE_TEST "ScaleTestLevel"
+
+// Input Key
+#define KEY_W "W"
+#define KEY_A "A"
+#define KEY_S "S"
+#define KEY_D "D"
+#define KEY_MOUSELEFT "VK_LBUTTON"
+#define KEY_MOUSERIGHT "VK_RBUTTON"
+#define KEY_SPACEBAR "SpaceBar"
+
