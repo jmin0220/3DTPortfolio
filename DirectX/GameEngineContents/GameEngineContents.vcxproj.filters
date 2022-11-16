@@ -148,6 +148,9 @@
     <Filter Include="999_Test\TestActor\ScaleTestActor">
       <UniqueIdentifier>{dcfe50ac-cc8c-4c88-b5d5-71211e76ace9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02_Actor\Stage04Actor">
+      <UniqueIdentifier>{621f28cc-edfb-4ca0-a281-3c4dad8fbea1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">

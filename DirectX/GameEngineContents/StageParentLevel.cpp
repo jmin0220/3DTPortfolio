@@ -19,15 +19,12 @@ StageParentLevel::~StageParentLevel()
 
 void StageParentLevel::Start()
 {
-
 }
 void StageParentLevel::Update(float _DeltaTime)
 {
-
 }
 void StageParentLevel::End()
 {
-
 }
 
 void StageParentLevel::LevelStartEvent()
@@ -65,7 +62,7 @@ void StageParentLevel::LevelStartLoad()
 		//CurStageName = "\\stage3.json";
 		break;
 	case StageNum::STAGE4:
-		//ContentsCore::GetInst()->LoadLevelResource(LEVELS::STAGE4_TEST);
+		ContentsCore::GetInst()->LoadLevelResource(LEVELS::STAGE04_HEX_A_GONE);
 		//CurStageName = "\\stage4.json";
 		break;
 	default:

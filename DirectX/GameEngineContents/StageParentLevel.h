@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineCore/GameEngineLevel.h>
+#include "VirtualPhysXLevel.h"
 
 enum class StageNum
 {
@@ -32,7 +33,7 @@ struct StageObject
 };
 
 // Ό³Έν :
-class StageParentLevel : public GameEngineLevel
+class StageParentLevel : public VirtualPhysXLevel
 {
 public:
 	// constrcuter destructer

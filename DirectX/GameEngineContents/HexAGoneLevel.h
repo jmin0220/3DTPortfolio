@@ -1,7 +1,8 @@
 #pragma once
-
+#include "StageParentLevel.h"
 // Ό³Έν :
-class HexAGoneLevel
+
+class HexAGoneLevel	:	public StageParentLevel
 {
 public:
 	// constrcuter destructer
@@ -15,7 +16,12 @@ public:
 	HexAGoneLevel& operator=(HexAGoneLevel&& _Other) noexcept = delete;
 
 protected:
+	void Start() override;
+	void Update(float _DeltaTime) override;
+	void End() override;
 
+	void LevelStartEvent() override;
+	void LevelEndEvent() override;
 private:
 
 };
