@@ -13,8 +13,8 @@ void TestMapActor::Start()
 {
 	{
 		std::shared_ptr<GameEngineFBXStaticRenderer> Renderer = CreateComponent<GameEngineFBXStaticRenderer>();
-		Renderer->SetFBXMesh("HexAGoneMap.FBX", "Texture");
-		//Renderer->GetTransform().SetWorldScale({ 50.0f,50.0f, 50.0f });
+		Renderer->SetFBXMesh("TestMap4.FBX", "Texture");
+		Renderer->GetTransform().SetWorldScale({ 50.0f,50.0f, 50.0f });
 	}
 }
 

@@ -46,7 +46,7 @@ void MapEditorLevel::LevelStartEvent()
 	// ¿¢ÅÍ »ý¼º
 	std::shared_ptr<GameEngineActor> Picker = CreateActor<ActorPicker>();
 
-	//std::shared_ptr<TestMapActor> TestMap = CreateActor<TestMapActor>();
+	std::shared_ptr<TestMapActor> TestMap = CreateActor<TestMapActor>();
 	
 	//std::shared_ptr<PickableActor> act = CreateActor<PickableActor>();
 	//act->SetStaticMesh("Rainbow.FBX");
