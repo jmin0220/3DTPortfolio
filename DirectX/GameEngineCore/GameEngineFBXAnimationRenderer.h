@@ -27,6 +27,11 @@ public:
 	void Init(const std::string_view& _Name, int _Index);
 	void Reset();
 	void Update(float _DeltaTime);
+	//******BlendAnimation추가본*******(선생님 코드엔 없음)
+	float CurBlendTime;
+	float BlendTime;
+	void BlendUpdate(float _DeltaTime);
+	//******BlendAnimation추가본*******(선생님 코드엔 없음)
 
 public:
 	FBXRendererAnimation() 
@@ -35,6 +40,10 @@ public:
 		, CurFrame(0)
 		, Start(0)
 		, End(0)
+		//******BlendAnimation추가본*******(선생님 코드엔 없음)
+		, CurBlendTime(0.0f)
+		, BlendTime(0.0f)
+		//******BlendAnimation추가본*******(선생님 코드엔 없음)
 	{
 		int a = 0;
 	}
@@ -81,6 +90,11 @@ public:
 
 	void Update(float _DeltaTime) override;
 
+	void OffIsBlending()
+	{
+		IsBlending = false;
+	}
+
 protected:
 
 private:
@@ -92,5 +106,10 @@ private:
 
 	std::map<size_t, std::vector<AnimationBoneData>> AnimationBoneDatas;
 
+
+	//******BlendAnimation추가본*******(선생님 코드엔 없음)
+	std::map<size_t, std::vector<AnimationBoneData>> tmpAnimationBoneDatas;
+	bool IsBlending;
+	//******BlendAnimation추가본*******(선생님 코드엔 없음)
 };
 
