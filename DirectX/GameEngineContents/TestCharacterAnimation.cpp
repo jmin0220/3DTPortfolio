@@ -20,6 +20,7 @@ void TestCharacterAnimation::Start()
 		Renderer->CreateFBXAnimation("Run", "TestRun.fbx");
 		Renderer->ChangeAnimation("Idle");
 		GetTransform().SetWorldScale({ SIZE_MAGNIFICATION_RATIO });
+		GetTransform().SetWorldRotation({ 0.0f, 180.0f, 0.0f });
 	}
 
 	{
@@ -28,7 +29,8 @@ void TestCharacterAnimation::Start()
 		{
 			for (GameEngineRenderUnit& Unit : RenderUnit)
 			{
-				Unit.ShaderResources.SetTexture("DiffuseTexture", "CH_Tanager_AM.png");
+				Unit.ShaderResources.SetTexture("DiffuseTexture", "CH_FallGuy_AM.png");
+				//Unit.ShaderResources.SetTexture("DiffuseTexture", "CH_FallGuy_NM.png");
 			}
 		}
 	}
