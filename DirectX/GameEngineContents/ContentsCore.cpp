@@ -19,6 +19,7 @@
 
 #pragma comment(lib, "GameEngineBase.lib")
 #include <GameEngineCore/GameEngineRes.h>
+#include <GameEngineBase/GameEnginePath.h>
 
 std::shared_ptr<ContentsCore> ContentsCore::Inst_ = std::make_shared<ContentsCore>();
 std::vector<GameEngineLevel*> ContentsCore::Levels_;
@@ -351,9 +352,12 @@ void ContentsCore::LevelAllResourceLoad(GameEngineDirectory& _LevelDir)
 			std::vector<GameEngineFile> Files = Dir.GetAllFile(EXT_FBX);
 			for (GameEngineFile& File : Files)
 			{
-				std::shared_ptr<GameEngineFBXMesh> Mesh = GameEngineFBXMesh::Load(File.GetFullPath());
+				File.ChangeExtension(".FBX");
+				std::string Path = File.GetFullPath();
 
-				std::shared_ptr<GameEngineFBXAnimation> Anim = GameEngineFBXAnimation::Load(File.GetFullPath());
+				std::shared_ptr<GameEngineFBXMesh> Mesh = GameEngineFBXMesh::Load(Path);
+
+				std::shared_ptr<GameEngineFBXAnimation> Anim = GameEngineFBXAnimation::Load(Path);
 			}
 		}
 	}

@@ -69,9 +69,6 @@
     <ClCompile Include="GameEngineWindow.cpp">
       <Filter>WindowsOS</Filter>
     </ClCompile>
-    <ClCompile Include="GameEngineString.cpp">
-      <Filter>String</Filter>
-    </ClCompile>
     <ClCompile Include="GameEngineSound.cpp">
       <Filter>ThirdParty\Sound</Filter>
     </ClCompile>
@@ -92,6 +89,9 @@
     </ClCompile>
     <ClCompile Include="PreCompile.cpp">
       <Filter>PreCompile</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineString.cpp">
+      <Filter>String</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -125,9 +125,6 @@
     <ClInclude Include="GameEngineWindow.h">
       <Filter>WindowsOS</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineString.h">
-      <Filter>String</Filter>
-    </ClInclude>
     <ClInclude Include="GameEngineSound.h">
       <Filter>ThirdParty\Sound</Filter>
     </ClInclude>
@@ -154,6 +151,9 @@
     </ClInclude>
     <ClInclude Include="PreCompile.h">
       <Filter>PreCompile</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineString.h">
+      <Filter>String</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
