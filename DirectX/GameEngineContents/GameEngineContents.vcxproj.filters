@@ -142,6 +142,12 @@
     <Filter Include="01_Level\Stage04_Hex-A-Gone">
       <UniqueIdentifier>{19790645-1ec0-40bb-ac30-d5486d3992f5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="999_Test\TestActor\EditorActor">
+      <UniqueIdentifier>{d76cd897-70b0-4d72-995e-f7d60fae0cb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="999_Test\TestActor\ScaleTestActor">
+      <UniqueIdentifier>{dcfe50ac-cc8c-4c88-b5d5-71211e76ace9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -252,9 +258,6 @@
     <ClInclude Include="TestWall.h">
       <Filter>999_Test\TestActor\PhysicCustom</Filter>
     </ClInclude>
-    <ClInclude Include="TestRainBow.h">
-      <Filter>999_Test\TestActor</Filter>
-    </ClInclude>
     <ClInclude Include="PhysicXComponent.h">
       <Filter>999_Test\TestComponent\TestPhysX</Filter>
     </ClInclude>
@@ -281,9 +284,6 @@
     </ClInclude>
     <ClInclude Include="PhysX\SampleAllocator.h">
       <Filter>999_Test\PhysXTest\Actor\CCT</Filter>
-    </ClInclude>
-    <ClInclude Include="TestMapActor.h">
-      <Filter>999_Test\TestActor</Filter>
     </ClInclude>
     <ClInclude Include="StartGameTitleActor.h">
       <Filter>02_Actor\UIActor\InGameUI</Filter>
@@ -396,6 +396,18 @@
     <ClInclude Include="PhysXPendulaComponent.h">
       <Filter>999_Test\TestComponent\TestPhysX</Filter>
     </ClInclude>
+    <ClInclude Include="TestMapActor.h">
+      <Filter>999_Test\TestActor\EditorActor</Filter>
+    </ClInclude>
+    <ClInclude Include="TestRainBow.h">
+      <Filter>999_Test\TestActor\EditorActor</Filter>
+    </ClInclude>
+    <ClInclude Include="TestFloor.h">
+      <Filter>999_Test\TestActor\ScaleTestActor</Filter>
+    </ClInclude>
+    <ClInclude Include="TestWallActor.h">
+      <Filter>999_Test\TestActor\ScaleTestActor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -506,9 +518,6 @@
     <ClCompile Include="TestWall.cpp">
       <Filter>999_Test\TestActor\PhysicCustom</Filter>
     </ClCompile>
-    <ClCompile Include="TestRainBow.cpp">
-      <Filter>999_Test\TestActor</Filter>
-    </ClCompile>
     <ClCompile Include="PhysicXComponent.cpp">
       <Filter>999_Test\TestComponent\TestPhysX</Filter>
     </ClCompile>
@@ -535,9 +544,6 @@
     </ClCompile>
     <ClCompile Include="PhysX\SampleAllocator.cpp">
       <Filter>999_Test\PhysXTest\Actor\CCT</Filter>
-    </ClCompile>
-    <ClCompile Include="TestMapActor.cpp">
-      <Filter>999_Test\TestActor</Filter>
     </ClCompile>
     <ClCompile Include="StartGameTitleActor.cpp">
       <Filter>02_Actor\UIActor\InGameUI</Filter>
@@ -649,6 +655,18 @@
     </ClCompile>
     <ClCompile Include="PlayerActor_State.cpp">
       <Filter>02_Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="TestMapActor.cpp">
+      <Filter>999_Test\TestActor\EditorActor</Filter>
+    </ClCompile>
+    <ClCompile Include="TestRainBow.cpp">
+      <Filter>999_Test\TestActor\EditorActor</Filter>
+    </ClCompile>
+    <ClCompile Include="TestFloor.cpp">
+      <Filter>999_Test\TestActor\ScaleTestActor</Filter>
+    </ClCompile>
+    <ClCompile Include="TestWallActor.cpp">
+      <Filter>999_Test\TestActor\ScaleTestActor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

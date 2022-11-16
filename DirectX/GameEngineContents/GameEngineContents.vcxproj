@@ -368,6 +368,10 @@
     </ClInclude>
     <ClInclude Include="TestBox.h" />
     <ClInclude Include="TestCharacterAnimation.h" />
+    <ClInclude Include="TestFloor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="TestGround.h" />
     <ClInclude Include="TestMapActor.h">
       <SubType>
@@ -379,6 +383,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="TestWall.h" />
+    <ClInclude Include="TestWallActor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="TitleActor.h" />
     <ClInclude Include="LobbyLevel.h">
       <SubType>
@@ -628,6 +636,10 @@
     </ClCompile>
     <ClCompile Include="TestBox.cpp" />
     <ClCompile Include="TestCharacterAnimation.cpp" />
+    <ClCompile Include="TestFloor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="TestGround.cpp" />
     <ClCompile Include="TestMapActor.cpp">
       <SubType>
@@ -639,6 +651,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="TestWall.cpp" />
+    <ClCompile Include="TestWallActor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="TitleActor.cpp" />
     <ClCompile Include="LobbyLevel.cpp">
       <SubType>

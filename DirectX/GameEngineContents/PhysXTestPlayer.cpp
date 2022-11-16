@@ -29,7 +29,7 @@ void PhysXTestPlayer::LevelStartEvent()
 {
 	// 메쉬 로드
 	FbxRenderer_->SetFBXMesh("Character.FBX", "Texture");
-	FbxRenderer_->GetTransform().SetWorldScale({ SIZE_MAGNIFICATION_RATIO });
+	//FbxRenderer_->GetTransform().SetWorldScale({ SIZE_MAGNIFICATION_RATIO });
 
 
 }
