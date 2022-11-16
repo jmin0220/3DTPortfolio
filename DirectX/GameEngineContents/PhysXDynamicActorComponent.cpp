@@ -40,7 +40,7 @@ void PhysXDynamicActorComponent::CreatePhysXActors(physx::PxScene* _Scene, physx
 	// 충돌체의 형태
 	// 충돌체의 크기는 절반의 크기를 설정하므로 실제 Renderer의 스케일은 충돌체의 2배로 설정되어야 함
 	// TODO::부모 액터의 RenderUnit으로부터 Mesh의 Scale 과 WorldScale의 연산의 결과를 지오메트리의 Scale로 세팅해야함.
-	//shape_ = _physics->createShape(physx::PxBoxGeometry(tmpGeoMetryScale), *material_);
+	shape_ = _physics->createShape(physx::PxBoxGeometry(tmpGeoMetryScale), *material_);
 	shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(_GeoMetryScale.x * 0.5f * 0.25f), *material_);
 	shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, _GeoMetryScale.x * 0.5f * 0.25f, 0)));
 	shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(_GeoMetryScale.x * 0.5f * 0.25f), *material_);
@@ -50,7 +50,14 @@ void PhysXDynamicActorComponent::CreatePhysXActors(physx::PxScene* _Scene, physx
 	shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(_GeoMetryScale.x * 0.5f * 0.25f), *material_);
 	shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, _GeoMetryScale.x * 0.5f * 1.75f, 0)));
 
-
+	//shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxBoxGeometry(physx::PxVec3(_GeoMetryScale.x * 0.5f * 0.25f)), *material_);
+	//shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, _GeoMetryScale.x * 0.5f * 0.25f, 0)));
+	//shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxBoxGeometry(physx::PxVec3(_GeoMetryScale.x * 0.5f * 0.25f)), *material_);
+	//shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, _GeoMetryScale.x * 0.5f * 0.75f, 0)));
+	//shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxBoxGeometry(physx::PxVec3(_GeoMetryScale.x * 0.5f * 0.25f)), *material_);
+	//shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, _GeoMetryScale.x * 0.5f * 1.25f, 0)));
+	//shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxBoxGeometry(physx::PxVec3(_GeoMetryScale.x * 0.5f * 0.25f)), *material_);
+	//shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, _GeoMetryScale.x * 0.5f * 1.75f, 0)));
 
 	dynamic_->attachShape(*shape_);
 
@@ -82,6 +89,11 @@ void PhysXDynamicActorComponent::Update(float _DeltaTime)
 	ParentActor_.lock()->GetTransform().SetWorldRotation(tmpWorldRot);
 
 
-	dynamic_->setLinearVelocity(physx::PxVec3(0.01f * _DeltaTime, 0.0f, 0.0f));
+	// TODO::LinearVelocity로 움직이는게 맞는듯.
+	// TODO::LinearVelocity를 직접 입력하는동안에는 충돌이 있어나지 않는다고 하니 확인해봐야함.
+	dynamic_->setLinearVelocity(physx::PxVec3(100.0f * _DeltaTime, 0.0f, 0.0f));
+	//dynamic_->setForceAndTorque(physx::PxVec3(0.01f, 0.01f, 0.0f), physx::PxVec3(0.0f), physx::PxForceMode::eACCELERATION);
+	//dynamic_->addForce(physx::PxVec3(0.01f, 0.01f, 0.0f), physx::PxForceMode::eACCELERATION);
+	
 	// physx::PxRigidBodyExt::addForceAtLocalPos(*dynamic_, physx::PxVec3(0.01f, 0.01f, 0.0f), physx::PxVec3(GeoMetryScale_.x * 0.5f, 0, 0), physx::PxForceMode::eIMPULSE);
 }

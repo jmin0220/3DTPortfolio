@@ -16,7 +16,7 @@ public:
 	PlayerActor& operator=(const PlayerActor& _Other) = delete;
 	PlayerActor& operator=(PlayerActor&& _Other) noexcept = delete;
 
-	void CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics, physx::PxControllerManager* _CtrManager);
+	void CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics);
 
 protected:
 	void Start() override;

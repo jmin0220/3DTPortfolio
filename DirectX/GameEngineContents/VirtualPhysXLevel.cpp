@@ -7,6 +7,7 @@ physx::PxPhysics* VirtualPhysXLevel::Physics_ = nullptr;
 
 VirtualPhysXLevel::VirtualPhysXLevel() 
 	: Player_(nullptr)
+	, CtrManager_(nullptr)
 {
 }
 
@@ -76,18 +77,18 @@ void VirtualPhysXLevel::initPhysics(bool _interactive)
 		pvdClient->setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_SCENEQUERIES, true);
 	}
 
-	// 컨트롤러 매니저 생성(CCTActor 생성을 위해서)
-	CtrManager_ = PxCreateControllerManager(*Scene_);
+	//// 컨트롤러 매니저 생성(CCTActor 생성을 위해서)
+	//CtrManager_ = PxCreateControllerManager(*Scene_);
 
-	// 지오메트리가 겹치는 경우 자동으로 복구될 수 있는 모드
-	// TODO::일반적인 경우에는 필요하지 않을 수 있음
-	CtrManager_->setOverlapRecoveryModule(true);
-	CtrManager_->setPreciseSweeps(true);
+	//// 지오메트리가 겹치는 경우 자동으로 복구될 수 있는 모드
+	//// TODO::일반적인 경우에는 필요하지 않을 수 있음
+	//CtrManager_->setOverlapRecoveryModule(true);
+	//CtrManager_->setPreciseSweeps(true);
 
 	// 플레이어가 존재하면 생성
 	if (nullptr != Player_)
 	{
-		Player_->CreatePhysXActors(Scene_, Physics_, CtrManager_);
+		Player_->CreatePhysXActors(Scene_, Physics_);
 	}
 }
 
@@ -108,19 +109,38 @@ void VirtualPhysXLevel::cleanupPhysics(bool _Interactive)
 	{
 		//CtrManager_->purgeControllers();
 		CtrManager_->release();
+		CtrManager_ = nullptr;
 	}
 
-	PX_RELEASE(Scene_);
-	PX_RELEASE(DefaultCpuDispatcher_);
-	PX_RELEASE(Physics_);
+	if (nullptr != Scene_)
+	{
+		PX_RELEASE(Scene_);
+	}
+
+	if (nullptr != DefaultCpuDispatcher_)
+	{
+		PX_RELEASE(DefaultCpuDispatcher_);
+	}
+
+	if (nullptr != Physics_)
+	{
+		PX_RELEASE(Physics_);
+	}
+
 	if (Pvd_)
 	{
 		physx::PxPvdTransport* transport = Pvd_->getTransport();
 		Pvd_->release();	Pvd_ = NULL;
 		PX_RELEASE(transport);
 	}
-	PX_RELEASE(Foundation_);
+
+	if (nullptr != Foundation_)
+	{
+		PX_RELEASE(Foundation_);
+	}
 
 	Scene_ = nullptr;
 	Physics_ = nullptr;
+	DefaultCpuDispatcher_ = nullptr;
+	Foundation_ = nullptr;
 }

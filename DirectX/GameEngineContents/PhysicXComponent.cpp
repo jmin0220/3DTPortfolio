@@ -34,7 +34,7 @@ void PhysicXComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysic
 	// 회전값
 	dynamic_->setAngularDamping(0.5f);
 	// 속도
-	dynamic_->setLinearVelocity(physx::PxVec3(0.0f, 0.0f, -200.0f));
+	//dynamic_->setLinearVelocity(physx::PxVec3(0.0f, 0.0f, -20.0f));
 
 	// Scene에 액터 추가
 	_Scene->addActor(*dynamic_);
@@ -60,6 +60,7 @@ void PhysicXComponent::Update(float _DeltaTime)
 	ParentActor_->GetTransform().SetWorldPosition(tmpWorldPos);
 	ParentActor_->GetTransform().SetWorldRotation(tmpWorldRot);
 
+	dynamic_->setLinearVelocity(physx::PxVec3(0.0f, 0.0f, -200.0f * _DeltaTime));
 }
 
 void PhysicXComponent::End()

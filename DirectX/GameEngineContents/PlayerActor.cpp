@@ -14,7 +14,7 @@ PlayerActor::~PlayerActor()
 }
 
 
-void PlayerActor::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics, physx::PxControllerManager* _CtrManager)
+void PlayerActor::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics)
 {
 	DynamicActorComponent_->CreatePhysXActors(_Scene, _physics);
 }
