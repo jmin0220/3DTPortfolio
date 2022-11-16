@@ -1,5 +1,6 @@
 #pragma once
-#include "PhysXCCTActorComponent.h"
+//#include "PhysXCCTActorComponent.h"
+#include "PhysXDynamicActorComponent.h"
 
 // 설명 :
 class PlayerActor : public GameEngineActor
@@ -25,7 +26,7 @@ protected:
 
 private:
 	std::shared_ptr<GameEngineFBXStaticRenderer> FbxRenderer_;
-	std::shared_ptr<PhysXCCTActorComponent> CCTActorComponent_;
+	std::shared_ptr<PhysXDynamicActorComponent> DynamicActorComponent_;
 
 	// 카메라 암
 	std::shared_ptr<class CameraArm> CameraArm_;

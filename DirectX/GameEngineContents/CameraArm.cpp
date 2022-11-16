@@ -2,11 +2,11 @@
 #include "CameraArm.h"
 
 // 카메라 움직임 속도
-float SPEED_CAM_X = 1.0f;
-float SPEED_CAM_Y = 1.0f;
+float SPEED_CAM_X = 0.5f;
+float SPEED_CAM_Y = 0.5f;
 
-const float4 DEFAULT_ARMVEC(0, 1.0f, -2.0f);
-const float4 DEFAULT_POSHEAD(0, 250, 0);
+const float4 DEFAULT_ARMVEC(0, 0.001f, -0.002f);
+const float4 DEFAULT_POSHEAD(0, 2.5f, 0);
 
 CameraArm::CameraArm()
 	: Camera_(nullptr)
@@ -29,13 +29,19 @@ void CameraArm::Start()
 	CamAxisX_->SetParent(CamAxisY_);
 	CamAxisY_->SetParent(shared_from_this());
 
-	CamAxisY_->GetTransform().SetWorldScale({ 1200, 1200, 1200 });
+	//CamAxisY_->GetTransform().SetWorldScale({ 1200, 1200, 1200 });
+	//CamAxisY_->SetDebugSetting(CollisionType::CT_OBB, float4(0, 1.0f, 0, 0.2f));
+
+	//CamAxisX_->GetTransform().SetWorldScale({ 1000, 1000, 1000 });
+	//CamAxisX_->SetDebugSetting(CollisionType::CT_OBB, float4(1.0f, 0, 0, 0.4f));
+
+	CamAxisY_->GetTransform().SetWorldScale({ 12, 12, 12 });
 	CamAxisY_->SetDebugSetting(CollisionType::CT_OBB, float4(0, 1.0f, 0, 0.2f));
 
-	CamAxisX_->GetTransform().SetWorldScale({ 1000, 1000, 1000 });
+	CamAxisX_->GetTransform().SetWorldScale({ 10, 10, 10 });
 	CamAxisX_->SetDebugSetting(CollisionType::CT_OBB, float4(1.0f, 0, 0, 0.4f));
 
-	CamHolderCollision_->GetTransform().SetWorldScale({ 20, 20, 50 });
+	CamHolderCollision_->GetTransform().SetWorldScale({ 2, 2, 5 });
 	CamHolderCollision_->SetDebugSetting(CollisionType::CT_OBB, float4(0.8f, 0.8f, 0.8f, 0.5f));
 
 	// DEBUG GUI사용

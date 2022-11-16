@@ -300,9 +300,6 @@
     <ClInclude Include="SampleCCTJump.h">
       <Filter>999_Test\PhysXTest\Actor\CCT</Filter>
     </ClInclude>
-    <ClInclude Include="PhysXCCTActorComponent.h">
-      <Filter>999_Test\TestComponent\TestPhysX</Filter>
-    </ClInclude>
     <ClInclude Include="SuccessCount.h">
       <Filter>02_Actor\UIActor\InGameUI</Filter>
     </ClInclude>
@@ -398,6 +395,12 @@
     </ClInclude>
     <ClInclude Include="PhysXPendulaComponent.h">
       <Filter>999_Test\TestComponent\TestPhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysXCCTActorComponent.h">
+      <Filter>03_Component\PhysXComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysXDynamicActorComponent.h">
+      <Filter>03_Component\PhysXComponent</Filter>
     </ClInclude>
     <ClInclude Include="TestMapActor.h">
       <Filter>999_Test\TestActor\EditorActor</Filter>
@@ -560,9 +563,6 @@
     <ClCompile Include="SampleCCTJump.cpp">
       <Filter>999_Test\PhysXTest\Actor\CCT</Filter>
     </ClCompile>
-    <ClCompile Include="PhysXCCTActorComponent.cpp">
-      <Filter>999_Test\TestComponent\TestPhysX</Filter>
-    </ClCompile>
     <ClCompile Include="SuccessCount.cpp">
       <Filter>02_Actor\UIActor\InGameUI</Filter>
     </ClCompile>
@@ -658,6 +658,12 @@
     </ClCompile>
     <ClCompile Include="PlayerActor_State.cpp">
       <Filter>02_Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXCCTActorComponent.cpp">
+      <Filter>03_Component\PhysXComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXDynamicActorComponent.cpp">
+      <Filter>03_Component\PhysXComponent</Filter>
     </ClCompile>
     <ClCompile Include="TestMapActor.cpp">
       <Filter>999_Test\TestActor\EditorActor</Filter>

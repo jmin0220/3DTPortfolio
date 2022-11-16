@@ -1,7 +1,7 @@
 #pragma once
 
 // 사이즈 배율
-#define SIZE_MAGNIFICATION_RATIO 100.0f, 100.0f, 100.0f
+#define SIZE_MAGNIFICATION_RATIO 1.0f, 1.0f, 1.0f
 
 // 디렉토리
 #define DIR_RESOURCES "Resources"

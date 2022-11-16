@@ -16,14 +16,14 @@ PlayerActor::~PlayerActor()
 
 void PlayerActor::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics, physx::PxControllerManager* _CtrManager)
 {
-	CCTActorComponent_->CreatePhysXActors(_Scene, _physics, _CtrManager);
+	DynamicActorComponent_->CreatePhysXActors(_Scene, _physics);
 }
 
 void PlayerActor::Start()
 {
 	// 캐릭터 메쉬 로드 테스트용
 	FbxRenderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
-	CCTActorComponent_ = CreateComponent<PhysXCCTActorComponent>();
+	DynamicActorComponent_ = CreateComponent<PhysXDynamicActorComponent>();
 
 	CamActor_ = GetLevel()->GetMainCameraActor();
 	CameraArm_ = GetLevel()->CreateActor<CameraArm>();

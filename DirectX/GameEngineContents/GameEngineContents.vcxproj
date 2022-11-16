@@ -291,6 +291,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="PhysXDynamicActorComponent.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="PhysXLevel.h">
       <SubType>
       </SubType>
@@ -552,6 +556,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="PhysXCCTActorComponent.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="PhysXDynamicActorComponent.cpp">
       <SubType>
       </SubType>
     </ClCompile>
