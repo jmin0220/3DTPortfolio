@@ -34,4 +34,5 @@ void StageTestLevel::LevelStartEvent()
 }
 void StageTestLevel::LevelEndEvent()
 {
+	StageParentLevel::LevelEndEvent();
 }

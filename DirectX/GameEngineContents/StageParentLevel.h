@@ -12,8 +12,13 @@ enum class StageNum
 enum class Stage_MeshEnum
 {
 	START,	// 가장 시작
-	axis,
-	Character,
+	// STAGE01
+	// STAGE02
+	// STAGE03
+	// STAGE04
+	HexAGoneMap,
+	HexTile,
+	// TEST
 	Rainbow,
 	TestMap,
 	END, // 가장 마지막

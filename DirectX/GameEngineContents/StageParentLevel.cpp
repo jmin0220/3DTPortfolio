@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "StageParentLevel.h"
 #include "TestRainBow.h"
+#include "TestMapActor.h"
 #include <GameEngineBase/magic_enum.hpp>
 #include <GameEngineCore/ThirdParty/inc/json.h>
 #include <GameEngineCore/CoreMinimal.h>
@@ -111,31 +112,41 @@ void StageParentLevel::LevelStartLoad()
 
 		switch ((*MeshEnumMap_.find(NewObj.Name_)).second)
 		{
-		case Stage_MeshEnum::axis:
+		case Stage_MeshEnum::START:
 		{
-			//NewObj.Actor_ = CreateActor<AxisActor>();
+			int a = 0;
+			break;
 		}
-		break;
-		case Stage_MeshEnum::Character:
+		case Stage_MeshEnum::HexAGoneMap:
 		{
-			//NewObj.Actor_ = CreateActor<TestActor_Character>();
+			NewObj.Actor_ = CreateActor<TestMapActor>();
+			break;
 		}
-		break;
+		case Stage_MeshEnum::HexTile:
+		{
+			NewObj.Actor_ = CreateActor<TestRainBow>();
+			break;
+		}
 		case Stage_MeshEnum::Rainbow:
 		{
 			NewObj.Actor_ = CreateActor<TestRainBow>();
+			break;
 		}
-		break;
 		case Stage_MeshEnum::TestMap:
 		{
-			int a = 0;
+			NewObj.Actor_ = CreateActor<TestMapActor>();
+			break;
 		}
-		break;
+		case Stage_MeshEnum::END:
+		{
+			int a = 0;
+			break;
+		}
 		default:
 		{
 			int a = 0;
+			break;
 		}
-		break;
 		}
 
 		NewObj.Actor_.lock()->GetTransform().SetWorldPosition(Pos);

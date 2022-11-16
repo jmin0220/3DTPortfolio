@@ -21,7 +21,7 @@
   },
   "Object2": {
     "Mesh": {
-      "Name": "Rainbow",
+      "Name": "HexAGoneMap",
       "Transform": {
         "Pos": [ 0.0, 0.0, 0.0 ],
         "Rot": [ 0.0, 0.0, 0.0 ],

@@ -327,36 +327,44 @@ void MapEditorGUI::OnClickSpawn()
 
 		switch ((*MeshEnumMap_.find(NewObj.Name_)).second)
 		{
-		case MeshEnum::axis:
-		{
-			std::shared_ptr<GameEngineFBXStaticRenderer> Renderer = NewObj.Actor_.lock()->CreateComponent<GameEngineFBXStaticRenderer>();
-			Renderer->SetFBXMesh("Rainbow.FBX", "Texture");
-			//Renderer = ConnectedLevel->CreateActor<AxisActor>();
-		}
-			break;
-		case MeshEnum::Character:
-		{
-			//NewObj.Actor_ = ConnectedLevel->CreateActor<TestActor_Character>();
-		}
-			break;
-		case MeshEnum::Rainbow:
-		{
-			// 2. 메쉬 세팅해준더
-			NewObj.Actor_.lock()->SetStaticMesh("Rainbow.FBX");
-		}
-			break;
-		case MeshEnum::TestMap:
+		case MeshEnum::START:
 		{
 			int a = 0;
-		}
 			break;
+		}
+		case MeshEnum::HexAGoneMap:
+		{
+			NewObj.Actor_.lock()->SetStaticMesh("HexAGoneMap.FBX");
+			break;
+		}
+		case MeshEnum::HexTile:
+		{
+			NewObj.Actor_.lock()->SetStaticMesh("HexTile.FBX");
+			break;
+		}
+		case MeshEnum::Rainbow:
+		{
+			// 2. 메쉬 세팅해준다
+			NewObj.Actor_.lock()->SetStaticMesh("Rainbow.FBX");
+			break;
+		}
+		case MeshEnum::TestMap:
+		{
+			NewObj.Actor_.lock()->SetStaticMesh("TestMap.FBX");
+			break;
+		}
+		case MeshEnum::END:
+		{
+			int a = 0;
+			break;
+		}
 		default:
 		{
 			int a = 0;
-		}
 			break;
 		}
-
+		}
+		
 		NewObj.Actor_.lock()->GetTransform().SetWorldPosition({ 0, 0, 0 });
 
 		SpawnedObjects_.push_back(NewObj);
@@ -603,6 +611,7 @@ void MapEditorGUI::LoadData(const std::string& _FilePath, const std::string& _Fi
 
 		//NewObj.Dir_ = FBXFiles_[FileIdx].GetFullPath();
 		//NewObj.Actor_ = ConnectedLevel->CreateActor<ColorBox>();
+		NewObj.Actor_ = ConnectedLevel->CreateActor<PickableActor>();
 
 		std::map<std::string, MeshEnum> MeshEnumMap_;
 		MeshEnum tmpEnum = MeshEnum::START;
@@ -616,31 +625,42 @@ void MapEditorGUI::LoadData(const std::string& _FilePath, const std::string& _Fi
 
 		switch ((*MeshEnumMap_.find(NewObj.Name_)).second)
 		{
-		case MeshEnum::axis:
-		{
-			//NewObj.Actor_ = ConnectedLevel->CreateActor<AxisActor>();
-		}
-		break;
-		case MeshEnum::Character:
-		{
-			//NewObj.Actor_ = ConnectedLevel->CreateActor<TestActor_Character>();
-		}
-		break;
-		case MeshEnum::Rainbow:
-		{
-			//NewObj.Actor_ = ConnectedLevel->CreateActor<TestRainBow>();
-		}
-		break;
-		case MeshEnum::TestMap:
+		case MeshEnum::START:
 		{
 			int a = 0;
+			break;
 		}
-		break;
+		case MeshEnum::HexAGoneMap:
+		{
+			NewObj.Actor_.lock()->SetStaticMesh("HexAGoneMap.FBX");
+			break;
+		}
+		case MeshEnum::HexTile:
+		{
+			NewObj.Actor_.lock()->SetStaticMesh("HexTile.FBX");
+			break;
+		}
+		case MeshEnum::Rainbow:
+		{
+			// 2. 메쉬 세팅해준다
+			NewObj.Actor_.lock()->SetStaticMesh("Rainbow.FBX");
+			break;
+		}
+		case MeshEnum::TestMap:
+		{
+			NewObj.Actor_.lock()->SetStaticMesh("TestMap.FBX");
+			break;
+		}
+		case MeshEnum::END:
+		{
+			int a = 0;
+			break;
+		}
 		default:
 		{
 			int a = 0;
+			break;
 		}
-		break;
 		}
 
 		NewObj.Actor_.lock()->GetTransform().SetWorldPosition(Pos);
