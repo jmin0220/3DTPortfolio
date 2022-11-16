@@ -14,6 +14,7 @@ enum class MeshEnum
 	START,	// 가장 시작
 	// STAGE01
 	// STAGE02
+	JumpClubMap,
 	// STAGE03
 	// STAGE04
 	HexAGoneMap,

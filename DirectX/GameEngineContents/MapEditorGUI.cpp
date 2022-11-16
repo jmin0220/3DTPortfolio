@@ -332,6 +332,11 @@ void MapEditorGUI::OnClickSpawn()
 			int a = 0;
 			break;
 		}
+		case MeshEnum::JumpClubMap:
+		{
+			NewObj.Actor_.lock()->SetStaticMesh("JumpClubMap.FBX");
+			break;
+		}
 		case MeshEnum::HexAGoneMap:
 		{
 			NewObj.Actor_.lock()->SetStaticMesh("HexAGoneMap.FBX");
@@ -628,6 +633,11 @@ void MapEditorGUI::LoadData(const std::string& _FilePath, const std::string& _Fi
 		case MeshEnum::START:
 		{
 			int a = 0;
+			break;
+		}
+		case MeshEnum::JumpClubMap:
+		{
+			NewObj.Actor_.lock()->SetStaticMesh("JumpClubMap.FBX");
 			break;
 		}
 		case MeshEnum::HexAGoneMap:
