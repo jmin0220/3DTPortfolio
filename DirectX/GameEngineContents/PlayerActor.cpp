@@ -39,14 +39,14 @@ void PlayerActor::Update(float _DeltaTime)
 
 	PlayerStateManager_.Update(_DeltaTime);
 
-	//GetTransform().SetWorldMove(MoveDir_ * SPEED_PLAYER * _DeltaTime);
+	GetTransform().SetWorldMove(MoveDir_ * SPEED_PLAYER * _DeltaTime);
 }
 
 void PlayerActor::LevelStartEvent()
 {
 	// 메쉬 로드
 	FbxRenderer_->SetFBXMesh("Character.FBX", "Texture");
-	FbxRenderer_->GetTransform().SetWorldScale({ SIZE_MAGNIFICATION_RATIO });
+	FbxRenderer_->GetTransform().SetWorldScale({ 3,3,3 });
 }
 
 void PlayerActor::InputController(float _DeltaTime)

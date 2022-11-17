@@ -1,7 +1,7 @@
 #pragma once
 #include "StageParentLevel.h"
 // 설명 :
-
+class HexTile;
 class HexAGoneLevel	:	public StageParentLevel
 {
 public:
@@ -23,6 +23,14 @@ protected:
 	void LevelStartEvent() override;
 	void LevelEndEvent() override;
 private:
+	std::shared_ptr<GameEngineActor> BackGroundObj_;;
+	std::shared_ptr<GameEngineActor> Tiles_;
+	//std::shared_ptr<GameEngineActor> Player_;
 
+	std::vector<std::shared_ptr<GameEngineActor>> TilesVec_;
+	int Row_;  //행
+	int Col_;  //열 
+	int Num_;
+	float4 TileScale_;
 };
 

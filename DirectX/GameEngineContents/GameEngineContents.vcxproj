@@ -220,6 +220,18 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="HexTile.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Hex_BackGroundObject.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Hex_ProPeller.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="InGameSetUI.h">
       <SubType>
       </SubType>
@@ -472,6 +484,18 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="GoalTipActor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="HexTile.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Hex_BackGroundObject.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Hex_ProPeller.cpp">
       <SubType>
       </SubType>
     </ClCompile>

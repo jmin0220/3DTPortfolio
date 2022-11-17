@@ -396,6 +396,15 @@
     <ClInclude Include="TestWallActor.h">
       <Filter>999_Test\TestActor\ScaleTestActor</Filter>
     </ClInclude>
+    <ClInclude Include="HexTile.h">
+      <Filter>02_Actor\Stage04Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Hex_ProPeller.h">
+      <Filter>02_Actor\Stage04Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Hex_BackGroundObject.h">
+      <Filter>02_Actor\Stage04Actor</Filter>
+    </ClInclude>
     <ClInclude Include="TestCharacterAnimation.h">
       <Filter>999_Test\TestActor\ScaleTestActor</Filter>
     </ClInclude>
@@ -646,6 +655,15 @@
     </ClCompile>
     <ClCompile Include="TestWallActor.cpp">
       <Filter>999_Test\TestActor\ScaleTestActor</Filter>
+    </ClCompile>
+    <ClCompile Include="HexTile.cpp">
+      <Filter>02_Actor\Stage04Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Hex_ProPeller.cpp">
+      <Filter>02_Actor\Stage04Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Hex_BackGroundObject.cpp">
+      <Filter>02_Actor\Stage04Actor</Filter>
     </ClCompile>
     <ClCompile Include="TestCharacterAnimation.cpp">
       <Filter>999_Test\TestActor\ScaleTestActor</Filter>
