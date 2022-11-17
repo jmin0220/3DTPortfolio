@@ -123,6 +123,7 @@ void PickableActor::SetCollisionOnly(const float4& _Scale)
 		Collision_Picking_ = CreateComponent<GameEngineCollision>();
 		Collision_Picking_->GetTransform().SetLocalScale(_Scale);
 		Collision_Picking_->SetDebugSetting(CollisionType::CT_OBB, float4(0.5f, 0.0f, 0.0f, 0.25f));
+		
 		Collision_Picking_->ChangeOrder(CollisionGroup::Picking);
 
 		// ·»´õ·¯

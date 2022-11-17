@@ -53,6 +53,8 @@ void MapEditorLevel::LevelStartEvent()
 
 	std::shared_ptr<PickableActor> CollisionOnly = CreateActor<PickableActor>();
 	CollisionOnly->SetCollisionOnly(float4(700, 700, 700));
+
+	
 }
 
 void MapEditorLevel::LevelEndEvent()

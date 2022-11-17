@@ -5,12 +5,13 @@
 float SPEED_CAM_X = 0.5f;
 float SPEED_CAM_Y = 0.5f;
 
-const float4 DEFAULT_ARMVEC(0, 0.001f, -0.002f);
-const float4 DEFAULT_POSHEAD(0, 2.5f, 0);
+const float4 DEFAULT_ARMVEC(0, 1.2f, -1.5f);
+const float4 DEFAULT_POSHEAD(0, 2.0f, 0);
 
 CameraArm::CameraArm()
 	: Camera_(nullptr)
 	, Character_(nullptr)
+	, ArmRatio_(1.0f)
 {
 }
 
@@ -20,6 +21,7 @@ CameraArm::~CameraArm()
 
 void CameraArm::Start()
 {
+
 	// 자이로스코프
 	CamHolderCollision_ = CreateComponent<GameEngineCollision>();
 	CamAxisX_ = CreateComponent<GameEngineCollision>();
@@ -29,13 +31,7 @@ void CameraArm::Start()
 	CamAxisX_->SetParent(CamAxisY_);
 	CamAxisY_->SetParent(shared_from_this());
 
-	//CamAxisY_->GetTransform().SetWorldScale({ 1200, 1200, 1200 });
-	//CamAxisY_->SetDebugSetting(CollisionType::CT_OBB, float4(0, 1.0f, 0, 0.2f));
-
-	//CamAxisX_->GetTransform().SetWorldScale({ 1000, 1000, 1000 });
-	//CamAxisX_->SetDebugSetting(CollisionType::CT_OBB, float4(1.0f, 0, 0, 0.4f));
-
-	CamAxisY_->GetTransform().SetWorldScale({ 12, 12, 12 });
+	CamAxisY_->GetTransform().SetWorldScale({ 10, 10, 10 });
 	CamAxisY_->SetDebugSetting(CollisionType::CT_OBB, float4(0, 1.0f, 0, 0.2f));
 
 	CamAxisX_->GetTransform().SetWorldScale({ 10, 10, 10 });
@@ -54,17 +50,20 @@ void CameraArm::SetFollowCamera(std::shared_ptr<GameEngineCameraActor> _Camera, 
 {
 	// 카메라 암 엑터와 캐릭터를 연결
 	SetParent(_Character);
-	//SetParent(std::dynamic_pointer_cast<GameEngineUpdateObject>(_Character));
+
 	Camera_ = _Camera;
-	//Character_ = _Character;
+	if (true == Camera_->IsFreeCameraMode())
+	{
+		Camera_->FreeCameraModeOnOff();
+	}
 
 	// 카메라 암 피벗 정도
-	ArmVector_ = DEFAULT_ARMVEC;
+	ArmVector_ = DEFAULT_ARMVEC * ArmRatio_;
 
 	// 캐릭터보다 조금 위를 바라본다
 	PosHead_ = DEFAULT_POSHEAD;
 
-	CamHolderCollision_->GetTransform().SetLocalPosition(ArmVector_);
+
 }
 
 void CameraArm::SetArmLength(float _Depth, float _Height)
@@ -84,21 +83,33 @@ void CameraArm::Update(float _DeltaTime)
 		return;
 	}
 
-	// 마우스입력
+	if (true == Camera_->IsFreeCameraMode())
+	{
+		return;
+	}
+
+	// 마우스 입력 받음
 	CurMouseInput_ = Camera_->GetCameraComponent()->GetMouseScreenPosition();
 	MouseMove_ = CurMouseInput_ - PrevMouseInput_;
 
+	// 카메라 홀더 위치 받음
 	PosCamHolder_ = CamHolderCollision_->GetTransform().GetWorldPosition();
 	PosCharacter_ = GetTransform().GetWorldPosition();
 
+	// 카메라 홀더 위치에 카메라 따라가도록
 	Camera_->GetTransform().SetWorldPosition(PosCamHolder_);
 
+	// 카메라가 플레이어를 바라보도록 각도계산
 	CameraLookPlayer();
+
+	// 마우스 수직/수평 입력
 	VerticalOrbitCamera();
 	HorizontalOrbitCamera();
 
-	// 마우스 입력
+	// 마우스 입력 초기화
 	PrevMouseInput_ = CurMouseInput_;
+
+	ZoomInOut();
 }
 
 void CameraArm::End()
@@ -143,17 +154,37 @@ void CameraArm::CameraLookPlayer()
 // 마우스 가로 움직임
 void CameraArm::HorizontalOrbitCamera()
 {
-	CamAxisY_->GetTransform().SetAddWorldRotation({ 0, MouseMove_.x * SPEED_CAM_X, 0 });
+	CamAxisY_->GetTransform().SetAddWorldRotation({ 0,  MouseMove_.x * SPEED_CAM_X, 0 });
 }
 
 // 마우스 세로 움직임
 void CameraArm::VerticalOrbitCamera()
 {
+
 	// 카메라 떨림 현상 제거
 	float Rot = CamAxisX_->GetTransform().GetLocalRotation().x + MouseMove_.y * SPEED_CAM_Y;
-	float ClampRot = std::clamp(Rot, -10.0f, 60.0f);
+	float ClampRot = std::clamp(Rot, -40.0f, 40.0f);
 
 	CamAxisX_->GetTransform().SetLocalRotation({ ClampRot, 0, 0 });
+}
+
+void CameraArm::ZoomInOut()
+{
+	// 카메라 암 갱신
+	int Wheel = GameEngineInput::GetInst()->GetMouseWheel();
+
+	if (Wheel < 0)
+	{
+		ArmRatio_ *= 1.1f;
+	}
+	else if (Wheel > 0)
+	{
+		ArmRatio_ *= 0.9f;
+	}
+
+	ArmRatio_ = std::clamp(ArmRatio_, 0.5f, 1.5f);
+
+	CamHolderCollision_->GetTransform().SetLocalPosition(ArmVector_ * ArmRatio_);
 }
 
 

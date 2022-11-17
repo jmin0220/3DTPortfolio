@@ -15,12 +15,11 @@ CameraTestLevel::~CameraTestLevel()
 
 void CameraTestLevel::Start()
 {
-	if (false == GetMainCameraActor()->IsFreeCameraMode())
-	{
-		GetMainCameraActor()->FreeCameraModeOnOff();
-		GetMainCameraActor()->GetTransform().SetWorldMove({ 0, 200, -3000 });
-	}
-
+	//if (false == GetMainCameraActor()->IsFreeCameraMode())
+	//{
+	//	GetMainCameraActor()->FreeCameraModeOnOff();
+	//	GetMainCameraActor()->GetTransform().SetWorldMove({ 0, 200, -3000 });
+	//}
 
 
 
@@ -40,6 +39,12 @@ void CameraTestLevel::LevelStartEvent()
 {	
 	GEngine::CollisionDebugOff();
 	
+
+	if (false == GetMainCameraActor()->IsFreeCameraMode())
+	{
+		GetMainCameraActor()->FreeCameraModeOnOff();
+	}
+
 	// 리소스 로드
 	ContentsCore::GetInst()->LoadLevelResource(LEVELS::CAMERA_TEST);
 

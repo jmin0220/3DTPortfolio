@@ -32,6 +32,7 @@ private:
 	void CameraLookPlayer();
 	void HorizontalOrbitCamera();
 	void VerticalOrbitCamera();
+	void ZoomInOut();
 
 private:
 	std::shared_ptr<GameEngineCameraActor> Camera_;
@@ -39,6 +40,7 @@ private:
 
 	// ArmVector : 최초 카메라 피벗위치
 	float4 ArmVector_;
+	float ArmRatio_;
 	float4 PosCamHolder_;
 	float4 PosCharacter_;
 	float4 PosHead_;
