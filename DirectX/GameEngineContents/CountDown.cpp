@@ -102,32 +102,32 @@ void CountDown::Start()
 		PopAni6_->SetTexture("Pop_Frames.png");
 
 		std::vector<unsigned int> Five = { 0, 1, 2, 3, 4 };
-		PopAni1_->CreateFrameAnimationCutTexture("Pop", FrameAnimation_DESC("Pop_Frames.png", Five, 0.1f, false));
+		PopAni1_->CreateFrameAnimationCutTexture("Pop", GameEngineRenderingEvent("Pop_Frames.png", Five, 0.1f, false));
 		PopAni1_->ChangeFrameAnimation("Pop");
 		PopAni1_->Off();
 		PopAni1_->AnimationBindEnd("Pop", std::bind(&CountDown::PopEnd, this));
 
-		PopAni2_->CreateFrameAnimationCutTexture("Pop", FrameAnimation_DESC("Pop_Frames.png", Five, 0.1f, false));
+		PopAni2_->CreateFrameAnimationCutTexture("Pop", GameEngineRenderingEvent("Pop_Frames.png", Five, 0.1f, false));
 		PopAni2_->ChangeFrameAnimation("Pop");
 		PopAni2_->Off();
 		PopAni2_->AnimationBindEnd("Pop", std::bind(&CountDown::PopEnd, this));
 
-		PopAni3_->CreateFrameAnimationCutTexture("Pop", FrameAnimation_DESC("Pop_Frames.png", Five, 0.1f, false));
+		PopAni3_->CreateFrameAnimationCutTexture("Pop", GameEngineRenderingEvent("Pop_Frames.png", Five, 0.1f, false));
 		PopAni3_->ChangeFrameAnimation("Pop");
 		PopAni3_->Off();
 		PopAni3_->AnimationBindEnd("Pop", std::bind(&CountDown::PopEnd, this));
 
-		PopAni4_->CreateFrameAnimationCutTexture("Pop", FrameAnimation_DESC("Pop_Frames.png", Five, 0.1f, false));
+		PopAni4_->CreateFrameAnimationCutTexture("Pop", GameEngineRenderingEvent("Pop_Frames.png", Five, 0.1f, false));
 		PopAni4_->ChangeFrameAnimation("Pop");
 		PopAni4_->Off();
 		PopAni4_->AnimationBindEnd("Pop", std::bind(&CountDown::PopEnd, this));
 
-		PopAni5_->CreateFrameAnimationCutTexture("Pop", FrameAnimation_DESC("Pop_Frames.png", Five, 0.1f, false));
+		PopAni5_->CreateFrameAnimationCutTexture("Pop", GameEngineRenderingEvent("Pop_Frames.png", Five, 0.1f, false));
 		PopAni5_->ChangeFrameAnimation("Pop");
 		PopAni5_->Off();
 		PopAni5_->AnimationBindEnd("Pop", std::bind(&CountDown::PopEnd, this));
 
-		PopAni6_->CreateFrameAnimationCutTexture("Pop", FrameAnimation_DESC("Pop_Frames.png", Five, 0.1f, false));
+		PopAni6_->CreateFrameAnimationCutTexture("Pop", GameEngineRenderingEvent("Pop_Frames.png", Five, 0.1f, false));
 		PopAni6_->ChangeFrameAnimation("Pop");
 		PopAni6_->Off();
 		PopAni6_->AnimationBindEnd("Pop", std::bind(&CountDown::PopEnd, this));

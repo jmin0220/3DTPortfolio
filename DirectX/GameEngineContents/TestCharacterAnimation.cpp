@@ -13,11 +13,35 @@ void TestCharacterAnimation::Start()
 {
 	//GameEngineTime::GetInst()->SetTimeScale();
 	{
+
+
 		Renderer = CreateComponent<GameEngineFBXAnimationRenderer>();
 		Renderer->SetFBXMesh("TestIdle.fbx", "TextureAnimation");
-		Renderer->CreateFBXAnimation("Idle", "TestIdle.fbx");
-		Renderer->CreateFBXAnimation("Walk", "TestWalk.fbx");
-		Renderer->CreateFBXAnimation("Run", "TestRun.fbx");
+
+		{
+			GameEngineRenderingEvent Event;
+			Event.ResourcesName = "TestIdle.fbx";
+			Event.Loop = true;
+			Event.Inter = 0.1f;
+			Renderer->CreateFBXAnimation("Idle", Event, 0);
+		}
+
+		{
+			GameEngineRenderingEvent Event;
+			Event.ResourcesName = "TestWalk.fbx";
+			Event.Loop = true;
+			Event.Inter = 0.1f;
+			Renderer->CreateFBXAnimation("Walk", Event, 0);
+		}
+
+		{
+			GameEngineRenderingEvent Event;
+			Event.ResourcesName = "TestRun.fbx";
+			Event.Loop = true;
+			Event.Inter = 0.1f;
+			Renderer->CreateFBXAnimation("Run", Event, 0);
+		}
+
 		Renderer->ChangeAnimation("Idle");
 		GetTransform().SetWorldScale({ SIZE_MAGNIFICATION_RATIO });
 		GetTransform().SetWorldRotation({ 0.0f, 180.0f, 0.0f });
