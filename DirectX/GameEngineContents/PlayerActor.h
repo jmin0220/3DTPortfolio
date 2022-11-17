@@ -52,7 +52,7 @@ private:
 	void JumpEnd(const StateInfo& _Info);
 
 	// ют╥б
-	void InputController();
+	void InputController(float _DeltaTime);
 	float4 MoveDir_;
 };
 

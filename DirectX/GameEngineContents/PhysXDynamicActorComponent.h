@@ -16,7 +16,7 @@ public:
 
 	void CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics, physx::PxVec3 _GeoMetryScale = physx::PxVec3(2.0f), float4 _GeoMetryRot = { 0.0f });
 
-
+	void SetMoveSpeed(float4 _MoveSpeed);
 
 protected:
 	void Start() override;

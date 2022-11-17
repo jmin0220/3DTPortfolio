@@ -3,7 +3,7 @@
 
 #include "CameraArm.h"
 
-float SPEED_PLAYER = 100.0f;
+float SPEED_PLAYER = 800.0f;
 
 PlayerActor::PlayerActor() 
 {
@@ -35,11 +35,11 @@ void PlayerActor::Start()
 
 void PlayerActor::Update(float _DeltaTime)
 {
-	InputController();
+	InputController(_DeltaTime);
 
 	PlayerStateManager_.Update(_DeltaTime);
 
-	GetTransform().SetWorldMove(MoveDir_ * SPEED_PLAYER * _DeltaTime);
+	//GetTransform().SetWorldMove(MoveDir_ * SPEED_PLAYER * _DeltaTime);
 }
 
 void PlayerActor::LevelStartEvent()
@@ -49,26 +49,30 @@ void PlayerActor::LevelStartEvent()
 	FbxRenderer_->GetTransform().SetWorldScale({ SIZE_MAGNIFICATION_RATIO });
 }
 
-void PlayerActor::InputController()
+void PlayerActor::InputController(float _DeltaTime)
 {
+	float4 tmpMoveSpeed = float4::ZERO;
 	MoveDir_ = float4::ZERO;
 
 	if (true == GameEngineInput::GetInst()->IsPress(KEY_W))
 	{
 		// EX) 카메라가 보고있는 방향으로 전진
-		// MoveDir_ += GetLevel()->GetMainCameraActor()->GetTransform().GetForwardVector();
+		MoveDir_ += GetTransform().GetForwardVector();
 	}
 
 	if (true == GameEngineInput::GetInst()->IsPress(KEY_A))
 	{
+		MoveDir_ += GetTransform().GetLeftVector();
 	}
 
 	if (true == GameEngineInput::GetInst()->IsPress(KEY_S))
 	{
+		MoveDir_ += GetTransform().GetBackVector();
 	}
 
 	if (true == GameEngineInput::GetInst()->IsPress(KEY_D))
 	{
+		MoveDir_ += GetTransform().GetRightVector();
 	}
 
 	if (true == GameEngineInput::GetInst()->IsPress(KEY_SPACEBAR))
@@ -83,4 +87,11 @@ void PlayerActor::InputController()
 	{
 	}
 
+	if (true == MoveDir_.IsNearlyZero())
+	{
+		return;
+	}
+
+	tmpMoveSpeed = MoveDir_ * SPEED_PLAYER * _DeltaTime;
+	DynamicActorComponent_->SetMoveSpeed(tmpMoveSpeed);
 }

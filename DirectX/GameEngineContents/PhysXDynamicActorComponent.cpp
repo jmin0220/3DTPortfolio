@@ -20,7 +20,7 @@ void PhysXDynamicActorComponent::CreatePhysXActors(physx::PxScene* _Scene, physx
 		physx::PxQuat(tmpQuat.x, tmpQuat.y, tmpQuat.z, tmpQuat.w));
 
 	// 마찰, 탄성계수
-	material_ = _physics->createMaterial(0.5f, 0.5f, 0.001f);
+	material_ = _physics->createMaterial(0.5f, 0.5f, 0.000f);
 
 	// TODO::배율을 적용할 경우 이쪽 코드를 사용
 	//float4 tmpMagnification = { SIZE_MAGNIFICATION_RATIO };
@@ -62,10 +62,26 @@ void PhysXDynamicActorComponent::CreatePhysXActors(physx::PxScene* _Scene, physx
 	dynamic_->attachShape(*shape_);
 
 	// RigidDynamic의 밀도를 설정
-	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 10.0f);
+	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 100000.0f);
 
 	// Scene에 액터 추가
 	_Scene->addActor(*dynamic_);
+}
+
+void PhysXDynamicActorComponent::SetMoveSpeed(float4 _MoveSpeed)
+{
+	//dynamic_->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, true);
+	dynamic_->setRigidDynamicLockFlags(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_X | physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z);
+
+	// TODO::LinearVelocity로 움직이는게 맞는듯.
+	// TODO::LinearVelocity를 직접 입력하는동안에는 충돌이 있어나지 않는다고 하니 확인해봐야함.
+	dynamic_->setLinearVelocity(physx::PxVec3(_MoveSpeed.x, _MoveSpeed.y, _MoveSpeed.z));
+	//dynamic_->setKinematicTarget(physx::PxTransform(physx::PxVec3(_MoveSpeed.x, _MoveSpeed.y, _MoveSpeed.z)));
+
+	//dynamic_->setForceAndTorque(physx::PxVec3(0.01f, 0.01f, 0.0f), physx::PxVec3(0.0f), physx::PxForceMode::eACCELERATION);
+	//dynamic_->addForce(physx::PxVec3(0.01f, 0.01f, 0.0f), physx::PxForceMode::eACCELERATION);
+
+	// physx::PxRigidBodyExt::addForceAtLocalPos(*dynamic_, physx::PxVec3(0.01f, 0.01f, 0.0f), physx::PxVec3(GeoMetryScale_.x * 0.5f, 0, 0), physx::PxForceMode::eIMPULSE);
 }
 
 void PhysXDynamicActorComponent::Start()
@@ -89,11 +105,4 @@ void PhysXDynamicActorComponent::Update(float _DeltaTime)
 	ParentActor_.lock()->GetTransform().SetWorldRotation(tmpWorldRot);
 
 
-	// TODO::LinearVelocity로 움직이는게 맞는듯.
-	// TODO::LinearVelocity를 직접 입력하는동안에는 충돌이 있어나지 않는다고 하니 확인해봐야함.
-	dynamic_->setLinearVelocity(physx::PxVec3(100.0f * _DeltaTime, 0.0f, 0.0f));
-	//dynamic_->setForceAndTorque(physx::PxVec3(0.01f, 0.01f, 0.0f), physx::PxVec3(0.0f), physx::PxForceMode::eACCELERATION);
-	//dynamic_->addForce(physx::PxVec3(0.01f, 0.01f, 0.0f), physx::PxForceMode::eACCELERATION);
-	
-	// physx::PxRigidBodyExt::addForceAtLocalPos(*dynamic_, physx::PxVec3(0.01f, 0.01f, 0.0f), physx::PxVec3(GeoMetryScale_.x * 0.5f, 0, 0), physx::PxForceMode::eIMPULSE);
 }
