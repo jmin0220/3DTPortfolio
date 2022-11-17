@@ -17,10 +17,12 @@ const float SliderFloatMax = 100000;
 
 static int FileIdx = 0;
 static int SpawnedIdx = 0;
+static int CollisionIdx = 0;
 
 
 MapEditorGUI::MapEditorGUI()
 	: IsChange_(false)
+	, IsFileExist_(false)
 {
 }
 
@@ -266,6 +268,8 @@ void MapEditorGUI::ShowLoadedList()
 	ImGui::BeginChild("MeshLoad", ImVec2(200, 100), true);
 	if (0 == FBXFiles_.size())
 	{
+		IsFileExist_ = false;
+		
 		if (ImGui::Selectable("Null", FileIdx == 0))
 		{
 			FileIdx = 0;
@@ -273,6 +277,8 @@ void MapEditorGUI::ShowLoadedList()
 	}
 	else
 	{
+		IsFileExist_ = true;
+
 		for (int i = 0; i < FBXFiles_.size(); ++i)
 		{
 			std::string FolderName = FBXFiles_[i].GetFileName();
@@ -283,6 +289,24 @@ void MapEditorGUI::ShowLoadedList()
 		}
 	}
 	ImGui::EndChild();
+
+	if (true == IsFileExist_)
+	{
+		ImGui::SameLine();
+
+		ImGui::BeginChild("CollisionList", ImVec2(200, 100), true);
+		MeshEnum ColEnum = MeshEnum::Col_StartPos;
+		for (int i = static_cast<int>(MeshEnum::Col_StartPos); i < static_cast<int>(MeshEnum::END); i++)
+		{
+			std::string CollisionTypeName = magic_enum::enum_name(ColEnum).data();
+			if (ImGui::Selectable(CollisionTypeName.c_str(), CollisionIdx == i))
+			{
+				CollisionIdx = i;
+			}
+			ColEnum = (MeshEnum)((int)ColEnum + 1);
+		}
+		ImGui::EndChild();
+	}
 }
 
 // 선택한 FBX 스폰버튼
@@ -294,7 +318,7 @@ void MapEditorGUI::OnClickSpawn()
 		{
 			return;
 		}
-		SpawnedObject NewObj;
+		//SpawnedObject NewObj;
 		std::string Extention = FBXFiles_[FileIdx].GetExtension();
 		std::string Name = FBXFiles_[FileIdx].GetFileName();
 		NewObj.Name_ = Name.substr(0, Name.size() - Extention.size());
@@ -373,6 +397,46 @@ void MapEditorGUI::OnClickSpawn()
 
 		SpawnedObjects_.push_back(NewObj);
 		ActorPicker::SelectedActor = NewObj.Actor_.lock();
+	}
+
+	if (true == IsFileExist_)
+	{
+		ImGui::SameLine();
+
+		if (true == ImGui::Button("SpawnCollision"))
+		{
+			MeshEnum ColEnum = (MeshEnum)((int)CollisionIdx);
+			NewObj.Name_ = magic_enum::enum_name(ColEnum).data();
+
+			NewObj.Actor_ = ConnectedLevel->CreateActor<PickableActor>();
+
+			std::map<std::string, MeshEnum> CollisionEnumMap_;
+			MeshEnum tmpEnum = MeshEnum::Col_StartPos;
+
+			for (int i = static_cast<int>(MeshEnum::Col_StartPos); i < static_cast<int>(MeshEnum::END); i++)
+			{
+				std::string tmp = magic_enum::enum_name(tmpEnum).data();
+				CollisionEnumMap_[tmp] = (MeshEnum)i;
+				tmpEnum = (MeshEnum)((int)tmpEnum + 1);
+			}
+
+			switch ((*CollisionEnumMap_.find(NewObj.Name_)).second)
+			{
+			case MeshEnum::Col_StartPos:
+				NewObj.Actor_.lock()->SetCollisionOnly(float4(1, 1, 1));
+				break;
+			case MeshEnum::Col_Goal:
+				NewObj.Actor_.lock()->SetCollisionOnly(float4(1, 1, 1));
+				break;
+			default:
+				break;
+			}
+
+			NewObj.Actor_.lock()->GetTransform().SetWorldPosition({ 0, 0, 0 });
+
+			SpawnedObjects_.push_back(NewObj);
+			ActorPicker::SelectedActor = NewObj.Actor_.lock();
+		}
 	}
 }
 
@@ -658,6 +722,16 @@ void MapEditorGUI::LoadData(const std::string& _FilePath, const std::string& _Fi
 		case MeshEnum::TestMap:
 		{
 			NewObj.Actor_.lock()->SetStaticMesh("TestMap.FBX");
+			break;
+		}
+		case MeshEnum::Col_StartPos:
+		{
+			NewObj.Actor_.lock()->SetCollisionOnly(Size);
+			break;
+		}
+		case MeshEnum::Col_Goal:
+		{
+			NewObj.Actor_.lock()->SetCollisionOnly(Size);
 			break;
 		}
 		case MeshEnum::END:

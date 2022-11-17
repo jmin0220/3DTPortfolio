@@ -22,6 +22,9 @@ enum class MeshEnum
 	// TEST
 	Rainbow,
 	TestMap,
+	// COLLISION
+	Col_StartPos,
+	Col_Goal,
 	END, // 가장 마지막
 };
 
@@ -69,10 +72,12 @@ private:
 
 	bool IsChange_;
 	bool CamFollowMode_;
+	bool IsFileExist_;
 
 	GameEngineLevel* ConnectedLevel;
 	std::weak_ptr<GameEngineActor> CurActor_;
 
+	SpawnedObject NewObj;
 	MeshEnum CurMesh;
 
 	std::string SelectFolderTexture_;
