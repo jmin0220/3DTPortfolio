@@ -16,6 +16,7 @@
 #include "GameManagerGUI.h"
 #include "StageTestLevel.h"
 #include "HexAGoneLevel.h"
+#include "PlayerTestLevel.h"
 
 #pragma comment(lib, "GameEngineBase.lib")
 #include <GameEngineCore/GameEngineRes.h>
@@ -128,6 +129,11 @@ void ContentsCore::CreateLevels()
 	}
 	{
 		GameEngineLevel* Level = CreateLevel<ScaleTestLevel>(LEVEL_NAME_SCALE_TEST);
+		Levels_.push_back(Level);
+	}	
+
+	{
+		GameEngineLevel* Level = CreateLevel<PlayerTestLevel>(LEVEL_NAME_PLAYER_TEST);
 		Levels_.push_back(Level);
 	}
 
@@ -251,6 +257,10 @@ void ContentsCore::LoadLevelResource(LEVELS _LEVEL)
 		break;
 	case LEVELS::SCALE_TEST:
 		Dir.Move(DIR_TESTLEVEL_SCALETEST);
+		ResScaleTest(Dir);
+		break;
+	case LEVELS::PLAYER_TEST:
+		Dir.Move(DIR_TESTLEVEL_PLAYERTEST);
 		ResScaleTest(Dir);
 		break;
 	// 확인을 위해 DIR_TESTLEVEL_MAPEDITOR 그대로 사용, 추후 각 스테이지에 맞게 로드 필요

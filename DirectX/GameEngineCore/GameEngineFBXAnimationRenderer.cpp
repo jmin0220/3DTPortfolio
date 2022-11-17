@@ -27,7 +27,7 @@ void FBXRendererAnimation::Init(const std::string_view& _Name, int _Index)
 	FBXAnimationData = Aniamtion->GetAnimationData(_Index);
 	Start = 0;
 	End = static_cast<unsigned int>(FBXAnimationData->TimeEndCount);
-	Info.Inter = 0.1f;
+	//Info.Inter = 0.1f;
 	BlendTime = 0.1f;
 }
 
@@ -60,7 +60,7 @@ void FBXRendererAnimation::Update(float _DeltaTime)
 
 		///////////////////////////////////////////////////////////////////////////////////
 
-		Info.CurFrameTime += _DeltaTime;
+		//Info.CurFrameTime += _DeltaTime;
 
 		if (nullptr != TimeEvent)
 		{

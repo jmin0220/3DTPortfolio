@@ -19,18 +19,15 @@ void TestCharacterAnimation::Start()
 		Renderer->SetFBXMesh("TestIdle.fbx", "TextureAnimation");
 
 		{
-			GameEngineRenderingEvent Event;
-			Event.ResourcesName = "TestIdle.fbx";
-			Event.Loop = true;
-			Event.Inter = 0.1f;
-			Renderer->CreateFBXAnimation("Idle", Event, 0);
+			Renderer->CreateFBXAnimation("Idle", 
+				GameEngineRenderingEvent{ "TestIdle.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
 		}
 
 		{
 			GameEngineRenderingEvent Event;
 			Event.ResourcesName = "TestWalk.fbx";
 			Event.Loop = true;
-			Event.Inter = 0.1f;
+			Event.Inter = 0.016666666666666666666666666666666666666666667f;
 			Renderer->CreateFBXAnimation("Walk", Event, 0);
 		}
 
@@ -38,7 +35,7 @@ void TestCharacterAnimation::Start()
 			GameEngineRenderingEvent Event;
 			Event.ResourcesName = "TestRun.fbx";
 			Event.Loop = true;
-			Event.Inter = 0.1f;
+			Event.Inter = 0.016666666666666666666666666666666666666666667f;
 			Renderer->CreateFBXAnimation("Run", Event, 0);
 		}
 
@@ -58,6 +55,7 @@ void TestCharacterAnimation::Start()
 			}
 		}
 	}
+
 	if (GameEngineInput::GetInst()->IsKey("1") == false)
 	{
 		GameEngineInput::GetInst()->CreateKey("1", '1');

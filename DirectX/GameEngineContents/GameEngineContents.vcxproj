@@ -323,6 +323,8 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="PlayerTestActor.h" />
+    <ClInclude Include="PlayerTestLevel.h" />
     <ClInclude Include="PreCompile.h" />
     <ClInclude Include="RoundEnd.h">
       <SubType>
@@ -577,6 +579,8 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="PlayerActor_State.cpp" />
+    <ClCompile Include="PlayerTestActor.cpp" />
+    <ClCompile Include="PlayerTestLevel.cpp" />
     <ClCompile Include="PreCompile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>

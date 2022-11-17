@@ -17,6 +17,7 @@
 #define DIR_TESTLEVEL_PHISICS "Levels\\TestLevels\\PhysicsTestLevel"
 #define DIR_TESTLEVEL_MAPEDITOR "Levels\\TestLevels\\MapEditorLevel"
 #define DIR_TESTLEVEL_SCALETEST "Levels\\TestLevels\\ScaleTestLevel"
+#define DIR_TESTLEVEL_PLAYERTEST "Levels\\TestLevels\\PlayerTestLevel"
 
 // ÆùÆ®
 #define FONT_NOTO_SANS_CJK_SC "Noto Sans CJK SC"
@@ -60,6 +61,7 @@
 #define LEVEL_NAME_CAMERA_TEST "CameraTestLevel"
 #define LEVEL_NAME_CAMERA_TEST "CameraTestLevel"
 #define LEVEL_NAME_SCALE_TEST "ScaleTestLevel"
+#define LEVEL_NAME_PLAYER_TEST "PlayerTestLevel"
 
 // Input Key
 #define KEY_W "W"

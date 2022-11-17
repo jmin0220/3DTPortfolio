@@ -151,6 +151,9 @@
     <Filter Include="02_Actor\Stage04Actor">
       <UniqueIdentifier>{621f28cc-edfb-4ca0-a281-3c4dad8fbea1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="999_Test\TestActor\PlayerTest">
+      <UniqueIdentifier>{6a067586-30fa-4f21-aed8-bea574287fb8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -330,9 +333,6 @@
     <ClInclude Include="PlayerActor.h">
       <Filter>02_Actor</Filter>
     </ClInclude>
-    <ClInclude Include="TestCharacterAnimation.h">
-      <Filter>999_Test\TestActor</Filter>
-    </ClInclude>
     <ClInclude Include="ScaleTestLevel.h">
       <Filter>999_Test\TestLevel</Filter>
     </ClInclude>
@@ -395,6 +395,15 @@
     </ClInclude>
     <ClInclude Include="TestWallActor.h">
       <Filter>999_Test\TestActor\ScaleTestActor</Filter>
+    </ClInclude>
+    <ClInclude Include="TestCharacterAnimation.h">
+      <Filter>999_Test\TestActor\ScaleTestActor</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerTestActor.h">
+      <Filter>999_Test\TestActor\PlayerTest</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerTestLevel.h">
+      <Filter>999_Test\TestLevel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -575,9 +584,6 @@
     <ClCompile Include="GameManagerGUI.cpp">
       <Filter>98_LevelGUI</Filter>
     </ClCompile>
-    <ClCompile Include="TestCharacterAnimation.cpp">
-      <Filter>999_Test\TestActor</Filter>
-    </ClCompile>
     <ClCompile Include="ScaleTestLevel.cpp">
       <Filter>999_Test\TestLevel</Filter>
     </ClCompile>
@@ -640,6 +646,15 @@
     </ClCompile>
     <ClCompile Include="TestWallActor.cpp">
       <Filter>999_Test\TestActor\ScaleTestActor</Filter>
+    </ClCompile>
+    <ClCompile Include="TestCharacterAnimation.cpp">
+      <Filter>999_Test\TestActor\ScaleTestActor</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerTestActor.cpp">
+      <Filter>999_Test\TestActor\PlayerTest</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerTestLevel.cpp">
+      <Filter>999_Test\TestLevel</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
