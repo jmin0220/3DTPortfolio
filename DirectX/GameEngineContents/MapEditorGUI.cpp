@@ -314,7 +314,6 @@ void MapEditorGUI::OnClickSpawn()
 		// 1. PickableActor ¼ÒÈ¯ ÈÄ
 		NewObj.Actor_ = ConnectedLevel->CreateActor<PickableActor>();
 		
-
 		std::map<std::string, MeshEnum> MeshEnumMap_;
 		MeshEnum tmpEnum = MeshEnum::START;
 

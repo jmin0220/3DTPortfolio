@@ -31,34 +31,16 @@ void PickableActor::Update(float _DeltaTime)
 // ActorPicker에 나 충돌했어요 알려줌
 void PickableActor::CheckPickingRay()
 {
-	if (nullptr == Collision_Picking)
+	if (nullptr == Collision_Picking_)
 	{
 		MsgBoxAssert("맵 에디터용 엑터에 피킹용 콜리전이 생성되지 않았습니다");
 	}
 
 	// 충돌했으면 PickedActors세트에 추가
-	bool Pickable = Collision_Picking->IsCollision(CollisionType::CT_OBB, CollisionGroup::Ray, CollisionType::CT_OBB,
+	bool Pickable = Collision_Picking_->IsCollision(CollisionType::CT_OBB, CollisionGroup::Ray, CollisionType::CT_OBB,
 		[=](std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other)
 		{
-			//if (true == GameEngineInput::GetInst()->IsDown("VK_LBUTTON"))
-			//{
-			//	if (CurPicking_Collision.lock() == nullptr)
-			//	{
-			//		CurPicking_Collision = _This;
-			//	}
 
-			//	//다른 액터의 콜리전이 선택됐다면.
-			//	if (CurPicking_Collision.lock() != _This)
-			//	{
-			//		if (_This->GetOrder() == static_cast<int>(CollisionGroup::Picking))
-			//		{
-			//			CurPicking_Collision.lock()->On();
-			//		}
-
-
-			//		CurPicking_Collision = _This;
-			//	}
-			//}
 
 			ActorPicker::PickedActors.insert(std::dynamic_pointer_cast<PickableActor>(shared_from_this()));
 
@@ -77,11 +59,11 @@ void PickableActor::CheckSelected()
 	// 선택된 엑터는 Axis콜리전을 활성화하고 피킹 콜리전을 비활성화
 	if (shared_from_this() == std::dynamic_pointer_cast<GameEngineUpdateObject>(ActorPicker::SelectedActor))
 	{
-		Collision_Picking->Off();
+		Collision_Picking_->Off();
 	}
 	else
 	{
-		Collision_Picking->On();
+		Collision_Picking_->On();
 	}
 }
 
@@ -98,11 +80,10 @@ void PickableActor::SetStaticMesh(const std::string& _FBX, const std::string& _T
 
 	// 피킹용 콜리전
 	float4 CollisionScale = FBXScale * 25;
-	Collision_Picking = CreateComponent<GameEngineCollision>();
-	Collision_Picking->GetTransform().SetLocalScale(CollisionScale);
-	Collision_Picking->SetDebugSetting(CollisionType::CT_OBB, float4(0.0f, 1.0f, 0.0f, 0.25f));
-	Collision_Picking->ChangeOrder(CollisionGroup::Picking);
-	
+	Collision_Picking_ = CreateComponent<GameEngineCollision>();
+	Collision_Picking_->GetTransform().SetLocalScale(CollisionScale);
+	Collision_Picking_->SetDebugSetting(CollisionType::CT_OBB, float4(0.5f, 0.0f, 0.0f, 0.25f));
+	Collision_Picking_->ChangeOrder(CollisionGroup::Picking);
 
 	// 렌더러
 	FBXRenderer_->GetTransform().SetLocalScale(FBXScale);
@@ -125,15 +106,46 @@ void PickableActor::SetStaticMesh(const std::string& _FBX, const std::string& _T
 	}
 }
 
+void PickableActor::SetCollisionOnly(const float4& _Scale)
+{
+	// 처음 세팅해줄 때
+	if (nullptr == CollisionRenderer_)
+	{
+		IsAxis_ = false;
+
+		CollisionRenderer_ = CreateComponent<GameEngineTextureRenderer>();
+		CollisionRenderer_->SetMesh("Box");
+		CollisionRenderer_->SetPipeLine("Color");
+		ResultColor_ = float4(0.0f, 1.0f, 0.0f, 0.5f);
+		CollisionRenderer_->GetRenderUnit().ShaderResources.SetConstantBufferLink("ResultColor", ResultColor_);
+
+		// 피킹용 콜리전
+		Collision_Picking_ = CreateComponent<GameEngineCollision>();
+		Collision_Picking_->GetTransform().SetLocalScale(_Scale);
+		Collision_Picking_->SetDebugSetting(CollisionType::CT_OBB, float4(0.5f, 0.0f, 0.0f, 0.25f));
+		Collision_Picking_->ChangeOrder(CollisionGroup::Picking);
+
+		// 렌더러
+		CollisionRenderer_->GetTransform().SetLocalScale(_Scale);
+	}
+	// 사이즈만 변경하고 싶을 때
+	else
+	{
+		CollisionRenderer_->GetTransform().SetLocalScale(_Scale);
+		Collision_Picking_->GetTransform().SetLocalScale(_Scale);
+	}
+
+}
+
 void PickableActor::SetAxisMove(float4 _Color, float4 _Scale, float4 _MoveDir)
 {
 	IsAxis_ = true;
 	MoveDir_ = _MoveDir;
 
-	Collision_Picking = CreateComponent<GameEngineCollision>();
-	Collision_Picking->GetTransform().SetLocalScale(_Scale);
-	Collision_Picking->SetDebugSetting(CollisionType::CT_OBB, _Color);
-	Collision_Picking->ChangeOrder(CollisionGroup::Picking);
+	Collision_Picking_ = CreateComponent<GameEngineCollision>();
+	Collision_Picking_->GetTransform().SetLocalScale(_Scale);
+	Collision_Picking_->SetDebugSetting(CollisionType::CT_OBB, _Color);
+	Collision_Picking_->ChangeOrder(CollisionGroup::Picking);
 
 }
 
@@ -143,8 +155,8 @@ void PickableActor::SetAxisRot(float4 _Color, float4 _Scale)
 	IsAxis_ = true;
 	//MoveDir_ = _MoveDir;
 
-	Collision_Picking = CreateComponent<GameEngineCollision>();
-	Collision_Picking->GetTransform().SetLocalScale(_Scale);
-	Collision_Picking->SetDebugSetting(CollisionType::CT_OBB, _Color);
-	Collision_Picking->ChangeOrder(CollisionGroup::Picking);
+	Collision_Picking_ = CreateComponent<GameEngineCollision>();
+	Collision_Picking_->GetTransform().SetLocalScale(_Scale);
+	Collision_Picking_->SetDebugSetting(CollisionType::CT_OBB, _Color);
+	Collision_Picking_->ChangeOrder(CollisionGroup::Picking);
 }

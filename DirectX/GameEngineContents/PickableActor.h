@@ -7,12 +7,20 @@ class PickableActor : public GameEngineActor
 {
 public:
 
-	// ★★★ CreateActor<PickableActor> 후에 무조건 호출해줘야함 ★★★
+	/// CreateActor<PickableActor> 후에 무조건 호출해줘야함
+
+	// 유저 메쉬 세팅할 PickableActor 세팅
 	void SetStaticMesh(const std::string& _FBX, const std::string& _Texture = "");
 
-	// Axis용
+	// Collision만 있는 PickableActor 세팅, 사이즈만 변경하고 싶을 때도 호출 가능
+	void SetCollisionOnly(const float4& _Scale);
+
+	/// ~ CreateActor<PickableActor> 후에 무조건 호출해줘야함
+
+	// Axis 세팅
 	void SetAxisMove(float4 _Color, float4 _Scale, float4 _MoveDir);
 	void SetAxisRot(float4 _Color, float4 _Scale);
+
 
 	bool IsAxis()
 	{
@@ -47,43 +55,22 @@ protected:
 	void CheckSelected();
 
 	// 맵 에딧용 콜리전, 캐릭용 콜리전은 별도로 생각해야함
-	std::shared_ptr<GameEngineCollision> Collision_Picking;
+	std::shared_ptr<GameEngineCollision> Collision_Picking_;
 	std::shared_ptr<GameEngineFBXStaticRenderer> FBXRenderer_;
-	std::shared_ptr<GameEngineCollision> PrevActorCol;
+
+	std::shared_ptr<GameEngineTextureRenderer> CollisionRenderer_;
+	float4 ResultColor_;
 
 	void Start() override;
 	void Update(float _DeltaTime) override;
 
 private:
+	// Axis 용
 	bool IsAxis_;
 	float4 MoveDir_;
 
-// .feat 희상형
-//public:
-	//float4 AxisDir;
-	//void SetAxisDir(float4 Dir)
-	//{
-	//	AxisDir = Dir;
-	//}
+	// 유저메쉬 없이 콜리전만 생성하고 싶다(발판, 세이브포인트, 골 지점)
 
-	//float4 GetAxisDir()
-	//{
-	//	return AxisDir;
-	//}
 
-	//int GetCollisionOrder()
-	//{
-	//	return Collision_Picking.lock()->GetOrder();
-	//}
-
-	//static std::weak_ptr<GameEngineCollision> GetCurPickingCol()
-	//{
-	//	return CurPicking_Collision;
-	//}
-
-	//std::weak_ptr<GameEngineCollision> GetPickingCol()
-	//{
-	//	return Collision_Picking;
-	//}
 };
 

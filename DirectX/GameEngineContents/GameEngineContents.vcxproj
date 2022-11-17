@@ -412,21 +412,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="XAxis.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="XAxisRot.h" />
-    <ClInclude Include="YAxis.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="YAxisRot.h" />
-    <ClInclude Include="ZAxis.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="ZAxisRot.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ActorPicker.cpp" />
@@ -684,21 +669,6 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="XAxis.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="XAxisRot.cpp" />
-    <ClCompile Include="YAxis.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="YAxisRot.cpp" />
-    <ClCompile Include="ZAxis.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="ZAxisRot.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

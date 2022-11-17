@@ -201,15 +201,6 @@
     <ClInclude Include="AxisActor.h">
       <Filter>02_Actor\MapEditorActor\AxisMove</Filter>
     </ClInclude>
-    <ClInclude Include="XAxis.h">
-      <Filter>02_Actor\MapEditorActor\AxisMove</Filter>
-    </ClInclude>
-    <ClInclude Include="YAxis.h">
-      <Filter>02_Actor\MapEditorActor\AxisMove</Filter>
-    </ClInclude>
-    <ClInclude Include="ZAxis.h">
-      <Filter>02_Actor\MapEditorActor\AxisMove</Filter>
-    </ClInclude>
     <ClInclude Include="TestActor_WaterPlane.h">
       <Filter>990_Tutorial\Shader\Actor</Filter>
     </ClInclude>
@@ -316,15 +307,6 @@
       <Filter>99_Global</Filter>
     </ClInclude>
     <ClInclude Include="AxisActorRot.h">
-      <Filter>02_Actor\MapEditorActor\AxisRotate</Filter>
-    </ClInclude>
-    <ClInclude Include="XAxisRot.h">
-      <Filter>02_Actor\MapEditorActor\AxisRotate</Filter>
-    </ClInclude>
-    <ClInclude Include="YAxisRot.h">
-      <Filter>02_Actor\MapEditorActor\AxisRotate</Filter>
-    </ClInclude>
-    <ClInclude Include="ZAxisRot.h">
       <Filter>02_Actor\MapEditorActor\AxisRotate</Filter>
     </ClInclude>
     <ClInclude Include="PhysXBoxGeometryComponent.h">
@@ -464,15 +446,6 @@
     <ClCompile Include="AxisActor.cpp">
       <Filter>02_Actor\MapEditorActor\AxisMove</Filter>
     </ClCompile>
-    <ClCompile Include="XAxis.cpp">
-      <Filter>02_Actor\MapEditorActor\AxisMove</Filter>
-    </ClCompile>
-    <ClCompile Include="YAxis.cpp">
-      <Filter>02_Actor\MapEditorActor\AxisMove</Filter>
-    </ClCompile>
-    <ClCompile Include="ZAxis.cpp">
-      <Filter>02_Actor\MapEditorActor\AxisMove</Filter>
-    </ClCompile>
     <ClCompile Include="TopMenu.cpp">
       <Filter>02_Actor\UIActor\LobbyUIs</Filter>
     </ClCompile>
@@ -576,15 +549,6 @@
       <Filter>02_Actor\UIActor\InGameUI</Filter>
     </ClCompile>
     <ClCompile Include="AxisActorRot.cpp">
-      <Filter>02_Actor\MapEditorActor\AxisRotate</Filter>
-    </ClCompile>
-    <ClCompile Include="XAxisRot.cpp">
-      <Filter>02_Actor\MapEditorActor\AxisRotate</Filter>
-    </ClCompile>
-    <ClCompile Include="YAxisRot.cpp">
-      <Filter>02_Actor\MapEditorActor\AxisRotate</Filter>
-    </ClCompile>
-    <ClCompile Include="ZAxisRot.cpp">
       <Filter>02_Actor\MapEditorActor\AxisRotate</Filter>
     </ClCompile>
     <ClCompile Include="PhysXBoxGeometryComponent.cpp">

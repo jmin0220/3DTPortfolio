@@ -37,7 +37,5 @@ private:
 	std::shared_ptr<class PickableActor> YAxis_;
 	std::shared_ptr<class PickableActor> ZAxis_;
 
-public:
-	void SetPosition();
 };
 
