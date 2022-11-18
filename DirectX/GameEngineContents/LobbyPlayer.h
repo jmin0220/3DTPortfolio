@@ -2,7 +2,7 @@
 #include <GameEngineCore/GameEngineActor.h>
 
 // 설명 : //로비에 서있을 플레이어
-class GameEngineFBXMesh;
+class GameEngineFBXAnimationRenderer;
 class LobbyPlayer : public GameEngineActor
 {
 public:
@@ -23,7 +23,8 @@ protected:
 
 	void LevelStartEvent() override;
 private:
-	std::shared_ptr<GameEngineFBXStaticRenderer> FBXRenderer_;
-	std::shared_ptr<GameEngineFBXMesh> Mesh;
+	std::shared_ptr<GameEngineFBXAnimationRenderer> FBXRenderer_;
+	std::shared_ptr<GameEngineFBXAnimationRenderer> Chair_;
+	//std::shared_ptr<GameEngineFBXMesh> Mesh;
 };
 

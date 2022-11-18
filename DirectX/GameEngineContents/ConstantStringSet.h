@@ -17,6 +17,7 @@
 #define DIR_TESTLEVEL_PHISICS "Levels\\TestLevels\\PhysicsTestLevel"
 #define DIR_TESTLEVEL_MAPEDITOR "Levels\\TestLevels\\MapEditorLevel"
 #define DIR_TESTLEVEL_SCALETEST "Levels\\TestLevels\\ScaleTestLevel"
+#define DIR_TESTLEVEL_LOBBY "Levels\\TestLevels\\LobbyTestLevel"
 #define DIR_TESTLEVEL_PLAYERTEST "Levels\\TestLevels\\PlayerTestLevel"
 
 // ÆùÆ®

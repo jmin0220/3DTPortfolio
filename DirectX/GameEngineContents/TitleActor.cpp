@@ -44,7 +44,6 @@ void TitleActor::Start()
 
 		Pattern_->GetRenderUnit().ShaderResources.SetTexture("Mask", "LogoBG.png");
 
-		Pattern_->GetPixelData().MulColor.a = 0.5f;
 	}
 
 	{

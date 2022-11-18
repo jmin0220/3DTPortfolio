@@ -9,6 +9,7 @@ class NoneMoney;
 class PlayButton;
 class SelectShowButton;
 class TopMenu;
+class Cursor;
 class LobbySetUI : public GameEngineActor
 {
 public:
@@ -37,5 +38,11 @@ private:
 	std::shared_ptr<PlayButton> PlayButton_;
 	std::shared_ptr<SelectShowButton> SelectShowButton_;
 	std::shared_ptr<TopMenu> TopMenu_;
+
+	std::shared_ptr<Cursor> Mouse_;
+
+	std::shared_ptr<GameEngineTextureRenderer> BG_;
+	std::shared_ptr<GameEngineTextureRenderer> Circle1_;
+	std::shared_ptr<GameEngineTextureRenderer> Circle2_;
 };
 

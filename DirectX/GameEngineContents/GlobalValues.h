@@ -42,7 +42,7 @@ enum class LEVELS
 
 
 	// 테스트용
-	TMP_TEST,
+	LOBBY_TEST,
 	PHYSICS_TEST,
 	PHYSX_TEST,
 	CAMERA_TEST,

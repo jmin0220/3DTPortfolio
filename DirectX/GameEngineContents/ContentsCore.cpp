@@ -238,6 +238,10 @@ void ContentsCore::LoadLevelResource(LEVELS _LEVEL)
 
 
 		// 임시/테스트 레벨
+	case LEVELS::LOBBY_TEST:
+		Dir.Move(DIR_TESTLEVEL_LOBBY);
+		ResLoadCameraTest(Dir);
+		break;
 	case LEVELS::CAMERA_TEST:
 		Dir.Move(DIR_TESTLEVEL_CAMERA);
 		ResLoadCameraTest(Dir);
@@ -322,7 +326,6 @@ void ContentsCore::ResScaleTest(GameEngineDirectory& _Dir)
 {
 	LevelAllResourceLoad(_Dir);
 }
-
 
 void ContentsCore::ResLoadCameraTest(GameEngineDirectory& _Dir)
 {

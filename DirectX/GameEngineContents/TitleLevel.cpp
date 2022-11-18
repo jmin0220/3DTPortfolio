@@ -38,4 +38,5 @@ void TitleLevel::LevelStartEvent()
 void TitleLevel::LevelEndEvent()
 {
 	TitleLogo->Death();
+	Mouse->Death();
 }
