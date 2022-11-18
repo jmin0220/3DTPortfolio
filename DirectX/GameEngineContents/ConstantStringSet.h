@@ -3,6 +3,12 @@
 // 사이즈 배율
 #define SIZE_MAGNIFICATION_RATIO 1.0f, 1.0f, 1.0f
 
+// 중력
+#define PHYSX_GRAVITY -9.81f
+
+// 플레이어 최대속력
+#define PLAYER_MAX_SPEED 8.0f
+
 // 디렉토리
 #define DIR_RESOURCES "Resources"
 #define DIR_GAMES "Texture2D\\Games"

@@ -62,7 +62,7 @@ void VirtualPhysXLevel::initPhysics(bool _interactive)
 
 	// Scene»ý¼º
 	physx::PxSceneDesc sceneDesc(Physics_->getTolerancesScale());
-	sceneDesc.gravity = physx::PxVec3(0.0f, -9.81f, 0.0f);
+	sceneDesc.gravity = physx::PxVec3(0.0f, PHYSX_GRAVITY, 0.0f);
 	DefaultCpuDispatcher_ = physx::PxDefaultCpuDispatcherCreate(2);
 	sceneDesc.cpuDispatcher = DefaultCpuDispatcher_;
 	sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;

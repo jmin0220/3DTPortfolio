@@ -3,7 +3,7 @@
 
 #include "CameraArm.h"
 
-float SPEED_PLAYER = 800.0f;
+float SPEED_PLAYER = 400000.0f;
 
 PlayerActor::PlayerActor() 
 {
@@ -77,6 +77,7 @@ void PlayerActor::InputController(float _DeltaTime)
 
 	if (true == GameEngineInput::GetInst()->IsPress(KEY_SPACEBAR))
 	{
+		DynamicActorComponent_->SetMoveJump();
 	}
 
 	if (true == GameEngineInput::GetInst()->IsPress(KEY_MOUSELEFT))
@@ -89,8 +90,16 @@ void PlayerActor::InputController(float _DeltaTime)
 
 	if (true == MoveDir_.IsNearlyZero())
 	{
+		// TODO::실제로는 무언가와 충돌했을때 호출
+		//DynamicActorComponent_->SetDynamicIdle();
+
 		return;
 	}
+
+	// 2개 이상의 키가 동시에 눌리면 문제가 발생하므로 노말라이즈
+	MoveDir_.Normalize3D();
+	// TODO::바닥의 마찰을 무시할 수 있도록
+	MoveDir_ += {0.0f, 0.001f, 0.0f};
 
 	tmpMoveSpeed = MoveDir_ * SPEED_PLAYER * _DeltaTime;
 	DynamicActorComponent_->SetMoveSpeed(tmpMoveSpeed);

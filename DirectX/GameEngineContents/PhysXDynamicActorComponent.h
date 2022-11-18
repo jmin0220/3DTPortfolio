@@ -18,6 +18,16 @@ public:
 
 	void SetMoveSpeed(float4 _MoveSpeed);
 
+	void SetMoveJump();
+
+	// RigidDynamic을 CCT에서 해제하는 함수
+	void SetDynamicIdle();
+
+	inline physx::PxVec3 GetLinearVelocity()
+	{
+		return dynamic_->getLinearVelocity();
+	}
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;

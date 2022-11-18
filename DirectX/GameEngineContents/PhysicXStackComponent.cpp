@@ -18,7 +18,7 @@ void PhysicXStackComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::PxP
 		, ParentActor_->GetTransform().GetWorldPosition().z);
 
 	// 표면, 마찰 등
-	material_ = _physics->createMaterial(0.5f, 0.5f, 0.6f);
+	material_ = _physics->createMaterial(0.0f, 0.f, 0.6f);
 
 	// 충돌체의 형태
 	// 충돌체의 크기는 절반의 크기를 설정하므로 실제 Renderer의 스케일은 충돌체의 2배로 설정되어야 함
@@ -29,6 +29,7 @@ void PhysicXStackComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::PxP
 	dynamic_->attachShape(*shape_);
 	// 중력이 적용되지 않도록
 	dynamic_->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, true);
+	dynamic_->setMaxLinearVelocity(1.0f);
 
 	// RigidDynamic의 밀도를 설정
 	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 10.0f);
