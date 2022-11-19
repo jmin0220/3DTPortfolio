@@ -31,6 +31,15 @@ void PlayerActor::Start()
 
 	// FSM
 	CreateFSMStates();
+
+	// TODO::충격테스트용 키
+	if (false == GameEngineInput::GetInst()->IsKey("ImpulsW"))
+	{
+		GameEngineInput::GetInst()->CreateKey("ImpulsW", VK_UP);
+		GameEngineInput::GetInst()->CreateKey("ImpulsA", VK_LEFT);
+		GameEngineInput::GetInst()->CreateKey("ImpulsS", VK_DOWN);
+		GameEngineInput::GetInst()->CreateKey("ImpulsD", VK_RIGHT);
+	}
 }
 
 void PlayerActor::Update(float _DeltaTime)
@@ -40,6 +49,9 @@ void PlayerActor::Update(float _DeltaTime)
 	PlayerStateManager_.Update(_DeltaTime);
 
 	GetTransform().SetWorldMove(MoveDir_ * SPEED_PLAYER * _DeltaTime);
+
+	// TODO::충격테스트코드
+	ImpulseTest();
 }
 
 void PlayerActor::LevelStartEvent()
@@ -103,4 +115,35 @@ void PlayerActor::InputController(float _DeltaTime)
 
 	tmpMoveSpeed = MoveDir_ * SPEED_PLAYER * _DeltaTime;
 	DynamicActorComponent_->SetMoveSpeed(tmpMoveSpeed);
+}
+
+// TODO::물리 충격 테스트
+void PlayerActor::ImpulseTest()
+{
+	float4 tmpPower = float4::ZERO;
+	float tmpImpulse = 10.0f;
+
+	if (true == GameEngineInput::GetInst()->IsPress("ImpulsW"))
+	{
+		tmpPower = { 0.0f, 0.0f, tmpImpulse };
+	}
+	if (true == GameEngineInput::GetInst()->IsPress("ImpulsA"))
+	{
+		tmpPower = { -tmpImpulse, 0.0f, 0.0f };
+	}
+	if (true == GameEngineInput::GetInst()->IsPress("ImpulsS"))
+	{
+		tmpPower = { 0.0f, 0.0f, -tmpImpulse };
+	}
+	if (true == GameEngineInput::GetInst()->IsPress("ImpulsD"))
+	{
+		tmpPower = { tmpImpulse, 0.0f, 0.0f };
+	}
+
+	if (true == tmpPower.IsNearlyZero())
+	{
+		return;
+	}
+
+	DynamicActorComponent_->PushImpulse(tmpPower);
 }

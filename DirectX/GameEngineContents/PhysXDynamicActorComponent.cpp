@@ -46,28 +46,33 @@ void PhysXDynamicActorComponent::CreatePhysXActors(physx::PxScene* _Scene, physx
 	// 충돌체의 형태
 	// 충돌체의 크기는 절반의 크기를 설정하므로 실제 Renderer의 스케일은 충돌체의 2배로 설정되어야 함
 	// TODO::부모 액터의 RenderUnit으로부터 Mesh의 Scale 과 WorldScale의 연산의 결과를 지오메트리의 Scale로 세팅해야함.
-	shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(_GeoMetryScale.x * 0.5f * 0.25f), *material_);
-	shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, _GeoMetryScale.x * 0.5f * 0.25f, 0)));
-	shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(_GeoMetryScale.x * 0.5f * 0.25f), *material_);
-	shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, _GeoMetryScale.x * 0.5f * 0.75f, 0)));
-	shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(_GeoMetryScale.x * 0.5f * 0.25f), *material_);
-	shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, _GeoMetryScale.x * 0.5f * 1.25f, 0)));
-	shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(_GeoMetryScale.x * 0.5f * 0.25f), *material_);
-	shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, _GeoMetryScale.x * 0.5f * 1.75f, 0)));
-
-	//shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxBoxGeometry(physx::PxVec3(_GeoMetryScale.x * 0.5f * 0.25f)), *material_);
+	//shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(_GeoMetryScale.x * 0.5f * 0.25f), *material_);
 	//shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, _GeoMetryScale.x * 0.5f * 0.25f, 0)));
-	//shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxBoxGeometry(physx::PxVec3(_GeoMetryScale.x * 0.5f * 0.25f)), *material_);
+	//shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(_GeoMetryScale.x * 0.5f * 0.25f), *material_);
 	//shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, _GeoMetryScale.x * 0.5f * 0.75f, 0)));
-	//shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxBoxGeometry(physx::PxVec3(_GeoMetryScale.x * 0.5f * 0.25f)), *material_);
+	//shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(_GeoMetryScale.x * 0.5f * 0.25f), *material_);
 	//shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, _GeoMetryScale.x * 0.5f * 1.25f, 0)));
-	//shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxBoxGeometry(physx::PxVec3(_GeoMetryScale.x * 0.5f * 0.25f)), *material_);
+	//shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(_GeoMetryScale.x * 0.5f * 0.25f), *material_);
 	//shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, _GeoMetryScale.x * 0.5f * 1.75f, 0)));
 
-	dynamic_->attachShape(*shape_);
+	// Note. 각 Shape의 크기, updateMassAndInertia로 질량을 업데이트하는 순간이 모두 Shape의 전체 무게중심에 그 결과에 관여함.
+	// 따라서, 필요에 따라 구의 크기를 조절하고, 질량을 업데이트해서 무게중심을 조절해야함.
+	shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(.2f), *material_);
+	shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, -.29, 0)));
 
 	// RigidDynamic의 밀도를 설정
-	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 1000.0f);
+	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 10000.0f);
+
+	shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(.5f), *material_);
+	//shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, _GeoMetryScale.x * 0.5f * 0.75f, 0)));
+	shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(.4f), *material_);
+	shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, .6, 0)));
+	shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(.3f), *material_);
+	shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, 1.1, 0)));
+
+	// dynamic_->attachShape(*shape_);
+
+
 
 	// Scene에 액터 추가
 	_Scene->addActor(*dynamic_);
@@ -120,7 +125,7 @@ void PhysXDynamicActorComponent::SetMoveSpeed(float4 _MoveSpeed)
 void PhysXDynamicActorComponent::SetMoveJump()
 {
 	// 
-	dynamic_->addForce(physx::PxVec3(0.0f, 50.0f, 0.0f), physx::PxForceMode::eIMPULSE);
+	dynamic_->addForce(physx::PxVec3(0.0f, 20.0f, 0.0f), physx::PxForceMode::eIMPULSE);
 }
 
 void PhysXDynamicActorComponent::SetDynamicIdle()
@@ -156,4 +161,13 @@ void PhysXDynamicActorComponent::Update(float _DeltaTime)
 	ParentActor_.lock()->GetTransform().SetWorldRotation(tmpWorldRot);
 
 
+}
+
+void PhysXDynamicActorComponent::PushImpulse(float4 _ImpulsePower)
+{
+	// 고정된 축을 해제
+	dynamic_->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_X, false);
+	dynamic_->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z, false);
+
+	dynamic_->addForce(physx::PxVec3(_ImpulsePower.x, _ImpulsePower.y, _ImpulsePower.z), physx::PxForceMode::eIMPULSE);
 }

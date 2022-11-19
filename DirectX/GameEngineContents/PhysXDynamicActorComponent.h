@@ -28,6 +28,8 @@ public:
 		return dynamic_->getLinearVelocity();
 	}
 
+	void PushImpulse(float4 _ImpulsePower);
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;

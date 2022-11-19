@@ -54,5 +54,9 @@ private:
 	// 입력
 	void InputController(float _DeltaTime);
 	float4 MoveDir_;
+
+
+	// TODO::테스트코드
+	void ImpulseTest();
 };
 
