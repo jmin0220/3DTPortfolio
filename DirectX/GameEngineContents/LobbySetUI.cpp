@@ -10,6 +10,7 @@
 #include "Cursor.h"
 
 LobbySetUI::LobbySetUI() 
+	:IsLevelOn_(false)
 {
 }
 
@@ -23,10 +24,28 @@ void LobbySetUI::Start()
 
 void LobbySetUI::Update(float _DeltaTime)
 {
+	Time_ += (_DeltaTime * 5.0f);
+
+	if (IsLevelOn_ == true)
+	{
+		Circle1_->GetTransform().SetWorldScale({ CircleSize_.x  + Time_, CircleSize_.y  + Time_, 1.0f });
+		Circle2_->GetTransform().SetWorldScale({ CircleSize_.x + 4.0f + (Time_*2.f), CircleSize_.y + 4.0f + (Time_ * 2.f), 1.0f });
+
+		if (Time_ > 125.0f)
+		{
+			Circle1_->GetTransform().SetWorldScale({ 1.0f,1.0f,1.0f });
+			Circle2_->GetTransform().SetWorldScale({ 2.0f,2.0f,1.0f });
+			Time_ = 0.0f;
+		}
+	}
 }
 
 void LobbySetUI::LevelStartEvent()
 {
+	CircleSize_ = { 1,1 };
+	IsLevelOn_ = true;
+	Time_ = 0.0f;
+
 	BG_ = CreateComponent<GameEngineTextureRenderer>();
 	BG_->SetTexture("LobbyBG.png");
 	BG_->SetPivot(PIVOTMODE::CENTER);
@@ -36,17 +55,12 @@ void LobbySetUI::LevelStartEvent()
 	Circle1_ = CreateComponent<GameEngineTextureRenderer>();
 	Circle1_->SetTexture("Circle1.png");
 	Circle1_->SetPivot(PIVOTMODE::CENTER);
-	Circle1_->GetTransform().SetWorldScale({ 1600,900 });
+	Circle1_->GetTransform().SetWorldScale({ 1,1,1 });
 
-	Circle1_->GetRenderUnit().SetPipeLine("TextureLoop");
-	Circle1_->GetRenderUnit().EngineShaderResourcesSetting(Circle1_);
-	Circle1_->GetRenderUnit().ShaderResources.SetTexture("Tex", "Circle1.png");
-	float4 SlicePos_ = float4(1, 0, 0, 0);
-	if (true == Circle1_->GetRenderUnit().ShaderResources.IsConstantBuffer("SliceData"))
-	{
-		Circle1_->GetRenderUnit().ShaderResources.SetConstantBufferLink("SliceData", SlicePos_);
-	}
-	Circle1_->GetRenderUnit().ShaderResources.SetTexture("Mask", "LobbyBG.png");
+	Circle2_ = CreateComponent<GameEngineTextureRenderer>();
+	Circle2_->SetTexture("Circle2.png");
+	Circle2_->SetPivot(PIVOTMODE::CENTER);
+	Circle2_->GetTransform().SetWorldScale({ 5,5,1 });
 
 	CrownCount_ = GetLevel()->CreateActor<CrownCount>();
 	NamePlate_ = GetLevel()->CreateActor<NamePlate>();
@@ -68,5 +82,6 @@ void LobbySetUI::LevelEndEvent()
 	SelectShowButton_->GetLevel()->Death();
 	TopMenu_->GetLevel()->Death();
 	Mouse_->GetLevel()->Death();
+	IsLevelOn_ = false;
 }
 

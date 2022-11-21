@@ -44,7 +44,7 @@ void LobbyLevel::LevelStartEvent()
 	//InGameSetUI_ = CreateActor<InGameSetUI>();
 
 	Player_ = CreateActor<LobbyPlayer>();
-	Player_->GetTransform().SetWorldPosition({ 0,-100,600});//현재 z값 영향을 안받음
+	Player_->GetTransform().SetWorldPosition({ 0, -15, 0});//현재 z값 영향을 안받음
 	Player_->GetTransform().SetWorldRotation({ 0,160,0 });//반측면으로 돌림
 
 	//Test_ = CreateActor<TestActor>();

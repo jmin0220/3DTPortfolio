@@ -44,5 +44,9 @@ private:
 	std::shared_ptr<GameEngineTextureRenderer> BG_;
 	std::shared_ptr<GameEngineTextureRenderer> Circle1_;
 	std::shared_ptr<GameEngineTextureRenderer> Circle2_;
+
+	float4 CircleSize_;
+	bool IsLevelOn_;
+	float Time_;
 };
 
