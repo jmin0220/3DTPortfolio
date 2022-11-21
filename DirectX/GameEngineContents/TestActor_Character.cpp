@@ -62,7 +62,7 @@ void TestActor_Character::Start()
 			}
 		}
 	}
-	FBXRenderer_->GetTransform().SetWorldScale({ 200, 200, 200 });
+	FBXRenderer_->GetTransform().SetWorldScale({ 3, 3, 3 });
 	
 
 	// GUI
@@ -93,26 +93,26 @@ void TestActor_Character::PlayerInputController()
 {
 	MoveDir_ = float4::ZERO;
 
-	if (true == GameEngineInput::GetInst()->IsPress("W"))
-	{
-		// 카메라가 바라보는 방향을 앞으로
-		MoveDir_ += GetLevel()->GetMainCameraActor()->GetTransform().GetForwardVector();
-	}
+	//if (true == GameEngineInput::GetInst()->IsPress("W"))
+	//{
+	//	// 카메라가 바라보는 방향을 앞으로
+	//	MoveDir_ += GetLevel()->GetMainCameraActor()->GetTransform().GetForwardVector();
+	//}
 
-	if (true == GameEngineInput::GetInst()->IsPress("A"))
-	{
-		MoveDir_ += float4(-1.0f, 0.0f, 0.0f, 0.0f);
-	}
+	//if (true == GameEngineInput::GetInst()->IsPress("A"))
+	//{
+	//	MoveDir_ += float4(-1.0f, 0.0f, 0.0f, 0.0f);
+	//}
 
-	if (true == GameEngineInput::GetInst()->IsPress("S"))
-	{
-		MoveDir_ += float4(0.0f, 0.0f, -1.0f, 0.0f);
-	}
+	//if (true == GameEngineInput::GetInst()->IsPress("S"))
+	//{
+	//	MoveDir_ += float4(0.0f, 0.0f, -1.0f, 0.0f);
+	//}
 
-	if (true == GameEngineInput::GetInst()->IsPress("D"))
-	{
-		MoveDir_ += float4(1.0f, 0.0f, 0.0f, 0.0f);
-	}
+	//if (true == GameEngineInput::GetInst()->IsPress("D"))
+	//{
+	//	MoveDir_ += float4(1.0f, 0.0f, 0.0f, 0.0f);
+	//}
 
 	if (true == GameEngineInput::GetInst()->IsPress("SpaceBar"))
 	{

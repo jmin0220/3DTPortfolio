@@ -23,6 +23,7 @@ protected:
 	void Update(float _DeltaTime) override;
 
 	void LevelStartEvent() override;
+	void LevelEndEvent() override;
 
 private:
 	std::shared_ptr<GameEngineFBXStaticRenderer> FbxRenderer_;

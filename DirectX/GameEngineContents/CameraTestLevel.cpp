@@ -4,6 +4,7 @@
 
 #include "TestActor_WaterPlane.h"
 #include "TestActor_Character.h"
+#include "SkyboxActor.h"
 
 CameraTestLevel::CameraTestLevel() 
 {
@@ -50,19 +51,23 @@ void CameraTestLevel::LevelStartEvent()
 
 	// 竣磐 积己
 	std::shared_ptr<GameEngineActor> Floor = CreateActor<TestActor_WaterPlane>();
-	Actors_.push_back(Floor);
+	Floor->GetTransform().SetWorldPosition({ 0, -5000, 0 });
 
 	std::shared_ptr<GameEngineActor> Player = CreateActor<TestActor_Character>();
-	Player->GetTransform().SetWorldPosition({ 0, 300, 0 });
+	Player->GetTransform().SetWorldPosition({ 0, 0, 0 });
+
+	std::shared_ptr<GameEngineActor> Skybox = CreateActor<SkyboxActor>();
+	Skybox->GetTransform().SetWorldScale({ 100, 100, 100 });
+
 	Actors_.push_back(Player);
+	
 }
 
 void CameraTestLevel::LevelEndEvent()
 {
-	// 竣磐 力芭
-	for (std::shared_ptr<GameEngineActor> Actor : Actors_)
+	for (std::shared_ptr<GameEngineActor> Ptr : Actors_)
 	{
-		Actor->Death();
+		Ptr->Death();
 	}
 
 	// 府家胶 秦力

@@ -61,6 +61,11 @@ void PlayerActor::LevelStartEvent()
 	FbxRenderer_->GetTransform().SetWorldScale({ 3,3,3 });
 }
 
+void PlayerActor::LevelEndEvent()
+{
+	CameraArm_->Off();
+}
+
 void PlayerActor::InputController(float _DeltaTime)
 {
 	float4 tmpMoveSpeed = float4::ZERO;

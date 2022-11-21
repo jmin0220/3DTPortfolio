@@ -414,6 +414,9 @@
     <ClInclude Include="PlayerTestLevel.h">
       <Filter>999_Test\TestLevel</Filter>
     </ClInclude>
+    <ClInclude Include="SkyboxActor.h">
+      <Filter>999_Test\TestActor\CameraTest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -673,6 +676,9 @@
     </ClCompile>
     <ClCompile Include="PlayerTestLevel.cpp">
       <Filter>999_Test\TestLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="SkyboxActor.cpp">
+      <Filter>999_Test\TestActor\CameraTest</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -28,6 +28,7 @@ protected:
 	void OffEvent() override;
 
 private:
+	void GetCursurInput();
 	void FollowCharacterPosition();
 	void CameraLookPlayer();
 	void HorizontalOrbitCamera();
@@ -52,9 +53,12 @@ private:
 
 
 	// Mouse회전
-	float4 PrevMouseInput_;
-	float4 CurMouseInput_;
+	float4 PrevMousePos_;
+	float4 CurMousePos_;
+	float PrevMoveLength_;
+	float CurMoveLength_;
 	float4 MouseMove_;
+	float4 ScreenCenterPos_;
 
 	// 디버깅
 	void GuIDebugFunc();

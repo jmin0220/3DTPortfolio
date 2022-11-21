@@ -2,11 +2,14 @@
 #include "CameraArm.h"
 
 // 카메라 움직임 속도
-float SPEED_CAM_X = 0.5f;
-float SPEED_CAM_Y = 0.5f;
+float SPEED_CAM_X = 1.0f;
+float SPEED_CAM_Y = 1.0f;
 
-const float4 DEFAULT_ARMVEC(0, 1.2f, -1.5f);
-const float4 DEFAULT_POSHEAD(0, 2.0f, 0);
+const float4 DEFAULT_ARMVEC(0, 4.2f, -4.5f);
+const float4 DEFAULT_POSHEAD(0, 8.0f, 0);
+
+const float4 SIZE_MENUBAR(8, 31, 0); // 마우스를 화면 가운데로 고정하기 위한 오차
+//const float4 SIZE_MENUBAR(0, 0, 0); // 마우스를 화면 가운데로 고정하기 위한 오차
 
 CameraArm::CameraArm()
 	: Camera_(nullptr)
@@ -44,6 +47,7 @@ void CameraArm::Start()
 	GUI = GameEngineGUI::CreateGUIWindow<CustomableGUI>("CustomableGUI", nullptr);
 	GUI->SetGUIDebugFunc([=]() {GuIDebugFunc(); });
 	GUI->Off();
+
 }
 
 void CameraArm::SetFollowCamera(std::shared_ptr<GameEngineCameraActor> _Camera, std::shared_ptr<GameEngineActor> _Character)
@@ -64,6 +68,10 @@ void CameraArm::SetFollowCamera(std::shared_ptr<GameEngineCameraActor> _Camera, 
 	PosHead_ = DEFAULT_POSHEAD;
 
 
+	// 마우스 게임중일 때 화면 가운데 위치를 유지
+	ScreenCenterPos_ = GameEngineWindow::GetScale() / 2.0f;
+	PrevMousePos_ = ScreenCenterPos_;
+	SetCursorPos(ScreenCenterPos_.ix(), ScreenCenterPos_.iy());
 }
 
 void CameraArm::SetArmLength(float _Depth, float _Height)
@@ -88,9 +96,9 @@ void CameraArm::Update(float _DeltaTime)
 		return;
 	}
 
-	// 마우스 입력 받음
-	CurMouseInput_ = Camera_->GetCameraComponent()->GetMouseScreenPosition();
-	MouseMove_ = CurMouseInput_ - PrevMouseInput_;
+	ZoomInOut();
+
+	GetCursurInput();
 
 	// 카메라 홀더 위치 받음
 	PosCamHolder_ = CamHolderCollision_->GetTransform().GetWorldPosition();
@@ -106,10 +114,6 @@ void CameraArm::Update(float _DeltaTime)
 	VerticalOrbitCamera();
 	HorizontalOrbitCamera();
 
-	// 마우스 입력 초기화
-	PrevMouseInput_ = CurMouseInput_;
-
-	ZoomInOut();
 }
 
 void CameraArm::End()
@@ -124,6 +128,20 @@ void CameraArm::OnEvent()
 void CameraArm::OffEvent()
 {
 	GUI->Off();
+}
+
+// 마우스 커서 화면 중심으로 고정
+void CameraArm::GetCursurInput()
+{
+	// 커서, 화면 중심으로부터 멀어지면 움직이고, 중심으로 되돌아가는거면 안움직이는 방식
+	CurMousePos_ = Camera_->GetCameraComponent()->GetMouseScreenPosition();
+
+	float4 MouseDelta = CurMousePos_ - ScreenCenterPos_ + SIZE_MENUBAR;
+	MouseMove_.x = abs(MouseDelta.x) > 0.01f ? MouseDelta.x : 0.0f;
+	MouseMove_.y = abs(MouseDelta.y) > 0.01f ? MouseDelta.y : 0.0f;
+
+	SetCursorPos(ScreenCenterPos_.ix(), ScreenCenterPos_.iy());
+	CurMousePos_ = ScreenCenterPos_;
 }
 
 // 필요없을 예정
@@ -146,7 +164,6 @@ void CameraArm::CameraLookPlayer()
 	// 내적
 	float Angle = acosf(float4::DotProduct3D(Forward, Target)) * GameEngineMath::RadianToDegree;
 
-	DebugValue = Angle;
 	Camera_->GetTransform().SetAddWorldRotation({ Angle, 0, 0 });
 
 }
@@ -160,10 +177,9 @@ void CameraArm::HorizontalOrbitCamera()
 // 마우스 세로 움직임
 void CameraArm::VerticalOrbitCamera()
 {
-
-	// 카메라 떨림 현상 제거
+	// 카메라 떨림 현상 제거 -> Clamp
 	float Rot = CamAxisX_->GetTransform().GetLocalRotation().x + MouseMove_.y * SPEED_CAM_Y;
-	float ClampRot = std::clamp(Rot, -40.0f, 40.0f);
+	float ClampRot = std::clamp(Rot, -30.0f, 30.0f);
 
 	CamAxisX_->GetTransform().SetLocalRotation({ ClampRot, 0, 0 });
 }
@@ -172,6 +188,11 @@ void CameraArm::ZoomInOut()
 {
 	// 카메라 암 갱신
 	int Wheel = GameEngineInput::GetInst()->GetMouseWheel();
+	
+	if (Wheel == 0)
+	{
+		return;
+	}
 
 	if (Wheel < 0)
 	{
@@ -204,7 +225,7 @@ void CameraArm::GuIDebugFunc()
 
 	{
 		float4 Pos = DebugValue;
-		std::string Name = "TargetDegree : " + std::to_string(Pos.x) + " | " + std::to_string(Pos.y) + " | " + std::to_string(Pos.z) + " | " + std::to_string(Pos.w);
+		std::string Name = "MouseVec : " + std::to_string(Pos.x) + " | " + std::to_string(Pos.y) + " | " + std::to_string(Pos.z) + " | " + std::to_string(Pos.w);
 		ImGui::Text(Name.c_str());
 	}
 
