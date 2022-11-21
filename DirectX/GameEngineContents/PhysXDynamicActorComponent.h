@@ -28,6 +28,20 @@ public:
 		return dynamic_->getLinearVelocity();
 	}
 
+	inline void SetlockAxis()
+	{
+		dynamic_->setRigidDynamicLockFlags(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_X | physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z);
+	}
+
+	inline void SetUnlockAxis()
+	{
+		// 고정된 축을 해제
+		dynamic_->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_X, false);
+		dynamic_->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z, false);
+
+		dynamic_->addForce(physx::PxVec3(0.0f, 0.01f, 0.0f), physx::PxForceMode::eIMPULSE);
+	}
+
 	void PushImpulse(float4 _ImpulsePower);
 
 protected:

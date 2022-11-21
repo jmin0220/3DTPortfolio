@@ -58,7 +58,7 @@ void PhysXDynamicActorComponent::CreatePhysXActors(physx::PxScene* _Scene, physx
 	// Note. 각 Shape의 크기, updateMassAndInertia로 질량을 업데이트하는 순간이 모두 Shape의 전체 무게중심에 그 결과에 관여함.
 	// 따라서, 필요에 따라 구의 크기를 조절하고, 질량을 업데이트해서 무게중심을 조절해야함.
 	shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(.2f), *material_);
-	shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, -.29, 0)));
+	shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, -.1f, 0)));
 
 	// RigidDynamic의 밀도를 설정
 	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 10000.0f);
@@ -70,7 +70,20 @@ void PhysXDynamicActorComponent::CreatePhysXActors(physx::PxScene* _Scene, physx
 	shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(.3f), *material_);
 	shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, 1.1, 0)));
 
-	// dynamic_->attachShape(*shape_);
+	
+	//// Note. 각 Shape의 크기, updateMassAndInertia로 질량을 업데이트하는 순간이 모두 Shape의 전체 무게중심에 그 결과에 관여함.
+	//// 따라서, 필요에 따라 구의 크기를 조절하고, 질량을 업데이트해서 무게중심을 조절해야함.
+	//shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(.5f), *material_);
+	////shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, -.29, 0)));
+
+	//shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(.4f), *material_);
+	//shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, .6f, 0)));
+	//shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(.3f), *material_);
+	//shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, 1.1f, 0)));
+
+	//// RigidDynamic의 밀도를 설정
+	//const physx::PxVec3 localPos = physx::PxVec3(0, -.5, 0);
+	//physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 500.0f, &localPos);
 
 
 
