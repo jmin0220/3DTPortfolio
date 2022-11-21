@@ -29,6 +29,9 @@
     </FxCompile>
     <FxCompile Include="RenderOption.fx" />
     <FxCompile Include="TransformHeader.fx" />
+    <FxCompile Include="TextureColor.hlsl">
+      <Filter>Texture</Filter>
+    </FxCompile>
     <FxCompile Include="Bloom.hlsl">
       <Filter>PostEfffect</Filter>
     </FxCompile>

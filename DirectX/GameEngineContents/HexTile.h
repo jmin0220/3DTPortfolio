@@ -29,13 +29,31 @@ protected:
 	void CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics) override;
 
 private:
+	HexTileState Mode_;
+
 	std::shared_ptr<PhysXBoxGeometryComponent> PhysXBoxGeometry_;
 	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer_;
 	std::shared_ptr<GameEngineCollision> Collision_;   //트리거 콜리전
 	std::string TexName;
 
-	bool Trigger_;
+	float4 CurPos;
+	float4 MyPos;
 
+	MeshPixelData MeshPixelData_;
+
+	float Speed_;
+	bool Trigger_;
+	bool Shake_;
+	bool Flag_;
+
+	GameEngineStateManager StateManager_;
+
+
+	void MoveStart(const StateInfo& _Info);
+	void MoveUpdate(float _DeltaTime, const StateInfo& _Info);
+
+	void ShakeStart(const StateInfo& _Info);
+	void ShakeUpdate(float _DeltaTime, const StateInfo& _Info);
 public:
 	inline std::shared_ptr<GameEngineFBXStaticRenderer> GetRenderer()
 	{

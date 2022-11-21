@@ -196,6 +196,13 @@ void ContentsCore::LoadShaders()
 	}
 
 	{
+		//텍스쳐 Color 용
+		std::shared_ptr<GameEngineMaterial> Material = GameEngineMaterial::Create("TextureColor");
+		Material->SetVertexShader("TextureColor.hlsl");
+		Material->SetPixelShader("TextureColor.hlsl");
+	}
+
+	{
 		std::shared_ptr<GameEngineMaterial> Material = GameEngineMaterial::Create("CustomColor");
 		Material->SetVertexShader("CustomColor.hlsl");
 		Material->SetPixelShader("CustomColor.hlsl");

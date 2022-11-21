@@ -1,5 +1,20 @@
 #pragma once
 
+struct MeshPixelData
+{
+	float4 MulColor;
+	float4 PlusColor;
+	float4 Slice;
+
+	MeshPixelData()
+		: MulColor(float4::WHITE)
+		, PlusColor(float4::ZERO)
+		, Slice(float4::ZERO)
+	{
+
+	}
+};
+
 enum class CollisionGroup
 {
 	Axis,
@@ -18,6 +33,12 @@ enum class AxisMode
 {
 	Move,
 	Rotate
+};
+
+enum class HexTileState
+{
+	Move,
+	Shake
 };
 
 

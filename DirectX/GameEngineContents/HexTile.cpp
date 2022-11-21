@@ -4,7 +4,10 @@
 #include <GameEngineBase/GameEngineRandom.h>
 
 HexTile::HexTile() :
-	Trigger_(false)
+	Trigger_(false),
+	Shake_(false),
+	Flag_(false),
+	Speed_(3.0f)
 {
 }
 
@@ -15,7 +18,7 @@ HexTile::~HexTile()
 void HexTile::Start()
 {
 	Collision_ = CreateComponent<GameEngineCollision>();
-	Collision_->GetTransform().SetWorldScale({ 9.0f,3.0f,9.0f });
+	Collision_->GetTransform().SetWorldScale({ 8.0f,3.0f,8.0f });
 
 
 	// 1. 사용할 PhysX컴포넌트를 Create
@@ -23,13 +26,14 @@ void HexTile::Start()
 
 	// 2. 메쉬세팅 Static renderer
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
-	Renderer_->SetFBXMesh("HexTile.FBX", "Texture");
+	Renderer_->SetFBXMesh("HexTile.FBX", "TextureColor");
 	//Renderer_->GetTransform().SetWorldScale({ 10.0f,10.0f,10.0f });
 	std::vector<std::vector<GameEngineRenderUnit>>& UnitSet = Renderer_->GetAllRenderUnit();
 	for (std::vector<GameEngineRenderUnit>& Units : UnitSet)
 	{
 		for (GameEngineRenderUnit& Unit : Units)
 		{
+			Unit.ShaderResources.SetConstantBufferLink("MeshPixelData", MeshPixelData_);
 			if (true == Unit.ShaderResources.IsTexture("DiffuseTexture"))
 			{
 				int RanNum = GameEngineRandom::MainRandom.RandomInt(0, 4);
@@ -58,6 +62,17 @@ void HexTile::Start()
 		}
 	}
 
+	StateManager_.CreateStateMember("Move"
+		, std::bind(&HexTile::MoveUpdate, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&HexTile::MoveStart, this, std::placeholders::_1));
+
+	StateManager_.CreateStateMember("Shake"
+		, std::bind(&HexTile::ShakeUpdate, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&HexTile::ShakeStart, this, std::placeholders::_1));
+
+	StateManager_.ChangeState("Move");
+
+	Mode_ = HexTileState::Move;
 
 }
 
@@ -67,14 +82,38 @@ void HexTile::Update(float _DeltaTime)
 	{
 		Collision_->Off();
 		Trigger_ = true;
+		MyPos = GetTransform().GetWorldPosition();
+		CurPos = GetTransform().GetWorldPosition();
+		CurPos.y -= 0.9f;
 	}
 
 	if (Trigger_ == true)
 	{
-		PhysXBoxGeometry_->ReleasePhysX();
-		float YVector = GameEngineMath::Lerp(GetTransform().GetWorldPosition().y, GetTransform().GetWorldPosition().y - 10.0f, 7.0f * _DeltaTime);
+		StateManager_.Update(_DeltaTime);
 
-		GetTransform().SetWorldPosition({ GetTransform().GetWorldPosition().x,YVector,GetTransform().GetWorldPosition().z });
+		//PhysXBoxGeometry_->ReleasePhysX();
+		/*if (GetTransform().GetWorldPosition().y >= CurPos.y)
+		{
+			GetTransform().SetWorldDownMove(10.0f, _DeltaTime);
+			if (GetTransform().GetWorldPosition().y <= CurPos.y)
+			{
+				Trigger_ = false;
+				Shake_ = true;
+			}
+		}*/
+	}
+
+	if (Flag_ == true)
+	{
+		MeshPixelData_.MulColor = 0.7f;
+		MeshPixelData_.PlusColor += 1.0f * _DeltaTime;
+
+		if (MeshPixelData_.PlusColor.x >= 1.0f)
+		{
+		
+				PhysXBoxGeometry_->ReleasePhysX();
+			
+		}
 	}
 
 }
@@ -107,6 +146,74 @@ void HexTile::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physi
 {
 	float4 MeshBoundScale = Renderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
 	PhysXBoxGeometry_->CreatePhysXActors(_Scene, _physics, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z));
+}
+
+
+
+void HexTile::MoveStart(const StateInfo& _Info)
+{
+
+}
+
+void HexTile::MoveUpdate(float _DeltaTime, const StateInfo& _Info)
+{
+	if (Shake_ == true)
+	{
+		if (GetTransform().GetWorldPosition().y <= MyPos.y)
+		{
+			GetTransform().SetWorldUpMove(Speed_ + 0.3f, _DeltaTime);
+		}
+
+		if (GetTransform().GetWorldPosition().y >= MyPos.y)
+		{
+			Trigger_ = false;
+			Flag_ = true;
+		}
+
+		return;
+	}
+
+
+	if (GetTransform().GetWorldPosition().y >= CurPos.y)
+	{
+		GetTransform().SetWorldDownMove(Speed_ + 0.3f, _DeltaTime);
+		if (GetTransform().GetWorldPosition().y <= CurPos.y)
+		{
+			StateManager_.ChangeState("Shake");
+		}
+	}
+
+
+}
+
+void HexTile::ShakeStart(const StateInfo& _Info)
+{
+	CurPos.y += 0.3f;
+}
+
+void HexTile::ShakeUpdate(float _DeltaTime, const StateInfo& _Info)
+{
+	if (GetTransform().GetWorldPosition().y <= CurPos.y && Shake_==false)
+	{
+		GetTransform().SetWorldUpMove(Speed_, _DeltaTime);
+		if (GetTransform().GetWorldPosition().y >= CurPos.y)
+		{
+			Shake_ = true;
+			CurPos.y -= 0.3f;
+		}
+	}
+
+	if (Shake_ == true)
+	{
+		if (GetTransform().GetWorldPosition().y >= CurPos.y)
+		{
+			GetTransform().SetWorldDownMove(Speed_, _DeltaTime);
+		}
+		else
+		{
+			StateManager_.ChangeState("Move");
+		}
+	}
 }
 
 //CollisionReturn HexTile::CheckCol(std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other)
