@@ -16,7 +16,7 @@ public:
 	GameEngineBlur& operator=(GameEngineBlur&& _Other) noexcept = delete;
 
 	virtual void EffectInit();
-	virtual void Effect(std::shared_ptr < GameEngineRenderTarget> _Render);
+	virtual void Effect(std::shared_ptr<GameEngineRenderTarget> _Render);
 
 protected:
 	std::shared_ptr<GameEngineRenderTarget> CopyTarget;

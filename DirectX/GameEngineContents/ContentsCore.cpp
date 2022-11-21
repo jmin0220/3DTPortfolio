@@ -207,6 +207,15 @@ void ContentsCore::LoadShaders()
 		Material->SetVertexShader("RtoLSlice.hlsl");
 		Material->SetPixelShader("RtoLSlice.hlsl");
 	}
+
+
+	// 포스트 이펙트용
+	{
+		std::shared_ptr<GameEngineMaterial> Material = GameEngineMaterial::Create("Bloom");
+		Material->SetVertexShader("Bloom.hlsl");
+		Material->SetPixelShader("Bloom.hlsl");
+	}
+	// ~ 포스트 이펙트용
 }
 
 //////////////////////////////////////////////////////

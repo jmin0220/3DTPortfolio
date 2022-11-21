@@ -28,6 +28,9 @@ void SkyboxActor::Start()
 		}
 	}
 
+
+	StaticRenderer_->GetTransform().SetLocalPosition(float4(0, -50, 0));
+
 }
 
 void SkyboxActor::Update(float _DeltaTime)

@@ -7,6 +7,9 @@
     <Filter Include="FBX">
       <UniqueIdentifier>{a02af34a-5484-41b3-bf70-1f5e9268e382}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PostEfffect">
+      <UniqueIdentifier>{9321d7fa-abc2-4327-8d8f-cc21551dda4c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="WaterShader.hlsl">
@@ -26,5 +29,8 @@
     </FxCompile>
     <FxCompile Include="RenderOption.fx" />
     <FxCompile Include="TransformHeader.fx" />
+    <FxCompile Include="Bloom.hlsl">
+      <Filter>PostEfffect</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

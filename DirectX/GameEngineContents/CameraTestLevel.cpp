@@ -6,6 +6,8 @@
 #include "TestActor_Character.h"
 #include "SkyboxActor.h"
 
+#include "PostEffect_Bloom.h"
+
 CameraTestLevel::CameraTestLevel() 
 {
 }
@@ -22,7 +24,8 @@ void CameraTestLevel::Start()
 	//	GetMainCameraActor()->GetTransform().SetWorldMove({ 0, 200, -3000 });
 	//}
 
-
+	std::shared_ptr<PostEffect_Bloom> Ptr = GetMainCamera()->GetCameraRenderTarget()->AddEffect<PostEffect_Bloom>();
+	Ptr->On();
 
 }
 

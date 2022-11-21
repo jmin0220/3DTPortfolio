@@ -154,6 +154,12 @@
     <Filter Include="999_Test\TestActor\PlayerTest">
       <UniqueIdentifier>{6a067586-30fa-4f21-aed8-bea574287fb8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04_PostEffect">
+      <UniqueIdentifier>{4dd82d3c-4d1f-4b9c-953c-74c31010040f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04_PostEffect\Effects">
+      <UniqueIdentifier>{a4b85a6b-259b-4980-8b27-4f71fec85129}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -417,6 +423,12 @@
     <ClInclude Include="SkyboxActor.h">
       <Filter>999_Test\TestActor\CameraTest</Filter>
     </ClInclude>
+    <ClInclude Include="PostEffect.h">
+      <Filter>04_PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="PostEffect_Bloom.h">
+      <Filter>04_PostEffect\Effects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -679,6 +691,12 @@
     </ClCompile>
     <ClCompile Include="SkyboxActor.cpp">
       <Filter>999_Test\TestActor\CameraTest</Filter>
+    </ClCompile>
+    <ClCompile Include="PostEffect.cpp">
+      <Filter>04_PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="PostEffect_Bloom.cpp">
+      <Filter>04_PostEffect\Effects</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
