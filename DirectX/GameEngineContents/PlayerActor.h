@@ -33,6 +33,9 @@ private:
 	std::shared_ptr<class CameraArm> CameraArm_;
 	std::shared_ptr<class GameEngineCameraActor> CamActor_;
 
+	//eventtrigger¿ë collision
+	std::shared_ptr<GameEngineCollision> EventCol_;
+
 	// FSM
 private:
 	GameEngineStateManager PlayerStateManager_;

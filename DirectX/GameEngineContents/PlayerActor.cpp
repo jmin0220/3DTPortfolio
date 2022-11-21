@@ -29,6 +29,14 @@ void PlayerActor::Start()
 	CameraArm_ = GetLevel()->CreateActor<CameraArm>();
 	CameraArm_->SetFollowCamera(CamActor_, std::dynamic_pointer_cast<GameEngineActor>(shared_from_this()));
 
+
+	//EventCol
+	EventCol_ = CreateComponent<GameEngineCollision>();
+	EventCol_->ChangeOrder(CollisionGroup::Player);
+	EventCol_->GetTransform().SetWorldScale({ PLAYER_COL_SCALE });
+	EventCol_->GetTransform().SetLocalPosition({ 0,2.0f,0 });
+
+
 	// FSM
 	CreateFSMStates();
 

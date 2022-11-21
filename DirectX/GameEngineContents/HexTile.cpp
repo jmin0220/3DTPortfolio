@@ -3,7 +3,8 @@
 #include "HexTile.h"
 #include <GameEngineBase/GameEngineRandom.h>
 
-HexTile::HexTile() 
+HexTile::HexTile() :
+	Trigger_(false)
 {
 }
 
@@ -13,6 +14,10 @@ HexTile::~HexTile()
 
 void HexTile::Start()
 {
+	Collision_ = CreateComponent<GameEngineCollision>();
+	Collision_->GetTransform().SetWorldScale({ 9.0f,3.0f,9.0f });
+
+
 	// 1. 사용할 PhysX컴포넌트를 Create
 	PhysXBoxGeometry_ = CreateComponent<PhysXBoxGeometryComponent>();
 
@@ -58,7 +63,19 @@ void HexTile::Start()
 
 void HexTile::Update(float _DeltaTime)
 {
+	if(true == Collision_->IsCollision(CollisionType::CT_OBB, CollisionGroup::Player, CollisionType::CT_OBB))
+	{
+		Collision_->Off();
+		Trigger_ = true;
+	}
 
+	if (Trigger_ == true)
+	{
+		PhysXBoxGeometry_->ReleasePhysX();
+		float YVector = GameEngineMath::Lerp(GetTransform().GetWorldPosition().y, GetTransform().GetWorldPosition().y - 10.0f, 7.0f * _DeltaTime);
+
+		GetTransform().SetWorldPosition({ GetTransform().GetWorldPosition().x,YVector,GetTransform().GetWorldPosition().z });
+	}
 
 }
 
@@ -91,3 +108,10 @@ void HexTile::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physi
 	float4 MeshBoundScale = Renderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
 	PhysXBoxGeometry_->CreatePhysXActors(_Scene, _physics, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z));
 }
+
+//CollisionReturn HexTile::CheckCol(std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other)
+//{
+//	_This->Off();
+//	Trigger_ = true;
+//	return CollisionReturn::Break;
+//}

@@ -37,7 +37,7 @@ protected:
 private:
 	std::shared_ptr<GameEngineCollision> Collision_;
 	std::shared_ptr<GameEngineActor> AxisMove_;
-	std::shared_ptr<GameEngineActor> AxisRot_;
+	std::shared_ptr<GameEngineActor> AxisRot_; 
 
 	GameEngineStateManager StateManager_;
 

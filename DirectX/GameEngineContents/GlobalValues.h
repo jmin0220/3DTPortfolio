@@ -10,6 +10,7 @@ enum class CollisionGroup
 	PhysicsGround,
 	PhysicsWall,
 	PhysicsPlayer,
+	HexTiles,
 	Max
 };
 

@@ -52,7 +52,7 @@ void HexAGoneLevel::LevelStartEvent()
 	float XPos = 0;
 	float ZPos = 0;
 	Num_ = 0;
-	Col_ = 35;
+	Col_ = 45;
 	Row_ = 5;
 
 	for (int i = 0; i < Col_; i++)

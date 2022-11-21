@@ -8,6 +8,8 @@
 
 // 플레이어 최대속력
 #define PLAYER_MAX_SPEED 8.0f
+//플레이어 eventCol 사이즈
+#define PLAYER_COL_SCALE 3.0f, 5.0f, 3.0f
 
 // 디렉토리
 #define DIR_RESOURCES "Resources"

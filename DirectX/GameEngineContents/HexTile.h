@@ -31,13 +31,17 @@ protected:
 private:
 	std::shared_ptr<PhysXBoxGeometryComponent> PhysXBoxGeometry_;
 	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer_;
-
+	std::shared_ptr<GameEngineCollision> Collision_;   //트리거 콜리전
 	std::string TexName;
+
+	bool Trigger_;
 
 public:
 	inline std::shared_ptr<GameEngineFBXStaticRenderer> GetRenderer()
 	{
 		return Renderer_;
 	}
+
+	//CollisionReturn CheckCol(std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other);
 };
 
