@@ -1,8 +1,10 @@
 #pragma once
 #include <GameEngineCore/GameEngineLevel.h>
+#include "VirtualPhysXLevel.h"
+#include "PhysXActor.h"
 
 // Ό³Έν :
-class PlayerTestLevel : public GameEngineLevel
+class PlayerTestLevel : public VirtualPhysXLevel
 {
 public:
 	// constrcuter destructer
@@ -26,8 +28,6 @@ protected:
 private:
 
 private:
-	std::shared_ptr<GameEngineActor> Player;
-	class TestActor_WaterPlane* Floor_;
-	GameEngineActor* Player_;
+	std::shared_ptr<VirtualPhysXActor> PhysxHexTile_;
 };
 

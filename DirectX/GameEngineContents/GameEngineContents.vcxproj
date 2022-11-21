@@ -307,6 +307,8 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="PhysXHexgonTest.h" />
+    <ClInclude Include="PhysXHexTileGeometryComponent.h" />
     <ClInclude Include="PhysXLevel.h">
       <SubType>
       </SubType>
@@ -586,6 +588,8 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="PhysXHexgonTest.cpp" />
+    <ClCompile Include="PhysXHexTileGeometryComponent.cpp" />
     <ClCompile Include="PhysXLevel.cpp">
       <SubType>
       </SubType>

@@ -26,6 +26,11 @@ public:
 		return Physics_;
 	}
 
+	inline physx::PxCooking* GetCooking()
+	{
+		return Cooking_;
+	}
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTIme) override;
@@ -49,7 +54,7 @@ private:
 	// Foundation을 생성하는데 필요한 변수
 	physx::PxDefaultAllocator		DefaultAllocator_;
 	physx::PxDefaultErrorCallback	DefaultErrorCallback_;
-
+	physx::PxCooking* Cooking_;
 
 	// 클래스 초기화
 	void initPhysics(bool _interactive);

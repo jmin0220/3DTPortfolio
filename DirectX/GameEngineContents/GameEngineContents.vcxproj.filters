@@ -151,7 +151,10 @@
     <Filter Include="02_Actor\Stage04Actor">
       <UniqueIdentifier>{621f28cc-edfb-4ca0-a281-3c4dad8fbea1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="999_Test\TestActor\PlayerTest">
+    <Filter Include="999_Test\PhysXTest\Chaewoon">
+      <UniqueIdentifier>{2e33efec-7f41-4860-aa4d-436e9471aaab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="999_Test\PhysXTest\Chaewoon\PlayerTest">
       <UniqueIdentifier>{6a067586-30fa-4f21-aed8-bea574287fb8}</UniqueIdentifier>
     </Filter>
     <Filter Include="04_PostEffect">
@@ -415,10 +418,16 @@
       <Filter>999_Test\TestActor\ScaleTestActor</Filter>
     </ClInclude>
     <ClInclude Include="PlayerTestActor.h">
-      <Filter>999_Test\TestActor\PlayerTest</Filter>
+      <Filter>999_Test\PhysXTest\Chaewoon\PlayerTest</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysXHexgonTest.h">
+      <Filter>999_Test\PhysXTest\Chaewoon\PlayerTest</Filter>
     </ClInclude>
     <ClInclude Include="PlayerTestLevel.h">
-      <Filter>999_Test\TestLevel</Filter>
+      <Filter>999_Test\PhysXTest\Chaewoon\PlayerTest</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysXHexTileGeometryComponent.h">
+      <Filter>03_Component\PhysXComponent</Filter>
     </ClInclude>
     <ClInclude Include="SkyboxActor.h">
       <Filter>999_Test\TestActor\CameraTest</Filter>
@@ -684,10 +693,16 @@
       <Filter>999_Test\TestActor\ScaleTestActor</Filter>
     </ClCompile>
     <ClCompile Include="PlayerTestActor.cpp">
-      <Filter>999_Test\TestActor\PlayerTest</Filter>
+      <Filter>999_Test\PhysXTest\Chaewoon\PlayerTest</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXHexgonTest.cpp">
+      <Filter>999_Test\PhysXTest\Chaewoon\PlayerTest</Filter>
     </ClCompile>
     <ClCompile Include="PlayerTestLevel.cpp">
-      <Filter>999_Test\TestLevel</Filter>
+      <Filter>999_Test\PhysXTest\Chaewoon\PlayerTest</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXHexTileGeometryComponent.cpp">
+      <Filter>03_Component\PhysXComponent</Filter>
     </ClCompile>
     <ClCompile Include="SkyboxActor.cpp">
       <Filter>999_Test\TestActor\CameraTest</Filter>

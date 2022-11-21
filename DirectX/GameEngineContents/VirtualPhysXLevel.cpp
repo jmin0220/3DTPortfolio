@@ -2,6 +2,7 @@
 #include "VirtualPhysXLevel.h"
 #include "PlayerActor.h"
 
+
 physx::PxScene* VirtualPhysXLevel::Scene_ = nullptr;
 physx::PxPhysics* VirtualPhysXLevel::Physics_ = nullptr;
 
@@ -90,6 +91,13 @@ void VirtualPhysXLevel::initPhysics(bool _interactive)
 	{
 		Player_->CreatePhysXActors(Scene_, Physics_);
 	}
+
+	Cooking_ = PxCreateCooking(PX_PHYSICS_VERSION, *Foundation_, physx::PxCookingParams(Physics_->getTolerancesScale()));
+	if (!Cooking_)
+	{
+		MsgBox("PxCreateCooking failed!");
+	}
+
 }
 
 // PhysX 업데이트
@@ -110,6 +118,13 @@ void VirtualPhysXLevel::cleanupPhysics(bool _Interactive)
 		//CtrManager_->purgeControllers();
 		CtrManager_->release();
 		CtrManager_ = nullptr;
+	}
+
+	//릴리즈 순서가 중요하다
+
+	if (nullptr != Cooking_)
+	{
+		PX_RELEASE(Cooking_);
 	}
 
 	if (nullptr != Scene_)
