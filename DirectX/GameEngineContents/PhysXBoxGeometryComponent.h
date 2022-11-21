@@ -17,6 +17,15 @@ public:
 
 	void CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics, physx::PxVec3 _GeoMetryScale = physx::PxVec3(2.0f), float4 _GeoMetryRot = {0.0f});
 
+	inline void ReleasePhysX()
+	{
+		if (true == rigidStatic_->isReleasable())
+		{
+			rigidStatic_->release();
+			ParentActor_.lock()->Death();
+		}
+	}
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -28,7 +37,6 @@ private:
 
 	physx::PxMaterial* material_;
 	physx::PxShape* shape_;
-	physx::PxRigidDynamic* dynamic_;
 	physx::PxRigidStatic* rigidStatic_;
 
 	// 이 컴포넌트를 가지고 있는 Parent에 대한 정보
