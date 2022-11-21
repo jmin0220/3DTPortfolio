@@ -17,13 +17,9 @@ public:
 	// 애니메이션을 가지고 있는 FBX
 	std::shared_ptr<GameEngineFBXAnimation> Aniamtion;
 	FbxExAniData* FBXAnimationData;
-	// 이 애니메이션이 현재까지 얼마나 지났나.
-	float CurFrameTime;
-	float FrameTime; // 0.1
-	UINT CurFrame;
+
 	UINT Start;
 	UINT End;
-
 
 	GameEngineRenderingEvent Info;
 

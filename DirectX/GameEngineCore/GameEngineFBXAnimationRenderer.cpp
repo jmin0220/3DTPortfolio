@@ -4,12 +4,12 @@
 #include "GameEngineVertexShader.h"
 #include "GameEngineFBXMesh.h"
 
-GameEngineFBXAnimationRenderer::GameEngineFBXAnimationRenderer() 
+GameEngineFBXAnimationRenderer::GameEngineFBXAnimationRenderer()
 {
-	
+
 }
 
-GameEngineFBXAnimationRenderer::~GameEngineFBXAnimationRenderer() 
+GameEngineFBXAnimationRenderer::~GameEngineFBXAnimationRenderer()
 {
 	Animations.clear();
 }
@@ -42,6 +42,7 @@ void FBXRendererAnimation::Update(float _DeltaTime)
 	if (false == Pause)
 	{
 		Info.CurFrameTime += _DeltaTime;
+		Info.PlayTime += _DeltaTime;
 		//                      0.1
 		// 1
 		while (Info.CurFrameTime >= Info.Inter)
@@ -55,31 +56,18 @@ void FBXRendererAnimation::Update(float _DeltaTime)
 			{
 				Info.CurFrame = Start;
 			}
-		}
 
-
-		///////////////////////////////////////////////////////////////////////////////////
-
-		//Info.CurFrameTime += _DeltaTime;
-
-		if (nullptr != TimeEvent)
-		{
-			TimeEvent(Info, _DeltaTime);
-		}
-
-		if (false == bOnceStart
-			&& Info.CurFrame == 0)
-		{
-			if (nullptr != StartEvent)
+			if (false == bOnceStart
+				&& Info.CurFrame == 0)
 			{
-				StartEvent(Info);
+				if (nullptr != StartEvent)
+				{
+					StartEvent(Info);
+				}
+				bOnceStart = true;
+				bOnceEnd = false;
 			}
-			bOnceStart = true;
-			bOnceEnd = false;
-		}
 
-		if (Info.Inter <= Info.CurFrameTime)
-		{
 			if (Info.CurFrame == (Info.Frames.size() - 1)
 				&& false == bOnceEnd)
 			{
@@ -89,13 +77,17 @@ void FBXRendererAnimation::Update(float _DeltaTime)
 				}
 				bOnceEnd = true;
 				bOnceStart = false;
-				return;
+				break;
 			}
 
-			++Info.CurFrame;
 			if (nullptr != FrameEvent)
 			{
 				FrameEvent(Info);
+			}
+
+			if (nullptr != TimeEvent)
+			{
+				TimeEvent(Info, _DeltaTime);
 			}
 
 			if (Info.CurFrame >= Info.Frames.size())
@@ -109,8 +101,6 @@ void FBXRendererAnimation::Update(float _DeltaTime)
 					Info.CurFrame = static_cast<unsigned int>(Info.Frames.size()) - 1;
 				}
 			}
-
-			Info.CurFrameTime -= Info.Inter;
 		}
 	}
 
@@ -211,6 +201,7 @@ void FBXRendererAnimation::Update(float _DeltaTime)
 
 	}
 }
+
 //******BlendAnimation추가본*******(선생님 코드엔 없음)
 void FBXRendererAnimation::BlendUpdate(float _DeltaTime)
 {
@@ -220,7 +211,7 @@ void FBXRendererAnimation::BlendUpdate(float _DeltaTime)
 	// 1
 	if (CurBlendTime > BlendTime)
 	{
-		CurFrameTime += CurBlendTime - BlendTime;
+		Info.CurFrameTime += CurBlendTime - BlendTime;
 		ParentRenderer->OffIsBlending();
 		return;
 	}
@@ -268,7 +259,7 @@ void FBXRendererAnimation::BlendUpdate(float _DeltaTime)
 				float a = CurBlendTime / BlendTime;
 
 				// 현재프레임과 
-				FbxExBoneFrameData& CurData = FBXAnimationData->AniFrameData[MeshIndex][i].BoneMatData[CurFrame];
+				FbxExBoneFrameData& CurData = FBXAnimationData->AniFrameData[MeshIndex][i].BoneMatData[Info.CurFrame];
 				// 다음프레임의 정보가 필요한데
 				FbxExBoneFrameData& NextData = FBXAnimationData->AniFrameData[MeshIndex][i].BoneMatData[0];
 
@@ -293,16 +284,18 @@ void FBXRendererAnimation::BlendUpdate(float _DeltaTime)
 	}
 }
 //******BlendAnimation추가본*******(선생님 코드엔 없음)
+
 void FBXRendererAnimation::Reset()
 {
 	Info.CurFrameTime = 0.0f;
 	Info.CurFrame = 0;
+	Info.PlayTime = 0.0f;
 	// Start = 0;
 
 	//******BlendAnimation추가본*******(선생님 코드엔 없음)
 	CurBlendTime = 0.0f;
-	CurFrameTime = 0.0f;
-	CurFrame = 0;
+	//CurFrameTime = 0.0f;
+	//CurFrame = 0;
 	//******BlendAnimation추가본*******(선생님 코드엔 없음)
 }
 
@@ -438,7 +431,7 @@ void GameEngineFBXAnimationRenderer::CreateFBXAnimation(const std::string& _Anim
 
 	NewAnimation->Init(_AnimationName, _Index);
 
-	for (size_t i = 0; i < NewAnimation->End - NewAnimation->Start; i++)
+	for (unsigned int i = 0; i < NewAnimation->End - NewAnimation->Start; i++)
 	{
 		NewAnimation->Info.Frames.push_back(i);
 	}
@@ -496,5 +489,4 @@ void GameEngineFBXAnimationRenderer::Update(float _DeltaTime)
 		}
 	}
 	//******BlendAnimation추가본*******(선생님 코드엔 없음)
-
 }

@@ -777,6 +777,9 @@
     <ClInclude Include="ThirdParty\inc\writer.h">
       <Filter>ThirdParty\Inc</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineRenderingEvent.h">
+      <Filter>Object\Component\Rendering\Content</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineActor.cpp">
@@ -952,6 +955,9 @@
       <Filter>Object\Component\Rendering\Content</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineFBXStaticRenderer.cpp">
+      <Filter>Object\Component\Rendering\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineRenderingEvent.cpp">
       <Filter>Object\Component\Rendering\Content</Filter>
     </ClCompile>
   </ItemGroup>

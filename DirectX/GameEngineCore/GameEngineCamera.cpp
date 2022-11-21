@@ -217,8 +217,6 @@ void GameEngineCamera::PushInstancing(std::shared_ptr<GameEngineMaterial> _Pipe,
 		MsgBoxAssert("인스턴싱이 불가능한 랜더러 입니다.")
 	}
 
-	// Camera->gameenginepipeline
-
 	GameEngineInstancing& Instancing = InstancingMap[_Pipe.get()];
 
 	Instancing.Count += Count;
