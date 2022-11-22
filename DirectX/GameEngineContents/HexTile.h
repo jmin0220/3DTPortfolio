@@ -1,7 +1,7 @@
 #pragma once
 #include "VirtualPhysXActor.h"
 #include "PhysXBoxGeometryComponent.h"
-
+#include "PhysXConvexGeometryComponent.h"
 
 // 설명 :
 class HexTile :public VirtualPhysXActor
@@ -31,6 +31,7 @@ protected:
 private:
 	HexTileState Mode_;
 
+	std::shared_ptr<PhysXConvexGeometryComponent> PhysXHexTileGeometry_;
 	std::shared_ptr<PhysXBoxGeometryComponent> PhysXBoxGeometry_;
 	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer_;
 	std::shared_ptr<GameEngineCollision> Collision_;   //트리거 콜리전

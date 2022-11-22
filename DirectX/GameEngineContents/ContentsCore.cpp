@@ -147,6 +147,10 @@ void ContentsCore::CreateLevels()
 		Levels_.push_back(Level);
 	}
 	{
+		GameEngineLevel* Level = CreateLevel<HexAGoneLevel>(LEVEL_NAME_DOORDASH);
+		Levels_.push_back(Level);
+	}
+	{
 		GameEngineLevel* Level = CreateLevel<JumpClubLevel>(LEVEL_NAME_JUMPCLUB);
 		Levels_.push_back(Level);
 	} 
@@ -289,8 +293,8 @@ void ContentsCore::LoadLevelResource(LEVELS _LEVEL)
 		ResScaleTest(Dir);
 		break;
 	// 확인을 위해 DIR_TESTLEVEL_MAPEDITOR 그대로 사용, 추후 각 스테이지에 맞게 로드 필요
-	case LEVELS::STAGE1_TEST:
-		Dir.Move(DIR_TESTLEVEL_MAPEDITOR);
+	case LEVELS::STAGE01_DOORDASH:
+		Dir.Move(DIR_LEVEL_STAGE01);
 		ResScaleTest(Dir);
 		break;
 	case LEVELS::STAGE02_JUMPCLUB:

@@ -203,6 +203,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="DoorDashLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="DoorDash_BackGroundObject.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="FontActor.h">
       <SubType>
       </SubType>
@@ -489,6 +497,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="CustomableGUI.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="DoorDashLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="DoorDash_BackGroundObject.cpp">
       <SubType>
       </SubType>
     </ClCompile>

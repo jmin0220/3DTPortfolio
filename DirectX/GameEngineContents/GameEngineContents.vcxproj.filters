@@ -139,9 +139,6 @@
     <Filter Include="02_Actor\MapEditorActor\Axis">
       <UniqueIdentifier>{1bcbcb36-9fa2-4841-ae5a-e036fe466adf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01_Level\Stage04_Hex-A-Gone">
-      <UniqueIdentifier>{19790645-1ec0-40bb-ac30-d5486d3992f5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="999_Test\TestActor\EditorActor">
       <UniqueIdentifier>{d76cd897-70b0-4d72-995e-f7d60fae0cb4}</UniqueIdentifier>
     </Filter>
@@ -163,11 +160,23 @@
     <Filter Include="04_PostEffect\Effects">
       <UniqueIdentifier>{a4b85a6b-259b-4980-8b27-4f71fec85129}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01_Level\Stage02_JumpClub">
-      <UniqueIdentifier>{2e5b91f7-1c4e-43c5-a3e7-42d3087a0d98}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02_Actor\Stage02Actor">
       <UniqueIdentifier>{99f7de34-5504-4660-8cf5-6bf3a55c9575}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01_Level\StageLevel">
+      <UniqueIdentifier>{5fe6cd11-1ed6-4097-976e-521f7a2a82ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01_Level\StageLevel\Stage02_JumpClub">
+      <UniqueIdentifier>{2e5b91f7-1c4e-43c5-a3e7-42d3087a0d98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01_Level\StageLevel\Stage04_Hex-A-Gone">
+      <UniqueIdentifier>{19790645-1ec0-40bb-ac30-d5486d3992f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01_Level\StageLevel\Stage01_DoorDash">
+      <UniqueIdentifier>{9f71b80c-db50-4b3f-900c-c3b22329b26f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Actor\Stage01Actor">
+      <UniqueIdentifier>{9ce6f138-8c1d-4a37-9f3e-40d04195ac0e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -384,11 +393,8 @@
     <ClInclude Include="StageTestLevel.h">
       <Filter>999_Test\TestLevel</Filter>
     </ClInclude>
-    <ClInclude Include="StageParentLevel.h">
-      <Filter>01_Level</Filter>
-    </ClInclude>
     <ClInclude Include="HexAGoneLevel.h">
-      <Filter>01_Level\Stage04_Hex-A-Gone</Filter>
+      <Filter>01_Level\StageLevel\Stage04_Hex-A-Gone</Filter>
     </ClInclude>
     <ClInclude Include="PhysXPendulaComponent.h">
       <Filter>999_Test\TestComponent\TestPhysX</Filter>
@@ -445,10 +451,19 @@
       <Filter>04_PostEffect\Effects</Filter>
     </ClInclude>
     <ClInclude Include="JumpClubLevel.h">
-      <Filter>01_Level\Stage02_JumpClub</Filter>
+      <Filter>01_Level\StageLevel\Stage02_JumpClub</Filter>
     </ClInclude>
     <ClInclude Include="JumpClub_BackGroundObject.h">
       <Filter>02_Actor\Stage02Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="StageParentLevel.h">
+      <Filter>01_Level\StageLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="DoorDashLevel.h">
+      <Filter>01_Level\StageLevel\Stage01_DoorDash</Filter>
+    </ClInclude>
+    <ClInclude Include="DoorDash_BackGroundObject.h">
+      <Filter>02_Actor\Stage01Actor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -662,11 +677,8 @@
     <ClCompile Include="StageTestLevel.cpp">
       <Filter>999_Test\TestLevel</Filter>
     </ClCompile>
-    <ClCompile Include="StageParentLevel.cpp">
-      <Filter>01_Level</Filter>
-    </ClCompile>
     <ClCompile Include="HexAGoneLevel.cpp">
-      <Filter>01_Level\Stage04_Hex-A-Gone</Filter>
+      <Filter>01_Level\StageLevel\Stage04_Hex-A-Gone</Filter>
     </ClCompile>
     <ClCompile Include="PhysXPendulaComponent.cpp">
       <Filter>999_Test\TestComponent\TestPhysX</Filter>
@@ -726,10 +738,19 @@
       <Filter>04_PostEffect\Effects</Filter>
     </ClCompile>
     <ClCompile Include="JumpClubLevel.cpp">
-      <Filter>01_Level\Stage02_JumpClub</Filter>
+      <Filter>01_Level\StageLevel\Stage02_JumpClub</Filter>
     </ClCompile>
     <ClCompile Include="JumpClub_BackGroundObject.cpp">
       <Filter>02_Actor\Stage02Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="StageParentLevel.cpp">
+      <Filter>01_Level\StageLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="DoorDashLevel.cpp">
+      <Filter>01_Level\StageLevel\Stage01_DoorDash</Filter>
+    </ClCompile>
+    <ClCompile Include="DoorDash_BackGroundObject.cpp">
+      <Filter>02_Actor\Stage01Actor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

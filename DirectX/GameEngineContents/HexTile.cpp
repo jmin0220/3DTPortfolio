@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "VirtualPhysXLevel.h"
 #include "HexTile.h"
+#include "PhysXConvexGeometryComponent.h"
 #include <GameEngineBase/GameEngineRandom.h>
 
 HexTile::HexTile() :
@@ -22,7 +23,8 @@ void HexTile::Start()
 
 
 	// 1. 사용할 PhysX컴포넌트를 Create
-	PhysXBoxGeometry_ = CreateComponent<PhysXBoxGeometryComponent>();
+	//PhysXBoxGeometry_ = CreateComponent<PhysXBoxGeometryComponent>();
+	PhysXHexTileGeometry_ = CreateComponent<PhysXConvexGeometryComponent>();
 
 	// 2. 메쉬세팅 Static renderer
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
@@ -111,7 +113,8 @@ void HexTile::Update(float _DeltaTime)
 		if (MeshPixelData_.PlusColor.x >= 1.0f)
 		{
 		
-				PhysXBoxGeometry_->ReleasePhysX();
+			PhysXHexTileGeometry_->ReleasePhysX();
+			//PhysXBoxGeometry_->ReleasePhysX();
 			
 		}
 	}
@@ -144,8 +147,13 @@ void HexTile::LevelStartEvent()
 
 void HexTile::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics)
 {
+	physx::PxCooking* Cooking = static_cast<VirtualPhysXLevel*>(GetLevel())->GetCooking();
+	// Tip..3번째 매개변수인 GeometryScale은 액터가 가질 물리강체의 크기
 	float4 MeshBoundScale = Renderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
-	PhysXBoxGeometry_->CreatePhysXActors(_Scene, _physics, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z));
+	PhysXHexTileGeometry_->CreatePhysXActors("HexTile.fbx", _Scene, _physics, Cooking, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z));
+
+	//float4 MeshBoundScale = Renderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
+	//PhysXBoxGeometry_->CreatePhysXActors(_Scene, _physics, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z));
 }
 
 
