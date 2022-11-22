@@ -44,10 +44,7 @@ void CameraTestLevel::LevelStartEvent()
 	GEngine::CollisionDebugOff();
 	
 
-	if (false == GetMainCameraActor()->IsFreeCameraMode())
-	{
-		GetMainCameraActor()->FreeCameraModeOnOff();
-	}
+
 
 	// 리소스 로드
 	ContentsCore::GetInst()->LoadLevelResource(LEVELS::CAMERA_TEST);
