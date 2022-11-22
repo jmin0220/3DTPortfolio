@@ -53,6 +53,16 @@ void ActorPicker::Update(float _DeltaTime)
 	SelectPickedActor();
 
 	// 피킹 오브젝트 클릭체크
+	// 화면 밖이면 피킹X
+	float4 MouseScreenPos = GetLevel()->GetMainCamera()->GetMouseScreenPosition();
+	float ScaleX = GameEngineWindow::GetScale().x;
+	float ScaleY = GameEngineWindow::GetScale().y;
+	if (ScaleX < MouseScreenPos.x || ScaleY < MouseScreenPos.y)
+	{
+		ClickedActor.reset();
+		return;
+	}
+
 	ClickCheck();
 
 	ClickAxisControl();
@@ -91,15 +101,6 @@ void ActorPicker::SelectPickedActor()
 
 void ActorPicker::ClickCheck()
 {
-	// 화면 밖이면 피킹X
-	float4 MouseScreenPos = GetLevel()->GetMainCamera()->GetMouseScreenPosition();
-	float ScaleX = GameEngineWindow::GetScale().x;
-	float ScaleY = GameEngineWindow::GetScale().y;
-	if ( ScaleX < MouseScreenPos.x || ScaleY < MouseScreenPos.y)
-	{
-		return;
-	}
-
 	// 클릭했음
 	if (true == GameEngineInput::GetInst()->IsDown("VK_LBUTTON"))
 	{
@@ -146,6 +147,7 @@ void ActorPicker::ClickCheck()
 
 void ActorPicker::ClickAxisControl()
 {
+
 	if (nullptr == ClickedActor)
 	{
 		return;
