@@ -17,6 +17,7 @@
 #define DIR_LEVELS "Levels"
 #define DIR_TESTLEVELS "Levels\\TestLevels"
 #define DIR_JSONTEST "JsonTest"
+#define DIR_LEVEL_STAGE02 "Levels\\StageLevel\\Stage02"
 #define DIR_LEVEL_STAGE04 "Levels\\StageLevel\\Stage04"
 
 // 테스트용은 분리
@@ -61,6 +62,7 @@
 #define LEVEL_NAME_PHYSX_BOX_GEOMETRY_TEST "LJM_PhysXBoxGeometryTest"
 #define LEVEL_NAME_CAMERA_TEST "CameraTestLevel"
 #define LEVEL_NAME_SHADER_TUTORIAL "ShaderTutorialLevel"
+#define LEVEL_NAME_JUMPCLUB "JumpClubLevel"
 #define LEVEL_NAME_HEXAGONE "HexAGoneLevel"
 
 //Axis Mode

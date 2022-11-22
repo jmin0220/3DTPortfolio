@@ -67,6 +67,7 @@ private:
 private:
 	void ResLoadLobby(GameEngineDirectory& _Dir);
 	void ResLoadLoading(GameEngineDirectory& _Dir);
+	void ResStage02(GameEngineDirectory& _Dir);
 	void ResStage04(GameEngineDirectory& _Dir);
 
 	// 테스트 및 임시

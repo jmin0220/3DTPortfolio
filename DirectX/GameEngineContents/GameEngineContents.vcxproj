@@ -240,6 +240,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="JumpClubLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="JumpClub_BackGroundObject.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="LJM_PhysXBoxGeometryTest.h">
       <SubType>
       </SubType>
@@ -518,6 +526,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="HexAGoneLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="JumpClubLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="JumpClub_BackGroundObject.cpp">
       <SubType>
       </SubType>
     </ClCompile>

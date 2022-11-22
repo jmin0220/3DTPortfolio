@@ -59,7 +59,7 @@ void StageParentLevel::LevelStartLoad()
 		break;
 	}
 	case StageNum::STAGE2:
-		//ContentsCore::GetInst()->LoadLevelResource(LEVELS::STAGE2_TEST);
+		ContentsCore::GetInst()->LoadLevelResource(LEVELS::STAGE02_JUMPCLUB);
 		//CurStageName = "\\stage2.json";
 		break;
 	case StageNum::STAGE3:

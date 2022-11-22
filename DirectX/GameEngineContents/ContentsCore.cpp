@@ -15,6 +15,7 @@
 #include "ShaderTutorialLevel.h"
 #include "GameManagerGUI.h"
 #include "StageTestLevel.h"
+#include "JumpClubLevel.h"
 #include "HexAGoneLevel.h"
 #include "PlayerTestLevel.h"
 
@@ -145,6 +146,10 @@ void ContentsCore::CreateLevels()
 		GameEngineLevel* Level = CreateLevel<StageTestLevel>("StageTestLevel");
 		Levels_.push_back(Level);
 	}
+	{
+		GameEngineLevel* Level = CreateLevel<JumpClubLevel>(LEVEL_NAME_JUMPCLUB);
+		Levels_.push_back(Level);
+	} 
 	{
 		GameEngineLevel* Level = CreateLevel<HexAGoneLevel>(LEVEL_NAME_HEXAGONE);
 		Levels_.push_back(Level);
@@ -288,6 +293,10 @@ void ContentsCore::LoadLevelResource(LEVELS _LEVEL)
 		Dir.Move(DIR_TESTLEVEL_MAPEDITOR);
 		ResScaleTest(Dir);
 		break;
+	case LEVELS::STAGE02_JUMPCLUB:
+		Dir.Move(DIR_LEVEL_STAGE02);
+		ResStage02(Dir); 
+		break;
 	case LEVELS::STAGE04_HEX_A_GONE:
 		Dir.Move(DIR_LEVEL_STAGE04);
 		ResStage04(Dir);
@@ -317,6 +326,11 @@ void ContentsCore::ResLoadLobby(GameEngineDirectory& _Dir)
 }
 
 void ContentsCore::ResLoadLoading(GameEngineDirectory& _Dir)
+{
+	LevelAllResourceLoad(_Dir);
+}
+
+void ContentsCore::ResStage02(GameEngineDirectory& _Dir)
 {
 	LevelAllResourceLoad(_Dir);
 }

@@ -163,6 +163,12 @@
     <Filter Include="04_PostEffect\Effects">
       <UniqueIdentifier>{a4b85a6b-259b-4980-8b27-4f71fec85129}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01_Level\Stage02_JumpClub">
+      <UniqueIdentifier>{2e5b91f7-1c4e-43c5-a3e7-42d3087a0d98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Actor\Stage02Actor">
+      <UniqueIdentifier>{99f7de34-5504-4660-8cf5-6bf3a55c9575}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -438,6 +444,12 @@
     <ClInclude Include="PostEffect_Bloom.h">
       <Filter>04_PostEffect\Effects</Filter>
     </ClInclude>
+    <ClInclude Include="JumpClubLevel.h">
+      <Filter>01_Level\Stage02_JumpClub</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpClub_BackGroundObject.h">
+      <Filter>02_Actor\Stage02Actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -712,6 +724,12 @@
     </ClCompile>
     <ClCompile Include="PostEffect_Bloom.cpp">
       <Filter>04_PostEffect\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpClubLevel.cpp">
+      <Filter>01_Level\Stage02_JumpClub</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpClub_BackGroundObject.cpp">
+      <Filter>02_Actor\Stage02Actor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
