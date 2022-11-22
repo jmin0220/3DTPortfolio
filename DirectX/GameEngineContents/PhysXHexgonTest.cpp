@@ -19,6 +19,7 @@ void PhysXHexgonTest::LevelStartEvent()
 {
 	// 1. 사용할 PhysX컴포넌트를 Create
 	PhysXHexTileGeometry_ = CreateComponent<PhysXConvexGeometryComponent>();
+	//PhysXHexTileGeometry_ = CreateComponent<PhysXTriMeshGeometryComponent>();
 
 	// 2. 메쉬세팅 Static renderer
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();

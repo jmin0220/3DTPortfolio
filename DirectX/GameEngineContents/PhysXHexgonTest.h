@@ -2,6 +2,7 @@
 #include "VirtualPhysXActor.h"
 #include "PhysXBoxGeometryComponent.h"
 #include "PhysXConvexGeometryComponent.h"
+#include "PhysXTriMeshGeometryComponent.h"
 
 // 물리를 사용해야하는 Actor는 GameEngineActor대신
 // VirtualPhysXHexgonTest를 상속
@@ -30,6 +31,7 @@ protected:
 
 private:
 	std::shared_ptr<PhysXConvexGeometryComponent> PhysXHexTileGeometry_;
+	//std::shared_ptr<PhysXTriMeshGeometryComponent> PhysXHexTileGeometry_;
 	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer_;
 
 };

@@ -1,15 +1,15 @@
 #include "PreCompile.h"
-#include "PhysXConvexGeometryComponent.h"
+#include "PhysXTriMeshGeometryComponent.h"
 
-PhysXConvexGeometryComponent::PhysXConvexGeometryComponent() 
+PhysXTriMeshGeometryComponent::PhysXTriMeshGeometryComponent() 
 {
 }
 
-PhysXConvexGeometryComponent::~PhysXConvexGeometryComponent() 
+PhysXTriMeshGeometryComponent::~PhysXTriMeshGeometryComponent() 
 {
 }
 
-void PhysXConvexGeometryComponent::CreatePhysXActors(const std::string& _MeshName, physx::PxScene* _Scene, physx::PxPhysics* _physics, 
+void PhysXTriMeshGeometryComponent::CreatePhysXActors(const std::string& _MeshName, physx::PxScene* _Scene, physx::PxPhysics* _physics, 
 	physx::PxCooking* _cooking, physx::PxVec3 _GeoMetryScale, float4 _GeoMetryRot)
 {
 	CustomFBXLoad(_MeshName);
@@ -42,22 +42,30 @@ void PhysXConvexGeometryComponent::CreatePhysXActors(const std::string& _MeshNam
 	const physx::PxVec3 convexVerts[] = { physx::PxVec3(0,1,0),physx::PxVec3(1,0,0),physx::PxVec3(-1,0,0),physx::PxVec3(0,0,1),
 	physx::PxVec3(0,0,-1) };
 
-	physx::PxConvexMeshDesc convexDesc;
-	convexDesc.points.count = VertexVec.size();
-	convexDesc.points.stride = sizeof(physx::PxVec3);
-	convexDesc.points.data = &VertexVec[0];
-	convexDesc.flags = physx::PxConvexFlag::eCOMPUTE_CONVEX;
+	physx::PxTriangleMeshDesc meshDesc;
+	meshDesc.points.count = VertexVec.size();
+	meshDesc.points.stride = sizeof(physx::PxVec3);
+	meshDesc.points.data = &VertexVec[0];
 
-	physx::PxDefaultMemoryOutputStream buf;
-	physx::PxConvexMeshCookingResult::Enum result;
-	if (!_cooking->cookConvexMesh(convexDesc, buf, &result))
+	unsigned int IndexVecSize = IndexVec.size() / 3;
+
+	meshDesc.triangles.count = IndexVecSize;
+	meshDesc.triangles.stride = 3 * sizeof(physx::PxU32);
+	meshDesc.triangles.data = &IndexVec[0];
+
+	physx::PxDefaultMemoryOutputStream writeBuffer;
+	physx::PxTriangleMeshCookingResult::Enum* result = nullptr;
+	bool status = _cooking->cookTriangleMesh(meshDesc, writeBuffer, result);
+	if (!status)
 	{
-		MsgBox("매쉬를 불러와 피직스X 충동체를 만드는데 실패했습니다");
+		MsgBox("매쉬를 불러와 피직스X 충돌체를 만드는데 실패했습니다 TriMesh");
 	}
-	physx::PxDefaultMemoryInputData input(buf.getData(), buf.getSize());
-	physx::PxConvexMesh* convexMesh = _physics->createConvexMesh(input);
 
-	shape_ = _physics->createShape(physx::PxConvexMeshGeometry(convexMesh), *material_);
+
+	physx::PxDefaultMemoryInputData readBuffer(writeBuffer.getData(), writeBuffer.getSize());
+	physx::PxTriangleMesh* TriangleMesh = _physics->createTriangleMesh(readBuffer);
+	shape_ = _physics->createShape(physx::PxTriangleMeshGeometry(TriangleMesh), *material_);
+
 
 	//// 충돌체의 종류
 	//dynamic_ = _physics->createRigidDynamic(localTm);
@@ -81,13 +89,13 @@ void PhysXConvexGeometryComponent::CreatePhysXActors(const std::string& _MeshNam
 	_Scene->addActor(*rigidStatic_);
 }
 
-void PhysXConvexGeometryComponent::Start()
+void PhysXTriMeshGeometryComponent::Start()
 {
 	// 부모의 정보의 저장
 	ParentActor_ = std::dynamic_pointer_cast<GameEngineActor>(GetRoot());
 }
 
-void PhysXConvexGeometryComponent::Update(float _DeltaTime)
+void PhysXTriMeshGeometryComponent::Update(float _DeltaTime)
 {
 	// TODO::static은 변경되지 않으니 Update할 필요가 없을지도
 	// PhysX Actor의 상태에 맞춰서 부모의 Transform정보를 갱신
@@ -103,7 +111,7 @@ void PhysXConvexGeometryComponent::Update(float _DeltaTime)
 	//ParentActor_.lock()->GetTransform().SetWorldRotation(tmpWorldRot);
 }
 
-void PhysXConvexGeometryComponent::CustomFBXLoad(const std::string& _MeshName)
+void PhysXTriMeshGeometryComponent::CustomFBXLoad(const std::string& _MeshName)
 {
 
 	GameEngineDirectory Dir;
@@ -126,14 +134,23 @@ void PhysXConvexGeometryComponent::CustomFBXLoad(const std::string& _MeshName)
 	FbxRenderUnitInfo* RenderUnitInfo = Mesh->GetRenderUnit(0);
 
 	std::vector<GameEngineVertex> MeshVertexs = RenderUnitInfo->Vertexs;
+	std::vector<unsigned int> Indexes = RenderUnitInfo->Indexs[0];
 
 	size_t VertexSize = MeshVertexs.size();
+	size_t IndexSize = Indexes.size();
 
 	VertexVec.reserve(VertexSize + 1);
-
+	IndexVec.reserve(IndexSize +1);
 	for (size_t i = 0; i < VertexSize; i++)
 	{
 		VertexVec.push_back(physx::PxVec3(MeshVertexs[i].POSITION.x, MeshVertexs[i].POSITION.y, MeshVertexs[i].POSITION.z));
 	}
 
+	for (size_t i = 0; i < IndexSize; i++)
+	{
+		IndexVec.push_back(physx::PxU32(Indexes[i]));
+	}
+
+
+	//Mesh->UserLoad();
 }

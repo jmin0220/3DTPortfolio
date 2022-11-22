@@ -40,12 +40,13 @@ void ScaleTestLevel::LevelStartEvent()
 	//Wall->GetTransform().SetWorldPosition({ 0,0,0 });
 	//std::shared_ptr<GameEngineActor> Floor = CreateActor<TestFloor>();
 	//Floor->GetTransform().SetWorldPosition({ 0,0,0 });
-	std::shared_ptr<GameEngineActor> Cha_Ani = CreateActor<TestCharacterAnimation>();
+	Cha_Ani = CreateActor<TestCharacterAnimation>();
 	Cha_Ani->GetTransform().SetWorldPosition({ 0,1.3f,0.0f });
 }
 
 void ScaleTestLevel::LevelEndEvent()
 {
-
+	ContentsCore::GetInst()->ReleaseCurLevelResource();
+	Cha_Ani->Death();
 }
 

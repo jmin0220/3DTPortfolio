@@ -456,6 +456,9 @@
     <ClInclude Include="JumpClub_BackGroundObject.h">
       <Filter>02_Actor\Stage02Actor</Filter>
     </ClInclude>
+    <ClInclude Include="PhysXTriMeshGeometryComponent.h">
+      <Filter>03_Component\PhysXComponent</Filter>
+    </ClInclude>
     <ClInclude Include="StageParentLevel.h">
       <Filter>01_Level\StageLevel</Filter>
     </ClInclude>
@@ -751,6 +754,9 @@
     </ClCompile>
     <ClCompile Include="DoorDash_BackGroundObject.cpp">
       <Filter>02_Actor\Stage01Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXTriMeshGeometryComponent.cpp">
+      <Filter>03_Component\PhysXComponent</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

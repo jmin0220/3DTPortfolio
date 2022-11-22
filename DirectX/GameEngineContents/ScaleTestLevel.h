@@ -27,6 +27,7 @@ private:
 
 private:
 	class TestActor_WaterPlane* Floor_;
-	GameEngineActor* Player_;
+
+	std::shared_ptr<GameEngineActor> Cha_Ani;
 };
 

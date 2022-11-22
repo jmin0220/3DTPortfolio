@@ -345,6 +345,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="PhysXTriMeshGeometryComponent.h" />
     <ClInclude Include="PhysX\SampleAllocator.h" />
     <ClInclude Include="PickableActor.h" />
     <ClInclude Include="PlayableObject.h" />
@@ -642,6 +643,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="PhysXTriMeshGeometryComponent.cpp" />
     <ClCompile Include="PhysX\SampleAllocator.cpp" />
     <ClCompile Include="PickableActor.cpp" />
     <ClCompile Include="PlayableObject.cpp" />
