@@ -53,13 +53,19 @@ void CameraArm::Start()
 void CameraArm::SetFollowCamera(std::shared_ptr<GameEngineCameraActor> _Camera, std::shared_ptr<GameEngineActor> _Character)
 {
 	// 카메라 암 엑터와 캐릭터를 연결
-	SetParent(_Character);
-
 	Camera_ = _Camera;
+	
+	// 카메라암은 프리카메라 모드 아님
 	if (true == Camera_->IsFreeCameraMode())
 	{
 		Camera_->FreeCameraModeOnOff();
 	}
+
+	GetTransform().SetWorldPosition(_Character->GetTransform().GetWorldPosition());
+	SetParent(_Character);
+
+
+	
 
 	// 카메라 암 피벗 정도
 	ArmVector_ = DEFAULT_ARMVEC * ArmRatio_;
@@ -86,15 +92,10 @@ void CameraArm::Update(float _DeltaTime)
 		return;
 	}
 
-	if (nullptr == Camera_ )
+	/*if (true == Camera_->IsFreeCameraMode())
 	{
 		return;
-	}
-
-	if (true == Camera_->IsFreeCameraMode())
-	{
-		return;
-	}
+	}*/
 
 	ZoomInOut();
 
@@ -106,6 +107,8 @@ void CameraArm::Update(float _DeltaTime)
 
 	// 카메라 홀더 위치에 카메라 따라가도록
 	Camera_->GetTransform().SetWorldPosition(PosCamHolder_);
+	Camera_->GetTransform().SetWorldForwardMove(20, _DeltaTime);
+	DebugValue = PosCamHolder_;
 
 	// 카메라가 플레이어를 바라보도록 각도계산
 	CameraLookPlayer();

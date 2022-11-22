@@ -523,7 +523,7 @@ void MapEditorGUI::Load()
 	wchar_t szName[256] = {};
 	std::string LoadPath(LoadDir.GetFullPath());
 
-#if DEBUG
+#if _DEBUG
 	ofn.lpstrFile = (LPSTR)szName;
 	ofn.lpstrInitialDir = (LPCSTR)LoadPath.c_str();
 #else
@@ -560,7 +560,7 @@ void MapEditorGUI::Save()
 	wchar_t szName[256] = {};
 	std::string SavePath(SaveDir.GetFullPath());
 
-#if DEBUG
+#if _DEBUG
 	ofn.lpstrFile = (LPSTR)szName;
 	ofn.lpstrInitialDir = (LPCSTR)SavePath.c_str();
 #else
