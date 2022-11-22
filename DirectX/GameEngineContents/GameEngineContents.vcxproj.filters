@@ -468,6 +468,9 @@
     <ClInclude Include="DoorDash_BackGroundObject.h">
       <Filter>02_Actor\Stage01Actor</Filter>
     </ClInclude>
+    <ClInclude Include="DoorDashStage.h">
+      <Filter>02_Actor\Stage01Actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -753,6 +756,9 @@
       <Filter>01_Level\StageLevel\Stage01_DoorDash</Filter>
     </ClCompile>
     <ClCompile Include="DoorDash_BackGroundObject.cpp">
+      <Filter>02_Actor\Stage01Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="DoorDashStage.cpp">
       <Filter>02_Actor\Stage01Actor</Filter>
     </ClCompile>
     <ClCompile Include="PhysXTriMeshGeometryComponent.cpp">

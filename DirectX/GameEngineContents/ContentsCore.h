@@ -67,6 +67,7 @@ private:
 private:
 	void ResLoadLobby(GameEngineDirectory& _Dir);
 	void ResLoadLoading(GameEngineDirectory& _Dir);
+	void ResLoadStage01(GameEngineDirectory& _Dir);
 	void ResStage02(GameEngineDirectory& _Dir);
 	void ResStage04(GameEngineDirectory& _Dir);
 

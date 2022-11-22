@@ -1,6 +1,8 @@
 #include "PreCompile.h"
 #include "DoorDashLevel.h"
 
+#include "DoorDashStage.h"
+
 DoorDashLevel::DoorDashLevel() 
 {
 }
@@ -17,7 +19,7 @@ void DoorDashLevel::Start()
 
 void DoorDashLevel::Update(float _DeltaTime)
 {
-	
+	StageParentLevel::Update(_DeltaTime);
 }
 
 void DoorDashLevel::End()
@@ -28,6 +30,8 @@ void DoorDashLevel::End()
 void DoorDashLevel::LevelStartEvent()
 {
 	StageParentLevel::LevelStartEvent();
+
+	std::shared_ptr<DoorDashStage> Map = CreateActor<DoorDashStage>();
 }
 
 void DoorDashLevel::LevelEndEvent()

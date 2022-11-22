@@ -18,6 +18,7 @@
 #include "JumpClubLevel.h"
 #include "HexAGoneLevel.h"
 #include "PlayerTestLevel.h"
+#include "DoorDashLevel.h"
 
 #pragma comment(lib, "GameEngineBase.lib")
 #include <GameEngineCore/GameEngineRes.h>
@@ -147,7 +148,7 @@ void ContentsCore::CreateLevels()
 		Levels_.push_back(Level);
 	}
 	{
-		GameEngineLevel* Level = CreateLevel<HexAGoneLevel>(LEVEL_NAME_DOORDASH);
+		GameEngineLevel* Level = CreateLevel<DoorDashLevel>(LEVEL_NAME_DOORDASH);
 		Levels_.push_back(Level);
 	}
 	{
@@ -295,7 +296,7 @@ void ContentsCore::LoadLevelResource(LEVELS _LEVEL)
 	// 확인을 위해 DIR_TESTLEVEL_MAPEDITOR 그대로 사용, 추후 각 스테이지에 맞게 로드 필요
 	case LEVELS::STAGE01_DOORDASH:
 		Dir.Move(DIR_LEVEL_STAGE01);
-		ResScaleTest(Dir);
+		ResLoadStage01(Dir);
 		break;
 	case LEVELS::STAGE02_JUMPCLUB:
 		Dir.Move(DIR_LEVEL_STAGE02);
@@ -355,6 +356,13 @@ void ContentsCore::ResLoadMapEditor(GameEngineDirectory& _Dir)
 {
 	LevelAllResourceLoad(_Dir);
 }
+
+void ContentsCore::ResLoadStage01(GameEngineDirectory& _Dir)
+{
+	LevelAllResourceLoad(_Dir);
+}
+
+
 
 void ContentsCore::ResScaleTest(GameEngineDirectory& _Dir)
 {

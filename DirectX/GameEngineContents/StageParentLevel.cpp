@@ -55,7 +55,7 @@ void StageParentLevel::LevelStartLoad()
 	case StageNum::STAGE1:
 	{
 		ContentsCore::GetInst()->LoadLevelResource(LEVELS::STAGE01_DOORDASH);
-		CurStageName = "\\stage1.json";
+		//CurStageName = "\\stage1.json";
 		break;
 	}
 	case StageNum::STAGE2:
