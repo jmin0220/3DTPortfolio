@@ -25,6 +25,11 @@ Output WaterShader_VS(Input _Input)
     return NewOutPut;
 }
 
+cbuffer WaterData : register(b0)
+{
+    float4 WaterColor;
+}
+
 Texture2D Tex : register(t0);
 SamplerState POINTWRAP : register(s0);
 
@@ -35,7 +40,8 @@ float4 WaterShader_PS(Output _Input) : SV_Target0
 {
     float2 TexPos = _Input.Tex.xy;
 
-    float Time = SumDeltaTime * .5 + 23.0;
+    // 물결 빠르기(값이 클수록 빠름)
+    float Time = SumDeltaTime * .1 + 23.0;
     
 #ifdef SHOW_TILING
 	vec2 p = fmod(TexPos*TAU*2.0, TAU)-250.0;
@@ -43,7 +49,8 @@ float4 WaterShader_PS(Output _Input) : SV_Target0
     float2 p = fmod(TexPos * TAU, TAU) - 250.0;
 #endif
     float2 i = float2(p.x, p.y);
-    float c = 1.0;
+    // 값이 클수록 눈부심이 덜한걸로 추측
+    float c = 1.8;
     float inten = .005;
 
     for (int n = 0; n < MAX_ITER; n++)
@@ -57,7 +64,7 @@ float4 WaterShader_PS(Output _Input) : SV_Target0
     
     float d = pow(abs(c), 8.0);
     float3 colour = float3(d, d, d);
-    colour = clamp(colour + float3(0.0, 0.35, 0.5), 0.0, 1.0);
+    colour = clamp(colour + float3(WaterColor.r, WaterColor.g, WaterColor.b), 0.0, 1.0);
 
 #ifdef SHOW_TILING
 	// Flash tile borders...

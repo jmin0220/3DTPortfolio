@@ -453,6 +453,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="VFXWaterActor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="VirtualPhysXActor.h">
       <SubType>
       </SubType>
@@ -756,6 +760,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="TopMenu.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="VFXWaterActor.cpp">
       <SubType>
       </SubType>
     </ClCompile>
