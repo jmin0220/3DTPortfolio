@@ -18,13 +18,13 @@ public:
 	PhysXTriMeshGeometryComponent& operator=(PhysXTriMeshGeometryComponent&& _Other) noexcept = delete;
 
 	void CreatePhysXActors(const std::string& _MeshName, physx::PxScene* _Scene, physx::PxPhysics* _physics, 
-		physx::PxCooking* _cooking, physx::PxVec3 _GeoMetryScale = physx::PxVec3(2.0f), float4 _GeoMetryRot = {0.0f});
+		physx::PxCooking* _cooking, bool _InverseIndex = true, physx::PxVec3 _GeoMetryScale = physx::PxVec3(2.0f), float4 _GeoMetryRot = {0.0f});
 
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	
-	void CustomFBXLoad(const std::string& _MeshName);
+	void CustomFBXLoad(const std::string& _MeshName, bool _InverseIndex);
 
 private:
 	// Phys액터 생성에 필요한 정보
@@ -36,8 +36,9 @@ private:
 	physx::PxRigidDynamic* dynamic_;
 	physx::PxRigidStatic* rigidStatic_;
 
-	std::vector<physx::PxVec3> VertexVec;
-	std::vector<physx::PxU32> IndexVec;
+	std::vector<std::vector<physx::PxVec3>> VertexVec;
+	std::vector<std::vector<physx::PxU32>> IndexVec;
+
 	physx::PxConvexMesh* convexMesh;
 	std::shared_ptr<GameEngineFBXMesh> Mesh;
 

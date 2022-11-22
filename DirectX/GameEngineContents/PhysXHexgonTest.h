@@ -30,8 +30,8 @@ protected:
 	void CreateHexaTileActor(physx::PxScene* _Scene, physx::PxPhysics* _physics, physx::PxVec3 _GeoMetryScale, float4 _GeoMetryRot);
 
 private:
-	std::shared_ptr<PhysXConvexGeometryComponent> PhysXHexTileGeometry_;
-	//std::shared_ptr<PhysXTriMeshGeometryComponent> PhysXHexTileGeometry_;
+	//std::shared_ptr<PhysXConvexGeometryComponent> PhysXHexTileGeometry_;
+	std::shared_ptr<PhysXTriMeshGeometryComponent> PhysXHexTileGeometry_;
 	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer_;
 
 };

@@ -2,6 +2,7 @@
 #include "DoorDashLevel.h"
 
 #include "DoorDashStage.h"
+#include "PlayerActor.h"
 
 DoorDashLevel::DoorDashLevel() 
 {
@@ -31,7 +32,11 @@ void DoorDashLevel::LevelStartEvent()
 {
 	StageParentLevel::LevelStartEvent();
 
+	std::shared_ptr<PlayerActor> Player = CreateActor<PlayerActor>();
+	Player->CreatePhysXActors(GetScene(), GetPhysics());
 	std::shared_ptr<DoorDashStage> Map = CreateActor<DoorDashStage>();
+	Map->GetTransform().SetWorldPosition({30.0f, -200.0f, 30.0f});
+
 }
 
 void DoorDashLevel::LevelEndEvent()

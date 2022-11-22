@@ -18,8 +18,8 @@ void PhysXHexgonTest::Start()
 void PhysXHexgonTest::LevelStartEvent()
 {
 	// 1. 사용할 PhysX컴포넌트를 Create
-	PhysXHexTileGeometry_ = CreateComponent<PhysXConvexGeometryComponent>();
-	//PhysXHexTileGeometry_ = CreateComponent<PhysXTriMeshGeometryComponent>();
+	//PhysXHexTileGeometry_ = CreateComponent<PhysXConvexGeometryComponent>();
+	PhysXHexTileGeometry_ = CreateComponent<PhysXTriMeshGeometryComponent>();
 
 	// 2. 메쉬세팅 Static renderer
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
@@ -42,7 +42,7 @@ void PhysXHexgonTest::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics
 	physx::PxCooking* Cooking = static_cast<VirtualPhysXLevel*>(GetLevel())->GetCooking();
 	// Tip..3번째 매개변수인 GeometryScale은 액터가 가질 물리강체의 크기
 	float4 MeshBoundScale = Renderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
-	PhysXHexTileGeometry_->CreatePhysXActors("HexTile0.fbx", _Scene, _physics, Cooking, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z));
+	PhysXHexTileGeometry_->CreatePhysXActors("SpinnerBar.fbx", _Scene, _physics, Cooking, true, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z));
 }
 
 void CreateHexaTileActor(physx::PxScene* _Scene, physx::PxPhysics* _physics, physx::PxVec3 _GeoMetryScale, float4 _GeoMetryRot)

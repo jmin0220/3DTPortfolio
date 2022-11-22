@@ -9,10 +9,12 @@ PhysXTriMeshGeometryComponent::~PhysXTriMeshGeometryComponent()
 {
 }
 
+//_MeshName(불러올 매시의 이름), _Scene, _Physics, _Cooking (InitPhysics 에서 불러온 값), _InverseIndex(Index를 역순으로 할지에 대한 bool값), 
+// _GeoMetryScale(스케일값), _GeoMetryRot(로테이션값)
 void PhysXTriMeshGeometryComponent::CreatePhysXActors(const std::string& _MeshName, physx::PxScene* _Scene, physx::PxPhysics* _physics, 
-	physx::PxCooking* _cooking, physx::PxVec3 _GeoMetryScale, float4 _GeoMetryRot)
+	physx::PxCooking* _cooking, bool _InverseIndex, physx::PxVec3 _GeoMetryScale, float4 _GeoMetryRot)
 {
-	CustomFBXLoad(_MeshName);
+	CustomFBXLoad(_MeshName, _InverseIndex);
 	float4 tmpQuat = _GeoMetryRot.DegreeRotationToQuaternionReturn();
 
 	// 부모 액터로부터 위치 생성
@@ -23,6 +25,9 @@ void PhysXTriMeshGeometryComponent::CreatePhysXActors(const std::string& _MeshNa
 
 	// 마찰, 탄성계수
 	material_ = _physics->createMaterial(0.0f, 0.0f, 0.0f);
+
+	// 충돌체의 종류
+	rigidStatic_ = _physics->createRigidStatic(localTm);
 
 	// TODO::배율을 적용할 경우 이쪽 코드를 사용
 	//float4 tmpMagnification = { SIZE_MAGNIFICATION_RATIO };
@@ -39,32 +44,40 @@ void PhysXTriMeshGeometryComponent::CreatePhysXActors(const std::string& _MeshNa
 	// TODO::부모 액터의 RenderUnit으로부터 Mesh의 Scale 과 WorldScale의 연산의 결과를 지오메트리의 Scale로 세팅해야함.
 	//shape_ = _physics->createShape();
 
-	const physx::PxVec3 convexVerts[] = { physx::PxVec3(0,1,0),physx::PxVec3(1,0,0),physx::PxVec3(-1,0,0),physx::PxVec3(0,0,1),
-	physx::PxVec3(0,0,-1) };
+	int RenderinfoCount = Mesh->GetRenderUnitCount();
 
-	physx::PxTriangleMeshDesc meshDesc;
-	meshDesc.points.count = VertexVec.size();
-	meshDesc.points.stride = sizeof(physx::PxVec3);
-	meshDesc.points.data = &VertexVec[0];
-
-	unsigned int IndexVecSize = IndexVec.size() / 3;
-
-	meshDesc.triangles.count = IndexVecSize;
-	meshDesc.triangles.stride = 3 * sizeof(physx::PxU32);
-	meshDesc.triangles.data = &IndexVec[0];
-
-	physx::PxDefaultMemoryOutputStream writeBuffer;
-	physx::PxTriangleMeshCookingResult::Enum* result = nullptr;
-	bool status = _cooking->cookTriangleMesh(meshDesc, writeBuffer, result);
-	if (!status)
+	for (size_t i = 0; i < RenderinfoCount; i++)
 	{
-		MsgBox("매쉬를 불러와 피직스X 충돌체를 만드는데 실패했습니다 TriMesh");
+		//Vertex의 값을 Desc에 넣어준다
+		//Size, 단위의 바이트사이즈, 데이터의 시작값
+		physx::PxTriangleMeshDesc meshDesc;
+		meshDesc.points.count = VertexVec[i].size();
+		meshDesc.points.stride = sizeof(physx::PxVec3);
+		meshDesc.points.data = &VertexVec[i][0];
+
+		unsigned int IndexVecSize = IndexVec[i].size() / 3;
+
+		//Index의 값을 Desc에 넣어준다
+		//Triangle의 갯수(Index의 1/3개수), 단위의 바이트사이즈, 데이터의 시작값
+		meshDesc.triangles.count = IndexVecSize;
+		meshDesc.triangles.stride = 3 * sizeof(physx::PxU32);
+		meshDesc.triangles.data = &IndexVec[i][0];
+
+		physx::PxDefaultMemoryOutputStream writeBuffer;
+		physx::PxTriangleMeshCookingResult::Enum* result = nullptr;
+		bool status = _cooking->cookTriangleMesh(meshDesc, writeBuffer, result);
+		if (!status)
+		{
+			MsgBox("매쉬를 불러와 피직스X 충돌체를 만드는데 실패했습니다 TriMesh");
+		}
+
+
+		physx::PxDefaultMemoryInputData readBuffer(writeBuffer.getData(), writeBuffer.getSize());
+		physx::PxTriangleMesh* TriangleMesh = _physics->createTriangleMesh(readBuffer);
+		//createExclusiveShapefh RigidStatic에 Shape를 넣어준다.
+		shape_ = physx::PxRigidActorExt::createExclusiveShape(*rigidStatic_, physx::PxTriangleMeshGeometry(TriangleMesh), *material_);
 	}
-
-
-	physx::PxDefaultMemoryInputData readBuffer(writeBuffer.getData(), writeBuffer.getSize());
-	physx::PxTriangleMesh* TriangleMesh = _physics->createTriangleMesh(readBuffer);
-	shape_ = _physics->createShape(physx::PxTriangleMeshGeometry(TriangleMesh), *material_);
+	
 
 
 	//// 충돌체의 종류
@@ -80,10 +93,7 @@ void PhysXTriMeshGeometryComponent::CreatePhysXActors(const std::string& _MeshNa
 	//// Scene에 액터 추가
 	//_Scene->addActor(*dynamic_);
 
-	// 충돌체의 종류
-	rigidStatic_ = _physics->createRigidStatic(localTm);
-
-	rigidStatic_->attachShape(*shape_);
+	//rigidStatic_->attachShape(*shape_);
 
 	// Scene에 액터 추가
 	_Scene->addActor(*rigidStatic_);
@@ -111,7 +121,7 @@ void PhysXTriMeshGeometryComponent::Update(float _DeltaTime)
 	//ParentActor_.lock()->GetTransform().SetWorldRotation(tmpWorldRot);
 }
 
-void PhysXTriMeshGeometryComponent::CustomFBXLoad(const std::string& _MeshName)
+void PhysXTriMeshGeometryComponent::CustomFBXLoad(const std::string& _MeshName, bool _InverseIndex)
 {
 
 	GameEngineDirectory Dir;
@@ -121,36 +131,63 @@ void PhysXTriMeshGeometryComponent::CustomFBXLoad(const std::string& _MeshName)
 	Dir.Move(DIR_PHYSXMESH);
 	std::string Path = Dir.PlusFilePath(_MeshName);
 
+	//매쉬를 찾는다
 	std::shared_ptr<GameEngineFBXMesh> FindFBXMesh = GameEngineFBXMesh::Find(_MeshName);
 	if (FindFBXMesh == nullptr)
 	{
+		//만약 매시가 없을경우 로드한다
 		Mesh = GameEngineFBXMesh::Load(Path);
 	}
 	else
 	{
+		//만약 매시가 존재할경우는 그대로 얻어온다.
 		Mesh = FindFBXMesh;
 	}
+	
+	//랜더유닛카운트를 불러와 백터에 reserve를 한다
+	int RenderinfoCount = Mesh->GetRenderUnitCount();
 
-	FbxRenderUnitInfo* RenderUnitInfo = Mesh->GetRenderUnit(0);
+	VertexVec.reserve(RenderinfoCount + 1);
+	IndexVec.reserve(RenderinfoCount + 1);
 
-	std::vector<GameEngineVertex> MeshVertexs = RenderUnitInfo->Vertexs;
-	std::vector<unsigned int> Indexes = RenderUnitInfo->Indexs[0];
-
-	size_t VertexSize = MeshVertexs.size();
-	size_t IndexSize = Indexes.size();
-
-	VertexVec.reserve(VertexSize + 1);
-	IndexVec.reserve(IndexSize +1);
-	for (size_t i = 0; i < VertexSize; i++)
+	for (size_t i = 0; i < RenderinfoCount; i++)
 	{
-		VertexVec.push_back(physx::PxVec3(MeshVertexs[i].POSITION.x, MeshVertexs[i].POSITION.y, MeshVertexs[i].POSITION.z));
-	}
+		//i 번째 GetRenderUnit에서 RenderUnitInfo를 Get한다
+		FbxRenderUnitInfo* RenderUnitInfo = Mesh->GetRenderUnit(i);
 
-	for (size_t i = 0; i < IndexSize; i++)
-	{
-		IndexVec.push_back(physx::PxU32(Indexes[i]));
-	}
+		std::vector<GameEngineVertex> MeshVertexs = RenderUnitInfo->Vertexs;
+		std::vector<unsigned int> Indexes = RenderUnitInfo->Indexs[0];
 
+		int VertexSize = MeshVertexs.size();
+		int IndexSize = Indexes.size();
+		std::vector<physx::PxVec3> InstVertVec;
+		std::vector<unsigned int> InstIndexVec;
+		//Vertex와 Index 정보를 VertexVec, IndexVec에 저장한다
+		for (size_t j = 0; j < VertexSize; j++)
+		{
+			InstVertVec.push_back(physx::PxVec3(MeshVertexs[j].POSITION.x, MeshVertexs[j].POSITION.y, MeshVertexs[j].POSITION.z));
+		}
+
+		if (_InverseIndex == true)
+		{
+			for (size_t j = 0; j < IndexSize; j++)
+			{
+				InstIndexVec.push_back(physx::PxU32(Indexes[j]));
+			}
+		}
+		if (_InverseIndex == false)
+		{
+			for (int j = IndexSize - 1; j >= 0; --j)
+			{
+				InstIndexVec.push_back(physx::PxU32(Indexes[j]));
+			}
+		}
+
+
+		VertexVec.push_back(InstVertVec);
+		IndexVec.push_back(InstIndexVec);
+	}
+	
 
 	//Mesh->UserLoad();
 }
