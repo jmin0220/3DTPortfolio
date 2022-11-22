@@ -1,16 +1,18 @@
 #include "PreCompile.h"
-#include "PhysXHexTileGeometryComponent.h"
+#include "PhysXConvexGeometryComponent.h"
 
-PhysXHexTileGeometryComponent::PhysXHexTileGeometryComponent() 
+PhysXConvexGeometryComponent::PhysXConvexGeometryComponent() 
 {
 }
 
-PhysXHexTileGeometryComponent::~PhysXHexTileGeometryComponent() 
+PhysXConvexGeometryComponent::~PhysXConvexGeometryComponent() 
 {
 }
 
-void PhysXHexTileGeometryComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics, physx::PxCooking* _cooking, physx::PxVec3 _GeoMetryScale, float4 _GeoMetryRot)
+void PhysXConvexGeometryComponent::CreatePhysXActors(const std::string& _MeshName, physx::PxScene* _Scene, physx::PxPhysics* _physics, 
+	physx::PxCooking* _cooking, physx::PxVec3 _GeoMetryScale, float4 _GeoMetryRot)
 {
+	CustomFBXLoad(_MeshName);
 	float4 tmpQuat = _GeoMetryRot.DegreeRotationToQuaternionReturn();
 
 	// 부모 액터로부터 위치 생성
@@ -41,9 +43,9 @@ void PhysXHexTileGeometryComponent::CreatePhysXActors(physx::PxScene* _Scene, ph
 	physx::PxVec3(0,0,-1) };
 
 	physx::PxConvexMeshDesc convexDesc;
-	convexDesc.points.count = 5;
+	convexDesc.points.count = VertexVec.size();
 	convexDesc.points.stride = sizeof(physx::PxVec3);
-	convexDesc.points.data = convexVerts;
+	convexDesc.points.data = &VertexVec[0];
 	convexDesc.flags = physx::PxConvexFlag::eCOMPUTE_CONVEX;
 
 	physx::PxDefaultMemoryOutputStream buf;
@@ -79,15 +81,13 @@ void PhysXHexTileGeometryComponent::CreatePhysXActors(physx::PxScene* _Scene, ph
 	_Scene->addActor(*rigidStatic_);
 }
 
-void PhysXHexTileGeometryComponent::Start()
+void PhysXConvexGeometryComponent::Start()
 {
 	// 부모의 정보의 저장
 	ParentActor_ = std::dynamic_pointer_cast<GameEngineActor>(GetRoot());
-
-	//Mesh->UserLoad();
 }
 
-void PhysXHexTileGeometryComponent::Update(float _DeltaTime)
+void PhysXConvexGeometryComponent::Update(float _DeltaTime)
 {
 	// TODO::static은 변경되지 않으니 Update할 필요가 없을지도
 	// PhysX Actor의 상태에 맞춰서 부모의 Transform정보를 갱신
@@ -101,4 +101,40 @@ void PhysXHexTileGeometryComponent::Update(float _DeltaTime)
 
 	//ParentActor_.lock()->GetTransform().SetWorldPosition(tmpWorldPos);
 	//ParentActor_.lock()->GetTransform().SetWorldRotation(tmpWorldRot);
+}
+
+void PhysXConvexGeometryComponent::CustomFBXLoad(const std::string& _MeshName)
+{
+
+	GameEngineDirectory Dir;
+
+	Dir.MoveParentToExitsChildDirectory(DIR_RESOURCES);
+	Dir.Move(DIR_RESOURCES);
+	Dir.Move(DIR_PHYSXMESH);
+	std::string Path = Dir.PlusFilePath(_MeshName);
+
+	std::shared_ptr<GameEngineFBXMesh> FindFBXMesh = GameEngineFBXMesh::Find(_MeshName);
+	if (FindFBXMesh == nullptr)
+	{
+		Mesh = GameEngineFBXMesh::Load(Path);
+	}
+	else
+	{
+		Mesh = FindFBXMesh;
+	}
+
+	FbxRenderUnitInfo* RenderUnitInfo = Mesh->GetRenderUnit(0);
+
+	std::vector<GameEngineVertex> MeshVertexs = RenderUnitInfo->Vertexs;
+
+	size_t VertexSize = MeshVertexs.size();
+
+
+	for (size_t i = 0; i < VertexSize; i++)
+	{
+		VertexVec.push_back(physx::PxVec3(MeshVertexs[i].POSITION.x, MeshVertexs[i].POSITION.y, MeshVertexs[i].POSITION.z));
+	}
+
+
+	//Mesh->UserLoad();
 }

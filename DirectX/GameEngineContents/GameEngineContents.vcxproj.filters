@@ -432,7 +432,7 @@
     <ClInclude Include="PlayerTestLevel.h">
       <Filter>999_Test\PhysXTest\Chaewoon\PlayerTest</Filter>
     </ClInclude>
-    <ClInclude Include="PhysXHexTileGeometryComponent.h">
+    <ClInclude Include="PhysXConvexGeometryComponent.h">
       <Filter>03_Component\PhysXComponent</Filter>
     </ClInclude>
     <ClInclude Include="SkyboxActor.h">
@@ -713,7 +713,7 @@
     <ClCompile Include="PlayerTestLevel.cpp">
       <Filter>999_Test\PhysXTest\Chaewoon\PlayerTest</Filter>
     </ClCompile>
-    <ClCompile Include="PhysXHexTileGeometryComponent.cpp">
+    <ClCompile Include="PhysXConvexGeometryComponent.cpp">
       <Filter>03_Component\PhysXComponent</Filter>
     </ClCompile>
     <ClCompile Include="SkyboxActor.cpp">

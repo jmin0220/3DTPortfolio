@@ -13,6 +13,7 @@
 
 // 디렉토리
 #define DIR_RESOURCES "Resources"
+#define DIR_PHYSXMESH "PhysxMesh"
 #define DIR_GAMES "Texture2D\\Games"
 #define DIR_LEVELS "Levels"
 #define DIR_TESTLEVELS "Levels\\TestLevels"

@@ -1,7 +1,7 @@
 #pragma once
 #include "VirtualPhysXActor.h"
 #include "PhysXBoxGeometryComponent.h"
-#include "PhysXHexTileGeometryComponent.h"
+#include "PhysXConvexGeometryComponent.h"
 
 // 물리를 사용해야하는 Actor는 GameEngineActor대신
 // VirtualPhysXHexgonTest를 상속
@@ -29,7 +29,7 @@ protected:
 	void CreateHexaTileActor(physx::PxScene* _Scene, physx::PxPhysics* _physics, physx::PxVec3 _GeoMetryScale, float4 _GeoMetryRot);
 
 private:
-	std::shared_ptr<PhysXHexTileGeometryComponent> PhysXHexTileGeometry_;
+	std::shared_ptr<PhysXConvexGeometryComponent> PhysXHexTileGeometry_;
 	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer_;
 
 };
