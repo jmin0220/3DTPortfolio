@@ -6,6 +6,8 @@
 #include "Hex_BackGroundObject.h"
 #include "PlayerActor.h"
 
+#include "SkyboxActor.h"
+
 HexAGoneLevel::HexAGoneLevel() 
 {
 }
@@ -125,6 +127,9 @@ void HexAGoneLevel::LevelStartEvent()
 	//	XPos += TileScale_.x * 0.75f;
 	//}
 
+	// 스카이박스 생성
+	std::shared_ptr<SkyboxActor> Skybox = CreateActor<SkyboxActor>();
+	Skybox->SetSkyTexture("S5_SkyBox_Respawn.png");
 }
 
 void HexAGoneLevel::LevelEndEvent()

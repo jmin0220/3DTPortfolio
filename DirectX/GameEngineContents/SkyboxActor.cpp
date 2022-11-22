@@ -14,7 +14,6 @@ void SkyboxActor::Start()
 	StaticRenderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
 	StaticRenderer_->SetFBXMesh("Skybox_S5.fbx", "Texture");
 
-
 	// 텍스쳐 씌워주기
 	std::vector<std::vector<GameEngineRenderUnit>>& UnitSet = StaticRenderer_->GetAllRenderUnit();
 	for (std::vector<GameEngineRenderUnit>& Units : UnitSet)
@@ -29,7 +28,8 @@ void SkyboxActor::Start()
 	}
 
 
-	StaticRenderer_->GetTransform().SetLocalPosition(float4(0, -50, 0));
+	// 크기와 피봇 설정
+	StaticRenderer_->GetTransform().SetWorldScale({ 100, 100, 100 });
 
 }
 
