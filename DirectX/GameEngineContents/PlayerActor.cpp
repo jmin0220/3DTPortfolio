@@ -102,19 +102,20 @@ void PlayerActor::InputController(float _DeltaTime)
 
 	if (true == GameEngineInput::GetInst()->IsDown(KEY_SPACEBAR))
 	{
-		static bool tmp = true;
 
-		// DynamicActorComponent_->SetMoveJump();
-		if (true == tmp)
-		{
-			DynamicActorComponent_->SetlockAxis();
-			tmp = false;
-		}
-		else
-		{
-			DynamicActorComponent_->SetUnlockAxis();
-			tmp = true;
-		}
+		DynamicActorComponent_->SetMoveJump();
+
+		//static bool tmp = true;
+		//if (true == tmp)
+		//{
+		//	DynamicActorComponent_->SetlockAxis();
+		//	tmp = false;
+		//}
+		//else
+		//{
+		//	DynamicActorComponent_->SetUnlockAxis();
+		//	tmp = true;
+		//}
 	}
 
 	if (true == GameEngineInput::GetInst()->IsPress(KEY_MOUSELEFT))
@@ -146,7 +147,7 @@ void PlayerActor::InputController(float _DeltaTime)
 void PlayerActor::ImpulseTest()
 {
 	float4 tmpPower = float4::ZERO;
-	float tmpImpulse = 25.0f;
+	float tmpImpulse = 2.5f;
 	
 	if (true == GameEngineInput::GetInst()->IsPress("ImpulsW"))
 	{

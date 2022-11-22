@@ -40,6 +40,7 @@ void PhysXDynamicActorComponent::CreatePhysXActors(physx::PxScene* _Scene, physx
 	//// 충돌체의 종류
 	dynamic_ = _physics->createRigidDynamic(localTm);
 
+	// TODO::점프속력에 영향을 미침. 스테이지 작성후 자세한 수치는 나중에 조절
 	// 플레이어 최대 속력
 	dynamic_->setMaxLinearVelocity(PLAYER_MAX_SPEED);
 
@@ -61,7 +62,7 @@ void PhysXDynamicActorComponent::CreatePhysXActors(physx::PxScene* _Scene, physx
 	shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, -.1f, 0)));
 
 	// RigidDynamic의 밀도를 설정
-	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 10000.0f);
+	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 1000.0f);
 
 	shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(.5f), *material_);
 	//shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, _GeoMetryScale.x * 0.5f * 0.75f, 0)));
@@ -137,8 +138,7 @@ void PhysXDynamicActorComponent::SetMoveSpeed(float4 _MoveSpeed)
 
 void PhysXDynamicActorComponent::SetMoveJump()
 {
-	// 
-	dynamic_->addForce(physx::PxVec3(0.0f, 20.0f, 0.0f), physx::PxForceMode::eIMPULSE);
+	dynamic_->addForce(physx::PxVec3(0.0f, 10000.0f, 0.0f), physx::PxForceMode::eIMPULSE);
 }
 
 void PhysXDynamicActorComponent::SetDynamicIdle()
