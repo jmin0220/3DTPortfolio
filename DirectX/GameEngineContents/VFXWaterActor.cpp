@@ -23,6 +23,11 @@ void VFXWaterActor::Start()
 		for (GameEngineRenderUnit& Unit : Units)
 		{
 			Unit.ShaderResources.SetConstantBufferLink("WaterData", WaterData_);
+
+			if ( true == Unit.ShaderResources.IsTexture("Tex"))
+			{
+				Unit.ShaderResources.SetTexture("Tex", "VFX_Noise02.png");
+			}
 		}
 	}
 }

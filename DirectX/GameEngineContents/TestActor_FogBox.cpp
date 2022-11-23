@@ -13,9 +13,9 @@ void TestActor_FogBox::Start()
 {
 	Renderer_ = CreateComponent<GameEngineTextureRenderer>();
 	Renderer_->SetMesh("Box");
-	Renderer_->SetPipeLine("Color");
+	Renderer_->SetPipeLine("BoxFog");
 
-	Color_ = float4::RED;
+	Color_ = float4::WHITE;
 	Renderer_->GetRenderUnit().ShaderResources.SetConstantBufferLink("ResultColor", Color_);
 	Renderer_->GetTransform().SetWorldScale({ 100, 100, 100 });
 
