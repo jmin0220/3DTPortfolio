@@ -17,6 +17,7 @@ public:
 
 	void StartAnimation();
 	void EndAnimation();
+	void Reset();
 
 protected:
 	void Start() override;

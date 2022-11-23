@@ -17,12 +17,15 @@ public:
 
 	void CountDownStart();
 	void PopEnd();
+	void Reset();
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void End() override {};
 
+
 	void LevelStartEvent() override;
+
 private:
 	std::shared_ptr<GameEngineUIRenderer> Three_;
 	std::shared_ptr<GameEngineUIRenderer> Two_;

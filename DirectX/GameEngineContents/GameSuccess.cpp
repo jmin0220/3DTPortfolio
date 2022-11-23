@@ -93,6 +93,8 @@ void GameSuccess::LevelStartEvent()
 	PopUpTime_ = 0.0f;
 
 	Text_->On();
+	Text_->GetTransform().SetWorldScale({ 300.5f, 157.5f });
+	Text_->GetTransform().SetWorldRotation({ 0.0f, 0.0f, 3.0f });
 
 	SetRenderer_->GetTransform().SetWorldScale({ 2048.0f, 336.0f });
 	CrownRenderer_->GetTransform().SetWorldScale({ 2048.0f, 336.0f });
@@ -182,4 +184,25 @@ void GameSuccess::UIOff()
 
 		Text_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale4, f4DestinationScale4, GameEngineTime::GetDeltaTime() * 6.f) });
 	}
+}
+
+void GameSuccess::Reset()
+{
+	SlicePos_ = float4(1, 0, 0, 0);
+
+	Text_->GetPixelData().MulColor.a = 0.0f;
+	IsPop_ = false;
+	IsOut_ = false;
+	PopUpTime_ = 0.0f;
+
+	Text_->On();
+
+	SetRenderer_->GetTransform().SetWorldScale({ 2048.0f, 336.0f });
+	CrownRenderer_->GetTransform().SetWorldScale({ 2048.0f, 336.0f });
+	SideCircle1_->GetTransform().SetWorldScale({ 459.0f, 141.0f });
+	SideCircle2_->GetTransform().SetWorldScale({ 300.0f, 92.0f });
+	SideCircle3_->GetTransform().SetWorldScale({ 400.0f, 140.0f });
+	SideCircle4_->GetTransform().SetWorldScale({ 400.0f, 70.0f });
+	Text_->GetTransform().SetWorldScale({ 300.5f, 157.5f });
+	Text_->GetTransform().SetWorldRotation({ 0.0f, 0.0f, 3.0f });
 }

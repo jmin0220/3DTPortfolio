@@ -266,3 +266,22 @@ void GameFail::TextRendererPop()
 	}
 }
 
+void GameFail::Reset()
+{
+	SlicePos_ = float4(1, 0, 0, 0);
+
+	Text_->GetPixelData().MulColor.a = 0.0f;
+	IsPop_ = false;
+	IsOut_ = false;
+	IsBoing_ = false;
+	PopUpTime_ = 0.0f;
+
+	Text_->On();
+
+	SetRenderer_->GetTransform().SetWorldScale({ 2048.0f, 336.0f });
+	CrownRenderer_->GetTransform().SetWorldScale({ 2048.0f, 336.0f });
+	SideCircle1_->GetTransform().SetWorldScale({ 459.0f, 141.0f });
+	SideCircle2_->GetTransform().SetWorldScale({ 300.0f, 92.0f });
+	SideCircle3_->GetTransform().SetWorldScale({ 400.0f, 140.0f });
+	SideCircle4_->GetTransform().SetWorldScale({ 400.0f, 70.0f });
+}

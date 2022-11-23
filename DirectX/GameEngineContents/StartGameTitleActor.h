@@ -22,6 +22,8 @@ public:
 		SubTitleFont_->SetText(_SubText, "Noto Sans CJK SC");
 		GameIcon_->SetTexture(_GameIcon);
 	}
+
+	void Reset();
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;

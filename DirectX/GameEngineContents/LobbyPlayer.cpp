@@ -25,4 +25,17 @@ void LobbyPlayer::LevelStartEvent()
 	FBXRenderer_->ChangeAnimation("Idle");
 	FBXRenderer_->GetTransform().SetWorldScale({ 15,15,15 });
 	//FBXRenderer_->GetTransform().SetWorldScale({ SIZE_MAGNIFICATION_RATIO });
+
+
+	{
+		std::vector<std::vector<GameEngineRenderUnit>>& Units = FBXRenderer_->GetAllRenderUnit();
+
+		for (std::vector<GameEngineRenderUnit>& UnitSet : Units)
+		{
+			for (GameEngineRenderUnit& Unit : UnitSet)
+			{
+				Unit.ShaderResources.SetTexture("DiffuseTexture", "Character.png");
+			}
+		}
+	}
 }

@@ -17,6 +17,7 @@ public:
 
 	void TextRendererPop();
 	void AlphaSet();
+	void Reset();
 
 protected:
 	void Start() override;

@@ -355,3 +355,38 @@ void CountDown::PopEnd()
 	PopAni5_->Off();
 	PopAni6_->Off();
 }
+
+void CountDown::Reset()
+{
+	//Ã³À½¿¡ ´Ù ²¨³ö¾ßÇÔ
+	IsThreePop_ = false;
+	IsThreeEnd_ = false;
+	Three_->GetTransform().SetWorldScale({ 0.0f, 0.0f });
+	Three_->GetTransform().SetWorldRotation({ 0,0,0,0 });
+	Three_->On();
+
+	IsTwoPop_ = false;
+	IsTwoEnd_ = false;
+	Two_->GetTransform().SetWorldScale({ 0.0f, 0.0f });
+	Two_->GetTransform().SetWorldRotation({ 0,0,0,0 });
+	Two_->On();
+
+	IsOnePop_ = false;
+	IsOneEnd_ = false;
+	One_->GetTransform().SetWorldScale({ 0.0f, 0.0f });
+	One_->GetTransform().SetWorldRotation({ 0,0,0,0 });
+	One_->On();
+
+	IsGoPop_ = false;
+	IsGoEnd_ = false;
+	Go_->GetTransform().SetWorldScale({ 0.0f, 0.0f });
+	Go_->On();
+
+	IsAniOn_ = false;
+	PopAni1_->CurAnimationReset();
+	PopAni2_->CurAnimationReset();
+	PopAni3_->CurAnimationReset();
+	PopAni4_->CurAnimationReset();
+	PopAni5_->CurAnimationReset();
+	PopAni6_->CurAnimationReset();
+}

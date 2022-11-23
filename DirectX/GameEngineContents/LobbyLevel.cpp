@@ -42,7 +42,7 @@ void LobbyLevel::LevelStartEvent()
 
 	LobbySet_ = CreateActor<LobbySetUI>();
 
-	//InGameSetUI_ = CreateActor<InGameSetUI>();
+	InGameSetUI_ = CreateActor<InGameSetUI>();
 
 	Player_ = CreateActor<LobbyPlayer>();
 	Player_->GetTransform().SetWorldPosition({ 0, -15, 0});//현재 z값 영향을 안받음
@@ -60,7 +60,7 @@ void LobbyLevel::LevelEndEvent()
 
 	LobbySet_->Death();
 
-	//InGameSetUI_->Death();
+	InGameSetUI_->Death();
 
 	Player_->Death();
 

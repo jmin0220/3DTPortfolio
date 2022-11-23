@@ -55,7 +55,7 @@ void StartGameTitleActor::Start()
 
 void StartGameTitleActor::Update(float _DeltaTime)
 {
-	SetTitleText("게임 제목", "부가설명" , "UI_Medal_Icon_DoorDash.png");
+	//SetTitleText("게임 제목", "부가설명" , "UI_Medal_Icon_DoorDash.png");
 	TitlebarAnimation();
 }
 
@@ -138,4 +138,18 @@ void StartGameTitleActor::TitlebarAnimation()
 			}
 		}
 	}
+}
+
+void StartGameTitleActor::Reset()
+{
+	GreenTitle_->GetTransform().SetWorldScale({ 0.0f, 109.0f });
+	WhiteTitle_->GetTransform().SetWorldScale({ 0.0f, 109.0f });
+	WhiteTitle_->GetTransform().SetWorldPosition({ -800.0f, -350.0f });
+	BlackTitle_->GetTransform().SetWorldScale({ 0.0f, 109.0f });
+	Swap_ = false;
+	IsFirstAniEnd_ = false;
+	IsSecondAniEnd_ = false;
+	TitleFont_->Off();
+	SubTitleFont_->Off();
+	GameIcon_->Off();
 }

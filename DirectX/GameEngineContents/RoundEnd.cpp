@@ -231,3 +231,20 @@ void RoundEnd::EndAnimation()
 		Text_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale4, f4DestinationScale4, GameEngineTime::GetDeltaTime() * 15.f) });
 	}
 }
+
+void RoundEnd::Reset()
+{
+	SlicePos_ = float4(0, 0, 0, 0);
+
+	SetRenderer_->GetTransform().SetWorldScale({ 0.0f, 336.0f });
+	SideCircle1_->GetTransform().SetWorldScale({ 0.0f, 141.0f });
+	SideCircle2_->GetTransform().SetWorldScale({ 0.0f, 92.0f });
+	SideCircle3_->GetTransform().SetWorldScale({ 0.0f, 140.0f });
+	SideCircle4_->GetTransform().SetWorldScale({ 0.0f, 70.0f });
+
+	Text_->GetTransform().SetWorldScale({ 0.0f, 0.0f });
+
+	Pop_ = false;
+	IsOut_ = false;
+	PopUpTime_ = 0.0f;
+}
