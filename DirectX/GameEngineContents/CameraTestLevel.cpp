@@ -4,6 +4,7 @@
 
 #include "TestActor_WaterPlane.h"
 #include "TestActor_Character.h"
+#include "TestActor_FogBox.h"
 #include "SkyboxActor.h"
 
 #include "PostEffect_Bloom.h"
@@ -24,8 +25,8 @@ void CameraTestLevel::Start()
 	//	GetMainCameraActor()->GetTransform().SetWorldMove({ 0, 200, -3000 });
 	//}
 
-	std::shared_ptr<PostEffect_Bloom> Ptr = GetMainCamera()->GetCameraRenderTarget()->AddEffect<PostEffect_Bloom>();
-	Ptr->On();
+	//std::shared_ptr<PostEffect_Bloom> Ptr = GetMainCamera()->GetCameraRenderTarget()->AddEffect<PostEffect_Bloom>();
+	//Ptr->On();
 
 }
 
@@ -51,13 +52,16 @@ void CameraTestLevel::LevelStartEvent()
 
 	// ¿¢ÅÍ »ý¼º
 	std::shared_ptr<GameEngineActor> Floor = CreateActor<TestActor_WaterPlane>();
-	Floor->GetTransform().SetWorldPosition({ 0, -5000, 0 });
+	Floor->GetTransform().SetWorldPosition({ 0, -2000, 0 });
 
 	std::shared_ptr<GameEngineActor> Player = CreateActor<TestActor_Character>();
 	Player->GetTransform().SetWorldPosition({ 0, 0, 0 });
 
 	std::shared_ptr<GameEngineActor> Skybox = CreateActor<SkyboxActor>();
 	Skybox->GetTransform().SetWorldScale({ 100, 100, 100 });
+
+	std::shared_ptr<GameEngineActor> FogBox = CreateActor<TestActor_FogBox>();
+	FogBox->GetTransform().SetWorldPosition({ 0, -2000, 200 });
 
 	Actors_.push_back(Player);
 	

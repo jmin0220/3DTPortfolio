@@ -16,7 +16,7 @@ void TestCharacterAnimation::Start()
 
 
 		Renderer = CreateComponent<GameEngineFBXAnimationRenderer>();
-		Renderer->SetFBXMesh("TestIdle.fbx", "TextureAnimation");
+		Renderer->SetFBXMesh("TestIdle.fbx", "TextureAnimationCustom");
 
 		{
 			Renderer->CreateFBXAnimation("Idle", 
@@ -44,14 +44,41 @@ void TestCharacterAnimation::Start()
 		GetTransform().SetWorldRotation({ 0.0f, 180.0f, 0.0f });
 	}
 
+
+	DiffuseData_.BodyTextureColor = float4(0.37f, 0.64f, 0.91f);
 	{
 		std::vector<std::vector<GameEngineRenderUnit>>& RenderUnits = Renderer->GetAllRenderUnit();
 		for (std::vector<GameEngineRenderUnit>& RenderUnit : RenderUnits)
 		{
 			for (GameEngineRenderUnit& Unit : RenderUnit)
 			{
+				// 텍스쳐
 				Unit.ShaderResources.SetTexture("DiffuseTexture", "CH_FallGuy_AM.png");
-				//Unit.ShaderResources.SetTexture("DiffuseTexture", "CH_FallGuy_NM.png");
+
+				// 텍스쳐 색
+				if (true == Unit.ShaderResources.IsConstantBuffer("DiffuseData"))
+				{
+					Unit.ShaderResources.SetConstantBufferLink("DiffuseData", DiffuseData_);
+				}
+
+				// 마스킹
+				if (true == Unit.ShaderResources.IsTexture("FaceEyeMskTexture"))
+				{
+					Unit.ShaderResources.SetTexture("FaceEyeMskTexture", "CH_FallGuy_faceEyes_MSK.png");
+				}
+
+				// 스킨
+				if (true == Unit.ShaderResources.IsTexture("BodyMskTexture"))
+				{
+					Unit.ShaderResources.SetTexture("BodyMskTexture", "CH_FallGuy_BackToFrontGradient_PTN.png");
+				}
+
+				// 노말맵 + 빛
+				if (true == Unit.ShaderResources.IsTexture("NormalTexture"))
+				{
+					Unit.ShaderResources.SetTexture("NormalTexture", "CH_FallGuy_NM.png");
+				}
+
 			}
 		}
 	}

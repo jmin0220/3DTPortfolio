@@ -1,5 +1,16 @@
 #pragma once
 
+struct LightData
+{
+	float4 DiffuseColor;
+	float4 LightDirection;
+};
+
+struct DiffuseData
+{
+	float4 BodyTextureColor;
+};
+
 // ¼³¸í :
 class TestCharacterAnimation	:	public GameEngineActor
 {
@@ -20,5 +31,9 @@ protected:
 private:
 	std::shared_ptr<GameEngineFBXAnimationRenderer> Renderer;
 
+
+	// ³ë¸»¸Ê + ºû
+	LightData LightData_;
+	DiffuseData DiffuseData_;
 };
 

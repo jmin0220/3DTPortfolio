@@ -243,9 +243,6 @@
     <ClInclude Include="CrownCount.h">
       <Filter>02_Actor\UIActor\LobbyUIs</Filter>
     </ClInclude>
-    <ClInclude Include="TestActor_Plane.h">
-      <Filter>999_Test\TestActor\CameraTest</Filter>
-    </ClInclude>
     <ClInclude Include="TestActor_Character.h">
       <Filter>999_Test\TestActor\CameraTest</Filter>
     </ClInclude>
@@ -357,9 +354,6 @@
     <ClInclude Include="PlayerActor.h">
       <Filter>02_Actor</Filter>
     </ClInclude>
-    <ClInclude Include="ScaleTestLevel.h">
-      <Filter>999_Test\TestLevel</Filter>
-    </ClInclude>
     <ClInclude Include="GameManagerGUI.h">
       <Filter>98_LevelGUI</Filter>
     </ClInclude>
@@ -389,9 +383,6 @@
     </ClInclude>
     <ClInclude Include="ActorAxis.h">
       <Filter>02_Actor\MapEditorActor\Axis</Filter>
-    </ClInclude>
-    <ClInclude Include="StageTestLevel.h">
-      <Filter>999_Test\TestLevel</Filter>
     </ClInclude>
     <ClInclude Include="HexAGoneLevel.h">
       <Filter>01_Level\StageLevel\Stage04_Hex-A-Gone</Filter>
@@ -425,9 +416,6 @@
     </ClInclude>
     <ClInclude Include="Hex_BackGroundObject.h">
       <Filter>02_Actor\Stage04Actor</Filter>
-    </ClInclude>
-    <ClInclude Include="TestCharacterAnimation.h">
-      <Filter>999_Test\TestActor\ScaleTestActor</Filter>
     </ClInclude>
     <ClInclude Include="PlayerTestActor.h">
       <Filter>999_Test\PhysXTest\Chaewoon\PlayerTest</Filter>
@@ -479,6 +467,18 @@
     </ClInclude>
     <ClInclude Include="JumpClub_SpinBarSingle.h">
       <Filter>02_Actor\Stage02Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="TestActor_FogBox.h">
+      <Filter>999_Test\TestActor\CameraTest</Filter>
+    </ClInclude>
+    <ClInclude Include="ScaleTestLevel.h">
+      <Filter>999_Test\TestLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="StageTestLevel.h">
+      <Filter>999_Test\TestLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="TestCharacterAnimation.h">
+      <Filter>999_Test\TestActor\ScaleTestActor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -541,9 +541,6 @@
     </ClCompile>
     <ClCompile Include="PhysicsBase.cpp">
       <Filter>97_Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="TestActor_Plane.cpp">
-      <Filter>999_Test\TestActor\CameraTest</Filter>
     </ClCompile>
     <ClCompile Include="TestActor_WaterPlane.cpp">
       <Filter>990_Tutorial\Shader\Actor</Filter>
@@ -659,9 +656,6 @@
     <ClCompile Include="GameManagerGUI.cpp">
       <Filter>98_LevelGUI</Filter>
     </ClCompile>
-    <ClCompile Include="ScaleTestLevel.cpp">
-      <Filter>999_Test\TestLevel</Filter>
-    </ClCompile>
     <ClCompile Include="ShaderTutorialLevel.cpp">
       <Filter>990_Tutorial\Shader\Level</Filter>
     </ClCompile>
@@ -688,9 +682,6 @@
     </ClCompile>
     <ClCompile Include="InGameSetUI.cpp">
       <Filter>02_Actor\UIActor\SetUI\InGameUIs</Filter>
-    </ClCompile>
-    <ClCompile Include="StageTestLevel.cpp">
-      <Filter>999_Test\TestLevel</Filter>
     </ClCompile>
     <ClCompile Include="HexAGoneLevel.cpp">
       <Filter>01_Level\StageLevel\Stage04_Hex-A-Gone</Filter>
@@ -727,9 +718,6 @@
     </ClCompile>
     <ClCompile Include="Hex_BackGroundObject.cpp">
       <Filter>02_Actor\Stage04Actor</Filter>
-    </ClCompile>
-    <ClCompile Include="TestCharacterAnimation.cpp">
-      <Filter>999_Test\TestActor\ScaleTestActor</Filter>
     </ClCompile>
     <ClCompile Include="PlayerTestActor.cpp">
       <Filter>999_Test\PhysXTest\Chaewoon\PlayerTest</Filter>
@@ -781,6 +769,18 @@
     </ClCompile>
     <ClCompile Include="JumpClub_SpinBarSingle.cpp">
       <Filter>02_Actor\Stage02Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="TestActor_FogBox.cpp">
+      <Filter>999_Test\TestActor\CameraTest</Filter>
+    </ClCompile>
+    <ClCompile Include="ScaleTestLevel.cpp">
+      <Filter>999_Test\TestLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="StageTestLevel.cpp">
+      <Filter>999_Test\TestLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="TestCharacterAnimation.cpp">
+      <Filter>999_Test\TestActor\ScaleTestActor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -395,10 +395,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="StageTestLevel.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
+    <ClInclude Include="StageTestLevel.h" />
     <ClInclude Include="StartGameTitleActor.h">
       <SubType>
       </SubType>
@@ -415,14 +412,11 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="TestActor_Plane.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="SkyboxActor.h">
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="TestActor_FogBox.h" />
     <ClInclude Include="TestActor_WaterPlane.h">
       <SubType>
       </SubType>
@@ -713,10 +707,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="StageTestLevel.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
+    <ClCompile Include="StageTestLevel.cpp" />
     <ClCompile Include="StartGameTitleActor.cpp">
       <SubType>
       </SubType>
@@ -733,14 +724,11 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="TestActor_Plane.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="SkyboxActor.cpp">
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="TestActor_FogBox.cpp" />
     <ClCompile Include="TestActor_WaterPlane.cpp">
       <SubType>
       </SubType>

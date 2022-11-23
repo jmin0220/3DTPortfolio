@@ -137,6 +137,7 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
     </FxCompile>
+    <FxCompile Include="BoxFog.hlsl" />
     <FxCompile Include="CustomColor.hlsl" />
     <FxCompile Include="RenderOption.fx" />
     <FxCompile Include="RtoLSlice.hlsl">
@@ -149,6 +150,7 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
     </FxCompile>
+    <FxCompile Include="TextureAnimationCustom.hlsl" />
     <FxCompile Include="TextureColor.hlsl" />
     <FxCompile Include="TextureCustom.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>

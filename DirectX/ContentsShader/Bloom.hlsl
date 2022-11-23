@@ -23,7 +23,7 @@ Output Bloom_VS(Input _Input)
 #define ColorRange 2.5 // -> 상수버퍼로 하는게 좋을거같음
 
 Texture2D Tex : register(t0);
-SamplerState POINTWRAP : register(s0);
+SamplerState LINEARWRAP : register(s0);
 
 float3 JodieReinhardTonemap(float3 c)
 {
@@ -35,7 +35,7 @@ float3 JodieReinhardTonemap(float3 c)
 
 float3 BloomTile(float lod, float2 offset, float2 uv)
 {
-    return Tex.Sample(POINTWRAP, uv * exp2(-lod) + offset).rgb;
+    return Tex.Sample(LINEARWRAP, uv * exp2(-lod) + offset).rgb;
 }
 
 float3 GetBloom(float2 uv)
@@ -54,7 +54,7 @@ float3 GetBloom(float2 uv)
 float4 Bloom_PS(Output _Input) : SV_Target0
 {
     float2 TexPos = _Input.Tex.xy;
-    float3 Color = pow(Tex.Sample(POINTWRAP, TexPos).rgb * ColorRange, float3(2.2, 2.2, 2.2));
+    float3 Color = pow(Tex.Sample(LINEARWRAP, TexPos).rgb * ColorRange, float3(2.2, 2.2, 2.2));
 
     Color = pow(Color, float3(2.2, 2.2, 2.2));
     Color += pow(GetBloom(TexPos), float3(2.2, 2.2, 2.2));

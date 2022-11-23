@@ -26,7 +26,7 @@ protected:
 	void LevelEndEvent() override;
 
 private:
-	std::shared_ptr<GameEngineFBXStaticRenderer> FbxRenderer_;
+	std::shared_ptr<GameEngineFBXAnimationRenderer> FbxRenderer_;
 	std::shared_ptr<PhysXDynamicActorComponent> DynamicActorComponent_;
 
 	// 카메라 암
@@ -62,5 +62,19 @@ private:
 
 	// TODO::테스트코드
 	void ImpulseTest();
+
+
+	// 캐릭터 애니메이션 & 스킨
+private:
+	void SetCharacterAnimation();
+	void SetCharacterTexture();
+
+	struct SkinData
+	{
+		float4 BodyColor;
+	};
+
+	SkinData SkinData_;
+
 };
 

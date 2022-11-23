@@ -1,6 +1,11 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
 
+struct WaterData
+{
+	float4 WaterColor;
+};
+
 // Ό³Έν :
 class TestActor_WaterPlane : public GameEngineActor
 {
@@ -24,5 +29,7 @@ protected:
 private:
 	std::shared_ptr<GameEngineCollision> Collision_;
 	std::shared_ptr<GameEngineTextureRenderer> Renderer_;
+
+	WaterData WaterData_;
 };
 

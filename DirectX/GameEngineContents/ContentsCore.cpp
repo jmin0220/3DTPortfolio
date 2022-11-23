@@ -200,6 +200,12 @@ void ContentsCore::LoadShaders()
 	}
 
 	{
+		std::shared_ptr<GameEngineMaterial> Material = GameEngineMaterial::Create("TextureAnimationCustom");
+		Material->SetVertexShader("TextureAnimationCustom.hlsl");
+		Material->SetPixelShader("TextureAnimationCustom.hlsl");
+	}
+
+	{
 		std::shared_ptr<GameEngineMaterial> Material = GameEngineMaterial::Create("TextureLoop");
 		Material->SetVertexShader("TextureLoop.hlsl");
 		Material->SetPixelShader("TextureLoop.hlsl");
@@ -233,6 +239,7 @@ void ContentsCore::LoadShaders()
 		Material->SetPixelShader("Bloom.hlsl");
 	}
 	// ~ 포스트 이펙트용
+
 }
 
 //////////////////////////////////////////////////////

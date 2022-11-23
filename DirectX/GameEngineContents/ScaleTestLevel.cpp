@@ -42,6 +42,7 @@ void ScaleTestLevel::LevelStartEvent()
 	//Floor->GetTransform().SetWorldPosition({ 0,0,0 });
 	Cha_Ani = CreateActor<TestCharacterAnimation>();
 	Cha_Ani->GetTransform().SetWorldPosition({ 0,1.3f,0.0f });
+	Cha_Ani->GetTransform().SetWorldScale({ 100, 100, 100});
 }
 
 void ScaleTestLevel::LevelEndEvent()

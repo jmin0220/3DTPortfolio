@@ -22,7 +22,7 @@ void PlayerActor::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _p
 void PlayerActor::Start()
 {
 	// 캐릭터 메쉬 로드 테스트용
-	FbxRenderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
+	FbxRenderer_ = CreateComponent<GameEngineFBXAnimationRenderer>();
 	DynamicActorComponent_ = CreateComponent<PhysXDynamicActorComponent>();
 
 	CamActor_ = GetLevel()->GetMainCameraActor();
@@ -65,7 +65,10 @@ void PlayerActor::Update(float _DeltaTime)
 void PlayerActor::LevelStartEvent()
 {
 	// 메쉬 로드
-	FbxRenderer_->SetFBXMesh("Character.FBX", "Texture");
+	//FbxRenderer_->SetFBXMesh("Character.FBX", "Texture");
+	FbxRenderer_->SetFBXMesh("TestIdle.fbx", "TextureAnimationCustom");
+	SetCharacterAnimation();
+	SetCharacterTexture();
 	FbxRenderer_->GetTransform().SetWorldScale({ 3,3,3 });
 }
 
@@ -172,4 +175,56 @@ void PlayerActor::ImpulseTest()
 	}
 
 	DynamicActorComponent_->PushImpulse(tmpPower);
+}
+
+
+// 애니메이션 초기화
+void PlayerActor::SetCharacterAnimation()
+{
+	FbxRenderer_->CreateFBXAnimation("Idle",
+	GameEngineRenderingEvent{ "TestIdle.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
+
+	FbxRenderer_->ChangeAnimation("Idle");
+}
+
+// 캐릭터 스킨
+void PlayerActor::SetCharacterTexture()
+{
+	SkinData_.BodyColor = float4(0.37f, 0.64f, 0.91f);
+	{
+		std::vector<std::vector<GameEngineRenderUnit>>& RenderUnits = FbxRenderer_->GetAllRenderUnit();
+		for (std::vector<GameEngineRenderUnit>& RenderUnit : RenderUnits)
+		{
+			for (GameEngineRenderUnit& Unit : RenderUnit)
+			{
+				// 텍스쳐
+				Unit.ShaderResources.SetTexture("DiffuseTexture", "CH_FallGuy_AM.png");
+
+				// 색 정보
+				if (true == Unit.ShaderResources.IsConstantBuffer("DiffuseData"))
+				{
+					Unit.ShaderResources.SetConstantBufferLink("DiffuseData", SkinData_);
+				}
+
+				// 마스킹
+				if (true == Unit.ShaderResources.IsTexture("FaceEyeMskTexture"))
+				{
+					Unit.ShaderResources.SetTexture("FaceEyeMskTexture", "CH_FallGuy_faceEyes_MSK.png");
+				}
+
+				// 스킨
+				if (true == Unit.ShaderResources.IsTexture("BodyMskTexture"))
+				{
+					Unit.ShaderResources.SetTexture("BodyMskTexture", "CH_FallGuy_BackToFrontGradient_PTN.png");
+				}
+
+				// 노말맵 + 빛
+				if (true == Unit.ShaderResources.IsTexture("NormalTexture"))
+				{
+					Unit.ShaderResources.SetTexture("NormalTexture", "CH_FallGuy_NM.png");
+				}
+
+			}
+		}
+	}
 }
