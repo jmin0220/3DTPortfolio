@@ -41,5 +41,5 @@ void JumpClub_SpinBarDouble::CreatePhysXActors(physx::PxScene* _Scene, physx::Px
 	physx::PxCooking* Cooking = static_cast<VirtualPhysXLevel*>(GetLevel())->GetCooking();
 	
 	float4 MeshBoundScale = Renderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
-	PhysXTriMeshGeometry_->CreatePhysXActors("SpinBarDouble.fbx", _Scene, _physics, Cooking, false, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z));
+	PhysXTriMeshGeometry_->CreatePhysXActors("SpinBarDouble.fbx", _Scene, _physics, Cooking, true, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z));
 }

@@ -2,6 +2,7 @@
 #include "PhysXBoxGeometryComponent.h"
 
 PhysXBoxGeometryComponent::PhysXBoxGeometryComponent() 
+	: PositionSetFromParentFlag_(false)
 {
 }
 
@@ -20,7 +21,7 @@ void PhysXBoxGeometryComponent::CreatePhysXActors(physx::PxScene* _Scene, physx:
 		physx::PxQuat(tmpQuat.x, tmpQuat.y, tmpQuat.z, tmpQuat.w));
 
 	// 마찰, 탄성계수
-	material_ = _physics->createMaterial(0.0f, 0.0f, 0.0f);
+	material_ = _physics->createMaterial(0.0f, 0.0f, 0.3f);
 
 	// TODO::배율을 적용할 경우 이쪽 코드를 사용
 	//float4 tmpMagnification = { SIZE_MAGNIFICATION_RATIO };
@@ -37,25 +38,26 @@ void PhysXBoxGeometryComponent::CreatePhysXActors(physx::PxScene* _Scene, physx:
 	// TODO::부모 액터의 RenderUnit으로부터 Mesh의 Scale 과 WorldScale의 연산의 결과를 지오메트리의 Scale로 세팅해야함.
 	shape_ = _physics->createShape(physx::PxBoxGeometry(tmpGeoMetryScale), *material_);
 
-	//// 충돌체의 종류
-	//dynamic_ = _physics->createRigidDynamic(localTm);
-	//dynamic_->attachShape(*shape_);
-	//// 중력이 적용되지 않도록
-	//// TODO::RigidStatic으로 변경해야
-	//dynamic_->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, true);
-
-	//// RigidDynamic의 밀도를 설정
-	//physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 10.0f);
-
-	//// Scene에 액터 추가
-	//_Scene->addActor(*dynamic_);
-
 	// 충돌체의 종류
-	rigidStatic_ = _physics->createRigidStatic(localTm);
-	rigidStatic_->attachShape(*shape_);
+	dynamic_ = _physics->createRigidDynamic(localTm);
+	dynamic_->attachShape(*shape_);
+
+	// 중력이 적용되지 않도록
+	// TODO::RigidStatic으로 변경해야
+	dynamic_->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, true);
+
+	// RigidDynamic의 밀도를 설정
+	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 10.0f);
 
 	// Scene에 액터 추가
-	_Scene->addActor(*rigidStatic_);
+	_Scene->addActor(*dynamic_);
+
+	//// 충돌체의 종류
+	//rigidStatic_ = _physics->createRigidStatic(localTm);
+	//rigidStatic_->attachShape(*shape_);
+
+	//// Scene에 액터 추가
+	//_Scene->addActor(*rigidStatic_);
 }
 
 void PhysXBoxGeometryComponent::Start()
@@ -66,16 +68,27 @@ void PhysXBoxGeometryComponent::Start()
 
 void PhysXBoxGeometryComponent::Update(float _DeltaTime)
 {
-	// TODO::static은 변경되지 않으니 Update할 필요가 없을지도
-	// PhysX Actor의 상태에 맞춰서 부모의 Transform정보를 갱신
-	//float4 tmpWorldPos = { rigidStatic_->getGlobalPose().p.x
-	//, rigidStatic_->getGlobalPose().p.y
-	//, rigidStatic_->getGlobalPose().p.z };
+	if (false == PositionSetFromParentFlag_)
+	{
+		// PhysX Actor의 상태에 맞춰서 부모의 Transform정보를 갱신
+		float4 tmpWorldPos = { rigidDynamic_->getGlobalPose().p.x
+		, rigidDynamic_->getGlobalPose().p.y
+		, rigidDynamic_->getGlobalPose().p.z };
 
-	//float4 tmpWorldRot = { rigidStatic_->getGlobalPose().q.x
-	//, rigidStatic_->getGlobalPose().q.y
-	//, rigidStatic_->getGlobalPose().q.z };
+		float4 tmpWorldRot = { rigidDynamic_->getGlobalPose().q.x
+		, rigidDynamic_->getGlobalPose().q.y
+		, rigidDynamic_->getGlobalPose().q.z };
 
-	//ParentActor_.lock()->GetTransform().SetWorldPosition(tmpWorldPos);
-	//ParentActor_.lock()->GetTransform().SetWorldRotation(tmpWorldRot);
+		ParentActor_.lock()->GetTransform().SetWorldPosition(tmpWorldPos);
+		ParentActor_.lock()->GetTransform().SetWorldRotation(tmpWorldRot);
+	}
+	else
+	{
+		// 부모의 Transform정보를 바탕으로 PhysX Actor의 트랜스폼을 갱신
+		rigidDynamic_->setGlobalPose(ParentActor_.lock()->GetTransform().GetWorldPosition().x,
+			ParentActor_.lock()->GetTransform().GetWorldPosition().y,
+			ParentActor_.lock()->GetTransform().GetWorldPosition().z);
+
+		// TODO::회전도 처리해야함. DegreeToQuat
+	}
 }

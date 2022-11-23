@@ -26,6 +26,11 @@ public:
 		}
 	}
 
+	inline void SetPositionSetFromParentFlag(bool _Flag)
+	{
+		PositionSetFromParentFlag_ = _Flag;
+	}
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -37,10 +42,11 @@ private:
 
 	physx::PxMaterial* material_;
 	physx::PxShape* shape_;
-	physx::PxRigidStatic* rigidStatic_;
+	physx::PxRigidStatic* rigidDynamic_;
 
 	// 이 컴포넌트를 가지고 있는 Parent에 대한 정보
 	std::weak_ptr<GameEngineActor> ParentActor_;
 
+	bool PositionSetFromParentFlag_;
 };
 

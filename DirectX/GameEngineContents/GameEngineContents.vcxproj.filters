@@ -480,6 +480,9 @@
     <ClInclude Include="TestCharacterAnimation.h">
       <Filter>999_Test\TestActor\ScaleTestActor</Filter>
     </ClInclude>
+    <ClInclude Include="JumpClubStage.h">
+      <Filter>02_Actor\Stage02Actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -781,6 +784,9 @@
     </ClCompile>
     <ClCompile Include="TestCharacterAnimation.cpp">
       <Filter>999_Test\TestActor\ScaleTestActor</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpClubStage.cpp">
+      <Filter>02_Actor\Stage02Actor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
