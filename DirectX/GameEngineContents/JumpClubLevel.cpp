@@ -5,6 +5,8 @@
 #include "SkyboxActor.h"
 #include "JumpClub_BackGroundObject.h"
 #include "VFXWaterActor.h"
+#include "JumpClub_SpinBarDouble.h"
+#include "JumpClub_SpinBarSingle.h"
 
 #include "PostEffect_Bloom.h"
 
@@ -40,6 +42,13 @@ void JumpClubLevel::LevelStartEvent()
 	StageParentLevel::LevelStartEvent();
 	BackGroundObj_ = CreateActor<JumpClub_BackGroundObject>();
 	VFXWaterObj_ = CreateActor<VFXWaterActor>();
+
+	// Bar Y축 조정 필요
+	std::shared_ptr<JumpClub_SpinBarDouble> BarDouble = CreateActor<JumpClub_SpinBarDouble>();
+	BarDouble->GetTransform().SetWorldPosition({ 0.0f, 65.0f, 0.0f });
+
+	std::shared_ptr<JumpClub_SpinBarSingle> BarSingle = CreateActor<JumpClub_SpinBarSingle>();
+	BarSingle->GetTransform().SetWorldPosition({ 0.0f, 70.0f, 0.0f });
 
 	std::shared_ptr<GameEngineActor> Skybox = CreateActor<SkyboxActor>();
 	Skybox->GetTransform().SetWorldScale({ 100, 100, 100 });

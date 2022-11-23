@@ -260,6 +260,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="JumpClub_SpinBarDouble.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="JumpClub_SpinBarSingle.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="LJM_PhysXBoxGeometryTest.h">
       <SubType>
       </SubType>
@@ -563,6 +571,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="JumpClub_BackGroundObject.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="JumpClub_SpinBarDouble.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="JumpClub_SpinBarSingle.cpp">
       <SubType>
       </SubType>
     </ClCompile>
