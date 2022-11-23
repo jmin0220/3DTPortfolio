@@ -22,7 +22,12 @@ protected:
 	void End() override {};
 private:
 	std::shared_ptr<GameEngineUIRenderer> Button_;
+	std::shared_ptr<GameEngineCollision> ButtonCol_;
 	std::shared_ptr<GameEngineUIRenderer> Key_;
 	std::shared_ptr<GameEngineFontRenderer> Font_;
+
+	bool ButtonCheck_;
+	bool IsPop_;
+	bool IsEnd_;
 };
 
