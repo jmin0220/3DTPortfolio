@@ -72,6 +72,7 @@ private:
 	
 	void LoadData(const std::string& _FilePath, const std::string& _FileName);
 	void SaveData(const std::string& _FilePath, const std::string& _FileName);
+	void CreateFBXMesh();
 
 	bool IsChange_;
 	bool CamFollowMode_;

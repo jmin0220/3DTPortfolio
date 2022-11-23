@@ -318,96 +318,15 @@ void MapEditorGUI::OnClickSpawn()
 		{
 			return;
 		}
-		//SpawnedObject NewObj;
+		
 		std::string Extention = FBXFiles_[FileIdx].GetExtension();
 		std::string Name = FBXFiles_[FileIdx].GetFileName();
 		NewObj.Name_ = Name.substr(0, Name.size() - Extention.size());
 
 		NewObj.Dir_ = FBXFiles_[FileIdx].GetFullPath();
 		
-		//NewObj.Actor_ = ConnectedLevel->CreateActor<ColorBox>();
+		CreateFBXMesh();
 
-		//CurMesh = MeshEnum::Rainbow;
-		//std::string_view Meshname = magic_enum::enum_name(CurMesh);
-		//if (Meshname == NewObj.Name_)
-		//{
-
-		//	int a = 0;
-		//}
-
-		// 1. PickableActor 소환 후
-		NewObj.Actor_ = ConnectedLevel->CreateActor<PickableActor>();
-		
-		std::map<std::string, MeshEnum> MeshEnumMap_;
-		MeshEnum tmpEnum = MeshEnum::START;
-
-		for (int i = 0; i < static_cast<int>(MeshEnum::END); i++)
-		{
-			std::string tmp = magic_enum::enum_name(tmpEnum).data();
-			MeshEnumMap_[tmp] = (MeshEnum)i;
-			tmpEnum = (MeshEnum)((int)tmpEnum + 1);
-		}
-
-		switch ((*MeshEnumMap_.find(NewObj.Name_)).second)
-		{
-		case MeshEnum::START:
-		{
-			int a = 0;
-			break;
-		}
-		case MeshEnum::JumpClubMap:
-		{
-			NewObj.Actor_.lock()->SetStaticMesh("JumpClubMap.FBX");
-			break;
-		}
-		case MeshEnum::HexAGoneMap:
-		{
-			NewObj.Actor_.lock()->SetStaticMesh("HexAGoneMap.FBX");
-			break;
-		}
-		case MeshEnum::HexTile:
-		{
-			NewObj.Actor_.lock()->SetStaticMesh("HexTile.FBX");
-			break;
-		}
-		case MeshEnum::Rainbow:
-		{
-			// 2. 메쉬 세팅해준다
-			NewObj.Actor_.lock()->SetStaticMesh("Rainbow.FBX");
-			break;
-		} //DoorDash
-		case MeshEnum::DoodrDashEnv:
-		{
-			NewObj.Actor_.lock()->SetStaticMesh("DoodrDashEnv.FBX");
-			break;
-		}
-		case MeshEnum::DoorDashCollisionMesh:
-		{
-			NewObj.Actor_.lock()->SetStaticMesh("DoorDashCollisionMesh.FBX");
-			break;
-		}
-		case MeshEnum::DoorBlock:
-		{
-			NewObj.Actor_.lock()->SetStaticMesh("DoorBlock.FBX");
-			break;
-		}
-		case MeshEnum::TestMap:
-		{
-			NewObj.Actor_.lock()->SetStaticMesh("TestMap.FBX");
-			break;
-		}
-		case MeshEnum::END:
-		{
-			int a = 0;
-			break;
-		}
-		default:
-		{
-			int a = 0;
-			break;
-		}
-		}
-		
 		NewObj.Actor_.lock()->GetTransform().SetWorldPosition({ 0, 0, 0 });
 
 		SpawnedObjects_.push_back(NewObj);
@@ -701,92 +620,11 @@ void MapEditorGUI::LoadData(const std::string& _FilePath, const std::string& _Fi
 		float4 Size = { Mesh["Transform"]["Size"][0].asFloat() , Mesh["Transform"]["Size"][1].asFloat() , Mesh["Transform"]["Size"][2].asFloat(), Mesh["Transform"]["Size"][3].asFloat() };
 		float4 Rot = { Mesh["Transform"]["Rot"][0].asFloat() , Mesh["Transform"]["Rot"][1].asFloat() , Mesh["Transform"]["Rot"][2].asFloat(), Mesh["Transform"]["Rot"][3].asFloat() };
 		
-		SpawnedObject NewObj;
 		NewObj.Name_ = Mesh["Name"].asCString();
 
 		//NewObj.Dir_ = FBXFiles_[FileIdx].GetFullPath();
-		//NewObj.Actor_ = ConnectedLevel->CreateActor<ColorBox>();
-		NewObj.Actor_ = ConnectedLevel->CreateActor<PickableActor>();
-
-		std::map<std::string, MeshEnum> MeshEnumMap_;
-		MeshEnum tmpEnum = MeshEnum::START;
-
-		for (int i = 0; i < static_cast<int>(MeshEnum::END); i++)
-		{
-			std::string tmp = magic_enum::enum_name(tmpEnum).data();
-			MeshEnumMap_[tmp] = (MeshEnum)i;
-			tmpEnum = (MeshEnum)((int)tmpEnum + 1);
-		}
-
-		switch ((*MeshEnumMap_.find(NewObj.Name_)).second)
-		{
-		case MeshEnum::START:
-		{
-			int a = 0;
-			break;
-		}
-		case MeshEnum::JumpClubMap:
-		{
-			NewObj.Actor_.lock()->SetStaticMesh("JumpClubMap.FBX");
-			break;
-		}
-		case MeshEnum::HexAGoneMap:
-		{
-			NewObj.Actor_.lock()->SetStaticMesh("HexAGoneMap.FBX");
-			break;
-		}
-		case MeshEnum::HexTile:
-		{
-			NewObj.Actor_.lock()->SetStaticMesh("HexTile.FBX");
-			break;
-		}
-		case MeshEnum::Rainbow:
-		{
-			// 2. 메쉬 세팅해준다
-			NewObj.Actor_.lock()->SetStaticMesh("Rainbow.FBX");
-			break;
-		}
-		case MeshEnum::TestMap:
-		{
-			NewObj.Actor_.lock()->SetStaticMesh("TestMap.FBX");
-			break;
-		}
-		case MeshEnum::Col_StartPos:
-		{
-			NewObj.Actor_.lock()->SetCollisionOnly(Size);
-			break;
-		}
-		case MeshEnum::Col_Goal:
-		{
-			NewObj.Actor_.lock()->SetCollisionOnly(Size);
-			break;
-		}
-		case MeshEnum::DoodrDashEnv:
-		{
-			NewObj.Actor_.lock()->SetStaticMesh("DoodrDashEnv.FBX");
-			break;
-		}
-		case MeshEnum::DoorDashCollisionMesh:
-		{
-			NewObj.Actor_.lock()->SetStaticMesh("DoorDashCollisionMesh.FBX");
-			break;
-		}
-		case MeshEnum::DoorBlock:
-		{
-			NewObj.Actor_.lock()->SetStaticMesh("DoorBlock.FBX");
-			break;
-		}
-		case MeshEnum::END:
-		{
-			int a = 0;
-			break;
-		}
-		default:
-		{
-			int a = 0;
-			break;
-		}
-		}
+	
+		CreateFBXMesh();
 
 		NewObj.Actor_.lock()->GetTransform().SetWorldPosition(Pos);
 		NewObj.Actor_.lock()->GetTransform().SetWorldScale(Size);
@@ -796,5 +634,81 @@ void MapEditorGUI::LoadData(const std::string& _FilePath, const std::string& _Fi
 		ActorPicker::SelectedActor = NewObj.Actor_.lock();
 
 		j++;
+	}
+}
+
+void MapEditorGUI::CreateFBXMesh()
+{
+	// 1. PickableActor 소환 후
+	NewObj.Actor_ = ConnectedLevel->CreateActor<PickableActor>();
+
+	std::map<std::string, MeshEnum> MeshEnumMap_;
+	MeshEnum tmpEnum = MeshEnum::START;
+
+	for (int i = 0; i < static_cast<int>(MeshEnum::END); i++)
+	{
+		std::string tmp = magic_enum::enum_name(tmpEnum).data();
+		MeshEnumMap_[tmp] = (MeshEnum)i;
+		tmpEnum = (MeshEnum)((int)tmpEnum + 1);
+	}
+
+	switch ((*MeshEnumMap_.find(NewObj.Name_)).second)
+	{
+	case MeshEnum::START:
+	{
+		int a = 0;
+		break;
+	}
+	case MeshEnum::JumpClubMap:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("JumpClubMap.FBX");
+		break;
+	}
+	case MeshEnum::HexAGoneMap:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("HexAGoneMap.FBX");
+		break;
+	}
+	case MeshEnum::HexTile:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("HexTile.FBX");
+		break;
+	}
+	case MeshEnum::Rainbow:
+	{
+		// 2. 메쉬 세팅해준다
+		NewObj.Actor_.lock()->SetStaticMesh("Rainbow.FBX");
+		break;
+	} //DoorDash
+	case MeshEnum::DoodrDashEnv:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("DoodrDashEnv.FBX");
+		break;
+	}
+	case MeshEnum::DoorDashCollisionMesh:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("DoorDashCollisionMesh.FBX");
+		break;
+	}
+	case MeshEnum::DoorBlock:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("DoorBlock.FBX");
+		break;
+	}
+	case MeshEnum::TestMap:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("TestMap.FBX");
+		break;
+	}
+	case MeshEnum::END:
+	{
+		int a = 0;
+		break;
+	}
+	default:
+	{
+		int a = 0;
+		break;
+	}
 	}
 }
