@@ -2,6 +2,8 @@
 #include "StageParentLevel.h"
 
 // Ό³Έν :
+class DoorDashStage;
+class DoorDash_BackGroundObject;
 class DoorDashLevel	:	public StageParentLevel
 {
 public:
@@ -22,6 +24,7 @@ protected:
 	void LevelStartEvent() override;
 	void LevelEndEvent() override;
 private:
-
+	std::shared_ptr<GameEngineActor> Stage_;
+	std::shared_ptr<GameEngineActor>BackGround_;
 };
 

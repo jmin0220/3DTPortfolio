@@ -11,7 +11,7 @@ PlayableObject::PlayableObject()
 	, MovementAccx({2000.0f, 0.0f, 0.0f}) //움직일때의 가속도
 	, MovementAccz({0.0f, 0.0f, 2000.0f}) //움직일때의 가속도
 	, MovementVelocity({0.0f, 0.0f, 0.0f})//움직일때의 속도
-	, MaxSpeed(300.0f) // 움직이는 최대 속도
+	, MaxSpeed(100.0f) // 움직이는 최대 속도
 {
 	if (GameEngineInput::GetInst()->IsKey("MoveRight") == false)
 	{

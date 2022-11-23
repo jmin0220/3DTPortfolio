@@ -15,8 +15,13 @@ public:
 	DoorDash_BackGroundObject& operator=(DoorDash_BackGroundObject&& _Other) noexcept = delete;
 
 protected:
+	void Start() override;
+	void Update(float _DeltaTime) override;
+	//void End() override;
 
+	//void LevelStartEvent() override;
+	//void LevelEndEvent() override;
 private:
-
+	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer_;
 };
 

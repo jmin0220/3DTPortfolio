@@ -2,6 +2,7 @@
 #include "DoorDashLevel.h"
 
 #include "DoorDashStage.h"
+#include "DoorDash_BackGroundObject.h"
 #include "PlayerActor.h"
 
 DoorDashLevel::DoorDashLevel() 
@@ -34,9 +35,14 @@ void DoorDashLevel::LevelStartEvent()
 
 	std::shared_ptr<PlayerActor> Player = CreateActor<PlayerActor>();
 	Player->CreatePhysXActors(GetScene(), GetPhysics());
-	std::shared_ptr<DoorDashStage> Map = CreateActor<DoorDashStage>();
-	Map->GetTransform().SetWorldPosition({30.0f, -200.0f, 30.0f});
+	Player->GetTransform().SetWorldPosition({ 30.0f,50.0f,0 });
+	//collision용 매쉬 바닥, 벽 등
+	Stage_ = CreateActor<DoorDashStage>();
+	Stage_->GetTransform().SetWorldPosition({0, -200, 0});
 
+	//그외 배경용 static매쉬
+	//BackGround_ = CreateActor<DoorDash_BackGroundObject>();
+	//BackGround_->GetTransform().SetWorldPosition({ 0,0,0 });
 }
 
 void DoorDashLevel::LevelEndEvent()
