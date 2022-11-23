@@ -39,18 +39,18 @@ void PhysXBoxGeometryComponent::CreatePhysXActors(physx::PxScene* _Scene, physx:
 	shape_ = _physics->createShape(physx::PxBoxGeometry(tmpGeoMetryScale), *material_);
 
 	// 충돌체의 종류
-	dynamic_ = _physics->createRigidDynamic(localTm);
-	dynamic_->attachShape(*shape_);
+	rigidDynamic_ = _physics->createRigidDynamic(localTm);
+	rigidDynamic_->attachShape(*shape_);
 
 	// 중력이 적용되지 않도록
 	// TODO::RigidStatic으로 변경해야
-	dynamic_->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, true);
+	rigidDynamic_->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, true);
 
 	// RigidDynamic의 밀도를 설정
-	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 10.0f);
+	physx::PxRigidBodyExt::updateMassAndInertia(*rigidDynamic_, 10.0f);
 
 	// Scene에 액터 추가
-	_Scene->addActor(*dynamic_);
+	_Scene->addActor(*rigidDynamic_);
 
 	//// 충돌체의 종류
 	//rigidStatic_ = _physics->createRigidStatic(localTm);
@@ -84,10 +84,12 @@ void PhysXBoxGeometryComponent::Update(float _DeltaTime)
 	}
 	else
 	{
-		// 부모의 Transform정보를 바탕으로 PhysX Actor의 트랜스폼을 갱신
-		rigidDynamic_->setGlobalPose(ParentActor_.lock()->GetTransform().GetWorldPosition().x,
+		physx::PxTransform tmpPxTransform(ParentActor_.lock()->GetTransform().GetWorldPosition().x,
 			ParentActor_.lock()->GetTransform().GetWorldPosition().y,
 			ParentActor_.lock()->GetTransform().GetWorldPosition().z);
+
+		// 부모의 Transform정보를 바탕으로 PhysX Actor의 트랜스폼을 갱신
+		rigidDynamic_->setGlobalPose(tmpPxTransform);
 
 		// TODO::회전도 처리해야함. DegreeToQuat
 	}

@@ -19,9 +19,9 @@ public:
 
 	inline void ReleasePhysX()
 	{
-		if (true == rigidStatic_->isReleasable())
+		if (true == rigidDynamic_->isReleasable())
 		{
-			rigidStatic_->release();
+			rigidDynamic_->release();
 			ParentActor_.lock()->Death();
 		}
 	}
@@ -42,7 +42,7 @@ private:
 
 	physx::PxMaterial* material_;
 	physx::PxShape* shape_;
-	physx::PxRigidStatic* rigidDynamic_;
+	physx::PxRigidDynamic* rigidDynamic_;
 
 	// 이 컴포넌트를 가지고 있는 Parent에 대한 정보
 	std::weak_ptr<GameEngineActor> ParentActor_;
