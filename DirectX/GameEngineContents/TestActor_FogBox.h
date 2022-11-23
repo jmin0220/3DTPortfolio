@@ -1,6 +1,13 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
 
+struct FogData
+{
+	float4 FogBottomPos_;
+	float4 FogTopPos_;
+	float4 Color_;
+};
+
 // Ό³Έν :
 class TestActor_FogBox : public GameEngineActor
 {
@@ -21,7 +28,7 @@ protected:
 	void End() override;
 
 private:
-	std::shared_ptr<GameEngineTextureRenderer> Renderer_;
-	float4 Color_;
+	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer_;
+	FogData FogData_;
 };
 

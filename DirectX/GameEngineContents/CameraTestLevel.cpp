@@ -61,7 +61,6 @@ void CameraTestLevel::LevelStartEvent()
 	Skybox->GetTransform().SetWorldScale({ 100, 100, 100 });
 
 	std::shared_ptr<GameEngineActor> FogBox = CreateActor<TestActor_FogBox>();
-	FogBox->GetTransform().SetWorldPosition({ 0, -2000, 200 });
 
 	Actors_.push_back(Player);
 	

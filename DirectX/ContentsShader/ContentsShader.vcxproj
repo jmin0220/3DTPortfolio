@@ -137,7 +137,7 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="BoxFog.hlsl" />
+    <FxCompile Include="Fog.hlsl" />
     <FxCompile Include="CustomColor.hlsl" />
     <FxCompile Include="RenderOption.fx" />
     <FxCompile Include="RtoLSlice.hlsl">

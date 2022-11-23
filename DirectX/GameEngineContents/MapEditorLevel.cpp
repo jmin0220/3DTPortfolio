@@ -51,8 +51,9 @@ void MapEditorLevel::LevelStartEvent()
 	//std::shared_ptr<PickableActor> act = CreateActor<PickableActor>();
 	//act->SetStaticMesh("Rainbow.FBX");
 
-	std::shared_ptr<PickableActor> CollisionOnly = CreateActor<PickableActor>();
-	CollisionOnly->SetCollisionOnly(float4(700, 700, 700));
+	// 트리거용 콜리전만 따로 생성
+	//std::shared_ptr<PickableActor> CollisionOnly = CreateActor<PickableActor>();
+	//CollisionOnly->SetCollisionOnly(float4(700, 700, 700));
 
 	
 }

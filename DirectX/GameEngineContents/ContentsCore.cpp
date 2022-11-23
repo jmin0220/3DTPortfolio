@@ -233,9 +233,9 @@ void ContentsCore::LoadShaders()
 
 
 	{
-		std::shared_ptr<GameEngineMaterial> Material = GameEngineMaterial::Create("BoxFog");
-		Material->SetVertexShader("BoxFog.hlsl");
-		Material->SetPixelShader("BoxFog.hlsl");
+		std::shared_ptr<GameEngineMaterial> Material = GameEngineMaterial::Create("Fog");
+		Material->SetVertexShader("Fog.hlsl");
+		Material->SetPixelShader("Fog.hlsl");
 	}
 
 

@@ -32,7 +32,7 @@
     <FxCompile Include="Bloom.hlsl">
       <Filter>PostEfffect</Filter>
     </FxCompile>
-    <FxCompile Include="BoxFog.hlsl">
+    <FxCompile Include="Fog.hlsl">
       <Filter>Texture</Filter>
     </FxCompile>
     <FxCompile Include="TextureAnimationCustom.hlsl">

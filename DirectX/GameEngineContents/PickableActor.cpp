@@ -86,10 +86,10 @@ void PickableActor::SetStaticMesh(const std::string& _FBX, const std::string& _T
 	Collision_Picking_->ChangeOrder(CollisionGroup::Picking);
 
 	// ·»´õ·¯
-	FBXRenderer_->GetTransform().SetLocalScale(FBXScale);
+	//FBXRenderer_->GetTransform().SetLocalScale(FBXScale);
 
 	// ÇÇ¹þ
-	FBXRenderer_->GetTransform().SetLocalMove(float4(CollisionScale.x * -0.5f, CollisionScale.y * -0.5f, 0.0f));
+	//FBXRenderer_->GetTransform().SetLocalMove(float4(CollisionScale.x * -0.5f, CollisionScale.y * -0.5f, 0.0f));
 	if (0 != _Texture.compare(""))
 	{
 		std::vector<std::vector<GameEngineRenderUnit>>& UnitSet = FBXRenderer_->GetAllRenderUnit();
