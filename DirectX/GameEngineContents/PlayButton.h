@@ -16,6 +16,8 @@ public:
 	PlayButton& operator=(const PlayButton& _Other) = delete;
 	PlayButton& operator=(PlayButton&& _Other) noexcept = delete;
 
+	CollisionReturn ButtonOn(std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other);
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -24,5 +26,11 @@ private:
 	std::shared_ptr<GameEngineUIRenderer> Button_;
 	std::shared_ptr<GameEngineUIRenderer> Key_;
 	std::shared_ptr<GameEngineFontRenderer> Font_;
+
+	std::shared_ptr<GameEngineCollision> ButtonCol_;
+
+	bool ButtonCheck_;
+	bool IsPop_;
+	bool IsEnd_;
 };
 

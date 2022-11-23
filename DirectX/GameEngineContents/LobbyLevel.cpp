@@ -38,6 +38,7 @@ void LobbyLevel::LevelStartEvent()
 	GetMainCamera()->SetProjectionMode(CAMERAPROJECTIONMODE::PersPective);
 
 	ContentsCore::GetInst()->LoadLevelResource(LEVELS::LOBBY_TEST);//경로설정
+	//이걸 하면 밑에 EndEvent에서 리소스 제거 해줘야한다
 
 	LobbySet_ = CreateActor<LobbySetUI>();
 
@@ -66,5 +67,7 @@ void LobbyLevel::LevelEndEvent()
 	//Test_->Death();
 
 	Mouse->Death();
+
+	ContentsCore::GetInst()->ReleaseCurLevelResource();
 }
 

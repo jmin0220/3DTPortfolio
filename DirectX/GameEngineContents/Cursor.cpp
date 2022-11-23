@@ -25,6 +25,7 @@ void Cursor::Start()
 
 	UICollision_ = CreateComponent<GameEngineCollision>();
 	UICollision_->SetDebugSetting(CollisionType::CT_OBB2D, float4{ 0.0f,1.0f,0.0f,0.3f });
+	UICollision_->ChangeOrder(UICOLLISION::Mouse);
 	UICollision_->GetTransform().SetWorldScale({ 4.0f, 4.0f, 100.0f });
 	UICollision_->SetUIDebugCamera();
 }
