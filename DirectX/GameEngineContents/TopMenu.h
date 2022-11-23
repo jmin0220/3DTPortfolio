@@ -16,11 +16,6 @@ public:
 	TopMenu& operator=(const TopMenu& _Other) = delete;
 	TopMenu& operator=(TopMenu&& _Other) noexcept = delete;
 
-	CollisionReturn Button1On(std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other);
-	CollisionReturn Button2On(std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other);
-	CollisionReturn Button3On(std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other);
-	CollisionReturn Button4On(std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other);
-
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;

@@ -113,34 +113,23 @@ void TopMenu::Start()
 void TopMenu::Update(float _DeltaTime)
 {
 	{
-		PanelCol1_->IsCollision(CollisionType::CT_OBB2D, UICOLLISION::Mouse, CollisionType::CT_OBB2D,
-			std::bind(&TopMenu::Button1On, this, std::placeholders::_1, std::placeholders::_2));
-		PanelCol2_->IsCollision(CollisionType::CT_OBB2D, UICOLLISION::Mouse, CollisionType::CT_OBB2D,
-			std::bind(&TopMenu::Button2On, this, std::placeholders::_1, std::placeholders::_2));
-		PanelCol3_->IsCollision(CollisionType::CT_OBB2D, UICOLLISION::Mouse, CollisionType::CT_OBB2D,
-			std::bind(&TopMenu::Button3On, this, std::placeholders::_1, std::placeholders::_2));
-		PanelCol4_->IsCollision(CollisionType::CT_OBB2D, UICOLLISION::Mouse, CollisionType::CT_OBB2D,
-			std::bind(&TopMenu::Button4On, this, std::placeholders::_1, std::placeholders::_2));
-	}
-	
-	{
 		//이 조건문 성훈님 Pikable 코드 베껴 적음..[=]이게 뭔지 모름 ㅎ; 람다식..?함수포인터..? 암튼 해서 true false를 받음
-		ButtonCheck1_ = PanelCol1_->IsCollision(CollisionType::CT_OBB, CollisionGroup::Ray, CollisionType::CT_OBB,
+		ButtonCheck1_ = PanelCol1_->IsCollision(CollisionType::CT_OBB2D, UICOLLISION::Mouse, CollisionType::CT_OBB2D,
 			[=](std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other)
 			{
 				return CollisionReturn::Break;
 			});
-		ButtonCheck2_ = PanelCol2_->IsCollision(CollisionType::CT_OBB, CollisionGroup::Ray, CollisionType::CT_OBB,
+		ButtonCheck2_ = PanelCol2_->IsCollision(CollisionType::CT_OBB2D, UICOLLISION::Mouse, CollisionType::CT_OBB2D,
 			[=](std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other)
 			{
 				return CollisionReturn::Break;
 			});
-		ButtonCheck3_ = PanelCol3_->IsCollision(CollisionType::CT_OBB, CollisionGroup::Ray, CollisionType::CT_OBB,
+		ButtonCheck3_ = PanelCol3_->IsCollision(CollisionType::CT_OBB2D, UICOLLISION::Mouse, CollisionType::CT_OBB2D,
 			[=](std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other)
 			{
 				return CollisionReturn::Break;
 			});
-		ButtonCheck4_ = PanelCol4_->IsCollision(CollisionType::CT_OBB, CollisionGroup::Ray, CollisionType::CT_OBB,
+		ButtonCheck4_ = PanelCol4_->IsCollision(CollisionType::CT_OBB2D, UICOLLISION::Mouse, CollisionType::CT_OBB2D,
 			[=](std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other)
 			{
 				return CollisionReturn::Break;
@@ -153,11 +142,23 @@ void TopMenu::Update(float _DeltaTime)
 			float4 f4DestinationScale = { 70.f,51.8f };
 			Panel1_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 15.f) });
 		}
+		else
+		{
+			float4 f4CurrentScale = Panel1_->GetTransform().GetWorldScale();
+			float4 f4DestinationScale = { 90.f,51.8f };
+			Panel1_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 15.f) });
+		}
 		if (ButtonCheck2_ == false)
 		{
 			//충돌이 아니라면 원래 사이즈로 돌아간다
 			float4 f4CurrentScale = Panel2_->GetTransform().GetWorldScale();
 			float4 f4DestinationScale = { 70.f,51.8f };
+			Panel2_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 15.f) });
+		}
+		else
+		{
+			float4 f4CurrentScale = Panel2_->GetTransform().GetWorldScale();
+			float4 f4DestinationScale = { 90.f,51.8f };
 			Panel2_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 15.f) });
 		}
 		if (ButtonCheck3_ == false)
@@ -167,6 +168,12 @@ void TopMenu::Update(float _DeltaTime)
 			float4 f4DestinationScale = { 70.f,51.8f };
 			Panel3_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 15.f) });
 		}
+		else
+		{
+			float4 f4CurrentScale = Panel3_->GetTransform().GetWorldScale();
+			float4 f4DestinationScale = { 90.f,51.8f };
+			Panel3_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 15.f) });
+		}
 		if (ButtonCheck4_ == false)
 		{
 			//충돌이 아니라면 원래 사이즈로 돌아간다
@@ -174,41 +181,11 @@ void TopMenu::Update(float _DeltaTime)
 			float4 f4DestinationScale = { 70.f,51.8f };
 			Panel4_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 15.f) });
 		}
+		else
+		{
+			float4 f4CurrentScale = Panel4_->GetTransform().GetWorldScale();
+			float4 f4DestinationScale = { 90.f,51.8f };
+			Panel4_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 15.f) });
+		}
 	}
-}
-
-CollisionReturn TopMenu::Button1On(std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other)
-{
-	//충돌하면 약간 버튼이 늘어남
-	float4 f4CurrentScale = Panel1_->GetTransform().GetWorldScale();
-	float4 f4DestinationScale = { 90.f,51.8f };
-	Panel1_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 15.f) });
-	return CollisionReturn::Break;
-}
-
-CollisionReturn TopMenu::Button2On(std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other)
-{
-	//충돌하면 약간 버튼이 늘어남
-	float4 f4CurrentScale = Panel2_->GetTransform().GetWorldScale();
-	float4 f4DestinationScale = { 90.f,51.8f };
-	Panel2_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 15.f) });
-	return CollisionReturn::Break;
-}
-
-CollisionReturn TopMenu::Button3On(std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other)
-{
-	//충돌하면 약간 버튼이 늘어남
-	float4 f4CurrentScale = Panel3_->GetTransform().GetWorldScale();
-	float4 f4DestinationScale = { 90.f,51.8f };
-	Panel3_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 15.f) });
-	return CollisionReturn::Break;
-}
-
-CollisionReturn TopMenu::Button4On(std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other)
-{
-	//충돌하면 약간 버튼이 늘어남
-	float4 f4CurrentScale = Panel4_->GetTransform().GetWorldScale();
-	float4 f4DestinationScale = { 90.f,51.8f };
-	Panel4_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 15.f) });
-	return CollisionReturn::Break;
 }
