@@ -232,6 +232,13 @@ void ContentsCore::LoadShaders()
 	}
 
 
+	{
+		std::shared_ptr<GameEngineMaterial> Material = GameEngineMaterial::Create("BoxFog");
+		Material->SetVertexShader("BoxFog.hlsl");
+		Material->SetPixelShader("BoxFog.hlsl");
+	}
+
+
 	// 포스트 이펙트용
 	{
 		std::shared_ptr<GameEngineMaterial> Material = GameEngineMaterial::Create("Bloom");

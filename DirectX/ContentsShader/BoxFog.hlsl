@@ -13,7 +13,7 @@ struct Output
 };
 
 
-Output Color_VS(Input _Input)
+Output BoxFog_VS(Input _Input)
 {
     // 쉐이더의 경우에는 대부분의 상황에서 형변환이 가능하다.
     Output NewOutPut = (Output) 0;
@@ -22,14 +22,14 @@ Output Color_VS(Input _Input)
     return NewOutPut;
 }
 
-cbuffer ResultColor : register(b8)
+cbuffer ResultColor : register(b0)
 {
     float4 Color;
 }
 
-float4 Color_PS(Output _Input) : SV_Target0
+float4 BoxFog_PS(Output _Input) : SV_Target0
 {
-
     
     return Color;
 }
+
