@@ -375,6 +375,21 @@ void MapEditorGUI::OnClickSpawn()
 			// 2. 메쉬 세팅해준다
 			NewObj.Actor_.lock()->SetStaticMesh("Rainbow.FBX");
 			break;
+		} //DoorDash
+		case MeshEnum::DoodrDashEnv:
+		{
+			NewObj.Actor_.lock()->SetStaticMesh("DoodrDashEnv.FBX");
+			break;
+		}
+		case MeshEnum::DoorDashCollisionMesh:
+		{
+			NewObj.Actor_.lock()->SetStaticMesh("DoorDashCollisionMesh.FBX");
+			break;
+		}
+		case MeshEnum::DoorBlock:
+		{
+			NewObj.Actor_.lock()->SetStaticMesh("DoorBlock.FBX");
+			break;
 		}
 		case MeshEnum::TestMap:
 		{
@@ -744,6 +759,21 @@ void MapEditorGUI::LoadData(const std::string& _FilePath, const std::string& _Fi
 		case MeshEnum::Col_Goal:
 		{
 			NewObj.Actor_.lock()->SetCollisionOnly(Size);
+			break;
+		}
+		case MeshEnum::DoodrDashEnv:
+		{
+			NewObj.Actor_.lock()->SetStaticMesh("DoodrDashEnv.FBX");
+			break;
+		}
+		case MeshEnum::DoorDashCollisionMesh:
+		{
+			NewObj.Actor_.lock()->SetStaticMesh("DoorDashCollisionMesh.FBX");
+			break;
+		}
+		case MeshEnum::DoorBlock:
+		{
+			NewObj.Actor_.lock()->SetStaticMesh("DoorBlock.FBX");
 			break;
 		}
 		case MeshEnum::END:

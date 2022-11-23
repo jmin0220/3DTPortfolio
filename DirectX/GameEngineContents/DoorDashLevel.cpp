@@ -4,6 +4,7 @@
 #include "DoorDashStage.h"
 #include "DoorDash_BackGroundObject.h"
 #include "PlayerActor.h"
+#include "SkyboxActor.h"
 
 DoorDashLevel::DoorDashLevel() 
 {
@@ -40,6 +41,9 @@ void DoorDashLevel::LevelStartEvent()
 	Stage_ = CreateActor<DoorDashStage>();
 	Stage_->GetTransform().SetWorldPosition({0, -200, 0});
 
+	//스카이박스
+	std::shared_ptr<SkyboxActor> Skybox = CreateActor<SkyboxActor>();
+	Skybox->SetSkyTexture("Respawn_SkyBox_S02.png");
 	//그외 배경용 static매쉬
 	//BackGround_ = CreateActor<DoorDash_BackGroundObject>();
 	//BackGround_->GetTransform().SetWorldPosition({ 0,0,0 });

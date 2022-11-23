@@ -79,7 +79,7 @@ void PickableActor::SetStaticMesh(const std::string& _FBX, const std::string& _T
 	//float4 Ratio(SIZE_MAGNIFICATION_RATIO * 0.25f);
 
 	// 피킹용 콜리전
-	float4 CollisionScale = FBXScale * 25;
+	float4 CollisionScale = FBXScale * 0.25f;
 	Collision_Picking_ = CreateComponent<GameEngineCollision>();
 	Collision_Picking_->GetTransform().SetLocalScale(CollisionScale);
 	Collision_Picking_->SetDebugSetting(CollisionType::CT_OBB, float4(0.5f, 0.0f, 0.0f, 0.25f));

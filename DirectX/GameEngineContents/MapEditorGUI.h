@@ -22,6 +22,9 @@ enum class MeshEnum
 	// TEST
 	Rainbow,
 	TestMap,
+	DoorDashCollisionMesh,
+	DoodrDashEnv,
+	DoorBlock,
 	// COLLISION
 	Col_StartPos,
 	Col_Goal,

@@ -18,7 +18,6 @@ public:
 	HexTile& operator=(HexTile&& _Other) noexcept = delete;
 
 protected:
-protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void LevelStartEvent() override;
