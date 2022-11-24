@@ -14,12 +14,10 @@ void TestActor_FogBox::Start()
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
 	Renderer_->SetFBXMesh("ENV_S5_Background_FogPlane.fbx", "Fog");
 
-
 	Renderer_->GetTransform().SetWorldScale({ 0.001f, 0.001f, 0.001f });
 	Renderer_->GetTransform().SetWorldPosition({ 0, -2000, 0 });
 
-
-	FogData_.Color_ = float4::RED;
+	FogData_.Color_ = float4::WHITE;
 	FogData_.FogBottomPos_ = GetTransform().GetWorldPosition();
 	FogData_.FogTopPos_ = FogData_.FogBottomPos_.y + Renderer_->GetTransform().GetWorldScale().y;
 
@@ -33,9 +31,9 @@ void TestActor_FogBox::Start()
 				Unit.ShaderResources.SetConstantBufferLink("FogData", FogData_);
 			}
 
-			if (true == Unit.ShaderResources.IsTexture("FogMsk"))
+			if (true == Unit.ShaderResources.IsTexture("DiffuseTexture"))
 			{
-				Unit.ShaderResources.SetTexture("FogMsk", "VFX_NoiseFog.png");
+				Unit.ShaderResources.SetTexture("DiffuseTexture", "VFX_NoiseFog.png");
 			}
 		}
 	}

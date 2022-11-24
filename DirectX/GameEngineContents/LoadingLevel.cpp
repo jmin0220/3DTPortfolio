@@ -17,6 +17,7 @@ void LoadingLevel::Start()
 
 void LoadingLevel::Update(float _DeltaTime)
 {
+
 }
 
 void LoadingLevel::LevelStartEvent()
