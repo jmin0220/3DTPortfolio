@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "StageParentLevel.h"
 #include "TestRainBow.h"
+#include "DoorBlock.h"
 #include "TestMapActor.h"
 #include <GameEngineBase/magic_enum.hpp>
 #include <GameEngineCore/ThirdParty/inc/json.h>
@@ -55,7 +56,7 @@ void StageParentLevel::LevelStartLoad()
 	case StageNum::STAGE1:
 	{
 		ContentsCore::GetInst()->LoadLevelResource(LEVELS::STAGE01_DOORDASH);
-		//CurStageName = "\\stage1.json";
+		CurStageName = JSON_NAME_DOORS;
 		break;
 	}
 	case StageNum::STAGE2:
@@ -137,6 +138,11 @@ void StageParentLevel::LevelStartLoad()
 		case Stage_MeshEnum::TestMap:
 		{
 			NewObj.Actor_ = CreateActor<TestMapActor>();
+			break;
+		}
+		case Stage_MeshEnum::DoorBlock:
+		{
+			NewObj.Actor_ = CreateActor<DoorBlock>();
 			break;
 		}
 		case Stage_MeshEnum::END:

@@ -28,6 +28,13 @@ protected:
 
 private:
 	float Speed_;
+	bool Switch_;
+
+	float YPos;
+	float Pos;
+
+	//문 순서용 변수  각 문마다 다른 속도와 상태를 부여하기위함
+	static int Num;
 
 	std::shared_ptr<PhysXBoxGeometryComponent> PhysXBoxGeometry_;
 	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer_;

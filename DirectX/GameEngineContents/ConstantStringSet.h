@@ -53,6 +53,10 @@
 #define FBX_NAME_HEXAGONFLOOR "HexagonFloor.FBX"
 #define FBX_NAME_TESTMAP "TestMap.FBX"
 
+//JSON
+#define JSON_NAME_DOORS "\\Doors.Json"
+
+
 
 // Level
 #define LEVEL_NAME_TITLE "TitleLevel"

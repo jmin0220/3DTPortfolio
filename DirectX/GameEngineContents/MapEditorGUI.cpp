@@ -578,7 +578,8 @@ void MapEditorGUI::SaveData(const std::string& _FilePath, const std::string& _Fi
 
 		MeshData["Mesh"]["Transform"] = NameTransform;
 
-		Object["Object" + std::to_string(j++)] = MeshData;
+		Object["Object" + std::to_string(j)] = MeshData;
+		j++;
 	}
 		Json::StreamWriterBuilder builder;
 		builder["commentStyle"] = "None";

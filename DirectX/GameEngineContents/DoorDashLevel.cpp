@@ -18,6 +18,11 @@ void DoorDashLevel::Start()
 {
 	StageParentLevel::Start();
 	MyStage_ = StageNum::STAGE1;
+
+	Player_ = CreateActor<PlayerActor>();
+
+	// InitPhysic는 레벨이 시작될때 실행되므로 LevelStartEvent가 실행되기 전에 포지션을 결정해야함.
+	Player_->GetTransform().SetWorldPosition({ 10.0f, -70.0f, -390.0f });
 }
 
 void DoorDashLevel::Update(float _DeltaTime)
@@ -34,9 +39,6 @@ void DoorDashLevel::LevelStartEvent()
 {
 	StageParentLevel::LevelStartEvent();
 
-	std::shared_ptr<PlayerActor> Player = CreateActor<PlayerActor>();
-	Player->CreatePhysXActors(GetScene(), GetPhysics());
-	Player->GetTransform().SetWorldPosition({ 30.0f,50.0f,0 });
 	//collision용 매쉬 바닥, 벽 등
 	Stage_ = CreateActor<DoorDashStage>();
 	Stage_->GetTransform().SetWorldPosition({0, -200, 0});
