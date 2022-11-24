@@ -181,6 +181,7 @@ void CustomSimulationEventCallback::onContact(const physx::PxContactPairHeader& 
 
 		if (cp.events & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
 		{
+			// 충돌체중에 Player가 존재하는지 체크
 			if ((pairHeader.actors[0] == PlayerDynamic_) || (pairHeader.actors[1] == PlayerDynamic_))
 			{
 				// 플레이어가 아닌 액터를 판별

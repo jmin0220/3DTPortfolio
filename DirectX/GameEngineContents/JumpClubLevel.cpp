@@ -26,6 +26,8 @@ void JumpClubLevel::Start()
 	StageParentLevel::Start();
 	MyStage_ = StageNum::STAGE2;
 
+	Player_ = CreateActor<PlayerActor>();
+
 	std::shared_ptr<PostEffect_Bloom> Ptr = GetMainCamera()->GetCameraRenderTarget()->AddEffect<PostEffect_Bloom>();
 	Ptr->Off();
 }
@@ -45,9 +47,8 @@ void JumpClubLevel::LevelStartEvent()
 	StageParentLevel::LevelStartEvent();
 	BackGroundObj_ = CreateActor<JumpClub_BackGroundObject>();
 	VFXWaterObj_ = CreateActor<VFXWaterActor>();
-	Player_ = CreateActor<PlayerActor>();
+
 	Player_->GetTransform().SetWorldPosition({ 0.0f,200.0f,0.0f });
-	Player_->CreatePhysXActors(GetScene(), GetPhysics());
 
 	std::shared_ptr<JumpClubStage> Stage = CreateActor<JumpClubStage>();
 	Stage->GetTransform().SetWorldPosition({ 0.0f, 0.0f, 0.0f });

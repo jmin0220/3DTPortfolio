@@ -65,6 +65,11 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 1000.0f);
 
 	shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(.5f), *material_);
+
+	// 충돌시점 콜백을 위한 세팅
+	shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Player)
+		, static_cast<physx::PxU32>(PhysXFilterGroup::Ground), 0, 0));
+
 	//shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, _GeoMetryScale.x * 0.5f * 0.75f, 0)));
 	shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(.4f), *material_);
 	shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, .6, 0)));

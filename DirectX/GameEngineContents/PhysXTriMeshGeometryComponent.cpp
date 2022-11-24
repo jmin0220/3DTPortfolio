@@ -75,7 +75,14 @@ void PhysXTriMeshGeometryComponent::CreatePhysXActors(const std::string& _MeshNa
 		physx::PxTriangleMesh* TriangleMesh = _physics->createTriangleMesh(readBuffer);
 		//createExclusiveShapefh RigidStatic에 Shape를 넣어준다.
 		shape_ = physx::PxRigidActorExt::createExclusiveShape(*rigidStatic_, physx::PxTriangleMeshGeometry(TriangleMesh), *material_);
-		shape_->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, true);
+
+		// invalid parameter : PxShape::setFlag(s): triangle mesh and heightfield triggers are not supported!
+		// Triangle에서는 Trigger를 사용할 수 없음
+		//shape_->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
+
+		// 충돌시점 콜백을 위한 세팅
+		shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Ground)
+															, static_cast<physx::PxU32>(PhysXFilterGroup::Player), 0, 0));
 			
 	}
 	
