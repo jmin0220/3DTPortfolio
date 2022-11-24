@@ -18,6 +18,7 @@
 #define DIR_LEVELS "Levels"
 #define DIR_TESTLEVELS "Levels\\TestLevels"
 #define DIR_JSONTEST "JsonTest"
+#define DIR_LEVEL_LOBBY "Levels\\LobbyLevel"
 #define DIR_LEVEL_STAGE01 "Levels\\StageLevel\\Stage01"
 #define DIR_LEVEL_STAGE02 "Levels\\StageLevel\\Stage02"
 #define DIR_LEVEL_STAGE04 "Levels\\StageLevel\\Stage04"

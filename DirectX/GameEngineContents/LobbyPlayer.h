@@ -22,6 +22,20 @@ protected:
 	void End() override {};
 
 	void LevelStartEvent() override;
+
+	// 캐릭터 스킨 & 애니메이션 초기화
+private:
+	void SetCharacterAnimation();
+	void SetCharacterTexture();
+
+	struct SkinData
+	{
+		float4 BodyColor;
+	};
+
+	SkinData SkinData_;
+
+
 private:
 	std::shared_ptr<GameEngineFBXAnimationRenderer> FBXRenderer_;
 	std::shared_ptr<GameEngineFBXAnimationRenderer> Chair_;

@@ -271,7 +271,10 @@ void ContentsCore::LoadLevelResource(LEVELS _LEVEL)
 
 	switch (_LEVEL)
 	{
+		// 게임에 적용될 레벨
 	case LEVELS::LOBBY:
+		Dir.Move(DIR_LEVEL_LOBBY);
+		ResLoadLobby(Dir);
 		break;
 	case LEVELS::LOADING:
 		break;
@@ -407,14 +410,15 @@ void ContentsCore::LevelAllResourceLoad(GameEngineDirectory& _LevelDir)
 	{
 		GameEngineDirectory Dir(Folder.GetFullPath());
 
+		// 모든 PNG는 Texture2D 폴더에 모아두는걸로
 		// PNG
-		{
-			std::vector<GameEngineFile> Files = Dir.GetAllFile(EXT_PNG);
-			for (GameEngineFile& File : Files)
-			{
-				std::shared_ptr<GameEngineTexture> Texture = GameEngineTexture::Load(File.GetFullPath());
-			}
-		}
+		//{
+		//	std::vector<GameEngineFile> Files = Dir.GetAllFile(EXT_PNG);
+		//	for (GameEngineFile& File : Files)
+		//	{
+		//		std::shared_ptr<GameEngineTexture> Texture = GameEngineTexture::Load(File.GetFullPath());
+		//	}
+		//}
 
 		// Mesh & Animation
 		{
