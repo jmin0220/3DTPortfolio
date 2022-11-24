@@ -18,7 +18,8 @@ PlayerActor::~PlayerActor()
 physx::PxRigidDynamic* PlayerActor::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics)
 {
 	float4 MeshBoundScale = FbxRenderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
-	DynamicActorComponent_->CreatePhysXActors(_Scene, _physics, 
+
+	return DynamicActorComponent_->CreatePhysXActors(_Scene, _physics, 
 		physx::PxVec3(MeshBoundScale.x * float4(PLAYER_SIZE_MAGNIFICATION_RATIO).x, 
 		MeshBoundScale.y * float4(PLAYER_SIZE_MAGNIFICATION_RATIO).y, 
 		MeshBoundScale.z * float4(PLAYER_SIZE_MAGNIFICATION_RATIO).z));

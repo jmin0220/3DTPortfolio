@@ -91,6 +91,7 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 	// Scene에 액터 추가
 	_Scene->addActor(*dynamic_);
 
+	// TODO::virtualPhysXLevel에서 Callback 함수에 호출하기 위한 Dynamic 리턴
 	return dynamic_;
 }
 
