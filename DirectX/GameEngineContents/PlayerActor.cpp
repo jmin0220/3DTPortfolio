@@ -14,9 +14,9 @@ PlayerActor::~PlayerActor()
 }
 
 
-void PlayerActor::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics)
+physx::PxRigidDynamic* PlayerActor::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics)
 {
-	DynamicActorComponent_->CreatePhysXActors(_Scene, _physics);
+	return DynamicActorComponent_->CreatePhysXActors(_Scene, _physics);
 }
 
 void PlayerActor::Start()

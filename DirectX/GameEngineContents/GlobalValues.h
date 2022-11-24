@@ -29,6 +29,13 @@ enum class CollisionGroup
 	Max
 };
 
+enum class PhysXFilterGroup
+{
+	Player,		// 플레이어
+	Ground,		// 바닥
+	Obstacle,	// 충돌체(HitCallback을 호출할 용도)
+};
+
 enum class AxisMode
 {
 	Move,

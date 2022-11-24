@@ -28,7 +28,6 @@ void PhysXTriMeshGeometryComponent::CreatePhysXActors(const std::string& _MeshNa
 
 	// 충돌체의 종류
 	rigidStatic_ = _physics->createRigidStatic(localTm);
-
 	// TODO::배율을 적용할 경우 이쪽 코드를 사용
 	//float4 tmpMagnification = { SIZE_MAGNIFICATION_RATIO };
 	//physx::PxVec3 tmpGeoMetryScale(_GeoMetryScale.x * tmpMagnification.x * 0.5f, 
@@ -76,6 +75,8 @@ void PhysXTriMeshGeometryComponent::CreatePhysXActors(const std::string& _MeshNa
 		physx::PxTriangleMesh* TriangleMesh = _physics->createTriangleMesh(readBuffer);
 		//createExclusiveShapefh RigidStatic에 Shape를 넣어준다.
 		shape_ = physx::PxRigidActorExt::createExclusiveShape(*rigidStatic_, physx::PxTriangleMeshGeometry(TriangleMesh), *material_);
+		shape_->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, true);
+			
 	}
 	
 

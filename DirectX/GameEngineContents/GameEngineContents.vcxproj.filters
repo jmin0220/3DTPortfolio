@@ -178,6 +178,9 @@
     <Filter Include="02_Actor\Stage01Actor">
       <UniqueIdentifier>{9ce6f138-8c1d-4a37-9f3e-40d04195ac0e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="99_Global\PhysX">
+      <UniqueIdentifier>{c0e70e77-6294-4783-8d0a-7cc9b0a81cd4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -486,6 +489,9 @@
     <ClInclude Include="DoorBlock.h">
       <Filter>02_Actor\Stage01Actor</Filter>
     </ClInclude>
+    <ClInclude Include="PhysXCommonFunc.h">
+      <Filter>99_Global\PhysX</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -793,6 +799,9 @@
     </ClCompile>
     <ClCompile Include="DoorBlock.cpp">
       <Filter>02_Actor\Stage01Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXCommonFunc.cpp">
+      <Filter>99_Global\PhysX</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

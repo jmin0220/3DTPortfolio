@@ -6,7 +6,7 @@
 // Ό³Έν :
 // https://gameworksdocs.nvidia.com/PhysX/4.1/documentation/physxguide/Manual/CharacterControllers.html
 
-class PhysXCCTActorComponent : public GameEngineComponent
+class PhysXCCTActorComponent : public GameEngineComponent, public PhysXCommonFunc
 {
 public:
 	// constrcuter destructer

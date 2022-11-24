@@ -6,6 +6,8 @@
 physx::PxScene* VirtualPhysXLevel::Scene_ = nullptr;
 physx::PxPhysics* VirtualPhysXLevel::Physics_ = nullptr;
 
+physx::PxFilterFlags CustomFilterShader(physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0, physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1, physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize);
+
 VirtualPhysXLevel::VirtualPhysXLevel() 
 	: Player_(nullptr)
 	, CtrManager_(nullptr)
@@ -64,11 +66,20 @@ void VirtualPhysXLevel::initPhysics(bool _interactive)
 	// Scene생성
 	physx::PxSceneDesc sceneDesc(Physics_->getTolerancesScale());
 	sceneDesc.gravity = physx::PxVec3(0.0f, PHYSX_GRAVITY, 0.0f);
+
+	// EventCallback 세팅
+	SimulationEventCallback_ = new CustomSimulationEventCallback();
+	sceneDesc.simulationEventCallback = SimulationEventCallback_;
+	// callback을 호출 처리할 filtershader 세팅
+	//sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
+	sceneDesc.filterShader = CustomFilterShader;
+
 	DefaultCpuDispatcher_ = physx::PxDefaultCpuDispatcherCreate(2);
 	sceneDesc.cpuDispatcher = DefaultCpuDispatcher_;
-	sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
-	Scene_ = Physics_->createScene(sceneDesc);
 
+	// Scene 생성
+	Scene_ = Physics_->createScene(sceneDesc);
+	
 	// PVD연결
 	physx::PxPvdSceneClient* pvdClient = Scene_->getScenePvdClient();
 	if (pvdClient)
@@ -85,12 +96,6 @@ void VirtualPhysXLevel::initPhysics(bool _interactive)
 	//// TODO::일반적인 경우에는 필요하지 않을 수 있음
 	//CtrManager_->setOverlapRecoveryModule(true);
 	//CtrManager_->setPreciseSweeps(true);
-
-	// 플레이어가 존재하면 생성
-	if (nullptr != Player_)
-	{
-		Player_->CreatePhysXActors(Scene_, Physics_);
-	}
 
 	Cooking_ = PxCreateCooking(PX_PHYSICS_VERSION, *Foundation_, physx::PxCookingParams(Physics_->getTolerancesScale()));
 	if (!Cooking_)
@@ -118,6 +123,12 @@ void VirtualPhysXLevel::cleanupPhysics(bool _Interactive)
 		//CtrManager_->purgeControllers();
 		CtrManager_->release();
 		CtrManager_ = nullptr;
+	}
+
+	if (nullptr != SimulationEventCallback_)
+	{
+		delete SimulationEventCallback_;
+		SimulationEventCallback_ = nullptr;
 	}
 
 	//릴리즈 순서가 중요하다
@@ -154,8 +165,52 @@ void VirtualPhysXLevel::cleanupPhysics(bool _Interactive)
 		PX_RELEASE(Foundation_);
 	}
 
+
+
 	Scene_ = nullptr;
 	Physics_ = nullptr;
 	DefaultCpuDispatcher_ = nullptr;
 	Foundation_ = nullptr;
 }
+
+void CustomSimulationEventCallback::onContact(const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs)
+{
+	for (physx::PxU32 i = 0; i < nbPairs; i++)
+	{
+		const physx::PxContactPair& cp = pairs[i];
+
+		if (cp.events & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
+		{
+			if ((pairHeader.actors[0] == PlayerDynamic_) || (pairHeader.actors[1] == PlayerDynamic_))
+			{
+				// 플레이어가 아닌 액터를 판별
+				physx::PxActor* otherActor = (PlayerDynamic_ == pairHeader.actors[0]) ? pairHeader.actors[1] : pairHeader.actors[0];
+
+				break;
+			}
+		}
+	}
+}
+
+
+physx::PxFilterFlags CustomFilterShader(physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0, physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1, physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize)
+{
+	// SampleSubmarineFilterShader로부터 가져옴
+	// 
+	// let triggers through
+	if (physx::PxFilterObjectIsTrigger(attributes0) || physx::PxFilterObjectIsTrigger(attributes1))
+	{
+		pairFlags = physx::PxPairFlag::eTRIGGER_DEFAULT;
+		return physx::PxFilterFlag::eDEFAULT;
+	}
+	// generate contacts for all that were not filtered above
+	pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
+
+	// trigger the contact callback for pairs (A,B) where 
+	// the filtermask of A contains the ID of B and vice versa.
+	if ((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1))
+		pairFlags |= physx::PxPairFlag::eNOTIFY_TOUCH_FOUND;
+
+	return physx::PxFilterFlag::eDEFAULT;
+}
+

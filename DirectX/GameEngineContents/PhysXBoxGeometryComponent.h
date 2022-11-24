@@ -2,7 +2,7 @@
 #include <GameEngineCore/GameEngineComponent.h>
 
 // Ό³Έν :
-class PhysXBoxGeometryComponent : public GameEngineComponent
+class PhysXBoxGeometryComponent : public GameEngineComponent, public PhysXCommonFunc
 {
 public:
 	// constrcuter destructer

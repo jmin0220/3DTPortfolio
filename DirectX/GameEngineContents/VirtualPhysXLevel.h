@@ -1,9 +1,32 @@
 #pragma once
 #include <GameEngineCore/GameEngineLevel.h>
+#include "PhysXCommonFunc.h"
+
+// callback 이벤트를 재정의할 클래스
+class CustomSimulationEventCallback : public physx::PxSimulationEventCallback
+{
+public:
+	void SetPlayer(physx::PxRigidDynamic* _Dynamic)
+	{
+		PlayerDynamic_ = _Dynamic;
+	}
+
+	void onContact(const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs) override;
+
+	void onConstraintBreak(physx::PxConstraintInfo* constraints, physx::PxU32 count) override {};
+	void onWake(physx::PxActor** actors, physx::PxU32 count) override {};
+	void onSleep(physx::PxActor** actors, physx::PxU32 count) override {};
+	void onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count) override {};
+	void onAdvance(const physx::PxRigidBody* const* bodyBuffer, const physx::PxTransform* poseBuffer, const physx::PxU32 count) override {};
+
+private:
+	physx::PxRigidDynamic* PlayerDynamic_;
+};
+
 
 // 설명 :
 class PlayerActor;
-class VirtualPhysXLevel : public GameEngineLevel
+class VirtualPhysXLevel : public GameEngineLevel, public PhysXCommonFunc
 {
 public:
 	// constrcuter destructer
@@ -31,6 +54,11 @@ public:
 		return Cooking_;
 	}
 
+	inline void SetSimulationPlayer(physx::PxRigidDynamic* _PlayerDynamic)
+	{
+		SimulationEventCallback_->SetPlayer(_PlayerDynamic);
+	}
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTIme) override;
@@ -56,6 +84,8 @@ private:
 	physx::PxDefaultErrorCallback	DefaultErrorCallback_;
 	physx::PxCooking* Cooking_;
 
+	CustomSimulationEventCallback* SimulationEventCallback_;
+
 	// 클래스 초기화
 	void initPhysics(bool _interactive);
 
@@ -64,6 +94,4 @@ private:
 
 	// Memory Release
 	void cleanupPhysics(bool _Interactive = true);
-
 };
-

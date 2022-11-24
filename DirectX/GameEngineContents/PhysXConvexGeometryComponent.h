@@ -4,7 +4,7 @@
 
 
 // Ό³Έν :
-class PhysXConvexGeometryComponent : public GameEngineComponent
+class PhysXConvexGeometryComponent : public GameEngineComponent, public PhysXCommonFunc
 {
 public:
 	// constrcuter destructer

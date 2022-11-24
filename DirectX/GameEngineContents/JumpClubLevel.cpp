@@ -65,6 +65,5 @@ void JumpClubLevel::LevelStartEvent()
 
 void JumpClubLevel::LevelEndEvent()
 {
-	Player_->Death();
 	StageParentLevel::LevelEndEvent();
 }

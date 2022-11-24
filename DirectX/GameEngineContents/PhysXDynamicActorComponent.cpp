@@ -9,7 +9,7 @@ PhysXDynamicActorComponent::~PhysXDynamicActorComponent()
 {
 }
 
-void PhysXDynamicActorComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics, physx::PxVec3 _GeoMetryScale, float4 _GeoMetryRot)
+physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics, physx::PxVec3 _GeoMetryScale, float4 _GeoMetryRot)
 {
 	Scene_ = _Scene;
 	physics_ = _physics;
@@ -90,6 +90,8 @@ void PhysXDynamicActorComponent::CreatePhysXActors(physx::PxScene* _Scene, physx
 
 	// Scene에 액터 추가
 	_Scene->addActor(*dynamic_);
+
+	return dynamic_;
 }
 
 void PhysXDynamicActorComponent::SetMoveSpeed(float4 _MoveSpeed)
@@ -172,8 +174,6 @@ void PhysXDynamicActorComponent::Update(float _DeltaTime)
 
 	ParentActor_.lock()->GetTransform().SetWorldPosition(tmpWorldPos);
 	ParentActor_.lock()->GetTransform().SetWorldRotation(tmpWorldRot);
-
-
 }
 
 void PhysXDynamicActorComponent::PushImpulse(float4 _ImpulsePower)
