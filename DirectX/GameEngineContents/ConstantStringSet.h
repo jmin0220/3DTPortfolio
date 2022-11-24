@@ -2,6 +2,7 @@
 
 // 사이즈 배율
 #define SIZE_MAGNIFICATION_RATIO 1.0f, 1.0f, 1.0f
+#define PLAYER_SIZE_MAGNIFICATION_RATIO 3.0f, 3.0f, 3.0f
 
 // 중력
 #define PHYSX_GRAVITY -9.81f

@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "PlayerActor.h"
+#include "StageParentLevel.h"
 
 #include "CameraArm.h"
 
@@ -16,7 +17,11 @@ PlayerActor::~PlayerActor()
 
 physx::PxRigidDynamic* PlayerActor::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics)
 {
-	return DynamicActorComponent_->CreatePhysXActors(_Scene, _physics);
+	float4 MeshBoundScale = FbxRenderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
+	DynamicActorComponent_->CreatePhysXActors(_Scene, _physics, 
+		physx::PxVec3(MeshBoundScale.x * float4(PLAYER_SIZE_MAGNIFICATION_RATIO).x, 
+		MeshBoundScale.y * float4(PLAYER_SIZE_MAGNIFICATION_RATIO).y, 
+		MeshBoundScale.z * float4(PLAYER_SIZE_MAGNIFICATION_RATIO).z));
 }
 
 void PlayerActor::Start()
@@ -56,8 +61,7 @@ void PlayerActor::Update(float _DeltaTime)
 
 	PlayerStateManager_.Update(_DeltaTime);
 
-	GetTransform().SetWorldMove(MoveDir_ * SPEED_PLAYER * _DeltaTime);
-
+	//GetTransform().SetWorldMove(MoveDir_ * SPEED_PLAYER * _DeltaTime);
 	// TODO::충격테스트코드
 	ImpulseTest();
 }
@@ -69,7 +73,9 @@ void PlayerActor::LevelStartEvent()
 	FbxRenderer_->SetFBXMesh("TestIdle.fbx", "TextureAnimationCustom");
 	SetCharacterAnimation();
 	SetCharacterTexture();
-	FbxRenderer_->GetTransform().SetWorldScale({ 3,3,3 });
+	FbxRenderer_->GetTransform().SetWorldScale({ PLAYER_SIZE_MAGNIFICATION_RATIO });
+	CreatePhysXActors(dynamic_cast<StageParentLevel*>(GetLevel())->GetScene() , 
+		dynamic_cast<StageParentLevel*>(GetLevel())->GetPhysics());
 }
 
 void PlayerActor::LevelEndEvent()
