@@ -91,4 +91,5 @@
 #define KEY_MOUSELEFT "VK_LBUTTON"
 #define KEY_MOUSERIGHT "VK_RBUTTON"
 #define KEY_SPACEBAR "SpaceBar"
+#define KEY_ENTER "VK_RETURN"
 

@@ -23,6 +23,13 @@ protected:
 
 	void LevelStartEvent() override;
 	void LevelEndEvent() override;
+
 private:
 	std::shared_ptr<LoadingActor> Loadings_;
+	MapSelect SelectedMap_;
+
+	// 진행도 관련
+private:
+	class std::shared_ptr<CustomableGUI> LoadingGUI_;
+	void ShowLoadingProgress();
 };

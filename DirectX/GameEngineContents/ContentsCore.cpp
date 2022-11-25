@@ -68,6 +68,7 @@ void ContentsCore::CreateKeys()
 	GameEngineInput::GetInst()->CreateKey(AXIS_MOVE, 'Q');
 	GameEngineInput::GetInst()->CreateKey(AXIS_ROTATE, 'E');
 	GameEngineInput::GetInst()->CreateKey(KEY_SPACEBAR, VK_SPACE);
+	GameEngineInput::GetInst()->CreateKey(KEY_ENTER, VK_RETURN);
 }
 
 // 기본적인 리소스(UI, 로비, ...)
