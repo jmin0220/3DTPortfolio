@@ -20,7 +20,7 @@ public:
 	void onAdvance(const physx::PxRigidBody* const* bodyBuffer, const physx::PxTransform* poseBuffer, const physx::PxU32 count) override {};
 
 private:
-	physx::PxRigidDynamic* PlayerDynamic_;
+	physx::PxRigidDynamic* PlayerDynamic_ = nullptr;
 };
 
 

@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "PlayerActor.h"
 #include "StageParentLevel.h"
+#include "VirtualPhysXLevel.h"
 
 #include "CameraArm.h"
 
@@ -75,8 +76,10 @@ void PlayerActor::LevelStartEvent()
 	SetCharacterAnimation();
 	SetCharacterTexture();
 	FbxRenderer_->GetTransform().SetWorldScale({ PLAYER_SIZE_MAGNIFICATION_RATIO });
-	CreatePhysXActors(dynamic_cast<StageParentLevel*>(GetLevel())->GetScene() , 
-		dynamic_cast<StageParentLevel*>(GetLevel())->GetPhysics());
+
+	// 플레이어를 생성하고, 플레이어의 RigidActor를 받아와서 콜백에 사용함
+	static_cast<VirtualPhysXLevel*>(GetLevel())->SetSimulationPlayer(CreatePhysXActors(dynamic_cast<StageParentLevel*>(GetLevel())->GetScene(),
+		dynamic_cast<StageParentLevel*>(GetLevel())->GetPhysics()));
 }
 
 void PlayerActor::LevelEndEvent()
