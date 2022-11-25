@@ -184,8 +184,10 @@ void CustomSimulationEventCallback::onContact(const physx::PxContactPairHeader& 
 			// 충돌체중에 Player가 존재하는지 체크
 			if ((pairHeader.actors[0] == PlayerDynamic_) || (pairHeader.actors[1] == PlayerDynamic_))
 			{
-				// 플레이어가 아닌 액터를 판별
+				// 플레이어가 아닌 액터를 판별 -> 딱히 필요없을지도?
 				physx::PxActor* otherActor = (PlayerDynamic_ == pairHeader.actors[0]) ? pairHeader.actors[1] : pairHeader.actors[0];
+
+				// TODO::바닥과 플레이어 충돌했을때 해야할일추가
 
 				break;
 			}
