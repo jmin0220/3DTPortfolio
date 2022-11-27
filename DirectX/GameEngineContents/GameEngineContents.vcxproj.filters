@@ -492,6 +492,9 @@
     <ClInclude Include="PhysXCommonFunc.h">
       <Filter>99_Global\PhysX</Filter>
     </ClInclude>
+    <ClInclude Include="PhysXTriMeshDynamicGeometryComponent.h">
+      <Filter>03_Component\PhysXComponent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -802,6 +805,9 @@
     </ClCompile>
     <ClCompile Include="PhysXCommonFunc.cpp">
       <Filter>99_Global\PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXTriMeshDynamicGeometryComponent.cpp">
+      <Filter>03_Component\PhysXComponent</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

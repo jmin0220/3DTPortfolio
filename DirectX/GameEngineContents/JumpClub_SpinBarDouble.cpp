@@ -15,7 +15,7 @@ void JumpClub_SpinBarDouble::Start()
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
 	Renderer_->SetFBXMesh("SpinBarDouble.FBX", "Texture");
 
-	PhysXTriMeshGeometry_ = CreateComponent<PhysXTriMeshGeometryComponent>();
+	PhysXTriMeshDynamicGeometry_ = CreateComponent<PhysXTriMeshDynamicGeometryComponent>();
 }
 
 void JumpClub_SpinBarDouble::Update(float _DeltaTime)
@@ -41,5 +41,5 @@ void JumpClub_SpinBarDouble::CreatePhysXActors(physx::PxScene* _Scene, physx::Px
 	physx::PxCooking* Cooking = static_cast<VirtualPhysXLevel*>(GetLevel())->GetCooking();
 	
 	float4 MeshBoundScale = Renderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
-	PhysXTriMeshGeometry_->CreatePhysXActors("SpinBarDouble.fbx", _Scene, _physics, Cooking, true, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z));
+	PhysXTriMeshDynamicGeometry_->CreatePhysXActors("SpinBarDouble.fbx", _Scene, _physics, Cooking, true, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z));
 }

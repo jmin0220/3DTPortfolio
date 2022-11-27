@@ -1,6 +1,6 @@
 #pragma once
 #include "VirtualPhysXActor.h"
-#include "PhysXTriMeshGeometryComponent.h"
+#include "PhysXTriMeshDynamicGeometryComponent.h"
 
 // Ό³Έν :
 class JumpClub_SpinBarDouble : public VirtualPhysXActor
@@ -27,7 +27,7 @@ protected:
 	void CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics) override;
 
 private:
-	std::shared_ptr<PhysXTriMeshGeometryComponent> PhysXTriMeshGeometry_;
+	std::shared_ptr<PhysXTriMeshDynamicGeometryComponent> PhysXTriMeshDynamicGeometry_;
 	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer_;
 
 };
