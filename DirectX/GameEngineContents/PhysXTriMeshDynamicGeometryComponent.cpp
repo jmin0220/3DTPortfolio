@@ -127,9 +127,9 @@ void PhysXTriMeshDynamicGeometryComponent::Update(float _DeltaTime)
 	, dynamic_->getGlobalPose().p.y
 	, dynamic_->getGlobalPose().p.z };
 
-	float4 tmpWorldRot = { dynamic_->getGlobalPose().q.x
-	, dynamic_->getGlobalPose().q.y
-	, dynamic_->getGlobalPose().q.z };
+	//float4 tmpWorldRot = { dynamic_->getGlobalPose().q.x
+	//, dynamic_->getGlobalPose().q.y
+	//, dynamic_->getGlobalPose().q.z };
 
 	// È¸Àü?
 	float4 tmpRot = { 0.0f, CurRot_, 0.0f, 0.0f };
@@ -142,7 +142,7 @@ void PhysXTriMeshDynamicGeometryComponent::Update(float _DeltaTime)
 	dynamic_->setKinematicTarget(tmpTansform);
 
 	ParentActor_.lock()->GetTransform().SetWorldPosition(tmpWorldPos);
-	ParentActor_.lock()->GetTransform().SetWorldRotation(tmpWorldRot);
+	ParentActor_.lock()->GetTransform().SetWorldRotation(tmpRot);
 }
 
 void PhysXTriMeshDynamicGeometryComponent::CustomFBXLoad(const std::string& _MeshName, bool _InverseIndex)
