@@ -44,6 +44,20 @@ public:
 	}
 
 
+	static std::shared_ptr < GameEngineStructuredBuffer> Create(
+		D3D11_SHADER_BUFFER_DESC _Desc,
+		int Count
+	)
+	{
+		std::shared_ptr < GameEngineStructuredBuffer> Res = CreateResUnName();
+
+		Res->CreateResize(_Desc, Count);
+
+		return Res;
+	}
+
+
+
 	static std::shared_ptr < GameEngineStructuredBuffer> CreateAndFind(
 		const std::string& _Name,
 		D3D11_SHADER_BUFFER_DESC _Desc,
@@ -125,13 +139,18 @@ public:
 
 	void CreateResize(const D3D11_SHADER_BUFFER_DESC& _Desc, int Count, void* _StartData = nullptr);
 
-	void CreateResize(int DataSize, int Count, void* _StartData = nullptr);
+	void CreateResize(size_t DataSize, size_t Count, void* _StartData = nullptr);
 
-	void CreateResize(int Count, void* _StartData = nullptr);
+	void CreateResize(size_t Count, void* _StartData = nullptr);
 
 	inline int GetDataSize() 
 	{
 		return DataSize;
+	}
+
+	inline D3D11_SHADER_BUFFER_DESC& GetShaderDesc()
+	{
+		return ShaderDesc;
 	}
 
 protected:

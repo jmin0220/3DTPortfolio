@@ -23,7 +23,6 @@ public:
 
 	GameEngineRenderingEvent Info;
 
-	bool Pause;
 	bool bOnceStart;
 	bool bOnceEnd;
 	std::function<void(const GameEngineRenderingEvent&)> FrameEvent;
@@ -33,7 +32,6 @@ public:
 
 	// Event
 
-	void PauseSwtich();
 	void Init(const std::string_view& _Name, int _Index);
 	void Reset();
 	void Update(float _DeltaTime);
@@ -48,7 +46,6 @@ public:
 	FBXRendererAnimation() 
 		: Start(0)
 		, End(0)
-		, Pause(false)
 		, bOnceStart(false)
 		, bOnceEnd(false)
 		//******BlendAnimation추가본*******(선생님 코드엔 없음)
@@ -97,10 +94,12 @@ public:
 
 	void CreateFBXAnimation(const std::string& _AnimationName, const GameEngineRenderingEvent& _Desc, int _Index = 0);
 
-
 	void ChangeAnimation(const std::string& _AnimationName);
 
 	void Update(float _DeltaTime) override;
+
+	void PauseSwtich();
+
 
 	//******BlendAnimation추가본*******(선생님 코드엔 없음)
 	void OffIsBlending()
@@ -166,6 +165,8 @@ public:
 protected:
 
 private:
+	bool Pause;
+
 	std::map<std::string, std::shared_ptr<FBXRendererAnimation>> Animations;
 	std::shared_ptr<FBXRendererAnimation> CurAnimation;
 

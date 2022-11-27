@@ -31,7 +31,7 @@ void GameEngineSamplerSetter::Setting() const
 
 void GameEngineStructuredBufferSetter::Setting() const
 {
-	Res->ChangeData(SetData, Size);
+	Res->ChangeData(SetData, Size * Count);
 	SettingFunction();
 }
 
@@ -40,10 +40,15 @@ int GameEngineStructuredBufferSetter::GetDataSize()
 	return Res->GetDataSize();
 }
 
-void GameEngineStructuredBufferSetter::Resize(int _Count)
+void GameEngineStructuredBufferSetter::Resize(size_t _Count)
 {
 	Res->CreateResize(_Count, nullptr);
+	Size = Res->GetDataSize();
+	Count = _Count;
 	OriginalData.resize(Res->GetDataSize() * _Count);
+
+	// 무조건 자기자신의 데이터와 연결
+	SetData = &OriginalData[0];
 }
 
 void GameEngineStructuredBufferSetter::PushData(const void* Data, int _Count)

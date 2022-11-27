@@ -169,6 +169,12 @@ public:
 		return PixelDataInst;
 	}
 
+	AtlasData& GetAtlasData()
+	{
+		return AtlasDataInst;
+	}
+
+
 
 	// 애니메이션 바인드
 	// 시작 프레임에 들어온다.

@@ -19,18 +19,18 @@ void RoundEnd::Start()
 	SlicePos_ = float4(0, 0, 0, 0);
 
 	SetRenderer_ = CreateComponent<GameEngineUIRenderer>();
-	SetRenderer_->GetRenderUnit().SetPipeLine("RtoLSlice");
+	SetRenderer_->GetRenderUnit()->SetPipeLine("RtoLSlice");
 
 	SetRenderer_->GetTransform().SetWorldScale({ 2048.0f, 336.0f });
 	SetRenderer_->GetTransform().SetWorldPosition({ 0.0f, 0.0f });
 	SetRenderer_->SetPivot(PIVOTMODE::LEFT);
 	SetRenderer_->SetTexture("round-over-border-set.png");
 
-	SetRenderer_->GetRenderUnit().EngineShaderResourcesSetting(SetRenderer_);
+	SetRenderer_->GetRenderUnit()->EngineShaderResourcesSetting(SetRenderer_);
 
-	if (true == SetRenderer_->GetRenderUnit().ShaderResources.IsConstantBuffer("SliceData"))
+	if (true == SetRenderer_->GetRenderUnit()->ShaderResources.IsConstantBuffer("SliceData"))
 	{
-		SetRenderer_->GetRenderUnit().ShaderResources.SetConstantBufferLink("SliceData", SlicePos_);
+		SetRenderer_->GetRenderUnit()->ShaderResources.SetConstantBufferLink("SliceData", SlicePos_);
 	}
 
 
@@ -40,15 +40,15 @@ void RoundEnd::Start()
 	CrownRenderer_->SetPivot(PIVOTMODE::LEFT);
 	CrownRenderer_->SetTexture("round-over-white.png");
 
-	CrownRenderer_->GetRenderUnit().SetPipeLine("TextureLoop");
-	CrownRenderer_->GetRenderUnit().EngineShaderResourcesSetting(CrownRenderer_);
-	CrownRenderer_->GetRenderUnit().ShaderResources.SetTexture("Tex", "crown-pattern-black.png");
-	if (true == CrownRenderer_->GetRenderUnit().ShaderResources.IsConstantBuffer("SliceData"))
+	CrownRenderer_->GetRenderUnit()->SetPipeLine("TextureLoop");
+	CrownRenderer_->GetRenderUnit()->EngineShaderResourcesSetting(CrownRenderer_);
+	CrownRenderer_->GetRenderUnit()->ShaderResources.SetTexture("Tex", "crown-pattern-black.png");
+	if (true == CrownRenderer_->GetRenderUnit()->ShaderResources.IsConstantBuffer("SliceData"))
 	{
-		CrownRenderer_->GetRenderUnit().ShaderResources.SetConstantBufferLink("SliceData", SlicePos_);
+		CrownRenderer_->GetRenderUnit()->ShaderResources.SetConstantBufferLink("SliceData", SlicePos_);
 	}
 
-	CrownRenderer_->GetRenderUnit().ShaderResources.SetTexture("Mask", "round-over-white.png");
+	CrownRenderer_->GetRenderUnit()->ShaderResources.SetTexture("Mask", "round-over-white.png");
 
 	SideCircle1_ = CreateComponent<GameEngineUIRenderer>();
 	//SideCircle1_->GetTransform().SetWorldScale({ 459.0f, 141.0f });

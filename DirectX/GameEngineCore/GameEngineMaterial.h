@@ -62,14 +62,16 @@ public:
 	// 랜더러 자체가 들어올 가능성이 높네요.
 	void Setting();
 
-	void RenderingInstancing(int _RenderingCount, std::shared_ptr < GameEngineInstancingBuffer> _Buffer);
+	void SettingInstancing();
+
+	// void RenderingInstancing(int _RenderingCount, std::shared_ptr < GameEngineInstancingBuffer> _Buffer);
 
 	//inline GameEngineVertexBuffer* GetVertexBuffer()
 	//{
 	//	return VertexBuffer;
 	//}
 
-	inline std::shared_ptr < GameEngineVertexShader> GetVertexShader()
+	inline std::shared_ptr <GameEngineVertexShader> GetVertexShader()
 	{
 		return VertexShader;
 	}
@@ -120,6 +122,8 @@ private:
 
 	void VertexShaderSetting();
 
+	void InstancingVertexShaderSetting();
+	
 
 	void RasterizerSetting();
 

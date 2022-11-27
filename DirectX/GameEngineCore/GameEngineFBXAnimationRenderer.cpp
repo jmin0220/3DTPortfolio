@@ -5,6 +5,7 @@
 #include "GameEngineFBXMesh.h"
 
 GameEngineFBXAnimationRenderer::GameEngineFBXAnimationRenderer()
+	: Pause(false)
 {
 
 }
@@ -27,19 +28,15 @@ void FBXRendererAnimation::Init(const std::string_view& _Name, int _Index)
 	FBXAnimationData = Aniamtion->GetAnimationData(_Index);
 	Start = 0;
 	End = static_cast<unsigned int>(FBXAnimationData->TimeEndCount);
-	//Info.Inter = 0.1f;
+	
+	//******BlendAnimation추가본*******(선생님 코드엔 없음)
 	BlendTime = 0.1f;
-}
-
-void FBXRendererAnimation::PauseSwtich()
-{
-	Pause = !Pause;
 }
 
 void FBXRendererAnimation::Update(float _DeltaTime)
 {
 	// 0~24진행이죠?
-	if (false == Pause)
+	if (false == ParentRenderer->Pause)
 	{
 		Info.CurFrameTime += _DeltaTime;
 		Info.PlayTime += _DeltaTime;
@@ -51,11 +48,6 @@ void FBXRendererAnimation::Update(float _DeltaTime)
 			// 여분의 시간이 중요합니다.
 			Info.CurFrameTime -= Info.Inter;
 			++Info.CurFrame;
-
-			if (Info.CurFrame >= End)
-			{
-				Info.CurFrame = Start;
-			}
 
 			if (false == bOnceStart
 				&& Info.CurFrame == 0)
@@ -90,11 +82,11 @@ void FBXRendererAnimation::Update(float _DeltaTime)
 				TimeEvent(Info, _DeltaTime);
 			}
 
-			if (Info.CurFrame >= Info.Frames.size())
+			if (Info.CurFrame >= Info.Frames.size() - 1)
 			{
 				if (true == Info.Loop)
 				{
-					Info.CurFrame = 0;
+					Info.CurFrame = Start;
 				}
 				else
 				{
@@ -203,88 +195,6 @@ void FBXRendererAnimation::Update(float _DeltaTime)
 }
 
 //******BlendAnimation추가본*******(선생님 코드엔 없음)
-void FBXRendererAnimation::BlendUpdate(float _DeltaTime)
-{
-	// 0~24진행이죠?
-	CurBlendTime += _DeltaTime;
-	//                      0.1
-	// 1
-	if (CurBlendTime > BlendTime)
-	{
-		Info.CurFrameTime += CurBlendTime - BlendTime;
-		ParentRenderer->OffIsBlending();
-		return;
-	}
-
-	unsigned int NextFrame = 0;
-
-	// mesh      subset
-	std::vector<std::vector<GameEngineRenderUnit>>& Units = ParentRenderer->GetAllRenderUnit();
-
-	for (size_t UnitSetIndex = 0; UnitSetIndex < Units.size(); ++UnitSetIndex)
-	{
-		for (size_t RenderUnitIndex = 0; RenderUnitIndex < Units[UnitSetIndex].size(); ++RenderUnitIndex)
-		{
-			GameEngineRenderUnit& Render = Units[UnitSetIndex][RenderUnitIndex];
-
-			// 위험!!!! 위험!!!! 뭔가 기분이 멜랑꽇ㄹㅁㄴ어ㅏ림ㄴㅇ엉라ㅣㅁㄴ
-			std::map<size_t, std::vector<float4x4>>::iterator MatrixIter = ParentRenderer->AnimationBoneMatrixs.find(UnitSetIndex);
-
-			if (MatrixIter == ParentRenderer->AnimationBoneMatrixs.end())
-			{
-				continue;
-			}
-			// 68개 
-			std::vector<float4x4>& AnimationBoneMatrix = MatrixIter->second;
-
-			std::map<size_t, std::vector<AnimationBoneData>>::iterator AnimationDataIter = ParentRenderer->AnimationBoneDatas.find(UnitSetIndex);
-			std::map<size_t, std::vector<AnimationBoneData>>::iterator tmpAnimationDataIter = ParentRenderer->tmpAnimationBoneDatas.find(UnitSetIndex);
-
-			// 68개 
-			std::vector<AnimationBoneData>& AnimationBoneDatas = AnimationDataIter->second;
-			std::vector<AnimationBoneData>& tmpAnimationBoneDatas = tmpAnimationDataIter->second;
-
-			size_t MeshIndex = MatrixIter->first;
-
-			for (int i = 0; i < AnimationBoneMatrix.size(); i++)
-			{
-				Bone* BoneData = ParentRenderer->GetFBXMesh()->FindBone(MeshIndex, i);
-
-				if (true == FBXAnimationData->AniFrameData[MeshIndex][i].BoneMatData.empty())
-				{
-					AnimationBoneMatrix[i] = float4x4::Affine(BoneData->BonePos.GlobalScale, BoneData->BonePos.GlobalRotation, BoneData->BonePos.GlobalTranslation);
-					return;
-				}
-
-				float a = CurBlendTime / BlendTime;
-
-				// 현재프레임과 
-				FbxExBoneFrameData& CurData = FBXAnimationData->AniFrameData[MeshIndex][i].BoneMatData[Info.CurFrame];
-				// 다음프레임의 정보가 필요한데
-				FbxExBoneFrameData& NextData = FBXAnimationData->AniFrameData[MeshIndex][i].BoneMatData[0];
-
-				// 애니메이션이 바뀌는 순간 한번은 저장해야 한다.
-				AnimationBoneDatas[i].Scale = float4::Lerp(tmpAnimationBoneDatas[i].Scale, NextData.S, CurBlendTime / BlendTime);
-				// 로컬 쿼터니온
-				AnimationBoneDatas[i].RotQuaternion = float4::SLerpQuaternion(tmpAnimationBoneDatas[i].RotQuaternion, NextData.Q, CurBlendTime / BlendTime);
-				// 로컬 포지션
-				AnimationBoneDatas[i].Pos = float4::Lerp(tmpAnimationBoneDatas[i].Pos, NextData.T, CurBlendTime / BlendTime);
-				// 새롭게 바뀐 애니메이션
-
-				size_t Size = sizeof(float4x4);
-				// 자신의 원본행렬과 곱해준다 큰 의미는 없다.
-
-				float4x4 Mat = float4x4::Affine(AnimationBoneDatas[i].Scale, AnimationBoneDatas[i].RotQuaternion, AnimationBoneDatas[i].Pos);
-
-
-				AnimationBoneMatrix[i] = BoneData->BonePos.Offset * Mat;
-			}
-		}
-
-	}
-}
-//******BlendAnimation추가본*******(선생님 코드엔 없음)
-
 void FBXRendererAnimation::Reset()
 {
 	Info.CurFrameTime = 0.0f;
@@ -298,6 +208,7 @@ void FBXRendererAnimation::Reset()
 	//CurFrame = 0;
 	//******BlendAnimation추가본*******(선생님 코드엔 없음)
 }
+//******BlendAnimation추가본*******(선생님 코드엔 없음)
 
 void GameEngineFBXAnimationRenderer::SetFBXMesh(const std::string& _Name, std::string _Material)
 {
@@ -385,12 +296,19 @@ GameEngineRenderUnit* GameEngineFBXAnimationRenderer::SetFBXMesh(const std::stri
 
 		// 링크를 걸어준것.
 		AnimationBuffer->SetData = &AnimationBoneMatrixs[_MeshIndex][0];
-		AnimationBuffer->Size = AnimationBoneMatrixs[_MeshIndex].size() * sizeof(float4x4);
+		AnimationBuffer->Size = sizeof(float4x4);
+		AnimationBuffer->Count = AnimationBoneMatrixs[_MeshIndex].size();
 		AnimationBuffer->Bind();
 
 	}
 
 	return Unit;
+}
+
+
+void GameEngineFBXAnimationRenderer::PauseSwtich()
+{
+	Pause = !Pause;
 }
 
 void GameEngineFBXAnimationRenderer::CreateFBXAnimation(const std::string& _AnimationName, const GameEngineRenderingEvent& _Desc, int _Index)
@@ -422,26 +340,18 @@ void GameEngineFBXAnimationRenderer::CreateFBXAnimation(const std::string& _Anim
 
 	std::shared_ptr<FBXRendererAnimation> NewAnimation = std::make_shared<FBXRendererAnimation>();
 
+	FbxExAniData* AnimData = Animation->GetAnimationData(_Index);
+
 	NewAnimation->Info = _Desc;
+	NewAnimation->Info.Init(AnimData->TimeStartCount, AnimData->TimeEndCount);
 	NewAnimation->Info.Renderer = this;
 	NewAnimation->Mesh = GetFBXMesh();
 	NewAnimation->Aniamtion = Animation;
 	NewAnimation->ParentRenderer = this;
 	NewAnimation->Reset();
-
 	NewAnimation->Init(_AnimationName, _Index);
 
-	for (unsigned int i = 0; i < NewAnimation->End - NewAnimation->Start; i++)
-	{
-		NewAnimation->Info.Frames.push_back(i);
-	}
-
-	// 이순간 애니메이션 프레임 행렬에 대한 계산이 이때 이뤄지는데.
-	// 이건 느릴것이기 때문에 아마 추후 분명히.
-	// 다른 툴이나 함수로 한번 로드하고 우리 포맷으로 저장하는 일을 해야할겁니다.
-
 	RenderOptionInst.IsAnimation = 1;
-
 	Animations.insert(std::make_pair(UpperName, NewAnimation));
 
 	Animation;
@@ -471,6 +381,7 @@ void GameEngineFBXAnimationRenderer::ChangeAnimation(const std::string& _Animati
 	CurAnimation = FindIter->second;
 }
 
+
 void GameEngineFBXAnimationRenderer::Update(float _DeltaTime)
 {
 	if (nullptr == CurAnimation)
@@ -489,4 +400,85 @@ void GameEngineFBXAnimationRenderer::Update(float _DeltaTime)
 		}
 	}
 	//******BlendAnimation추가본*******(선생님 코드엔 없음)
+}
+
+void FBXRendererAnimation::BlendUpdate(float _DeltaTime)
+{
+	// 0~24진행이죠?
+	CurBlendTime += _DeltaTime;
+	//                      0.1
+	// 1
+	if (CurBlendTime > BlendTime)
+	{
+		Info.CurFrameTime += CurBlendTime - BlendTime;
+		ParentRenderer->OffIsBlending();
+		return;
+	}
+
+	unsigned int NextFrame = 0;
+
+	// mesh      subset
+	std::vector<std::vector<GameEngineRenderUnit>>& Units = ParentRenderer->GetAllRenderUnit();
+
+	for (size_t UnitSetIndex = 0; UnitSetIndex < Units.size(); ++UnitSetIndex)
+	{
+		for (size_t RenderUnitIndex = 0; RenderUnitIndex < Units[UnitSetIndex].size(); ++RenderUnitIndex)
+		{
+			GameEngineRenderUnit& Render = Units[UnitSetIndex][RenderUnitIndex];
+
+			// 위험!!!! 위험!!!! 뭔가 기분이 멜랑꽇ㄹㅁㄴ어ㅏ림ㄴㅇ엉라ㅣㅁㄴ
+			std::map<size_t, std::vector<float4x4>>::iterator MatrixIter = ParentRenderer->AnimationBoneMatrixs.find(UnitSetIndex);
+
+			if (MatrixIter == ParentRenderer->AnimationBoneMatrixs.end())
+			{
+				continue;
+			}
+			// 68개 
+			std::vector<float4x4>& AnimationBoneMatrix = MatrixIter->second;
+
+			std::map<size_t, std::vector<AnimationBoneData>>::iterator AnimationDataIter = ParentRenderer->AnimationBoneDatas.find(UnitSetIndex);
+			std::map<size_t, std::vector<AnimationBoneData>>::iterator tmpAnimationDataIter = ParentRenderer->tmpAnimationBoneDatas.find(UnitSetIndex);
+
+			// 68개 
+			std::vector<AnimationBoneData>& AnimationBoneDatas = AnimationDataIter->second;
+			std::vector<AnimationBoneData>& tmpAnimationBoneDatas = tmpAnimationDataIter->second;
+
+			size_t MeshIndex = MatrixIter->first;
+
+			for (int i = 0; i < AnimationBoneMatrix.size(); i++)
+			{
+				Bone* BoneData = ParentRenderer->GetFBXMesh()->FindBone(MeshIndex, i);
+
+				if (true == FBXAnimationData->AniFrameData[MeshIndex][i].BoneMatData.empty())
+				{
+					AnimationBoneMatrix[i] = float4x4::Affine(BoneData->BonePos.GlobalScale, BoneData->BonePos.GlobalRotation, BoneData->BonePos.GlobalTranslation);
+					return;
+				}
+
+				float a = CurBlendTime / BlendTime;
+
+				// 현재프레임과 
+				FbxExBoneFrameData& CurData = FBXAnimationData->AniFrameData[MeshIndex][i].BoneMatData[Info.CurFrame];
+				// 다음프레임의 정보가 필요한데
+				FbxExBoneFrameData& NextData = FBXAnimationData->AniFrameData[MeshIndex][i].BoneMatData[0];
+
+				// 애니메이션이 바뀌는 순간 한번은 저장해야 한다.
+				AnimationBoneDatas[i].Scale = float4::Lerp(tmpAnimationBoneDatas[i].Scale, NextData.S, CurBlendTime / BlendTime);
+				// 로컬 쿼터니온
+				AnimationBoneDatas[i].RotQuaternion = float4::SLerpQuaternion(tmpAnimationBoneDatas[i].RotQuaternion, NextData.Q, CurBlendTime / BlendTime);
+				// 로컬 포지션
+				AnimationBoneDatas[i].Pos = float4::Lerp(tmpAnimationBoneDatas[i].Pos, NextData.T, CurBlendTime / BlendTime);
+				// 새롭게 바뀐 애니메이션
+
+				size_t Size = sizeof(float4x4);
+				// 자신의 원본행렬과 곱해준다 큰 의미는 없다.
+
+				float4x4 Mat = float4x4::Affine(AnimationBoneDatas[i].Scale, AnimationBoneDatas[i].RotQuaternion, AnimationBoneDatas[i].Pos);
+
+
+				AnimationBoneMatrix[i] = BoneData->BonePos.Offset * Mat;
+			}
+		}
+
+	}
 }

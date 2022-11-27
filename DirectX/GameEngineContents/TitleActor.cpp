@@ -33,16 +33,16 @@ void TitleActor::Start()
 
 		Pattern_->SetTexture("LogoBG.png");
 
-		Pattern_->GetRenderUnit().SetPipeLine("TextureLoop");
-		Pattern_->GetRenderUnit().EngineShaderResourcesSetting(Pattern_);
-		Pattern_->GetRenderUnit().ShaderResources.SetTexture("Tex", "LogoPattern.png");
+		Pattern_->GetRenderUnit()->SetPipeLine("TextureLoop");
+		Pattern_->GetRenderUnit()->EngineShaderResourcesSetting(Pattern_);
+		Pattern_->GetRenderUnit()->ShaderResources.SetTexture("Tex", "LogoPattern.png");
 
-		if (true == Pattern_->GetRenderUnit().ShaderResources.IsConstantBuffer("SliceData"))
+		if (true == Pattern_->GetRenderUnit()->ShaderResources.IsConstantBuffer("SliceData"))
 		{
-			Pattern_->GetRenderUnit().ShaderResources.SetConstantBufferLink("SliceData", SlicePos_);
+			Pattern_->GetRenderUnit()->ShaderResources.SetConstantBufferLink("SliceData", SlicePos_);
 		}
 
-		Pattern_->GetRenderUnit().ShaderResources.SetTexture("Mask", "LogoBG.png");
+		Pattern_->GetRenderUnit()->ShaderResources.SetTexture("Mask", "LogoBG.png");
 
 	}
 

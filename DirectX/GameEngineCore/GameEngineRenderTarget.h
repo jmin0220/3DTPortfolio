@@ -56,7 +56,7 @@ public:
 
 public:
 	virtual void EffectInit() = 0;
-	virtual void Effect(std::shared_ptr<GameEngineRenderTarget> _Render) = 0;
+	virtual void Effect(class std::shared_ptr<GameEngineRenderTarget> _Render) = 0;
 
 	virtual ~GameEnginePostEffect() 
 	{
