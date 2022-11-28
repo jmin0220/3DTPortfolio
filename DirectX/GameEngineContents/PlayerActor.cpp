@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "PlayerActor.h"
+#include <GameEngineBase/GameEngineRandom.h>
 #include "StageParentLevel.h"
 #include "VirtualPhysXLevel.h"
 
@@ -7,7 +8,9 @@
 
 float SPEED_PLAYER = 400000.0f;
 
-PlayerActor::PlayerActor() 
+PlayerActor::PlayerActor() :
+	CheckPointFlag_(false),
+	CheckPointPos_(float4::ZERO)
 {
 }
 
@@ -53,6 +56,9 @@ void PlayerActor::Start()
 		GameEngineInput::GetInst()->CreateKey("ImpulsA", VK_LEFT);
 		GameEngineInput::GetInst()->CreateKey("ImpulsS", VK_DOWN);
 		GameEngineInput::GetInst()->CreateKey("ImpulsD", VK_RIGHT);
+
+		//체크포인트 실험용
+		GameEngineInput::GetInst()->CreateKey("TestPos", 'J');
 	}
 }
 
@@ -65,6 +71,13 @@ void PlayerActor::Update(float _DeltaTime)
 	//GetTransform().SetWorldMove(MoveDir_ * SPEED_PLAYER * _DeltaTime);
 	// TODO::충격테스트코드
 	ImpulseTest();
+
+
+	//체크포인트 실험용
+	if (GameEngineInput::GetInst()->IsDown("TestPos") == true)
+	{
+		DynamicActorComponent_->SetPlayerStartPos(ResetCheckPointPos());
+	}
 }
 
 void PlayerActor::LevelStartEvent()
@@ -83,6 +96,8 @@ void PlayerActor::LevelStartEvent()
 	// 플레이어를 생성하고, 플레이어의 RigidActor를 받아와서 콜백에 사용함
 	static_cast<VirtualPhysXLevel*>(GetLevel())->SetSimulationPlayer(CreatePhysXActors(dynamic_cast<StageParentLevel*>(GetLevel())->GetScene(),
 		dynamic_cast<StageParentLevel*>(GetLevel())->GetPhysics()));
+
+	DynamicActorComponent_->SetPlayerStartPos(GetTransform().GetWorldPosition());
 }
 
 void PlayerActor::LevelEndEvent()
@@ -190,6 +205,13 @@ void PlayerActor::ImpulseTest()
 	DynamicActorComponent_->PushImpulse(tmpPower);
 }
 
+float4 PlayerActor::ResetCheckPointPos()
+{
+	float4 Pos = CheckPointPos_;
+	Pos.x = Pos.x + GameEngineRandom::MainRandom.RandomFloat(-20.0f, 20.0f);
+	return Pos;
+}
+
 
 // 애니메이션 초기화
 void PlayerActor::SetCharacterAnimation()
@@ -241,3 +263,4 @@ void PlayerActor::SetCharacterTexture()
 		}
 	}
 }
+

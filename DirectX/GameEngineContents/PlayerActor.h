@@ -36,6 +36,10 @@ private:
 	//eventtrigger용 collision
 	std::shared_ptr<GameEngineCollision> EventCol_;
 
+	//CheckPoint Position
+	float4 CheckPointPos_;
+	bool CheckPointFlag_;
+
 	// FSM
 private:
 	GameEngineStateManager PlayerStateManager_;
@@ -62,6 +66,7 @@ private:
 
 	// TODO::테스트코드
 	void ImpulseTest();
+	float4 ResetCheckPointPos();
 
 
 	// 캐릭터 애니메이션 & 스킨
@@ -75,6 +80,28 @@ private:
 	};
 
 	SkinData SkinData_;
+public:
+	//플레이어 위치 재설정을 위한 GEt함수
+	std::shared_ptr<PhysXDynamicActorComponent> GetDynamicActorComponent()
+	{
+		return DynamicActorComponent_;
+	}
+
+	inline void SetCheckPoint(float4 _Pos)
+	{
+		CheckPointPos_ = _Pos;
+	}
+
+
+	inline void SetFlag()
+	{
+		CheckPointFlag_ = !CheckPointFlag_;
+	}
+
+	inline bool GetFlag()
+	{
+		return CheckPointFlag_;
+	}
 
 	float4 MeshBoundScale;
 

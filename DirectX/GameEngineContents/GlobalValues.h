@@ -26,7 +26,9 @@ enum class CollisionGroup
 	PhysicsWall,
 	PhysicsPlayer,
 	HexTiles,
-	Max
+	Max,
+	CheckPoint,
+	Trigger
 };
 
 enum class PhysXFilterGroup

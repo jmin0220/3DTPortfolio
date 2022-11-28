@@ -65,6 +65,9 @@ protected:
 
 	StageNum MyStage_;
 
+	static float4 PlayerPos;
+
+
 private:
 	std::vector<StageObject> StageObjects_;
 	void LevelStartLoad();

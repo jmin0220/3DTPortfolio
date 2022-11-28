@@ -13,6 +13,9 @@
 #include <iostream>
 #include <fstream>
 
+float4 StageParentLevel::PlayerPos = float4::ZERO;
+
+
 StageParentLevel::StageParentLevel() 
 	: MyStage_(StageNum::STAGE1)
 {
@@ -153,6 +156,13 @@ void StageParentLevel::LevelStartLoad()
 		case Stage_MeshEnum::Col_StartPos:
 		{
 			NewObj.Actor_ = CreateActor<Col_StartPos>();
+			NewObj.Actor_.lock()->GetTransform().SetWorldPosition(Pos);
+			NewObj.Actor_.lock()->GetTransform().SetWorldScale(Size);
+			NewObj.Actor_.lock()->GetTransform().SetLocalRotation(Rot);
+
+			//플레이어 포지션을 가지고있어야하는 static 전역변수
+			PlayerPos = NewObj.Actor_.lock()->GetTransform().GetWorldPosition();
+
 			break;
 		}
 		case Stage_MeshEnum::Col_CheckPoint:
@@ -185,6 +195,12 @@ void StageParentLevel::LevelStartLoad()
 		NewObj.Actor_.lock()->GetTransform().SetWorldPosition(Pos);
 		NewObj.Actor_.lock()->GetTransform().SetWorldScale(Size);
 		NewObj.Actor_.lock()->GetTransform().SetLocalRotation(Rot);
+
+
+
+
+
+
 
 		StageObjects_.push_back(NewObj);
 
