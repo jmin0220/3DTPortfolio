@@ -76,5 +76,7 @@ private:
 
 	SkinData SkinData_;
 
+	float4 MeshBoundScale;
+
 };
 

@@ -18,12 +18,11 @@ PlayerActor::~PlayerActor()
 
 physx::PxRigidDynamic* PlayerActor::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics)
 {
-	float4 MeshBoundScale = FbxRenderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
 
 	return DynamicActorComponent_->CreatePhysXActors(_Scene, _physics, 
-		physx::PxVec3(MeshBoundScale.x * float4(PLAYER_SIZE_MAGNIFICATION_RATIO).x, 
-		MeshBoundScale.y * float4(PLAYER_SIZE_MAGNIFICATION_RATIO).y, 
-		MeshBoundScale.z * float4(PLAYER_SIZE_MAGNIFICATION_RATIO).z));
+		physx::PxVec3(MeshBoundScale.x, 
+		MeshBoundScale.y, 
+		MeshBoundScale.z));
 }
 
 void PlayerActor::Start()
@@ -76,6 +75,10 @@ void PlayerActor::LevelStartEvent()
 	SetCharacterAnimation();
 	SetCharacterTexture();
 	FbxRenderer_->GetTransform().SetWorldScale({ PLAYER_SIZE_MAGNIFICATION_RATIO });
+
+	MeshBoundScale = FbxRenderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
+	MeshBoundScale *= float4{ PLAYER_SIZE_MAGNIFICATION_RATIO };
+	FbxRenderer_->GetTransform().SetLocalPosition({0.0f, -MeshBoundScale.y * 1.5f , 0.0f});
 
 	// 플레이어를 생성하고, 플레이어의 RigidActor를 받아와서 콜백에 사용함
 	static_cast<VirtualPhysXLevel*>(GetLevel())->SetSimulationPlayer(CreatePhysXActors(dynamic_cast<StageParentLevel*>(GetLevel())->GetScene(),

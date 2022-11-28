@@ -42,9 +42,15 @@ public:
 		dynamic_->addForce(physx::PxVec3(0.0f, 0.01f, 0.0f), physx::PxForceMode::eIMPULSE);
 	}
 
+	inline float4 GetWorldPosition()
+	{
+		return float4(dynamic_->getGlobalPose().p.x, dynamic_->getGlobalPose().p.y, dynamic_->getGlobalPose().p.z);
+	}
+
 	void SetPlayerStartPos(float4 _Pos);
 
 	void PushImpulse(float4 _ImpulsePower);
+	
 
 protected:
 	void Start() override;
@@ -61,9 +67,13 @@ private:
 	physx::PxShape* shape_;
 	physx::PxRigidDynamic* dynamic_;
 
+	float SnowManHeight;
 	// 이 컴포넌트를 가지고 있는 Parent에 대한 정보
 	std::weak_ptr<GameEngineActor> ParentActor_;
 
 	physx::PxVec3 GeoMetryScale_;
+
+	float4 ToEulerAngles(const physx::PxQuat& q);
+
 };
 

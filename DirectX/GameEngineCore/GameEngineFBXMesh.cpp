@@ -635,9 +635,9 @@ void GameEngineFBXMesh::VertexBufferCheck()
 			VtxData[controlPointIndex].POSITION = FbxVecToTransform(calculateControlPoint);
 			VtxData[controlPointIndex].POSITION.w = 1.0f;
 
-			if (RenderUnit.MaxBoundBox.x < VtxData[controlPointIndex].POSITION.x)			{				RenderUnit.MaxBoundBox.x = VtxData[controlPointIndex].POSITION.x;			}
-			if (RenderUnit.MaxBoundBox.y < VtxData[controlPointIndex].POSITION.y)			{				RenderUnit.MaxBoundBox.y = VtxData[controlPointIndex].POSITION.y;			}
-			if (RenderUnit.MaxBoundBox.z < VtxData[controlPointIndex].POSITION.z) { RenderUnit.MaxBoundBox.z = VtxData[controlPointIndex].POSITION.z; }
+			if (RenderUnit.MaxBoundBox.x < VtxData[controlPointIndex].POSITION.x) {RenderUnit.MaxBoundBox.x = VtxData[controlPointIndex].POSITION.x;}
+			if (RenderUnit.MaxBoundBox.y < VtxData[controlPointIndex].POSITION.y) {RenderUnit.MaxBoundBox.y = VtxData[controlPointIndex].POSITION.y;}
+			if (RenderUnit.MaxBoundBox.z < VtxData[controlPointIndex].POSITION.z) { RenderUnit.MaxBoundBox.z = VtxData[controlPointIndex].POSITION.z;}
 
 			if (RenderUnit.MinBoundBox.x > VtxData[controlPointIndex].POSITION.x) { RenderUnit.MinBoundBox.x = VtxData[controlPointIndex].POSITION.x; }
 			if (RenderUnit.MinBoundBox.y > VtxData[controlPointIndex].POSITION.y) { RenderUnit.MinBoundBox.y = VtxData[controlPointIndex].POSITION.y; }
