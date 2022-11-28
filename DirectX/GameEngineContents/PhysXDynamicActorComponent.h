@@ -51,6 +51,7 @@ public:
 
 	void PushImpulse(float4 _ImpulsePower);
 	
+	bool PlayerStandUp();
 
 protected:
 	void Start() override;
@@ -72,6 +73,8 @@ private:
 	std::weak_ptr<GameEngineActor> ParentActor_;
 
 	physx::PxVec3 GeoMetryScale_;
+
+	float4 InitFallGuyRotation;
 
 	float4 ToEulerAngles(const physx::PxQuat& q);
 

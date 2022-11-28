@@ -70,10 +70,10 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 	//shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(.5f), *material_);
 
 	//shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, _GeoMetryScale.x * 0.5f * 0.75f, 0)));
-	shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(.4f), *material_);
+	/*shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(.4f), *material_);
 	shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, .6, 0)));
 	shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(.3f), *material_);
-	shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, 1.1, 0)));
+	shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, 1.1, 0)));*/
 	float ScaledRadius = _GeoMetryScale.z;
 	float ScaledHeight = _GeoMetryScale.y;
 	
@@ -82,15 +82,8 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 	shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Player)
 		, static_cast<physx::PxU32>(PhysXFilterGroup::Ground), 0, 0));
 
-	physx::PxTransform relativePose(physx::PxQuat(physx::PxHalfPi, physx::PxVec3(0, 0, 1)));
+	physx::PxTransform relativePose(physx::PxVec3(0.0f, +ScaledHeight * 0.9f + ScaledRadius * 1.3f, 0.0f), physx::PxQuat(physx::PxHalfPi, physx::PxVec3(0, 0, 1)));
 	shape_->setLocalPose(relativePose);
-
-	float4 MyAng = ToEulerAngles(relativePose.q);
-
-	dynamic_->getGlobalPose().rotate(physx::PxVec3(0,1,0));
-	float XAngle = dynamic_->getGlobalPose().q.getAngle(physx::PxQuat(0,1,0,0));
-	float YAngle = dynamic_->getGlobalPose().q.getAngle(physx::PxQuat(0,0,1,0));
-	float ZAngle = dynamic_->getGlobalPose().q.getAngle(physx::PxQuat(0,0,0,1));
 	// 
 	physx::PxTransform LocalPose = dynamic_->getCMassLocalPose();
 	//shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(_GeoMetryScale.z * 0.5f * 0.25f), *material_);
@@ -123,7 +116,7 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 
 	// Scene에 액터 추가
 	_Scene->addActor(*dynamic_);
-
+	
 	// TODO::virtualPhysXLevel에서 Callback 함수에 호출하기 위한 Dynamic 리턴
 	return dynamic_;
 }
@@ -233,7 +226,10 @@ void PhysXDynamicActorComponent::SetPlayerStartPos(float4 _Pos)
 	dynamic_->setGlobalPose(tmpPxTransform);
 }
 
-
+bool PhysXDynamicActorComponent::PlayerStandUp()
+{
+	return false;
+}
 
 
 float4 PhysXDynamicActorComponent::ToEulerAngles(const physx::PxQuat& q) {

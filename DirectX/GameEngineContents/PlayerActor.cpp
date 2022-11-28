@@ -91,7 +91,8 @@ void PlayerActor::LevelStartEvent()
 
 	MeshBoundScale = FbxRenderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
 	MeshBoundScale *= float4{ PLAYER_SIZE_MAGNIFICATION_RATIO };
-	FbxRenderer_->GetTransform().SetLocalPosition({0.0f, -MeshBoundScale.y * 1.5f , 0.0f});
+	//FbxRenderer_->GetTransform().SetLocalPosition({0.0f, -MeshBoundScale.y * 1.5f , 0.0f});
+	FbxRenderer_->GetTransform().SetLocalPosition({0.0f, 0.0f , 0.0f});
 
 	// 플레이어를 생성하고, 플레이어의 RigidActor를 받아와서 콜백에 사용함
 	static_cast<VirtualPhysXLevel*>(GetLevel())->SetSimulationPlayer(CreatePhysXActors(dynamic_cast<StageParentLevel*>(GetLevel())->GetScene(),
