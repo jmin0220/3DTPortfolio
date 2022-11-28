@@ -232,7 +232,7 @@ void PhysXDynamicActorComponent::SetPlayerStartPos(float4 _Pos)
 	// 부모의 Transform정보를 바탕으로 PhysX Actor의 트랜스폼을 갱신
 	dynamic_->setGlobalPose(tmpPxTransform);
 }
-}
+
 
 
 
