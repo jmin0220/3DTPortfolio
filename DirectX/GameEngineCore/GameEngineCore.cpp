@@ -169,17 +169,17 @@ void GameEngineCore::WindowCreate(const std::string& _Name, GameEngineCore* _Use
 
 void GameEngineCore::InitializeLevel(GameEngineLevel* _Level, const std::string _Name)
 {
-	{
-		std::shared_ptr<GameEngineCameraActor> actor = _Level->CreateActor<GameEngineCameraActor>();
-		actor->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
-		actor->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -100.0f });
-	}
+	//{
+	//	std::shared_ptr<GameEngineCameraActor> actor = _Level->CreateActor<GameEngineCameraActor>();
+	//	actor->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
+	//	actor->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -100.0f });
+	//}
 
-	{
-		std::shared_ptr<GameEngineCameraActor> actor = _Level->CreateActor<GameEngineCameraActor>();
-		actor->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
-		actor->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -100.0f });
-	}
+	//{
+	//	std::shared_ptr<GameEngineCameraActor> actor = _Level->CreateActor<GameEngineCameraActor>();
+	//	actor->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
+	//	actor->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -100.0f });
+	//}
 
 	_Level->Start();
 	_Level->SetName(_Name);

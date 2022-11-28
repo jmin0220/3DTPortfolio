@@ -53,6 +53,9 @@ void HexAGoneLevel::LevelStartEvent()
 	// InitPhysic는 레벨이 시작될때 실행되므로 LevelStartEvent가 실행되기 전에 포지션을 결정해야함.
 	Player_->GetTransform().SetWorldPosition({ 0.0f, 400.0f, 0.0f });
 
+	// *플레이어 생성 후 카메라암 세팅 해줘야함*
+	CameraArm_->SetFollowCamera(GetMainCameraActor(), Player_);
+
 	UIs_ = CreateActor<InGameSetUI>();
 
 	float XPos = 0;

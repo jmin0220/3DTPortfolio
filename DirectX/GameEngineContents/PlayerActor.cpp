@@ -34,10 +34,6 @@ void PlayerActor::Start()
 	FbxRenderer_ = CreateComponent<GameEngineFBXAnimationRenderer>();
 	DynamicActorComponent_ = CreateComponent<PhysXDynamicActorComponent>();
 
-	CamActor_ = GetLevel()->GetMainCameraActor();
-	CameraArm_ = GetLevel()->CreateActor<CameraArm>();
-	CameraArm_->SetFollowCamera(CamActor_, std::dynamic_pointer_cast<GameEngineActor>(shared_from_this()));
-
 
 	//EventCol
 	EventCol_ = CreateComponent<GameEngineCollision>();
@@ -103,7 +99,6 @@ void PlayerActor::LevelStartEvent()
 
 void PlayerActor::LevelEndEvent()
 {
-	CameraArm_->Off();
 }
 
 void PlayerActor::InputController(float _DeltaTime)

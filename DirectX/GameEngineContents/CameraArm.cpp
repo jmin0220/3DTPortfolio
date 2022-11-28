@@ -56,10 +56,7 @@ void CameraArm::SetFollowCamera(std::shared_ptr<GameEngineCameraActor> _Camera, 
 	Camera_ = _Camera;
 	
 	// 카메라암은 프리카메라 모드 아님
-	if (true == Camera_->IsFreeCameraMode())
-	{
-		Camera_->FreeCameraModeOnOff();
-	}
+	Camera_->OffFreeCameraMode();
 
 	GetTransform().SetWorldPosition(_Character->GetTransform().GetWorldPosition());
 	

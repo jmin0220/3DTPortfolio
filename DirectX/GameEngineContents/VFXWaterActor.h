@@ -1,5 +1,10 @@
 #pragma once
 
+struct PatternSmpData
+{
+	float4 SmpInfo_;     // float2 SmpStartPos; float2 SmpScale;
+};
+
 // Ό³Έν :
 class VFXWaterActor : public GameEngineActor
 {
@@ -20,6 +25,6 @@ protected:
 
 private:
 	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer_;
-
+	PatternSmpData SmpData_;
 };
 

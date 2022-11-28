@@ -29,10 +29,6 @@ private:
 	std::shared_ptr<GameEngineFBXAnimationRenderer> FbxRenderer_;
 	std::shared_ptr<PhysXDynamicActorComponent> DynamicActorComponent_;
 
-	// 카메라 암
-	std::shared_ptr<class CameraArm> CameraArm_;
-	std::shared_ptr<class GameEngineCameraActor> CamActor_;
-
 	//eventtrigger용 collision
 	std::shared_ptr<GameEngineCollision> EventCol_;
 

@@ -1,6 +1,7 @@
 #pragma once
 #include <GameEngineCore/GameEngineLevel.h>
 #include "VirtualPhysXLevel.h"
+#include "CameraArm.h"
 
 enum class StageNum
 {
@@ -67,6 +68,8 @@ protected:
 
 	static float4 PlayerPos;
 
+	// 카메라 암
+	std::shared_ptr<CameraArm> CameraArm_;
 
 private:
 	std::vector<StageObject> StageObjects_;

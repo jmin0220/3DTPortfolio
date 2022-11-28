@@ -132,6 +132,12 @@ void ContentsCore::CreateLevels()
 		GameLevels_.push_back(Level);
 	}
 
+	for (GameEngineLevel* Level : GameLevels_)
+	{
+		Level->GetMainCameraActor()->OffFreeCameraMode();
+		Level->GetUICameraActor()->OffFreeCameraMode();
+	}
+
 	// ********* 구분 *********
 	//		  테스트 레벨 
 

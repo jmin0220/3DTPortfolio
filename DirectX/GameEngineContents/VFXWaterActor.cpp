@@ -18,10 +18,16 @@ void VFXWaterActor::Start()
 	//WaterData_.WaterColor = float4::RED;
 	//WaterData_.WaterColor = float4{0.99f,0.63f,0.79f};
 
+	SmpData_.SmpInfo_ = float4(0, 0, 0.8f, 0.8f);
+
 	for (std::vector<GameEngineRenderUnit>& Units : UnitSets)
 	{
 		for (GameEngineRenderUnit& Unit : Units)
 		{
+			if (true == Unit.ShaderResources.IsConstantBuffer("PatternSmpData"))
+			{
+				Unit.ShaderResources.SetConstantBufferLink("PatternSmpData", SmpData_);
+			}
 
 			if ( true == Unit.ShaderResources.IsTexture("WaterTex"))
 			{

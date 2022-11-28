@@ -42,11 +42,15 @@ void StageParentLevel::LevelStartEvent()
 {
 	VirtualPhysXLevel::LevelStartEvent();
 	LevelStartLoad();
+
+	CameraArm_ = CreateActor<CameraArm>();
 }
 void StageParentLevel::LevelEndEvent()
 {
 	VirtualPhysXLevel::LevelEndEvent();
 	ContentsCore::GetInst()->ReleaseCurLevelResource();
+
+	CameraArm_->Death();
 }
 
 void StageParentLevel::LevelStartLoad()

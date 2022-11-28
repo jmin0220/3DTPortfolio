@@ -53,6 +53,8 @@ void JumpClubLevel::LevelStartEvent()
 	UIs_ = CreateActor<InGameSetUI>();
 
 	Player_->GetTransform().SetWorldPosition({ 0.0f,200.0f,0.0f });
+	// *플레이어 생성 후 카메라암 세팅 해줘야함*
+	CameraArm_->SetFollowCamera(GetMainCameraActor(), Player_);
 
 	std::shared_ptr<JumpClubStage> Stage = CreateActor<JumpClubStage>();
 	Stage->GetTransform().SetWorldPosition({ 0.0f, 0.0f, 0.0f });

@@ -18,7 +18,7 @@ public:
 	GameEngineCameraActor& operator=(const GameEngineCameraActor& _Other) = delete;
 	GameEngineCameraActor& operator=(GameEngineCameraActor&& _Other) noexcept = delete;
 
-	std::shared_ptr < GameEngineCamera> GetCameraComponent()
+	std::shared_ptr<GameEngineCamera> GetCameraComponent()
 	{
 		return CameraComponent;
 	}
@@ -28,6 +28,16 @@ public:
 	inline bool IsFreeCameraMode() 
 	{
 		return FreeCameraMode;
+	}
+
+	inline void OffFreeCameraMode()
+	{
+		FreeCameraMode = false;
+	}
+
+	inline void OnFreeCameraMode()
+	{
+		FreeCameraMode = true;
 	}
 
 	void Update(float _DeltaTime) override;

@@ -41,6 +41,8 @@ void DoorDashLevel::LevelStartEvent()
 
 	//Player_->GetDynamicActorComponent()->SetPlayerStartPos(PlayerPos);
 	Player_->GetTransform().SetWorldPosition(PlayerPos);
+	// *플레이어 생성 후 카메라암 세팅 해줘야함*
+	CameraArm_->SetFollowCamera(GetMainCameraActor(), Player_);
 
 	//collision용 매쉬 바닥, 벽 등
 	Stage_ = CreateActor<DoorDashStage>();
