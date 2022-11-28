@@ -62,7 +62,9 @@ void CameraArm::SetFollowCamera(std::shared_ptr<GameEngineCameraActor> _Camera, 
 	}
 
 	GetTransform().SetWorldPosition(_Character->GetTransform().GetWorldPosition());
-	SetParent(_Character);
+	
+	Character_ = _Character;
+	//SetParent(_Character);
 
 	// 카메라 암 피벗 정도
 	ArmVector_ = DEFAULT_ARMVEC * ArmRatio_;
@@ -93,6 +95,14 @@ void CameraArm::SetArmLength(float _Depth, float _Height)
 
 void CameraArm::Update(float _DeltaTime)
 {
+	if (nullptr == Character_)
+	{
+		return;
+	}
+
+	// 카메라암은 플레이어를 따라다닌다
+	GetTransform().SetWorldPosition(Character_->GetTransform().GetWorldPosition());
+
 	if (false == GameEngineWindow::GetInst()->IsMouseCurApp())
 	{
 		return;
@@ -102,6 +112,8 @@ void CameraArm::Update(float _DeltaTime)
 	{
 		return;
 	}
+
+
 
 	ZoomInOut();
 

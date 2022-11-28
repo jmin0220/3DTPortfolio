@@ -16,17 +16,26 @@ void VFXWaterActor::Start()
 	std::vector<std::vector<GameEngineRenderUnit>>& UnitSets = Renderer->GetAllRenderUnit();
 
 	//WaterData_.WaterColor = float4::RED;
-	WaterData_.WaterColor = float4{0.9f,0.4f,0.7f};
+	//WaterData_.WaterColor = float4{0.99f,0.63f,0.79f};
 
 	for (std::vector<GameEngineRenderUnit>& Units : UnitSets)
 	{
 		for (GameEngineRenderUnit& Unit : Units)
 		{
-			Unit.ShaderResources.SetConstantBufferLink("WaterData", WaterData_);
 
-			if ( true == Unit.ShaderResources.IsTexture("Tex"))
+			if ( true == Unit.ShaderResources.IsTexture("WaterTex"))
 			{
-				Unit.ShaderResources.SetTexture("Tex", "VFX_Noise02.png");
+				Unit.ShaderResources.SetTexture("WaterTex", "WaterColor.png");
+			}
+
+			if (true == Unit.ShaderResources.IsTexture("PatternTex"))
+			{
+				Unit.ShaderResources.SetTexture("PatternTex", "ENV_WaterPattern.png");
+			}
+
+			if (true == Unit.ShaderResources.IsTexture("NoiseTex"))
+			{
+				Unit.ShaderResources.SetTexture("NoiseTex", "VFX_Noise02.png");
 			}
 		}
 	}

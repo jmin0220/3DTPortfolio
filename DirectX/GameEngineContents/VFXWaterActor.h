@@ -1,10 +1,5 @@
 #pragma once
 
-struct WaterData
-{
-	float4 WaterColor;
-};
-
 // Ό³Έν :
 class VFXWaterActor : public GameEngineActor
 {
@@ -25,8 +20,6 @@ protected:
 
 private:
 	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer_;
-
-	WaterData WaterData_;
 
 };
 

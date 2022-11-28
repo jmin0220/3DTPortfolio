@@ -109,6 +109,9 @@
     <Filter Include="990_Tutorial\Shader\Actor">
       <UniqueIdentifier>{0b497306-8f2b-4d47-8547-8f4814c88045}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02_Actor\UIActor\LobbyGUY">
+      <UniqueIdentifier>{063d8bf5-5ad2-4aa9-bd9e-efbda0c32152}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02_Actor\UIActor\SetUI">
       <UniqueIdentifier>{a4b573c9-0efa-4e54-8f9b-3820a9096e0e}</UniqueIdentifier>
     </Filter>
@@ -174,9 +177,6 @@
     </Filter>
     <Filter Include="02_Actor\Stage01Actor">
       <UniqueIdentifier>{9ce6f138-8c1d-4a37-9f3e-40d04195ac0e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02_Actor\UIActor\LobbyActors">
-      <UniqueIdentifier>{063d8bf5-5ad2-4aa9-bd9e-efbda0c32152}</UniqueIdentifier>
     </Filter>
     <Filter Include="99_Global\PhysX">
       <UniqueIdentifier>{c0e70e77-6294-4783-8d0a-7cc9b0a81cd4}</UniqueIdentifier>
@@ -253,9 +253,6 @@
       <Filter>02_Actor\UIActor\LobbyUIs</Filter>
     </ClInclude>
     <ClInclude Include="TestActor_Character.h">
-      <Filter>999_Test\TestActor\CameraTest</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraArm.h">
       <Filter>999_Test\TestActor\CameraTest</Filter>
     </ClInclude>
     <ClInclude Include="PlayableObject.h">
@@ -373,7 +370,7 @@
       <Filter>02_Actor\UIActor\InGameUI</Filter>
     </ClInclude>
     <ClInclude Include="LobbyPlayer.h">
-      <Filter>02_Actor\UIActor\LobbyActors</Filter>
+      <Filter>02_Actor\UIActor\LobbyGUY</Filter>
     </ClInclude>
     <ClInclude Include="LobbySetUI.h">
       <Filter>02_Actor\UIActor\SetUI\Lobby</Filter>
@@ -516,6 +513,9 @@
     <ClInclude Include="GameEngineStatusWindow.h">
       <Filter>98_LevelGUI\EngineStatusWindow</Filter>
     </ClInclude>
+    <ClInclude Include="CameraArm.h">
+      <Filter>02_Actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -582,9 +582,6 @@
       <Filter>990_Tutorial\Shader\Actor</Filter>
     </ClCompile>
     <ClCompile Include="TestActor_Character.cpp">
-      <Filter>999_Test\TestActor\CameraTest</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraArm.cpp">
       <Filter>999_Test\TestActor\CameraTest</Filter>
     </ClCompile>
     <ClCompile Include="Cursor.cpp">
@@ -702,7 +699,7 @@
       <Filter>02_Actor\UIActor\InGameUI</Filter>
     </ClCompile>
     <ClCompile Include="LobbyPlayer.cpp">
-      <Filter>02_Actor\UIActor\LobbyActors</Filter>
+      <Filter>02_Actor\UIActor\LobbyGUY</Filter>
     </ClCompile>
     <ClCompile Include="LobbySetUI.cpp">
       <Filter>02_Actor\UIActor\SetUI\Lobby</Filter>
@@ -844,6 +841,9 @@
     </ClCompile>
     <ClCompile Include="GameEngineStatusWindow.cpp">
       <Filter>98_LevelGUI\EngineStatusWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraArm.cpp">
+      <Filter>02_Actor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

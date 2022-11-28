@@ -25,12 +25,9 @@ Output WaterShader_VS(Input _Input)
     return NewOutPut;
 }
 
-cbuffer WaterData : register(b0)
-{
-    float4 WaterColor;
-}
-
-Texture2D Tex : register(t0);
+Texture2D WaterTex : register(t0);
+Texture2D PatternTex : register(t1);
+Texture2D NoiseTex : register(t2);
 SamplerState LINEARMIRROR : register(s0);
 
 #define TAU 6.28318530718
@@ -82,29 +79,26 @@ SamplerState LINEARMIRROR : register(s0);
 //    return Color;
 //}
 
-
 float4 WaterShader_PS(Output _Input) : SV_Target0
 {
     float2 TexPos = _Input.Tex.xy;
-    float4 Color = WaterColor;
+    float4 WaterColor = WaterTex.Sample(LINEARMIRROR, TexPos);
     
-    TexPos.x += SumDeltaTime * 0.05;
-    TexPos.y += SumDeltaTime * 0.05;
+    TexPos.x += SumDeltaTime * 0.005;
+    TexPos.y += SumDeltaTime * 0.005;
     
-    float4 NoiseColor = Tex.Sample(LINEARMIRROR, TexPos);
-    
-    // 기름때
-    if (NoiseColor.g > 0)
+    float4 PatternColor = PatternTex.Sample(LINEARMIRROR, TexPos);
+
+    if (PatternColor.a == 0)
     {
-        Color.rgb = Color.rgb + NoiseColor.g * 0.3;
+        return WaterColor;
+    }
+    else
+    {
+        WaterColor.rgb = WaterColor.rgb * 0.6 + PatternColor.rgb * 0.4;
+        WaterColor.a = WaterColor.a * 0.6 + PatternColor.a * 0.4;
     }
     
-    // 핑크
-    if (NoiseColor.r > 0)
-    {
-        Color.rgb *= 1.2;
-    }
-    
-    
-     return Color;
+  
+    return WaterColor;
 }
