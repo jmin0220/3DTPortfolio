@@ -55,6 +55,7 @@ void StageParentLevel::LevelStartLoad()
 	{
 	case StageNum::STAGE1:
 	{
+		// 김성훈 : LoadLevelResource 추후에 LoadingLevel로 옮겨질 예정
 		ContentsCore::GetInst()->LoadLevelResource(LEVELS::STAGE01_DOORDASH);
 		CurStageName = JSON_NAME_DOORS;
 		break;

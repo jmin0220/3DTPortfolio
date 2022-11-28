@@ -61,7 +61,8 @@ private:
 	void LoadShaders();
 	void LoadCommonResources();
 
-	static std::vector<GameEngineLevel*> Levels_;
+	static std::vector<GameEngineLevel*> TestLevels_;
+	static std::vector<GameEngineLevel*> GameLevels_;
 
 	// 레벨별 리소스
 private:

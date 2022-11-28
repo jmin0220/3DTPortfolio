@@ -22,6 +22,7 @@ void LoadingLevel::Update(float _DeltaTime)
 
 }
 
+// 랜덤으로 스테이지를 시작하는게 아니라 원하는 스테이지를 선택할 수 있도록
 void LoadingLevel::LevelStartEvent()
 {
 	LoadingGUI_ = GameEngineGUI::CreateGUIWindow<CustomableGUI>("LoadingGUI", this);
@@ -56,8 +57,6 @@ void LoadingLevel::ShowLoadingProgress()
 	ImGui::SameLine();
 	if (true == ImGui::Button("PauseStage"))
 	{
-
-
 		// 스테이지 선택
 		SelectedMap_ = Loadings_->SelectMap();
 	}

@@ -25,7 +25,8 @@
 #include <GameEngineBase/GameEnginePath.h>
 
 std::shared_ptr<ContentsCore> ContentsCore::Inst_ = std::make_shared<ContentsCore>();
-std::vector<GameEngineLevel*> ContentsCore::Levels_;
+std::vector<GameEngineLevel*> ContentsCore::TestLevels_;
+std::vector<GameEngineLevel*> ContentsCore::GameLevels_;
 
 ContentsCore::ContentsCore()
 	: GameEngineCore()
@@ -108,58 +109,63 @@ void ContentsCore::CreateLevels()
 {
 	{
 		GameEngineLevel* Level = CreateLevel<TitleLevel>(LEVEL_NAME_TITLE);
-		Levels_.push_back(Level);
+		GameLevels_.push_back(Level);
 	}
 	{
 		GameEngineLevel* Level = CreateLevel<LobbyLevel>(LEVEL_NAME_LOBBY);
-		Levels_.push_back(Level);
+		GameLevels_.push_back(Level);
 	}
 	{
 		GameEngineLevel* Level = CreateLevel<LoadingLevel>(LEVEL_NAME_LOADING);
-		Levels_.push_back(Level);
+		GameLevels_.push_back(Level);
 	}
 	{
+		GameEngineLevel* Level = CreateLevel<DoorDashLevel>(LEVEL_NAME_DOORDASH);
+		GameLevels_.push_back(Level);
+	}
+	{
+		GameEngineLevel* Level = CreateLevel<JumpClubLevel>(LEVEL_NAME_JUMPCLUB);
+		GameLevels_.push_back(Level);
+	}
+	{
+		GameEngineLevel* Level = CreateLevel<HexAGoneLevel>(LEVEL_NAME_HEXAGONE);
+		GameLevels_.push_back(Level);
+	}
+
+	// ********* 구분 *********
+	//		  테스트 레벨 
+
+	{
 		GameEngineLevel* Level = CreateLevel<MapEditorLevel>(LEVEL_NAME_MAP_EDITER);
-		Levels_.push_back(Level);
+		TestLevels_.push_back(Level);
 	}
 	{
 		GameEngineLevel* Level = CreateLevel<CameraTestLevel>(LEVEL_NAME_CAMERA_TEST);
-		Levels_.push_back(Level);
+		TestLevels_.push_back(Level);
 	}
 	{
 		GameEngineLevel* Level = CreateLevel<PhysXLevel>("PhysXLevel");
-		Levels_.push_back(Level);
+		TestLevels_.push_back(Level);
 	}
 	{
 		GameEngineLevel* Level = CreateLevel<ScaleTestLevel>(LEVEL_NAME_SCALE_TEST);
-		Levels_.push_back(Level);
+		TestLevels_.push_back(Level);
 	}	
 
 	{
 		GameEngineLevel* Level = CreateLevel<PlayerTestLevel>(LEVEL_NAME_PLAYER_TEST);
-		Levels_.push_back(Level);
+		TestLevels_.push_back(Level);
 	}
 
 	{
 		GameEngineLevel* Level = CreateLevel<ShaderTutorialLevel>(LEVEL_NAME_SHADER_TUTORIAL);
-		Levels_.push_back(Level);
+		TestLevels_.push_back(Level);
 	}
 	{
 		GameEngineLevel* Level = CreateLevel<StageTestLevel>("StageTestLevel");
-		Levels_.push_back(Level);
+		TestLevels_.push_back(Level);
 	}
-	{
-		GameEngineLevel* Level = CreateLevel<DoorDashLevel>(LEVEL_NAME_DOORDASH);
-		Levels_.push_back(Level);
-	}
-	{
-		GameEngineLevel* Level = CreateLevel<JumpClubLevel>(LEVEL_NAME_JUMPCLUB);
-		Levels_.push_back(Level);
-	} 
-	{
-		GameEngineLevel* Level = CreateLevel<HexAGoneLevel>(LEVEL_NAME_HEXAGONE);
-		Levels_.push_back(Level);
-	}
+
 	//{
 	//	GameEngineLevel* Level = CreateLevel<LJM_PhysXHelloWorld>(LEVEL_NAME_PHYSX_HELLOWORLD);
 	//	Levels_.push_back(Level);
