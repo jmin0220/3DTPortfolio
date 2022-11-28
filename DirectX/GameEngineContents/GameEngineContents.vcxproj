@@ -223,6 +223,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameEngineStatusWindow.h" />
     <ClInclude Include="GameFail.h">
       <SubType>
       </SubType>
@@ -547,6 +548,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineStatusWindow.cpp" />
     <ClCompile Include="GameFail.cpp">
       <SubType>
       </SubType>

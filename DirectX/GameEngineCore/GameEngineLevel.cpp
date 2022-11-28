@@ -12,7 +12,7 @@
 
 GameEngineLevel::GameEngineLevel() 
 {
-	Cameras.resize(static_cast<unsigned int>(CAMERAORDER::UICAMERA));
+	Cameras.resize(static_cast<unsigned int>(CAMERAORDER::UICAMERA) + 1);
 
 	{
 		std::shared_ptr<GameEngineCameraActor> CameraActor = CreateActor<GameEngineCameraActor>();
@@ -122,7 +122,13 @@ void GameEngineLevel::PushRenderer(std::shared_ptr<GameEngineRenderer> _Renderer
 
 void GameEngineLevel::PushCamera(std::shared_ptr<GameEngineCamera> _Camera, int _CameraOrder)
 {
-	Cameras.resize(_CameraOrder + 1);
+	if (_CameraOrder >= Cameras.size())
+	{
+		MsgBoxAssert("카메라의 범위를 넘어간곳에 카메라를 집어넣으려고 했습니다.");
+		return;
+	}
+
+	// Cameras.resize(_CameraOrder + 1);
 
 	Cameras[_CameraOrder] = _Camera;
 }

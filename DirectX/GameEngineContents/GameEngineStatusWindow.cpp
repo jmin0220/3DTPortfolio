@@ -1,8 +1,8 @@
 #include "PreCompile.h"
 #include "GameEngineStatusWindow.h"
-#include "GameEngineRenderTarget.h"
-#include "GameEngineCameraActor.h"
-#include "GEngine.h"
+#include <GameEngineCore/GameEngineRenderTarget.h>
+#include <GameEngineCore/GameEngineCameraActor.h>
+#include <GameEngineCore/GEngine.h>
 
 std::map<std::string, GameEngineRenderTarget*> GameEngineStatusWindow::DebugRenderTarget;
 

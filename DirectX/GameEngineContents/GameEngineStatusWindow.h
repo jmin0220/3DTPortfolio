@@ -1,5 +1,5 @@
 #pragma once
-#include "GameEngineGUI.h"
+#include <GameEngineCore/GameEngineGUI.h>
 
 class GameEngineImageShotWindow : public GameEngineGUIWindow
 {
