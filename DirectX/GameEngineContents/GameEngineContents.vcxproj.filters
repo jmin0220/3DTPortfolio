@@ -109,9 +109,6 @@
     <Filter Include="990_Tutorial\Shader\Actor">
       <UniqueIdentifier>{0b497306-8f2b-4d47-8547-8f4814c88045}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02_Actor\UIActor\LobbyGUY">
-      <UniqueIdentifier>{063d8bf5-5ad2-4aa9-bd9e-efbda0c32152}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02_Actor\UIActor\SetUI">
       <UniqueIdentifier>{a4b573c9-0efa-4e54-8f9b-3820a9096e0e}</UniqueIdentifier>
     </Filter>
@@ -177,6 +174,9 @@
     </Filter>
     <Filter Include="02_Actor\Stage01Actor">
       <UniqueIdentifier>{9ce6f138-8c1d-4a37-9f3e-40d04195ac0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Actor\UIActor\LobbyActors">
+      <UniqueIdentifier>{063d8bf5-5ad2-4aa9-bd9e-efbda0c32152}</UniqueIdentifier>
     </Filter>
     <Filter Include="99_Global\PhysX">
       <UniqueIdentifier>{c0e70e77-6294-4783-8d0a-7cc9b0a81cd4}</UniqueIdentifier>
@@ -367,7 +367,7 @@
       <Filter>02_Actor\UIActor\InGameUI</Filter>
     </ClInclude>
     <ClInclude Include="LobbyPlayer.h">
-      <Filter>02_Actor\UIActor\LobbyGUY</Filter>
+      <Filter>02_Actor\UIActor\LobbyActors</Filter>
     </ClInclude>
     <ClInclude Include="LobbySetUI.h">
       <Filter>02_Actor\UIActor\SetUI\Lobby</Filter>
@@ -681,7 +681,7 @@
       <Filter>02_Actor\UIActor\InGameUI</Filter>
     </ClCompile>
     <ClCompile Include="LobbyPlayer.cpp">
-      <Filter>02_Actor\UIActor\LobbyGUY</Filter>
+      <Filter>02_Actor\UIActor\LobbyActors</Filter>
     </ClCompile>
     <ClCompile Include="LobbySetUI.cpp">
       <Filter>02_Actor\UIActor\SetUI\Lobby</Filter>

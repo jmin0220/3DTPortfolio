@@ -5,6 +5,7 @@
 
 class Cursor;
 class FontActor;
+class LobbyBackgroundActor;
 class LobbySetUI;
 class InGameSetUI;
 class LobbyPlayer;

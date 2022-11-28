@@ -232,7 +232,6 @@ void ContentsCore::LoadShaders()
 		Material->SetPixelShader("RtoLSlice.hlsl");
 	}
 
-
 	{
 		std::shared_ptr<GameEngineMaterial> Material = GameEngineMaterial::Create("Fog");
 		Material->SetVertexShader("Fog.hlsl");
