@@ -369,7 +369,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="PhysXTriMeshDynamicGeometryComponent.h">
+    <ClInclude Include="PhysXSpinBarComponent.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -693,7 +693,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="PhysXTriMeshDynamicGeometryComponent.cpp">
+    <ClCompile Include="PhysXSpinBarComponent.cpp">
       <SubType>
       </SubType>
     </ClCompile>

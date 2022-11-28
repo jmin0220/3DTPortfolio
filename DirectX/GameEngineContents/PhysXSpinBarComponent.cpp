@@ -1,16 +1,17 @@
 #include "PreCompile.h"
-#include "PhysXTriMeshDynamicGeometryComponent.h"
+#include "PhysXSpinBarComponent.h"
 
-PhysXTriMeshDynamicGeometryComponent::PhysXTriMeshDynamicGeometryComponent() 
+PhysXSpinBarComponent::PhysXSpinBarComponent()
 	: CurRot_(0.0f)
+	, SpinSpeed_(0.0f)
 {
 }
 
-PhysXTriMeshDynamicGeometryComponent::~PhysXTriMeshDynamicGeometryComponent() 
+PhysXSpinBarComponent::~PhysXSpinBarComponent()
 {
 }
 
-void PhysXTriMeshDynamicGeometryComponent::CreatePhysXActors(const std::string& _MeshName, physx::PxScene* _Scene, physx::PxPhysics* _physics, physx::PxCooking* _cooking, bool _InverseIndex, physx::PxVec3 _GeoMetryScale, float4 _GeoMetryRot)
+void PhysXSpinBarComponent::CreatePhysXActors(const std::string& _MeshName, physx::PxScene* _Scene, physx::PxPhysics* _physics, physx::PxCooking* _cooking, bool _InverseIndex, physx::PxVec3 _GeoMetryScale, float4 _GeoMetryRot)
 {
 	CustomFBXLoad(_MeshName, _InverseIndex);
 	float4 tmpQuat = _GeoMetryRot.DegreeRotationToQuaternionReturn();
@@ -113,13 +114,13 @@ void PhysXTriMeshDynamicGeometryComponent::CreatePhysXActors(const std::string& 
 	_Scene->addActor(*dynamic_);
 }
 
-void PhysXTriMeshDynamicGeometryComponent::Start()
+void PhysXSpinBarComponent::Start()
 {
 	// 부모의 정보의 저장
 	ParentActor_ = std::dynamic_pointer_cast<GameEngineActor>(GetRoot());
 }
 
-void PhysXTriMeshDynamicGeometryComponent::Update(float _DeltaTime)
+void PhysXSpinBarComponent::Update(float _DeltaTime)
 {
 
 	// PhysX Actor의 상태에 맞춰서 부모의 Transform정보를 갱신
@@ -137,7 +138,7 @@ void PhysXTriMeshDynamicGeometryComponent::Update(float _DeltaTime)
 	const physx::PxQuat tmpPxQuat(tmpQuat.x, tmpQuat.y, tmpQuat.z, tmpQuat.w);
 	const physx::PxTransform tmpTansform(tmpWorldPos.x, tmpWorldPos.y, tmpWorldPos.z, tmpPxQuat);
 
-	CurRot_ += 1.0f;
+	CurRot_ += SpinSpeed_;
 
 	dynamic_->setKinematicTarget(tmpTansform);
 
@@ -145,7 +146,7 @@ void PhysXTriMeshDynamicGeometryComponent::Update(float _DeltaTime)
 	ParentActor_.lock()->GetTransform().SetWorldRotation(tmpRot);
 }
 
-void PhysXTriMeshDynamicGeometryComponent::CustomFBXLoad(const std::string& _MeshName, bool _InverseIndex)
+void PhysXSpinBarComponent::CustomFBXLoad(const std::string& _MeshName, bool _InverseIndex)
 {
 	GameEngineDirectory Dir;
 
