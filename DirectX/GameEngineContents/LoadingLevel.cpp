@@ -19,10 +19,6 @@ void LoadingLevel::Start()
 
 void LoadingLevel::Update(float _DeltaTime)
 {
-	/////////////////
-	// 임시 레벨 로딩
-	/////////////////
-
 
 }
 
@@ -60,6 +56,8 @@ void LoadingLevel::ShowLoadingProgress()
 	ImGui::SameLine();
 	if (true == ImGui::Button("PauseStage"))
 	{
+
+
 		// 스테이지 선택
 		SelectedMap_ = Loadings_->SelectMap();
 	}
@@ -68,10 +66,62 @@ void LoadingLevel::ShowLoadingProgress()
 	// Load Resources
 	if (true == ImGui::Button("LoadingStage"))
 	{
-		// 스레드 이용 로딩 시작
-		
-		// 로딩 마무리되면 그 스테이지로 ChangeLevel
+		if (MapSelect::NONE == SelectedMap_)
+		{
+			return;
+		}
 
+		// 스레드 이용 로딩 시작
+		GameEngineCore::EngineThreadPool.Work(
+			[=]()
+			{
+				ContentsCore::GetInst()->LoadLevelResource(SelectedMapToLevel());
+			}
+		);
+
+	}
+
+
+	if (true == ImGui::Button("StageStart"))
+	{
+		// TODO : 스레드 작업 마무리 했는지 확인
+
+
+		// 마무리 됐으면 레벨 변경
+		ChangeLevelByMap();
+	}
+
+}
+
+LEVELS LoadingLevel::SelectedMapToLevel()
+{
+	switch (SelectedMap_)
+	{
+	case MapSelect::Splash_CoY_DoorDash:
+		return LEVELS::STAGE01_DOORDASH;
+		break;
+	case MapSelect::Splash_JumpClub:
+		return LEVELS::STAGE02_JUMPCLUB;
+		break;
+	case MapSelect::Splash_Hexagone:
+		return LEVELS::STAGE04_HEX_A_GONE;
+		break;
+	}
+}
+
+void LoadingLevel::ChangeLevelByMap()
+{
+	switch (SelectedMap_)
+	{
+	case MapSelect::Splash_CoY_DoorDash:
+		GEngine::ChangeLevel(LEVEL_NAME_DOORDASH);
+		break;
+	case MapSelect::Splash_JumpClub:
+		GEngine::ChangeLevel(LEVEL_NAME_JUMPCLUB);
+		break;
+	case MapSelect::Splash_Hexagone:
+		GEngine::ChangeLevel(LEVEL_NAME_HEXAGONE);
+		break;
 	}
 
 }
