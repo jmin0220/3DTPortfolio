@@ -182,6 +182,22 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Col_CheckPoint.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Col_Goal.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Col_StartPos.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Col_Trigger.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ConstantStringSet.h" />
     <ClInclude Include="ContentsCore.h">
       <SubType>
@@ -505,6 +521,22 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ColorBox.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Col_CheckPoint.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Col_Goal.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Col_StartPos.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Col_Trigger.cpp">
       <SubType>
       </SubType>
     </ClCompile>

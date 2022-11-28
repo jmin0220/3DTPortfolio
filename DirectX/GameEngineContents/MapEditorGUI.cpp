@@ -359,6 +359,12 @@ void MapEditorGUI::OnClickSpawn()
 			case MeshEnum::Col_StartPos:
 				NewObj.Actor_.lock()->SetCollisionOnly(float4(1, 1, 1));
 				break;
+			case MeshEnum::Col_CheckPoint:
+				NewObj.Actor_.lock()->SetCollisionOnly(float4(1, 1, 1));
+				break;
+			case MeshEnum::Col_Trigger:
+				NewObj.Actor_.lock()->SetCollisionOnly(float4(1, 1, 1));
+				break;
 			case MeshEnum::Col_Goal:
 				NewObj.Actor_.lock()->SetCollisionOnly(float4(1, 1, 1));
 				break;
@@ -696,6 +702,26 @@ void MapEditorGUI::CreateFBXMesh()
 	case MeshEnum::TestMap:
 	{
 		NewObj.Actor_.lock()->SetStaticMesh("TestMap.FBX");
+		break;
+	}
+	case MeshEnum::Col_StartPos:
+	{
+		NewObj.Actor_.lock()->SetCollisionOnly(float4(1, 1, 1));
+		break;
+	}
+	case MeshEnum::Col_CheckPoint:
+	{
+		NewObj.Actor_.lock()->SetCollisionOnly(float4(1, 1, 1));
+		break;
+	}
+	case MeshEnum::Col_Trigger:
+	{
+		NewObj.Actor_.lock()->SetCollisionOnly(float4(1, 1, 1));
+		break;
+	}
+	case MeshEnum::Col_Goal:
+	{
+		NewObj.Actor_.lock()->SetCollisionOnly(float4(1, 1, 1));
 		break;
 	}
 	case MeshEnum::END:

@@ -23,6 +23,14 @@ enum class Stage_MeshEnum
 	// TEST
 	Rainbow,
 	TestMap,
+
+
+
+	//Collision
+	Col_StartPos,
+	Col_CheckPoint,
+	Col_Trigger,
+	Col_Goal,
 	END, // 가장 마지막
 };
 

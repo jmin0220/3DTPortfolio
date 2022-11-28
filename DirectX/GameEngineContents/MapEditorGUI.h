@@ -27,6 +27,8 @@ enum class MeshEnum
 	DoorBlock,
 	// COLLISION
 	Col_StartPos,
+	Col_CheckPoint,
+	Col_Trigger,
 	Col_Goal,
 	END, // 가장 마지막
 };

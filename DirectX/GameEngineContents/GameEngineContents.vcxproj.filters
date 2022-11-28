@@ -181,6 +181,9 @@
     <Filter Include="99_Global\PhysX">
       <UniqueIdentifier>{c0e70e77-6294-4783-8d0a-7cc9b0a81cd4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02_Actor\StageCollision">
+      <UniqueIdentifier>{be007dc0-326d-44df-8ad9-a6ffad2f7f2c}</UniqueIdentifier>
+    </Filter>
     <Filter Include="98_LevelGUI\EngineStatusWindow">
       <UniqueIdentifier>{037bae6f-1a6d-4ee5-9aef-91e0b3bdad44}</UniqueIdentifier>
     </Filter>
@@ -498,6 +501,18 @@
     <ClInclude Include="PhysXSpinBarComponent.h">
       <Filter>03_Component\PhysXComponent</Filter>
     </ClInclude>
+    <ClInclude Include="Col_StartPos.h">
+      <Filter>02_Actor\StageCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="Col_CheckPoint.h">
+      <Filter>02_Actor\StageCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="Col_Trigger.h">
+      <Filter>02_Actor\StageCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="Col_Goal.h">
+      <Filter>02_Actor\StageCollision</Filter>
+    </ClInclude>
     <ClInclude Include="GameEngineStatusWindow.h">
       <Filter>98_LevelGUI\EngineStatusWindow</Filter>
     </ClInclude>
@@ -814,6 +829,18 @@
     </ClCompile>
     <ClCompile Include="PhysXSpinBarComponent.cpp">
       <Filter>03_Component\PhysXComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Col_StartPos.cpp">
+      <Filter>02_Actor\StageCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="Col_CheckPoint.cpp">
+      <Filter>02_Actor\StageCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="Col_Trigger.cpp">
+      <Filter>02_Actor\StageCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="Col_Goal.cpp">
+      <Filter>02_Actor\StageCollision</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineStatusWindow.cpp">
       <Filter>98_LevelGUI\EngineStatusWindow</Filter>

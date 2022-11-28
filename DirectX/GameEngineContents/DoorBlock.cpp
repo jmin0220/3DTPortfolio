@@ -102,80 +102,80 @@ void DoorBlock::Init()
 		break;
 	case 3:
 		DownTime_ = 1.0f;
-		UpTime_ = 1.5f;
-		Speed_ = 5.0f;
+		UpTime_ = 1.0f;
+		Speed_ = 8.0f;
 
-		WaitTimer_ = UpTime_;
+		WaitTimer_ = 0;
 		DownTimer_ = DownTime_;
 		UpTimer_ = UpTime_;
 		break;
 	case 4:
 		DownTime_ = 1.0f;
-		UpTime_ = 1.5f;
-		Speed_ = 5.0f;
+		UpTime_ = 1.0f;
+		Speed_ = 8.0f;
 
-		WaitTimer_ = UpTime_;
+		WaitTimer_ = 2.4f;
 		DownTimer_ = DownTime_;
 		UpTimer_ = UpTime_;
 		break;
 	case 5:
 		DownTime_ = 1.0f;
-		UpTime_ = 1.5f;
-		Speed_ = 5.0f;
+		UpTime_ = 1.0f;
+		Speed_ = 8.0f;
 
-		WaitTimer_ = UpTime_;
+		WaitTimer_ = 0.0f;
 		DownTimer_ = DownTime_;
 		UpTimer_ = UpTime_;
 		break;
 	case 6:
 		DownTime_ = 1.0f;
-		UpTime_ = 1.5f;
-		Speed_ = 5.0f;
+		UpTime_ = 1.0f;
+		Speed_ = 8.0f;
 
-		WaitTimer_ = UpTime_;
+		WaitTimer_ = 2.4f;
 		DownTimer_ = DownTime_;
 		UpTimer_ = UpTime_;
 		break;
 	case 7:
 		DownTime_ = 1.0f;
-		UpTime_ = 1.5f;
-		Speed_ = 5.0f;
+		UpTime_ = 1.0f;
+		Speed_ = 8.0f;
 
-		WaitTimer_ = UpTime_;
+		WaitTimer_ = 2.4f;
 		DownTimer_ = DownTime_;
 		UpTimer_ = UpTime_;
 		break;
 	case 8:
 		DownTime_ = 1.0f;
-		UpTime_ = 1.5f;
-		Speed_ = 5.0f;
+		UpTime_ = 1.0f;
+		Speed_ = 8.0f;
 
-		WaitTimer_ = UpTime_;
+		WaitTimer_ = 0;
 		DownTimer_ = DownTime_;
 		UpTimer_ = UpTime_;
 		break;
 	case 9:
 		DownTime_ = 1.0f;
-		UpTime_ = 1.5f;
-		Speed_ = 5.0f;
+		UpTime_ = 1.0f;
+		Speed_ = 8.0f;
 
-		WaitTimer_ = UpTime_;
+		WaitTimer_ = 2.4f;
 		DownTimer_ = DownTime_;
 		UpTimer_ = UpTime_;
 		break;
 	case 10:
 		DownTime_ = 1.0f;
-		UpTime_ = 1.5f;
-		Speed_ = 5.0f;
+		UpTime_ = 1.0f;
+		Speed_ = 8.0f;
 
-		WaitTimer_ = UpTime_;
+		WaitTimer_ = 0;
 		DownTimer_ = DownTime_;
 		UpTimer_ = UpTime_;
 		break;
 	case 11:
-		DownTime_ = 1.0f;
+		DownTime_ = 6.0f;
 		UpTime_ = 1.5f;
-		Speed_ = 5.0f;
+		Speed_ = 10.0f;
 
 		WaitTimer_ = UpTime_;
 		DownTimer_ = DownTime_;
@@ -183,8 +183,8 @@ void DoorBlock::Init()
 		break;
 	case 12:
 		DownTime_ = 1.0f;
-		UpTime_ = 1.5f;
-		Speed_ = 5.0f;
+		UpTime_ = 1.0f;
+		Speed_ = 10.0f;
 
 		WaitTimer_ = UpTime_;
 		DownTimer_ = DownTime_;
@@ -192,26 +192,26 @@ void DoorBlock::Init()
 		break;
 	case 13:
 		DownTime_ = 1.0f;
-		UpTime_ = 1.5f;
-		Speed_ = 5.0f;
+		UpTime_ = 1.0f;
+		Speed_ = 10.0f;
 
 		WaitTimer_ = UpTime_;
 		DownTimer_ = DownTime_;
 		UpTimer_ = UpTime_;
 		break;
 	case 14:
-		DownTime_ = 1.0f;
+		DownTime_ = 6.0f;
 		UpTime_ = 1.5f;
-		Speed_ = 5.0f;
+		Speed_ = 10.0f;
 
 		WaitTimer_ = UpTime_;
 		DownTimer_ = DownTime_;
 		UpTimer_ = UpTime_;
 		break;
 	case 15:
-		DownTime_ = 1.0f;
+		DownTime_ = 6.0f;
 		UpTime_ = 1.5f;
-		Speed_ = 5.0f;
+		Speed_ = 10.0f;
 
 		WaitTimer_ = UpTime_;
 		DownTimer_ = DownTime_;
@@ -219,8 +219,8 @@ void DoorBlock::Init()
 		break;
 	case 16:
 		DownTime_ = 1.0f;
-		UpTime_ = 1.5f;
-		Speed_ = 5.0f;
+		UpTime_ = 1.0f;
+		Speed_ = 10.0f;
 
 		WaitTimer_ = UpTime_;
 		DownTimer_ = DownTime_;
@@ -228,64 +228,91 @@ void DoorBlock::Init()
 		break;
 	case 17:
 		DownTime_ = 1.0f;
-		UpTime_ = 1.5f;
-		Speed_ = 5.0f;
+		UpTime_ = 1.0f;
+		Speed_ = 10.0f;
 
 		WaitTimer_ = UpTime_;
 		DownTimer_ = DownTime_;
 		UpTimer_ = UpTime_;
 		break;
 	case 18:
-		DownTime_ = 1.0f;
+		DownTime_ = 6.0f;
 		UpTime_ = 1.5f;
-		Speed_ = 5.0f;
+		Speed_ = 10.0f;
 
 		WaitTimer_ = UpTime_;
 		DownTimer_ = DownTime_;
 		UpTimer_ = UpTime_;
 		break;
 	case 19:
-		DownTime_ = 1.0f;
-		UpTime_ = 1.5f;
-		Speed_ = 5.0f;
+		DownTime_ = 0.8f;
+		UpTime_ = 0.8f;
+		Speed_ = 20.0f;
 
-		WaitTimer_ = UpTime_;
+		WaitTimer_ = 0;
 		DownTimer_ = DownTime_;
 		UpTimer_ = UpTime_;
 		break;
 	case 20:
-		DownTime_ = 1.0f;
-		UpTime_ = 1.5f;
-		Speed_ = 5.0f;
+		DownTime_ = 0.8f;
+		UpTime_ = 0.8f;
+		Speed_ = 20.0f;
 
-		WaitTimer_ = UpTime_;
+		WaitTimer_ = 1.5f;
 		DownTimer_ = DownTime_;
 		UpTimer_ = UpTime_;
 		break;
 	case 21:
-		DownTime_ = 1.0f;
-		UpTime_ = 1.5f;
-		Speed_ = 5.0f;
+		DownTime_ = 0.8f;
+		UpTime_ = 0.8f;
+		Speed_ = 20.0f;
 
-		WaitTimer_ = UpTime_;
+		WaitTimer_ = 0;
 		DownTimer_ = DownTime_;
 		UpTimer_ = UpTime_;
 		break;
 	case 22:
+		DownTime_ = 0.8f;
+		UpTime_ = 0.8f;
+		Speed_ = 20.0f;
+
+		WaitTimer_ = 1.5f;
+		DownTimer_ = DownTime_;
+		UpTimer_ = UpTime_;
+		break;
+	case 23:
+		DownTime_ = 0.8f;
+		UpTime_ = 0.8;
+		Speed_ = 20.0f;
+
+		WaitTimer_ = 0;
+		DownTimer_ = DownTime_;
+		UpTimer_ = UpTime_;
+		break;
+	case 24:
 		DownTime_ = 1.0f;
-		UpTime_ = 1.5f;
+		UpTime_ = 1.0f;
+		Speed_ = 5.0f;
+
+		WaitTimer_ = 4.3f;
+		DownTimer_ = DownTime_;
+		UpTimer_ = UpTime_;
+		break;
+	case 25:
+		DownTime_ = 1.0f;
+		UpTime_ = 1.0f;
 		Speed_ = 5.0f;
 
 		WaitTimer_ = UpTime_;
 		DownTimer_ = DownTime_;
 		UpTimer_ = UpTime_;
 		break;
-	case 23:
+	case 26:
 		DownTime_ = 1.0f;
-		UpTime_ = 1.5f;
+		UpTime_ = 1.0f;
 		Speed_ = 5.0f;
 
-		WaitTimer_ = UpTime_;
+		WaitTimer_ = 4.3f;
 		DownTimer_ = DownTime_;
 		UpTimer_ = UpTime_;
 		break;
@@ -1163,103 +1190,6 @@ void DoorBlock::DoorMove(float _DeltaTime)
 			}
 
 			break;
-		case 27:
-			if (Switch_ == false)
-			{
-				if (GetTransform().GetWorldPosition().y >= YPos)
-				{
-					DownTimer_ -= _DeltaTime;
-					if (DownTimer_ <= 0)
-					{
-						Switch_ = true;
-						DownTimer_ = DownTime_;
-					}
-					break;
-				}
-
-				GetTransform().SetWorldUpMove(Speed_, _DeltaTime);
-			}
-			else if (Switch_ == true)
-			{
-				if (GetTransform().GetWorldPosition().y <= Pos)
-				{
-					UpTimer_ -= _DeltaTime;
-					if (UpTimer_ <= 0)
-					{
-						Switch_ = false;
-						UpTimer_ = UpTime_;
-					}
-					break;
-				}
-				GetTransform().SetWorldDownMove(Speed_, _DeltaTime);
-			}
-
-			break;
-		case 28:
-			if (Switch_ == false)
-			{
-				if (GetTransform().GetWorldPosition().y >= YPos)
-				{
-					DownTimer_ -= _DeltaTime;
-					if (DownTimer_ <= 0)
-					{
-						Switch_ = true;
-						DownTimer_ = DownTime_;
-					}
-					break;
-				}
-
-				GetTransform().SetWorldUpMove(Speed_, _DeltaTime);
-			}
-			else if (Switch_ == true)
-			{
-				if (GetTransform().GetWorldPosition().y <= Pos)
-				{
-					UpTimer_ -= _DeltaTime;
-					if (UpTimer_ <= 0)
-					{
-						Switch_ = false;
-						UpTimer_ = UpTime_;
-					}
-					break;
-				}
-				GetTransform().SetWorldDownMove(Speed_, _DeltaTime);
-			}
-
-			break;
-		case 29:
-			if (Switch_ == false)
-			{
-				if (GetTransform().GetWorldPosition().y >= YPos)
-				{
-					DownTimer_ -= _DeltaTime;
-					if (DownTimer_ <= 0)
-					{
-						Switch_ = true;
-						DownTimer_ = DownTime_;
-					}
-					break;
-				}
-
-				GetTransform().SetWorldUpMove(Speed_, _DeltaTime);
-			}
-			else if (Switch_ == true)
-			{
-				if (GetTransform().GetWorldPosition().y <= Pos)
-				{
-					UpTimer_ -= _DeltaTime;
-					if (UpTimer_ <= 0)
-					{
-						Switch_ = false;
-						UpTimer_ = UpTime_;
-					}
-					break;
-				}
-				GetTransform().SetWorldDownMove(Speed_, _DeltaTime);
-			}
-
-			break;
-
 		default:
 			break;
 		}

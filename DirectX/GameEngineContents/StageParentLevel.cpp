@@ -3,6 +3,10 @@
 #include "TestRainBow.h"
 #include "DoorBlock.h"
 #include "TestMapActor.h"
+#include "Col_StartPos.h"
+#include "Col_Trigger.h"
+#include "Col_Goal.h"
+#include "Col_CheckPoint.h"
 #include <GameEngineBase/magic_enum.hpp>
 #include <GameEngineCore/ThirdParty/inc/json.h>
 #include <GameEngineCore/CoreMinimal.h>
@@ -57,7 +61,7 @@ void StageParentLevel::LevelStartLoad()
 	{
 		// 김성훈 : LoadLevelResource 추후에 LoadingLevel로 옮겨질 예정
 		ContentsCore::GetInst()->LoadLevelResource(LEVELS::STAGE01_DOORDASH);
-		CurStageName = JSON_NAME_DOORS;
+		CurStageName = JSON_NAME_DOORDASH;
 		break;
 	}
 	case StageNum::STAGE2:
@@ -144,6 +148,26 @@ void StageParentLevel::LevelStartLoad()
 		case Stage_MeshEnum::DoorBlock:
 		{
 			NewObj.Actor_ = CreateActor<DoorBlock>();
+			break;
+		}
+		case Stage_MeshEnum::Col_StartPos:
+		{
+			NewObj.Actor_ = CreateActor<Col_StartPos>();
+			break;
+		}
+		case Stage_MeshEnum::Col_CheckPoint:
+		{
+			NewObj.Actor_ = CreateActor<Col_CheckPoint>();
+			break;
+		}
+		case Stage_MeshEnum::Col_Trigger:
+		{
+			NewObj.Actor_ = CreateActor<Col_Trigger>();
+			break;
+		}
+		case Stage_MeshEnum::Col_Goal:
+		{
+			NewObj.Actor_ = CreateActor<Col_Goal>();
 			break;
 		}
 		case Stage_MeshEnum::END:
