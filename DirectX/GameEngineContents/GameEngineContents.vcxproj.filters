@@ -181,6 +181,9 @@
     <Filter Include="99_Global\PhysX">
       <UniqueIdentifier>{c0e70e77-6294-4783-8d0a-7cc9b0a81cd4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="98_LevelGUI\EngineStatusWindow">
+      <UniqueIdentifier>{037bae6f-1a6d-4ee5-9aef-91e0b3bdad44}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -495,6 +498,9 @@
     <ClInclude Include="PhysXSpinBarComponent.h">
       <Filter>03_Component\PhysXComponent</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineStatusWindow.h">
+      <Filter>98_LevelGUI\EngineStatusWindow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -808,6 +814,9 @@
     </ClCompile>
     <ClCompile Include="PhysXSpinBarComponent.cpp">
       <Filter>03_Component\PhysXComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineStatusWindow.cpp">
+      <Filter>98_LevelGUI\EngineStatusWindow</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -58,6 +58,11 @@ public:
 		return Cameras[static_cast<int>(CAMERAORDER::UICAMERA)];
 	}
 
+	std::shared_ptr<GameEngineCamera> GetCamera(CAMERAORDER _Order)
+	{
+		return Cameras[static_cast<int>(_Order)];
+	}
+
 	std::shared_ptr<GameEngineCameraActor> GetMainCameraActor();
 
 	GameEngineTransform& GetMainCameraActorTransform();
@@ -133,11 +138,6 @@ public:
 	}
 
 	void AllClear();
-
-protected:
-	
-
-
 
 private:
 	void PushActor(std::shared_ptr < GameEngineActor> _Actor, int _ObjectGroupIndex);

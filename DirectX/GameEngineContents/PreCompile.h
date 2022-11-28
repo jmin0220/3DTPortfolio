@@ -1,5 +1,11 @@
 #pragma once
 
+#include <WS2tcpip.h> // inet_pton 함수를 사용하기 위한 헤더
+#include <WinSock2.h>
+#include <stdint.h>
+#include <sstream>
+#include <Windows.h>
+
 // std and direct
 #include <string>
 
@@ -8,8 +14,6 @@
 #include <set>
 #include <vector>
 #include <chrono>
-
-#include <Windows.h>
 
 #include <d3d11_4.h>
 #include <d3dcompiler.h>
@@ -27,6 +31,9 @@
 // base
 #include <GameEngineBase/GameEngineDebug.h>
 #include <GameEngineBase/GameEngineInput.h>
+#include <GameEngineBase/GameEngineNet.h>
+#include <GameEngineBase/GameEngineNetServer.h>
+#include <GameEngineBase/GameEngineNetClient.h>
 
 // core
 #include <GameEngineCore/CoreMinimal.h>
