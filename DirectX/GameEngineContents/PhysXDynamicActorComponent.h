@@ -42,6 +42,8 @@ public:
 		dynamic_->addForce(physx::PxVec3(0.0f, 0.01f, 0.0f), physx::PxForceMode::eIMPULSE);
 	}
 
+	void SetPlayerStartPos(float4 _Pos);
+
 	void PushImpulse(float4 _ImpulsePower);
 
 protected:

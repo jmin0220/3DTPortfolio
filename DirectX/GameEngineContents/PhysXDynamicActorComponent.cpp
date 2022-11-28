@@ -190,3 +190,11 @@ void PhysXDynamicActorComponent::PushImpulse(float4 _ImpulsePower)
 
 	dynamic_->addForce(physx::PxVec3(_ImpulsePower.x, _ImpulsePower.y, _ImpulsePower.z), physx::PxForceMode::eIMPULSE);
 }
+
+void PhysXDynamicActorComponent::SetPlayerStartPos(float4 _Pos)
+{
+	physx::PxTransform tmpPxTransform(_Pos.x, _Pos.y, _Pos.z);
+
+	// 부모의 Transform정보를 바탕으로 PhysX Actor의 트랜스폼을 갱신
+	dynamic_->setGlobalPose(tmpPxTransform);
+}
