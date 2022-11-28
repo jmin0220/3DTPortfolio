@@ -3,6 +3,8 @@
 #include "VirtualPhysXLevel.h"
 
 JumpClub_SpinBarSingle::JumpClub_SpinBarSingle() 
+	: AccSpeed_(50.0f)
+	, AccTime_(5.0f)
 {
 }
 
@@ -20,6 +22,21 @@ void JumpClub_SpinBarSingle::Start()
 
 void JumpClub_SpinBarSingle::Update(float _DeltaTime)
 {
+	AccTime_ += _DeltaTime;
+	// 게임시작 5초 뒤 델타타임만큼 속도 증가(, 5초마다 델타타임만큼 속도 증가)
+	if (5.0f < AccTime_)
+	{
+		//AccTime_ = 0.0f;
+		AccSpeed_ += _DeltaTime;
+	}
+
+	// 속도가 100 이상이 되면 100으로 고정
+	if (100.0f <= AccSpeed_)
+	{
+		AccSpeed_ = 100.0f;
+	}
+
+	PhysXSpinBarComponent_->SetSpinSpeedRot(AccSpeed_ * _DeltaTime);
 }
 
 void JumpClub_SpinBarSingle::End()
@@ -44,5 +61,5 @@ void JumpClub_SpinBarSingle::CreatePhysXActors(physx::PxScene* _Scene, physx::Px
 	PhysXSpinBarComponent_->CreatePhysXActors("SpinBarSingle.fbx", _Scene, _physics, Cooking, true, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z));
 
 	// 회전속도
-	PhysXSpinBarComponent_->SetSpinSpeedRot(0.5f);
+	//PhysXSpinBarComponent_->SetSpinSpeedRot(0.3f);
 }

@@ -30,5 +30,7 @@ private:
 	std::shared_ptr<PhysXSpinBarComponent> PhysXSpinBarComponent_;
 	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer_;
 
+	float AccSpeed_;
+	float AccTime_;
 };
 

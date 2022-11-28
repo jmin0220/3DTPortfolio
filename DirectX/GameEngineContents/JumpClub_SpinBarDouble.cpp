@@ -20,6 +20,7 @@ void JumpClub_SpinBarDouble::Start()
 
 void JumpClub_SpinBarDouble::Update(float _DeltaTime)
 {
+	PhysXSpinBarComponent_->SetSpinSpeedRot(50.0f * _DeltaTime);
 }
 
 void JumpClub_SpinBarDouble::End()
@@ -44,5 +45,5 @@ void JumpClub_SpinBarDouble::CreatePhysXActors(physx::PxScene* _Scene, physx::Px
 	PhysXSpinBarComponent_->CreatePhysXActors("SpinBarDouble.fbx", _Scene, _physics, Cooking, true, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z));
 
 	// 회전속도
-	PhysXSpinBarComponent_->SetSpinSpeedRot(0.1f);
+	//PhysXSpinBarComponent_->SetSpinSpeedRot(0.5f);
 }
