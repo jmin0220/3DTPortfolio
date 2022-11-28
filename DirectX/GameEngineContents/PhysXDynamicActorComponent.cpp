@@ -42,7 +42,7 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 
 	// TODO::점프속력에 영향을 미침. 스테이지 작성후 자세한 수치는 나중에 조절
 	// 플레이어 최대 속력
-	dynamic_->setMaxLinearVelocity(PLAYER_MAX_SPEED);
+	// dynamic_->setMaxLinearVelocity(PLAYER_MAX_SPEED);
 
 	dynamic_->setRigidDynamicLockFlags(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_X | physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y |
 		physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z);
@@ -112,7 +112,8 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 	//const physx::PxVec3 localPos = physx::PxVec3(0, -.5, 0);
 	//physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 500.0f, &localPos);
 
-
+	// 제동?
+	dynamic_->setLinearDamping(physx::PxReal(1.f));
 
 	// Scene에 액터 추가
 	_Scene->addActor(*dynamic_);
@@ -168,7 +169,7 @@ void PhysXDynamicActorComponent::SetMoveSpeed(float4 _MoveSpeed)
 
 void PhysXDynamicActorComponent::SetMoveJump()
 {
-	dynamic_->addForce(physx::PxVec3(0.0f, 10000.0f, 0.0f), physx::PxForceMode::eIMPULSE);
+	dynamic_->addForce(physx::PxVec3(0.0f, 10.0f, 0.0f), physx::PxForceMode::eIMPULSE);
 }
 
 void PhysXDynamicActorComponent::SetDynamicIdle()

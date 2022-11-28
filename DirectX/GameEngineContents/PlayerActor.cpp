@@ -6,7 +6,7 @@
 
 #include "CameraArm.h"
 
-float SPEED_PLAYER = 400000.0f;
+float SPEED_PLAYER = 4000.0f;
 
 PlayerActor::PlayerActor() :
 	CheckPointFlag_(false),
