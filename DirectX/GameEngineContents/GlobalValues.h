@@ -55,6 +55,7 @@ enum class UICOLLISION //김예나 작성
 {
 	Mouse,
 	Button,
+	PlayButton,
 };
 
 enum class LEVELS

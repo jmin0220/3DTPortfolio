@@ -13,6 +13,8 @@
 
 #include "PostEffect_Bloom.h"
 
+#include "InGameSetUI.h"
+
 JumpClubLevel::JumpClubLevel() 
 {
 }
@@ -47,6 +49,8 @@ void JumpClubLevel::LevelStartEvent()
 	StageParentLevel::LevelStartEvent();
 	BackGroundObj_ = CreateActor<JumpClub_BackGroundObject>();
 	VFXWaterObj_ = CreateActor<VFXWaterActor>();
+
+	UIs_ = CreateActor<InGameSetUI>();
 
 	Player_->GetTransform().SetWorldPosition({ 0.0f,200.0f,0.0f });
 

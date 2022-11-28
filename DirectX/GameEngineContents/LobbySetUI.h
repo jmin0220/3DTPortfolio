@@ -1,12 +1,12 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
+#include "PlayButton.h"
 
 // 설명 : 로비에 나올 모든 UI세트
 class CrownCount;
 class NamePlate;
 class NoneButton;
 class NoneMoney;
-class PlayButton;
 class SelectShowButton;
 class TopMenu;
 class Cursor;
@@ -22,6 +22,11 @@ public:
 	LobbySetUI(LobbySetUI&& _Other) noexcept = delete;
 	LobbySetUI& operator=(const LobbySetUI& _Other) = delete;
 	LobbySetUI& operator=(LobbySetUI&& _Other) noexcept = delete;
+
+	std::weak_ptr<PlayButton> GetPlayButton()
+	{
+		return PlayButton_;
+	}
 
 protected:
 	void Start() override;

@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "HexAGoneLevel.h"
+#include "InGameSetUI.h"
 
 //오브젝트액터
 #include "HexTile.h"
@@ -21,10 +22,7 @@ void HexAGoneLevel::Start()
 	StageParentLevel::Start();
 	MyStage_ = StageNum::STAGE4;
 
-	Player_ = CreateActor<PlayerActor>();
-
-	// InitPhysic는 레벨이 시작될때 실행되므로 LevelStartEvent가 실행되기 전에 포지션을 결정해야함.
-	Player_->GetTransform().SetWorldPosition({ 0.0f, 400.0f, 0.0f });
+	
 }
 
 void HexAGoneLevel::Update(float _DeltaTime)
@@ -50,6 +48,12 @@ void HexAGoneLevel::LevelStartEvent()
 	BackGroundObj_ = CreateActor<Hex_BackGroundObject>();
 	//Tiles_ = CreateActor<HexTile>();
 	//Tiles_->GetTransform().SetWorldPosition({ 0,300.0f,0 });
+
+	Player_ = CreateActor<PlayerActor>();//김예나 : 생성 순간 변경(Start에다 해두면 레벨 다시 들어올 때 터져용)
+	// InitPhysic는 레벨이 시작될때 실행되므로 LevelStartEvent가 실행되기 전에 포지션을 결정해야함.
+	Player_->GetTransform().SetWorldPosition({ 0.0f, 400.0f, 0.0f });
+
+	UIs_ = CreateActor<InGameSetUI>();
 
 	float XPos = 0;
 	float ZPos = 0;
@@ -88,6 +92,7 @@ void HexAGoneLevel::LevelStartEvent()
 
 			Row_++;
 			Num_++;
+
 		}
 
 		if (Row_ < 5)
@@ -135,4 +140,5 @@ void HexAGoneLevel::LevelStartEvent()
 void HexAGoneLevel::LevelEndEvent()
 {
 	StageParentLevel::LevelEndEvent();
+	Player_->Death();//김예나 : 추가
 }

@@ -2,6 +2,7 @@
 #include "StageParentLevel.h"
 
 // Ό³Έν :
+class InGameSetUI;
 class JumpClubLevel : public StageParentLevel
 {
 public:
@@ -24,6 +25,8 @@ protected:
 	void LevelEndEvent() override;
 
 private:
+	std::shared_ptr<InGameSetUI> UIs_;
+
 	std::shared_ptr<GameEngineActor> BackGroundObj_;;
 	std::shared_ptr<GameEngineActor> VFXWaterObj_;;
 	std::shared_ptr<PlayerActor> Player_;

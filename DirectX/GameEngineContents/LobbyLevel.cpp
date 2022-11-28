@@ -27,6 +27,11 @@ void LobbyLevel::Start()
 
 void LobbyLevel::Update(float _DeltaTime)
 {
+	std::weak_ptr<PlayButton> tmpPlayButton = LobbySet_->GetPlayButton();
+	if (tmpPlayButton.lock()->GetIsLevelChange() == true)
+	{
+		GEngine::ChangeLevel(LEVEL_NAME_HEXAGONE);
+	}
 }
 
 void LobbyLevel::End()

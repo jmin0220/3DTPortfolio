@@ -15,6 +15,12 @@ public:
 	SuccessCount& operator=(const SuccessCount& _Other) = delete;
 	SuccessCount& operator=(SuccessCount&& _Other) noexcept = delete;
 
+	static int Score_;
+	static int Player1Score_;
+	static int Player2Score_;
+	static int Player3Score_;
+	static int Player4Score_;
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -23,6 +29,7 @@ private:
 	int MaxCount_;
 	int CurrentCount_;
 	
+	std::shared_ptr<GameEngineFontRenderer> ScoreFont_;
 	std::shared_ptr<GameEngineFontRenderer> MaxFont_;
 	std::shared_ptr<GameEngineFontRenderer> CurrentFont_;
 	std::shared_ptr<GameEngineFontRenderer> SlashFont_;

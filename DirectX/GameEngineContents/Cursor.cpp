@@ -12,6 +12,11 @@ Cursor::~Cursor()
 
 void Cursor::Start()
 {
+	if (false == GameEngineInput::GetInst()->IsKey("Click"))
+	{
+		GameEngineInput::GetInst()->CreateKey("Click", VK_LBUTTON);
+	}
+
 	MouseImage_ = CreateComponent<GameEngineUIRenderer>();
 	
 	MouseImage_->SetTexture("Cursor.png");
@@ -28,6 +33,7 @@ void Cursor::Start()
 	UICollision_->ChangeOrder(UICOLLISION::Mouse);
 	UICollision_->GetTransform().SetWorldScale({ 4.0f, 4.0f, 100.0f });
 	UICollision_->SetUIDebugCamera();
+
 }
 
 void Cursor::Update(float _DeltaTime)

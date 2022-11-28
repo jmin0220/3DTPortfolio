@@ -16,7 +16,11 @@ public:
 	PlayButton& operator=(const PlayButton& _Other) = delete;
 	PlayButton& operator=(PlayButton&& _Other) noexcept = delete;
 
-	CollisionReturn ButtonOn(std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other);
+	inline bool GetIsLevelChange()
+	{
+		return IsLevelChange_;
+	}
+
 
 protected:
 	void Start() override;
@@ -32,5 +36,7 @@ private:
 	bool ButtonCheck_;
 	bool IsPop_;
 	bool IsEnd_;
+
+	bool IsLevelChange_;
 };
 

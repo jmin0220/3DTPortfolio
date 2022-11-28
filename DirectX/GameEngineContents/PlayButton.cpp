@@ -5,6 +5,7 @@ PlayButton::PlayButton()
 	:ButtonCheck_(false)
 	,IsPop_(false)
 	,IsEnd_(false)
+	,IsLevelChange_(false)
 {
 }
 
@@ -24,7 +25,7 @@ void PlayButton::Start()
 	ButtonCol_->SetUIDebugCamera();
 	ButtonCol_->GetTransform().SetWorldScale({ 350.0f, 90.0f });
 	ButtonCol_->GetTransform().SetWorldPosition({ 600.0f,-375.0f });
-	ButtonCol_->ChangeOrder(UICOLLISION::Button);
+	ButtonCol_->ChangeOrder(UICOLLISION::PlayButton);
 
 	Key_ = CreateComponent<GameEngineUIRenderer>();
 	Key_->SetTexture("Spacebar.png");
@@ -44,6 +45,14 @@ void PlayButton::Update(float _DeltaTime)
 	ButtonCheck_ = ButtonCol_->IsCollision(CollisionType::CT_OBB2D, UICOLLISION::Mouse, CollisionType::CT_OBB2D,
 		[=](std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other)
 		{
+			if (true == GameEngineInput::GetInst()->IsDown("Click"))
+			{
+				IsLevelChange_ = true;
+			}
+			else /*(true == GameEngineInput::GetInst()->IsFree("Click"))*/
+			{
+				IsLevelChange_ = false;
+			}
 			return CollisionReturn::Break;
 		});
 

@@ -2,6 +2,7 @@
 #include "StageParentLevel.h"
 // Ό³Έν :
 class HexTile;
+class InGameSetUI;
 class HexAGoneLevel	:	public StageParentLevel
 {
 public:
@@ -26,6 +27,8 @@ private:
 	std::shared_ptr<GameEngineActor> BackGroundObj_;;
 	std::shared_ptr<GameEngineActor> Tiles_;
 	//std::shared_ptr<GameEngineActor> Player_;
+
+	std::shared_ptr<InGameSetUI> UIs_;
 
 	std::vector<std::shared_ptr<GameEngineActor>> TilesVec_;
 	int Row_;  //Ηΰ

@@ -68,6 +68,12 @@ void InGameSetUI::Update(float _DeltaTime)
 	{
 		GoalTipActor_->OnOffSwitch();
 	}
+
+
+	if (true == GameEngineInput::GetInst()->IsDown("PlusScore"))
+	{
+		SuccessCount::Score_ += 100;
+	}
 }
 
 void InGameSetUI::LevelStartEvent()
@@ -83,6 +89,7 @@ void InGameSetUI::LevelStartEvent()
 		GameEngineInput::GetInst()->CreateKey("Tip", '5');
 		GameEngineInput::GetInst()->CreateKey("Count", '6');
 		GameEngineInput::GetInst()->CreateKey("321GO", '0');
+		GameEngineInput::GetInst()->CreateKey("PlusScore", '7');
 	}
 
 	GameFail_ = GetLevel()->CreateActor<GameFail>();
@@ -106,7 +113,7 @@ void InGameSetUI::LevelStartEvent()
 	GoalTipActor_->Off();
 
 	SuccessCount_ = GetLevel()->CreateActor<SuccessCount>();
-	SuccessCount_->Off();
+	//SuccessCount_->Off();
 }
 
 void InGameSetUI::LevelEndEvent()
