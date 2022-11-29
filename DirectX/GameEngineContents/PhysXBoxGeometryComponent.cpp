@@ -21,7 +21,7 @@ void PhysXBoxGeometryComponent::CreatePhysXActors(physx::PxScene* _Scene, physx:
 		physx::PxQuat(tmpQuat.x, tmpQuat.y, tmpQuat.z, tmpQuat.w));
 
 	// 마찰, 탄성계수
-	material_ = _physics->createMaterial(0.0f, 0.0f, 0.3f);
+	material_ = _physics->createMaterial(staticfriction_, dynamicfriction_, resitution_);
 
 	// TODO::배율을 적용할 경우 이쪽 코드를 사용
 	//float4 tmpMagnification = { SIZE_MAGNIFICATION_RATIO };
@@ -46,8 +46,10 @@ void PhysXBoxGeometryComponent::CreatePhysXActors(physx::PxScene* _Scene, physx:
 	// TODO::RigidStatic으로 변경해야
 	rigidDynamic_->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, true);
 
+	rigidDynamic_->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, true);
+
 	// RigidDynamic의 밀도를 설정
-	physx::PxRigidBodyExt::updateMassAndInertia(*rigidDynamic_, 10.0f);
+	physx::PxRigidBodyExt::updateMassAndInertia(*rigidDynamic_, 0.1f);
 
 	// Scene에 액터 추가
 	_Scene->addActor(*rigidDynamic_);
@@ -89,8 +91,7 @@ void PhysXBoxGeometryComponent::Update(float _DeltaTime)
 			ParentActor_.lock()->GetTransform().GetWorldPosition().z);
 
 		// 부모의 Transform정보를 바탕으로 PhysX Actor의 트랜스폼을 갱신
-		rigidDynamic_->setGlobalPose(tmpPxTransform);
-
+		rigidDynamic_->setKinematicTarget(tmpPxTransform);
 		// TODO::회전도 처리해야함. DegreeToQuat
 	}
 }

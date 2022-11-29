@@ -50,9 +50,24 @@ public:
 	void SetPlayerStartPos(float4 _Pos);
 
 	void PushImpulse(float4 _ImpulsePower);
+	void PushImpulseAtLocalPos(float4 _ImpulsePower, float4 _Pos);
 	
 	bool PlayerStandUp();
 
+	void TurnOffSpeedLimit()
+	{
+		IsSpeedLimit_ = false;
+	}
+
+	void TurnOnSpeedLimit()
+	{
+		IsSpeedLimit_ = true;
+	}
+
+	void SwitchSpeedLimit()
+	{
+		!IsSpeedLimit_;
+	}
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -68,15 +83,15 @@ private:
 	physx::PxShape* shape_;
 	physx::PxRigidDynamic* dynamic_;
 
-	float SnowManHeight;
+	bool IsSpeedLimit_;
+
+	float SnowManHeight_;
 	// 이 컴포넌트를 가지고 있는 Parent에 대한 정보
 	std::weak_ptr<GameEngineActor> ParentActor_;
 
 	physx::PxVec3 GeoMetryScale_;
 
 	float4 InitFallGuyRotation;
-
-	float4 ToEulerAngles(const physx::PxQuat& q);
 
 };
 

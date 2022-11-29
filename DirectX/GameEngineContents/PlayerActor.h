@@ -62,6 +62,7 @@ private:
 
 	// TODO::테스트코드
 	void ImpulseTest();
+	void StandUp();
 	float4 ResetCheckPointPos();
 
 

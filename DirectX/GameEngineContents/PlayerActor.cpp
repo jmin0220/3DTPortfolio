@@ -6,7 +6,7 @@
 
 #include "CameraArm.h"
 
-float SPEED_PLAYER = 4000.0f;
+float SPEED_PLAYER = 2000.0f;
 
 PlayerActor::PlayerActor() :
 	CheckPointFlag_(false),
@@ -54,8 +54,13 @@ void PlayerActor::Start()
 		GameEngineInput::GetInst()->CreateKey("ImpulsD", VK_RIGHT);
 
 		//체크포인트 실험용 나중에 지워야함
+		GameEngineInput::GetInst()->CreateKey("StandUp", 'K');
+
+		//체크포인트 실험용
 		GameEngineInput::GetInst()->CreateKey("TestPos", 'J');
 	}
+
+	DynamicActorComponent_->TurnOnSpeedLimit();
 }
 
 void PlayerActor::Update(float _DeltaTime)
@@ -67,6 +72,7 @@ void PlayerActor::Update(float _DeltaTime)
 	//GetTransform().SetWorldMove(MoveDir_ * SPEED_PLAYER * _DeltaTime);
 	// TODO::충격테스트코드
 	ImpulseTest();
+	StandUp();
 
 
 	//체크포인트 실험용 나중에 지워야함
@@ -87,8 +93,8 @@ void PlayerActor::LevelStartEvent()
 
 	MeshBoundScale = FbxRenderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
 	MeshBoundScale *= float4{ PLAYER_SIZE_MAGNIFICATION_RATIO };
-	//FbxRenderer_->GetTransform().SetLocalPosition({0.0f, -MeshBoundScale.y * 1.5f , 0.0f});
-	FbxRenderer_->GetTransform().SetLocalPosition({0.0f, 0.0f , 0.0f});
+	FbxRenderer_->GetTransform().SetLocalPosition({0.0f, -MeshBoundScale.y * 1.5f , 0.0f});
+	//FbxRenderer_->GetTransform().SetLocalPosition({0.0f, 0.0f , 0.0f});
 
 	// 플레이어를 생성하고, 플레이어의 RigidActor를 받아와서 콜백에 사용함
 	static_cast<VirtualPhysXLevel*>(GetLevel())->SetSimulationPlayer(CreatePhysXActors(dynamic_cast<StageParentLevel*>(GetLevel())->GetScene(),
@@ -169,7 +175,7 @@ void PlayerActor::InputController(float _DeltaTime)
 	// 2개 이상의 키가 동시에 눌리면 문제가 발생하므로 노말라이즈
 	MoveDir_.Normalize3D();
 	// TODO::바닥의 마찰을 무시할 수 있도록
-	MoveDir_ += {0.0f, 0.001f, 0.0f};
+	//MoveDir_ += {0.0f, 0.5f, 0.0f};
 
 	tmpMoveSpeed = MoveDir_ * SPEED_PLAYER * _DeltaTime;
 	DynamicActorComponent_->SetMoveSpeed(tmpMoveSpeed);
@@ -179,7 +185,7 @@ void PlayerActor::InputController(float _DeltaTime)
 void PlayerActor::ImpulseTest()
 {
 	float4 tmpPower = float4::ZERO;
-	float tmpImpulse = 2.5f;
+	float tmpImpulse = 1.0f;
 	
 	if (true == GameEngineInput::GetInst()->IsPress("ImpulsW"))
 	{
@@ -220,7 +226,10 @@ void PlayerActor::SetCharacterAnimation()
 	FbxRenderer_->CreateFBXAnimation("Idle",
 	GameEngineRenderingEvent{ "TestIdle.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
 
-	FbxRenderer_->ChangeAnimation("Idle");
+	FbxRenderer_->CreateFBXAnimation("Run",
+		GameEngineRenderingEvent{ "TestRun.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
+
+	FbxRenderer_->ChangeAnimation("Run");
 }
 
 // 캐릭터 스킨
@@ -265,3 +274,7 @@ void PlayerActor::SetCharacterTexture()
 	}
 }
 
+void PlayerActor::StandUp()
+{
+
+}

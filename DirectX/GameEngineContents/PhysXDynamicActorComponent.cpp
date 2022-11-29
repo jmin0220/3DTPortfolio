@@ -2,6 +2,7 @@
 #include "PhysXDynamicActorComponent.h"
 
 PhysXDynamicActorComponent::PhysXDynamicActorComponent() 
+	:IsSpeedLimit_(false)
 {
 }
 
@@ -65,7 +66,6 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 	//shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, -.1f, 0)));
 
 	// RigidDynamic의 밀도를 설정
-	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 1000.0f);
 
 	//shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(.5f), *material_);
 
@@ -76,6 +76,9 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 	shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, 1.1, 0)));*/
 	float ScaledRadius = _GeoMetryScale.z;
 	float ScaledHeight = _GeoMetryScale.y;
+
+	physx::PxReal Mass1 = dynamic_->getMass();
+
 	
 	shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxCapsuleGeometry(ScaledRadius * 1.3f, ScaledHeight * 0.9f), *material_);
 	// 충돌시점 콜백을 위한 세팅
@@ -84,10 +87,15 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 	shape_->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);	
 	shape_->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
 
-	physx::PxTransform relativePose(physx::PxVec3(0.0f, +ScaledHeight * 0.9f + ScaledRadius * 1.3f, 0.0f), physx::PxQuat(physx::PxHalfPi, physx::PxVec3(0, 0, 1)));
+	//physx::PxTransform relativePose(physx::PxVec3(0.0f, +ScaledHeight * 0.9f + ScaledRadius * 1.3f, 0.0f), physx::PxQuat(physx::PxHalfPi, physx::PxVec3(0, 0, 1)));
+	physx::PxTransform relativePose(physx::PxQuat(physx::PxHalfPi, physx::PxVec3(0, 0, 1)));
 	shape_->setLocalPose(relativePose);
 	// 
 	physx::PxTransform LocalPose = dynamic_->getCMassLocalPose();
+
+
+	physx::PxReal Mass2 = dynamic_->getMass();
+	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 0.01f);
 	//shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(_GeoMetryScale.z * 0.5f * 0.25f), *material_);
 	//shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, _GeoMetryScale.z * 0.5f * 1.75f, 0)));
 	_GeoMetryScale;
@@ -115,7 +123,8 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 	//physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 500.0f, &localPos);
 
 	// 제동?
-	dynamic_->setLinearDamping(physx::PxReal(1.f));
+	dynamic_->setLinearDamping(physx::PxReal(0.5f));
+	dynamic_->setAngularDamping(physx::PxReal(0.5f));
 
 	// Scene에 액터 추가
 	_Scene->addActor(*dynamic_);
@@ -133,7 +142,6 @@ void PhysXDynamicActorComponent::SetMoveSpeed(float4 _MoveSpeed)
 
 	// 캐릭터의 방향을 힘으로 조절
 	dynamic_->addForce(physx::PxVec3(_MoveSpeed.x, _MoveSpeed.y, _MoveSpeed.z), physx::PxForceMode::eFORCE);
-
 
 #pragma region Unused
 	// 속도체크용 디버깅 코드
@@ -171,7 +179,7 @@ void PhysXDynamicActorComponent::SetMoveSpeed(float4 _MoveSpeed)
 
 void PhysXDynamicActorComponent::SetMoveJump()
 {
-	dynamic_->addForce(physx::PxVec3(0.0f, 10.0f, 0.0f), physx::PxForceMode::eIMPULSE);
+	dynamic_->addForce(physx::PxVec3(0.0f, PLAYER_JUMP_FORCE, 0.0f), physx::PxForceMode::eIMPULSE);
 }
 
 void PhysXDynamicActorComponent::SetDynamicIdle()
@@ -209,6 +217,25 @@ void PhysXDynamicActorComponent::Update(float _DeltaTime)
 	ParentActor_.lock()->GetTransform().SetWorldPosition(tmpWorldPos);
 	ParentActor_.lock()->GetTransform().SetWorldRotation(tmpWorldRot);
 
+	if (IsSpeedLimit_ == true)
+	{
+		physx::PxVec3 Velo = dynamic_->getLinearVelocity();
+
+		if (std::abs(Velo.x) > PLAYER_MAX_SPEED)
+		{
+			int k = (Velo.x > 0) ? 1 : ((Velo.x < 0) ? -1 : 0);
+			Velo.x = PLAYER_MAX_SPEED * k;
+		}
+
+		if (std::abs(Velo.z) > PLAYER_MAX_SPEED)
+		{
+			int k = (Velo.z > 0) ? 1 : ((Velo.z < 0) ? -1 : 0);
+			Velo.z = PLAYER_MAX_SPEED * k;
+		}
+
+		dynamic_->setLinearVelocity(Velo);
+	}
+
 
 }
 
@@ -219,6 +246,16 @@ void PhysXDynamicActorComponent::PushImpulse(float4 _ImpulsePower)
 	dynamic_->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z, false);
 
 	dynamic_->addForce(physx::PxVec3(_ImpulsePower.x, _ImpulsePower.y, _ImpulsePower.z), physx::PxForceMode::eIMPULSE);
+}
+
+void PhysXDynamicActorComponent::PushImpulseAtLocalPos(float4 _ImpulsePower, float4 _Pos)
+{
+	// 고정된 축을 해제
+	dynamic_->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_X, false);
+	dynamic_->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z, false);
+
+	physx::PxRigidBodyExt::addForceAtPos(*dynamic_, physx::PxVec3(_Pos.x, _Pos.y * 0.9f, _Pos.z),
+		physx::PxVec3(_ImpulsePower.x, _ImpulsePower.y, _ImpulsePower.z), physx::PxForceMode::eIMPULSE, true);
 }
 
 void PhysXDynamicActorComponent::SetPlayerStartPos(float4 _Pos)
@@ -235,33 +272,3 @@ bool PhysXDynamicActorComponent::PlayerStandUp()
 }
 
 
-float4 PhysXDynamicActorComponent::ToEulerAngles(const physx::PxQuat& q) {
-	float4 angles;    //yaw pitch roll
-	const float x = q.x;
-	const float y = q.y;
-	const float z = q.z;
-	const float w = q.w;
-
-	// roll (x-axis rotation)
-	double sinr_cosp = 2 * (w * x + y * z);
-	double cosr_cosp = 1 - 2 * (x * x + y * y);
-	angles.x = std::atan2(sinr_cosp, cosr_cosp);
-
-	// pitch (y-axis rotation)
-	double sinp = 2 * (w * y - z * x);
-	if (std::abs(sinp) >= 1)
-	{
-		angles.y = std::copysign(GameEngineMath::PI / 4, sinp); // use 90 degrees if out of range
-	}
-
-	else
-	{
-		angles.y = std::asin(sinp);
-	}
-
-	// yaw (z-axis rotation)
-	double siny_cosp = 2 * (w * z + x * y);
-	double cosy_cosp = 1 - 2 * (y * y + z * z);
-	angles.z = std::atan2(siny_cosp, cosy_cosp);
-	return angles;
-}
