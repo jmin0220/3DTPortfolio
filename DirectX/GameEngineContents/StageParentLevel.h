@@ -17,6 +17,7 @@ enum class Stage_MeshEnum
 	// STAGE01
 	DoorBlock,
 	MovingBar,
+	Chevron,
 	// STAGE02
 	// STAGE03
 	// STAGE04
