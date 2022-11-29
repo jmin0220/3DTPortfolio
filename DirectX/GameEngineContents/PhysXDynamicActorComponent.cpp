@@ -77,8 +77,15 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 	float ScaledRadius = _GeoMetryScale.z;
 	float ScaledHeight = _GeoMetryScale.y;
 
-	physx::PxReal Mass1 = dynamic_->getMass();
+	shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxCapsuleGeometry(ScaledRadius * 1.3f, ScaledHeight * 0.9f), *material_);
+	// 충돌시점 콜백을 위한 세팅
+	shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Player)
+		, static_cast<physx::PxU32>(PhysXFilterGroup::Ground), 0, 0));
+	//physx::PxTransform relativePose(physx::PxVec3(0.0f, +ScaledHeight * 0.9f + ScaledRadius * 1.3f, 0.0f), physx::PxQuat(physx::PxHalfPi, physx::PxVec3(0, 0, 1)));
+	physx::PxTransform relativePose(physx::PxQuat(physx::PxHalfPi, physx::PxVec3(0, 0, 1)));
+	shape_->setLocalPose(relativePose);
 
+	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 0.01f);
 	
 	shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxCapsuleGeometry(ScaledRadius * 1.3f, ScaledHeight * 0.9f), *material_);
 	// 충돌시점 콜백을 위한 세팅
@@ -88,14 +95,10 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 	shape_->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
 
 	//physx::PxTransform relativePose(physx::PxVec3(0.0f, +ScaledHeight * 0.9f + ScaledRadius * 1.3f, 0.0f), physx::PxQuat(physx::PxHalfPi, physx::PxVec3(0, 0, 1)));
-	physx::PxTransform relativePose(physx::PxQuat(physx::PxHalfPi, physx::PxVec3(0, 0, 1)));
 	shape_->setLocalPose(relativePose);
 	// 
 	physx::PxTransform LocalPose = dynamic_->getCMassLocalPose();
 
-
-	physx::PxReal Mass2 = dynamic_->getMass();
-	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 0.01f);
 	//shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(_GeoMetryScale.z * 0.5f * 0.25f), *material_);
 	//shape_->setLocalPose(physx::PxTransform(physx::PxVec3(0, _GeoMetryScale.z * 0.5f * 1.75f, 0)));
 	_GeoMetryScale;
