@@ -28,6 +28,7 @@
 #define DIR_LEVEL_STAGE01 "Levels\\StageLevel\\Stage01"
 #define DIR_LEVEL_STAGE02 "Levels\\StageLevel\\Stage02"
 #define DIR_LEVEL_STAGE04 "Levels\\StageLevel\\Stage04"
+#define DIR_LEVEL_WINNER "Levels\\WinnerLevel"
 
 // 테스트용은 분리
 #define DIR_TESTLEVEL_CAMERA "Levels\\TestLevels\\CameraTestLevel"
@@ -67,7 +68,7 @@
 // Level
 #define LEVEL_NAME_TITLE "TitleLevel"
 #define LEVEL_NAME_LOBBY "LobbyLevel"
-#define LEVEL_NAME_WIN "WinnerLevel"
+#define LEVEL_NAME_WINNER "WinnerLevel"
 #define LEVEL_NAME_LOADING "Loading"
 #define LEVEL_NAME_MAP_EDITER "MapEditorLevel"
 #define LEVEL_NAME_PHYSICS_TEST "PhysicsTestLevel"

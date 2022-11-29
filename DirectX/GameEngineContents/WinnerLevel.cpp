@@ -28,7 +28,7 @@ void WinnerLevel::LevelStartEvent()
 {
 	GetMainCamera()->SetProjectionMode(CAMERAPROJECTIONMODE::PersPective);
 
-	ContentsCore::GetInst()->LoadLevelResource(LEVELS::LOBBY);//경로설정
+	//ContentsCore::GetInst()->LoadLevelResource(LEVELS::WINNNER);//경로설정
 
 	Winner_ = CreateActor<Winner>();
 	Player_ = CreateActor<LobbyPlayer>();
@@ -42,4 +42,6 @@ void WinnerLevel::LevelEndEvent()
 {
 	Winner_->Death();
 	Player_->Death();
+
+	ContentsCore::GetInst()->ReleaseCurLevelResource();
 }

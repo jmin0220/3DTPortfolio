@@ -91,6 +91,7 @@ private:
 	void ResLoadStage01(GameEngineDirectory& _Dir);
 	void ResLoadStage02(GameEngineDirectory& _Dir);
 	void ResLoadStage04(GameEngineDirectory& _Dir);
+	void ResLoadWinner(GameEngineDirectory& _Dir);
 
 	// 테스트 및 임시
 	void ResLoadTmpTest(GameEngineDirectory& _Dir);

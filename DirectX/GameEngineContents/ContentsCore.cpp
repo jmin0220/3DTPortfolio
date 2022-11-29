@@ -146,10 +146,6 @@ void ContentsCore::CreateLevels()
 		GameLevels_.push_back(Level);
 	}
 	{
-		GameEngineLevel* Level = CreateLevel<WinnerLevel>(LEVEL_NAME_WIN);
-		GameLevels_.push_back(Level);
-	}
-	{
 		GameEngineLevel* Level = CreateLevel<DoorDashLevel>(LEVEL_NAME_DOORDASH);
 		GameLevels_.push_back(Level);
 	}
@@ -159,6 +155,10 @@ void ContentsCore::CreateLevels()
 	}
 	{
 		GameEngineLevel* Level = CreateLevel<HexAGoneLevel>(LEVEL_NAME_HEXAGONE);
+		GameLevels_.push_back(Level);
+	}
+	{
+		GameEngineLevel* Level = CreateLevel<WinnerLevel>(LEVEL_NAME_WINNER);
 		GameLevels_.push_back(Level);
 	}
 
@@ -336,6 +336,10 @@ void ContentsCore::LoadLevelResource(LEVELS _LEVEL)
 		Dir.Move(DIR_LEVEL_STAGE04);
 		ResLoadStage04(Dir);
 		break;
+	case LEVELS::WINNNER:
+		Dir.Move(DIR_LEVEL_WINNER);
+		ResLoadWinner(Dir);
+		break;
 
 		////////////////////
 		//	임시/테스트 레벨
@@ -406,6 +410,11 @@ void ContentsCore::ResLoadStage02(GameEngineDirectory& _Dir)
 }
 
 void ContentsCore::ResLoadStage04(GameEngineDirectory& _Dir)
+{
+	LevelAllResourceLoad(_Dir);
+}
+
+void ContentsCore::ResLoadWinner(GameEngineDirectory& _Dir)
 {
 	LevelAllResourceLoad(_Dir);
 }
@@ -506,6 +515,10 @@ LEVELS ContentsCore::StringLevelToLEVELS(std::string_view _StringLevel)
 	{
 		return LEVELS::STAGE04_HEX_A_GONE;
 	}
+	else if (0 == Level.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_WINNER)))
+	{
+		return LEVELS::WINNNER;
+	}
 
 	return LEVELS::NONE;
 }
@@ -527,6 +540,10 @@ std::string_view ContentsCore::StringLevelToStringSetLevel(std::string_view _Str
 	else if (0 == _StringLevel.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_HEXAGONE)))
 	{
 		return LEVEL_NAME_HEXAGONE;
+	}
+	else if (0 == _StringLevel.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_WINNER)))
+	{
+		return LEVEL_NAME_WINNER;
 	}
 
 	return "";
