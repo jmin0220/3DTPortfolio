@@ -28,7 +28,8 @@ private:
 	std::shared_ptr<GameEngineActor> Tiles_;
 	//std::shared_ptr<GameEngineActor> Player_;
 
-	std::shared_ptr<InGameSetUI> UIs_;
+	// StageParentLevel로 옮겼습니다 : 김성훈(예나님 확인하면 지워주세요)
+	//std::shared_ptr<InGameSetUI> UIs_;
 
 	std::vector<std::shared_ptr<GameEngineActor>> TilesVec_;
 	int Row_;  //행

@@ -75,5 +75,29 @@ protected:
 private:
 	std::vector<StageObject> StageObjects_;
 	void LevelStartLoad();
+
+	// FSM : 321 땅, 경기종료, 등의 레벨 상태(점점 많아질 수 있음 feat.서버)
+protected:
+	GameEngineStateManager StageStateManager_;
+
+	// FSM관련 엑터들
+	std::shared_ptr<class InGameSetUI> UIs_;
+
+	// 321땅 이전에 플레이어가 준비가 됬는지(서버..)
+	virtual void IdleStart(const StateInfo& _Info);
+	virtual void IdleUpdate(float _DeltaTime, const StateInfo& _Info);
+
+	// 321땅
+	virtual void ReadyStart(const StateInfo& _Info);
+	virtual void ReadyUpdate(float _DeltaTime, const StateInfo& _Info);
+
+	// 경기중 : 체크포인트 저장, 리스폰 등
+	virtual void RaceStart(const StateInfo& _Info);
+	virtual void RaceUpdate(float _DeltaTime, const StateInfo& _Info);
+
+	// 경기종료 : 정리
+	virtual void EndStart(const StateInfo& _Info);
+	virtual void EndUpdate(float _DeltaTime, const StateInfo& _Info);
+
 };
 

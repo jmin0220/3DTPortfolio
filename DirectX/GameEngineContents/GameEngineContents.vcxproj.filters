@@ -854,5 +854,8 @@
     <ClCompile Include="MovingBar.cpp">
       <Filter>02_Actor\Stage01Actor\Object</Filter>
     </ClCompile>
+    <ClCompile Include="StageParentLevel_FSM.cpp">
+      <Filter>01_Level\StageLevel</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

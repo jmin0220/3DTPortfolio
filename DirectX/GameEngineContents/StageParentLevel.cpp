@@ -29,10 +29,25 @@ StageParentLevel::~StageParentLevel()
 void StageParentLevel::Start()
 {
 	VirtualPhysXLevel::Start();
+
+	// 스테이지 FSM
+	StageStateManager_.CreateStateMember("Idle"
+		, std::bind(&StageParentLevel::IdleUpdate, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&StageParentLevel::IdleStart, this, std::placeholders::_1));
+
+	StageStateManager_.CreateStateMember("Ready"
+		, std::bind(&StageParentLevel::ReadyUpdate, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&StageParentLevel::ReadyStart, this, std::placeholders::_1));
+
+	StageStateManager_.ChangeState("Idle");
 }
+
 void StageParentLevel::Update(float _DeltaTime)
 {
 	VirtualPhysXLevel::Update(_DeltaTime);
+
+	StageStateManager_.Update(_DeltaTime);
+
 }
 void StageParentLevel::End()
 {
@@ -45,6 +60,7 @@ void StageParentLevel::LevelStartEvent()
 	LevelStartLoad();
 
 	CameraArm_ = CreateActor<CameraArm>();
+
 }
 void StageParentLevel::LevelEndEvent()
 {
@@ -212,3 +228,4 @@ void StageParentLevel::LevelStartLoad()
 		j++;
 	}
 }
+

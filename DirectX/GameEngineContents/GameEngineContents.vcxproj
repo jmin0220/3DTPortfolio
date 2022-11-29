@@ -781,6 +781,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="StageParentLevel_FSM.cpp" />
     <ClCompile Include="StageTestLevel.cpp" />
     <ClCompile Include="StartGameTitleActor.cpp">
       <SubType>
