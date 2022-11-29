@@ -3,6 +3,7 @@
 #include "TitleLevel.h"
 #include "LobbyLevel.h"
 #include "LoadingLevel.h"
+#include "WinnerLevel.h"
 #include "MapEditorLevel.h"
 #include "MapEditorGUI.h"
 #include "PhysicsTestLevel.h"
@@ -142,6 +143,10 @@ void ContentsCore::CreateLevels()
 	}
 	{
 		GameEngineLevel* Level = CreateLevel<LoadingLevel>(LEVEL_NAME_LOADING);
+		GameLevels_.push_back(Level);
+	}
+	{
+		GameEngineLevel* Level = CreateLevel<WinnerLevel>(LEVEL_NAME_WIN);
 		GameLevels_.push_back(Level);
 	}
 	{

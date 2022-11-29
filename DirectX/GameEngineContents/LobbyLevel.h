@@ -1,8 +1,7 @@
 #pragma once
 #include <GameEngineCore/GameEngineLevel.h>
 
-// 설명 :
-
+// 설명 : 로비 대기실 레벨
 class Cursor;
 class FontActor;
 class LobbyBackgroundActor;

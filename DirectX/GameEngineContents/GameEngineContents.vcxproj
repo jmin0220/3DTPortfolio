@@ -504,6 +504,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Winner.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="WinnerLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ActorPicker.cpp" />
@@ -851,6 +859,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="VirtualPhysXLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Winner.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="WinnerLevel.cpp">
       <SubType>
       </SubType>
     </ClCompile>

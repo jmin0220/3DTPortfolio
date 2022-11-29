@@ -16,6 +16,8 @@ public:
 	LobbyPlayer& operator=(const LobbyPlayer& _Other) = delete;
 	LobbyPlayer& operator=(LobbyPlayer&& _Other) noexcept = delete;
 
+	void ChangeAnimationIdle();
+	void ChangeAnimationWin();
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;

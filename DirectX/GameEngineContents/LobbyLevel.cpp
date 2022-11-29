@@ -9,6 +9,8 @@
 #include "LobbySetUI.h"
 #include "InGameSetUI.h"
 
+#include "Winner.h"
+
 LobbyLevel::LobbyLevel() 
 	:Font(nullptr)
 	,Swap(false)
@@ -53,10 +55,7 @@ void LobbyLevel::LevelStartEvent()
 	Player_->GetTransform().SetWorldPosition({ 0, -15, 0});//현재 z값 영향을 안받음
 	Player_->GetTransform().SetWorldRotation({ 0,160,0 });//반측면으로 돌림
 
-	//Test_ = CreateActor<TestActor>();
-
 	Mouse = CreateActor<Cursor>();
-
 }
 
 void LobbyLevel::LevelEndEvent()

@@ -187,6 +187,12 @@
     <Filter Include="98_LevelGUI\EngineStatusWindow">
       <UniqueIdentifier>{037bae6f-1a6d-4ee5-9aef-91e0b3bdad44}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01_Level\WinnerLevel">
+      <UniqueIdentifier>{2bc349a6-1c79-4ff7-88a6-09a344fe4d6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01_Level\WinnerLevel">
+      <UniqueIdentifier>{2bc349a6-1c79-4ff7-88a6-09a344fe4d6b}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02_Actor\Stage01Actor\Object">
       <UniqueIdentifier>{c0203418-9b78-4cdf-b09f-942cb27835a5}</UniqueIdentifier>
     </Filter>
@@ -515,6 +521,18 @@
     </ClInclude>
     <ClInclude Include="CameraArm.h">
       <Filter>02_Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Winner.h">
+      <Filter>02_Actor\UIActor</Filter>
+    </ClInclude>
+    <ClInclude Include="WinnerLevel.h">
+      <Filter>01_Level\WinnerLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="Winner.h">
+      <Filter>02_Actor\UIActor</Filter>
+    </ClInclude>
+    <ClInclude Include="WinnerLevel.h">
+      <Filter>01_Level\WinnerLevel</Filter>
     </ClInclude>
     <ClInclude Include="DoorBlock.h">
       <Filter>02_Actor\Stage01Actor\Object</Filter>
@@ -847,6 +865,18 @@
     </ClCompile>
     <ClCompile Include="CameraArm.cpp">
       <Filter>02_Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Winner.cpp">
+      <Filter>02_Actor\UIActor</Filter>
+    </ClCompile>
+    <ClCompile Include="WinnerLevel.cpp">
+      <Filter>01_Level\WinnerLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="Winner.cpp">
+      <Filter>02_Actor\UIActor</Filter>
+    </ClCompile>
+    <ClCompile Include="WinnerLevel.cpp">
+      <Filter>01_Level\WinnerLevel</Filter>
     </ClCompile>
     <ClCompile Include="DoorBlock.cpp">
       <Filter>02_Actor\Stage01Actor\Object</Filter>

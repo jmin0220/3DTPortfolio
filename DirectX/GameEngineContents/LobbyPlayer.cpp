@@ -11,6 +11,10 @@ LobbyPlayer::~LobbyPlayer()
 
 void LobbyPlayer::Start()
 {
+	FBXRenderer_ = CreateComponent<GameEngineFBXAnimationRenderer>();
+	FBXRenderer_->SetFBXMesh("Character_Idle_A.fbx", "TextureAnimationCustom");
+	SetCharacterAnimation();
+	SetCharacterTexture();
 }
 
 void LobbyPlayer::Update(float _DeltaTime)
@@ -19,10 +23,7 @@ void LobbyPlayer::Update(float _DeltaTime)
 
 void LobbyPlayer::LevelStartEvent()
 {
-	FBXRenderer_ = CreateComponent<GameEngineFBXAnimationRenderer>();
-	FBXRenderer_->SetFBXMesh("Character_Idle_A.fbx", "TextureAnimationCustom");
-	SetCharacterAnimation();
-	SetCharacterTexture();
+	
 
 	FBXRenderer_->GetTransform().SetWorldScale({ 15,15,15 });
 	//FBXRenderer_->GetTransform().SetWorldScale({ SIZE_MAGNIFICATION_RATIO });
@@ -34,11 +35,15 @@ void LobbyPlayer::SetCharacterAnimation()
 {
 	FBXRenderer_->CreateFBXAnimation("Idle",
 		GameEngineRenderingEvent{ "Character_Idle_A.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
-
-
+	FBXRenderer_->CreateFBXAnimation("Win",
+		GameEngineRenderingEvent{ "Character_Victory_Default_A.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
 	FBXRenderer_->ChangeAnimation("Idle");
 }
 
+void LobbyPlayer::ChangeAnimationWin()
+{
+	FBXRenderer_->ChangeAnimation("Win");
+}
 // 텍스처 세팅
 // 캐릭터 스킨
 void LobbyPlayer::SetCharacterTexture()
