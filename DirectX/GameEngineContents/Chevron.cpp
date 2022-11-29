@@ -17,7 +17,7 @@ void Chevron::Start()
 
 	PropellerRenderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
 	PropellerRenderer_->SetFBXMesh("Propeller.FBX", "Texture");
-	PropellerRenderer_->GetTransform().SetLocalScale({ 3,3,3 });
+	PropellerRenderer_->GetTransform().SetLocalScale({ 3,3,3  });
 	PropellerRenderer_->GetTransform().SetLocalPosition({ 0,-2.5f,0 });
 
 }
