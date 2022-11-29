@@ -12,6 +12,9 @@ class SuccessCount;
 class InGameSetUI : public GameEngineActor
 {
 public:
+	void CountdownStart();
+
+public:
 	// constrcuter destructer
 	InGameSetUI();
 	~InGameSetUI();

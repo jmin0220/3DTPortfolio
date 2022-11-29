@@ -56,8 +56,6 @@ void HexAGoneLevel::LevelStartEvent()
 	// *플레이어 생성 후 카메라암 세팅 해줘야함*
 	CameraArm_->SetFollowCamera(GetMainCameraActor(), Player_);
 
-	UIs_ = CreateActor<InGameSetUI>();
-
 	float XPos = 0;
 	float ZPos = 0;
 	Num_ = 0;

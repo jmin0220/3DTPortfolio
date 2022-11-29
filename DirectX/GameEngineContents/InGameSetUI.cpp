@@ -8,7 +8,13 @@
 #include "StartGameTitleActor.h"
 #include "SuccessCount.h"
 
-InGameSetUI::InGameSetUI() 
+void InGameSetUI::CountdownStart()
+{
+	CountDown_->Reset();
+	CountDown_->On();
+}
+
+InGameSetUI::InGameSetUI()
 {
 }
 

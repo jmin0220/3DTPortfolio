@@ -78,6 +78,7 @@ private:
 	void LevelStartLoad();
 
 	// FSM : 321 땅, 경기종료, 등의 레벨 상태(점점 많아질 수 있음 feat.서버)
+	// 특정 레벨에만 다르게 동작해야 된다면, Override해서 사용할 수 있음
 protected:
 	GameEngineStateManager StageStateManager_;
 

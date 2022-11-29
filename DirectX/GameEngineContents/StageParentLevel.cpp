@@ -14,6 +14,7 @@
 #include <GameEngineCore/CoreMinimal.h>
 #include <iostream>
 #include <fstream>
+#include "InGameSetUI.h"
 
 float4 StageParentLevel::PlayerPos = float4::ZERO;
 
@@ -40,6 +41,14 @@ void StageParentLevel::Start()
 		, std::bind(&StageParentLevel::ReadyUpdate, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&StageParentLevel::ReadyStart, this, std::placeholders::_1));
 
+	StageStateManager_.CreateStateMember("Race"
+		, std::bind(&StageParentLevel::RaceUpdate, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&StageParentLevel::RaceStart, this, std::placeholders::_1));
+
+	StageStateManager_.CreateStateMember("End"
+		, std::bind(&StageParentLevel::EndUpdate, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&StageParentLevel::EndStart, this, std::placeholders::_1));
+
 	StageStateManager_.ChangeState("Idle");
 }
 
@@ -62,6 +71,7 @@ void StageParentLevel::LevelStartEvent()
 
 	CameraArm_ = CreateActor<CameraArm>();
 
+	UIs_ = CreateActor<InGameSetUI>();
 }
 void StageParentLevel::LevelEndEvent()
 {
@@ -69,6 +79,8 @@ void StageParentLevel::LevelEndEvent()
 	ContentsCore::GetInst()->ReleaseCurLevelResource();
 
 	CameraArm_->Death();
+	
+	UIs_->Death();
 }
 
 void StageParentLevel::LevelStartLoad()

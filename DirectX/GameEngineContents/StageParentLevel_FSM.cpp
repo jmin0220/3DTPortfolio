@@ -9,11 +9,13 @@ void StageParentLevel::IdleStart(const StateInfo& _Info)
 
 void StageParentLevel::IdleUpdate(float _DeltaTime, const StateInfo& _Info)
 {
-	// 321 호출해주면 <UI> 321땅 시작
+	// 테스트용
+	// 추후 서버에서 레이스 시작 호출해주면 ReadyUpdate 에서 <UI> 321땅 시작
 	
 	if (true == GameEngineInput::GetInst()->IsDown(KEY_ENTER))
 	{
 		//UIs_-> 카운트다운 스타트
+		UIs_->CountdownStart();
 	}
 }
 
