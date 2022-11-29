@@ -81,6 +81,8 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 	// 충돌시점 콜백을 위한 세팅
 	shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Player)
 		, static_cast<physx::PxU32>(PhysXFilterGroup::Ground), 0, 0));
+	shape_->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);	
+	shape_->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
 
 	physx::PxTransform relativePose(physx::PxVec3(0.0f, +ScaledHeight * 0.9f + ScaledRadius * 1.3f, 0.0f), physx::PxQuat(physx::PxHalfPi, physx::PxVec3(0, 0, 1)));
 	shape_->setLocalPose(relativePose);

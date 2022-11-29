@@ -70,9 +70,10 @@ void VirtualPhysXLevel::initPhysics(bool _interactive)
 	// EventCallback 세팅
 	SimulationEventCallback_ = new CustomSimulationEventCallback();
 	sceneDesc.simulationEventCallback = SimulationEventCallback_;
+
 	// callback을 호출 처리할 filtershader 세팅
-	//sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
-	sceneDesc.filterShader = CustomFilterShader;
+	sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
+	//sceneDesc.filterShader = CustomFilterShader;
 
 	DefaultCpuDispatcher_ = physx::PxDefaultCpuDispatcherCreate(2);
 	sceneDesc.cpuDispatcher = DefaultCpuDispatcher_;
@@ -179,21 +180,87 @@ void VirtualPhysXLevel::cleanupPhysics(bool _Interactive)
 
 void CustomSimulationEventCallback::onContact(const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs)
 {
-	for (physx::PxU32 i = 0; i < nbPairs; i++)
+	//for (physx::PxU32 i = 0; i < nbPairs; i++)
+	//{
+	//	const physx::PxContactPair& cp = pairs[i];
+
+	//	if (cp.events & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
+	//	{
+	//		// 충돌체중에 Player가 존재하는지 체크
+	//		if ((pairHeader.actors[0] == PlayerDynamic_) || (pairHeader.actors[1] == PlayerDynamic_))
+	//		{
+	//			// 플레이어가 아닌 액터를 판별 -> 딱히 필요없을지도?
+	//			physx::PxActor* otherActor = (PlayerDynamic_ == pairHeader.actors[0]) ? pairHeader.actors[1] : pairHeader.actors[0];
+
+	//			// TODO::바닥과 플레이어 충돌했을때 해야할일추가
+
+	//			break;
+	//		}
+	//	}
+	//}
+	while (nbPairs--)
 	{
-		const physx::PxContactPair& cp = pairs[i];
+		const physx::PxContactPair& current = *pairs++;
 
-		if (cp.events & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
+		// The reported pairs can be trigger pairs or not. We only enabled contact reports for
+		// trigger pairs in the filter shader, so we don't need to do further checks here. In a
+		// real-world scenario you would probably need a way to tell whether one of the shapes
+		// is a trigger or not. You could e.g. reuse the PxFilterData like we did in the filter
+		// shader, or maybe use the shape's userData to identify triggers, or maybe put triggers
+		// in a hash-set and test the reported shape pointers against it. Many options here.
+			//	if (cp.events & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
+
+		// 충돌체중에 Player가 존재하는지 체크
+		if ((pairHeader.actors[0] == PlayerDynamic_) || (pairHeader.actors[1] == PlayerDynamic_))
 		{
-			// 충돌체중에 Player가 존재하는지 체크
-			if ((pairHeader.actors[0] == PlayerDynamic_) || (pairHeader.actors[1] == PlayerDynamic_))
+			// 플레이어가 아닌 액터를 판별 -> 딱히 필요없을지도?
+			physx::PxActor* otherActor = (PlayerDynamic_ == pairHeader.actors[0]) ? pairHeader.actors[1] : pairHeader.actors[0];
+
+			// TODO::바닥과 플레이어 충돌했을때 해야할일추가
+
+			break;
+		}
+
+
+		if (current.events & (physx::PxPairFlag::eNOTIFY_TOUCH_FOUND | physx::PxPairFlag::eNOTIFY_TOUCH_CCD))
+			printf("Shape is entering trigger volume\n");
+		if (current.events & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
+			printf("Shape is leaving trigger volume\n");
+	}
+}
+
+void CustomSimulationEventCallback::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)
+{
+	while (count--)
+	{
+		physx::PxTriggerPair& current = *pairs++;
+
+		// 액터가 가지고 있는 쉐이프를 모두 가져옴
+		physx::PxShape* shape;
+		physx::PxRigidActor& tmpOtherActor = *current.otherActor;
+		physx::PxU16 tmpnbShape = current.otherActor->getNbShapes();
+
+		for (physx::PxU32 i = 0; i < tmpnbShape; i++)
+		{
+			tmpOtherActor.getShapes(&shape, 1, i);
+
+			// retrieve current group mask
+			physx::PxFilterData resultFd = shape->getSimulationFilterData();
+
+			// 충돌체의 filterData가 ground이면서 닿았을 경우
+			if (resultFd.word0 == static_cast<physx::PxU32>(PhysXFilterGroup::Ground)
+				&& current.status & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
 			{
-				// 플레이어가 아닌 액터를 판별 -> 딱히 필요없을지도?
-				physx::PxActor* otherActor = (PlayerDynamic_ == pairHeader.actors[0]) ? pairHeader.actors[1] : pairHeader.actors[0];
+				// TODO::닿았을때 처리
+				int a = 0;
+			}
 
-				// TODO::바닥과 플레이어 충돌했을때 해야할일추가
-
-				break;
+			// 충돌체의 filterData가 ground이면서 떨어졌을 경우
+			if (resultFd.word0 == static_cast<physx::PxU32>(PhysXFilterGroup::Ground)
+				&& current.status & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
+			{
+				// TODO::떨어졌을 때 처리
+				int a = 0;
 			}
 		}
 	}

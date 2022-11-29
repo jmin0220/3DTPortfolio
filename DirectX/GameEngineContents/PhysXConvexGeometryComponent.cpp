@@ -58,7 +58,7 @@ void PhysXConvexGeometryComponent::CreatePhysXActors(const std::string& _MeshNam
 	physx::PxConvexMesh* convexMesh = _physics->createConvexMesh(input);
 
 	shape_ = _physics->createShape(physx::PxConvexMeshGeometry(convexMesh), *material_);
-
+	shape_->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
 	//// 충돌체의 종류
 	//dynamic_ = _physics->createRigidDynamic(localTm);
 	//dynamic_->attachShape(*shape_);
