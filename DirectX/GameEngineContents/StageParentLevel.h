@@ -16,6 +16,7 @@ enum class Stage_MeshEnum
 	START,	// 가장 시작
 	// STAGE01
 	DoorBlock,
+	MovingBar,
 	// STAGE02
 	// STAGE03
 	// STAGE04

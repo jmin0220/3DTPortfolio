@@ -53,7 +53,7 @@ void PlayerActor::Start()
 		GameEngineInput::GetInst()->CreateKey("ImpulsS", VK_DOWN);
 		GameEngineInput::GetInst()->CreateKey("ImpulsD", VK_RIGHT);
 
-		//체크포인트 실험용
+		//체크포인트 실험용 나중에 지워야함
 		GameEngineInput::GetInst()->CreateKey("TestPos", 'J');
 	}
 }
@@ -69,7 +69,7 @@ void PlayerActor::Update(float _DeltaTime)
 	ImpulseTest();
 
 
-	//체크포인트 실험용
+	//체크포인트 실험용 나중에 지워야함
 	if (GameEngineInput::GetInst()->IsDown("TestPos") == true)
 	{
 		DynamicActorComponent_->SetPlayerStartPos(ResetCheckPointPos());
@@ -94,6 +94,7 @@ void PlayerActor::LevelStartEvent()
 	static_cast<VirtualPhysXLevel*>(GetLevel())->SetSimulationPlayer(CreatePhysXActors(dynamic_cast<StageParentLevel*>(GetLevel())->GetScene(),
 		dynamic_cast<StageParentLevel*>(GetLevel())->GetPhysics()));
 
+	// LevelStartEvent에서 플레이어를 생성하고 위치를 재지정하는 함수
 	DynamicActorComponent_->SetPlayerStartPos(GetTransform().GetWorldPosition());
 }
 

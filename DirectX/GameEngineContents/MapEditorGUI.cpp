@@ -699,6 +699,16 @@ void MapEditorGUI::CreateFBXMesh()
 		NewObj.Actor_.lock()->SetStaticMesh("DoorBlock.FBX");
 		break;
 	}
+	case MeshEnum::Chevron:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("Chevron.FBX");
+		break;
+	}
+	case MeshEnum::MovingBar:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("MovingBar.FBX");
+		break;
+	}
 	case MeshEnum::TestMap:
 	{
 		NewObj.Actor_.lock()->SetStaticMesh("TestMap.FBX");

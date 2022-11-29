@@ -5,6 +5,7 @@
 #include "TestMapActor.h"
 #include "Col_StartPos.h"
 #include "Col_Trigger.h"
+#include "MovingBar.h"
 #include "Col_Goal.h"
 #include "Col_CheckPoint.h"
 #include <GameEngineBase/magic_enum.hpp>
@@ -155,6 +156,11 @@ void StageParentLevel::LevelStartLoad()
 		case Stage_MeshEnum::DoorBlock:
 		{
 			NewObj.Actor_ = CreateActor<DoorBlock>();
+			break;
+		}
+		case Stage_MeshEnum::MovingBar:
+		{
+			NewObj.Actor_ = CreateActor<MovingBar>();
 			break;
 		}
 		case Stage_MeshEnum::Col_StartPos:

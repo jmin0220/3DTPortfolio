@@ -187,6 +187,9 @@
     <Filter Include="98_LevelGUI\EngineStatusWindow">
       <UniqueIdentifier>{037bae6f-1a6d-4ee5-9aef-91e0b3bdad44}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02_Actor\Stage01Actor\Object">
+      <UniqueIdentifier>{c0203418-9b78-4cdf-b09f-942cb27835a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -489,9 +492,6 @@
     <ClInclude Include="JumpClubStage.h">
       <Filter>02_Actor\Stage02Actor</Filter>
     </ClInclude>
-    <ClInclude Include="DoorBlock.h">
-      <Filter>02_Actor\Stage01Actor</Filter>
-    </ClInclude>
     <ClInclude Include="PhysXCommonFunc.h">
       <Filter>99_Global\PhysX</Filter>
     </ClInclude>
@@ -515,6 +515,12 @@
     </ClInclude>
     <ClInclude Include="CameraArm.h">
       <Filter>02_Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="DoorBlock.h">
+      <Filter>02_Actor\Stage01Actor\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingBar.h">
+      <Filter>02_Actor\Stage01Actor\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -818,9 +824,6 @@
     <ClCompile Include="JumpClubStage.cpp">
       <Filter>02_Actor\Stage02Actor</Filter>
     </ClCompile>
-    <ClCompile Include="DoorBlock.cpp">
-      <Filter>02_Actor\Stage01Actor</Filter>
-    </ClCompile>
     <ClCompile Include="PhysXCommonFunc.cpp">
       <Filter>99_Global\PhysX</Filter>
     </ClCompile>
@@ -844,6 +847,12 @@
     </ClCompile>
     <ClCompile Include="CameraArm.cpp">
       <Filter>02_Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="DoorBlock.cpp">
+      <Filter>02_Actor\Stage01Actor\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingBar.cpp">
+      <Filter>02_Actor\Stage01Actor\Object</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

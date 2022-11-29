@@ -25,6 +25,8 @@ enum class MeshEnum
 	DoorDashCollisionMesh,
 	DoodrDashEnv,
 	DoorBlock,
+	MovingBar,
+	Chevron,
 	// COLLISION
 	Col_StartPos,
 	Col_CheckPoint,
