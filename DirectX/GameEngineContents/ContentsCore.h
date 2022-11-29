@@ -16,6 +16,8 @@ public:
 
 	void LoadLevelResource(LEVELS _LEVEL);
 	void ReleaseCurLevelResource();
+	LEVELS StringLevelToLEVELS(std::string_view _StringLevel);
+	std::string_view StringLevelToStringSetLevel(std::string_view _StringLevel);
 
 	// 리소스 로딩 현황 알려줌 Return : 0 ~ 1
 	float GetLoadingProgress()
@@ -27,6 +29,13 @@ public:
 
 		return LoadingProgress_ / LoadingSize_;
 	}
+
+	// *멀티 스레드 로딩*
+	// 로딩 레벨에서 리소스 로드 하겠다
+	void ChangeLevelByLoading(std::string_view _Level);
+
+	// 그냥 현재 레벨에서 로딩을 하겠다
+	void ChangeLevelByThread(std::string_view _Level);
 
 private:
 	static std::shared_ptr<ContentsCore> Inst_;
@@ -80,8 +89,8 @@ private:
 	void ResLoadLobby(GameEngineDirectory& _Dir);
 	void ResLoadLoading(GameEngineDirectory& _Dir);
 	void ResLoadStage01(GameEngineDirectory& _Dir);
-	void ResStage02(GameEngineDirectory& _Dir);
-	void ResStage04(GameEngineDirectory& _Dir);
+	void ResLoadStage02(GameEngineDirectory& _Dir);
+	void ResLoadStage04(GameEngineDirectory& _Dir);
 
 	// 테스트 및 임시
 	void ResLoadTmpTest(GameEngineDirectory& _Dir);

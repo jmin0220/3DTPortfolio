@@ -83,6 +83,8 @@ enum class LEVELS
 	SCALE_TEST,
 	STAGE1_TEST,
 	PLAYER_TEST,
+
+	NONE
 };
 
 

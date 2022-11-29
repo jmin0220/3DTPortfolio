@@ -3,7 +3,18 @@
 #include "LoadingActor.h"
 #include "CustomableGUI.h"
 
-LoadingLevel::LoadingLevel() 
+#include <GameEngineBase/magic_enum.hpp>
+
+LEVELS LoadingLevel::CurLoadingLevel_(LEVELS::NONE);
+std::string_view LoadingLevel::StrCurLoadingLevel_;
+
+void LoadingLevel::SetLoadingStage(std::string_view _Level)
+{
+	CurLoadingLevel_ = ContentsCore::GetInst()->StringLevelToLEVELS(_Level);
+	StrCurLoadingLevel_ = ContentsCore::GetInst()->StringLevelToStringSetLevel(_Level);
+}
+
+LoadingLevel::LoadingLevel()
 	: SelectedMap_(MapSelect::NONE)
 {
 }
@@ -19,6 +30,11 @@ void LoadingLevel::Start()
 
 void LoadingLevel::Update(float _DeltaTime)
 {
+	if (LoadingProgress_ >= 0.999f)
+	{
+		GEngine::ChangeLevel(StrCurLoadingLevel_.data());
+	}
+
 
 }
 
@@ -30,6 +46,20 @@ void LoadingLevel::LevelStartEvent()
 
 	// 엑터 생성
 	Loadings_ = CreateActor<LoadingActor>();
+
+
+	// 스레드 이용 로딩 시작
+	LoadingProgress_ = 0.0f;
+	if (CurLoadingLevel_ != LEVELS::NONE)
+	{
+		GameEngineCore::EngineThreadPool.Work(
+			[=]()
+			{
+				ContentsCore::GetInst()->LoadLevelResource(CurLoadingLevel_);
+			}
+		);
+	}
+	
 }
 
 void LoadingLevel::LevelEndEvent()
@@ -44,62 +74,21 @@ void LoadingLevel::ShowLoadingProgress()
 {
 	// 선택한 스테이지
 	{
-		std::string Name = Loadings_->GetCurMap().data();
-		ImGui::Text(("SelectedMap :" + Name).c_str());
+		std::string MapName = magic_enum::enum_name(CurLoadingLevel_).data();
+		ImGui::Text(("SelectedMap :" + MapName).c_str());
 	}
 
-	if (true == ImGui::Button("ShuffleStage"))
+	// 선택한 스테이지 로딩 정도
 	{
-		Loadings_->CancelMap();
-		SelectedMap_ = MapSelect::NONE;
+		LoadingProgress_ = ContentsCore::GetInst()->GetLoadingProgress();
+		std::string Out = "Loading... " + std::to_string(static_cast<int>(LoadingProgress_ * 100)) + " %";
+		ImGui::Text(Out.c_str());
 	}
 
-	ImGui::SameLine();
-	if (true == ImGui::Button("PauseStage"))
-	{
-		// 스테이지 선택
-		SelectedMap_ = Loadings_->SelectMap();
-	}
-
-
-	// Load Resources
-	if (true == ImGui::Button("LoadingStage"))
-	{
-		if (MapSelect::NONE == SelectedMap_)
-		{
-			return;
-		}
-
-		// 스레드 이용 로딩 시작
-		GameEngineCore::EngineThreadPool.Work(
-			[=]()
-			{
-				ContentsCore::GetInst()->LoadLevelResource(SelectedMapToLevel());
-			}
-		);
-
-	}
-
-	// 선택한 스테이지
-	{
-		float Progress = ContentsCore::GetInst()->GetLoadingProgress();
-		std::string Out = std::to_string(static_cast<int>(Progress * 100));
-		ImGui::Text(("Loading... " + Out).c_str());
-	}
-
-
-	if (true == ImGui::Button("StageStart"))
-	{
-		// TODO : 스레드 작업 마무리 했는지 확인
-
-
-		// 마무리 됐으면 레벨 변경
-		ChangeLevelByMap();
-	}
 
 }
 
-LEVELS LoadingLevel::SelectedMapToLevel()
+LEVELS LoadingLevel::MapSelectToLevels()
 {
 	switch (SelectedMap_)
 	{

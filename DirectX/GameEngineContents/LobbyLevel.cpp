@@ -42,7 +42,7 @@ void LobbyLevel::LevelStartEvent()
 {
 	GetMainCamera()->SetProjectionMode(CAMERAPROJECTIONMODE::PersPective);
 
-	ContentsCore::GetInst()->LoadLevelResource(LEVELS::LOBBY);//경로설정
+	//ContentsCore::GetInst()->LoadLevelResource(LEVELS::LOBBY);//경로설정
 	//이걸 하면 밑에 EndEvent에서 리소스 제거 해줘야한다
 
 	LobbySet_ = CreateActor<LobbySetUI>();

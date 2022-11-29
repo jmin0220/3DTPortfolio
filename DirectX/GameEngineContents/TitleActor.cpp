@@ -121,7 +121,7 @@ void TitleActor::FontSizeAnimation()
 			Font_->SetSize(FontSize_);
 		}
 
-		if (GameEngineInput::GetInst()->IsDown("Start"))
+		if (GameEngineInput::GetInst()->IsDown(KEY_ENTER))
 		{
 			//나중에 이걸 아무키나 누르면 Endstart시작으로
 			//_getch();??안댐..

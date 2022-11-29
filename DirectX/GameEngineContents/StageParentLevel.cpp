@@ -67,21 +67,16 @@ void StageParentLevel::LevelStartLoad()
 	{
 	case StageNum::STAGE1:
 	{
-		// 김성훈 : LoadLevelResource 추후에 LoadingLevel로 옮겨질 예정
-		ContentsCore::GetInst()->LoadLevelResource(LEVELS::STAGE01_DOORDASH);
 		CurStageName = JSON_NAME_DOORDASH;
 		break;
 	}
 	case StageNum::STAGE2:
-		ContentsCore::GetInst()->LoadLevelResource(LEVELS::STAGE02_JUMPCLUB);
 		//CurStageName = "\\stage2.json";
 		break;
 	case StageNum::STAGE3:
-		//ContentsCore::GetInst()->LoadLevelResource(LEVELS::STAGE3_TEST);
 		//CurStageName = "\\stage3.json";
 		break;
 	case StageNum::STAGE4:
-		ContentsCore::GetInst()->LoadLevelResource(LEVELS::STAGE04_HEX_A_GONE);
 		//CurStageName = "\\stage4.json";
 		break;
 	default:

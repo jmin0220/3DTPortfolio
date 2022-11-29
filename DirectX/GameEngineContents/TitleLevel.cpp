@@ -13,14 +13,20 @@ TitleLevel::~TitleLevel()
 
 void TitleLevel::Start()
 {
-	GameEngineInput::GetInst()->CreateKey("Start", VK_RETURN);
+	//GameEngineInput::GetInst()->CreateKey("Start", VK_RETURN);
 }
 
 void TitleLevel::Update(float _DeltaTime)
 {
-	if (TitleLogo->IsLevelChange_ == true)
+	if (GameEngineInput::GetInst()->IsDown(KEY_ENTER))
 	{
-		GEngine::ChangeLevel("LobbyLevel");
+		ContentsCore::GetInst()->ChangeLevelByThread(LEVEL_NAME_LOBBY);
+	}
+
+
+	if (ContentsCore::GetInst()->GetLoadingProgress() >= 0.999f)
+	{
+		GEngine::ChangeLevel(LEVEL_NAME_LOBBY);
 	}
 }
 

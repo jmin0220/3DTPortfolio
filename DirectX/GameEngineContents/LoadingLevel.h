@@ -6,7 +6,11 @@ class LoadingActor;
 class LoadingLevel : public GameEngineLevel
 {
 public:
-	
+	static void SetLoadingStage(std::string_view _Level);
+
+private:
+	static LEVELS CurLoadingLevel_;
+	static std::string_view StrCurLoadingLevel_;
 
 public:
 	// constrcuter destructer
@@ -35,8 +39,9 @@ private:
 	// 스테이지 로딩, 진행 정도 관련
 private:
 	void ShowLoadingProgress();
-	LEVELS SelectedMapToLevel();
+	LEVELS MapSelectToLevels();
 	void ChangeLevelByMap();
 	class std::shared_ptr<CustomableGUI> LoadingGUI_;
-	ULONG_PTR LoadJobKey_;
+
+	float LoadingProgress_;
 };

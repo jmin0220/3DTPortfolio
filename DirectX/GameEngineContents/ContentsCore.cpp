@@ -28,6 +28,29 @@ std::shared_ptr<ContentsCore> ContentsCore::Inst_ = std::make_shared<ContentsCor
 std::vector<GameEngineLevel*> ContentsCore::TestLevels_;
 std::vector<GameEngineLevel*> ContentsCore::GameLevels_;
 
+void ContentsCore::ChangeLevelByLoading(std::string_view _Level)
+{
+	// 로딩레벨로 일단 감, 다음 스테이지를 곁들인...
+	LoadingSize_ = 0;
+	LoadingProgress_ = 0;
+	LoadingLevel::SetLoadingStage(_Level);
+	ChangeLevel(LEVEL_NAME_LOADING);
+}
+
+void ContentsCore::ChangeLevelByThread(std::string_view _Level)
+{
+	LoadingSize_ = 0;
+	LoadingProgress_ = 0;
+	
+	GameEngineCore::EngineThreadPool.Work(
+		[=]()
+		{
+			LoadLevelResource(StringLevelToLEVELS(_Level));
+		}
+	);
+
+}
+
 ContentsCore::ContentsCore()
 	: GameEngineCore()
 	, LoadingSize_(0)
@@ -286,16 +309,33 @@ void ContentsCore::LoadLevelResource(LEVELS _LEVEL)
 
 	switch (_LEVEL)
 	{
+		//////////////////////
 		// 게임에 적용될 레벨
+		//////////////////////
+
 	case LEVELS::LOBBY:
 		Dir.Move(DIR_LEVEL_LOBBY);
 		ResLoadLobby(Dir);
 		break;
 	case LEVELS::LOADING:
 		break;
+	case LEVELS::STAGE01_DOORDASH:
+		Dir.Move(DIR_LEVEL_STAGE01);
+		ResLoadStage01(Dir);
+		break;
+	case LEVELS::STAGE02_JUMPCLUB:
+		Dir.Move(DIR_LEVEL_STAGE02);
+		ResLoadStage02(Dir);
+		break;
+	case LEVELS::STAGE04_HEX_A_GONE:
+		Dir.Move(DIR_LEVEL_STAGE04);
+		ResLoadStage04(Dir);
+		break;
 
+		////////////////////
+		//	임시/테스트 레벨
+		////////////////////
 
-		// 임시/테스트 레벨
 	case LEVELS::LOBBY_TEST:
 		Dir.Move(DIR_TESTLEVEL_LOBBY);
 		ResLoadCameraTest(Dir);
@@ -325,23 +365,11 @@ void ContentsCore::LoadLevelResource(LEVELS _LEVEL)
 		Dir.Move(DIR_TESTLEVEL_PLAYERTEST);
 		ResScaleTest(Dir);
 		break;
-	// 확인을 위해 DIR_TESTLEVEL_MAPEDITOR 그대로 사용, 추후 각 스테이지에 맞게 로드 필요
-	case LEVELS::STAGE01_DOORDASH:
-		Dir.Move(DIR_LEVEL_STAGE01);
-		ResLoadStage01(Dir);
-		break;
-	case LEVELS::STAGE02_JUMPCLUB:
-		Dir.Move(DIR_LEVEL_STAGE02);
-		ResStage02(Dir); 
-		break;
-	case LEVELS::STAGE04_HEX_A_GONE:
-		Dir.Move(DIR_LEVEL_STAGE04);
-		ResStage04(Dir);
+
 	default:
 		break;
 	}
 }
-
 
 /////////////////////////////////////////////////////////
 // # 리소스 로드
@@ -367,12 +395,12 @@ void ContentsCore::ResLoadLoading(GameEngineDirectory& _Dir)
 	LevelAllResourceLoad(_Dir);
 }
 
-void ContentsCore::ResStage02(GameEngineDirectory& _Dir)
+void ContentsCore::ResLoadStage02(GameEngineDirectory& _Dir)
 {
 	LevelAllResourceLoad(_Dir);
 }
 
-void ContentsCore::ResStage04(GameEngineDirectory& _Dir)
+void ContentsCore::ResLoadStage04(GameEngineDirectory& _Dir)
 {
 	LevelAllResourceLoad(_Dir);
 }
@@ -422,8 +450,7 @@ void ContentsCore::LevelAllResourceLoad(GameEngineDirectory& _LevelDir)
 	std::vector<GameEngineDirectory> LevelFolders = _LevelDir.GetRecursiveAllDirectory();
 
 	// 전체 크기 잼
-	LoadingSize_ = 0;
-	LoadingProgress_ = 0;
+
 	for (GameEngineDirectory& Folder : LevelFolders)
 	{
 		GameEngineDirectory Dir(Folder.GetFullPath());
@@ -435,16 +462,6 @@ void ContentsCore::LevelAllResourceLoad(GameEngineDirectory& _LevelDir)
 	for (GameEngineDirectory& Folder : LevelFolders)
 	{
 		GameEngineDirectory Dir(Folder.GetFullPath());
-
-		// 모든 PNG는 Texture2D 폴더에 모아두는걸로
-		// PNG
-		//{
-		//	std::vector<GameEngineFile> Files = Dir.GetAllFile(EXT_PNG);
-		//	for (GameEngineFile& File : Files)
-		//	{
-		//		std::shared_ptr<GameEngineTexture> Texture = GameEngineTexture::Load(File.GetFullPath());
-		//	}
-		//}
 
 		// Mesh & Animation
 		{
@@ -462,4 +479,50 @@ void ContentsCore::LevelAllResourceLoad(GameEngineDirectory& _LevelDir)
 			}
 		}
 	}
+}
+
+LEVELS ContentsCore::StringLevelToLEVELS(std::string_view _StringLevel)
+{
+	std::string Level = GameEngineString::ToUpperReturn(_StringLevel.data());
+
+	if (0 == Level.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_LOBBY)))
+	{
+		return LEVELS::LOBBY;
+	}
+	else if (0 == Level.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_DOORDASH)))
+	{
+		return LEVELS::STAGE01_DOORDASH;
+	}
+	else if (0 == Level.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_JUMPCLUB)))
+	{
+		return LEVELS::STAGE02_JUMPCLUB;
+	}
+	else if (0 == Level.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_HEXAGONE)))
+	{
+		return LEVELS::STAGE04_HEX_A_GONE;
+	}
+
+	return LEVELS::NONE;
+}
+
+std::string_view ContentsCore::StringLevelToStringSetLevel(std::string_view _StringLevel)
+{
+	if (0 == _StringLevel.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_LOBBY)))
+	{
+		return LEVEL_NAME_LOBBY;
+	}
+	else if (0 == _StringLevel.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_DOORDASH)))
+	{
+		return LEVEL_NAME_DOORDASH;
+	}
+	else if (0 == _StringLevel.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_JUMPCLUB)))
+	{
+		return LEVEL_NAME_JUMPCLUB;
+	}
+	else if (0 == _StringLevel.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_HEXAGONE)))
+	{
+		return LEVEL_NAME_HEXAGONE;
+	}
+
+	return "";
 }

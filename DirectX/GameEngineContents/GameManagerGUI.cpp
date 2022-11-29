@@ -39,7 +39,7 @@ void GameManagerGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 	{
 		if (true == ImGui::Button(Level->GetName().data()))
 		{
-			GameEngineCore::ChangeLevel(Level->GetName().data());
+			ContentsCore::GetInst()->ChangeLevel(Level->GetName().data());
 		}
 
 		ImGui::SameLine();
@@ -47,11 +47,13 @@ void GameManagerGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 
 	ImGui::NewLine();
 	ImGui::Text("GameLevel Select");
+
+	// 리소스로딩 하면 로딩 레벨로 들어가서 스레드로딩 방식으로 변경
 	for (GameEngineLevel* Level : ContentsCore::GameLevels_)
 	{
 		if (true == ImGui::Button(Level->GetName().data()))
 		{
-			GameEngineCore::ChangeLevel(Level->GetName().data());
+			ContentsCore::GetInst()->ChangeLevelByLoading(Level->GetName().data());
 		}
 
 		ImGui::SameLine();
