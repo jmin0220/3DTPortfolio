@@ -11,6 +11,8 @@ const float4 DEFAULT_POSHEAD(0, 8.0f, 0);
 const float4 SIZE_MENUBAR(8, 31, 0); // 마우스를 화면 가운데로 고정하기 위한 오차
 //const float4 SIZE_MENUBAR(0, 0, 0); // 마우스를 화면 가운데로 고정하기 위한 오차
 
+GameEngineActor* CameraArm::CameraArm_ = nullptr;
+
 CameraArm::CameraArm()
 	: Camera_(nullptr)
 	, Character_(nullptr)
@@ -48,6 +50,7 @@ void CameraArm::Start()
 	GUI->SetGUIDebugFunc([=]() {GuIDebugFunc(); });
 	GUI->Off();
 
+	CameraArm_ = this;
 }
 
 void CameraArm::SetFollowCamera(std::shared_ptr<GameEngineCameraActor> _Camera, std::shared_ptr<GameEngineActor> _Character)

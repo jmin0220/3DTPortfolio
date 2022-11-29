@@ -6,6 +6,9 @@ class LoadingActor;
 class LoadingLevel : public GameEngineLevel
 {
 public:
+	
+
+public:
 	// constrcuter destructer
 	LoadingLevel();
 	~LoadingLevel();

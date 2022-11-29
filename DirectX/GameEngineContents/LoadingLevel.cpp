@@ -80,6 +80,13 @@ void LoadingLevel::ShowLoadingProgress()
 
 	}
 
+	// 선택한 스테이지
+	{
+		float Progress = ContentsCore::GetInst()->GetLoadingProgress();
+		std::string Out = std::to_string(static_cast<int>(Progress * 100));
+		ImGui::Text(("Loading... " + Out).c_str());
+	}
+
 
 	if (true == ImGui::Button("StageStart"))
 	{

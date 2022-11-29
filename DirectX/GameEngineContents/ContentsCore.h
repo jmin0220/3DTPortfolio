@@ -17,6 +17,17 @@ public:
 	void LoadLevelResource(LEVELS _LEVEL);
 	void ReleaseCurLevelResource();
 
+	// 리소스 로딩 현황 알려줌 Return : 0 ~ 1
+	float GetLoadingProgress()
+	{
+		if (LoadingSize_ < 1)
+		{
+			return 0;
+		}
+
+		return LoadingProgress_ / LoadingSize_;
+	}
+
 private:
 	static std::shared_ptr<ContentsCore> Inst_;
 
@@ -81,5 +92,8 @@ private:
 	void ResScaleTest(GameEngineDirectory& _Dir);
 
 	void LevelAllResourceLoad(GameEngineDirectory& _LevelDir);
+
+	float LoadingSize_;
+	float LoadingProgress_;
 };
 

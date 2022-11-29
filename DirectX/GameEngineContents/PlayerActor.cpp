@@ -109,22 +109,26 @@ void PlayerActor::InputController(float _DeltaTime)
 	if (true == GameEngineInput::GetInst()->IsPress(KEY_W))
 	{
 		// EX) 카메라가 보고있는 방향으로 전진
-		MoveDir_ += GetTransform().GetForwardVector();
+		//MoveDir_ += GetTransform().GetForwardVector();
+		MoveDir_ += GetLevel()->GetMainCameraActor()->GetTransform().GetForwardVector();
 	}
 
 	if (true == GameEngineInput::GetInst()->IsPress(KEY_A))
 	{
-		MoveDir_ += GetTransform().GetLeftVector();
+		//MoveDir_ += GetTransform().GetLeftVector();
+		MoveDir_ += GetLevel()->GetMainCameraActor()->GetTransform().GetLeftVector();
 	}
 
 	if (true == GameEngineInput::GetInst()->IsPress(KEY_S))
 	{
-		MoveDir_ += GetTransform().GetBackVector();
+		//MoveDir_ += GetTransform().GetBackVector();
+		MoveDir_ += GetLevel()->GetMainCameraActor()->GetTransform().GetBackVector();
 	}
 
 	if (true == GameEngineInput::GetInst()->IsPress(KEY_D))
 	{
-		MoveDir_ += GetTransform().GetRightVector();
+		//MoveDir_ += GetTransform().GetRightVector();
+		MoveDir_ += GetLevel()->GetMainCameraActor()->GetTransform().GetRightVector();
 	}
 
 	if (true == GameEngineInput::GetInst()->IsDown(KEY_SPACEBAR))

@@ -30,6 +30,8 @@ std::vector<GameEngineLevel*> ContentsCore::GameLevels_;
 
 ContentsCore::ContentsCore()
 	: GameEngineCore()
+	, LoadingSize_(0)
+	, LoadingProgress_(0)
 {
 }
 
@@ -277,6 +279,7 @@ void ContentsCore::ReleaseCurLevelResource()
 
 void ContentsCore::LoadLevelResource(LEVELS _LEVEL)
 {
+
 	GameEngineDirectory Dir;
 	Dir.MoveParentToExitsChildDirectory(DIR_RESOURCES);
 	Dir.Move(DIR_RESOURCES);
@@ -418,6 +421,17 @@ void ContentsCore::LevelAllResourceLoad(GameEngineDirectory& _LevelDir)
 {
 	std::vector<GameEngineDirectory> LevelFolders = _LevelDir.GetRecursiveAllDirectory();
 
+	// ¿¸√º ≈©±‚ ¿Î
+	LoadingSize_ = 0;
+	LoadingProgress_ = 0;
+	for (GameEngineDirectory& Folder : LevelFolders)
+	{
+		GameEngineDirectory Dir(Folder.GetFullPath());
+		std::vector<GameEngineFile> Files = Dir.GetAllFile(EXT_FBX);
+		LoadingSize_ += static_cast<float>(Files.size());
+	}
+
+
 	for (GameEngineDirectory& Folder : LevelFolders)
 	{
 		GameEngineDirectory Dir(Folder.GetFullPath());
@@ -435,6 +449,7 @@ void ContentsCore::LevelAllResourceLoad(GameEngineDirectory& _LevelDir)
 		// Mesh & Animation
 		{
 			std::vector<GameEngineFile> Files = Dir.GetAllFile(EXT_FBX);
+			
 			for (GameEngineFile& File : Files)
 			{
 				File.ChangeExtension(".FBX");
@@ -443,6 +458,7 @@ void ContentsCore::LevelAllResourceLoad(GameEngineDirectory& _LevelDir)
 				std::shared_ptr<GameEngineFBXMesh> Mesh = GameEngineFBXMesh::Load(Path);
 
 				std::shared_ptr<GameEngineFBXAnimation> Anim = GameEngineFBXAnimation::Load(Path);
+				LoadingProgress_++;
 			}
 		}
 	}

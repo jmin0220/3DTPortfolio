@@ -7,6 +7,11 @@ class CameraArm : public GameEngineActor
 public:
 	void SetFollowCamera(std::shared_ptr<GameEngineCameraActor> _Camera, std::shared_ptr<GameEngineActor> _Character);
 	void SetArmLength(float _Depth, float _Height);
+	
+	static GameEngineActor* GetCameraArmCamera()
+	{
+		return CameraArm_;
+	}
 
 public:
 	// constrcuter destructer
@@ -64,5 +69,8 @@ private:
 	void GuIDebugFunc();
 	class std::shared_ptr<CustomableGUI> GUI;
 	float4 DebugValue;
+
+	// CameraArm 외부에서 정보 알고 싶다
+	static GameEngineActor* CameraArm_;
 };
 
