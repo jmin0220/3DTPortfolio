@@ -63,9 +63,9 @@ private:
 	bool IsOn;
 
 	std::weak_ptr<GameEngineRenderer> ParentRenderer;
-	std::shared_ptr<GameEngineMesh> Mesh; // 이 메쉬를
-	std::shared_ptr<GameEngineMaterial> Material; // 이 설정으로
-	std::shared_ptr<GameEngineInputLayOut> InputLayOut; // 인풋어셈블러1 세팅
+	std::shared_ptr < GameEngineMesh> Mesh; // 이 메쉬를
+	std::shared_ptr < GameEngineMaterial> Material; // 이 설정으로
+	std::shared_ptr < GameEngineInputLayOut> InputLayOut; // 인풋어셈블러1 세팅
 	// 	GameEngineShaderResourcesHelper ShaderResources; // 이 데이터를 가지고
 	D3D11_PRIMITIVE_TOPOLOGY Topology;// 이렇게 그린다.
 };

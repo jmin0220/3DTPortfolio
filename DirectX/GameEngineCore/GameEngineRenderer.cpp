@@ -102,8 +102,7 @@ void GameEngineRenderUnit::SetMesh(std::shared_ptr<GameEngineMesh> _Mesh)
 
 void GameEngineRenderUnit::SetPipeLine(const std::string& _Name)
 {
-	std::shared_ptr<GameEngineMaterial> Ptr = GameEngineMaterial::Find(_Name);
-	Material = Ptr;
+	Material = GameEngineMaterial::Find(_Name);
 
 	if (nullptr == Material)
 	{

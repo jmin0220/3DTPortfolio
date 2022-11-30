@@ -108,13 +108,41 @@ void GameEngineCore::CoreUpdate(GameEngineCore* _UserCore)
 	GameEngineSound::Update();
 	GameEngineTime::GetInst()->Update();
 	float DeltaTime = GameEngineTime::GetDeltaTime();
-	GameEngineInput::GetInst()->Update(DeltaTime);
+	//GameEngineInput::GetInst()->Update(DeltaTime);
+
+	// 60 1.0f
+
+	if (-1 == GameEngineTime::GetFrameLimit())
+	{
+		GameEngineInput::GetInst()->Update(DeltaTime);
+
+		_UserCore->Update(DeltaTime);
+		CurrentLevel->LevelUpdate(DeltaTime);
+		CurrentLevel->Release(DeltaTime);
+		CurrentLevel->Render(DeltaTime);
+		return;
+	}
 
 	if (true == GameEngineTime::IsFrameCheck())
 	{
-		// 엔진수준에서 유저가 하고 싶은일.
-		_UserCore->Update(DeltaTime);
-		CurrentLevel->LevelUpdate(DeltaTime);
+		int Count = GameEngineTime::FrameUpdateCount();
+
+		if (10 <= Count)
+		{
+			GameEngineTime::FrameUpdateCountReset();
+		}
+
+		while (Count--)
+		{
+			GameEngineInput::GetInst()->Update(DeltaTime);
+			_UserCore->Update(DeltaTime);
+			CurrentLevel->LevelUpdate(DeltaTime);
+			CurrentLevel->Release(DeltaTime);
+		}
+
+		CurrentLevel->Render(DeltaTime);
+
+		GameEngineTime::FrameUpdateCountReset();
 	}
 }
 

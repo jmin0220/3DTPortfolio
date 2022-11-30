@@ -29,6 +29,12 @@ void LobbyLevel::Start()
 
 void LobbyLevel::Update(float _DeltaTime)
 {
+	if (true == GameEngineInput::GetInst()->IsDown(KEY_ENTER))
+	{
+		int a = 0;
+	}
+
+
 	std::weak_ptr<PlayButton> tmpPlayButton = LobbySet_->GetPlayButton();
 	if (tmpPlayButton.lock()->GetIsLevelChange() == true)
 	{

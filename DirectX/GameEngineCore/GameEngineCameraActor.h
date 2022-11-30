@@ -18,7 +18,7 @@ public:
 	GameEngineCameraActor& operator=(const GameEngineCameraActor& _Other) = delete;
 	GameEngineCameraActor& operator=(GameEngineCameraActor&& _Other) noexcept = delete;
 
-	std::shared_ptr<GameEngineCamera> GetCameraComponent()
+	std::shared_ptr < GameEngineCamera> GetCameraComponent()
 	{
 		return CameraComponent;
 	}
