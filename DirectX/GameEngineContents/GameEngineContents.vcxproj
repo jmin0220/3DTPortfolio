@@ -170,6 +170,18 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="AxisActorRot.h" />
+    <ClInclude Include="BigShotsLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="BigShotsStage.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="BigShots_BackGroundObject.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="CameraArm.h">
       <SubType>
       </SubType>
@@ -536,6 +548,18 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="AxisActorRot.cpp" />
+    <ClCompile Include="BigShotsLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="BigShotsStage.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="BigShots_BackGroundObject.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="CameraArm.cpp">
       <SubType>
       </SubType>

@@ -28,6 +28,7 @@
 #define DIR_LEVEL_FALLING "Levels\\FallingLevel"
 #define DIR_LEVEL_STAGE01 "Levels\\StageLevel\\Stage01"
 #define DIR_LEVEL_STAGE02 "Levels\\StageLevel\\Stage02"
+#define DIR_LEVEL_STAGE03 "Levels\\StageLevel\\Stage03"
 #define DIR_LEVEL_STAGE04 "Levels\\StageLevel\\Stage04"
 #define DIR_LEVEL_WINNER "Levels\\WinnerLevel"
 
@@ -81,6 +82,7 @@
 #define LEVEL_NAME_SHADER_TUTORIAL "ShaderTutorialLevel"
 #define LEVEL_NAME_DOORDASH "DoorDashLevel"
 #define LEVEL_NAME_JUMPCLUB "JumpClubLevel"
+#define LEVEL_NAME_BIGSHOTS "BigShotsLevel"
 #define LEVEL_NAME_HEXAGONE "HexAGoneLevel"
 
 //Axis Mode

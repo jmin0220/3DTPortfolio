@@ -199,6 +199,12 @@
     <Filter Include="01_Level\FallingLevel">
       <UniqueIdentifier>{31c83664-1a9e-4aef-9ba6-261e29ed511e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01_Level\StageLevel\Stage03_BigShots">
+      <UniqueIdentifier>{615a2f02-da73-43ec-95e6-5656a75ba17c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Actor\Stage03Actor">
+      <UniqueIdentifier>{13b743c4-dcae-410a-8cc3-723fd5dc755f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -551,6 +557,15 @@
     </ClInclude>
     <ClInclude Include="GameServerGUI.h">
       <Filter>98_LevelGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="BigShotsLevel.h">
+      <Filter>01_Level\StageLevel\Stage03_BigShots</Filter>
+    </ClInclude>
+    <ClInclude Include="BigShots_BackGroundObject.h">
+      <Filter>02_Actor\Stage03Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="BigShotsStage.h">
+      <Filter>02_Actor\Stage03Actor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -907,6 +922,15 @@
     </ClCompile>
     <ClCompile Include="GameServerGUI.cpp">
       <Filter>98_LevelGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="BigShotsLevel.cpp">
+      <Filter>01_Level\StageLevel\Stage03_BigShots</Filter>
+    </ClCompile>
+    <ClCompile Include="BigShots_BackGroundObject.cpp">
+      <Filter>02_Actor\Stage03Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="BigShotsStage.cpp">
+      <Filter>02_Actor\Stage03Actor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -17,10 +17,11 @@
 #include "ShaderTutorialLevel.h"
 #include "GameManagerGUI.h"
 #include "StageTestLevel.h"
+#include "DoorDashLevel.h"
 #include "JumpClubLevel.h"
+#include "BigShotsLevel.h"
 #include "HexAGoneLevel.h"
 #include "PlayerTestLevel.h"
-#include "DoorDashLevel.h"
 
 #pragma comment(lib, "GameEngineBase.lib")
 #include <GameEngineCore/GameEngineRes.h>
@@ -155,6 +156,10 @@ void ContentsCore::CreateLevels()
 	}
 	{
 		GameEngineLevel* Level = CreateLevel<JumpClubLevel>(LEVEL_NAME_JUMPCLUB);
+		GameLevels_.push_back(Level);
+	}
+	{
+		GameEngineLevel* Level = CreateLevel<BigShotsLevel>(LEVEL_NAME_BIGSHOTS);
 		GameLevels_.push_back(Level);
 	}
 	{
@@ -341,6 +346,10 @@ void ContentsCore::LoadLevelResource(LEVELS _LEVEL)
 		Dir.Move(DIR_LEVEL_STAGE02);
 		ResLoadStage02(Dir);
 		break;
+	case LEVELS::STAGE03_BIGSHOTS:
+		Dir.Move(DIR_LEVEL_STAGE03);
+		ResLoadStage02(Dir);
+		break;
 	case LEVELS::STAGE04_HEX_A_GONE:
 		Dir.Move(DIR_LEVEL_STAGE04);
 		ResLoadStage04(Dir);
@@ -414,6 +423,11 @@ void ContentsCore::ResLoadLoading(GameEngineDirectory& _Dir)
 }
 
 void ContentsCore::ResLoadStage02(GameEngineDirectory& _Dir)
+{
+	LevelAllResourceLoad(_Dir);
+}
+
+void ContentsCore::ResLoadStage03(GameEngineDirectory& _Dir)
 {
 	LevelAllResourceLoad(_Dir);
 }
@@ -524,6 +538,10 @@ LEVELS ContentsCore::StringLevelToLEVELS(std::string_view _StringLevel)
 	{
 		return LEVELS::STAGE02_JUMPCLUB;
 	}
+	else if (0 == Level.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_BIGSHOTS)))
+	{
+		return LEVELS::STAGE03_BIGSHOTS;
+	}
 	else if (0 == Level.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_HEXAGONE)))
 	{
 		return LEVELS::STAGE04_HEX_A_GONE;
@@ -553,6 +571,10 @@ std::string_view ContentsCore::StringLevelToStringSetLevel(std::string_view _Str
 	else if (0 == _StringLevel.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_JUMPCLUB)))
 	{
 		return LEVEL_NAME_JUMPCLUB;
+	}
+	else if (0 == _StringLevel.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_BIGSHOTS)))
+	{
+		return LEVEL_NAME_BIGSHOTS;
 	}
 	else if (0 == _StringLevel.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_HEXAGONE)))
 	{
