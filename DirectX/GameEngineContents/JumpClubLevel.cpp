@@ -57,14 +57,14 @@ void JumpClubLevel::LevelStartEvent()
 	CameraArm_->SetFollowCamera(GetMainCameraActor(), Player_);
 
 	std::shared_ptr<JumpClubStage> Stage = CreateActor<JumpClubStage>();
-	Stage->GetTransform().SetWorldPosition({ 0.0f, 0.0f, 0.0f });
+	Stage->GetTransform().SetWorldPosition({ 0.0f, 65.0f, 0.0f });
 
 	// Bar Y축 조정 필요
 	std::shared_ptr<JumpClub_SpinBarDouble> BarDouble = CreateActor<JumpClub_SpinBarDouble>();
 	BarDouble->GetTransform().SetWorldPosition({ 0.0f, 75.0f, 0.0f });
 
 	std::shared_ptr<JumpClub_SpinBarSingle> BarSingle = CreateActor<JumpClub_SpinBarSingle>();
-	BarSingle->GetTransform().SetWorldPosition({ 0.0f, 75.0f, 0.0f });
+	BarSingle->GetTransform().SetWorldPosition({ 0.0f, 60.0f, 0.0f });
 
 	std::shared_ptr<GameEngineActor> Skybox = CreateActor<SkyboxActor>();
 	Skybox->GetTransform().SetWorldScale({ 100, 100, 100 });
