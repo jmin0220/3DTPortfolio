@@ -101,6 +101,9 @@ LEVELS LoadingLevel::MapSelectToLevels()
 	case MapSelect::Splash_Hexagone:
 		return LEVELS::STAGE04_HEX_A_GONE;
 		break;
+	default:
+		return LEVELS::NONE;
+		break;
 	}
 }
 
@@ -116,6 +119,8 @@ void LoadingLevel::ChangeLevelByMap()
 		break;
 	case MapSelect::Splash_Hexagone:
 		GEngine::ChangeLevel(LEVEL_NAME_HEXAGONE);
+		break;
+	default:
 		break;
 	}
 

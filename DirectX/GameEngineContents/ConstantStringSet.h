@@ -104,3 +104,10 @@
 #define KEY_SPACEBAR "SpaceBar"
 #define KEY_ENTER "VK_RETURN"
 
+
+////////////////
+//  서버
+////////////////
+
+// 호스트 주소
+#define SOCKADDR_HOST "127.0.0.1"

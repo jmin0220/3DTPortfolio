@@ -23,22 +23,21 @@ LobbyLevel::~LobbyLevel()
 
 void LobbyLevel::Start()
 {
+	StateManager_.CreateStateMember("Lobby"
+		, std::bind(&LobbyLevel::LobbyUpdate, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&LobbyLevel::LobbyStart, this, std::placeholders::_1));
 
+	StateManager_.CreateStateMember("Falling"
+		, std::bind(&LobbyLevel::FallingUpdate, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&LobbyLevel::FallingStart, this, std::placeholders::_1));
+
+	StateManager_.ChangeState("Lobby");
 	
 }
 
 void LobbyLevel::Update(float _DeltaTime)
 {
-	std::weak_ptr<PlayButton> tmpPlayButton = LobbySet_->GetPlayButton();
-	if (ContentsCore::GetInst()->GetLoadingProgress() >= 0.999f)
-	{
-		GEngine::ChangeLevel(LEVEL_NAME_FALLING);
-	}
-
-	if (true == tmpPlayButton.lock()->GetIsLevelChange())
-	{
-		ContentsCore::GetInst()->ChangeLevelByThread(LEVEL_NAME_FALLING);
-	}
+	StateManager_.Update(_DeltaTime);
 }
 
 void LobbyLevel::End()
@@ -47,12 +46,12 @@ void LobbyLevel::End()
 
 void LobbyLevel::LevelStartEvent()
 {
-	ContentsCore::GetInst()->InitLoadingProgress();
+	// 서버 GUI킴
+	ContentsCore::GetInst()->ServerGUIOn();
 
+	StateManager_.ChangeState("Lobby");
+	
 	GetMainCamera()->SetProjectionMode(CAMERAPROJECTIONMODE::PersPective);
-
-	//ContentsCore::GetInst()->LoadLevelResource(LEVELS::LOBBY);//경로설정
-	//이걸 하면 밑에 EndEvent에서 리소스 제거 해줘야한다
 
 	LobbySet_ = CreateActor<LobbySetUI>();
 
@@ -77,6 +76,28 @@ void LobbyLevel::LevelEndEvent()
 
 	Mouse->Death();
 
-	ContentsCore::GetInst()->ReleaseCurLevelResource();
+	//ContentsCore::GetInst()->ReleaseCurLevelResource();
+}
+
+void LobbyLevel::LobbyStart(const StateInfo& _Info)
+{
+}
+
+void LobbyLevel::LobbyUpdate(float _DeltaTime, const StateInfo& _Info)
+{
+	if (true == LobbySet_->GetPlayButton().lock()->GetIsLevelChange())
+	{
+		StateManager_.ChangeState("Falling");
+		return;
+	}
+}
+
+void LobbyLevel::FallingStart(const StateInfo& _Info)
+{
+	Player_->GetTransform().SetWorldPosition({ 0, 30, 100 });
+}
+
+void LobbyLevel::FallingUpdate(float _DeltaTime, const StateInfo& _Info)
+{
 }
 

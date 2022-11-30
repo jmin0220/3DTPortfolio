@@ -31,6 +31,8 @@ std::shared_ptr<ContentsCore> ContentsCore::Inst_ = std::make_shared<ContentsCor
 std::vector<GameEngineLevel*> ContentsCore::TestLevels_;
 std::vector<GameEngineLevel*> ContentsCore::GameLevels_;
 
+std::shared_ptr<GameServerGUI> ContentsCore::ServerGUI_;
+
 void ContentsCore::ChangeLevelByLoading(std::string_view _Level)
 {
 	// 로딩레벨로 일단 감, 다음 스테이지를 곁들인...
@@ -75,6 +77,9 @@ void ContentsCore::Start()
 
 	//GameEngineGUI::CreateGUIWindow<GameEngineStatusWindow>("GameEngineStatusWindow", nullptr); //GUI 추가 
 	GameEngineGUI::CreateGUIWindow<GameManagerGUI>("GameManager", nullptr);
+	
+	ServerGUI_ = GameEngineGUI::CreateGUIWindow<GameServerGUI>("ServerManager", nullptr);
+	ServerGUI_->Off();
 }
 
 void ContentsCore::Update(float _DeltaTime)

@@ -19,6 +19,7 @@ void TitleLevel::Start()
 
 void TitleLevel::Update(float _DeltaTime)
 {
+	/// *** 쓰레드 이용 레벨 변경시 호출 *** ///
 	if (ContentsCore::GetInst()->GetLoadingProgress() >= 0.999f)
 	{
 		GEngine::ChangeLevel(LEVEL_NAME_LOBBY);
@@ -29,7 +30,7 @@ void TitleLevel::Update(float _DeltaTime)
 		EnterDown_ = true;
 		ContentsCore::GetInst()->ChangeLevelByThread(LEVEL_NAME_LOBBY);
 	}
-
+	/// ~~~ 쓰레드 이용 레벨 변경시 호출 ~~~ ///
 }
 
 void TitleLevel::End()
@@ -38,6 +39,7 @@ void TitleLevel::End()
 
 void TitleLevel::LevelStartEvent()
 {
+	/// *** 쓰레드 이용 레벨 변경시 호출 *** ///
 	ContentsCore::GetInst()->InitLoadingProgress();
 
 	EnterDown_ = false;

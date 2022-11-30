@@ -26,6 +26,7 @@ void FallingLevel::LevelStartEvent()
 {
 	GetMainCamera()->SetProjectionMode(CAMERAPROJECTIONMODE::PersPective);
 
+
 	Player_ = CreateActor<LobbyPlayer>();
 	Player_->GetTransform().SetWorldRotation({ 0,180,0 });
 	Player_->GetTransform().SetWorldPosition({ 0,-15,0 });

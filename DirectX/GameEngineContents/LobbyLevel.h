@@ -39,5 +39,15 @@ private:
 	std::shared_ptr<LobbySetUI> LobbySet_;
 
 	bool Swap;
+
+	// FSM
+private:
+	GameEngineStateManager StateManager_;
+
+	void LobbyStart(const StateInfo& _Info);
+	void LobbyUpdate(float _DeltaTime, const StateInfo& _Info);
+
+	void FallingStart(const StateInfo& _Info);
+	void FallingUpdate(float _DeltaTime, const StateInfo& _Info);
 };
 
