@@ -6,7 +6,7 @@
 
 #include "CameraArm.h"
 
-float SPEED_PLAYER = 2000.0f;
+float SPEED_PLAYER = 2500.0f;
 
 PlayerActor::PlayerActor() :
 	CheckPointFlag_(false),
@@ -102,6 +102,11 @@ void PlayerActor::LevelStartEvent()
 
 	// LevelStartEvent에서 플레이어를 생성하고 위치를 재지정하는 함수
 	DynamicActorComponent_->SetPlayerStartPos(GetTransform().GetWorldPosition());
+
+	//ForwardVector를 구하기위한 카메라 암을 가져오는 작업
+	CamArm_ = dynamic_cast<StageParentLevel*>(GetLevel())->GetCameraArm();
+	CamHolderCollision_ = CamArm_->GetCamHolderCollision();
+
 }
 
 void PlayerActor::LevelEndEvent()
@@ -110,32 +115,47 @@ void PlayerActor::LevelEndEvent()
 
 void PlayerActor::InputController(float _DeltaTime)
 {
+
+
 	float4 tmpMoveSpeed = float4::ZERO;
 	MoveDir_ = float4::ZERO;
+	CamHolderCollision_->GetTransform().GetForwardVector();
 
 	if (true == GameEngineInput::GetInst()->IsPress(KEY_W))
 	{
 		// EX) 카메라가 보고있는 방향으로 전진
-		//MoveDir_ += GetTransform().GetForwardVector();
-		MoveDir_ += GetLevel()->GetMainCameraActor()->GetTransform().GetForwardVector();
+		//MoveDir_ += GetTransform().Ge(tForwardVector();
+		float4 InstMoveDir = GetLevel()->GetMainCameraActor()->GetTransform().GetForwardVector();
+		InstMoveDir.y = 0;
+		MoveDir_ += InstMoveDir.Normalize3DReturn();
+		int a = 0;
 	}
 
 	if (true == GameEngineInput::GetInst()->IsPress(KEY_A))
 	{
 		//MoveDir_ += GetTransform().GetLeftVector();
-		MoveDir_ += GetLevel()->GetMainCameraActor()->GetTransform().GetLeftVector();
+		//MoveDir_ += GetLevel()->GetMainCameraActor()->GetTransform().GetLeftVector();
+		float4 InstMoveDir = GetLevel()->GetMainCameraActor()->GetTransform().GetLeftVector();
+		InstMoveDir.y = 0;
+		MoveDir_ += InstMoveDir.Normalize3DReturn();
 	}
 
 	if (true == GameEngineInput::GetInst()->IsPress(KEY_S))
 	{
 		//MoveDir_ += GetTransform().GetBackVector();
-		MoveDir_ += GetLevel()->GetMainCameraActor()->GetTransform().GetBackVector();
+		//MoveDir_ += GetLevel()->GetMainCameraActor()->GetTransform().GetBackVector();
+		float4 InstMoveDir = GetLevel()->GetMainCameraActor()->GetTransform().GetBackVector();
+		InstMoveDir.y = 0;
+		MoveDir_ += InstMoveDir.Normalize3DReturn();
 	}
 
 	if (true == GameEngineInput::GetInst()->IsPress(KEY_D))
 	{
 		//MoveDir_ += GetTransform().GetRightVector();
-		MoveDir_ += GetLevel()->GetMainCameraActor()->GetTransform().GetRightVector();
+		//MoveDir_ += GetLevel()->GetMainCameraActor()->GetTransform().GetRightVector();
+		float4 InstMoveDir = GetLevel()->GetMainCameraActor()->GetTransform().GetRightVector();
+		InstMoveDir.y = 0;
+		MoveDir_ += InstMoveDir.Normalize3DReturn();
 	}
 
 	if (true == GameEngineInput::GetInst()->IsDown(KEY_SPACEBAR))

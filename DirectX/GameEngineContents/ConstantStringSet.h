@@ -9,7 +9,7 @@
 #define PHYSX_GRAVITY -50.48f
 
 // 플레이어 최대속력
-#define PLAYER_MAX_SPEED 20.0f
+#define PLAYER_MAX_SPEED 25.0f
 
 //플레이어 점프힘
 #define PLAYER_JUMP_FORCE 10.0f
