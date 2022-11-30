@@ -103,9 +103,6 @@ void PlayerActor::LevelStartEvent()
 	// LevelStartEvent에서 플레이어를 생성하고 위치를 재지정하는 함수
 	DynamicActorComponent_->SetPlayerStartPos(GetTransform().GetWorldPosition());
 
-	//ForwardVector를 구하기위한 카메라 암을 가져오는 작업
-	CamArm_ = dynamic_cast<StageParentLevel*>(GetLevel())->GetCameraArm();
-	CamHolderCollision_ = CamArm_->GetCamHolderCollision();
 
 }
 
@@ -119,7 +116,6 @@ void PlayerActor::InputController(float _DeltaTime)
 
 	float4 tmpMoveSpeed = float4::ZERO;
 	MoveDir_ = float4::ZERO;
-	CamHolderCollision_->GetTransform().GetForwardVector();
 
 	if (true == GameEngineInput::GetInst()->IsPress(KEY_W))
 	{

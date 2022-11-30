@@ -37,10 +37,6 @@ private:
 	float4 CheckPointPos_;
 	bool CheckPointFlag_;
 
-	//카메라 암
-	std::shared_ptr<CameraArm> CamArm_;
-	std::shared_ptr<GameEngineCollision> CamHolderCollision_;
-
 	// FSM
 private:
 	GameEngineStateManager PlayerStateManager_;
