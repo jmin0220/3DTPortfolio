@@ -4,6 +4,7 @@
 #include "Cursor.h"
 
 TitleLevel::TitleLevel() 
+	: EnterDown_(false)
 {
 }
 
@@ -23,8 +24,9 @@ void TitleLevel::Update(float _DeltaTime)
 		GEngine::ChangeLevel(LEVEL_NAME_LOBBY);
 	}
 
-	if (true == GameEngineInput::GetInst()->IsDown(KEY_ENTER))
+	if (false == EnterDown_ && true == GameEngineInput::GetInst()->IsDown(KEY_ENTER))
 	{
+		EnterDown_ = true;
 		ContentsCore::GetInst()->ChangeLevelByThread(LEVEL_NAME_LOBBY);
 	}
 
@@ -36,6 +38,8 @@ void TitleLevel::End()
 
 void TitleLevel::LevelStartEvent()
 {
+	EnterDown_ = false;
+
 	TitleLogo = CreateActor<TitleActor>();
 
 	Mouse = CreateActor<Cursor>();

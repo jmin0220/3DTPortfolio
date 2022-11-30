@@ -27,5 +27,7 @@ protected:
 private:
 	std::shared_ptr<TitleActor> TitleLogo;
 	std::shared_ptr<Cursor> Mouse;
+
+	bool EnterDown_;
 };
 

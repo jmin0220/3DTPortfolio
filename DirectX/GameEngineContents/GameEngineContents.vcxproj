@@ -249,6 +249,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="GameManagerGUI.h" />
+    <ClInclude Include="GameServerGUI.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="GameSuccess.h">
       <SubType>
       </SubType>
@@ -606,6 +610,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="GameManagerGUI.cpp" />
+    <ClCompile Include="GameServerGUI.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GameSuccess.cpp">
       <SubType>
       </SubType>

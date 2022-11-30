@@ -543,6 +543,9 @@
     <ClInclude Include="Chevron.h">
       <Filter>02_Actor\Stage01Actor\Object</Filter>
     </ClInclude>
+    <ClInclude Include="GameServerGUI.h">
+      <Filter>98_LevelGUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -892,6 +895,9 @@
     </ClCompile>
     <ClCompile Include="Chevron.cpp">
       <Filter>02_Actor\Stage01Actor\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="GameServerGUI.cpp">
+      <Filter>98_LevelGUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
