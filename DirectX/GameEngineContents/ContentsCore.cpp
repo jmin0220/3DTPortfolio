@@ -33,16 +33,14 @@ std::vector<GameEngineLevel*> ContentsCore::GameLevels_;
 void ContentsCore::ChangeLevelByLoading(std::string_view _Level)
 {
 	// 로딩레벨로 일단 감, 다음 스테이지를 곁들인...
-	LoadingSize_ = 0;
-	LoadingProgress_ = 0;
+	InitLoadingProgress();
 	LoadingLevel::SetLoadingStage(_Level);
 	ChangeLevel(LEVEL_NAME_LOADING);
 }
 
 void ContentsCore::ChangeLevelByThread(std::string_view _Level)
 {
-	LoadingSize_ = 0;
-	LoadingProgress_ = 0;
+	InitLoadingProgress();
 	
 	GameEngineCore::EngineThreadPool.Work(
 		[=]()
@@ -144,6 +142,10 @@ void ContentsCore::CreateLevels()
 		GameLevels_.push_back(Level);
 	}
 	{
+		GameEngineLevel* Level = CreateLevel<FallingLevel>(LEVEL_NAME_FALLING);
+		GameLevels_.push_back(Level);
+	}
+	{
 		GameEngineLevel* Level = CreateLevel<LoadingLevel>(LEVEL_NAME_LOADING);
 		GameLevels_.push_back(Level);
 	}
@@ -163,10 +165,7 @@ void ContentsCore::CreateLevels()
 		GameEngineLevel* Level = CreateLevel<WinnerLevel>(LEVEL_NAME_WINNER);
 		GameLevels_.push_back(Level);
 	}
-	{
-		GameEngineLevel* Level = CreateLevel<FallingLevel>(LEVEL_NAME_FALLING);
-		GameLevels_.push_back(Level);
-	}
+	
 
 	for (GameEngineLevel* Level : GameLevels_)
 	{
@@ -329,6 +328,10 @@ void ContentsCore::LoadLevelResource(LEVELS _LEVEL)
 		ResLoadLobby(Dir);
 		break;
 	case LEVELS::LOADING:
+		break;
+	case LEVELS::FALLING:
+		Dir.Move(DIR_LEVEL_FALLING);
+		ResLoadLobby(Dir);
 		break;
 	case LEVELS::STAGE01_DOORDASH:
 		Dir.Move(DIR_LEVEL_STAGE01);
@@ -509,6 +512,10 @@ LEVELS ContentsCore::StringLevelToLEVELS(std::string_view _StringLevel)
 	{
 		return LEVELS::LOBBY;
 	}
+	else if (0 == Level.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_FALLING)))
+	{
+		return LEVELS::FALLING;
+	}
 	else if (0 == Level.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_DOORDASH)))
 	{
 		return LEVELS::STAGE01_DOORDASH;
@@ -534,6 +541,10 @@ std::string_view ContentsCore::StringLevelToStringSetLevel(std::string_view _Str
 	if (0 == _StringLevel.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_LOBBY)))
 	{
 		return LEVEL_NAME_LOBBY;
+	}
+	else if (0 == _StringLevel.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_FALLING)))
+	{
+		return LEVEL_NAME_FALLING;
 	}
 	else if (0 == _StringLevel.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_DOORDASH)))
 	{

@@ -63,6 +63,7 @@ enum class LEVELS
 	MAP_EDITOR,
 	LOBBY,
 	LOADING,
+	FALLING,
 
 	// ¿¹½Ã
 	//PLAY_STAGE_???,

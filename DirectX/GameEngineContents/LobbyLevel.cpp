@@ -30,9 +30,14 @@ void LobbyLevel::Start()
 void LobbyLevel::Update(float _DeltaTime)
 {
 	std::weak_ptr<PlayButton> tmpPlayButton = LobbySet_->GetPlayButton();
-	if (tmpPlayButton.lock()->GetIsLevelChange() == true)
+	if (ContentsCore::GetInst()->GetLoadingProgress() >= 0.999f)
 	{
-		GEngine::ChangeLevel(LEVEL_NAME_HEXAGONE);
+		GEngine::ChangeLevel(LEVEL_NAME_FALLING);
+	}
+
+	if (true == tmpPlayButton.lock()->GetIsLevelChange())
+	{
+		ContentsCore::GetInst()->ChangeLevelByThread(LEVEL_NAME_FALLING);
 	}
 }
 
@@ -42,6 +47,8 @@ void LobbyLevel::End()
 
 void LobbyLevel::LevelStartEvent()
 {
+	ContentsCore::GetInst()->InitLoadingProgress();
+
 	GetMainCamera()->SetProjectionMode(CAMERAPROJECTIONMODE::PersPective);
 
 	//ContentsCore::GetInst()->LoadLevelResource(LEVELS::LOBBY);//경로설정

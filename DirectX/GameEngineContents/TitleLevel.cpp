@@ -38,6 +38,8 @@ void TitleLevel::End()
 
 void TitleLevel::LevelStartEvent()
 {
+	ContentsCore::GetInst()->InitLoadingProgress();
+
 	EnterDown_ = false;
 
 	TitleLogo = CreateActor<TitleActor>();

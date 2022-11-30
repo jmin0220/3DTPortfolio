@@ -20,6 +20,12 @@ public:
 	std::string_view StringLevelToStringSetLevel(std::string_view _StringLevel);
 
 	// 리소스 로딩 현황 알려줌 Return : 0 ~ 1
+	void InitLoadingProgress()
+	{
+		LoadingSize_ = 0;
+		LoadingProgress_ = 0;
+	}
+
 	float GetLoadingProgress()
 	{
 		if (LoadingSize_ < 1)
