@@ -66,7 +66,7 @@ public:
 
 	void SwitchSpeedLimit()
 	{
-		!IsSpeedLimit_;
+		IsSpeedLimit_ = !IsSpeedLimit_;
 	}
 protected:
 	void Start() override;
@@ -85,13 +85,13 @@ private:
 
 	bool IsSpeedLimit_;
 
-	float SnowManHeight_;
 	// 이 컴포넌트를 가지고 있는 Parent에 대한 정보
 	std::weak_ptr<GameEngineActor> ParentActor_;
 
 	physx::PxVec3 GeoMetryScale_;
 
-	float4 InitFallGuyRotation;
+	//속도제한 함수
+	void SpeedLimit();
 
 };
 

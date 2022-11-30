@@ -58,6 +58,11 @@ public:
 	StageParentLevel& operator=(const StageParentLevel& _Other) = delete;
 	StageParentLevel& operator=(StageParentLevel&& _Other) noexcept = delete;
 
+	std::shared_ptr<CameraArm> GetCameraArm()
+	{
+		return CameraArm_;
+	}
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;

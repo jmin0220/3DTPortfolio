@@ -24,7 +24,7 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 		physx::PxQuat(tmpQuat.x, tmpQuat.y, tmpQuat.z, tmpQuat.w));
 
 	// 마찰, 탄성계수
-	material_ = _physics->createMaterial(0.6f, 0.6f, 0.0f);
+	material_ = _physics->createMaterial(0.0f, 0.0f, 0.0f);
 
 	// TODO::배율을 적용할 경우 이쪽 코드를 사용
 	//float4 tmpMagnification = { SIZE_MAGNIFICATION_RATIO };
@@ -220,25 +220,11 @@ void PhysXDynamicActorComponent::Update(float _DeltaTime)
 	ParentActor_.lock()->GetTransform().SetWorldPosition(tmpWorldPos);
 	ParentActor_.lock()->GetTransform().SetWorldRotation(tmpWorldRot);
 
+
 	if (IsSpeedLimit_ == true)
 	{
-		physx::PxVec3 Velo = dynamic_->getLinearVelocity();
-
-		if (std::abs(Velo.x) > PLAYER_MAX_SPEED)
-		{
-			int k = (Velo.x > 0) ? 1 : ((Velo.x < 0) ? -1 : 0);
-			Velo.x = PLAYER_MAX_SPEED * k;
-		}
-
-		if (std::abs(Velo.z) > PLAYER_MAX_SPEED)
-		{
-			int k = (Velo.z > 0) ? 1 : ((Velo.z < 0) ? -1 : 0);
-			Velo.z = PLAYER_MAX_SPEED * k;
-		}
-
-		dynamic_->setLinearVelocity(Velo);
+		SpeedLimit();
 	}
-
 
 }
 
@@ -272,6 +258,35 @@ void PhysXDynamicActorComponent::SetPlayerStartPos(float4 _Pos)
 bool PhysXDynamicActorComponent::PlayerStandUp()
 {
 	return false;
+}
+
+void PhysXDynamicActorComponent::SpeedLimit()
+{
+	physx::PxVec3 Velo = dynamic_->getLinearVelocity();
+	physx::PxVec2 Velo2D(Velo.x, Velo.z);
+
+	if (Velo2D.magnitude() > PLAYER_MAX_SPEED)
+	{
+		Velo2D.normalize();
+		Velo2D *= PLAYER_MAX_SPEED;
+		Velo.x = Velo2D.x;
+		Velo.z = Velo2D.y;
+
+		dynamic_->setLinearVelocity(Velo);
+	}
+	//if (std::abs(Velo.x) > PLAYER_MAX_SPEED)
+	//{
+	//	int k = (Velo.x > 0) ? 1 : ((Velo.x < 0) ? -1 : 0);
+	//	Velo.x = PLAYER_MAX_SPEED * k;
+	//}
+
+	//if (std::abs(Velo.z) > PLAYER_MAX_SPEED)
+	//{
+	//	int k = (Velo.z > 0) ? 1 : ((Velo.z < 0) ? -1 : 0);
+	//	Velo.z = PLAYER_MAX_SPEED * k;
+	//}
+	////Velo.normalize();
+	//dynamic_->setLinearVelocity(Velo);
 }
 
 

@@ -13,6 +13,11 @@ public:
 		return CameraArm_;
 	}
 
+	std::shared_ptr<GameEngineCollision> GetCamHolderCollision()
+	{
+		return CamHolderCollision_;
+	}
+
 public:
 	// constrcuter destructer
 	CameraArm();

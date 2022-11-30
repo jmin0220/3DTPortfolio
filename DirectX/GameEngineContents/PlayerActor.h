@@ -2,6 +2,7 @@
 //#include "PhysXCCTActorComponent.h"
 #include "PhysXDynamicActorComponent.h"
 
+class CameraArm;
 // 설명 :
 class PlayerActor : public GameEngineActor
 {
@@ -35,6 +36,10 @@ private:
 	//CheckPoint Position
 	float4 CheckPointPos_;
 	bool CheckPointFlag_;
+
+	//카메라 암
+	std::shared_ptr<CameraArm> CamArm_;
+	std::shared_ptr<GameEngineCollision> CamHolderCollision_;
 
 	// FSM
 private:
