@@ -69,6 +69,7 @@
 #define LEVEL_NAME_TITLE "TitleLevel"
 #define LEVEL_NAME_LOBBY "LobbyLevel"
 #define LEVEL_NAME_WINNER "WinnerLevel"
+#define LEVEL_NAME_FALLING "FallingLevel"
 #define LEVEL_NAME_LOADING "Loading"
 #define LEVEL_NAME_MAP_EDITER "MapEditorLevel"
 #define LEVEL_NAME_PHYSICS_TEST "PhysicsTestLevel"

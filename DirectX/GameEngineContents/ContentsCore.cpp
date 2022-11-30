@@ -4,6 +4,7 @@
 #include "LobbyLevel.h"
 #include "LoadingLevel.h"
 #include "WinnerLevel.h"
+#include "FallingLevel.h"
 #include "MapEditorLevel.h"
 #include "MapEditorGUI.h"
 #include "PhysicsTestLevel.h"
@@ -160,6 +161,10 @@ void ContentsCore::CreateLevels()
 	}
 	{
 		GameEngineLevel* Level = CreateLevel<WinnerLevel>(LEVEL_NAME_WINNER);
+		GameLevels_.push_back(Level);
+	}
+	{
+		GameEngineLevel* Level = CreateLevel<FallingLevel>(LEVEL_NAME_FALLING);
 		GameLevels_.push_back(Level);
 	}
 

@@ -296,7 +296,7 @@ void CountDown::CountDownStart()
 		{
 			One_->Off();
 
-			if (IsAniOn_ == false)
+ 			if (IsAniOn_ == false)
 			{
 				PopAni1_->On();
 				PopAni2_->On();

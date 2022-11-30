@@ -68,8 +68,6 @@ void LobbyLevel::LevelEndEvent()
 
 	Player_->Death();
 
-	//Test_->Death();
-
 	Mouse->Death();
 
 	ContentsCore::GetInst()->ReleaseCurLevelResource();

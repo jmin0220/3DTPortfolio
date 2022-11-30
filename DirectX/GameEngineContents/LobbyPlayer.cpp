@@ -37,12 +37,19 @@ void LobbyPlayer::SetCharacterAnimation()
 		GameEngineRenderingEvent{ "Character_Idle_A.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
 	FBXRenderer_->CreateFBXAnimation("Win",
 		GameEngineRenderingEvent{ "Character_Victory_Default_A.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
-	FBXRenderer_->ChangeAnimation("Idle");
+	FBXRenderer_->CreateFBXAnimation("Fall",
+		GameEngineRenderingEvent{ "Character_LobbyDive_A.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
+	FBXRenderer_->ChangeAnimation("Fall");
 }
 
 void LobbyPlayer::ChangeAnimationWin()
 {
 	FBXRenderer_->ChangeAnimation("Win");
+}
+
+void LobbyPlayer::ChangeAnimationFall()
+{
+	FBXRenderer_->ChangeAnimation("Fall");
 }
 // 텍스처 세팅
 // 캐릭터 스킨
