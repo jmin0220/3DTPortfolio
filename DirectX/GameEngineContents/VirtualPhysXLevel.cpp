@@ -178,57 +178,6 @@ void VirtualPhysXLevel::cleanupPhysics(bool _Interactive)
 	Foundation_ = nullptr;
 }
 
-void CustomSimulationEventCallback::onContact(const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs)
-{
-	//for (physx::PxU32 i = 0; i < nbPairs; i++)
-	//{
-	//	const physx::PxContactPair& cp = pairs[i];
-
-	//	if (cp.events & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
-	//	{
-	//		// 충돌체중에 Player가 존재하는지 체크
-	//		if ((pairHeader.actors[0] == PlayerDynamic_) || (pairHeader.actors[1] == PlayerDynamic_))
-	//		{
-	//			// 플레이어가 아닌 액터를 판별 -> 딱히 필요없을지도?
-	//			physx::PxActor* otherActor = (PlayerDynamic_ == pairHeader.actors[0]) ? pairHeader.actors[1] : pairHeader.actors[0];
-
-	//			// TODO::바닥과 플레이어 충돌했을때 해야할일추가
-
-	//			break;
-	//		}
-	//	}
-	//}
-	while (nbPairs--)
-	{
-		const physx::PxContactPair& current = *pairs++;
-
-		// The reported pairs can be trigger pairs or not. We only enabled contact reports for
-		// trigger pairs in the filter shader, so we don't need to do further checks here. In a
-		// real-world scenario you would probably need a way to tell whether one of the shapes
-		// is a trigger or not. You could e.g. reuse the PxFilterData like we did in the filter
-		// shader, or maybe use the shape's userData to identify triggers, or maybe put triggers
-		// in a hash-set and test the reported shape pointers against it. Many options here.
-			//	if (cp.events & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
-
-		// 충돌체중에 Player가 존재하는지 체크
-		if ((pairHeader.actors[0] == PlayerDynamic_) || (pairHeader.actors[1] == PlayerDynamic_))
-		{
-			// 플레이어가 아닌 액터를 판별 -> 딱히 필요없을지도?
-			physx::PxActor* otherActor = (PlayerDynamic_ == pairHeader.actors[0]) ? pairHeader.actors[1] : pairHeader.actors[0];
-
-			// TODO::바닥과 플레이어 충돌했을때 해야할일추가
-
-			break;
-		}
-
-
-		if (current.events & (physx::PxPairFlag::eNOTIFY_TOUCH_FOUND | physx::PxPairFlag::eNOTIFY_TOUCH_CCD))
-			printf("Shape is entering trigger volume\n");
-		if (current.events & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
-			printf("Shape is leaving trigger volume\n");
-	}
-}
-
 void CustomSimulationEventCallback::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)
 {
 	while (count--)
@@ -244,11 +193,30 @@ void CustomSimulationEventCallback::onTrigger(physx::PxTriggerPair* pairs, physx
 		{
 			tmpOtherActor.getShapes(&shape, 1, i);
 
+			// 나와 충돌한 shape가 Dynamic이라면 hit처리
+			physx::PxRigidDynamic* actor = shape->getActor()->is<physx::PxRigidDynamic>();
+			if (actor)
+			{
+				int a = 0;
+
+				// 날아가는 처리는 physx에 맡기는게 낫나?
+				//if (hit.dir.y == 0.0f)
+				//{
+				//	physx::PxReal coeff = actor->getMass() * hit.length;
+				//	physx::PxRigidBodyExt::addForceAtLocalPos(*actor, hit.dir * coeff, physx::PxVec3(0, 0, 0), physx::PxForceMode::eIMPULSE);
+				//}
+			}
+
+
+			// 나와 충돌한 shape가 Static이라면 지면 처리등
+			// Static은 충돌처리를 하지 않음
 			// retrieve current group mask
 			physx::PxFilterData resultFd = shape->getSimulationFilterData();
 
+			// C26813  : 비트플래그로 사용된 enum끼리의 비교는 == 이 아닌 bitwise and(&)로 비교하는 것이 좋음
+			// WARNING : resultFd.word0 == static_cast<physx::PxU32>(PhysXFilterGroup::Ground
 			// 충돌체의 filterData가 ground이면서 닿았을 경우
-			if (resultFd.word0 == static_cast<physx::PxU32>(PhysXFilterGroup::Ground)
+			if (resultFd.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::Ground)
 				&& current.status & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
 			{
 				// TODO::닿았을때 처리
@@ -256,7 +224,7 @@ void CustomSimulationEventCallback::onTrigger(physx::PxTriggerPair* pairs, physx
 			}
 
 			// 충돌체의 filterData가 ground이면서 떨어졌을 경우
-			if (resultFd.word0 == static_cast<physx::PxU32>(PhysXFilterGroup::Ground)
+			if (resultFd.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::Ground)
 				&& current.status & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
 			{
 				// TODO::떨어졌을 때 처리
@@ -267,24 +235,24 @@ void CustomSimulationEventCallback::onTrigger(physx::PxTriggerPair* pairs, physx
 }
 
 
-physx::PxFilterFlags CustomFilterShader(physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0, physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1, physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize)
-{
-	// SampleSubmarineFilterShader로부터 가져옴
-	// 
-	// let triggers through
-	if (physx::PxFilterObjectIsTrigger(attributes0) || physx::PxFilterObjectIsTrigger(attributes1))
-	{
-		pairFlags = physx::PxPairFlag::eTRIGGER_DEFAULT;
-		return physx::PxFilterFlag::eDEFAULT;
-	}
-	// generate contacts for all that were not filtered above
-	pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
-
-	// trigger the contact callback for pairs (A,B) where 
-	// the filtermask of A contains the ID of B and vice versa.
-	if ((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1))
-		pairFlags |= physx::PxPairFlag::eNOTIFY_TOUCH_FOUND;
-
-	return physx::PxFilterFlag::eDEFAULT;
-}
-
+//physx::PxFilterFlags CustomFilterShader(physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0, physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1, physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize)
+//{
+//	// SampleSubmarineFilterShader로부터 가져옴
+//	// 
+//	// let triggers through
+//	if (physx::PxFilterObjectIsTrigger(attributes0) || physx::PxFilterObjectIsTrigger(attributes1))
+//	{
+//		pairFlags = physx::PxPairFlag::eTRIGGER_DEFAULT;
+//		return physx::PxFilterFlag::eDEFAULT;
+//	}
+//	// generate contacts for all that were not filtered above
+//	pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
+//
+//	// trigger the contact callback for pairs (A,B) where 
+//	// the filtermask of A contains the ID of B and vice versa.
+//	if ((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1))
+//		pairFlags |= physx::PxPairFlag::eNOTIFY_TOUCH_FOUND;
+//
+//	return physx::PxFilterFlag::eDEFAULT;
+//}
+//

@@ -11,7 +11,7 @@ public:
 		PlayerDynamic_ = _Dynamic;
 	}
 
-	void onContact(const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs) override;
+	void onContact(const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs) override {};
 
 	void onConstraintBreak(physx::PxConstraintInfo* constraints, physx::PxU32 count) override {};
 	void onWake(physx::PxActor** actors, physx::PxU32 count) override {};
