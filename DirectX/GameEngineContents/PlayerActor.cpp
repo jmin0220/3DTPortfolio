@@ -39,7 +39,7 @@ void PlayerActor::Start()
 	EventCol_ = CreateComponent<GameEngineCollision>();
 	EventCol_->ChangeOrder(CollisionGroup::Player);
 	EventCol_->GetTransform().SetWorldScale({ PLAYER_COL_SCALE });
-	EventCol_->GetTransform().SetLocalPosition({ 0,2.0f,0 });
+	EventCol_->GetTransform().SetLocalPosition({ 0.0f, -5.0f, 0.0f });
 
 
 	// FSM

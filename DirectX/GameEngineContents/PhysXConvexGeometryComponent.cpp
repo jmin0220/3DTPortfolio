@@ -34,11 +34,6 @@ void PhysXConvexGeometryComponent::CreatePhysXActors(const std::string& _MeshNam
 								   _GeoMetryScale.y * 0.5f,
 								   _GeoMetryScale.z * 0.5f);
 
-	// 충돌체의 형태
-	// 충돌체의 크기는 절반의 크기를 설정하므로 실제 Renderer의 스케일은 충돌체의 2배로 설정되어야 함
-	// TODO::부모 액터의 RenderUnit으로부터 Mesh의 Scale 과 WorldScale의 연산의 결과를 지오메트리의 Scale로 세팅해야함.
-	//shape_ = _physics->createShape();
-
 	const physx::PxVec3 convexVerts[] = { physx::PxVec3(0,1,0),physx::PxVec3(1,0,0),physx::PxVec3(-1,0,0),physx::PxVec3(0,0,1),
 	physx::PxVec3(0,0,-1) };
 
@@ -57,26 +52,16 @@ void PhysXConvexGeometryComponent::CreatePhysXActors(const std::string& _MeshNam
 	physx::PxDefaultMemoryInputData input(buf.getData(), buf.getSize());
 	physx::PxConvexMesh* convexMesh = _physics->createConvexMesh(input);
 
-	shape_ = _physics->createShape(physx::PxConvexMeshGeometry(convexMesh), *material_);
-	shape_->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
-	//// 충돌체의 종류
-	//dynamic_ = _physics->createRigidDynamic(localTm);
-	//dynamic_->attachShape(*shape_);
-	//// 중력이 적용되지 않도록
-	//// TODO::RigidStatic으로 변경해야
-	//dynamic_->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, true);
-
-	//// RigidDynamic의 밀도를 설정
-	//physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 10.0f);
-
-	//// Scene에 액터 추가
-	//_Scene->addActor(*dynamic_);
-
 	// 충돌체의 종류
 	rigidStatic_ = _physics->createRigidStatic(localTm);
 
-	rigidStatic_->attachShape(*shape_);
+	// 충돌체의 형태
+	// 충돌체의 크기는 절반의 크기를 설정하므로 실제 Renderer의 스케일은 충돌체의 2배로 설정되어야 함
+	shape_ = physx::PxRigidActorExt::createExclusiveShape(*rigidStatic_, physx::PxConvexMeshGeometry(convexMesh), *material_);
 
+	shape_->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
+
+	//createExclusiveShapefh RigidStatic에 Shape를 넣어준다.
 	// Scene에 액터 추가
 	_Scene->addActor(*rigidStatic_);
 }
@@ -89,23 +74,10 @@ void PhysXConvexGeometryComponent::Start()
 
 void PhysXConvexGeometryComponent::Update(float _DeltaTime)
 {
-	// TODO::static은 변경되지 않으니 Update할 필요가 없을지도
-	// PhysX Actor의 상태에 맞춰서 부모의 Transform정보를 갱신
-	//float4 tmpWorldPos = { rigidStatic_->getGlobalPose().p.x
-	//, rigidStatic_->getGlobalPose().p.y
-	//, rigidStatic_->getGlobalPose().p.z };
-
-	//float4 tmpWorldRot = { rigidStatic_->getGlobalPose().q.x
-	//, rigidStatic_->getGlobalPose().q.y
-	//, rigidStatic_->getGlobalPose().q.z };
-
-	//ParentActor_.lock()->GetTransform().SetWorldPosition(tmpWorldPos);
-	//ParentActor_.lock()->GetTransform().SetWorldRotation(tmpWorldRot);
 }
 
 void PhysXConvexGeometryComponent::CustomFBXLoad(const std::string& _MeshName)
 {
-
 	GameEngineDirectory Dir;
 
 	Dir.MoveParentToExitsChildDirectory(DIR_RESOURCES);

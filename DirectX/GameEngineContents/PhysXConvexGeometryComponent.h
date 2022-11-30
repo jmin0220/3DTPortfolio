@@ -24,8 +24,9 @@ public:
 	{
 		if (true == rigidStatic_->isReleasable())
 		{
-			rigidStatic_->release();
-			ParentActor_.lock()->Death();
+			// TODO::실제로 release하면 OnTrigger에서 터짐
+			rigidStatic_->setGlobalPose(physx::PxTransform(1000.0f, 1000.0f, 1000.0f));
+			ParentActor_.lock()->Off();
 		}
 	}
 
