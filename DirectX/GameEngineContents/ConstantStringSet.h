@@ -63,6 +63,7 @@
 
 //JSON
 #define JSON_NAME_DOORDASH "\\DoorDash.Json"
+#define JSON_NAME_HEXAGONE "\\HexAGone.json"
 
 
 

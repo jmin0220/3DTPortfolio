@@ -37,6 +37,9 @@ private:
 	float4 CheckPointPos_;
 	bool CheckPointFlag_;
 
+	//Race∏ ø°º≠º≠¿« Goal Check  ∞Ò¿Œ«ﬂ¿∏∏È IsGoal == true
+	bool IsGoal_;
+
 	// FSM
 private:
 	GameEngineStateManager PlayerStateManager_;
@@ -90,10 +93,19 @@ public:
 		CheckPointPos_ = _Pos;
 	}
 
+	inline void SetIsGoal()
+	{
+		IsGoal_ = !IsGoal_;
+	}
 
 	inline void SetFlag()
 	{
 		CheckPointFlag_ = !CheckPointFlag_;
+	}
+
+	inline bool GetIsGoal()
+	{
+		return IsGoal_;
 	}
 
 	inline bool GetFlag()

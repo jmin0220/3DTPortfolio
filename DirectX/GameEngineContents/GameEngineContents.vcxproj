@@ -281,7 +281,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Hex_ProPeller.h">
+    <ClInclude Include="HexProPeller.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -290,6 +290,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="HexAGoneLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="JumboTron.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -662,7 +666,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Hex_ProPeller.cpp">
+    <ClCompile Include="HexProPeller.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -671,6 +675,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="HexAGoneLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="JumboTron.cpp">
       <SubType>
       </SubType>
     </ClCompile>

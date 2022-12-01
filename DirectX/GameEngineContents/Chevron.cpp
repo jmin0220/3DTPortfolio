@@ -1,9 +1,14 @@
 #include "PreCompile.h"
 #include "Chevron.h"
 
+int Chevron::Num = 0;
+
 Chevron::Chevron() :
 	RotY(420.0f)
 {
+
+	Num++;
+	MyNum = Num;
 }
 
 Chevron::~Chevron() 
@@ -24,7 +29,13 @@ void Chevron::Start()
 
 void Chevron::Update(float _DeltaTime)
 {
-
-	PropellerRenderer_->GetTransform().SetLocalRotate({ 0,RotY * _DeltaTime ,0 });
+	if (MyNum >= 7)
+	{
+		PropellerRenderer_->GetTransform().SetLocalRotate({ 0,RotY * -_DeltaTime ,0 });
+	}
+	else
+	{
+		PropellerRenderer_->GetTransform().SetLocalRotate({ 0,RotY * _DeltaTime ,0 });
+	}
 }
 

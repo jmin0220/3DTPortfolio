@@ -23,6 +23,16 @@ enum class Stage_MeshEnum
 	// STAGE04
 	HexAGoneMap,
 	HexTile,
+	HexProPeller,
+	JumboTronProPeller,
+	JumboTron1,
+	JumboTron2,
+	JumboTron3,
+	JumboTron4,
+	JumboTron5,
+	JumboTron6,
+	JumboTron7,
+
 	// TEST
 	Rainbow,
 	TestMap,

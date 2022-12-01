@@ -35,8 +35,6 @@ void Col_CheckPoint::LevelStartEvent()
 
 CollisionReturn Col_CheckPoint::CheckCol(std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other)
 {
-	int a = 0;
-
 	if (_Other->GetActor()->CastThis<PlayerActor>()->GetFlag() == false)
 	{
 		std::shared_ptr<PlayerActor> Player_ = _Other->GetActor()->CastThis<PlayerActor>();
