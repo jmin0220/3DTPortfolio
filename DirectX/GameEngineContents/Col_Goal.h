@@ -22,5 +22,7 @@ protected:
 	void LevelStartEvent() override;
 private:
 	std::shared_ptr<GameEngineCollision> GoalCol_;
+
+	CollisionReturn CheckCol(std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other);
 };
 

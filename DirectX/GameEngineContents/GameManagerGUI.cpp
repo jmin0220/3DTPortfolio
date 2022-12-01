@@ -34,6 +34,20 @@ void GameManagerGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 		GEngine::GetCurrentLevel()->GetMainCameraActor()->FreeCameraModeOnOff();
 	}
 
+	// 카메라 월드 위치
+	ImGui::SameLine();
+	{
+		float4 Pos = GEngine::GetCurrentLevel()->GetMainCameraActorTransform().GetWorldPosition();
+		std::string Name = "MainCameraActorPos : " + std::to_string(Pos.x) + " : " + std::to_string(Pos.y) + " : " + std::to_string(Pos.z);
+		ImGui::Text(Name.c_str());
+	}
+	ImGui::SameLine();
+	{
+		float4 Rot = GEngine::GetCurrentLevel()->GetMainCameraActorTransform().GetWorldRotation();
+		std::string Name = "MainCameraActorRot : " + std::to_string(Rot.x) + " : " + std::to_string(Rot.y) + " : " + std::to_string(Rot.z);
+		ImGui::Text(Name.c_str());
+	}
+
 	ImGui::Text("TestLevel Select");
 	for (GameEngineLevel* Level : ContentsCore::TestLevels_)
 	{

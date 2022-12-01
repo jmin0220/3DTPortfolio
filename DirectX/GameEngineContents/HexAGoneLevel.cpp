@@ -49,12 +49,8 @@ void HexAGoneLevel::LevelStartEvent()
 	//Tiles_ = CreateActor<HexTile>();
 	//Tiles_->GetTransform().SetWorldPosition({ 0,300.0f,0 });
 
-	Player_ = CreateActor<PlayerActor>();//김예나 : 생성 순간 변경(Start에다 해두면 레벨 다시 들어올 때 터져용)
 	// InitPhysic는 레벨이 시작될때 실행되므로 LevelStartEvent가 실행되기 전에 포지션을 결정해야함.
 	Player_->GetTransform().SetWorldPosition({ 0.0f, 400.0f, 0.0f });
-
-	// *플레이어 생성 후 카메라암 세팅 해줘야함*
-	CameraArm_->SetFollowCamera(GetMainCameraActor(), Player_);
 
 	float XPos = 0;
 	float ZPos = 0;
@@ -141,5 +137,4 @@ void HexAGoneLevel::LevelStartEvent()
 void HexAGoneLevel::LevelEndEvent()
 {
 	StageParentLevel::LevelEndEvent();
-	Player_->Death();//김예나 : 추가
 }

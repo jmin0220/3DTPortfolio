@@ -20,6 +20,11 @@ protected:
 	void OnGUI(GameEngineLevel* _Level, float _DeltaTime) override;
 
 private:
+	void LobbyGUI();
+	void ServerGUI();
+
+private:
+	class GameEngineLevel* ServerLevel_;
 
 };
 

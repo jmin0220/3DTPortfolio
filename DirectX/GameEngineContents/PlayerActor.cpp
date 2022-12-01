@@ -11,7 +11,8 @@ float AngularSpeed = 90.0f;
 
 PlayerActor::PlayerActor() :
 	CheckPointFlag_(false),
-	CheckPointPos_(float4::ZERO)
+	CheckPointPos_(float4::ZERO),
+	IsGoal_(false)
 {
 }
 

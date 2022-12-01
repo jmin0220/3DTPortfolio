@@ -709,6 +709,51 @@ void MapEditorGUI::CreateFBXMesh()
 		NewObj.Actor_.lock()->SetStaticMesh("MovingBar.FBX");
 		break;
 	}
+	case MeshEnum::HexProPeller:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("HexProPeller.FBX");
+		break;
+	}
+	case MeshEnum::JumboTronProPeller:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("JumboTronProPeller.FBX");
+		break;
+	}
+	case MeshEnum::JumboTron1:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("JumboTron1.FBX");
+		break;
+	}
+	case MeshEnum::JumboTron2:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("JumboTron2.FBX");
+		break;
+	}
+	case MeshEnum::JumboTron3:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("JumboTron3.FBX");
+		break;
+	}
+	case MeshEnum::JumboTron4:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("JumboTron4.FBX");
+		break;
+	}
+	case MeshEnum::JumboTron5:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("JumboTron5.FBX");
+		break;
+	}
+	case MeshEnum::JumboTron6:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("JumboTron6.FBX");
+		break;
+	}
+	case MeshEnum::JumboTron7:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("JumboTron7.FBX");
+		break;
+	}
 	case MeshEnum::TestMap:
 	{
 		NewObj.Actor_.lock()->SetStaticMesh("TestMap.FBX");

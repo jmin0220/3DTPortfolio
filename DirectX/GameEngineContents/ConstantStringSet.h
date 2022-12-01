@@ -25,7 +25,6 @@
 #define DIR_TESTLEVELS "Levels\\TestLevels"
 #define DIR_JSONTEST "JsonTest"
 #define DIR_LEVEL_LOBBY "Levels\\LobbyLevel"
-#define DIR_LEVEL_FALLING "Levels\\FallingLevel"
 #define DIR_LEVEL_STAGE01 "Levels\\StageLevel\\Stage01"
 #define DIR_LEVEL_STAGE02 "Levels\\StageLevel\\Stage02"
 #define DIR_LEVEL_STAGE03 "Levels\\StageLevel\\Stage03"
@@ -64,6 +63,7 @@
 
 //JSON
 #define JSON_NAME_DOORDASH "\\DoorDash.Json"
+#define JSON_NAME_HEXAGONE "\\HexAGone.json"
 
 
 
@@ -71,7 +71,6 @@
 #define LEVEL_NAME_TITLE "TitleLevel"
 #define LEVEL_NAME_LOBBY "LobbyLevel"
 #define LEVEL_NAME_WINNER "WinnerLevel"
-#define LEVEL_NAME_FALLING "FallingLevel"
 #define LEVEL_NAME_LOADING "Loading"
 #define LEVEL_NAME_MAP_EDITER "MapEditorLevel"
 #define LEVEL_NAME_PHYSICS_TEST "PhysicsTestLevel"

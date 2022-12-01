@@ -1,20 +1,28 @@
 #include "PreCompile.h"
 #include "StageParentLevel.h"
 #include "TestRainBow.h"
+
+//load objects
 #include "DoorBlock.h"
 #include "TestMapActor.h"
 #include "Col_StartPos.h"
 #include "Col_Trigger.h"
 #include "MovingBar.h"
 #include "Chevron.h"
+#include "HexProPeller.h"
+#include "JumboTron.h"
 #include "Col_Goal.h"
 #include "Col_CheckPoint.h"
+
+
+
 #include <GameEngineBase/magic_enum.hpp>
 #include <GameEngineCore/ThirdParty/inc/json.h>
 #include <GameEngineCore/CoreMinimal.h>
 #include <iostream>
 #include <fstream>
 #include "InGameSetUI.h"
+#include "PlayerActor.h"
 
 float4 StageParentLevel::PlayerPos = float4::ZERO;
 
@@ -37,6 +45,10 @@ void StageParentLevel::Start()
 		, std::bind(&StageParentLevel::IdleUpdate, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&StageParentLevel::IdleStart, this, std::placeholders::_1));
 
+	StageStateManager_.CreateStateMember("StagePreView"
+		, std::bind(&StageParentLevel::StagePreViewUpdate, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&StageParentLevel::StagePreViewStart, this, std::placeholders::_1));
+
 	StageStateManager_.CreateStateMember("Ready"
 		, std::bind(&StageParentLevel::ReadyUpdate, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&StageParentLevel::ReadyStart, this, std::placeholders::_1));
@@ -48,8 +60,6 @@ void StageParentLevel::Start()
 	StageStateManager_.CreateStateMember("End"
 		, std::bind(&StageParentLevel::EndUpdate, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&StageParentLevel::EndStart, this, std::placeholders::_1));
-
-	StageStateManager_.ChangeState("Idle");
 }
 
 void StageParentLevel::Update(float _DeltaTime)
@@ -69,14 +79,22 @@ void StageParentLevel::LevelStartEvent()
 	VirtualPhysXLevel::LevelStartEvent();
 	LevelStartLoad();
 
+	// 서버관련 변경
+	Player_ = CreateActor<PlayerActor>();
+
+	MainCam_ = GetMainCameraActor();
 	CameraArm_ = CreateActor<CameraArm>();
 
 	UIs_ = CreateActor<InGameSetUI>();
+
+	StageStateManager_.ChangeState("Idle");
 }
 void StageParentLevel::LevelEndEvent()
 {
 	VirtualPhysXLevel::LevelEndEvent();
 	ContentsCore::GetInst()->ReleaseCurLevelResource();
+
+	Player_->Death();
 
 	CameraArm_->Death();
 	
@@ -106,7 +124,7 @@ void StageParentLevel::LevelStartLoad()
 		//CurStageName = "\\stage3.json";
 		break;
 	case StageNum::STAGE4:
-		//CurStageName = "\\stage4.json";
+		CurStageName = JSON_NAME_HEXAGONE;
 		break;
 	default:
 		break;
@@ -165,6 +183,63 @@ void StageParentLevel::LevelStartLoad()
 		case Stage_MeshEnum::HexTile:
 		{
 			NewObj.Actor_ = CreateActor<TestRainBow>();
+			break;
+		}
+		case Stage_MeshEnum::HexProPeller:
+		{
+			NewObj.Actor_ = CreateActor<HexProPeller>();
+			std::dynamic_pointer_cast<HexProPeller>(NewObj.Actor_.lock())->SetMesh("HexProPeller.FBX");
+			break;
+		}
+		case Stage_MeshEnum::JumboTronProPeller:
+		{
+			NewObj.Actor_ = CreateActor<HexProPeller>();
+			std::shared_ptr<HexProPeller> Act = std::dynamic_pointer_cast<HexProPeller>(NewObj.Actor_.lock());
+			Act->SetMesh("JumboTronProPeller.FBX");
+			Act->SetJumboNum(Act->GetNum());
+			Act->AddNum();
+			break;
+		}
+		case Stage_MeshEnum::JumboTron1:
+		{
+			NewObj.Actor_ = CreateActor<JumboTron>();
+			std::dynamic_pointer_cast<JumboTron>(NewObj.Actor_.lock())->SetMesh("JumboTron1.FBX");
+			break;
+		}
+		case Stage_MeshEnum::JumboTron2:
+		{
+			NewObj.Actor_ = CreateActor<JumboTron>();
+			std::dynamic_pointer_cast<JumboTron>(NewObj.Actor_.lock())->SetMesh("JumboTron2.FBX");
+			break;
+		}
+		case Stage_MeshEnum::JumboTron3:
+		{
+			NewObj.Actor_ = CreateActor<JumboTron>();
+			std::dynamic_pointer_cast<JumboTron>(NewObj.Actor_.lock())->SetMesh("JumboTron3.FBX");
+			break;
+		}
+		case Stage_MeshEnum::JumboTron4:
+		{
+			NewObj.Actor_ = CreateActor<JumboTron>();
+			std::dynamic_pointer_cast<JumboTron>(NewObj.Actor_.lock())->SetMesh("JumboTron4.FBX");
+			break;
+		}
+		case Stage_MeshEnum::JumboTron5:
+		{
+			NewObj.Actor_ = CreateActor<JumboTron>();
+			std::dynamic_pointer_cast<JumboTron>(NewObj.Actor_.lock())->SetMesh("JumboTron5.FBX");
+			break;
+		}
+		case Stage_MeshEnum::JumboTron6:
+		{
+			NewObj.Actor_ = CreateActor<JumboTron>();
+			std::dynamic_pointer_cast<JumboTron>(NewObj.Actor_.lock())->SetMesh("JumboTron6.FBX");
+			break;
+		}
+		case Stage_MeshEnum::JumboTron7:
+		{
+			NewObj.Actor_ = CreateActor<JumboTron>();
+			std::dynamic_pointer_cast<JumboTron>(NewObj.Actor_.lock())->SetMesh("JumboTron7.FBX");
 			break;
 		}
 		case Stage_MeshEnum::Rainbow:

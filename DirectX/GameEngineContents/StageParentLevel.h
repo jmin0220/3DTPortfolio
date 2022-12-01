@@ -23,6 +23,16 @@ enum class Stage_MeshEnum
 	// STAGE04
 	HexAGoneMap,
 	HexTile,
+	HexProPeller,
+	JumboTronProPeller,
+	JumboTron1,
+	JumboTron2,
+	JumboTron3,
+	JumboTron4,
+	JumboTron5,
+	JumboTron6,
+	JumboTron7,
+
 	// TEST
 	Rainbow,
 	TestMap,
@@ -75,7 +85,8 @@ protected:
 
 	static float4 PlayerPos;
 
-	// 카메라 암
+	// 카메라 관련
+	std::shared_ptr<GameEngineCameraActor> MainCam_;
 	std::shared_ptr<CameraArm> CameraArm_;
 
 private:
@@ -93,6 +104,10 @@ protected:
 	// 321땅 이전에 플레이어가 준비가 됬는지(서버..)
 	virtual void IdleStart(const StateInfo& _Info);
 	virtual void IdleUpdate(float _DeltaTime, const StateInfo& _Info);
+
+	// 카메라 시네마틱 무브 + BGM
+	virtual void StagePreViewStart(const StateInfo& _Info);
+	virtual void StagePreViewUpdate(float _DeltaTime, const StateInfo& _Info);
 
 	// 321땅
 	virtual void ReadyStart(const StateInfo& _Info);

@@ -28,6 +28,8 @@ public:
 		return PlayButton_;
 	}
 
+	void AllOff();
+	
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -50,7 +52,11 @@ private:
 	std::shared_ptr<GameEngineTextureRenderer> Circle1_;
 	std::shared_ptr<GameEngineTextureRenderer> Circle2_;
 
+	std::shared_ptr<GameEngineTextureRenderer> FallBG_;
+	std::shared_ptr<GameEngineTextureRenderer> Stripe_;
+
 	float4 CircleSize_;
+	float4 SlicePos_;
 	bool IsLevelOn_;
 	float Time_;
 };

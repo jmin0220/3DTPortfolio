@@ -196,9 +196,6 @@
     <Filter Include="02_Actor\Stage01Actor\Object">
       <UniqueIdentifier>{c0203418-9b78-4cdf-b09f-942cb27835a5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01_Level\FallingLevel">
-      <UniqueIdentifier>{31c83664-1a9e-4aef-9ba6-261e29ed511e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01_Level\StageLevel\Stage03_BigShots">
       <UniqueIdentifier>{615a2f02-da73-43ec-95e6-5656a75ba17c}</UniqueIdentifier>
     </Filter>
@@ -207,6 +204,9 @@
     </Filter>
     <Filter Include="01_Level\ServerLevel">
       <UniqueIdentifier>{dcbe30f1-f507-41f8-8168-f65c33474100}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Actor\Stage04Actor\Objects">
+      <UniqueIdentifier>{5069d1c5-8df4-4155-8111-494b257cf609}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -435,12 +435,6 @@
     <ClInclude Include="TestWallActor.h">
       <Filter>999_Test\TestActor\ScaleTestActor</Filter>
     </ClInclude>
-    <ClInclude Include="HexTile.h">
-      <Filter>02_Actor\Stage04Actor</Filter>
-    </ClInclude>
-    <ClInclude Include="Hex_ProPeller.h">
-      <Filter>02_Actor\Stage04Actor</Filter>
-    </ClInclude>
     <ClInclude Include="Hex_BackGroundObject.h">
       <Filter>02_Actor\Stage04Actor</Filter>
     </ClInclude>
@@ -555,9 +549,6 @@
     <ClInclude Include="Chevron.h">
       <Filter>02_Actor\Stage01Actor\Object</Filter>
     </ClInclude>
-    <ClInclude Include="FallingLevel.h">
-      <Filter>01_Level\FallingLevel</Filter>
-    </ClInclude>
     <ClInclude Include="GameServerGUI.h">
       <Filter>98_LevelGUI</Filter>
     </ClInclude>
@@ -572,6 +563,18 @@
     </ClInclude>
     <ClInclude Include="ServerLevel.h">
       <Filter>01_Level\ServerLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerPacket.h">
+      <Filter>01_Level\ServerLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="HexProPeller.h">
+      <Filter>02_Actor\Stage04Actor\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="HexTile.h">
+      <Filter>02_Actor\Stage04Actor\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="JumboTron.h">
+      <Filter>02_Actor\Stage04Actor\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -800,12 +803,6 @@
     <ClCompile Include="TestWallActor.cpp">
       <Filter>999_Test\TestActor\ScaleTestActor</Filter>
     </ClCompile>
-    <ClCompile Include="HexTile.cpp">
-      <Filter>02_Actor\Stage04Actor</Filter>
-    </ClCompile>
-    <ClCompile Include="Hex_ProPeller.cpp">
-      <Filter>02_Actor\Stage04Actor</Filter>
-    </ClCompile>
     <ClCompile Include="Hex_BackGroundObject.cpp">
       <Filter>02_Actor\Stage04Actor</Filter>
     </ClCompile>
@@ -923,9 +920,6 @@
     <ClCompile Include="Chevron.cpp">
       <Filter>02_Actor\Stage01Actor\Object</Filter>
     </ClCompile>
-    <ClCompile Include="FallingLevel.cpp">
-      <Filter>01_Level\FallingLevel</Filter>
-    </ClCompile>
     <ClCompile Include="GameServerGUI.cpp">
       <Filter>98_LevelGUI</Filter>
     </ClCompile>
@@ -940,6 +934,18 @@
     </ClCompile>
     <ClCompile Include="ServerLevel.cpp">
       <Filter>01_Level\ServerLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerPacket.cpp">
+      <Filter>01_Level\ServerLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="HexProPeller.cpp">
+      <Filter>02_Actor\Stage04Actor\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="HexTile.cpp">
+      <Filter>02_Actor\Stage04Actor\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="JumboTron.cpp">
+      <Filter>02_Actor\Stage04Actor\Objects</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

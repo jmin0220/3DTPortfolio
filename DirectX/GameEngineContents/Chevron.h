@@ -19,6 +19,8 @@ protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 private:
+	static int Num;
+	int MyNum;
 	float RotY;
 	std::shared_ptr<GameEngineFBXStaticRenderer> ChevronRenderer_;
 	std::shared_ptr<GameEngineFBXStaticRenderer> PropellerRenderer_;

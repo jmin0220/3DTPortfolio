@@ -22,7 +22,6 @@ void BigShotsLevel::Start()
 	StageParentLevel::Start();
 	MyStage_ = StageNum::STAGE3;
 
-	Player_ = CreateActor<PlayerActor>();
 }
 
 void BigShotsLevel::Update(float _DeltaTime)
@@ -45,8 +44,6 @@ void BigShotsLevel::LevelStartEvent()
 	VFXWaterObj_->GetTransform().SetWorldPosition(float4{ 0.0f,-80.0f,0.0f });
 
 	Player_->GetTransform().SetWorldPosition(PlayerPos);
-	// *플레이어 생성 후 카메라암 세팅 해줘야함*
-	CameraArm_->SetFollowCamera(GetMainCameraActor(), Player_);
 
 	std::shared_ptr<BigShotsStage> Stage = CreateActor<BigShotsStage>();
 	Stage->GetTransform().SetWorldPosition({ 0.0f, -50.0f, 0.0f });

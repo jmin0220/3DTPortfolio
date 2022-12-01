@@ -7,13 +7,13 @@
 #include "LobbyPlayer.h"
 
 #include "LobbySetUI.h"
-#include "InGameSetUI.h"
 
 #include "Winner.h"
 
 LobbyLevel::LobbyLevel() 
 	:Font(nullptr)
 	,Swap(false)
+	,FallTime_(0.0f)
 {
 }
 
@@ -29,10 +29,7 @@ void LobbyLevel::Start()
 
 	StateManager_.CreateStateMember("Falling"
 		, std::bind(&LobbyLevel::FallingUpdate, this, std::placeholders::_1, std::placeholders::_2)
-		, std::bind(&LobbyLevel::FallingStart, this, std::placeholders::_1));
-
-	StateManager_.ChangeState("Lobby");
-	
+		, std::bind(&LobbyLevel::FallingStart, this, std::placeholders::_1));	
 }
 
 void LobbyLevel::Update(float _DeltaTime)
@@ -49,17 +46,17 @@ void LobbyLevel::LevelStartEvent()
 	// 서버 GUI킴
 	ContentsCore::GetInst()->ServerGUIOn();
 
+	FallTime_ = 0.0f;
+
+	Player_ = CreateActor<LobbyPlayer>();
+	Player_->GetTransform().SetWorldPosition({ 0, -15, 0});//현재 z값 영향을 안받음
+	Player_->GetTransform().SetWorldRotation({ 0,160,0 });//반측면으로 돌림
+
 	StateManager_.ChangeState("Lobby");
 	
 	GetMainCamera()->SetProjectionMode(CAMERAPROJECTIONMODE::PersPective);
 
 	LobbySet_ = CreateActor<LobbySetUI>();
-
-	InGameSetUI_ = CreateActor<InGameSetUI>();
-
-	Player_ = CreateActor<LobbyPlayer>();
-	Player_->GetTransform().SetWorldPosition({ 0, -15, 0});//현재 z값 영향을 안받음
-	Player_->GetTransform().SetWorldRotation({ 0,160,0 });//반측면으로 돌림
 
 	Mouse = CreateActor<Cursor>();
 }
@@ -70,8 +67,6 @@ void LobbyLevel::LevelEndEvent()
 
 	LobbySet_->Death();
 
-	InGameSetUI_->Death();
-
 	Player_->Death();
 
 	Mouse->Death();
@@ -81,6 +76,10 @@ void LobbyLevel::LevelEndEvent()
 
 void LobbyLevel::LobbyStart(const StateInfo& _Info)
 {
+	//레벨에 액터만들어지기전에 들어가서 터짐
+	Player_->ChangeAnimationIdle();
+	Player_->GetTransform().SetWorldPosition({ 0, -15, 0 });
+	Player_->GetTransform().SetWorldRotation({ 0,160,0 });
 }
 
 void LobbyLevel::LobbyUpdate(float _DeltaTime, const StateInfo& _Info)
@@ -94,10 +93,39 @@ void LobbyLevel::LobbyUpdate(float _DeltaTime, const StateInfo& _Info)
 
 void LobbyLevel::FallingStart(const StateInfo& _Info)
 {
-	Player_->GetTransform().SetWorldPosition({ 0, 30, 100 });
+	Player_->ChangeAnimationFall();
+	Player_->GetTransform().SetWorldPosition({ 0, 40, 50 });
+	Player_->GetTransform().SetWorldRotation({ 0,180,0 });
+
+	LobbySet_->AllOff();
 }
 
 void LobbyLevel::FallingUpdate(float _DeltaTime, const StateInfo& _Info)
 {
+
+
+
+
+
+	// 1. 서버의 패킷 확인 : 첫 번째 스테이지 로딩시작 해도 되는지
+	// 2. 서버가 보내준 패킷 확인하여 로딩레벨로 변경
+	if (true == GameEngineInput::GetInst()->IsDown(KEY_ENTER))
+	{
+		ContentsCore::GetInst()->ChangeLevelByLoading(LEVEL_NAME_DOORDASH);
+		return;
+	}
+	FallTime_ -= GameEngineTime::GetDeltaTime()*20.0f;
+
+	if (Player_->GetTransform().GetWorldPosition().y > -10.0f)
+	{
+		Player_->GetTransform().SetWorldPosition({ 0.0f, 40.0f + FallTime_, 50.0f});
+	}
+
+	{
+		//러프를 하니 z값이 안먹는거 같다..?
+		/*float4 CurrentPos = Player_->GetTransform().GetWorldPosition();
+		float4 DestinationPos = (float4{ 0, 0, 50 ,1 });
+		Player_->GetTransform().SetWorldScale({ float4::Lerp(CurrentPos, DestinationPos, GameEngineTime::GetDeltaTime() * 15.f) });*/
+	}
 }
 

@@ -13,6 +13,10 @@ class InGameSetUI : public GameEngineActor
 {
 public:
 	void CountdownStart();
+	void OnOffSubTitle();
+	void OnOffSuccessCount();
+
+	void OnOffEnd();
 
 public:
 	// constrcuter destructer
