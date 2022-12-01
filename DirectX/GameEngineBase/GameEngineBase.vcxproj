@@ -186,6 +186,7 @@
     </ClCompile>
     <ClCompile Include="GameEngineTransform_Collision.cpp" />
     <ClCompile Include="GameEngineWindow.cpp" />
+    <ClCompile Include="GameServerDispatcher.cpp" />
     <ClCompile Include="GameServerNet.cpp" />
     <ClCompile Include="GameServerNetClient.cpp" />
     <ClCompile Include="GameServerNetServer.cpp" />
@@ -227,6 +228,7 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="GameEngineWindow.h" />
+    <ClInclude Include="GameServerDispatcher.h" />
     <ClInclude Include="GameServerNet.h" />
     <ClInclude Include="GameServerNetClient.h" />
     <ClInclude Include="GameServerNetServer.h" />

@@ -567,6 +567,9 @@
     <ClInclude Include="ServerLevel.h">
       <Filter>01_Level\ServerLevel</Filter>
     </ClInclude>
+    <ClInclude Include="ServerPacket.h">
+      <Filter>01_Level\ServerLevel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -930,6 +933,9 @@
       <Filter>02_Actor\Stage03Actor</Filter>
     </ClCompile>
     <ClCompile Include="ServerLevel.cpp">
+      <Filter>01_Level\ServerLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerPacket.cpp">
       <Filter>01_Level\ServerLevel</Filter>
     </ClCompile>
   </ItemGroup>

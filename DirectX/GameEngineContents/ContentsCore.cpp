@@ -77,9 +77,6 @@ void ContentsCore::Start()
 
 	//GameEngineGUI::CreateGUIWindow<GameEngineStatusWindow>("GameEngineStatusWindow", nullptr); //GUI Ãß°¡ 
 	GameEngineGUI::CreateGUIWindow<GameManagerGUI>("GameManager", nullptr);
-	
-	ServerGUI_ = GameEngineGUI::CreateGUIWindow<GameServerGUI>("ServerManager", nullptr);
-	ServerGUI_->Off();
 }
 
 void ContentsCore::Update(float _DeltaTime)
@@ -227,7 +224,8 @@ void ContentsCore::CreateLevels()
 	///////////////////
 	{
 		GameEngineLevel* Level = CreateLevel<ServerLevel>("ServerLevel");
-		TestLevels_.push_back(Level);
+		ServerGUI_ = GameEngineGUI::CreateGUIWindow<GameServerGUI>("ServerManager", Level);
+		ServerGUI_->Off();
 	}
 
 

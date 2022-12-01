@@ -8,6 +8,10 @@
 class ServerLevel : public GameEngineLevel
 {
 public:
+	static bool IsHost_;
+	static GameServerNet* Net;
+
+public:
 	// constrcuter destructer
 	ServerLevel();
 	~ServerLevel();
@@ -18,6 +22,8 @@ public:
 	ServerLevel& operator=(const ServerLevel& _Other) = delete;
 	ServerLevel& operator=(ServerLevel&& _Other) noexcept = delete;
 
+	void ObjectUpdatePacketProcess(std::shared_ptr<GameServerPacket> _Packet);
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -26,7 +32,6 @@ protected:
 	void LevelStartEvent() override;
 	void LevelEndEvent() override;
 private:
-	static GameServerNet* Net;
 	static GameServerNetServer Server;
 	static GameServerNetClient Client;
 
