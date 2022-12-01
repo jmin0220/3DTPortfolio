@@ -7,6 +7,7 @@
 #include "CameraArm.h"
 
 float SPEED_PLAYER = 2500.0f;
+float AngularSpeed = 90.0f;
 
 PlayerActor::PlayerActor() :
 	CheckPointFlag_(false),
@@ -121,10 +122,37 @@ void PlayerActor::InputController(float _DeltaTime)
 	{
 		// EX) 카메라가 보고있는 방향으로 전진
 		//MoveDir_ += GetTransform().Ge(tForwardVector();
-		float4 InstMoveDir = GetLevel()->GetMainCameraActor()->GetTransform().GetForwardVector();
-		InstMoveDir.y = 0;
-		MoveDir_ += InstMoveDir.Normalize3DReturn();
-		int a = 0;
+		float4 CamForwardVec = GetLevel()->GetMainCameraActor()->GetTransform().GetForwardVector();
+		CamForwardVec.y = 0;
+		MoveDir_ += CamForwardVec.Normalize3DReturn();
+
+		float4 CamForwardRot = GetLevel()->GetMainCameraActor()->GetTransform().GetWorldRotation();
+		float4 ActorRot = GetTransform().GetWorldRotation();
+
+		float AngDiff = ActorRot.y - CamForwardRot.y;
+
+		if (AngDiff > 0.0f)
+		{
+			if (AngDiff < 180.0f)
+			{
+				//Left
+			}
+			else
+			{
+				// AngDiff - 180 Right
+			}
+		}
+		else if (AngDiff < 0.0f)
+		{
+			if (AngDiff > -180.0f)
+			{
+				//Right
+			}
+			else
+			{
+				// AngDiff - 180 Left
+			}
+		}
 	}
 
 	if (true == GameEngineInput::GetInst()->IsPress(KEY_A))
