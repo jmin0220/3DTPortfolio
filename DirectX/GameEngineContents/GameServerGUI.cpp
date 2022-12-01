@@ -20,7 +20,8 @@ void GameServerGUI::Initialize(GameEngineLevel* _Level)
 
 void GameServerGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 {
-	int FPS = static_cast<int>(1.0f / _DeltaTime);
+	std::string Name = "FPS : " + std::to_string(GameEngineTime::GetFPS());
+	ImGui::Text(Name.c_str());
 	// printf 형식인데 안씀.
 
 	if (ContentsCore::GetCurLevel() != ServerLevel_)
@@ -35,10 +36,6 @@ void GameServerGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 
 void GameServerGUI::LobbyGUI()
 {
-	std::string Name = "FPS : " + std::to_string(GameEngineTime::GetFPS());
-	ImGui::Text(Name.c_str());
-
-	// 버튼
 	if (true == ImGui::Button("Create Host"))
 	{
 		ServerLevel::IsHost_ = true;
@@ -55,7 +52,7 @@ void GameServerGUI::LobbyGUI()
 
 void GameServerGUI::ServerGUI()
 {
-	std::string Name = "FPS : " + std::to_string(GameEngineTime::GetFPS());
+	std::string Name = ServerLevel::IsHost_ == true ? "< I'm Host >" : "< I'm Client > ";
 	ImGui::Text(Name.c_str());
 
 	if (true == ImGui::Button("Send Data"))
@@ -70,4 +67,16 @@ void GameServerGUI::ServerGUI()
 
 		ServerLevel::Net->SendPacket(Packet);
 	}
+
+
+	if (-1 != ServerLevel::ObjPacket_->ObjectID)
+	{
+		std::string Data;
+		Data += std::to_string(ServerLevel::ObjPacket_->ObjectID) + "\n";
+		Data += std::to_string(ServerLevel::ObjPacket_->Pos.x) + " : " + std::to_string(ServerLevel::ObjPacket_->Pos.y) + " : " + std::to_string(ServerLevel::ObjPacket_->Pos.z) + "\n";
+		Data += ServerLevel::ObjPacket_->Animation;
+
+		ImGui::Text(Data.c_str());
+	}
+
 }

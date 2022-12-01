@@ -9,6 +9,8 @@ GameServerNet* ServerLevel::Net;
 GameServerNetServer ServerLevel::Server;
 GameServerNetClient ServerLevel::Client;
 
+std::shared_ptr<ObjectUpdatePacket> ServerLevel::ObjPacket_ = std::make_shared<ObjectUpdatePacket>();
+
 ServerLevel::ServerLevel()
 {
 }
@@ -24,6 +26,9 @@ void ServerLevel::Start()
 void ServerLevel::ObjectUpdatePacketProcess(std::shared_ptr<GameServerPacket> _Packet)
 {
 	_Packet;
+
+	std::shared_ptr<ObjectUpdatePacket> Packet = std::dynamic_pointer_cast<ObjectUpdatePacket>(_Packet);
+	ObjPacket_ = Packet;
 }
 
 void ServerLevel::Update(float _DeltaTime)

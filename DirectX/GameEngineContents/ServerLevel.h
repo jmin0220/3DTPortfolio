@@ -11,6 +11,9 @@ public:
 	static bool IsHost_;
 	static GameServerNet* Net;
 
+	// 테스트용
+	static std::shared_ptr<class ObjectUpdatePacket> ObjPacket_;
+
 public:
 	// constrcuter destructer
 	ServerLevel();
