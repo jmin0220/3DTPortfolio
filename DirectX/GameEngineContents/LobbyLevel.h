@@ -6,7 +6,6 @@ class Cursor;
 class FontActor;
 class LobbyBackgroundActor;
 class LobbySetUI;
-class InGameSetUI;
 class LobbyPlayer;
 class LobbyLevel : public GameEngineLevel
 {
@@ -33,12 +32,13 @@ private:
 	std::shared_ptr<Cursor> Mouse;
 	std::shared_ptr<FontActor> Font;
 
-	std::shared_ptr<InGameSetUI> InGameSetUI_;
 	std::shared_ptr<LobbyPlayer> Player_;
 
 	std::shared_ptr<LobbySetUI> LobbySet_;
 
 	bool Swap;
+
+	float FallTime_;
 
 	// FSM
 private:

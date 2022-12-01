@@ -39,7 +39,12 @@ void LobbyPlayer::SetCharacterAnimation()
 		GameEngineRenderingEvent{ "Character_Victory_Default_A.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
 	FBXRenderer_->CreateFBXAnimation("Fall",
 		GameEngineRenderingEvent{ "Character_LobbyDive_A.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
-	FBXRenderer_->ChangeAnimation("Fall");
+	FBXRenderer_->ChangeAnimation("Idle");
+}
+
+void LobbyPlayer::ChangeAnimationIdle()
+{
+	FBXRenderer_->ChangeAnimation("Idle");
 }
 
 void LobbyPlayer::ChangeAnimationWin()

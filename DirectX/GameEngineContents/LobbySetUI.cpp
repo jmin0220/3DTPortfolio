@@ -87,3 +87,16 @@ void LobbySetUI::LevelEndEvent()
 	IsLevelOn_ = false;
 }
 
+void LobbySetUI::AllOff()
+{
+	CrownCount_->Off();
+	NamePlate_->Off();
+	NoneButton_->Off();
+	NoneMoney_->Off();
+	PlayButton_->Off();
+	SelectShowButton_->Off();
+	TopMenu_->Off();
+	BG_->Off();
+	Circle1_->Off();
+	Circle2_->Off();
+}

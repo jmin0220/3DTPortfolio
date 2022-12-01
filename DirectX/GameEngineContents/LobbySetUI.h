@@ -28,6 +28,8 @@ public:
 		return PlayButton_;
 	}
 
+	void AllOff();
+	
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
