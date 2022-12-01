@@ -23,9 +23,8 @@ void GameServerGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 	ImGui::Text(Name.c_str());
 
 	// ¹öÆ°
-	ImGui::SameLine();
-	if (true == ImGui::Button("FreeCameaOnOff"))
+	if (true == ImGui::Button("CreateHost"))
 	{
-		GEngine::GetCurrentLevel()->GetMainCameraActor()->FreeCameraModeOnOff();
+		GEngine::ChangeLevel("ServerLevel");
 	}
 }

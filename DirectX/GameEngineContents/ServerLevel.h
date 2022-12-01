@@ -1,4 +1,8 @@
 #pragma once
+#include <GameEngineBase/GameServerNetServer.h>
+#include <GameEngineBase/GameServerNetClient.h>
+#include <functional>
+
 
 // Ό³Έν :
 class ServerLevel : public GameEngineLevel
@@ -22,6 +26,10 @@ protected:
 	void LevelStartEvent() override;
 	void LevelEndEvent() override;
 private:
+	static GameServerNet* Net;
+	static GameServerNetServer Server;
+	static GameServerNetClient Client;
 
+	std::map<__int64, std::shared_ptr<GameEngineActor>> AllServerActor;
 };
 

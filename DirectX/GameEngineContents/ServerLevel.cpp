@@ -23,6 +23,7 @@ void ServerLevel::End()
 
 void ServerLevel::LevelStartEvent()
 {
+
 }
 
 void ServerLevel::LevelEndEvent()

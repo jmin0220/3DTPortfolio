@@ -2,13 +2,7 @@
 #include <GameEngineCore/CoreMinimal.h>
 #include <GameEngineCore/GameEngineCore.h>
 #include "GlobalValues.h"
-
-/////////
-// 서버
-/////////
 #include "GameServerGUI.h"
-#include <GameEngineBase/GameServerNetServer.h>
-#include <GameEngineBase/GameServerNetClient.h>
 
 
 // 설명 : 프로그램 자체를 시작하게 한다.
@@ -133,11 +127,5 @@ public:
 
 private:
 	static std::shared_ptr<GameServerGUI> ServerGUI_;
-
-	static GameServerNet* Net;
-	static GameServerNetServer Server;
-	static GameServerNetClient Client;
-
-	std::map<__int64, std::shared_ptr<GameEngineActor>> AllServerActor;
 };
 
