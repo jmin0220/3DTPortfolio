@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "GameServerNet.h"
 #include "GameEngineDebug.h"
+#include "GameServerSerializer.h"
 
 GameServerNet::GameServerNet() 
 {
@@ -39,4 +40,11 @@ int GameServerNet::Send(SOCKET _Socket, const char* Data, size_t _Size)
 int GameServerNet::Send(const char* Data, size_t _Size)
 {
 	return 0;
+}
+
+GameServerSerializer GameServerNet::PacketSerializ(std::shared_ptr<GameServerPacket> _Packet)
+{
+	GameServerSerializer NewSer = GameServerSerializer();
+	_Packet->SerializePacket(NewSer);
+	return NewSer;
 }

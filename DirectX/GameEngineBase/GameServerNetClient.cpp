@@ -49,3 +49,9 @@ int GameServerNetClient::Send(const char* Data, size_t _Size)
 {
 	return GameServerNet::Send(SessionSocket, Data, _Size);
 }
+
+int GameServerNetClient::SendPacket(std::shared_ptr<GameServerPacket> _Packet)
+{
+	GameServerSerializer Ser = PacketSerializ(_Packet);
+	return Send(Ser.GetDataPtrConvert<const char*>(), Ser.GetOffSet());
+}

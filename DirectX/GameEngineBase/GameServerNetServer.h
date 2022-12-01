@@ -1,10 +1,12 @@
 #pragma once
 #include "GameServerNet.h"
 #include "GameEngineThread.h"
+#include "GameServerDispatcher.h"
 // 설명 :
 class GameServerNetServer : public GameServerNet
 {
 public:
+
 	// constrcuter destructer
 	GameServerNetServer();
 	~GameServerNetServer();
@@ -17,6 +19,14 @@ public:
 
 	// 이제부터 내가 접속자를 받겠다.
 	void Accept(int Port);
+
+	int Send(const char* Data, size_t _Size) {
+		return 0;
+	}
+
+	int SendPacket(std::shared_ptr<GameServerPacket> _Packet) {
+		return 0;
+	}
 
 protected:
 

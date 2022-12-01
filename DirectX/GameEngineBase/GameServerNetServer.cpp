@@ -3,6 +3,7 @@
 #include "GameEngineString.h"
 #include "GameEngineDebug.h"
 #include "GameEngineThread.h"
+#include "GameServerSerializer.h"
 
 //enum PacketType
 //{
@@ -131,11 +132,24 @@ void GameServerNetServer::UserFunction(GameEngineThread* Thread, SOCKET _Socket)
 	{
 		int Result = recv(_Socket, Packet, sizeof(Packet), 0);
 
-		int a = 0;
-
 		if (-1 == Result)
 		{
-			
+			// MsgBoxAssert("네트워크 에러");
+			// 서버가 꺼졌어.
+			// 상대가 꺼졌어.
+			return;
 		}
+
+		GameServerSerializer Ser = GameServerSerializer(Packet, 1024);
+
+		int PacketType;
+		int PacketSize;
+
+		memcpy_s(&PacketType, sizeof(int), Ser.GetDataPtr(), sizeof(int));
+		memcpy_s(&PacketSize, sizeof(int), Ser.GetDataPtr() + 4, sizeof(int));
+
+		std::shared_ptr<GameServerPacket> Packet = Dis.PacketReturnCallBack(PacketType, PacketSize, Ser);
+
+		Dis.ProcessPacket(Packet);
 	}
 }

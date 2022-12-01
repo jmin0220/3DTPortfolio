@@ -20,6 +20,8 @@ public:
 
 	int Send(const char* Data, size_t _Size) override;
 
+	int SendPacket(std::shared_ptr<GameServerPacket> _Packet) override;
+
 protected:
 
 private:
