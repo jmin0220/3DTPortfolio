@@ -110,4 +110,4 @@
 ////////////////
 
 // 호스트 주소
-#define SOCKADDR_HOST "127.0.0.1"
+#define SOCKADDR_HOST "10.0.4.24"//"127.0.0.1"

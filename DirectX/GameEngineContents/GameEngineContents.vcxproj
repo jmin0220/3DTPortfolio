@@ -448,6 +448,10 @@
     </ClInclude>
     <ClInclude Include="ScaleTestLevel.h" />
     <ClInclude Include="SelectShowButton.h" />
+    <ClInclude Include="ServerLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ShaderTutorialLevel.h">
       <SubType>
       </SubType>
@@ -829,6 +833,10 @@
     </ClCompile>
     <ClCompile Include="ScaleTestLevel.cpp" />
     <ClCompile Include="SelectShowButton.cpp" />
+    <ClCompile Include="ServerLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ShaderTutorialLevel.cpp">
       <SubType>
       </SubType>

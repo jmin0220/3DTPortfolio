@@ -22,6 +22,7 @@
 #include "BigShotsLevel.h"
 #include "HexAGoneLevel.h"
 #include "PlayerTestLevel.h"
+#include "ServerLevel.h"
 
 #pragma comment(lib, "GameEngineBase.lib")
 #include <GameEngineCore/GameEngineRes.h>
@@ -225,6 +226,14 @@ void ContentsCore::CreateLevels()
 	//CreateLevel<PhysicsTestLevel>(LEVEL_NAME_PHYSICS_TEST);
 	//CreateLevel<LJM_PhysXPlayerTest>(LEVEL_NAME_PHYSX_PLAYER_TEST);
 	//CreateLevel<LJM_PhysXBoxGeometryTest>(LEVEL_NAME_PHYSX_BOX_GEOMETRY_TEST);
+
+	///////////////////
+	///    서버레벨
+	///////////////////
+	{
+		GameEngineLevel* Level = CreateLevel<ServerLevel>("ServerLevel");
+		TestLevels_.push_back(Level);
+	}
 
 
 	ChangeLevel(LEVEL_NAME_TITLE);

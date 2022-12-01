@@ -31,9 +31,9 @@
 // base
 #include <GameEngineBase/GameEngineDebug.h>
 #include <GameEngineBase/GameEngineInput.h>
-#include <GameEngineBase/GameEngineNet.h>
-#include <GameEngineBase/GameEngineNetServer.h>
-#include <GameEngineBase/GameEngineNetClient.h>
+#include <GameEngineBase/GameServerNet.h>
+#include <GameEngineBase/GameServerNetServer.h>
+#include <GameEngineBase/GameServerNetClient.h>
 
 // core
 #include <GameEngineCore/CoreMinimal.h>

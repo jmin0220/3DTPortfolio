@@ -205,6 +205,9 @@
     <Filter Include="02_Actor\Stage03Actor">
       <UniqueIdentifier>{13b743c4-dcae-410a-8cc3-723fd5dc755f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01_Level\ServerLevel">
+      <UniqueIdentifier>{dcbe30f1-f507-41f8-8168-f65c33474100}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -566,6 +569,9 @@
     </ClInclude>
     <ClInclude Include="BigShotsStage.h">
       <Filter>02_Actor\Stage03Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerLevel.h">
+      <Filter>01_Level\ServerLevel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -931,6 +937,9 @@
     </ClCompile>
     <ClCompile Include="BigShotsStage.cpp">
       <Filter>02_Actor\Stage03Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerLevel.cpp">
+      <Filter>01_Level\ServerLevel</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

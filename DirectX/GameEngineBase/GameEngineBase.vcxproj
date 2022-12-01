@@ -167,20 +167,8 @@
     <ClCompile Include="GameEngineInput.cpp" />
     <ClCompile Include="GameEngineMath.cpp" />
     <ClCompile Include="GameEngineNameObject.cpp" />
-    <ClCompile Include="GameEngineNet.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="GameEngineNetClient.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="GameEnginePath.cpp" />
     <ClCompile Include="GameEngineRandom.cpp" />
-    <ClCompile Include="GameEngineNetServer.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="GameEngineSound.cpp" />
     <ClCompile Include="GameEngineString.cpp" />
     <ClCompile Include="GameEngineThread.cpp">
@@ -198,6 +186,11 @@
     </ClCompile>
     <ClCompile Include="GameEngineTransform_Collision.cpp" />
     <ClCompile Include="GameEngineWindow.cpp" />
+    <ClCompile Include="GameServerNet.cpp" />
+    <ClCompile Include="GameServerNetClient.cpp" />
+    <ClCompile Include="GameServerNetServer.cpp" />
+    <ClCompile Include="GameServerPacket.cpp" />
+    <ClCompile Include="GameServerSerializer.cpp" />
     <ClCompile Include="PreCompile.cpp">
       <SubType>
       </SubType>
@@ -216,20 +209,8 @@
     <ClInclude Include="GameEngineInput.h" />
     <ClInclude Include="GameEngineMath.h" />
     <ClInclude Include="GameEngineNameObject.h" />
-    <ClInclude Include="GameEngineNet.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="GameEngineNetClient.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="GameEnginePath.h" />
     <ClInclude Include="GameEngineRandom.h" />
-    <ClInclude Include="GameEngineNetServer.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="GameEngineSound.h" />
     <ClInclude Include="GameEngineString.h" />
     <ClInclude Include="GameEngineThread.h">
@@ -246,6 +227,11 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="GameEngineWindow.h" />
+    <ClInclude Include="GameServerNet.h" />
+    <ClInclude Include="GameServerNetClient.h" />
+    <ClInclude Include="GameServerNetServer.h" />
+    <ClInclude Include="GameServerPacket.h" />
+    <ClInclude Include="GameServerSerializer.h" />
     <ClInclude Include="magic_enum.hpp" />
     <ClInclude Include="magic_enum_format.hpp" />
     <ClInclude Include="magic_enum_fuse.hpp" />
