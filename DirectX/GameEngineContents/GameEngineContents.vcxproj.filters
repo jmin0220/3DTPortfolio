@@ -196,9 +196,6 @@
     <Filter Include="02_Actor\Stage01Actor\Object">
       <UniqueIdentifier>{c0203418-9b78-4cdf-b09f-942cb27835a5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01_Level\FallingLevel">
-      <UniqueIdentifier>{31c83664-1a9e-4aef-9ba6-261e29ed511e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01_Level\StageLevel\Stage03_BigShots">
       <UniqueIdentifier>{615a2f02-da73-43ec-95e6-5656a75ba17c}</UniqueIdentifier>
     </Filter>
@@ -554,9 +551,6 @@
     </ClInclude>
     <ClInclude Include="Chevron.h">
       <Filter>02_Actor\Stage01Actor\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="FallingLevel.h">
-      <Filter>01_Level\FallingLevel</Filter>
     </ClInclude>
     <ClInclude Include="GameServerGUI.h">
       <Filter>98_LevelGUI</Filter>
@@ -922,9 +916,6 @@
     </ClCompile>
     <ClCompile Include="Chevron.cpp">
       <Filter>02_Actor\Stage01Actor\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="FallingLevel.cpp">
-      <Filter>01_Level\FallingLevel</Filter>
     </ClCompile>
     <ClCompile Include="GameServerGUI.cpp">
       <Filter>98_LevelGUI</Filter>

@@ -251,10 +251,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="FallingLevel.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="FontActor.h">
       <SubType>
       </SubType>
@@ -629,10 +625,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="DoorDash_BackGroundObject.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="FallingLevel.cpp">
       <SubType>
       </SubType>
     </ClCompile>

@@ -4,7 +4,6 @@
 #include "LobbyLevel.h"
 #include "LoadingLevel.h"
 #include "WinnerLevel.h"
-#include "FallingLevel.h"
 #include "MapEditorLevel.h"
 #include "MapEditorGUI.h"
 #include "PhysicsTestLevel.h"
@@ -146,10 +145,6 @@ void ContentsCore::CreateLevels()
 	}
 	{
 		GameEngineLevel* Level = CreateLevel<LobbyLevel>(LEVEL_NAME_LOBBY);
-		GameLevels_.push_back(Level);
-	}
-	{
-		GameEngineLevel* Level = CreateLevel<FallingLevel>(LEVEL_NAME_FALLING);
 		GameLevels_.push_back(Level);
 	}
 	{
@@ -348,10 +343,6 @@ void ContentsCore::LoadLevelResource(LEVELS _LEVEL)
 		break;
 	case LEVELS::LOADING:
 		break;
-	case LEVELS::FALLING:
-		Dir.Move(DIR_LEVEL_FALLING);
-		ResLoadLobby(Dir);
-		break;
 	case LEVELS::STAGE01_DOORDASH:
 		Dir.Move(DIR_LEVEL_STAGE01);
 		ResLoadStage01(Dir);
@@ -540,10 +531,6 @@ LEVELS ContentsCore::StringLevelToLEVELS(std::string_view _StringLevel)
 	{
 		return LEVELS::LOBBY;
 	}
-	else if (0 == Level.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_FALLING)))
-	{
-		return LEVELS::FALLING;
-	}
 	else if (0 == Level.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_DOORDASH)))
 	{
 		return LEVELS::STAGE01_DOORDASH;
@@ -573,10 +560,6 @@ std::string_view ContentsCore::StringLevelToStringSetLevel(std::string_view _Str
 	if (0 == _StringLevel.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_LOBBY)))
 	{
 		return LEVEL_NAME_LOBBY;
-	}
-	else if (0 == _StringLevel.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_FALLING)))
-	{
-		return LEVEL_NAME_FALLING;
 	}
 	else if (0 == _StringLevel.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_DOORDASH)))
 	{
