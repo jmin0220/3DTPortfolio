@@ -19,7 +19,6 @@ void DoorDashLevel::Start()
 	StageParentLevel::Start();
 	MyStage_ = StageNum::STAGE1;
 
-	Player_ = CreateActor<PlayerActor>();
 
 	// InitPhysic는 레벨이 시작될때 실행되므로 LevelStartEvent가 실행되기 전에 포지션을 결정해야함.
 	//Player_->GetTransform().SetWorldPosition({ 10.0f, -70.0f, -390.0f });
@@ -41,8 +40,6 @@ void DoorDashLevel::LevelStartEvent()
 
 	//Player_->GetDynamicActorComponent()->SetPlayerStartPos(PlayerPos);
 	Player_->GetTransform().SetWorldPosition(PlayerPos);
-	// *플레이어 생성 후 카메라암 세팅 해줘야함*
-	CameraArm_->SetFollowCamera(GetMainCameraActor(), Player_);
 
 	//collision용 매쉬 바닥, 벽 등
 	Stage_ = CreateActor<DoorDashStage>();

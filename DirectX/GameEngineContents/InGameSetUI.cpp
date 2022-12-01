@@ -14,6 +14,24 @@ void InGameSetUI::CountdownStart()
 	CountDown_->On();
 }
 
+void InGameSetUI::OnOffSubTitle()
+{
+	StartGameTitle_->SetTitleText("게임제목", "부가설명 ㅇㅅㅇ", "UI_Medal_Icon_DoorDash.png");
+	StartGameTitle_->OnOffSwitch();
+	StartGameTitle_->Reset();
+}
+
+void InGameSetUI::OnOffSuccessCount()
+{
+	SuccessCount_->OnOffSwitch();
+}
+
+void InGameSetUI::OnOffEnd()
+{
+	RoundEnd_->OnOffSwitch();
+	RoundEnd_->Reset();
+}
+
 InGameSetUI::InGameSetUI()
 {
 }

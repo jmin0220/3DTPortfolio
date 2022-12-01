@@ -102,6 +102,18 @@ void LobbyLevel::FallingStart(const StateInfo& _Info)
 
 void LobbyLevel::FallingUpdate(float _DeltaTime, const StateInfo& _Info)
 {
+
+
+
+
+
+	// 1. 서버의 패킷 확인 : 첫 번째 스테이지 로딩시작 해도 되는지
+	// 2. 서버가 보내준 패킷 확인하여 로딩레벨로 변경
+	if (true == GameEngineInput::GetInst()->IsDown(KEY_ENTER))
+	{
+		ContentsCore::GetInst()->ChangeLevelByLoading(LEVEL_NAME_DOORDASH);
+		return;
+	}
 	FallTime_ -= GameEngineTime::GetDeltaTime()*20.0f;
 
 	if (Player_->GetTransform().GetWorldPosition().y > -10.0f)

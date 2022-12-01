@@ -68,7 +68,9 @@ void GameServerGUI::ServerGUI()
 		ServerLevel::Net->SendPacket(Packet);
 	}
 
-
+	// 테스트
+	// 1. 클라이언트 몇명 접속했는지 확인
+	// 2. 로딩 시작 버튼
 	if (-1 != ServerLevel::ObjPacket_->ObjectID)
 	{
 		std::string Data;

@@ -22,6 +22,7 @@
 #include <iostream>
 #include <fstream>
 #include "InGameSetUI.h"
+#include "PlayerActor.h"
 
 float4 StageParentLevel::PlayerPos = float4::ZERO;
 
@@ -44,6 +45,10 @@ void StageParentLevel::Start()
 		, std::bind(&StageParentLevel::IdleUpdate, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&StageParentLevel::IdleStart, this, std::placeholders::_1));
 
+	StageStateManager_.CreateStateMember("StagePreView"
+		, std::bind(&StageParentLevel::StagePreViewUpdate, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&StageParentLevel::StagePreViewStart, this, std::placeholders::_1));
+
 	StageStateManager_.CreateStateMember("Ready"
 		, std::bind(&StageParentLevel::ReadyUpdate, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&StageParentLevel::ReadyStart, this, std::placeholders::_1));
@@ -55,8 +60,6 @@ void StageParentLevel::Start()
 	StageStateManager_.CreateStateMember("End"
 		, std::bind(&StageParentLevel::EndUpdate, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&StageParentLevel::EndStart, this, std::placeholders::_1));
-
-	StageStateManager_.ChangeState("Idle");
 }
 
 void StageParentLevel::Update(float _DeltaTime)
@@ -76,14 +79,22 @@ void StageParentLevel::LevelStartEvent()
 	VirtualPhysXLevel::LevelStartEvent();
 	LevelStartLoad();
 
+	// 서버관련 변경
+	Player_ = CreateActor<PlayerActor>();
+
+	MainCam_ = GetMainCameraActor();
 	CameraArm_ = CreateActor<CameraArm>();
 
 	UIs_ = CreateActor<InGameSetUI>();
+
+	StageStateManager_.ChangeState("Idle");
 }
 void StageParentLevel::LevelEndEvent()
 {
 	VirtualPhysXLevel::LevelEndEvent();
 	ContentsCore::GetInst()->ReleaseCurLevelResource();
+
+	Player_->Death();
 
 	CameraArm_->Death();
 	
