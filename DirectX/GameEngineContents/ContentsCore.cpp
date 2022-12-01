@@ -292,6 +292,13 @@ void ContentsCore::LoadShaders()
 	}
 
 	{
+		//±è¿¹³ª ½¦ÀÌ´õ Ãß°¡
+		std::shared_ptr<GameEngineMaterial> Material = GameEngineMaterial::Create("DownLoop");
+		Material->SetVertexShader("DownLoop.hlsl");
+		Material->SetPixelShader("DownLoop.hlsl");
+	}
+
+	{
 		std::shared_ptr<GameEngineMaterial> Material = GameEngineMaterial::Create("Fog");
 		Material->SetVertexShader("Fog.hlsl");
 		Material->SetPixelShader("Fog.hlsl");

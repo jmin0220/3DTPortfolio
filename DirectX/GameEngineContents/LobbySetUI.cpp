@@ -42,9 +42,39 @@ void LobbySetUI::Update(float _DeltaTime)
 
 void LobbySetUI::LevelStartEvent()
 {
+	SlicePos_ = float4(1, 0, 0, 0);
 	CircleSize_ = { 1,1 };
 	IsLevelOn_ = true;
 	Time_ = 0.0f;
+
+	FallBG_ = CreateComponent<GameEngineTextureRenderer>();
+	FallBG_->SetTexture("LobbyFallBG.png");
+	FallBG_->SetPivot(PIVOTMODE::CENTER);
+	FallBG_->GetTransform().SetWorldScale({ 1600,900 });
+	FallBG_->GetTransform().SetWorldPosition({ 0,0,1500 });
+
+	FallBG_->Off();
+
+	{
+		Stripe_ = CreateComponent<GameEngineTextureRenderer>();
+		Stripe_->GetTransform().SetWorldScale({ 1600,1600 });
+		Stripe_->GetTransform().SetWorldPosition({ 0,0,1500 });
+		Stripe_->SetPivot(PIVOTMODE::CENTER);
+		Stripe_->SetTexture("FallBGLoop.png");
+
+		Stripe_->Off();
+
+		Stripe_->GetRenderUnit()->SetPipeLine("DownLoop");
+		Stripe_->GetRenderUnit()->EngineShaderResourcesSetting(Stripe_);
+		Stripe_->GetRenderUnit()->ShaderResources.SetTexture("Tex", "FallBGLoop.png");
+		if (true == Stripe_->GetRenderUnit()->ShaderResources.IsConstantBuffer("SliceData"))
+		{
+			Stripe_->GetRenderUnit()->ShaderResources.SetConstantBufferLink("SliceData", SlicePos_);
+		}
+
+		Stripe_->GetRenderUnit()->ShaderResources.SetTexture("Mask", "LobbyFallBG.png");
+	}
+
 
 	BG_ = CreateComponent<GameEngineTextureRenderer>();
 	BG_->SetTexture("LobbyBG.png");
@@ -99,4 +129,7 @@ void LobbySetUI::AllOff()
 	BG_->Off();
 	Circle1_->Off();
 	Circle2_->Off();
+
+	FallBG_->On();//³²µé²¨Áú¶§ ¾ê´Â ÄÑÁü
+	Stripe_->On();
 }
