@@ -108,14 +108,16 @@ void GameEngineCore::CoreUpdate(GameEngineCore* _UserCore)
 	GameEngineSound::Update();
 	GameEngineTime::GetInst()->Update();
 	float DeltaTime = GameEngineTime::GetDeltaTime();
-	//GameEngineInput::GetInst()->Update(DeltaTime);
+
 
 	// 60 1.0f
 
 	if (-1 == GameEngineTime::GetFrameLimit())
 	{
-		GameEngineInput::GetInst()->Update(DeltaTime);
-
+		if (true == GameEngineWindow::GetInst()->GetIsFocus())
+		{
+			GameEngineInput::GetInst()->Update(DeltaTime);
+		}
 		_UserCore->Update(DeltaTime);
 		CurrentLevel->LevelUpdate(DeltaTime);
 		CurrentLevel->Release(DeltaTime);
@@ -134,7 +136,10 @@ void GameEngineCore::CoreUpdate(GameEngineCore* _UserCore)
 
 		while (Count--)
 		{
-			GameEngineInput::GetInst()->Update(DeltaTime);
+			if (true == GameEngineWindow::GetInst()->GetIsFocus())
+			{
+				GameEngineInput::GetInst()->Update(DeltaTime);
+			}
 			_UserCore->Update(DeltaTime);
 			CurrentLevel->LevelUpdate(DeltaTime);
 			CurrentLevel->Release(DeltaTime);
