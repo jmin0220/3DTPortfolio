@@ -82,6 +82,17 @@ void ContentsCore::Start()
 
 void ContentsCore::Update(float _DeltaTime)
 {
+	if (false == GameServer::GetInst()->IsServerStart())
+	{
+		return;
+	}
+
+	// 서버 시작 호출했다면
+	// 호스트 -> 클라 패킷 보냄
+	if (true == GameServer::GetInst()->Net->GetIsHost())
+	{
+		GameServer::GetInst()->SendGameStatePacketToClient();
+	}
 
 }
 

@@ -18,6 +18,7 @@ LobbyLevel::LobbyLevel()
 	,UserFont_(nullptr)
 	,CountDownFont_(nullptr)
 	,WaitingFont_(nullptr)
+	,PrevUserCount_(0)
 {
 }
 
@@ -163,5 +164,14 @@ void LobbyLevel::FallingUpdate(float _DeltaTime, const StateInfo& _Info)
 		float4 DestinationPos = (float4{ 0, 0, 50 ,1 });
 		Player_->GetTransform().SetWorldScale({ float4::Lerp(CurrentPos, DestinationPos, GameEngineTime::GetDeltaTime() * 15.f) });*/
 	}
+
+	// ★★★ 서버 ★★★
+	if (PrevUserCount_ != GameServer::GetInst()->PlayersCount_)
+	{
+		PrevUserCount_ = GameServer::GetInst()->PlayersCount_;
+		NumberFont_->SetFont(std::to_string(PrevUserCount_), "Titan One", 70.f, {800,680});
+	}
+
+	// ~~~ 서버 ~~~
 }
 

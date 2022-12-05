@@ -56,5 +56,10 @@ private:
 
 	void FallingStart(const StateInfo& _Info);
 	void FallingUpdate(float _DeltaTime, const StateInfo& _Info);
+
+	// ★★★ 서버 ★★★
+	int PrevUserCount_;
+
+	// ~~~ 서버 ~~~
 };
 

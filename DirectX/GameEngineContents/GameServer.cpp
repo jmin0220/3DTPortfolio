@@ -5,6 +5,7 @@
 
 std::shared_ptr<GameServer> GameServer::Inst_ = std::make_shared<GameServer>();
 bool GameServer::IsHost_ = false;
+bool GameServer::ServerStart_ = false;
 GameServerNet* GameServer::Net;
 GameServerNetServer GameServer::Server;
 GameServerNetClient GameServer::Client;
@@ -22,6 +23,8 @@ GameServer::~GameServer()
 // Lobby에서 게임시작 버튼 누르면 호출
 void GameServer::ServerStart()
 {
+	ServerStart_ = true;
+
 	////// 호스트 : 서버 생성 //////
 	if (true == IsHost_)
 	{
@@ -103,9 +106,9 @@ void GameServer::ServerEnd()
 }
 
 
-
-
-//////// 패킷 처리
+////////////////////
+///	 패킷 처리
+////////////////////
 void GameServer::ObjectUpdatePacketProcess(std::shared_ptr<GameServerPacket> _Packet)
 {
 	// 받은 패킷이 ObjectUpdatePacket
@@ -155,19 +158,35 @@ void GameServer::ClientInitPacketProcess(std::shared_ptr<GameServerPacket> _Pack
 
 	if (true == Net->GetIsHost())
 	{
-		MsgBoxAssert("호스인데 클라이언트용 패킷을 받았습니다.");
+		MsgBoxAssert("호스트인데 클라이언트용 패킷을 받았습니다.");
 	}
 
 
 	// 클라이언트의 mainplayer
 	//MainPlayer->ClientInit(ServerObjectType::Player, Packet->ObjectID);
 }
+
+// 서버에서보냄, 클라가 받은 게임상태 정보
 void GameServer::GameStatePacketProcess(std::shared_ptr<GameServerPacket> _Packet)
 {
+	if (true == Net->GetIsHost())
+	{
+		MsgBoxAssert("호스트인데 클라이언트용 패킷을 받았습니다.");
+	}
+
 	std::shared_ptr<GameStatePacket> Packet = std::dynamic_pointer_cast<GameStatePacket>(_Packet);
 
 	PlayersCount_ = Packet->PlayersCount;
-	GameServer::Net->SendPacket(Packet);
 	
 }
-//////// ~ 패킷 처리
+////////////////////
+///	 ~ 패킷 처리
+////////////////////
+
+// 호스트->클라 단방향
+void GameServer::SendGameStatePacketToClient()
+{
+	std::shared_ptr<GameStatePacket> Packet = std::make_shared<GameStatePacket>();
+	Packet->PlayersCount = PlayersCount_;
+	Net->SendPacket(Packet);
+}
