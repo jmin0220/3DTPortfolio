@@ -86,13 +86,13 @@ void LobbySetUI::LevelStartEvent()
 	Circle1_->SetTexture("Circle1.png");
 	Circle1_->SetPivot(PIVOTMODE::CENTER);
 	Circle1_->GetTransform().SetWorldScale({ 1,1,1 });
-	Circle1_->GetTransform().SetWorldPosition({ 0,0,10 });
+	Circle1_->GetTransform().SetWorldPosition({ 0,0,15 });
 
 	Circle2_ = CreateComponent<GameEngineTextureRenderer>();
 	Circle2_->SetTexture("Circle2.png");
 	Circle2_->SetPivot(PIVOTMODE::CENTER);
 	Circle2_->GetTransform().SetWorldScale({ 5,5,1 });
-	Circle2_->GetTransform().SetWorldPosition({ 0,0,10 });
+	Circle2_->GetTransform().SetWorldPosition({ 0,0,15 });
 
 	CrownCount_ = GetLevel()->CreateActor<CrownCount>();
 	NamePlate_ = GetLevel()->CreateActor<NamePlate>();

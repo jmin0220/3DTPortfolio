@@ -205,6 +205,9 @@
     <Filter Include="01_Level\ServerLevel">
       <UniqueIdentifier>{dcbe30f1-f507-41f8-8168-f65c33474100}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02_Actor\UIActor\LobbyObj">
+      <UniqueIdentifier>{d9ba7f00-b761-4b22-b835-73ce6badfda4}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02_Actor\Stage04Actor\Objects">
       <UniqueIdentifier>{5069d1c5-8df4-4155-8111-494b257cf609}</UniqueIdentifier>
     </Filter>
@@ -566,6 +569,9 @@
     </ClInclude>
     <ClInclude Include="ServerPacket.h">
       <Filter>01_Level\ServerLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorActor.h">
+      <Filter>02_Actor\UIActor\LobbyObj</Filter>
     </ClInclude>
     <ClInclude Include="HexProPeller.h">
       <Filter>02_Actor\Stage04Actor\Objects</Filter>
@@ -937,6 +943,9 @@
     </ClCompile>
     <ClCompile Include="ServerPacket.cpp">
       <Filter>01_Level\ServerLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorActor.cpp">
+      <Filter>02_Actor\UIActor\LobbyObj</Filter>
     </ClCompile>
     <ClCompile Include="HexProPeller.cpp">
       <Filter>02_Actor\Stage04Actor\Objects</Filter>

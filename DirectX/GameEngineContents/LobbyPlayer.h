@@ -41,7 +41,6 @@ private:
 
 private:
 	std::shared_ptr<GameEngineFBXAnimationRenderer> FBXRenderer_;
-	std::shared_ptr<GameEngineFBXAnimationRenderer> Chair_;
 	//std::shared_ptr<GameEngineFBXMesh> Mesh;
 };
 

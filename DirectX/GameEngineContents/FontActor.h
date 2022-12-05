@@ -16,9 +16,16 @@ public:
 	FontActor& operator=(const FontActor& _Other) = delete;
 	FontActor& operator=(FontActor&& _Other) noexcept = delete;
 
-	std::shared_ptr<GameEngineFontRenderer> GetFont()
+	std::weak_ptr<GameEngineFontRenderer> GetFont()
 	{
 		return Font_;
+	}
+
+	void SetFont(std::string _Text, std::string _Font, float _Size, float4 _Pos)
+	{
+		Font_->SetText(_Text, _Font);
+		Font_->SetSize(_Size);
+		Font_->SetScreenPostion(_Pos);
 	}
 
 protected:

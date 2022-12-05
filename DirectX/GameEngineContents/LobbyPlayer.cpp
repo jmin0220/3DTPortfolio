@@ -23,11 +23,8 @@ void LobbyPlayer::Update(float _DeltaTime)
 
 void LobbyPlayer::LevelStartEvent()
 {
-	
-
 	FBXRenderer_->GetTransform().SetWorldScale({ 15,15,15 });
 	//FBXRenderer_->GetTransform().SetWorldScale({ SIZE_MAGNIFICATION_RATIO });
-
 }
 
 // 애니메이션 초기화

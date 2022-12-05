@@ -9,11 +9,15 @@
 #include "LobbySetUI.h"
 
 #include "Winner.h"
+#include "FloorActor.h"
 
 LobbyLevel::LobbyLevel() 
-	:Font(nullptr)
-	,Swap(false)
+	:Swap(false)
 	,FallTime_(0.0f)
+	,NumberFont_(nullptr)
+	,UserFont_(nullptr)
+	,CountDownFont_(nullptr)
+	,WaitingFont_(nullptr)
 {
 }
 
@@ -52,11 +56,26 @@ void LobbyLevel::LevelStartEvent()
 	Player_->GetTransform().SetWorldPosition({ 0, -15, 0});//현재 z값 영향을 안받음
 	Player_->GetTransform().SetWorldRotation({ 0,160,0 });//반측면으로 돌림
 
+	Chair_ = CreateActor<FloorActor>();
+	Chair_->On();
+
 	StateManager_.ChangeState("Lobby");
 	
 	GetMainCamera()->SetProjectionMode(CAMERAPROJECTIONMODE::PersPective);
 
 	LobbySet_ = CreateActor<LobbySetUI>();
+
+	UserFont_ = CreateActor<FontActor>();
+	UserFont_->SetFont("접속자 수", "Noto Sans CJK SC", 25.f,{800,750});
+	UserFont_->Off();
+
+	NumberFont_ = CreateActor<FontActor>();
+	NumberFont_->SetFont("0", "Titan One", 70.f, { 800,680 });
+	NumberFont_->Off();
+
+	WaitingFont_ = CreateActor<FontActor>();
+	WaitingFont_->SetFont("플레이어를 기다리는 중", "Noto Sans CJK SC", 25.f, { 200,850 });
+	WaitingFont_->Off();
 
 	Mouse = CreateActor<Cursor>();
 }
@@ -71,6 +90,13 @@ void LobbyLevel::LevelEndEvent()
 
 	Mouse->Death();
 
+	Chair_->Death();
+
+	NumberFont_->Death();
+	UserFont_->Death();
+	CountDownFont_->Death();
+	WaitingFont_->Death();
+	
 	//ContentsCore::GetInst()->ReleaseCurLevelResource();
 }
 
@@ -97,7 +123,13 @@ void LobbyLevel::FallingStart(const StateInfo& _Info)
 	Player_->GetTransform().SetWorldPosition({ 0, 40, 50 });
 	Player_->GetTransform().SetWorldRotation({ 0,180,0 });
 
+	Chair_->Off();
+
 	LobbySet_->AllOff();
+
+	UserFont_->On();
+	NumberFont_->On();
+	WaitingFont_->On();
 }
 
 void LobbyLevel::FallingUpdate(float _DeltaTime, const StateInfo& _Info)
