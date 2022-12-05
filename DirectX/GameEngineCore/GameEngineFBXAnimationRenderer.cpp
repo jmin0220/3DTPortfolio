@@ -138,6 +138,11 @@ void FBXRendererAnimation::Update(float _DeltaTime)
 
 			for (int i = 0; i < AnimationBoneMatrix.size(); i++)
 			{
+				if (0 == FBXAnimationData->AniFrameData[MeshIndex].size())
+				{
+					continue;
+				}
+
 				Bone* BoneData = ParentRenderer->GetFBXMesh()->FindBone(MeshIndex, i);
 
 				if (true == FBXAnimationData->AniFrameData[MeshIndex][i].BoneMatData.empty())

@@ -202,9 +202,6 @@
     <Filter Include="02_Actor\Stage03Actor">
       <UniqueIdentifier>{13b743c4-dcae-410a-8cc3-723fd5dc755f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01_Level\ServerLevel">
-      <UniqueIdentifier>{dcbe30f1-f507-41f8-8168-f65c33474100}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02_Actor\UIActor\LobbyObj">
       <UniqueIdentifier>{d9ba7f00-b761-4b22-b835-73ce6badfda4}</UniqueIdentifier>
     </Filter>
@@ -216,6 +213,9 @@
     </Filter>
     <Filter Include="02_Actor\Stage05Actor">
       <UniqueIdentifier>{0fdfb3e6-8aad-46eb-9e8a-9882876f5829}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00_Core\Server">
+      <UniqueIdentifier>{04274615-5965-46bb-b3ca-0c571c21e3c4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -558,9 +558,6 @@
     <ClInclude Include="Chevron.h">
       <Filter>02_Actor\Stage01Actor\Object</Filter>
     </ClInclude>
-    <ClInclude Include="GameServerGUI.h">
-      <Filter>98_LevelGUI</Filter>
-    </ClInclude>
     <ClInclude Include="BigShotsLevel.h">
       <Filter>01_Level\StageLevel\Stage03_BigShots</Filter>
     </ClInclude>
@@ -569,12 +566,6 @@
     </ClInclude>
     <ClInclude Include="BigShotsStage.h">
       <Filter>02_Actor\Stage03Actor</Filter>
-    </ClInclude>
-    <ClInclude Include="ServerLevel.h">
-      <Filter>01_Level\ServerLevel</Filter>
-    </ClInclude>
-    <ClInclude Include="ServerPacket.h">
-      <Filter>01_Level\ServerLevel</Filter>
     </ClInclude>
     <ClInclude Include="FloorActor.h">
       <Filter>02_Actor\UIActor\LobbyObj</Filter>
@@ -593,6 +584,18 @@
     </ClInclude>
     <ClInclude Include="HoopsStageObjects.h">
       <Filter>02_Actor\Stage05Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="GameServerGUI.h">
+      <Filter>00_Core\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="GameServer.h">
+      <Filter>00_Core\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerPacket.h">
+      <Filter>00_Core\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="GameServerObject.h">
+      <Filter>00_Core\Server</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -938,9 +941,6 @@
     <ClCompile Include="Chevron.cpp">
       <Filter>02_Actor\Stage01Actor\Object</Filter>
     </ClCompile>
-    <ClCompile Include="GameServerGUI.cpp">
-      <Filter>98_LevelGUI</Filter>
-    </ClCompile>
     <ClCompile Include="BigShotsLevel.cpp">
       <Filter>01_Level\StageLevel\Stage03_BigShots</Filter>
     </ClCompile>
@@ -949,12 +949,6 @@
     </ClCompile>
     <ClCompile Include="BigShotsStage.cpp">
       <Filter>02_Actor\Stage03Actor</Filter>
-    </ClCompile>
-    <ClCompile Include="ServerLevel.cpp">
-      <Filter>01_Level\ServerLevel</Filter>
-    </ClCompile>
-    <ClCompile Include="ServerPacket.cpp">
-      <Filter>01_Level\ServerLevel</Filter>
     </ClCompile>
     <ClCompile Include="FloorActor.cpp">
       <Filter>02_Actor\UIActor\LobbyObj</Filter>
@@ -973,6 +967,18 @@
     </ClCompile>
     <ClCompile Include="HoopsStageObjects.cpp">
       <Filter>02_Actor\Stage05Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="GameServerGUI.cpp">
+      <Filter>00_Core\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="GameServer.cpp">
+      <Filter>00_Core\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerPacket.cpp">
+      <Filter>00_Core\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="GameServerObject.cpp">
+      <Filter>00_Core\Server</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -269,6 +269,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameServerObject.h" />
     <ClInclude Include="GameSuccess.h">
       <SubType>
       </SubType>
@@ -456,11 +457,7 @@
     </ClInclude>
     <ClInclude Include="ScaleTestLevel.h" />
     <ClInclude Include="SelectShowButton.h" />
-    <ClInclude Include="ServerLevel.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="ServerPacket.h">
+    <ClInclude Include="GameServer.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -666,6 +663,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameServerObject.cpp" />
     <ClCompile Include="GameSuccess.cpp">
       <SubType>
       </SubType>
@@ -857,11 +855,7 @@
     </ClCompile>
     <ClCompile Include="ScaleTestLevel.cpp" />
     <ClCompile Include="SelectShowButton.cpp" />
-    <ClCompile Include="ServerLevel.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="ServerPacket.cpp">
+    <ClCompile Include="GameServer.cpp">
       <SubType>
       </SubType>
     </ClCompile>

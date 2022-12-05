@@ -27,6 +27,7 @@
     </FxCompile>
     <FxCompile Include="RenderOption.fx" />
     <FxCompile Include="TransformHeader.fx" />
+    <FxCompile Include="LightHeader.fx" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debug">

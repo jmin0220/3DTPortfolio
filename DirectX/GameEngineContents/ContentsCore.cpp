@@ -22,7 +22,7 @@
 #include "BigShotsLevel.h"
 #include "HexAGoneLevel.h"
 #include "PlayerTestLevel.h"
-#include "ServerLevel.h"
+#include "GameServer.h"
 
 #pragma comment(lib, "GameEngineBase.lib")
 #include <GameEngineCore/GameEngineRes.h>
@@ -82,6 +82,7 @@ void ContentsCore::Start()
 
 void ContentsCore::Update(float _DeltaTime)
 {
+
 }
 
 void ContentsCore::End()
@@ -144,6 +145,9 @@ void ContentsCore::CreateLevels()
 	{
 		GameEngineLevel* Level = CreateLevel<LobbyLevel>(LEVEL_NAME_LOBBY);
 		GameLevels_.push_back(Level);
+
+		ServerGUI_ = GameEngineGUI::CreateGUIWindow<GameServerGUI>("ServerManager", Level);
+		ServerGUI_->Off();
 	}
 	{
 		GameEngineLevel* Level = CreateLevel<LoadingLevel>(LEVEL_NAME_LOADING);
@@ -224,14 +228,6 @@ void ContentsCore::CreateLevels()
 	//CreateLevel<LJM_PhysXPlayerTest>(LEVEL_NAME_PHYSX_PLAYER_TEST);
 	//CreateLevel<LJM_PhysXBoxGeometryTest>(LEVEL_NAME_PHYSX_BOX_GEOMETRY_TEST);
 
-	///////////////////
-	///    서버레벨
-	///////////////////
-	{
-		GameEngineLevel* Level = CreateLevel<ServerLevel>("ServerLevel");
-		ServerGUI_ = GameEngineGUI::CreateGUIWindow<GameServerGUI>("ServerManager", Level);
-		ServerGUI_->Off();
-	}
 
 
 	ChangeLevel(LEVEL_NAME_TITLE);

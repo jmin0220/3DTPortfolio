@@ -1,10 +1,11 @@
 #pragma once
 //#include "PhysXCCTActorComponent.h"
 #include "PhysXDynamicActorComponent.h"
+#include "GameServerObject.h"
 
 class CameraArm;
 // Ό³Έν :
-class PlayerActor : public GameEngineActor
+class PlayerActor : public GameEngineActor, public GameServerObject
 {
 public:
 	// constrcuter destructer

@@ -4,6 +4,7 @@ struct Input
 {
     float4 POSITION : POSITION;
     float4 TEXCOORD : TEXCOORD;
+    float4 NORMAL : NORMAL;
     float4 BLENDWEIGHT : BLENDWEIGHT;
     int4 BLENDINDICES : BLENDINDICES;
 };
@@ -25,7 +26,7 @@ StructuredBuffer<AniMat> ArrAniMationMatrix : register(t11);
 // float4&
 void Skinning(inout float4 _Pos, inout float4 _Weight, inout int4 _Index, StructuredBuffer<AniMat> _ArrMatrix)
 {
-    float4 CalPos = (float4) 0.0f;
+    float4 CalPos = (float4)0.0f;
     _Pos.w = 1.0f;
     // 1로 맞추려는 행동.
     // _Weight[3] = 1.0f - _Weight[0] - _Weight[1] - _Weight[2];
@@ -42,7 +43,7 @@ void Skinning(inout float4 _Pos, inout float4 _Weight, inout int4 _Index, Struct
 // 그래픽카드에서 이뤄지는것.
 Output TextureAnimation_VS(Input _Input)
 {
-    Output NewOutPut = (Output) 0;
+    Output NewOutPut = (Output)0;
     
     NewOutPut.POSITION = _Input.POSITION;
     Skinning(NewOutPut.POSITION, _Input.BLENDWEIGHT, _Input.BLENDINDICES, ArrAniMationMatrix);
@@ -51,7 +52,6 @@ Output TextureAnimation_VS(Input _Input)
     // NewOutPut.POSITION = mul(_Input.POSITION, ArrAniMationMatrix[_Input.BLENDINDICES[0]].Mat);
     NewOutPut.POSITION = mul(NewOutPut.POSITION, WorldViewProjection);
     NewOutPut.TEXCOORD = _Input.TEXCOORD;
-    
     
     return NewOutPut;
 }

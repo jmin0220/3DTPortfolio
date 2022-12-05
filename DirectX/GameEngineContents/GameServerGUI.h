@@ -21,10 +21,10 @@ protected:
 
 private:
 	void LobbyGUI();
-	void ServerGUI();
+	void InGameGUI();
 
 private:
-	class GameEngineLevel* ServerLevel_;
+	class GameEngineLevel* LobbyLevel_;
 
 };
 

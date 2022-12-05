@@ -5,11 +5,11 @@
 #include "FontActor.h"
 
 #include "LobbyPlayer.h"
-
 #include "LobbySetUI.h"
-
 #include "Winner.h"
 #include "FloorActor.h"
+
+#include "GameServer.h"
 
 LobbyLevel::LobbyLevel() 
 	:Swap(false)
@@ -130,22 +130,26 @@ void LobbyLevel::FallingStart(const StateInfo& _Info)
 	UserFont_->On();
 	NumberFont_->On();
 	WaitingFont_->On();
+
+	// ★★★ 서버 ★★★
+	GameServer::GetInst()->ServerStart();
+
+	// ~~~ 서버 ~~~
 }
 
 void LobbyLevel::FallingUpdate(float _DeltaTime, const StateInfo& _Info)
 {
 
-
-
-
-
-	// 1. 서버의 패킷 확인 : 첫 번째 스테이지 로딩시작 해도 되는지
-	// 2. 서버가 보내준 패킷 확인하여 로딩레벨로 변경
+	// 엔터 입력 -> 호스트의 시작 패킷 받으면 시작으로
 	if (true == GameEngineInput::GetInst()->IsDown(KEY_ENTER))
 	{
 		ContentsCore::GetInst()->ChangeLevelByLoading(LEVEL_NAME_DOORDASH);
 		return;
 	}
+
+
+
+
 	FallTime_ -= GameEngineTime::GetDeltaTime()*20.0f;
 
 	if (Player_->GetTransform().GetWorldPosition().y > -10.0f)
