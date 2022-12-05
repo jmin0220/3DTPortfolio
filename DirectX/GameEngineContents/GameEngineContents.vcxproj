@@ -289,6 +289,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="HoopsLegendsLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="InGameSetUI.h">
       <SubType>
       </SubType>
@@ -461,6 +465,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ShaderTutorialLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="HoopsStageObjects.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -678,6 +686,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="HoopsLegendsLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="InGameSetUI.cpp">
       <SubType>
       </SubType>
@@ -854,6 +866,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ShaderTutorialLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="HoopsStageObjects.cpp">
       <SubType>
       </SubType>
     </ClCompile>

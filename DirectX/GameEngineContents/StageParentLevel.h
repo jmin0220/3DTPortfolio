@@ -9,6 +9,7 @@ enum class StageNum
 	STAGE2,
 	STAGE3,
 	STAGE4,
+	STAGE5
 };
 
 enum class Stage_MeshEnum

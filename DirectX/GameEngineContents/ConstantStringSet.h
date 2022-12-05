@@ -29,6 +29,7 @@
 #define DIR_LEVEL_STAGE02 "Levels\\StageLevel\\Stage02"
 #define DIR_LEVEL_STAGE03 "Levels\\StageLevel\\Stage03"
 #define DIR_LEVEL_STAGE04 "Levels\\StageLevel\\Stage04"
+#define DIR_LEVEL_STAGE05 "Levels\\StageLevel\\Stage05"
 #define DIR_LEVEL_WINNER "Levels\\WinnerLevel"
 
 // 테스트용은 분리
@@ -64,6 +65,7 @@
 //JSON
 #define JSON_NAME_DOORDASH "\\DoorDash.Json"
 #define JSON_NAME_HEXAGONE "\\HexAGone.json"
+#define JSON_NAME_HOOPSLEGENDS "\\HoopsLegends.json"
 
 
 
@@ -83,6 +85,7 @@
 #define LEVEL_NAME_JUMPCLUB "JumpClubLevel"
 #define LEVEL_NAME_BIGSHOTS "BigShotsLevel"
 #define LEVEL_NAME_HEXAGONE "HexAGoneLevel"
+#define LEVEL_NAME_HOOPSLEGENDS "HoopsLegendsLevel"
 
 //Axis Mode
 #define AXIS_MOVE "Axis_Move"

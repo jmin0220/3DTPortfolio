@@ -126,6 +126,9 @@ void StageParentLevel::LevelStartLoad()
 	case StageNum::STAGE4:
 		CurStageName = JSON_NAME_HEXAGONE;
 		break;
+	case StageNum::STAGE5:
+		//CurStageName = JSON_NAME_HOOPSLEGENDS;
+		break;
 	default:
 		break;
 	}

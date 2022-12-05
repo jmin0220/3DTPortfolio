@@ -17,6 +17,7 @@
 #include "GameManagerGUI.h"
 #include "StageTestLevel.h"
 #include "DoorDashLevel.h"
+#include "HoopsLegendsLevel.h"
 #include "JumpClubLevel.h"
 #include "BigShotsLevel.h"
 #include "HexAGoneLevel.h"
@@ -162,6 +163,10 @@ void ContentsCore::CreateLevels()
 	}
 	{
 		GameEngineLevel* Level = CreateLevel<HexAGoneLevel>(LEVEL_NAME_HEXAGONE);
+		GameLevels_.push_back(Level);
+	}
+	{
+		GameEngineLevel* Level = CreateLevel<HexAGoneLevel>(LEVEL_NAME_HOOPSLEGENDS);
 		GameLevels_.push_back(Level);
 	}
 	{
@@ -364,6 +369,10 @@ void ContentsCore::LoadLevelResource(LEVELS _LEVEL)
 		Dir.Move(DIR_LEVEL_STAGE04);
 		ResLoadStage04(Dir);
 		break;
+	case LEVELS::STAGE05_HOOPS_LEGENDS:
+		Dir.Move(DIR_LEVEL_STAGE05);
+		ResLoadStage05(Dir);
+		break;
 	case LEVELS::WINNNER:
 		Dir.Move(DIR_LEVEL_WINNER);
 		ResLoadWinner(Dir);
@@ -443,6 +452,11 @@ void ContentsCore::ResLoadStage03(GameEngineDirectory& _Dir)
 }
 
 void ContentsCore::ResLoadStage04(GameEngineDirectory& _Dir)
+{
+	LevelAllResourceLoad(_Dir);
+}
+
+void ContentsCore::ResLoadStage05(GameEngineDirectory& _Dir)
 {
 	LevelAllResourceLoad(_Dir);
 }
@@ -552,6 +566,10 @@ LEVELS ContentsCore::StringLevelToLEVELS(std::string_view _StringLevel)
 	{
 		return LEVELS::STAGE04_HEX_A_GONE;
 	}
+	else if (0 == Level.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_HOOPSLEGENDS)))
+	{
+		return LEVELS::STAGE05_HOOPS_LEGENDS;
+	}
 	else if (0 == Level.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_WINNER)))
 	{
 		return LEVELS::WINNNER;
@@ -581,6 +599,10 @@ std::string_view ContentsCore::StringLevelToStringSetLevel(std::string_view _Str
 	else if (0 == _StringLevel.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_HEXAGONE)))
 	{
 		return LEVEL_NAME_HEXAGONE;
+	}
+	else if (0 == _StringLevel.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_HOOPSLEGENDS)))
+	{
+		return LEVEL_NAME_HOOPSLEGENDS;
 	}
 	else if (0 == _StringLevel.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_WINNER)))
 	{

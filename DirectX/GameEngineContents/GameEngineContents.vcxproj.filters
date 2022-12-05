@@ -211,6 +211,12 @@
     <Filter Include="02_Actor\Stage04Actor\Objects">
       <UniqueIdentifier>{5069d1c5-8df4-4155-8111-494b257cf609}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01_Level\StageLevel\Stage05_HoopsLegends">
+      <UniqueIdentifier>{e7db2f28-f32b-4299-a9e5-18de6847b2f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Actor\Stage05Actor">
+      <UniqueIdentifier>{0fdfb3e6-8aad-46eb-9e8a-9882876f5829}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -581,6 +587,12 @@
     </ClInclude>
     <ClInclude Include="JumboTron.h">
       <Filter>02_Actor\Stage04Actor\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="HoopsLegendsLevel.h">
+      <Filter>01_Level\StageLevel\Stage05_HoopsLegends</Filter>
+    </ClInclude>
+    <ClInclude Include="HoopsStageObjects.h">
+      <Filter>02_Actor\Stage05Actor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -955,6 +967,12 @@
     </ClCompile>
     <ClCompile Include="JumboTron.cpp">
       <Filter>02_Actor\Stage04Actor\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="HoopsLegendsLevel.cpp">
+      <Filter>01_Level\StageLevel\Stage05_HoopsLegends</Filter>
+    </ClCompile>
+    <ClCompile Include="HoopsStageObjects.cpp">
+      <Filter>02_Actor\Stage05Actor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
