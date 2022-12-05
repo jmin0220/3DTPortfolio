@@ -55,12 +55,13 @@ void HoopsStageObjects::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysi
 	physx::PxCooking* Cooking = static_cast<VirtualPhysXLevel*>(GetLevel())->GetCooking();
 	// Tip..3번째 매개변수인 GeometryScale은 액터가 가질 물리강체의 크기
 	float4 MeshBoundScale = WallRenderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
-	WallPhysXTriMeshGeometry_->CreatePhysXActors("HoopsObjectWall.fbx", _Scene, _physics, Cooking, false, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z));
+	WallPhysXTriMeshGeometry_->CreatePhysXActors("HoopsObjectWall.fbx", _Scene, _physics, Cooking, true, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z));
 
 
 	float4 MeshBoundScale2 = PlatformRenderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
-	PlatformPhysXTriMeshGeometry_->CreatePhysXActors("HoopsObjectPlatform.fbx", _Scene, _physics, Cooking, false, physx::PxVec3(MeshBoundScale2.x, MeshBoundScale2.y, MeshBoundScale2.z));
+	PlatformPhysXTriMeshGeometry_->CreatePhysXActors("HoopsObjectPlatform.fbx", _Scene, _physics, Cooking, true, physx::PxVec3(MeshBoundScale2.x, MeshBoundScale2.y, MeshBoundScale2.z));
+
 
 	float4 MeshBoundScale3 = FloorRenderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
-	FloorPhysXTriMeshGeometry_->CreatePhysXActors("HoopsFloor.fbx", _Scene, _physics, Cooking, false, physx::PxVec3(MeshBoundScale3.x, MeshBoundScale3.y, MeshBoundScale3.z));
+	FloorPhysXTriMeshGeometry_->CreatePhysXActors("HoopsFloor.fbx", _Scene, _physics, Cooking, true, physx::PxVec3(MeshBoundScale3.x, MeshBoundScale3.y, MeshBoundScale3.z));
 }

@@ -95,7 +95,8 @@ enum class MapSelect
 {
 	Splash_CoY_DoorDash,
 	Splash_JumpClub,
-	Splash_Hexagone,	// 여기까지가 선택할 수 있는 스테이지
+	Splash_Hexagone,	
+	Splash_HoopsLegends,  // 여기까지가 선택할 수 있는 스테이지
 
 	Splash_AirTime,		// 여기서 부턴 선택은 못하지만 이미지는 보여줄 수 있음
 	Splash_BasketFall,
@@ -128,7 +129,6 @@ enum class MapSelect
 	Splash_HexaTerrestrial,
 	Splash_Hoarders,
 	Splash_HoopsieDaisy,
-	Splash_HoopsLegends,
 	Splash_HoverboardHeroes,
 	Splash_HyperdriveHeroes,
 	Splash_Invisibeans,

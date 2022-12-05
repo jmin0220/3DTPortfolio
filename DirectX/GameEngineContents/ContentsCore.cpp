@@ -166,7 +166,7 @@ void ContentsCore::CreateLevels()
 		GameLevels_.push_back(Level);
 	}
 	{
-		GameEngineLevel* Level = CreateLevel<HexAGoneLevel>(LEVEL_NAME_HOOPSLEGENDS);
+		GameEngineLevel* Level = CreateLevel<HoopsLegendsLevel>(LEVEL_NAME_HOOPSLEGENDS);
 		GameLevels_.push_back(Level);
 	}
 	{

@@ -101,6 +101,9 @@ LEVELS LoadingLevel::MapSelectToLevels()
 	case MapSelect::Splash_Hexagone:
 		return LEVELS::STAGE04_HEX_A_GONE;
 		break;
+	case MapSelect::Splash_HoopsLegends:
+		return LEVELS::STAGE05_HOOPS_LEGENDS;
+		break;
 	default:
 		return LEVELS::NONE;
 		break;
@@ -119,6 +122,9 @@ void LoadingLevel::ChangeLevelByMap()
 		break;
 	case MapSelect::Splash_Hexagone:
 		GEngine::ChangeLevel(LEVEL_NAME_HEXAGONE);
+		break;
+	case MapSelect::Splash_HoopsLegends:
+		GEngine::ChangeLevel(LEVEL_NAME_HOOPSLEGENDS);
 		break;
 	default:
 		break;
