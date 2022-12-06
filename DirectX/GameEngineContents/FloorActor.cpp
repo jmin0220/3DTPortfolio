@@ -12,7 +12,7 @@ FloorActor::~FloorActor()
 void FloorActor::Start()
 {
 	FBXRenderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
-	//FBXRenderer_->SetFBXMesh("Floor.fbx", "Texture");
+	FBXRenderer_->SetFBXMesh("Floor.fbx", "Texture");
 }
 
 void FloorActor::Update(float _DeltaTime)
