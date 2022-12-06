@@ -111,7 +111,7 @@ void VirtualPhysXLevel::stepPhysics(bool _Interactive)
 {
 	float simulateRatio = 144.0f;
 #ifndef DEBUG
-	simulateRatio = 60.0f;
+	// simulateRatio = 144.0f;
 #endif
 	// TODO::현재프레임 만큼 수정할 필요가 있을지도
 	Scene_->simulate(1.0f / simulateRatio);

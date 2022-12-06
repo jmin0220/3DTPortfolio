@@ -597,6 +597,9 @@
     <ClInclude Include="GameServerObject.h">
       <Filter>00_Core\Server</Filter>
     </ClInclude>
+    <ClInclude Include="PhysXSeesawComponent.h">
+      <Filter>03_Component\PhysXComponent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -979,6 +982,9 @@
     </ClCompile>
     <ClCompile Include="GameServerObject.cpp">
       <Filter>00_Core\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXSeesawComponent.cpp">
+      <Filter>03_Component\PhysXComponent</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
