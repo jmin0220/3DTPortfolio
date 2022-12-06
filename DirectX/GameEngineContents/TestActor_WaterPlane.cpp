@@ -15,7 +15,7 @@ void TestActor_WaterPlane::Start()
 {
 	Renderer_ = CreateComponent<GameEngineTextureRenderer>();
 	Renderer_->SetMesh("Rect");
-	Renderer_->GetRenderUnit()->SetPipeLine("Water");
+	Renderer_->GetRenderUnit()->SetMaterial("Water");
 	
 	WaterData_.WaterColor = float4{ 0.9f,0.4f,0.7f };
 	Renderer_->GetRenderUnit()->ShaderResources.SetConstantBufferLink("WaterData", WaterData_);

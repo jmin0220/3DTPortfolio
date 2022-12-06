@@ -33,7 +33,7 @@ void TitleActor::Start()
 
 		Pattern_->SetTexture("LogoBG.png");
 
-		Pattern_->GetRenderUnit()->SetPipeLine("TextureLoop");
+		Pattern_->GetRenderUnit()->SetMaterial("TextureLoop");
 		Pattern_->GetRenderUnit()->EngineShaderResourcesSetting(Pattern_);
 		Pattern_->GetRenderUnit()->ShaderResources.SetTexture("Tex", "LogoPattern.png");
 

@@ -13,7 +13,7 @@ TestGround::~TestGround()
 void TestGround::Start()
 {
 	//Renderer = CreateComponent<GameEngineTextureRenderer>();
-	//Renderer->SetPipeLine("Color");
+	//Renderer->SetMaterial("Color");
 	//Renderer->SetMesh("Box");
 
 	//ResultColor = float4(0.0f, 0.5f, 0.0f, 1.0f);
@@ -33,7 +33,7 @@ void TestGround::Start()
 	GetTransform().SetWorldRotation({ 10.0f, 0.0f, 0.0f });
 
 	//Renderer = CreateComponent<GameEngineTextureRenderer>();
-	//Renderer->SetPipeLine("Color");
+	//Renderer->SetMaterial("Color");
 	//Renderer->SetMesh("Box");
 	//ResultColor = float4(0.0f, 1.0f, 1.0f, 1.0f);
 	//Renderer->GetShaderResources().SetConstantBufferLink("ResultColor", ResultColor);

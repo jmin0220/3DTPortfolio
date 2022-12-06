@@ -14,7 +14,7 @@ TestBox::~TestBox()
 void TestBox::Start()
 {
 	//Renderer = CreateComponent<GameEngineTextureRenderer>();
-	//Renderer->SetPipeLine("Color");
+	//Renderer->SetMaterial("Color");
 	//Renderer->SetMesh("Box");
 
 	//ResultColor = float4(1.0f, 0.5f, 0.0f, 1.0f);
@@ -32,7 +32,7 @@ void TestBox::Start()
 	Collision->SetCompoundType(CompoundType::Player);
 
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->SetPipeLine("Color");
+	Renderer->SetMaterial("Color");
 	Renderer->SetMesh("Box");
 
 	ResultColor = float4(1.0f, 0.0f, 0.0f, 0.5f);

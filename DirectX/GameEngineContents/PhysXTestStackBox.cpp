@@ -17,7 +17,7 @@ void PhysXTestStackBox::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysi
 void PhysXTestStackBox::Start()
 {
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->SetPipeLine("Color");
+	Renderer->SetMaterial("Color");
 	Renderer->SetMesh("Box");
 
 	ResultColor = float4(1.0f, 0.5f, 0.0f, 1.0f);

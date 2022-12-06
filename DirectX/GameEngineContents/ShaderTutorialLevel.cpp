@@ -42,7 +42,7 @@ void ShaderTutorialLevel::LevelEndEvent()
 준비 : 렌더러, 메테리얼(파이프라인), 쉐이더(.hlsl)
 
 렌더러 기능
-- SetMesh > SetPipeline > SetConstantBuffer
+- SetMesh > SetMaterial > SetConstantBuffer
 
 1. 렌더러의 메쉬를 설정하고
 	- Rect, Cube, 3DMesh 등등

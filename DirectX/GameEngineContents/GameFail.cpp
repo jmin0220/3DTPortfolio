@@ -17,8 +17,8 @@ void GameFail::Start()
 {
 	SlicePos_ = float4(1, 0, 0, 0);
 	SetRenderer_ = CreateComponent<GameEngineUIRenderer>();
-	//SetRenderer_->GetRenderUnit().SetPipeLine("TextureLoop");
-	SetRenderer_->GetRenderUnit()->SetPipeLine("RtoLSlice");
+	//SetRenderer_->GetRenderUnit().SetMaterial("TextureLoop");
+	SetRenderer_->GetRenderUnit()->SetMaterial("RtoLSlice");
 
 	SetRenderer_->GetTransform().SetWorldScale({ 2048.0f, 336.0f });
 	SetRenderer_->GetTransform().SetWorldPosition({ 0.0f, 0.0f });
@@ -39,7 +39,7 @@ void GameFail::Start()
 	CrownRenderer_->SetPivot(PIVOTMODE::LEFT);
 	CrownRenderer_->SetTexture("round-over-white.png");
 
-	CrownRenderer_->GetRenderUnit()->SetPipeLine("TextureLoop");
+	CrownRenderer_->GetRenderUnit()->SetMaterial("TextureLoop");
 	CrownRenderer_->GetRenderUnit()->EngineShaderResourcesSetting(CrownRenderer_);
 	CrownRenderer_->GetRenderUnit()->ShaderResources.SetTexture("Tex", "crown-pattern-pink.png");
 	if (true == CrownRenderer_->GetRenderUnit()->ShaderResources.IsConstantBuffer("SliceData"))

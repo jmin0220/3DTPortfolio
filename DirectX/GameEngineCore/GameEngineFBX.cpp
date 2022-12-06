@@ -281,8 +281,8 @@ std::vector<FBXNodeInfo> GameEngineFBX::CheckAllNode()
 		{
 			FBXNodeInfo& _NodeInfo = AllNode.emplace_back();
 
-	_NodeInfo.Name = _Node->GetName();
-	_NodeInfo.Node = _Node;
+			_NodeInfo.Name = _Node->GetName();
+			_NodeInfo.Node = _Node;
 
 		});
 

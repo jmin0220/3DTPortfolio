@@ -203,6 +203,7 @@ bool GameEngineFBXAnimation::AnimationLoad(std::shared_ptr <GameEngineFBXMesh> _
 	{
 		return true;
 	}
+
 	// return;
 
 	{
@@ -218,7 +219,7 @@ bool GameEngineFBXAnimation::AnimationLoad(std::shared_ptr <GameEngineFBXMesh> _
 		std::vector<FBXNodeInfo> ALLNODE = CheckAllNode();
 
 		_Mesh->AllBones;
-
+		
 
 		fbxsdk::FbxNode* pLinkNode = Scene->FindNodeByName(linkName.c_str());
 
@@ -248,8 +249,8 @@ bool GameEngineFBXAnimation::AnimationLoad(std::shared_ptr <GameEngineFBXMesh> _
 				{
 					FbxExBoneFrame& Frame = CurAniData.AniFrameData[MeshIndex][boneIndex];
 					Frame.BoneMatData.resize(endTime - startTime + 1);
-					Frame.BoneIndex = boneIndex;
-					Frame.BoneParentIndex = boneIndex;
+					Frame.BoneIndex = static_cast<int>(boneIndex);
+					Frame.BoneParentIndex = static_cast<int>(boneIndex);
 
 					for (fbxsdk::FbxLongLong i = startTime; i <= endTime; ++i)
 					{

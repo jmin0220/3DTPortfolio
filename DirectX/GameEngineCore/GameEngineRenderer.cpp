@@ -100,7 +100,7 @@ void GameEngineRenderUnit::SetMesh(std::shared_ptr<GameEngineMesh> _Mesh)
 	}
 }
 
-void GameEngineRenderUnit::SetPipeLine(const std::string& _Name)
+void GameEngineRenderUnit::SetMaterial(const std::string& _Name)
 {
 	Material = GameEngineMaterial::Find(_Name);
 

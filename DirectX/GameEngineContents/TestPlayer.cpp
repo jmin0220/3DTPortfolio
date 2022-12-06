@@ -34,7 +34,7 @@ void TestPlayer::Start()
 	Collision->IsPlayableOn();
 
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->SetPipeLine("Color");
+	Renderer->SetMaterial("Color");
 	Renderer->SetMesh("Box");
 
 	ResultColor = float4(1.0f, 0.0f, 0.0f, 0.5f);

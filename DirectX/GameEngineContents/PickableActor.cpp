@@ -115,7 +115,7 @@ void PickableActor::SetCollisionOnly(const float4& _Scale)
 
 		CollisionRenderer_ = CreateComponent<GameEngineTextureRenderer>();
 		CollisionRenderer_->SetMesh("Box");
-		CollisionRenderer_->SetPipeLine("Color");
+		CollisionRenderer_->SetMaterial("Color");
 		ResultColor_ = float4(0.0f, 1.0f, 0.0f, 0.5f);
 		CollisionRenderer_->GetRenderUnit()->ShaderResources.SetConstantBufferLink("ResultColor", ResultColor_);
 

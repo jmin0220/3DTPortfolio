@@ -17,7 +17,7 @@ void TestActor::Start()
 	Renderer_->SetTexture("large-pill-black.png");
 	Renderer_->GetTransform().SetWorldScale({ 459, 141 });
 
-	Renderer_->GetRenderUnit()->SetPipeLine("TextureLoop");
+	Renderer_->GetRenderUnit()->SetMaterial("TextureLoop");
 	Renderer_->GetRenderUnit()->EngineShaderResourcesSetting(Renderer_);
 	Renderer_->GetRenderUnit()->ShaderResources.SetTexture("Tex", "crown-pattern-2.png");
 
