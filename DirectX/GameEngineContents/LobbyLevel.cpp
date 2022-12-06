@@ -80,6 +80,7 @@ void LobbyLevel::LevelStartEvent()
 	WaitingFont_->Off();
 
 	Bingle_ = CreateActor<Bingle>();
+	Bingle_->Off();
 
 	Mouse = CreateActor<Cursor>();
 }
@@ -137,6 +138,7 @@ void LobbyLevel::FallingStart(const StateInfo& _Info)
 	UserFont_->On();
 	NumberFont_->On();
 	WaitingFont_->On();
+	Bingle_->On();
 
 	// ¡Ú¡Ú¡Ú ¼­¹ö ¡Ú¡Ú¡Ú
 	GameServer::GetInst()->ServerStart();
