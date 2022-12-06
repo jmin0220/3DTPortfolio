@@ -68,6 +68,9 @@ public:
 	{
 		IsSpeedLimit_ = !IsSpeedLimit_;
 	}
+
+	//회전 움직임 함수
+	void SetChangedRot(float4 _Rot);
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -92,6 +95,7 @@ private:
 
 	//속도제한 함수
 	void SpeedLimit();
+
 
 	float4 AnglexAxistoEuler(float4 Vec3, float angle);
 

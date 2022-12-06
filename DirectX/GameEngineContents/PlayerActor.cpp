@@ -7,7 +7,7 @@
 #include "CameraArm.h"
 
 float SPEED_PLAYER = 2500.0f;
-float AngularSpeed = 90.0f;
+float AngularSpeed = 70.0f;
 
 PlayerActor::PlayerActor() :
 	CheckPointFlag_(false),
@@ -118,7 +118,9 @@ void PlayerActor::InputController(float _DeltaTime)
 
 	float4 tmpMoveSpeed = float4::ZERO;
 	MoveDir_ = float4::ZERO;
-
+	float4 RotatedActor= GetTransform().GetWorldRotation();
+	float4 CamForwardRot = GetLevel()->GetMainCameraActor()->GetTransform().GetWorldRotation();
+	float4 ActorRot = GetTransform().GetWorldRotation();
 	if (true == GameEngineInput::GetInst()->IsPress(KEY_W))
 	{
 		// EX) 카메라가 보고있는 방향으로 전진
@@ -127,33 +129,8 @@ void PlayerActor::InputController(float _DeltaTime)
 		CamForwardVec.y = 0;
 		MoveDir_ += CamForwardVec.Normalize3DReturn();
 
-		float4 CamForwardRot = GetLevel()->GetMainCameraActor()->GetTransform().GetWorldRotation();
-		float4 ActorRot = GetTransform().GetWorldRotation();
+		RotatedActor = GetCameraBaseRotationAng(ActorRot, CamForwardRot, _DeltaTime);
 
-		float AngDiff = ActorRot.y - CamForwardRot.y;
-
-		if (AngDiff > 0.0f)
-		{
-			if (AngDiff < 180.0f)
-			{
-				//Left
-			}
-			else
-			{
-				// AngDiff - 180 Right
-			}
-		}
-		else if (AngDiff < 0.0f)
-		{
-			if (AngDiff > -180.0f)
-			{
-				//Right
-			}
-			else
-			{
-				// AngDiff - 180 Left
-			}
-		}
 	}
 
 	if (true == GameEngineInput::GetInst()->IsPress(KEY_A))
@@ -224,6 +201,7 @@ void PlayerActor::InputController(float _DeltaTime)
 
 	tmpMoveSpeed = MoveDir_ * SPEED_PLAYER * _DeltaTime;
 	DynamicActorComponent_->SetMoveSpeed(tmpMoveSpeed);
+	DynamicActorComponent_->SetChangedRot(RotatedActor);
 }
 
 // TODO::물리 충격 테스트
@@ -317,6 +295,63 @@ void PlayerActor::SetCharacterTexture()
 			}
 		}
 	}
+}
+
+float4 PlayerActor::GetCameraBaseRotationAng(float4 _ActorRot, float4 _CamForRot, float _DeltaTime)
+{
+	float AngDiff = _ActorRot.y - _CamForRot.y;
+	float4 ChangedActorRot = _ActorRot;
+	if (AngDiff > 0.0f)
+	{
+		if (AngDiff < 180.0f)
+		{
+			//Left
+
+			ChangedActorRot.y = _ActorRot.y + -AngularSpeed * _DeltaTime;
+
+			if (ChangedActorRot.y < _CamForRot.y)
+			{
+				ChangedActorRot.y = _CamForRot.y;
+			}
+		}
+		else
+		{
+			// AngDiff - 180 Right
+			ChangedActorRot.y = _ActorRot.y + AngularSpeed * _DeltaTime;
+
+			if (ChangedActorRot.y > _CamForRot.y)
+			{
+				ChangedActorRot.y = _CamForRot.y;
+			}
+		}
+	}
+	else if (AngDiff < 0.0f)
+	{
+		if (AngDiff > -180.0f)
+		{
+			//Right
+
+			ChangedActorRot.y = _ActorRot.y + AngularSpeed * _DeltaTime;
+
+			if (ChangedActorRot.y > _CamForRot.y)
+			{
+				ChangedActorRot.y = _CamForRot.y;
+			}
+		}
+		else
+		{
+			// AngDiff - 180 Left
+
+			ChangedActorRot.y = _ActorRot.y + -AngularSpeed * _DeltaTime;
+
+			if (ChangedActorRot.y < _CamForRot.y)
+			{
+				ChangedActorRot.y = _CamForRot.y;
+			}
+		}
+	}
+
+	return ChangedActorRot;
 }
 
 void PlayerActor::StandUp()

@@ -33,6 +33,9 @@ public:
 		resitution_ = _resitution;
 	}
 
+	float4 GetQuaternionEulerAngles(float4 rot);
+	float4 NormalizeAngles(float4 angles);
+	float NormalizeAngle(float angle);
 protected:
 	float staticfriction_ = 0.0f;
 	float dynamicfriction_ = 0.0f;

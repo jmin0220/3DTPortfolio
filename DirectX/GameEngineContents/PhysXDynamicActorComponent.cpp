@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "PhysXDynamicActorComponent.h"
 
+
 PhysXDynamicActorComponent::PhysXDynamicActorComponent() 
 	:IsSpeedLimit_(false)
 {
@@ -128,21 +129,15 @@ void PhysXDynamicActorComponent::Update(float _DeltaTime)
 	,dynamic_->getGlobalPose().p.y
 	, dynamic_->getGlobalPose().p.z };
 
-	//float4 tmpWorldRot = { dynamic_->getGlobalPose().q.x
-	//,dynamic_->getGlobalPose().q.y
-	//, dynamic_->getGlobalPose().q.z };
+	float4 Rot2 = ParentActor_.lock()->GetTransform().GetWorldRotation();
 	float4 QuatRot = float4{ dynamic_->getGlobalPose().q.x, dynamic_->getGlobalPose().q.y, dynamic_->getGlobalPose().q.z, dynamic_->getGlobalPose().q.w };
-	float4 EulerRot = float4::QuaternionToEulerAngles(QuatRot);
-	float angle;
-	physx::PxVec3 Vec3;
-	dynamic_->getGlobalPose().q.toRadiansAndUnitAxis(angle, Vec3);
-	float4 AAE = AnglexAxistoEuler(float4{Vec3.x, Vec3.y, Vec3.z}, angle);
-	float4 tmpWorldRot = { ToEulerAngles(dynamic_->getGlobalPose().q) };
-	tmpWorldRot = tmpWorldRot * GameEngineMath::RadianToDegree;
+	float4 EulerRot = PhysXCommonFunc::GetQuaternionEulerAngles(QuatRot);
 
+	dynamic_->getGlobalPose().q;
 
+	EulerRot *= GameEngineMath::RadianToDegree;
+	ParentActor_.lock()->GetTransform().SetWorldRotation(float4{ EulerRot.x, EulerRot.y, EulerRot.z });
 
-	ParentActor_.lock()->GetTransform().SetLocalRotation(EulerRot * GameEngineMath::RadianToDegree);
 	ParentActor_.lock()->GetTransform().SetWorldPosition(tmpWorldPos);
 
 
@@ -150,45 +145,9 @@ void PhysXDynamicActorComponent::Update(float _DeltaTime)
 	{
 		SpeedLimit();
 	}
-
 }
 
-float4 PhysXDynamicActorComponent::AnglexAxistoEuler(float4 Vec3, float angle)
-{
-	double s = std::sin(angle);
-	double c = std::cos(angle);
-	double t = 1 - c;
-	//  if axis is not already normalised then uncomment this
-	// double magnitude = Math.sqrt(x*x + y*y + z*z);
-	// if (magnitude==0) throw error;
-	// x /= magnitude;
-	// y /= magnitude;
-	// z /= magnitude;
-	if ((Vec3.x * Vec3.y * t + Vec3.z * s) > 0.998) { // north pole singularity detected
-		float heading = 2 * atan2(Vec3.x * std::sin(angle / 2), std::cos(angle / 2));
-		float attitude = GameEngineMath::PI / 2;
-		float bank = 0;
 
-		//return float4{attitude, heading, bank };
-		return float4{ heading ,attitude ,bank };
-		//return float4{heading , attitude, bank };
-	}
-	if ((Vec3.x * Vec3.y * t + Vec3.z * s) < -0.998) { // south pole singularity detected
-		float heading = -2 * atan2(Vec3.x * std::sin(angle / 2), std::cos(angle / 2));
-		float attitude = -GameEngineMath::PI / 2;
-		float bank = 0;
-		//return float4{ attitude, heading, bank };
-		return float4{ heading ,attitude ,bank };
-		//return float4{ heading , attitude, bank };
-	}
-	float heading = std::atan2(Vec3.y * s - Vec3.x * Vec3.z * t, 1 - (Vec3.y * Vec3.y + Vec3.z * Vec3.z) * t);
-	float attitude = std::asin(Vec3.x * Vec3.y * t + Vec3.z * s);
-	float bank = std::atan2(Vec3.x * s - Vec3.y * Vec3.z * t, 1 - (Vec3.x * Vec3.x + Vec3.z * Vec3.z) * t);
-
-	//return float4{ attitude, heading, bank };
-	return float4{ heading ,attitude ,bank };
-	//return float4{heading , attitude, bank };
-}
 
 void PhysXDynamicActorComponent::PushImpulse(float4 _ImpulsePower)
 {
@@ -237,19 +196,17 @@ void PhysXDynamicActorComponent::SpeedLimit()
 
 		dynamic_->setLinearVelocity(Velo);
 	}
-	//if (std::abs(Velo.x) > PLAYER_MAX_SPEED)
-	//{
-	//	int k = (Velo.x > 0) ? 1 : ((Velo.x < 0) ? -1 : 0);
-	//	Velo.x = PLAYER_MAX_SPEED * k;
-	//}
+}
 
-	//if (std::abs(Velo.z) > PLAYER_MAX_SPEED)
-	//{
-	//	int k = (Velo.z > 0) ? 1 : ((Velo.z < 0) ? -1 : 0);
-	//	Velo.z = PLAYER_MAX_SPEED * k;
-	//}
-	////Velo.normalize();
-	//dynamic_->setLinearVelocity(Velo);
+void PhysXDynamicActorComponent::SetChangedRot(float4 _Rot)
+{
+	//dynamic_->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y, false);
+
+	float4 tmpQuat = _Rot.DegreeRotationToQuaternionReturn();
+	const physx::PxQuat tmpPxQuat(tmpQuat.x, tmpQuat.y, tmpQuat.z, tmpQuat.w);
+	const physx::PxTransform tmpTansform(dynamic_->getGlobalPose().p, tmpPxQuat);
+
+	dynamic_->setGlobalPose(tmpTansform);
 }
 
 

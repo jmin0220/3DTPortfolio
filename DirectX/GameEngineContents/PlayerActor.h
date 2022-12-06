@@ -82,6 +82,10 @@ private:
 	};
 
 	SkinData SkinData_;
+
+	//캐릭터 카메라 동기 회전관련
+private:
+	float4 GetCameraBaseRotationAng(float4 _ActorRot, float4 _CamRot, float _DeltaTime);
 public:
 	//플레이어 위치 재설정을 위한 GEt함수
 	std::shared_ptr<PhysXDynamicActorComponent> GetDynamicActorComponent()
