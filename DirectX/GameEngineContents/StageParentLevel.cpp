@@ -30,6 +30,7 @@ float4 StageParentLevel::PlayerPos = float4::ZERO;
 StageParentLevel::StageParentLevel() 
 	: MyStage_(StageNum::STAGE1)
 {
+	CinemaCam_ = std::make_shared<Cinemachine>();
 }
 
 StageParentLevel::~StageParentLevel() 
@@ -39,6 +40,8 @@ StageParentLevel::~StageParentLevel()
 void StageParentLevel::Start()
 {
 	VirtualPhysXLevel::Start();
+	CinemaCam_->SetStage(MyStage_);
+	CinemaCam_->Init(GetMainCameraActor());
 
 	// 스테이지 FSM
 	StageStateManager_.CreateStateMember("Idle"
@@ -65,6 +68,8 @@ void StageParentLevel::Start()
 void StageParentLevel::Update(float _DeltaTime)
 {
 	VirtualPhysXLevel::Update(_DeltaTime);
+
+	CinemaCam_->Update();
 
 	StageStateManager_.Update(_DeltaTime);
 

@@ -2,6 +2,7 @@
 #include "StageParentLevel.h"
 #include "PlayerActor.h"
 #include "InGameSetUI.h"
+#include "Cinemachine.h"
 
 ///////////////////////////
 // 스테이지 시작전 준비 단계
@@ -19,7 +20,7 @@ void StageParentLevel::IdleUpdate(float _DeltaTime, const StateInfo& _Info)
 	
 	if (true == GameEngineInput::GetInst()->IsDown(KEY_ENTER))
 	{
-		StageStateManager_.ChangeState("StagePreView");
+		//StageStateManager_.ChangeState("StagePreView");
 		return;
 	}
 }
@@ -27,21 +28,21 @@ void StageParentLevel::IdleUpdate(float _DeltaTime, const StateInfo& _Info)
 ///////////////////////////
 // 카메라 시네머신
 ///////////////////////////
-void StageParentLevel::StagePreViewStart(const StateInfo& _Info)
-{
-	MainCam_->OnFreeCameraMode();
-	MainCam_->GetTransform().SetWorldRotation({ 0, 0, 0 });
-	MainCam_->GetTransform().SetWorldPosition({ 0, -60, 200 });
-}
-
-void StageParentLevel::StagePreViewUpdate(float _DeltaTime, const StateInfo& _Info)
-{
-	float4 NextPos = float4::Lerp(MainCam_->GetTransform().GetWorldPosition(), float4{ 0, -10, -520 }, _Info.StateTime * 0.002f);
-	MainCam_->GetTransform().SetWorldPosition(NextPos);
-
-	float4 NextRot = float4::Lerp(MainCam_->GetTransform().GetWorldRotation(), float4{ 16, 0, 0 }, _Info.StateTime * 0.002f);
-	MainCam_->GetTransform().SetWorldRotation(NextRot);
-}
+//void StageParentLevel::StagePreViewStart(const StateInfo& _Info)
+//{
+//	MainCam_->OnFreeCameraMode();
+//	MainCam_->GetTransform().SetWorldRotation({ 0, 0, 0 });
+//	MainCam_->GetTransform().SetWorldPosition({ 0, -60, 200 });
+//}
+//
+//void StageParentLevel::StagePreViewUpdate(float _DeltaTime, const StateInfo& _Info)
+//{
+//	float4 NextPos = float4::Lerp(MainCam_->GetTransform().GetWorldPosition(), float4{ 0, -10, -520 }, _Info.StateTime * 0.002f);
+//	MainCam_->GetTransform().SetWorldPosition(NextPos);
+//
+//	float4 NextRot = float4::Lerp(MainCam_->GetTransform().GetWorldRotation(), float4{ 16, 0, 0 }, _Info.StateTime * 0.002f);
+//	MainCam_->GetTransform().SetWorldRotation(NextRot);
+//}
 
 ///////////////////////////
 // 3, 2, 1, GO!

@@ -579,6 +579,9 @@
     <ClInclude Include="JumboTron.h">
       <Filter>02_Actor\Stage04Actor\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Cinemachine.h">
+      <Filter>99_Global</Filter>
+    </ClInclude>
     <ClInclude Include="HoopsLegendsLevel.h">
       <Filter>01_Level\StageLevel\Stage05_HoopsLegends</Filter>
     </ClInclude>
@@ -964,6 +967,9 @@
     </ClCompile>
     <ClCompile Include="JumboTron.cpp">
       <Filter>02_Actor\Stage04Actor\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Cinemachine.cpp">
+      <Filter>99_Global</Filter>
     </ClCompile>
     <ClCompile Include="HoopsLegendsLevel.cpp">
       <Filter>01_Level\StageLevel\Stage05_HoopsLegends</Filter>

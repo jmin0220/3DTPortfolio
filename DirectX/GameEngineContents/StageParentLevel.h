@@ -2,15 +2,7 @@
 #include <GameEngineCore/GameEngineLevel.h>
 #include "VirtualPhysXLevel.h"
 #include "CameraArm.h"
-
-enum class StageNum
-{
-	STAGE1,
-	STAGE2,
-	STAGE3,
-	STAGE4,
-	STAGE5
-};
+#include "Cinemachine.h"
 
 enum class Stage_MeshEnum
 {
@@ -98,6 +90,7 @@ private:
 	// 특정 레벨에만 다르게 동작해야 된다면, Override해서 사용할 수 있음
 protected:
 	GameEngineStateManager StageStateManager_;
+	std::shared_ptr<Cinemachine> CinemaCam_;
 
 	// FSM관련 엑터들
 	std::shared_ptr<class InGameSetUI> UIs_;
@@ -107,8 +100,8 @@ protected:
 	virtual void IdleUpdate(float _DeltaTime, const StateInfo& _Info);
 
 	// 카메라 시네마틱 무브 + BGM
-	virtual void StagePreViewStart(const StateInfo& _Info);
-	virtual void StagePreViewUpdate(float _DeltaTime, const StateInfo& _Info);
+	virtual void StagePreViewStart(const StateInfo& _Info) {};
+	virtual void StagePreViewUpdate(float _DeltaTime, const StateInfo& _Info) {};
 
 	// 321땅
 	virtual void ReadyStart(const StateInfo& _Info);

@@ -91,6 +91,16 @@ enum class LEVELS
 };
 
 
+enum class StageNum
+{
+	STAGE1,
+	STAGE2,
+	STAGE3,
+	STAGE4,
+	STAGE5,
+};
+
+
 enum class MapSelect
 {
 	Splash_CoY_DoorDash,
