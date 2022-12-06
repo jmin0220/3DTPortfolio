@@ -595,7 +595,6 @@
       <Filter>00_Core\Server</Filter>
     </ClInclude>
     <ClInclude Include="GameServerObject.h">
-    <ClInclude Include="GameServerObject.h">
       <Filter>00_Core\Server</Filter>
     </ClInclude>
     <ClInclude Include="ServerPacket.h">
@@ -987,7 +986,6 @@
     <ClCompile Include="GameServer.cpp">
       <Filter>00_Core\Server</Filter>
     </ClCompile>
-    <ClCompile Include="GameServerObject.cpp">
     <ClCompile Include="GameServerObject.cpp">
       <Filter>00_Core\Server</Filter>
     </ClCompile>
