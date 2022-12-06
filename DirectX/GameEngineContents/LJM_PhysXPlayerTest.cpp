@@ -11,45 +11,15 @@ LJM_PhysXPlayerTest::LJM_PhysXPlayerTest()
 
 LJM_PhysXPlayerTest::~LJM_PhysXPlayerTest() 
 {
-	// To release all created character controllers at once, either release the manager object itself
-	// , or use the following function if you intend to keep using the manager
-	if (nullptr != CtrManager_)
-	{
-		CtrManager_->purgeControllers();
-	}
 }
 
 void LJM_PhysXPlayerTest::Start()
 {
 
-
-	GameEngineInput::GetInst()->CreateKey("CreateBall", VK_SPACE);
-	GameEngineInput::GetInst()->CreateKey("CreateStack", '1');
 }
 
 void LJM_PhysXPlayerTest::Update(float _DeltaTime)
 {
-	// 물리연산 업데이트
-	stepPhysics(true);
-
-
-	if (true == GameEngineInput::GetInst()->IsDown("CreateBall"))
-	{
-		physx::PxTransform tmpTransform(GetMainCameraActor()->GetTransform().GetWorldPosition().x
-			, GetMainCameraActor()->GetTransform().GetWorldPosition().y
-			, GetMainCameraActor()->GetTransform().GetWorldPosition().z);
-
-		physx::PxVec3 tmpVec3(GetMainCameraActorTransform().GetLocalRotation().x
-			, GetMainCameraActorTransform().GetLocalRotation().y
-			, 1.0f);
-
-		createDynamic(tmpTransform, tmpVec3 * 200.0f);
-	}
-
-	if (true == GameEngineInput::GetInst()->IsDown("CreateStack"))
-	{
-		createStack(physx::PxTransform(physx::PxVec3(0, 0, stackZ -= 10.0f)), 10, 2.0f);
-	}
 }
 
 void LJM_PhysXPlayerTest::End()
@@ -59,21 +29,10 @@ void LJM_PhysXPlayerTest::End()
 void LJM_PhysXPlayerTest::LevelStartEvent()
 {
 
-	// 리소스 로드
-	ContentsCore::GetInst()->LoadLevelResource(LEVELS::PHYSX_TEST);
-
-	Player_ = CreateActor<PhysXTestPlayer>();
-
-
-	initPhysics(true);
 }
 
 void LJM_PhysXPlayerTest::LevelEndEvent()
 {
-	Player_->Death();
-
-	// 리소스 해제
-	ContentsCore::GetInst()->ReleaseCurLevelResource();
 }
 
 void LJM_PhysXPlayerTest::initPhysics(bool _interactive)

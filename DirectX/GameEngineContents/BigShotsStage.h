@@ -1,6 +1,6 @@
 #pragma once
 #include "VirtualPhysXActor.h"
-#include "PhysXTriMeshGeometryComponent.h"
+#include "PhysXSeesawComponent.h"
 
 // Ό³Έν :
 class BigShotsStage : public VirtualPhysXActor
@@ -27,7 +27,7 @@ protected:
 	void CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics) override;
 
 private:
-	std::shared_ptr<PhysXTriMeshGeometryComponent> PhysXTriMeshGeometry_;
+	//std::shared_ptr<PhysXSeesawComponent> PhysXSeesawGeometry_;
 
 	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer_;
 };
