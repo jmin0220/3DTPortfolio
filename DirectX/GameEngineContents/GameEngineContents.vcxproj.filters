@@ -594,14 +594,14 @@
     <ClInclude Include="GameServer.h">
       <Filter>00_Core\Server</Filter>
     </ClInclude>
-    <ClInclude Include="ServerPacket.h">
-      <Filter>00_Core\Server</Filter>
-    </ClInclude>
     <ClInclude Include="GameServerObject.h">
       <Filter>00_Core\Server</Filter>
     </ClInclude>
     <ClInclude Include="PhysXSeesawComponent.h">
       <Filter>03_Component\PhysXComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Bingle.h">
+      <Filter>02_Actor\UIActor\LoadingActors</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -983,14 +983,14 @@
     <ClCompile Include="GameServer.cpp">
       <Filter>00_Core\Server</Filter>
     </ClCompile>
-    <ClCompile Include="ServerPacket.cpp">
-      <Filter>00_Core\Server</Filter>
-    </ClCompile>
     <ClCompile Include="GameServerObject.cpp">
       <Filter>00_Core\Server</Filter>
     </ClCompile>
     <ClCompile Include="PhysXSeesawComponent.cpp">
       <Filter>03_Component\PhysXComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Bingle.cpp">
+      <Filter>02_Actor\UIActor\LoadingActors</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

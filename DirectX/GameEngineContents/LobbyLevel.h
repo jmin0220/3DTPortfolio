@@ -8,6 +8,7 @@ class LobbyBackgroundActor;
 class LobbySetUI;
 class LobbyPlayer;
 class FloorActor;
+class Bingle;
 class LobbyLevel : public GameEngineLevel
 {
 public:
@@ -42,6 +43,8 @@ private:
 	std::shared_ptr<FontActor> UserFont_;
 	std::shared_ptr<FontActor> CountDownFont_;
 	std::shared_ptr<FontActor> WaitingFont_;
+
+	std::shared_ptr<Bingle> Bingle_;
 
 	bool Swap;
 

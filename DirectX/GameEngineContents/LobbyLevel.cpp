@@ -8,6 +8,7 @@
 #include "LobbySetUI.h"
 #include "Winner.h"
 #include "FloorActor.h"
+#include "Bingle.h"
 
 #include "GameServer.h"
 
@@ -78,6 +79,8 @@ void LobbyLevel::LevelStartEvent()
 	WaitingFont_->SetFont("플레이어를 기다리는 중", "Noto Sans CJK SC", 25.f, { 200,850 });
 	WaitingFont_->Off();
 
+	Bingle_ = CreateActor<Bingle>();
+
 	Mouse = CreateActor<Cursor>();
 }
 
@@ -97,6 +100,8 @@ void LobbyLevel::LevelEndEvent()
 	UserFont_->Death();
 	CountDownFont_->Death();
 	WaitingFont_->Death();
+
+	Bingle_->Death();
 	
 	//ContentsCore::GetInst()->ReleaseCurLevelResource();
 }
@@ -111,6 +116,7 @@ void LobbyLevel::LobbyStart(const StateInfo& _Info)
 
 void LobbyLevel::LobbyUpdate(float _DeltaTime, const StateInfo& _Info)
 {
+
 	if (true == LobbySet_->GetPlayButton().lock()->GetIsLevelChange())
 	{
 		StateManager_.ChangeState("Falling");
