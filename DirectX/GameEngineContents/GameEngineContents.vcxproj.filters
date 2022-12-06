@@ -595,6 +595,10 @@
       <Filter>00_Core\Server</Filter>
     </ClInclude>
     <ClInclude Include="GameServerObject.h">
+    <ClInclude Include="GameServerObject.h">
+      <Filter>00_Core\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerPacket.h">
       <Filter>00_Core\Server</Filter>
     </ClInclude>
     <ClInclude Include="PhysXSeesawComponent.h">
@@ -984,6 +988,10 @@
       <Filter>00_Core\Server</Filter>
     </ClCompile>
     <ClCompile Include="GameServerObject.cpp">
+    <ClCompile Include="GameServerObject.cpp">
+      <Filter>00_Core\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerPacket.cpp">
       <Filter>00_Core\Server</Filter>
     </ClCompile>
     <ClCompile Include="PhysXSeesawComponent.cpp">

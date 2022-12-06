@@ -78,3 +78,6 @@
 #pragma comment (lib, "PhysXPvdSDK_static_64.lib")
 #pragma comment (lib, "PhysXCooking_static_64.lib")
 #pragma comment (lib, "PhysXCharacterKinematic_static_64.lib")
+
+// ¼­¹ö
+#include "GameServer.h"

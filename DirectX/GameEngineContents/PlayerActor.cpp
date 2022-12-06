@@ -5,9 +5,12 @@
 #include "VirtualPhysXLevel.h"
 
 #include "CameraArm.h"
+#include "ServerPacket.h"
 
 float SPEED_PLAYER = 2500.0f;
 float AngularSpeed = 520.0f;
+
+bool PlayerActor::IsMainPlayerSpawned_ = false;
 
 PlayerActor::PlayerActor() :
 	CheckPointFlag_(false),
@@ -34,20 +37,36 @@ physx::PxRigidDynamic* PlayerActor::CreatePhysXActors(physx::PxScene* _Scene, ph
 
 void PlayerActor::Start()
 {
-	// 캐릭터 메쉬 로드 테스트용
+	if (true == IsMainPlayerSpawned_)
+	{
+		int a = 0;
+	}
+
+	// 캐릭터 메쉬 로드
 	FbxRenderer_ = CreateComponent<GameEngineFBXAnimationRenderer>();
 	DynamicActorComponent_ = CreateComponent<PhysXDynamicActorComponent>();
 
+	// 메쉬 로드
+	//FbxRenderer_->SetFBXMesh("Character.FBX", "Texture");
+	FbxRenderer_->SetFBXMesh("TestIdle.fbx", "TextureAnimationCustom");
+	SetCharacterAnimation();
+	SetCharacterTexture();
+	FbxRenderer_->GetTransform().SetWorldScale({ PLAYER_SIZE_MAGNIFICATION_RATIO });
+
+	MeshBoundScale = FbxRenderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
+	MeshBoundScale *= float4{ PLAYER_SIZE_MAGNIFICATION_RATIO };
+	FbxRenderer_->GetTransform().SetLocalPosition({ 0.0f, -MeshBoundScale.y * 1.5f , 0.0f });
+	//FbxRenderer_->GetTransform().SetLocalPosition({0.0f, 0.0f , 0.0f});
+
+	// PhysXActor를 생성하고, 플레이어의 RigidActor를 받아와서 콜백에 사용함
+	static_cast<VirtualPhysXLevel*>(GetLevel())->SetSimulationPlayer(CreatePhysXActors(dynamic_cast<StageParentLevel*>(GetLevel())->GetScene(),
+		dynamic_cast<StageParentLevel*>(GetLevel())->GetPhysics()));
 
 	//EventCol
 	EventCol_ = CreateComponent<GameEngineCollision>();
 	EventCol_->ChangeOrder(CollisionGroup::Player);
 	EventCol_->GetTransform().SetWorldScale({ PLAYER_COL_SCALE });
 	EventCol_->GetTransform().SetLocalPosition({ 0.0f, -5.0f, 0.0f });
-
-
-	// FSM
-	CreateFSMStates();
 
 	// TODO::충격테스트용 키
 	if (false == GameEngineInput::GetInst()->IsKey("ImpulsW"))
@@ -65,49 +84,95 @@ void PlayerActor::Start()
 	}
 
 	DynamicActorComponent_->TurnOnSpeedLimit();
+
+	// 서버 메인 플레이어만 드렁모
+	// 
+	// CreateActor<PlayerActor> 여러번 호출하게됨, 내가 컨트롤 하지 않을 PlayerActor 제외사항
+	if (false == IsMainPlayerSpawned_)
+	{
+		IsMainPlayerSpawned_ = true;
+		IsPlayerble_ = true;
+
+		// FSM
+		CreateFSMStates();
+	}
 }
 
 void PlayerActor::Update(float _DeltaTime)
 {
-	InputController(_DeltaTime);
-
-	PlayerStateManager_.Update(_DeltaTime);
-
-	//GetTransform().SetWorldMove(MoveDir_ * SPEED_PLAYER * _DeltaTime);
-	// TODO::충격테스트코드
-	ImpulseTest();
-	StandUp();
-
-
-	//체크포인트 실험용 나중에 지워야함
-	if (GameEngineInput::GetInst()->IsDown("TestPos") == true)
+	// 서버
+	if (false == GetIsNetInit())
 	{
-		DynamicActorComponent_->SetPlayerStartPos(ResetCheckPointPos());
+		return;
 	}
+
+	if (true == IsPlayerble_)
+	{
+		InputController(_DeltaTime);
+
+		PlayerStateManager_.Update(_DeltaTime);
+
+		//GetTransform().SetWorldMove(MoveDir_ * SPEED_PLAYER * _DeltaTime);
+		// TODO::충격테스트코드
+		ImpulseTest();
+		StandUp();
+
+
+		//체크포인트 실험용 나중에 지워야함
+		if (GameEngineInput::GetInst()->IsDown("TestPos") == true)
+		{
+			DynamicActorComponent_->SetPlayerStartPos(ResetCheckPointPos());
+		}
+
+		// 서버에 패킷 보냄
+		std::shared_ptr<ObjectUpdatePacket> Packet = std::make_shared<ObjectUpdatePacket>();
+		Packet->ObjectID = GetNetID();
+		Packet->Type = ServerObjectType::Player;
+		Packet->State = ServerObjectBaseState::Base;
+		Packet->Pos = GetTransform().GetWorldPosition();
+		Packet->Rot = GetTransform().GetWorldRotation();
+		GameServer::Net->SendPacket(Packet);
+	}
+	// 서버가 조종하는 PlayerActor
+	else
+	{
+		while (false == IsPacketEmpty())
+		{
+			std::shared_ptr<GameServerPacket> Packet = PopPacket();
+
+			ContentsPacketType PacketType = Packet->GetPacketIDToEnum<ContentsPacketType>();
+
+			switch (PacketType)
+			{
+			case ContentsPacketType::ObjectUpdate:
+			{
+				std::shared_ptr<ObjectUpdatePacket> ObjectUpdate = std::dynamic_pointer_cast<ObjectUpdatePacket>(Packet);
+				GetTransform().SetWorldPosition(ObjectUpdate->Pos);
+				GetTransform().SetWorldRotation(ObjectUpdate->Rot);
+				break;
+			}
+			case ContentsPacketType::ClientInit:
+			{
+				break;
+			}
+			case ContentsPacketType::GameState:
+			{
+				break;
+			}
+			default:
+				MsgBoxAssert("처리할수 없는 패킷이 날아왔습니다.");
+				break;
+			}
+		}
+	}
+	
+
 }
 
 void PlayerActor::LevelStartEvent()
 {
-	// 메쉬 로드
-	//FbxRenderer_->SetFBXMesh("Character.FBX", "Texture");
-	FbxRenderer_->SetFBXMesh("TestIdle.fbx", "TextureAnimationCustom");
-	SetCharacterAnimation();
-	SetCharacterTexture();
-	FbxRenderer_->GetTransform().SetWorldScale({ PLAYER_SIZE_MAGNIFICATION_RATIO });
-
-	MeshBoundScale = FbxRenderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
-	MeshBoundScale *= float4{ PLAYER_SIZE_MAGNIFICATION_RATIO };
-	FbxRenderer_->GetTransform().SetLocalPosition({0.0f, -MeshBoundScale.y * 1.5f , 0.0f});
-	//FbxRenderer_->GetTransform().SetLocalPosition({0.0f, 0.0f , 0.0f});
-
-	// 플레이어를 생성하고, 플레이어의 RigidActor를 받아와서 콜백에 사용함
-	static_cast<VirtualPhysXLevel*>(GetLevel())->SetSimulationPlayer(CreatePhysXActors(dynamic_cast<StageParentLevel*>(GetLevel())->GetScene(),
-		dynamic_cast<StageParentLevel*>(GetLevel())->GetPhysics()));
-
 	// LevelStartEvent에서 플레이어를 생성하고 위치를 재지정하는 함수
 	DynamicActorComponent_->SetPlayerStartPos(GetTransform().GetWorldPosition());
-
-
 }
 
 void PlayerActor::LevelEndEvent()

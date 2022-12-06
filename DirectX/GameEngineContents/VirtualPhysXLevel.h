@@ -67,9 +67,7 @@ protected:
 	void LevelStartEvent() override;
 	void LevelEndEvent() override;
 
-	// 컨트롤 가능한 플레이어
 	std::shared_ptr<PlayerActor> Player_;
-
 private:
 	static physx::PxScene* Scene_;
 	static physx::PxPhysics* Physics_;

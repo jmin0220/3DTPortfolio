@@ -208,8 +208,8 @@ void ContentsCore::CreateLevels()
 		TestLevels_.push_back(Level);
 	}
 	{
-		GameEngineLevel* Level = CreateLevel<PhysXLevel>("PhysXLevel");
-		TestLevels_.push_back(Level);
+		//GameEngineLevel* Level = CreateLevel<PhysXLevel>("PhysXLevel");
+		//TestLevels_.push_back(Level);
 	}
 	{
 		GameEngineLevel* Level = CreateLevel<ScaleTestLevel>(LEVEL_NAME_SCALE_TEST);
@@ -587,31 +587,32 @@ LEVELS ContentsCore::StringLevelToLEVELS(std::string_view _StringLevel)
 
 std::string_view ContentsCore::StringLevelToStringSetLevel(std::string_view _StringLevel)
 {
-	if (0 == _StringLevel.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_LOBBY)))
+	std::string Level = GameEngineString::ToUpperReturn(_StringLevel.data());
+	if (0 == Level.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_LOBBY)))
 	{
 		return LEVEL_NAME_LOBBY;
 	}
-	else if (0 == _StringLevel.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_DOORDASH)))
+	else if (0 == Level.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_DOORDASH)))
 	{
 		return LEVEL_NAME_DOORDASH;
 	}
-	else if (0 == _StringLevel.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_JUMPCLUB)))
+	else if (0 == Level.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_JUMPCLUB)))
 	{
 		return LEVEL_NAME_JUMPCLUB;
 	}
-	else if (0 == _StringLevel.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_BIGSHOTS)))
+	else if (0 == Level.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_BIGSHOTS)))
 	{
 		return LEVEL_NAME_BIGSHOTS;
 	}
-	else if (0 == _StringLevel.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_HEXAGONE)))
+	else if (0 == Level.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_HEXAGONE)))
 	{
 		return LEVEL_NAME_HEXAGONE;
 	}
-	else if (0 == _StringLevel.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_HOOPSLEGENDS)))
+	else if (0 == Level.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_HOOPSLEGENDS)))
 	{
 		return LEVEL_NAME_HOOPSLEGENDS;
 	}
-	else if (0 == _StringLevel.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_WINNER)))
+	else if (0 == Level.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_WINNER)))
 	{
 		return LEVEL_NAME_WINNER;
 	}

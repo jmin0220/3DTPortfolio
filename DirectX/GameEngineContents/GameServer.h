@@ -24,7 +24,9 @@ public:
 
 	static bool IsHost_;
 	static GameServerNet* Net;
-	static UINT32 PlayersCount_;
+	static unsigned int PlayersCount_;
+	static unsigned int ChangeNextState_;
+	static int ClienID_;
 
 public:
 	// constrcuter destructer

@@ -9,7 +9,9 @@ bool GameServer::ServerStart_ = false;
 GameServerNet* GameServer::Net;
 GameServerNetServer GameServer::Server;
 GameServerNetClient GameServer::Client;
-UINT32 GameServer::PlayersCount_ = 0;
+unsigned int GameServer::PlayersCount_ = 0;
+unsigned int GameServer::ChangeNextState_ = 0;
+int GameServer::ClienID_ = -1;
 
 GameServer::GameServer()
 {
@@ -164,6 +166,8 @@ void GameServer::ClientInitPacketProcess(std::shared_ptr<GameServerPacket> _Pack
 
 	// 클라이언트의 mainplayer
 	//MainPlayer->ClientInit(ServerObjectType::Player, Packet->ObjectID);
+
+	GameServer::GetInst()->ClienID_ = Packet->ObjectID;
 }
 
 // 서버에서보냄, 클라가 받은 게임상태 정보
@@ -177,6 +181,7 @@ void GameServer::GameStatePacketProcess(std::shared_ptr<GameServerPacket> _Packe
 	std::shared_ptr<GameStatePacket> Packet = std::dynamic_pointer_cast<GameStatePacket>(_Packet);
 
 	PlayersCount_ = Packet->PlayersCount;
+	ChangeNextState_ = Packet->ChangeNextState;
 	
 }
 ////////////////////
@@ -188,5 +193,7 @@ void GameServer::SendGameStatePacketToClient()
 {
 	std::shared_ptr<GameStatePacket> Packet = std::make_shared<GameStatePacket>();
 	Packet->PlayersCount = PlayersCount_;
+	Packet->ChangeNextState = ChangeNextState_;
+
 	Net->SendPacket(Packet);
 }

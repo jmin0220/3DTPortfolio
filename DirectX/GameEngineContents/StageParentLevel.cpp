@@ -84,8 +84,20 @@ void StageParentLevel::LevelStartEvent()
 	VirtualPhysXLevel::LevelStartEvent();
 	LevelStartLoad();
 
-	// 서버관련 변경
+	// 서버
+	GameServer::ChangeNextState_ = 0;
+
+	// 호스트/클라이언트 자신의 플레이어
 	Player_ = CreateActor<PlayerActor>();
+	if (true == GameServer::IsHost_)
+	{
+		Player_->ServerInit(ServerObjectType::Player);
+	}
+	else
+	{
+		Player_->ClientInit(ServerObjectType::Player, GameServer::GetInst()->ClienID_);
+	}
+
 
 	MainCam_ = GetMainCameraActor();
 	CameraArm_ = CreateActor<CameraArm>();
@@ -93,6 +105,9 @@ void StageParentLevel::LevelStartEvent()
 	UIs_ = CreateActor<InGameSetUI>();
 
 	StageStateManager_.ChangeState("Idle");
+
+
+
 }
 void StageParentLevel::LevelEndEvent()
 {

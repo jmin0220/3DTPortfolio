@@ -76,6 +76,7 @@ protected:
 
 	StageNum MyStage_;
 
+	// 컨트롤 가능한 플레이어
 	static float4 PlayerPos;
 
 	// 카메라 관련

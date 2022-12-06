@@ -46,26 +46,23 @@ void GameServerGUI::LobbyGUI()
 	PlayersCount += std::to_string(GameServer::PlayersCount_);
 	ImGui::Text(GameEngineString::AnsiToUTF8Return(PlayersCount).c_str());
 
-}
+	ImGui::NewLine();
 
-void GameServerGUI::InGameGUI()
-{
-
+	// 호스트
 	if (true == GameServer::IsHost_)
 	{
-		/// 호스트 화면 ///
-
-
 		// 게임시작 버튼
 		if (ImGui::Button(GameEngineString::AnsiToUTF8Return("게임시작").c_str()))
 		{
 			// 모든 사용자에게 Falling -> Loading 으로 바꾸는 신호
+			GameServer::ChangeNextState_ = 1;
+			ContentsCore::GetInst()->ChangeLevelByLoading(LEVEL_NAME_DOORDASH);
 		}
 	}
-	else
-	{
-		/// 클라이언트 화면 ///
+}
 
-	}
+void GameServerGUI::InGameGUI()
+{
+	
 
 }

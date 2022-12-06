@@ -473,6 +473,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ServerPacket.h" />
     <ClInclude Include="ShaderTutorialLevel.h">
       <SubType>
       </SubType>
@@ -883,6 +884,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="ServerPacket.cpp" />
     <ClCompile Include="ShaderTutorialLevel.cpp">
       <SubType>
       </SubType>

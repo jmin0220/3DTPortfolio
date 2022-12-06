@@ -99,7 +99,7 @@ void LobbyLevel::LevelEndEvent()
 
 	NumberFont_->Death();
 	UserFont_->Death();
-	CountDownFont_->Death();
+	//CountDownFont_->Death();
 	WaitingFont_->Death();
 
 	Bingle_->Death();
@@ -150,7 +150,7 @@ void LobbyLevel::FallingUpdate(float _DeltaTime, const StateInfo& _Info)
 {
 
 	// 엔터 입력 -> 호스트의 시작 패킷 받으면 시작으로
-	if (true == GameEngineInput::GetInst()->IsDown(KEY_ENTER))
+	if (true == GameServer::ChangeNextState_)
 	{
 		ContentsCore::GetInst()->ChangeLevelByLoading(LEVEL_NAME_DOORDASH);
 		return;

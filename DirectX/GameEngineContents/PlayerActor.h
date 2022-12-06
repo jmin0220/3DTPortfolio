@@ -7,6 +7,11 @@ class CameraArm;
 // 설명 :
 class PlayerActor : public GameEngineActor, public GameServerObject
 {
+	// 서버
+private:
+	static bool IsMainPlayerSpawned_;
+	bool IsPlayerble_;
+
 public:
 	// constrcuter destructer
 	PlayerActor();

@@ -75,6 +75,7 @@ class GameStatePacket : public GameServerPacket
 {
 public:
 	int PlayersCount;
+	int ChangeNextState; // 0 or 1
 
 	GameStatePacket()
 	{
@@ -85,10 +86,12 @@ public:
 	{
 		GameServerPacket::Serialize(_Ser);
 		_Ser << PlayersCount;
+		_Ser << ChangeNextState;
 	}
 	virtual void DeSerialize(GameServerSerializer& _Ser)
 	{
 		GameServerPacket::DeSerialize(_Ser);
 		_Ser >> PlayersCount;
+		_Ser >> ChangeNextState;
 	}
 };
