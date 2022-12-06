@@ -7,12 +7,14 @@
 #include "CameraArm.h"
 
 float SPEED_PLAYER = 2500.0f;
-float AngularSpeed = 70.0f;
+float AngularSpeed = 520.0f;
 
 PlayerActor::PlayerActor() :
 	CheckPointFlag_(false),
 	CheckPointPos_(float4::ZERO),
-	IsGoal_(false)
+	IsGoal_(false),
+	IsStanding_(false)
+
 {
 }
 
@@ -55,7 +57,7 @@ void PlayerActor::Start()
 		GameEngineInput::GetInst()->CreateKey("ImpulsS", VK_DOWN);
 		GameEngineInput::GetInst()->CreateKey("ImpulsD", VK_RIGHT);
 
-		//체크포인트 실험용 나중에 지워야함
+		//일어서기 시험용
 		GameEngineInput::GetInst()->CreateKey("StandUp", 'K');
 
 		//체크포인트 실험용
@@ -121,6 +123,7 @@ void PlayerActor::InputController(float _DeltaTime)
 	float4 RotatedActor= GetTransform().GetWorldRotation();
 	float4 CamForwardRot = GetLevel()->GetMainCameraActor()->GetTransform().GetWorldRotation();
 	float4 ActorRot = GetTransform().GetWorldRotation();
+
 	if (true == GameEngineInput::GetInst()->IsPress(KEY_W))
 	{
 		// EX) 카메라가 보고있는 방향으로 전진
@@ -129,7 +132,6 @@ void PlayerActor::InputController(float _DeltaTime)
 		CamForwardVec.y = 0;
 		MoveDir_ += CamForwardVec.Normalize3DReturn();
 
-		RotatedActor = GetCameraBaseRotationAng(ActorRot, CamForwardRot, _DeltaTime);
 
 	}
 
@@ -199,9 +201,12 @@ void PlayerActor::InputController(float _DeltaTime)
 	// TODO::바닥의 마찰을 무시할 수 있도록
 	//MoveDir_ += {0.0f, 0.5f, 0.0f};
 
+	RotatedActor = GetCameraBaseRotationAng(ActorRot, CamForwardRot, MoveDir_, _DeltaTime);
+
 	tmpMoveSpeed = MoveDir_ * SPEED_PLAYER * _DeltaTime;
 	DynamicActorComponent_->SetMoveSpeed(tmpMoveSpeed);
 	DynamicActorComponent_->SetChangedRot(RotatedActor);
+
 }
 
 // TODO::물리 충격 테스트
@@ -297,9 +302,18 @@ void PlayerActor::SetCharacterTexture()
 	}
 }
 
-float4 PlayerActor::GetCameraBaseRotationAng(float4 _ActorRot, float4 _CamForRot, float _DeltaTime)
+float4 PlayerActor::GetCameraBaseRotationAng(float4 _ActorRot, float4 _CamForRot, float4 _MoveDir, float _DeltaTime)
 {
-	float AngDiff = _ActorRot.y - _CamForRot.y;
+
+	float CamRotAdjust = 0.0f;
+	CamRotAdjust = acosf(float4::DotProduct3D(_MoveDir, float4{0.0f, 0.0f, 1.0f}));
+	CamRotAdjust *= GameEngineMath::RadianToDegree;
+	if (_MoveDir.x < 0.0f)
+	{
+		CamRotAdjust = -CamRotAdjust + 360.0f;
+	}
+
+	float AngDiff = _ActorRot.y - CamRotAdjust;
 	float4 ChangedActorRot = _ActorRot;
 	if (AngDiff > 0.0f)
 	{
@@ -309,9 +323,9 @@ float4 PlayerActor::GetCameraBaseRotationAng(float4 _ActorRot, float4 _CamForRot
 
 			ChangedActorRot.y = _ActorRot.y + -AngularSpeed * _DeltaTime;
 
-			if (ChangedActorRot.y < _CamForRot.y)
+			if (ChangedActorRot.y < CamRotAdjust)
 			{
-				ChangedActorRot.y = _CamForRot.y;
+				ChangedActorRot.y = CamRotAdjust;
 			}
 		}
 		else
@@ -319,9 +333,9 @@ float4 PlayerActor::GetCameraBaseRotationAng(float4 _ActorRot, float4 _CamForRot
 			// AngDiff - 180 Right
 			ChangedActorRot.y = _ActorRot.y + AngularSpeed * _DeltaTime;
 
-			if (ChangedActorRot.y > _CamForRot.y)
+			if (ChangedActorRot.y < CamRotAdjust)
 			{
-				ChangedActorRot.y = _CamForRot.y;
+				ChangedActorRot.y = CamRotAdjust;
 			}
 		}
 	}
@@ -333,9 +347,9 @@ float4 PlayerActor::GetCameraBaseRotationAng(float4 _ActorRot, float4 _CamForRot
 
 			ChangedActorRot.y = _ActorRot.y + AngularSpeed * _DeltaTime;
 
-			if (ChangedActorRot.y > _CamForRot.y)
+			if (ChangedActorRot.y > CamRotAdjust)
 			{
-				ChangedActorRot.y = _CamForRot.y;
+				ChangedActorRot.y = CamRotAdjust;
 			}
 		}
 		else
@@ -344,9 +358,9 @@ float4 PlayerActor::GetCameraBaseRotationAng(float4 _ActorRot, float4 _CamForRot
 
 			ChangedActorRot.y = _ActorRot.y + -AngularSpeed * _DeltaTime;
 
-			if (ChangedActorRot.y < _CamForRot.y)
+			if (ChangedActorRot.y > CamRotAdjust)
 			{
-				ChangedActorRot.y = _CamForRot.y;
+				ChangedActorRot.y = CamRotAdjust;
 			}
 		}
 	}
@@ -356,5 +370,13 @@ float4 PlayerActor::GetCameraBaseRotationAng(float4 _ActorRot, float4 _CamForRot
 
 void PlayerActor::StandUp()
 {
+	if (GameEngineInput::GetInst()->IsDown("StandUp") && IsStanding_ == false)
+	{
+		IsStanding_ = true;
 
+		if (DynamicActorComponent_->PlayerStandUp() == true)
+		{
+			IsStanding_ = false;
+		}
+	}
 }

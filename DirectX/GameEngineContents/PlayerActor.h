@@ -68,6 +68,7 @@ private:
 	// TODO::테스트코드
 	void ImpulseTest();
 	void StandUp();
+	bool IsStanding_;
 	float4 ResetCheckPointPos();
 
 
@@ -85,7 +86,7 @@ private:
 
 	//캐릭터 카메라 동기 회전관련
 private:
-	float4 GetCameraBaseRotationAng(float4 _ActorRot, float4 _CamRot, float _DeltaTime);
+	float4 GetCameraBaseRotationAng(float4 _ActorRot, float4 _CamRot, float4 _MoveDir, float _DeltaTime);
 public:
 	//플레이어 위치 재설정을 위한 GEt함수
 	std::shared_ptr<PhysXDynamicActorComponent> GetDynamicActorComponent()
