@@ -68,7 +68,7 @@ void GameServer::ServerStart()
 
 			Packet->ObjectID = GameServerObject::GetServerID();
 
-			GameEngineDebug::OutPutString(std::to_string(Packet->ObjectID));
+			//GameEngineDebug::OutPutString(std::to_string(Packet->ObjectID));
 
 			Server.NetSendPacket(_User, Packet);
 
@@ -127,7 +127,6 @@ void GameServer::ServerStart()
 	{
 		// 내가 클라이언트 일때만 등록해야하는 패킷처리
 		Net->Dis.AddHandler(ContentsPacketType::ClientInit, std::bind(&GameServer::ClientInitPacketProcess, this, std::placeholders::_1));
-
 	}
 
 }

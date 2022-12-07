@@ -30,10 +30,14 @@ void LoadingLevel::Start()
 
 void LoadingLevel::Update(float _DeltaTime)
 {
-	//if (LoadingProgress_ >= 0.999f)
-	//{
-	//	GEngine::ChangeLevel(StrCurLoadingLevel_.data());
-	//}
+	if (false == GameServer::GetInst()->IsServerStart())
+	{
+		if (LoadingProgress_ >= 0.999f)
+		{
+			GEngine::ChangeLevel(StrCurLoadingLevel_.data());
+		}
+	}
+
 
 	if (false == LoadingComplete_ && LoadingProgress_ >= 0.999f)
 	{
@@ -53,7 +57,6 @@ void LoadingLevel::Update(float _DeltaTime)
 		if (true == GameServer::GetInst()->IsPlayersReady())
 		{
 			GEngine::ChangeLevel(StrCurLoadingLevel_.data());
-			GameServer::StateChangeSignal_ = 0;
 		}
 	}
 	else
@@ -62,7 +65,6 @@ void LoadingLevel::Update(float _DeltaTime)
 		if (1 == GameServer::StateChangeSignal_)
 		{
 			GEngine::ChangeLevel(StrCurLoadingLevel_.data());
-			GameServer::StateChangeSignal_ = 0;
 		}
 	}
 

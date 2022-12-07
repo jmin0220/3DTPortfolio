@@ -100,6 +100,10 @@ void ContentsCore::Update(float _DeltaTime)
 		}
 	}
 
+	if (-1 == GameServer::GetInst()->PlayerID_)
+	{
+		return;
+	}
 
 	// 모든 유저의 업데이트
 	GameServer::GetInst()->SendGameStatePacket();
