@@ -606,6 +606,9 @@
     <ClInclude Include="Bingle.h">
       <Filter>02_Actor\UIActor\LoadingActors</Filter>
     </ClInclude>
+    <ClInclude Include="WinnerBG.h">
+      <Filter>02_Actor\UIActor</Filter>
+    </ClInclude>
     <ClInclude Include="BigShots_Cannon.h">
       <Filter>02_Actor\Stage03Actor</Filter>
     </ClInclude>
@@ -1000,6 +1003,9 @@
     </ClCompile>
     <ClCompile Include="Bingle.cpp">
       <Filter>02_Actor\UIActor\LoadingActors</Filter>
+    </ClCompile>
+    <ClCompile Include="WinnerBG.cpp">
+      <Filter>02_Actor\UIActor</Filter>
     </ClCompile>
     <ClCompile Include="BigShots_Cannon.cpp">
       <Filter>02_Actor\Stage03Actor</Filter>

@@ -16,6 +16,8 @@ public:
 	LobbyPlayer& operator=(const LobbyPlayer& _Other) = delete;
 	LobbyPlayer& operator=(LobbyPlayer&& _Other) noexcept = delete;
 
+	void SetCharacterAnimation();//김예나 : 상태 중복오류떠서 레벨마다 준비하게끔 퍼블릭에 올려봄
+
 	void ChangeAnimationIdle();
 	void ChangeAnimationFall();
 	void ChangeAnimationWin();
@@ -28,7 +30,7 @@ protected:
 
 	// 캐릭터 스킨 & 애니메이션 초기화
 private:
-	void SetCharacterAnimation();
+
 	void SetCharacterTexture();
 
 	struct SkinData

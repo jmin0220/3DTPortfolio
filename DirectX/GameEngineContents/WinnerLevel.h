@@ -4,6 +4,8 @@
 // 설명 : 승리하여 환호하는 레벨
 class Winner;
 class LobbyPlayer;
+class WinnerBG;
+class FloorActor;
 class WinnerLevel : public GameEngineLevel
 {
 public:
@@ -27,5 +29,9 @@ protected:
 private:
 	std::shared_ptr<Winner> Winner_;
 	std::shared_ptr<LobbyPlayer> Player_;
+	std::shared_ptr<WinnerBG> BG_;
+	std::shared_ptr<FloorActor> Chair_;
+
+	float ChairTime_;
 };
 

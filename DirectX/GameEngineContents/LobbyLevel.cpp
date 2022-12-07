@@ -17,7 +17,6 @@ LobbyLevel::LobbyLevel()
 	,FallTime_(0.0f)
 	,NumberFont_(nullptr)
 	,UserFont_(nullptr)
-	,CountDownFont_(nullptr)
 	,WaitingFont_(nullptr)
 	,PrevUserCount_(0)
 {
@@ -99,7 +98,6 @@ void LobbyLevel::LevelEndEvent()
 
 	NumberFont_->Death();
 	UserFont_->Death();
-	//CountDownFont_->Death();
 	WaitingFont_->Death();
 
 	Bingle_->Death();

@@ -41,7 +41,6 @@ private:
 
 	std::shared_ptr<FontActor> NumberFont_;
 	std::shared_ptr<FontActor> UserFont_;
-	std::shared_ptr<FontActor> CountDownFont_;
 	std::shared_ptr<FontActor> WaitingFont_;
 
 	std::shared_ptr<Bingle> Bingle_;
