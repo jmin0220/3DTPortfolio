@@ -6,6 +6,7 @@
 #include "BigShots_BackGroundObject.h"
 #include "VFXWaterActor.h"
 #include "BigShotsStage.h"
+#include "BigShots_Cannon.h"
 
 #include "PlayerActor.h"
 
@@ -41,7 +42,7 @@ void BigShotsLevel::LevelStartEvent()
 	// 물 쉐이더 이상 추후 확인 필요
 	VFXWaterObj_ = CreateActor<VFXWaterActor>();
 	// 물 위아래 위치 조정 필요
-	VFXWaterObj_->GetTransform().SetWorldPosition(float4{ 0.0f,-80.0f,0.0f });
+	VFXWaterObj_->GetTransform().SetWorldPosition(float4{ 0.0f,-60.0f,0.0f });
 
 	//// TODO::테스트용 임시 포지션
 	//Player_->GetTransform().SetWorldPosition(float4(0.0f, 8.0f, 0.0f));
@@ -49,8 +50,20 @@ void BigShotsLevel::LevelStartEvent()
 	//CameraArm_->SetFollowCamera(GetMainCameraActor(), Player_);
 
 	std::shared_ptr<BigShotsStage> Stage = CreateActor<BigShotsStage>();
-	Stage->GetTransform().SetWorldPosition({ 0.0f, 0.0f, 0.0f });
+	Stage->GetTransform().SetWorldPosition({ 0.0f, -50.0f, 0.0f });
 	
+	std::shared_ptr<BigShots_Cannon> Cannon1 = CreateActor<BigShots_Cannon>();
+	Cannon1->GetTransform().SetWorldPosition({ -35.0f, -20.0f, -150.0f });
+	Cannon1->GetTransform().SetWorldRotation({ -10.0f, 0.0f, 180.0f });
+
+	std::shared_ptr<BigShots_Cannon> Cannon2 = CreateActor<BigShots_Cannon>();
+	Cannon2->GetTransform().SetWorldPosition({ 0.0f, -20.0f, -150.0f });
+	Cannon2->GetTransform().SetWorldRotation({ -10.0f, 0.0f, 180.0f });
+
+	std::shared_ptr<BigShots_Cannon> Cannon3 = CreateActor<BigShots_Cannon>();
+	Cannon3->GetTransform().SetWorldPosition({ 35.0f, -20.0f, -150.0f });
+	Cannon3->GetTransform().SetWorldRotation({ -10.0f, 0.0f, 180.0f });
+
 	//스카이박스
 	std::shared_ptr<SkyboxActor> Skybox = CreateActor<SkyboxActor>();
 	Skybox->SetSkyTexture("S4_SkyBox.png");
