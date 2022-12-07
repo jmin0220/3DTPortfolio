@@ -754,6 +754,31 @@ void MapEditorGUI::CreateFBXMesh()
 		NewObj.Actor_.lock()->SetStaticMesh("JumboTron7.FBX");
 		break;
 	}
+	case MeshEnum::HoopsBackGround:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("HoopsBackGround.FBX");
+		break;
+	}
+	case MeshEnum::HoopsFloor:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("HoopsFloor.FBX");
+		break;
+	}
+	case MeshEnum::HoopsObjectPlatform:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("HoopsObjectPlatform.FBX");
+		break;
+	}
+	case MeshEnum::HoopsObjectWall:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("HoopsObjectWall.FBX");
+		break;
+	}
+	case MeshEnum::WoodPlank:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("WoodPlank.FBX");
+		break;
+	}
 	case MeshEnum::TestMap:
 	{
 		NewObj.Actor_.lock()->SetStaticMesh("TestMap.FBX");

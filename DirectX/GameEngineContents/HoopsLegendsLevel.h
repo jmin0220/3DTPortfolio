@@ -23,6 +23,6 @@ protected:
 	void LevelStartEvent() override;
 	void LevelEndEvent() override;
 private:
-
+	std::shared_ptr<class TestGUI> GUI_;
 };
 

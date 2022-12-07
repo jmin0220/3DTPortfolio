@@ -273,6 +273,13 @@ void ContentsCore::CreateShaders()
 void ContentsCore::LoadShaders()
 {
 	{
+		std::shared_ptr<GameEngineMaterial> Material = GameEngineMaterial::Create("MaskShader");
+		Material->SetVertexShader("MaskShader.hlsl");
+		Material->SetPixelShader("MaskShader.hlsl");
+	}
+
+
+	{
 		std::shared_ptr<GameEngineMaterial> Material = GameEngineMaterial::Create("Water");
 		Material->SetVertexShader("WaterShader.hlsl");
 		Material->SetPixelShader("WaterShader.hlsl");

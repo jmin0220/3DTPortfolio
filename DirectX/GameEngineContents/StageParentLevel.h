@@ -26,6 +26,10 @@ enum class Stage_MeshEnum
 	JumboTron6,
 	JumboTron7,
 
+	// STAGE05
+	WoodPlank,
+
+
 	// TEST
 	Rainbow,
 	TestMap,

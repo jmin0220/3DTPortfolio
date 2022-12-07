@@ -13,6 +13,7 @@
 #include "JumboTron.h"
 #include "Col_Goal.h"
 #include "Col_CheckPoint.h"
+#include "HoopsWoodPlank.h"
 
 
 
@@ -150,7 +151,7 @@ void StageParentLevel::LevelStartLoad()
 		CurStageName = JSON_NAME_HEXAGONE;
 		break;
 	case StageNum::STAGE5:
-		//CurStageName = JSON_NAME_HOOPSLEGENDS;
+		CurStageName = JSON_NAME_HOOPSLEGENDS;
 		break;
 	default:
 		break;
@@ -291,6 +292,17 @@ void StageParentLevel::LevelStartLoad()
 		case Stage_MeshEnum::Chevron:
 		{
 			NewObj.Actor_ = CreateActor<Chevron>();
+			break;
+		}
+		case Stage_MeshEnum::WoodPlank:
+		{
+			NewObj.Actor_ = CreateActor<HoopsWoodPlank>();
+
+			NewObj.Actor_.lock()->GetTransform().SetWorldPosition(Pos);
+			NewObj.Actor_.lock()->GetTransform().SetWorldScale(Size);
+			NewObj.Actor_.lock()->GetTransform().SetLocalRotation(Rot);
+
+			std::dynamic_pointer_cast<HoopsWoodPlank>(NewObj.Actor_.lock())->SetRotation(Rot);
 			break;
 		}
 		case Stage_MeshEnum::Col_StartPos:

@@ -149,6 +149,7 @@
     </FxCompile>
     <FxCompile Include="Fog.hlsl" />
     <FxCompile Include="CustomColor.hlsl" />
+    <FxCompile Include="MaskShader.hlsl" />
     <FxCompile Include="RenderOption.fx" />
     <FxCompile Include="RtoLSlice.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>

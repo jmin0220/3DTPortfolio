@@ -41,5 +41,8 @@
     <FxCompile Include="DownLoop.hlsl">
       <Filter>Texture</Filter>
     </FxCompile>
+    <FxCompile Include="MaskShader.hlsl">
+      <Filter>Texture</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

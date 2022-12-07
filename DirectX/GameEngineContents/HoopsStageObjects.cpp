@@ -17,7 +17,36 @@ void HoopsStageObjects::Start()
 	FloorRenderer_->SetFBXMesh("HoopsFloor.FBX", "Texture");
 
 	PlatformRenderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
-	PlatformRenderer_->SetFBXMesh("HoopsObjectPlatform.FBX", "Texture");
+	PlatformRenderer_->SetFBXMesh("HoopsObjectPlatform.FBX", "MaskShader");
+
+	Data.Data_ = float4(0, 0, 1.0f, 1.0f);
+
+	std::vector<std::vector<GameEngineRenderUnit>>& UnitSets = PlatformRenderer_->GetAllRenderUnit();
+
+	//WaterData_.WaterColor = float4::RED;
+	//WaterData_.WaterColor = float4{0.99f,0.63f,0.79f};
+
+	for (std::vector<GameEngineRenderUnit>& Units : UnitSets)
+	{
+		for (GameEngineRenderUnit& Unit : Units)
+		{
+			if (true == Unit.ShaderResources.IsConstantBuffer("MaskingData"))
+			{
+				Unit.ShaderResources.SetConstantBufferLink("MaskingData", Data);
+			}
+
+			if (true == Unit.ShaderResources.IsTexture("MaskTexture"))
+			{
+				Unit.ShaderResources.SetTexture("MaskTexture", "ENV_S02_MedievalPattern_MSK.png");
+			}
+
+			if (true == Unit.ShaderResources.IsTexture("DiffuseTexture"))
+			{
+				Unit.ShaderResources.SetTexture("DiffuseTexture", "HoopPurple3.png");
+			}
+		}
+	}
+
 
 	WallRenderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
 	WallRenderer_->SetFBXMesh("HoopsObjectWall.FBX", "Texture");

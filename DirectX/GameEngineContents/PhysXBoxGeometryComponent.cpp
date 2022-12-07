@@ -89,9 +89,11 @@ void PhysXBoxGeometryComponent::Update(float _DeltaTime)
 	}
 	else
 	{
+		float4 tmpQuat = ParentActor_.lock()->GetTransform().GetWorldRotation().DegreeRotationToQuaternionReturn();
+
 		physx::PxTransform tmpPxTransform(ParentActor_.lock()->GetTransform().GetWorldPosition().x,
 			ParentActor_.lock()->GetTransform().GetWorldPosition().y,
-			ParentActor_.lock()->GetTransform().GetWorldPosition().z);
+			ParentActor_.lock()->GetTransform().GetWorldPosition().z, physx::PxQuat(tmpQuat.x, tmpQuat.y, tmpQuat.z, tmpQuat.w));
 
 		// 부모의 Transform정보를 바탕으로 PhysX Actor의 트랜스폼을 갱신
 		rigidDynamic_->setKinematicTarget(tmpPxTransform);

@@ -28,6 +28,12 @@ enum class MeshEnum
 	JumboTron5,
 	JumboTron6,
 	JumboTron7,
+	// STAGE05
+	HoopsBackGround,
+	HoopsFloor,
+	HoopsObjectPlatform,
+	HoopsObjectWall,
+	WoodPlank,
 	// TEST
 	Rainbow,
 	TestMap,
