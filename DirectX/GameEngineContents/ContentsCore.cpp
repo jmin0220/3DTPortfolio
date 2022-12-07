@@ -2,6 +2,7 @@
 #include "ContentsCore.h"
 #include "TitleLevel.h"
 #include "LobbyLevel.h"
+#include "MidScoreLevel.h"
 #include "LoadingLevel.h"
 #include "WinnerLevel.h"
 #include "MapEditorLevel.h"
@@ -182,7 +183,7 @@ void ContentsCore::CreateLevels()
 		GameLevels_.push_back(Level);
 	}
 	{
-		GameEngineLevel* Level = CreateLevel<WinnerLevel>(LEVEL_NAME_MIDSCORE);
+		GameEngineLevel* Level = CreateLevel<MidScoreLevel>(LEVEL_NAME_MIDSCORE);
 		GameLevels_.push_back(Level);
 	}
 	{
