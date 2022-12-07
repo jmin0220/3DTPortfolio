@@ -72,7 +72,7 @@ private:
 
 	// TODO::테스트코드
 	void ImpulseTest();
-	void StandUp();
+	void StandUp(float _DeltaTime);
 	bool IsStanding_;
 	float4 ResetCheckPointPos();
 
