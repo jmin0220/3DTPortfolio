@@ -67,6 +67,8 @@ void GameServer::ServerStart()
 
 			Packet->ObjectID = GameServerObject::GetServerID();
 
+			GameEngineDebug::OutPutString(std::to_string(Packet->ObjectID));
+
 			Server.NetSendPacket(_User, Packet);
 
 		};
@@ -168,6 +170,7 @@ void GameServer::ObjectUpdatePacketProcess(std::shared_ptr<GameServerPacket> _Pa
 			break;
 		}
 		default:
+			int a = 0;
 			break;
 		}
 	}
@@ -217,6 +220,11 @@ void GameServer::GameStatePacketProcess(std::shared_ptr<GameServerPacket> _Packe
 		StateChangeSignal_ = Packet->StateChangeSignal;
 	}
 
+	// 호스트라면 모든 클라에게 전달
+	if (true == Net->GetIsHost())
+	{
+		GameServer::Net->SendPacket(Packet);
+	}
 }
 ////////////////////
 ///	 ~ 패킷 처리

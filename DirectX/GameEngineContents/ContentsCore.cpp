@@ -87,8 +87,17 @@ void ContentsCore::Update(float _DeltaTime)
 		return;
 	}
 
+	// 모든 유저의 업데이트
 	GameServer::GetInst()->SendGameStatePacket();
 
+	// 호스트 업데이트
+	if (true == GameServer::IsHost_)
+	{
+		if (GameServer::GetInst()->GetAllPlayersCount() == GameServer::GetInst()->GetAllPlayersReadyCount())
+		{
+			GameServer::GetInst()->StateChangeSignal_ = 1;
+		}
+	}
 }
 
 void ContentsCore::End()

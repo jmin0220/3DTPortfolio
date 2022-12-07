@@ -41,9 +41,10 @@ void LoadingLevel::Update(float _DeltaTime)
 		GameServer::PlayerReady_ = 1;
 	}
 
-	if (GameServer::GetInst()->GetAllPlayersCount() == GameServer::GetInst()->GetAllPlayersReadyCount())
+	if (1 == GameServer::StateChangeSignal_)
 	{
 		GEngine::ChangeLevel(StrCurLoadingLevel_.data());
+		GameServer::StateChangeSignal_ = 0;
 	}
 
 }
