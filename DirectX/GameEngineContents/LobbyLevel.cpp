@@ -175,6 +175,8 @@ void LobbyLevel::FallingUpdate(float _DeltaTime, const StateInfo& _Info)
 	{
 		PrevUserCount_ = GameServer::GetInst()->GetAllPlayersCount();
 		NumberFont_->SetFont(std::to_string(PrevUserCount_), "Titan One", 70.f, {800,680});
+
+		GameEngineDebug::OutPutString(std::to_string(PrevUserCount_));
 	}
 
 	// ~~~ ¼­¹ö ~~~

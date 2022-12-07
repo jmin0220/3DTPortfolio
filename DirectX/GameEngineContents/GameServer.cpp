@@ -10,7 +10,7 @@ GameServerNet* GameServer::Net;
 GameServerNetServer GameServer::Server;
 GameServerNetClient GameServer::Client;
 unsigned int GameServer::StateChangeSignal_ = 0;
-unsigned int GameServer::PlayerID_ = 0;
+unsigned int GameServer::PlayerID_ = -1;
 unsigned int GameServer::PlayerReady_ = 0;
 bool GameServer::ObjectUpdate_ = false;
 
@@ -60,6 +60,7 @@ void GameServer::ServerStart()
 	{
 		Server.Accept(30001);
 		Net = &Server;
+		PlayerID_ = 0;
 
 		Server.AcceptCallBack = [&](SOCKET _User)
 		{

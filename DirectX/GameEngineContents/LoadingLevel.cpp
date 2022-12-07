@@ -41,11 +41,17 @@ void LoadingLevel::Update(float _DeltaTime)
 		GameServer::PlayerReady_ = 1;
 	}
 
-	if (1 == GameServer::StateChangeSignal_)
+
+
+	if (false == GameServer::IsHost_)
 	{
-		GEngine::ChangeLevel(StrCurLoadingLevel_.data());
-		GameServer::StateChangeSignal_ = 0;
+		if (1 == GameServer::StateChangeSignal_)
+		{
+			GEngine::ChangeLevel(StrCurLoadingLevel_.data());
+			GameServer::StateChangeSignal_ = 0;
+		}
 	}
+	
 
 }
 
