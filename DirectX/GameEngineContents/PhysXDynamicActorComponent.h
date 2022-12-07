@@ -52,7 +52,7 @@ public:
 	void PushImpulse(float4 _ImpulsePower);
 	void PushImpulseAtLocalPos(float4 _ImpulsePower, float4 _Pos);
 	
-	bool PlayerStandUp();
+	bool PlayerStandUp(float _DeltaTime);
 
 	void TurnOffSpeedLimit()
 	{

@@ -131,7 +131,7 @@ void PlayerActor::Update(float _DeltaTime)
 		//GetTransform().SetWorldMove(MoveDir_ * SPEED_PLAYER * _DeltaTime);
 		// TODO::충격테스트코드
 		ImpulseTest();
-		StandUp();
+		StandUp(_DeltaTime);
 
 
 		//체크포인트 실험용 나중에 지워야함
@@ -451,11 +451,16 @@ float4 PlayerActor::GetCameraBaseRotationAng(float4 _ActorRot, float4 _CamForRot
 
 void PlayerActor::StandUp(float _DeltaTime)
 {
-	if (GameEngineInput::GetInst()->IsPress("StandUp"))
-	{
+	//if (GameEngineInput::GetInst()->IsDown("StandUp"))
+	//{
+	//	IsStanding_ = true;
+	//}
 
-		if (DynamicActorComponent_->PlayerStandUp(_DeltaTime) == true)
-		{
-		}
-	}
+	//if (IsStanding_ == true)
+	//{
+	//	if (DynamicActorComponent_->PlayerStandUp(_DeltaTime) == true)
+	//	{
+	//		IsStanding_ = false;
+	//	}
+	//}
 }
