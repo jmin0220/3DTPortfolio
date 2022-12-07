@@ -15,6 +15,11 @@ public:
 	GoalTipActor& operator=(const GoalTipActor& _Other) = delete;
 	GoalTipActor& operator=(GoalTipActor&& _Other) noexcept = delete;
 
+	std::weak_ptr<GameEngineFontRenderer> GetFont()
+	{
+		return Font_;
+	}
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;

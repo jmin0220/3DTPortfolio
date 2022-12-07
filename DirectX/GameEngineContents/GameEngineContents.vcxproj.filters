@@ -217,6 +217,9 @@
     <Filter Include="00_Core\Server">
       <UniqueIdentifier>{04274615-5965-46bb-b3ca-0c571c21e3c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01_Level\MidScoreLevel">
+      <UniqueIdentifier>{f4baeebc-f888-4a83-b659-46bdc501768e}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02_Actor\Stage05Actor\Objects">
       <UniqueIdentifier>{90e22ab7-d1a1-40c4-b201-8271bd0e802e}</UniqueIdentifier>
     </Filter>
@@ -614,6 +617,9 @@
     </ClInclude>
     <ClInclude Include="BigShots_Cannon.h">
       <Filter>02_Actor\Stage03Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="MidScoreLevel.h">
+      <Filter>01_Level\MidScoreLevel</Filter>
     </ClInclude>
     <ClInclude Include="HoopsWoodPlank.h">
       <Filter>02_Actor\Stage05Actor\Objects</Filter>
@@ -1024,6 +1030,9 @@
     </ClCompile>
     <ClCompile Include="BigShots_Cannon.cpp">
       <Filter>02_Actor\Stage03Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="MidScoreLevel.cpp">
+      <Filter>01_Level\MidScoreLevel</Filter>
     </ClCompile>
     <ClCompile Include="HoopsWoodPlank.cpp">
       <Filter>02_Actor\Stage05Actor\Objects</Filter>

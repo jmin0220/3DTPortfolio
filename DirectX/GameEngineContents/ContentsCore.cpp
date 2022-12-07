@@ -182,6 +182,10 @@ void ContentsCore::CreateLevels()
 		GameLevels_.push_back(Level);
 	}
 	{
+		GameEngineLevel* Level = CreateLevel<WinnerLevel>(LEVEL_NAME_MIDSCORE);
+		GameLevels_.push_back(Level);
+	}
+	{
 		GameEngineLevel* Level = CreateLevel<DoorDashLevel>(LEVEL_NAME_DOORDASH);
 		GameLevels_.push_back(Level);
 	}
@@ -382,6 +386,10 @@ void ContentsCore::LoadLevelResource(LEVELS _LEVEL)
 		Dir.Move(DIR_LEVEL_LOBBY);
 		ResLoadLobby(Dir);
 		break;
+	case LEVELS::MIDSCORE:
+		Dir.Move(DIR_LEVEL_MIDSCORE);
+		ResLoadMidScore(Dir);
+		break;
 	case LEVELS::LOADING:
 		break;
 	case LEVELS::STAGE01_DOORDASH:
@@ -468,6 +476,11 @@ void ContentsCore::ResLoadLobby(GameEngineDirectory& _Dir)
 }
 
 void ContentsCore::ResLoadLoading(GameEngineDirectory& _Dir)
+{
+	LevelAllResourceLoad(_Dir);
+}
+
+void ContentsCore::ResLoadMidScore(GameEngineDirectory& _Dir)
 {
 	LevelAllResourceLoad(_Dir);
 }
@@ -581,6 +594,10 @@ LEVELS ContentsCore::StringLevelToLEVELS(std::string_view _StringLevel)
 	{
 		return LEVELS::LOBBY;
 	}
+	else if (0 == Level.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_MIDSCORE)))
+	{
+		return LEVELS::MIDSCORE;
+	}
 	else if (0 == Level.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_DOORDASH)))
 	{
 		return LEVELS::STAGE01_DOORDASH;
@@ -615,6 +632,10 @@ std::string_view ContentsCore::StringLevelToStringSetLevel(std::string_view _Str
 	if (0 == Level.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_LOBBY)))
 	{
 		return LEVEL_NAME_LOBBY;
+	}
+	else if (0 == Level.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_MIDSCORE)))
+	{
+		return LEVEL_NAME_MIDSCORE;
 	}
 	else if (0 == Level.compare(GameEngineString::ToUpperReturn(LEVEL_NAME_DOORDASH)))
 	{
