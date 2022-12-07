@@ -1,22 +1,23 @@
 #pragma once
 
 // Ό³Έν :
-class PhysXSeesawComponent : public GameEngineComponent, public PhysXCommonFunc
+class PhysXConvexDynamicComponent : public GameEngineComponent, public PhysXCommonFunc
 {
 public:
 	// constrcuter destructer
-	PhysXSeesawComponent();
-	~PhysXSeesawComponent();
+	PhysXConvexDynamicComponent();
+	~PhysXConvexDynamicComponent();
 
 	// delete Function
-	PhysXSeesawComponent(const PhysXSeesawComponent& _Other) = delete;
-	PhysXSeesawComponent(PhysXSeesawComponent&& _Other) noexcept = delete;
-	PhysXSeesawComponent& operator=(const PhysXSeesawComponent& _Other) = delete;
-	PhysXSeesawComponent& operator=(PhysXSeesawComponent&& _Other) noexcept = delete;
+	PhysXConvexDynamicComponent(const PhysXConvexDynamicComponent& _Other) = delete;
+	PhysXConvexDynamicComponent(PhysXConvexDynamicComponent&& _Other) noexcept = delete;
+	PhysXConvexDynamicComponent& operator=(const PhysXConvexDynamicComponent& _Other) = delete;
+	PhysXConvexDynamicComponent& operator=(PhysXConvexDynamicComponent&& _Other) noexcept = delete;
 
 	void CreatePhysXActors(const std::string& _MeshName, physx::PxScene* _Scene, physx::PxPhysics* _physics,
 		physx::PxCooking* _cooking, bool _InverseIndex = true, physx::PxVec3 _GeoMetryScale = physx::PxVec3(2.0f), float4 _GeoMetryRot = { 0.0f });
 
+	void AddForce(float4 _Force);
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;

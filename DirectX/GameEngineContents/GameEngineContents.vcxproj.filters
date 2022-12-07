@@ -603,7 +603,7 @@
     <ClInclude Include="ServerPacket.h">
       <Filter>00_Core\Server</Filter>
     </ClInclude>
-    <ClInclude Include="PhysXSeesawComponent.h">
+    <ClInclude Include="PhysXConvexDynamicComponent.h">
       <Filter>03_Component\PhysXComponent</Filter>
     </ClInclude>
     <ClInclude Include="Bingle.h">
@@ -623,6 +623,9 @@
     </ClInclude>
     <ClInclude Include="HoopsScythe.h">
       <Filter>02_Actor\Stage05Actor\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="BigShots_PRP.h">
+      <Filter>02_Actor\Stage03Actor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1010,7 +1013,7 @@
     <ClCompile Include="ServerPacket.cpp">
       <Filter>00_Core\Server</Filter>
     </ClCompile>
-    <ClCompile Include="PhysXSeesawComponent.cpp">
+    <ClCompile Include="PhysXConvexDynamicComponent.cpp">
       <Filter>03_Component\PhysXComponent</Filter>
     </ClCompile>
     <ClCompile Include="Bingle.cpp">
@@ -1030,6 +1033,9 @@
     </ClCompile>
     <ClCompile Include="HoopsScythe.cpp">
       <Filter>02_Actor\Stage05Actor\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="BigShots_PRP.cpp">
+      <Filter>02_Actor\Stage03Actor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

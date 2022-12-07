@@ -161,6 +161,13 @@ public:
 
 		Animations[Name]->TimeEvent = _Function;
 	}
+	
+	//******bOnceEnd 강제 조정을 위한 추가 코드*******(선생님 코드엔 없음)
+	inline std::shared_ptr<FBXRendererAnimation> GetCurAni()
+	{
+		return CurAnimation;
+	}
+	//******bOnceEnd 강제 조정을 위한 추가 코드*******(선생님 코드엔 없음)
 
 protected:
 
