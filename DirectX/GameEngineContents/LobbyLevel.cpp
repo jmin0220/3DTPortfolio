@@ -140,7 +140,6 @@ void LobbyLevel::FallingStart(const StateInfo& _Info)
 
 	// ★★★ 서버 ★★★
 	GameServer::GetInst()->ServerStart();
-
 	// ~~~ 서버 ~~~
 }
 
@@ -148,8 +147,8 @@ void LobbyLevel::FallingUpdate(float _DeltaTime, const StateInfo& _Info)
 {
 	if (1 == GameServer::StateChangeSignal_)
 	{
-		GameServer::StateChangeSignal_ = 0;
 		ContentsCore::GetInst()->ChangeLevelByLoading(LEVEL_NAME_DOORDASH);
+		GameServer::StateChangeSignal_ = 0;
 		return;
 	}
 

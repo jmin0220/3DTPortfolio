@@ -86,11 +86,12 @@ void ContentsCore::Update(float _DeltaTime)
 	{
 		return;
 	}
-
-	// 모든 유저의 업데이트
-	GameServer::GetInst()->SendGameStatePacket();
-
+	
+	/////////////////
 	// 호스트 업데이트
+	/////////////////
+
+	// 모든 유저가 준비 됐을 때 주는 신호
 	if (true == GameServer::IsHost_)
 	{
 		if (GameServer::GetInst()->GetAllPlayersCount() == GameServer::GetInst()->GetAllPlayersReadyCount())
@@ -98,6 +99,14 @@ void ContentsCore::Update(float _DeltaTime)
 			GameServer::GetInst()->StateChangeSignal_ = 1;
 		}
 	}
+
+
+	// 모든 유저의 업데이트
+	GameServer::GetInst()->SendGameStatePacket();
+
+	GameEngineDebug::OutPutString("StateChangeSignal : " + GameServer::GetInst()->StateChangeSignal_);
+
+
 }
 
 void ContentsCore::End()

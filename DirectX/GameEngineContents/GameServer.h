@@ -29,6 +29,11 @@ public:
 
 	int GetAllPlayersReadyCount();
 
+	// 호스트만 호출해서 사용
+	bool IsPlayersReady()
+	{
+		return GetAllPlayersCount() == GetAllPlayersReadyCount();
+	}
 	
 
 	static bool IsHost_;
