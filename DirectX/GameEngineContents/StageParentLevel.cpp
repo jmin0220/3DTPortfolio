@@ -85,18 +85,21 @@ void StageParentLevel::LevelStartEvent()
 	LevelStartLoad();
 
 	// 서버
-	GameServer::ChangeNextState_ = 0;
-
 	// 호스트/클라이언트 자신의 플레이어
 	Player_ = CreateActor<PlayerActor>();
-	if (true == GameServer::IsHost_)
+
+	if (true == GameServer::GetInst()->IsServerStart())
 	{
-		Player_->ServerInit(ServerObjectType::Player);
+		if (true == GameServer::IsHost_)
+		{
+			Player_->ServerInit(ServerObjectType::Player);
+		}
+		else
+		{
+			Player_->ClientInit(ServerObjectType::Player, GameServer::GetInst()->PlayerID_);
+		}
 	}
-	else
-	{
-		Player_->ClientInit(ServerObjectType::Player, GameServer::GetInst()->ClienID_);
-	}
+
 
 
 	MainCam_ = GetMainCameraActor();

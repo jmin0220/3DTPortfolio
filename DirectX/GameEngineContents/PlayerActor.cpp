@@ -100,9 +100,25 @@ void PlayerActor::Start()
 
 void PlayerActor::Update(float _DeltaTime)
 {
-	// 서버
+	// 서버 안켰을 때
 	if (false == GetIsNetInit())
 	{
+		InputController(_DeltaTime);
+
+		PlayerStateManager_.Update(_DeltaTime);
+
+		//GetTransform().SetWorldMove(MoveDir_ * SPEED_PLAYER * _DeltaTime);
+		// TODO::충격테스트코드
+		ImpulseTest();
+		StandUp();
+
+
+		//체크포인트 실험용 나중에 지워야함
+		if (GameEngineInput::GetInst()->IsDown("TestPos") == true)
+		{
+			DynamicActorComponent_->SetPlayerStartPos(ResetCheckPointPos());
+		}
+
 		return;
 	}
 
@@ -171,6 +187,8 @@ void PlayerActor::Update(float _DeltaTime)
 
 void PlayerActor::LevelStartEvent()
 {
+
+
 	// LevelStartEvent에서 플레이어를 생성하고 위치를 재지정하는 함수
 	DynamicActorComponent_->SetPlayerStartPos(GetTransform().GetWorldPosition());
 }
@@ -181,8 +199,6 @@ void PlayerActor::LevelEndEvent()
 
 void PlayerActor::InputController(float _DeltaTime)
 {
-
-
 	float4 tmpMoveSpeed = float4::ZERO;
 	MoveDir_ = float4::ZERO;
 	float4 RotatedActor= GetTransform().GetWorldRotation();

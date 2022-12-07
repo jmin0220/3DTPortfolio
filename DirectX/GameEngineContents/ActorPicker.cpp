@@ -188,7 +188,7 @@ void ActorPicker::ClickAxisControl()
 		IsFront = CheckFront(ClickedActor->GetTransform().GetRightVector(),
 			(ActorPos - CamPos).Normalize3DReturn());
 
-		float Reverse = ActorPos.z - CamPos.z > 0 ? -1 : 1;
+		float Reverse = ActorPos.z - CamPos.z > 0 ? -1.0f : 1.0f;
 
 		MoveVec.z = IsFront ? CamZ : CamZ * -1;
 		MoveVec *= MouseDir.x * Reverse;

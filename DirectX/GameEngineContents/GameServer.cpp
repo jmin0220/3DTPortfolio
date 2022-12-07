@@ -9,9 +9,36 @@ bool GameServer::ServerStart_ = false;
 GameServerNet* GameServer::Net;
 GameServerNetServer GameServer::Server;
 GameServerNetClient GameServer::Client;
-unsigned int GameServer::PlayersCount_ = 0;
-unsigned int GameServer::ChangeNextState_ = 0;
-int GameServer::ClienID_ = -1;
+unsigned int GameServer::StateChangeSignal_ = 0;
+unsigned int GameServer::PlayerID_ = 0;
+unsigned int GameServer::PlayerReady_ = 0;
+bool GameServer::ObjectUpdate_ = false;
+
+int GameServer::GetAllPlayersReadyCount()
+{
+	std::map<int, std::shared_ptr<class GameStatePacket>>::iterator Begin = AllPlayersInfo_.begin();
+	std::map<int, std::shared_ptr<class GameStatePacket>>::iterator End = AllPlayersInfo_.end();
+
+	int ReadyCount = 0;
+
+	// 다른 사람들
+	for (; Begin != End; ++Begin)
+	{
+		std::shared_ptr<GameStatePacket> Packet = (*Begin).second;
+		if (1 == Packet->PlayerReady)
+		{
+			++ReadyCount;
+		}
+	}
+
+	// 자기자신
+	if (1 == PlayerReady_)
+	{
+		++ReadyCount;
+	}
+
+	return ReadyCount;
+}
 
 GameServer::GameServer()
 {
@@ -20,6 +47,7 @@ GameServer::GameServer()
 GameServer::~GameServer()
 {
 	Inst_.reset();
+	AllPlayersInfo_.clear();
 }
 
 // Lobby에서 게임시작 버튼 누르면 호출
@@ -32,7 +60,6 @@ void GameServer::ServerStart()
 	{
 		Server.Accept(30001);
 		Net = &Server;
-		PlayersCount_++; // 호스트도 플레이어 추가
 
 		Server.AcceptCallBack = [&](SOCKET _User)
 		{
@@ -42,7 +69,6 @@ void GameServer::ServerStart()
 
 			Server.NetSendPacket(_User, Packet);
 
-			PlayersCount_++; // 플레이어가 연결시도 하면 추가
 		};
 
 	}
@@ -73,6 +99,7 @@ void GameServer::ServerStart()
 			break;
 		default:
 			int a = 0;
+			// 이상한 패킷이 날라왔다
 			break;
 		}
 
@@ -86,18 +113,18 @@ void GameServer::ServerStart()
 	// 공통
 	Net->Dis.AddHandler(ContentsPacketType::ObjectUpdate, std::bind(&GameServer::ObjectUpdatePacketProcess, this, std::placeholders::_1));
 
+	Net->Dis.AddHandler(ContentsPacketType::GameState, std::bind(&GameServer::GameStatePacketProcess, this, std::placeholders::_1));
 
 	// 분리
 	if (true == Net->GetIsHost())
 	{
-		// 내가 서버일때만 등록해야하는 패킷
+		// 내가 서버일때만 등록해야하는 패킷처리
 	}
 	else
 	{
-		// 내가 클라이언트 일때만 등록해야하는 패킷
+		// 내가 클라이언트 일때만 등록해야하는 패킷처리
 		Net->Dis.AddHandler(ContentsPacketType::ClientInit, std::bind(&GameServer::ClientInitPacketProcess, this, std::placeholders::_1));
 
-		Net->Dis.AddHandler(ContentsPacketType::GameState, std::bind(&GameServer::GameStatePacketProcess, this, std::placeholders::_1));
 	}
 
 }
@@ -113,6 +140,11 @@ void GameServer::ServerEnd()
 ////////////////////
 void GameServer::ObjectUpdatePacketProcess(std::shared_ptr<GameServerPacket> _Packet)
 {
+	if (false == ObjectUpdate_)
+	{
+		return;
+	}
+
 	// 받은 패킷이 ObjectUpdatePacket
 	// ObjectUpdatePacket 중 타입을 통해 처리
 	std::shared_ptr<ObjectUpdatePacket> Packet = std::dynamic_pointer_cast<ObjectUpdatePacket>(_Packet);
@@ -120,6 +152,7 @@ void GameServer::ObjectUpdatePacketProcess(std::shared_ptr<GameServerPacket> _Pa
 	std::shared_ptr<GameServerObject> FindObject = GameServerObject::GetServerObject(Packet->ObjectID);
 
 	// 서버에서 보내준 패킷(플레이어, 장애물)이 클라에 없으면 무조건 만들어.
+	// -> StageParentLevel에서 수행
 	if (nullptr == FindObject)
 	{
 
@@ -167,33 +200,42 @@ void GameServer::ClientInitPacketProcess(std::shared_ptr<GameServerPacket> _Pack
 	// 클라이언트의 mainplayer
 	//MainPlayer->ClientInit(ServerObjectType::Player, Packet->ObjectID);
 
-	GameServer::GetInst()->ClienID_ = Packet->ObjectID;
+	PlayerID_ = Packet->ObjectID;
 }
 
-// 서버에서보냄, 클라가 받은 게임상태 정보
+// 게임상태 정보
 void GameServer::GameStatePacketProcess(std::shared_ptr<GameServerPacket> _Packet)
 {
-	if (true == Net->GetIsHost())
-	{
-		MsgBoxAssert("호스트인데 클라이언트용 패킷을 받았습니다.");
-	}
-
 	std::shared_ptr<GameStatePacket> Packet = std::dynamic_pointer_cast<GameStatePacket>(_Packet);
 
-	PlayersCount_ = Packet->PlayersCount;
-	ChangeNextState_ = Packet->ChangeNextState;
-	
+	// 모든 플레이어 정보 저장
+	AllPlayersInfo_[Packet->PlayerID] = Packet;
+
+	// 클라이언트 라면
+	if (false == Net->GetIsHost())
+	{
+		StateChangeSignal_ = Packet->StateChangeSignal;
+	}
+
 }
 ////////////////////
 ///	 ~ 패킷 처리
 ////////////////////
 
-// 호스트->클라 단방향
-void GameServer::SendGameStatePacketToClient()
+
+void GameServer::SendGameStatePacket()
 {
 	std::shared_ptr<GameStatePacket> Packet = std::make_shared<GameStatePacket>();
-	Packet->PlayersCount = PlayersCount_;
-	Packet->ChangeNextState = ChangeNextState_;
+	Packet->StateChangeSignal = 0;
+	Packet->PlayerID = PlayerID_;
+	Packet->PlayerReady = PlayerReady_;
+
+
+	// 호스트라면
+	if (true == Net->GetIsHost())
+	{
+		Packet->StateChangeSignal = StateChangeSignal_;
+	}
 
 	Net->SendPacket(Packet);
 }

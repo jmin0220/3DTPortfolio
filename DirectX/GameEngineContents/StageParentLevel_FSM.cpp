@@ -11,12 +11,15 @@ void StageParentLevel::IdleStart(const StateInfo& _Info)
 {
 	// 카메라암 -> 플레이어에게 세팅(나중이 이 줄 지워야됨)
 	CameraArm_->SetFollowCamera(GetMainCameraActor(), Player_);
+
 }
 
 void StageParentLevel::IdleUpdate(float _DeltaTime, const StateInfo& _Info)
 {
-	// 테스트용
-	// 추후 서버에서 레이스 시작 호출해주면 ReadyUpdate 에서 <UI> 321땅 시작
+	if (true == GameEngineInput::GetInst()->IsDown(KEY_SPACEBAR))
+	{
+		GameServer::ObjectUpdate_ = true;
+	}
 	
 	if (true == GameEngineInput::GetInst()->IsDown(KEY_ENTER))
 	{

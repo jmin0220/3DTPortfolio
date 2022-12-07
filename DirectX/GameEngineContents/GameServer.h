@@ -22,11 +22,23 @@ public:
 		return ServerStart_;
 	}
 
+	int GetAllPlayersCount()
+	{
+		return static_cast<int>(AllPlayersInfo_.size()) + 1;
+	}
+
+	int GetAllPlayersReadyCount();
+
+	
+
 	static bool IsHost_;
 	static GameServerNet* Net;
-	static unsigned int PlayersCount_;
-	static unsigned int ChangeNextState_;
-	static int ClienID_;
+	static unsigned int StateChangeSignal_;
+	static unsigned int PlayerID_;
+	static unsigned int PlayerReady_;
+	static bool ObjectUpdate_;
+	
+	std::map<int, std::shared_ptr<class GameStatePacket>> AllPlayersInfo_;
 
 public:
 	// constrcuter destructer
@@ -48,7 +60,7 @@ public:
 	void GameStatePacketProcess(std::shared_ptr<GameServerPacket> _Packet);
 
 	// 서버->클라
-	void SendGameStatePacketToClient();
+	void SendGameStatePacket();
 
 private:
 	static GameServerNetServer Server;

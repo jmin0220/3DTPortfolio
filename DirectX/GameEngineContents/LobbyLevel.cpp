@@ -148,10 +148,9 @@ void LobbyLevel::FallingStart(const StateInfo& _Info)
 
 void LobbyLevel::FallingUpdate(float _DeltaTime, const StateInfo& _Info)
 {
-
-	// 엔터 입력 -> 호스트의 시작 패킷 받으면 시작으로
-	if (true == GameServer::ChangeNextState_)
+	if (1 == GameServer::StateChangeSignal_)
 	{
+		GameServer::StateChangeSignal_ = 0;
 		ContentsCore::GetInst()->ChangeLevelByLoading(LEVEL_NAME_DOORDASH);
 		return;
 	}
@@ -174,9 +173,9 @@ void LobbyLevel::FallingUpdate(float _DeltaTime, const StateInfo& _Info)
 	}
 
 	// ★★★ 서버 ★★★
-	if (PrevUserCount_ != GameServer::GetInst()->PlayersCount_)
+	if (PrevUserCount_ != GameServer::GetInst()->GetAllPlayersCount())
 	{
-		PrevUserCount_ = GameServer::GetInst()->PlayersCount_;
+		PrevUserCount_ = GameServer::GetInst()->GetAllPlayersCount();
 		NumberFont_->SetFont(std::to_string(PrevUserCount_), "Titan One", 70.f, {800,680});
 	}
 

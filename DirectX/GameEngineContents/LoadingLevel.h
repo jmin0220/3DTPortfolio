@@ -43,5 +43,6 @@ private:
 	void ChangeLevelByMap();
 	class std::shared_ptr<CustomableGUI> LoadingGUI_;
 
+	bool LoadingComplete_;
 	float LoadingProgress_;
 };

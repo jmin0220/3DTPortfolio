@@ -87,12 +87,7 @@ void ContentsCore::Update(float _DeltaTime)
 		return;
 	}
 
-	// 서버 시작 호출했다면
-	// 호스트 -> 클라 패킷 보냄
-	if (true == GameServer::GetInst()->Net->GetIsHost())
-	{
-		GameServer::GetInst()->SendGameStatePacketToClient();
-	}
+	GameServer::GetInst()->SendGameStatePacket();
 
 }
 
@@ -543,7 +538,7 @@ void ContentsCore::LevelAllResourceLoad(GameEngineDirectory& _LevelDir)
 				std::shared_ptr<GameEngineFBXMesh> Mesh = GameEngineFBXMesh::Load(Path);
 
 				std::shared_ptr<GameEngineFBXAnimation> Anim = GameEngineFBXAnimation::Load(Path);
-				LoadingProgress_++;
+				++LoadingProgress_;
 			}
 		}
 	}

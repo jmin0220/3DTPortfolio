@@ -101,6 +101,15 @@ enum class StageNum
 };
 
 
+enum class ServerFlags
+{
+	ConnectReady = (1 << 0),
+	ResourceRoad = (1 << 1),
+	NumberCount  = (1 << 2),
+	GameEnd      = (1 << 3),
+
+};
+
 enum class MapSelect
 {
 	Splash_CoY_DoorDash,

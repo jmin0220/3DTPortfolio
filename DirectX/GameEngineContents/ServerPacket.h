@@ -74,8 +74,9 @@ public:
 class GameStatePacket : public GameServerPacket
 {
 public:
-	int PlayersCount;
-	int ChangeNextState; // 0 or 1
+	unsigned int StateChangeSignal; // 서버만, 서버가 클라에게 보내주는 신호
+	unsigned int PlayerID;
+	unsigned int PlayerReady; // 0 or 1
 
 	GameStatePacket()
 	{
@@ -85,13 +86,15 @@ public:
 	virtual void Serialize(GameServerSerializer& _Ser)
 	{
 		GameServerPacket::Serialize(_Ser);
-		_Ser << PlayersCount;
-		_Ser << ChangeNextState;
+		_Ser << StateChangeSignal;
+		_Ser << PlayerID;
+		_Ser << PlayerReady;
 	}
 	virtual void DeSerialize(GameServerSerializer& _Ser)
 	{
 		GameServerPacket::DeSerialize(_Ser);
-		_Ser >> PlayersCount;
-		_Ser >> ChangeNextState;
+		_Ser >> StateChangeSignal;
+		_Ser >> PlayerID;
+		_Ser >> PlayerReady;
 	}
 };
