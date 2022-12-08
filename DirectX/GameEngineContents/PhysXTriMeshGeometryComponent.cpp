@@ -25,6 +25,7 @@ void PhysXTriMeshGeometryComponent::CreatePhysXActors(const std::string& _MeshNa
 
 	// 마찰, 탄성계수
 	material_ = _physics->createMaterial(staticfriction_, dynamicfriction_, resitution_);
+	//material_ = _physics->createMaterial(0.7f, 1.5f, resitution_);
 
 
 	// 충돌체의 종류
@@ -77,6 +78,10 @@ void PhysXTriMeshGeometryComponent::CreatePhysXActors(const std::string& _MeshNa
 		//createExclusiveShapefh RigidStatic에 Shape를 넣어준다.
 		shape_ = physx::PxRigidActorExt::createExclusiveShape(*rigidStatic_, physx::PxTriangleMeshGeometry(TriangleMesh), *material_);
 
+		//피벗 설정
+		physx::PxVec3 Pivot(DynamicPivot_.x, DynamicPivot_.y, DynamicPivot_.z);
+		shape_->setLocalPose(physx::PxTransform(Pivot));
+
 		// invalid parameter : PxShape::setFlag(s): triangle mesh and heightfield triggers are not supported!
 		// Triangle에서는 Trigger를 사용할 수 없음
 		//shape_->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
@@ -84,6 +89,10 @@ void PhysXTriMeshGeometryComponent::CreatePhysXActors(const std::string& _MeshNa
 		// 충돌시점 콜백을 위한 세팅
 		shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Ground)
 															, static_cast<physx::PxU32>(PhysXFilterGroup::Player), 0, 0));
+
+		//콜백피벗 설정
+		shape_->setLocalPose(physx::PxTransform(Pivot));
+
 			
 	}
 	

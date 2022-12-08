@@ -67,6 +67,11 @@ void PhysXConvexDynamicComponent::CreatePhysXActors(const std::string& _MeshName
 	// 충돌체의 형태
 	// 충돌체의 크기는 절반의 크기를 설정하므로 실제 Renderer의 스케일은 충돌체의 2배로 설정되어야 함
 	shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxConvexMeshGeometry(convexMesh), *material_);
+
+	//피벗 설정
+	physx::PxVec3 Pivot(DynamicPivot_.x, DynamicPivot_.y, DynamicPivot_.z);
+	shape_->setLocalPose(physx::PxTransform(Pivot));
+
 	// 밀도 설정
 	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 10.0f);
 

@@ -26,19 +26,33 @@ public:
 	void SetupFiltering(physx::PxShape* _Shape, physx::PxU32 _FilterGroup, physx::PxU32 _FilterMask);
 	float4 ToEulerAngles(const physx::PxQuat& q);
 
+	//정지마찰계수설정
 	inline void SetStaticFriction(float _staticfriction)
 	{
 		staticfriction_ = _staticfriction;
 	}
-
+	//운동마찰계수설정
 	inline void SetDynamicFriction(float _dynamicfriction)
 	{
 		dynamicfriction_ = _dynamicfriction;
 	}
-
-	inline void RestitutionFriction(float _resitution)
+	//반발계수설정
+	inline void SetRestitution(float _resitution)
 	{
 		resitution_ = _resitution;
+	}
+	//순서대로 정지마찰계수설정, 운동마찰계수설정, 반발계수설정을 넣기
+	inline void SetPhysxMaterial(float _staticfriction, float _dynamicfriction, float _resitution)
+	{
+		staticfriction_ = _staticfriction;
+		dynamicfriction_ = _dynamicfriction;
+		resitution_ = _resitution;
+	}
+
+	//피벗설정
+	inline void SetDynamicPivot(float4 _Pivot)
+	{
+		DynamicPivot_ = _Pivot;
 	}
 
 	//쿼터니언 관련 함수
@@ -56,6 +70,8 @@ protected:
 	float staticfriction_ = 0.0f;
 	float dynamicfriction_ = 0.0f;
 	float resitution_ = 0.0f;
+
+	float4 DynamicPivot_ = {0.0f, 0.0f, 0.0f};
 private:
 
 };

@@ -50,9 +50,16 @@ void PhysXBoxGeometryComponent::CreatePhysXActors(physx::PxScene* _Scene, physx:
 	// RigidDynamic의 밀도를 설정
 	physx::PxRigidBodyExt::updateMassAndInertia(*rigidDynamic_, 0.1f);
 
+	//피벗 설정
+	physx::PxVec3 Pivot(DynamicPivot_.x, DynamicPivot_.y, DynamicPivot_.z);
+	shape_->setLocalPose(physx::PxTransform(Pivot));
+
 	// 충돌시점 콜백을 위한 세팅
 	shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Obstacle)
 		, static_cast<physx::PxU32>(PhysXFilterGroup::Player), 0, 0));
+
+	//콜백피벗 설정
+	shape_->setLocalPose(physx::PxTransform(Pivot));
 
 	// Scene에 액터 추가
 	_Scene->addActor(*rigidDynamic_);

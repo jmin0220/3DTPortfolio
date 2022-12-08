@@ -56,10 +56,15 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 
 	// ¸ÞÀÎ Ä¸½¶ ÄÝ¶óÀÌ´õ
 	shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxCapsuleGeometry(ScaledRadius * 1.3f, ScaledHeight * 0.9f), *material_);
-	physx::PxVec3 DynamicCenter(0.0f, 0.0f, (-ScaledHeight * 0.9f - ScaledRadius * 1.3f));
-	//shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Player)
-	//	, static_cast<physx::PxU32>(PhysXFilterGroup::Ground), 0, 0));
+	float CapsuleHeight = (ScaledHeight * 0.9f);
+	physx::PxVec3 DynamicCenter(0.0f, CapsuleHeight, 0.0f );
+
+	shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Player)
+		, static_cast<physx::PxU32>(PhysXFilterGroup::Ground), 0, 0));
+	//ÇÇ¹þ¼³Á¤
 	physx::PxTransform relativePose(physx::PxQuat(physx::PxHalfPi, physx::PxVec3(0, 0, 1)));
+	relativePose.p = DynamicCenter;
+	//physx::PxTransform relativePose(physx::PxQuat(physx::PxHalfPi, physx::PxVec3(0, 0, 1)));
 	shape_->setLocalPose(relativePose);
 
 	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 0.01f);
@@ -72,11 +77,10 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 	Instshape_->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
 	Instshape_->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
 
-	//physx::PxTransform relativePose(physx::PxVec3(0.0f, +ScaledHeight * 0.9f + ScaledRadius * 1.3f, 0.0f), physx::PxQuat(physx::PxHalfPi, physx::PxVec3(0, 0, 1)));
+	//ÄÝ¹éÇÇ¹þ¼³Á¤ 
 	Instshape_->setLocalPose(relativePose);
 	// 
 	physx::PxTransform LocalPose = dynamic_->getCMassLocalPose();
-
 
 	// Á¦µ¿?
 	dynamic_->setLinearDamping(physx::PxReal(0.5f));

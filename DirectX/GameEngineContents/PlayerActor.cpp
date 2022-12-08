@@ -51,7 +51,7 @@ void PlayerActor::Start()
 
 	MeshBoundScale = FbxRenderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
 	MeshBoundScale *= float4{ PLAYER_SIZE_MAGNIFICATION_RATIO };
-	FbxRenderer_->GetTransform().SetLocalPosition({ 0.0f, -MeshBoundScale.y * 1.5f , 0.0f });
+	FbxRenderer_->GetTransform().SetLocalPosition({ 0.0f, -MeshBoundScale.z * 1.3f , 0.0f });
 	//FbxRenderer_->GetTransform().SetLocalPosition({0.0f, 0.0f , 0.0f});
 
 	// PhysXActor를 생성하고, 플레이어의 RigidActor를 받아와서 콜백에 사용함
@@ -80,6 +80,8 @@ void PlayerActor::Start()
 	}
 
 	DynamicActorComponent_->TurnOnSpeedLimit();
+
+	DynamicActorComponent_->SetPhysxMaterial(0.0f,0.0f,0.0f);
 
 	// 서버 메인 플레이어만 드렁모
 	// 
