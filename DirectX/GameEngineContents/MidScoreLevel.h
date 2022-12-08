@@ -5,6 +5,8 @@
 class LobbyPlayer;
 class FloorActor;
 class GoalTipActor;
+class MidScoreBGActor;
+class FontActor;
 class MidScoreLevel : public GameEngineLevel
 {
 public:
@@ -26,8 +28,28 @@ protected:
 	void LevelStartEvent() override;
 	void LevelEndEvent() override;
 private:
-	std::shared_ptr<LobbyPlayer> Player_;
-	std::shared_ptr<FloorActor> Chair_;
+	std::shared_ptr<LobbyPlayer> Player1_;
+	std::shared_ptr<FloorActor> Chair1_;
+
+	std::shared_ptr<LobbyPlayer> Player2_;
+	std::shared_ptr<FloorActor> Chair2_;
+
+	std::shared_ptr<LobbyPlayer> Player3_;
+	std::shared_ptr<FloorActor> Chair3_;
+
+	std::shared_ptr<LobbyPlayer> Player4_;
+
 	std::shared_ptr<GoalTipActor> Score_;
+	std::shared_ptr<MidScoreBGActor> BG_;
+
+	std::shared_ptr<FontActor> Font1_;
+	std::shared_ptr<FontActor> Font1Score_;
+	std::shared_ptr<FontActor> Font2_;
+	std::shared_ptr<FontActor> Font2Score_;
+
+	std::string Player1Name_;
+	std::string Player2Name_;
+
+	float FallingTime_;
 };
 

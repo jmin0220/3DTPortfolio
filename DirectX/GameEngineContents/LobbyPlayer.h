@@ -21,6 +21,9 @@ public:
 	void ChangeAnimationIdle();
 	void ChangeAnimationFall();
 	void ChangeAnimationWin();
+	void ChangeAnimationTumbel();
+	void ChangeAnimationJogging();
+	void ChangeAnimationGasp();
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;

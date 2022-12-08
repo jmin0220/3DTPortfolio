@@ -36,6 +36,12 @@ void LobbyPlayer::SetCharacterAnimation()
 		GameEngineRenderingEvent{ "Character_Victory_Default_A.fbx", 0.016666666666666666666666666666666666666666667f , false }, 0);
 	FBXRenderer_->CreateFBXAnimation("Fall",
 		GameEngineRenderingEvent{ "Character_LobbyDive_A.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
+	FBXRenderer_->CreateFBXAnimation("Tumble",
+		GameEngineRenderingEvent{ "Character_Fall_A.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
+	FBXRenderer_->CreateFBXAnimation("Jogging",
+		GameEngineRenderingEvent{ "Character_JoggingOnSpot.fbx", 0.018f , true }, 0);
+	FBXRenderer_->CreateFBXAnimation("Gasp",
+		GameEngineRenderingEvent{ "Character_Victory_Gasp.fbx", 0.018f , true }, 0);
 	FBXRenderer_->ChangeAnimation("Idle");
 }
 
@@ -52,6 +58,21 @@ void LobbyPlayer::ChangeAnimationWin()
 void LobbyPlayer::ChangeAnimationFall()
 {
 	FBXRenderer_->ChangeAnimation("Fall");
+}
+
+void LobbyPlayer::ChangeAnimationTumbel()
+{
+	FBXRenderer_->ChangeAnimation("Tumble");
+}
+
+void LobbyPlayer::ChangeAnimationJogging()
+{
+	FBXRenderer_->ChangeAnimation("Jogging");
+}
+
+void LobbyPlayer::ChangeAnimationGasp()
+{
+	FBXRenderer_->ChangeAnimation("Gasp");
 }
 // 텍스처 세팅
 // 캐릭터 스킨

@@ -633,6 +633,9 @@
     <ClInclude Include="UISkyBoxActor.h">
       <Filter>02_Actor\UIActor</Filter>
     </ClInclude>
+    <ClInclude Include="MidScoreBGActor.h">
+      <Filter>02_Actor\UIActor</Filter>
+    </ClInclude>
     <ClInclude Include="HoopsScoreRing.h">
       <Filter>02_Actor\Stage05Actor\Objects</Filter>
     </ClInclude>
@@ -1056,6 +1059,9 @@
       <Filter>02_Actor\Stage03Actor</Filter>
     </ClCompile>
     <ClCompile Include="UISkyBoxActor.cpp">
+      <Filter>02_Actor\UIActor</Filter>
+    </ClCompile>
+    <ClCompile Include="MidScoreBGActor.cpp">
       <Filter>02_Actor\UIActor</Filter>
     </ClCompile>
     <ClCompile Include="HoopsScoreRing.cpp">

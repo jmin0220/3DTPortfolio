@@ -67,15 +67,15 @@ void LobbyLevel::LevelStartEvent()
 	LobbySet_ = CreateActor<LobbySetUI>();
 
 	UserFont_ = CreateActor<FontActor>();
-	UserFont_->SetFont("접속자 수", "Noto Sans CJK SC", 25.f,{800,750});
+	UserFont_->SetFont("접속자 수", "Noto Sans CJK SC", 25.f,{800,750},LeftAndRightSort::CENTER);
 	UserFont_->Off();
 
 	NumberFont_ = CreateActor<FontActor>();
-	NumberFont_->SetFont("0", "Titan One", 70.f, { 800,680 });
+	NumberFont_->SetFont("0", "Titan One", 70.f, { 800,680 }, LeftAndRightSort::CENTER);
 	NumberFont_->Off();
 
 	WaitingFont_ = CreateActor<FontActor>();
-	WaitingFont_->SetFont("플레이어를 기다리는 중", "Noto Sans CJK SC", 25.f, { 200,850 });
+	WaitingFont_->SetFont("플레이어를 기다리는 중", "Noto Sans CJK SC", 25.f, { 200,850 }, LeftAndRightSort::CENTER);
 	WaitingFont_->Off();
 
 	Bingle_ = CreateActor<Bingle>();
@@ -173,7 +173,7 @@ void LobbyLevel::FallingUpdate(float _DeltaTime, const StateInfo& _Info)
 	if (PrevUserCount_ != GameServer::GetInst()->GetAllPlayersCount())
 	{
 		PrevUserCount_ = GameServer::GetInst()->GetAllPlayersCount();
-		NumberFont_->SetFont(std::to_string(PrevUserCount_), "Titan One", 70.f, {800,680});
+		NumberFont_->SetFont(std::to_string(PrevUserCount_), "Titan One", 70.f, {800,680}, LeftAndRightSort::CENTER);
 
 	}
 
