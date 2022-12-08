@@ -22,7 +22,6 @@ protected:
 	void LevelStartEvent() override;
 	void LevelEndEvent() override;
 private:
-	std::shared_ptr<GameEngineTextureRenderer> BG_;
 	std::shared_ptr<GameEngineFBXStaticRenderer> Mesh_;
 };
 
