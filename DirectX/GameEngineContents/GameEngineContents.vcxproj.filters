@@ -633,6 +633,9 @@
     <ClInclude Include="BigShots_PRP.h">
       <Filter>02_Actor\Stage03Actor</Filter>
     </ClInclude>
+    <ClInclude Include="UISkyBoxActor.h">
+      <Filter>02_Actor\UIActor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -1045,6 +1048,9 @@
     </ClCompile>
     <ClCompile Include="BigShots_PRP.cpp">
       <Filter>02_Actor\Stage03Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="UISkyBoxActor.cpp">
+      <Filter>02_Actor\UIActor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

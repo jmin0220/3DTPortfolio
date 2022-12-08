@@ -6,6 +6,7 @@ class Winner;
 class LobbyPlayer;
 class WinnerBG;
 class FloorActor;
+class UISkyBoxActor;
 class WinnerLevel : public GameEngineLevel
 {
 public:
@@ -31,6 +32,7 @@ private:
 	std::shared_ptr<LobbyPlayer> Player_;
 	std::shared_ptr<WinnerBG> BG_;
 	std::shared_ptr<FloorActor> Chair_;
+	std::shared_ptr<UISkyBoxActor> Sky_;
 
 	float ChairTime_;
 };

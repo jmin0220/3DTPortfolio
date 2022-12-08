@@ -5,6 +5,7 @@
 #include "LobbyPlayer.h"
 #include "WinnerBG.h"
 #include "FloorActor.h"
+#include "UISkyBoxActor.h"
 
 WinnerLevel::WinnerLevel() 
 	:ChairTime_(0.0f)
@@ -40,7 +41,10 @@ void WinnerLevel::LevelStartEvent()
 	
 	//ContentsCore::GetInst()->LoadLevelResource(LEVELS::WINNNER);//경로설정
 	BG_ = CreateActor<WinnerBG>();
+	Sky_ = CreateActor<UISkyBoxActor>();
+
 	Winner_ = CreateActor<Winner>();
+
 	Player_ = CreateActor<LobbyPlayer>();
 	Player_->GetTransform().SetWorldRotation({ 0,180,0 });
 	Player_->GetTransform().SetWorldPosition({ 0,-15,0 });
@@ -53,9 +57,10 @@ void WinnerLevel::LevelStartEvent()
 
 void WinnerLevel::LevelEndEvent()
 {
+	Sky_->Death();
+	//BG_->Death();
 	Winner_->Death();
 	Player_->Death();
-	BG_->Death();
 	Chair_->Death();
 
 	ContentsCore::GetInst()->ReleaseCurLevelResource();
