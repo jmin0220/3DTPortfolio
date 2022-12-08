@@ -35,6 +35,8 @@ protected:
 
 	void CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics) override;
 private:
+	static int Num;
+	int MyNum;
 	float Rot_;
 	bool Switch;
 	float Timer_;
