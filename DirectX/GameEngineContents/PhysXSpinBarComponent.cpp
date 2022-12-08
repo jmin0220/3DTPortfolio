@@ -23,7 +23,9 @@ void PhysXSpinBarComponent::CreatePhysXActors(const std::string& _MeshName, phys
 		physx::PxQuat(tmpQuat.x, tmpQuat.y, tmpQuat.z, tmpQuat.w));
 
 	// 마찰, 탄성계수
-	material_ = _physics->createMaterial(0.0f, 0.0f, 0.0f);
+	//material_ = _physics->createMaterial(0.0f, 0.0f, 0.0f);
+
+	material_ = _physics->createMaterial(staticfriction_, dynamicfriction_, resitution_);
 
 	// 충돌체의 종류
 	dynamic_ = _physics->createRigidDynamic(localTm);

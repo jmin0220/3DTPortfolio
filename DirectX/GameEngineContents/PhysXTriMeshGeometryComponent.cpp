@@ -24,7 +24,8 @@ void PhysXTriMeshGeometryComponent::CreatePhysXActors(const std::string& _MeshNa
 		physx::PxQuat(tmpQuat.x, tmpQuat.y, tmpQuat.z, tmpQuat.w));
 
 	// 마찰, 탄성계수
-	material_ = _physics->createMaterial(0.7f, 1.5f, 0.0f);
+	material_ = _physics->createMaterial(staticfriction_, dynamicfriction_, resitution_);
+
 
 	// 충돌체의 종류
 	rigidStatic_ = _physics->createRigidStatic(localTm);

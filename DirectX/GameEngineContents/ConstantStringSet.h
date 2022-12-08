@@ -17,6 +17,15 @@
 //플레이어 eventCol 사이즈
 #define PLAYER_COL_SCALE 3.0f, 5.0f, 3.0f
 
+//스테이지 바닥의 Staticfriction (정지마찰계수)
+#define FLOOR_STATICFRICTION 0.7f;
+
+//스테이지 바닥의 Dynammicfriction (운동마찰계수)
+#define FLOOR_STATICFRICTION 1.5f;
+
+//스테이지 바닥의 Resistution (반발계수)
+#define FLOOR_STATICFRICTION 0.0f;
+
 // 디렉토리
 #define DIR_RESOURCES "Resources"
 #define DIR_PHYSXMESH "PhysxMesh"
