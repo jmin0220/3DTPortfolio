@@ -23,6 +23,7 @@ protected:
 
 private:
 	std::shared_ptr<GameEngineFBXAnimationRenderer> FbxRenderer_;
-
+	std::shared_ptr<GameEngineFBXStaticRenderer> FbxFloatingRenderer_;
+	std::shared_ptr<GameEngineFBXStaticRenderer> FbxSpinnerRenderer_;
 };
 

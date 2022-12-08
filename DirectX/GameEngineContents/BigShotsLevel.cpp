@@ -7,6 +7,7 @@
 #include "VFXWaterActor.h"
 #include "BigShotsStage.h"
 #include "BigShots_Cannon.h"
+#include "BigShots_Spinner.h"
 
 #include "PlayerActor.h"
 
@@ -53,16 +54,20 @@ void BigShotsLevel::LevelStartEvent()
 	Stage->GetTransform().SetWorldPosition({ 0.0f, -50.0f, 0.0f });
 	
 	std::shared_ptr<BigShots_Cannon> Cannon1 = CreateActor<BigShots_Cannon>();
-	Cannon1->GetTransform().SetWorldPosition({ -35.0f, -20.0f, -150.0f });
-	Cannon1->GetTransform().SetWorldRotation({ -10.0f, 0.0f, 180.0f });
+	Cannon1->GetTransform().SetWorldPosition({ -50.0f, -20.0f, -180.0f });
+	Cannon1->GetTransform().SetWorldRotation({ -10.0f, 0.0f, 0.0f });
 
 	std::shared_ptr<BigShots_Cannon> Cannon2 = CreateActor<BigShots_Cannon>();
-	Cannon2->GetTransform().SetWorldPosition({ 0.0f, -20.0f, -150.0f });
-	Cannon2->GetTransform().SetWorldRotation({ -10.0f, 0.0f, 180.0f });
+	Cannon2->GetTransform().SetWorldPosition({ 0.0f, -20.0f, -180.0f });
+	Cannon2->GetTransform().SetWorldRotation({ -10.0f, 0.0f, 0.0f });
 
 	std::shared_ptr<BigShots_Cannon> Cannon3 = CreateActor<BigShots_Cannon>();
-	Cannon3->GetTransform().SetWorldPosition({ 35.0f, -20.0f, -150.0f });
-	Cannon3->GetTransform().SetWorldRotation({ -10.0f, 0.0f, 180.0f });
+	Cannon3->GetTransform().SetWorldPosition({ 50.0f, -20.0f, -180.0f });
+	Cannon3->GetTransform().SetWorldRotation({ -10.0f, 0.0f, 0.0f });
+
+	// Test용
+	std::shared_ptr<BigShots_Spinner> Spinner1 = CreateActor<BigShots_Spinner>();
+	Spinner1->GetTransform().SetWorldPosition({ 50.0f, -20.0f, 0.0f });
 
 	//스카이박스
 	std::shared_ptr<SkyboxActor> Skybox = CreateActor<SkyboxActor>();

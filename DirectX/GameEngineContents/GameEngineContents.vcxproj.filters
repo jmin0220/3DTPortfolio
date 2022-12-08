@@ -636,6 +636,9 @@
     <ClInclude Include="UISkyBoxActor.h">
       <Filter>02_Actor\UIActor</Filter>
     </ClInclude>
+    <ClInclude Include="BigShots_Spinner.h">
+      <Filter>02_Actor\Stage03Actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -1051,6 +1054,9 @@
     </ClCompile>
     <ClCompile Include="UISkyBoxActor.cpp">
       <Filter>02_Actor\UIActor</Filter>
+    </ClCompile>
+    <ClCompile Include="BigShots_Spinner.cpp">
+      <Filter>02_Actor\Stage03Actor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

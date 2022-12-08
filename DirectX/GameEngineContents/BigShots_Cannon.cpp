@@ -13,6 +13,8 @@ BigShots_Cannon::~BigShots_Cannon()
 void BigShots_Cannon::Start()
 {
 	FbxRenderer_ = CreateComponent<GameEngineFBXAnimationRenderer>();
+	FbxFloatingRenderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
+	FbxSpinnerRenderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
 }
 
 void BigShots_Cannon::Update(float _DeltaTime)
@@ -43,7 +45,14 @@ void BigShots_Cannon::LevelStartEvent()
 			Unit.ShaderResources.SetTexture("DiffuseTexture", "PRP_S04_Cannon_AM.png");
 		}
 	}
-	//FbxRenderer_->GetTransform().SetWorldScale({ 3,3,3 });
+	FbxRenderer_->GetTransform().SetWorldScale({ 2.5f,2.5f,2.5f });
+
+	FbxFloatingRenderer_->SetFBXMesh("ENV_S04_FloatingCannonTubes.fbx", "Texture");
+	FbxFloatingRenderer_->GetTransform().SetWorldRotation(GetTransform().GetWorldRotation() + float4(10.0f, 0.0f, 0.0f));
+
+	FbxSpinnerRenderer_->SetFBXMesh("ENV_S04_Spinner.fbx", "Texture");
+	FbxSpinnerRenderer_->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition() + float4(0.0f, 40.0f, 0.0f));
+	FbxSpinnerRenderer_->GetTransform().SetWorldRotation(GetTransform().GetWorldRotation() + float4(10.0f, 0.0f, 0.0f));
 }
 
 void BigShots_Cannon::LevelEndEvent()

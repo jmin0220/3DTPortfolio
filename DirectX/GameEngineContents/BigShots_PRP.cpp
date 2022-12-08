@@ -26,31 +26,37 @@ void BigShots_PRP::Start()
 	case PRPType::CONTROLLER:
 	{
 		FBXName_ = "Controller.FBX";
+		PRPForce_ = float4(0.0f, 1000000.0f, 1300000.0f);
 		break;
 	}
 	case PRPType::MAGNET:
 	{
 		FBXName_ = "Magnet.FBX";
+		PRPForce_ = float4(0.0f, 300000.0f, 450000.0f);
 		break;
 	}
 	case PRPType::NUT:
 	{
 		FBXName_ = "Nut.FBX";
+		PRPForce_ = float4(0.0f, 90000.0f, 100000.0f);
 		break;
 	}
 	case PRPType::PLANET:
 	{
 		FBXName_ = "Planet.FBX";
+		PRPForce_ = float4(0.0f, 900000.0f, 2050000.0f);
 		break;
 	}
 	case PRPType::STAR:
 	{
 		FBXName_ = "Star.FBX";
+		PRPForce_ = float4(0.0f, 80000.0f, 88000.0f);
 		break;
 	}
 	case PRPType::TETRAPOD:
 	{
 		FBXName_ = "Tetrapod.FBX";
+		PRPForce_ = float4(0.0f, 800000.0f, 1000000.0f);
 		break;
 	}
 	default:
@@ -62,7 +68,7 @@ void BigShots_PRP::Start()
 	Renderer_->SetFBXMesh(FBXName_, "Texture");
 	PhysXConvexDynamicComponent_ = CreateComponent< PhysXConvexDynamicComponent>();
 	
-	//Death(5.0f);
+	Death(50.0f);
 }
 
 void BigShots_PRP::Update(float _DeltaTime)
@@ -88,7 +94,7 @@ void BigShots_PRP::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _
 	// Tip..3번째 매개변수인 GeometryScale은 액터가 가질 물리강체의 크기
 	float4 MeshBoundScale = Renderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
 	PhysXConvexDynamicComponent_->CreatePhysXActors(FBXName_, _Scene, _physics, Cooking, false, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z));
-	PhysXConvexDynamicComponent_->AddForce(float4(0.0f, 1000000.0f, 1000000.0f));
+	PhysXConvexDynamicComponent_->AddForce(PRPForce_);
 }
 
 void BigShots_PRP::CreatePhysX()
