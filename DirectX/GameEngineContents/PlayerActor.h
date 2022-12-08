@@ -7,9 +7,16 @@ class CameraArm;
 // 설명 :
 class PlayerActor : public GameEngineActor, public GameServerObject
 {
-	// 서버
-private:
+	// 서버 디버깅
+public:
+	static PlayerActor* MainPlayer;
 	static bool IsMainPlayerSpawned_;
+	static int GetPlayerID()
+	{
+		return MainPlayer->GetNetID();
+	}
+
+private:
 	bool IsPlayerble_;
 
 public:

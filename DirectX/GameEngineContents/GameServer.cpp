@@ -10,9 +10,9 @@ GameServerNet* GameServer::Net;
 GameServerNetServer GameServer::Server;
 GameServerNetClient GameServer::Client;
 unsigned int GameServer::StateChangeSignal_ = 0;
+unsigned int GameServer::ObjectUpdateSignal_ = false;
 unsigned int GameServer::PlayerID_ = -1;
 unsigned int GameServer::PlayerReady_ = 0;
-bool GameServer::ObjectUpdate_ = false;
 
 int GameServer::GetAllPlayersReadyCount()
 {
@@ -101,8 +101,8 @@ void GameServer::ServerStart()
 			NewPacket = std::make_shared<GameStatePacket>();
 			break;
 		default:
-			int a = 0;
 			// 이상한 패킷이 날라왔다
+			NewPacket = std::make_shared<GarbagePacket>();
 			break;
 		}
 
@@ -142,7 +142,7 @@ void GameServer::ServerEnd()
 ////////////////////
 void GameServer::ObjectUpdatePacketProcess(std::shared_ptr<GameServerPacket> _Packet)
 {
-	if (false == ObjectUpdate_)
+	if (false == ObjectUpdateSignal_)
 	{
 		return;
 	}
@@ -218,6 +218,7 @@ void GameServer::GameStatePacketProcess(std::shared_ptr<GameServerPacket> _Packe
 	if (false == Net->GetIsHost())
 	{
 		StateChangeSignal_ = Packet->StateChangeSignal;
+		ObjectUpdateSignal_ = Packet->ObjectUpdateSignal;
 	}
 
 	// 호스트라면 모든 클라에게 전달
@@ -235,6 +236,7 @@ void GameServer::SendGameStatePacket()
 {
 	std::shared_ptr<GameStatePacket> Packet = std::make_shared<GameStatePacket>();
 	Packet->StateChangeSignal = 0;
+	Packet->ObjectUpdateSignal = 0;
 	Packet->PlayerID = PlayerID_;
 	Packet->PlayerReady = PlayerReady_;
 
@@ -243,6 +245,9 @@ void GameServer::SendGameStatePacket()
 	if (true == Net->GetIsHost())
 	{
 		Packet->StateChangeSignal = StateChangeSignal_;
+		Packet->ObjectUpdateSignal = ObjectUpdateSignal_;
+
+		StateChangeSignal_ = 0;
 	}
 
 	Net->SendPacket(Packet);

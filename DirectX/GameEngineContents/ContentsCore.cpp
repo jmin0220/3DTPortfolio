@@ -88,30 +88,25 @@ void ContentsCore::Update(float _DeltaTime)
 		return;
 	}
 	
-	/////////////////
-	// 호스트 업데이트
-	/////////////////
-
-	// 모든 유저가 준비 됐을 때 주는 신호
-	if (true == GameServer::IsHost_)
-	{
-		if (GameServer::GetInst()->GetAllPlayersCount() == GameServer::GetInst()->GetAllPlayersReadyCount())
-		{
-			GameServer::GetInst()->StateChangeSignal_ = 1;
-		}
-	}
-
+	// ID를 받지 않은 유저는 패킷 못보냄
 	if (-1 == GameServer::GetInst()->PlayerID_)
 	{
 		return;
 	}
 
-	// 모든 유저의 업데이트
+	//////////////////////////////////
+	// 호스트 포함 모든 유저의 업데이트
+	//////////////////////////////////
+
+	if (true == GameServer::IsHost_)
+	{
+		if (true == GameEngineInput::GetInst()->IsDown(KEY_SPACEBAR))
+		{
+			GameServer::ObjectUpdateSignal_ = 1;
+		}
+	}
+
 	GameServer::GetInst()->SendGameStatePacket();
-
-	GameEngineDebug::OutPutString("StateChangeSignal : " + GameServer::GetInst()->StateChangeSignal_);
-
-
 }
 
 void ContentsCore::End()

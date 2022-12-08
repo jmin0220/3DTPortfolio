@@ -3,7 +3,9 @@
 #include <GameEngineCore/CoreMinimal.h>
 
 #include "GameServer.h"
+#include "GameServerObject.h"
 #include "ServerPacket.h"
+#include "PlayerActor.h"
 
 GameServerGUI::GameServerGUI() 
 {
@@ -62,11 +64,50 @@ void GameServerGUI::LobbyGUI()
 
 void GameServerGUI::InGameGUI()
 {
-	ImGui::Text(GameEngineString::AnsiToUTF8Return("플레이어 수 : ").c_str());
-	ImGui::SameLine();
-	ImGui::Text(std::to_string(GameServer::GetInst()->GetAllPlayersCount()).c_str());
+	{
+		std::string Text = GameServer::IsHost_ == true ? "@@@ 호스트 @@@" : "@@@ 클라이언트 @@@";
+		ImGui::Text(GameEngineString::AnsiToUTF8Return(Text).c_str());
+		ImGui::NewLine();
+	}
+	
+	{
+		std::string Text = "플레이어 수 :";
+		Text += std::to_string(GameServer::GetInst()->GetAllPlayersCount());
+		ImGui::Text(GameEngineString::AnsiToUTF8Return(Text).c_str());
+	}
 
-	ImGui::Text(GameEngineString::AnsiToUTF8Return("플레이어 준비 : ").c_str());
-	ImGui::SameLine();
-	ImGui::Text(std::to_string(GameServer::GetInst()->GetAllPlayersReadyCount()).c_str());
+	{
+		std::string Text = "플레이어 준비 :";
+		Text += std::to_string(GameServer::GetInst()->GetAllPlayersReadyCount());
+		ImGui::Text(GameEngineString::AnsiToUTF8Return(Text).c_str());
+	}
+
+
+	// 상태 디버깅
+	ImGui::NewLine();
+	{
+		std::string Text = "StateChangeSignal : ";
+		Text += GameServer::StateChangeSignal_ == 1 ? "TRUE" : "FALSE";
+		ImGui::Text(GameEngineString::AnsiToUTF8Return(Text).c_str());
+	}
+
+	{
+		std::string Text = "ObjectUpdateSignal_ : ";
+		Text += GameServer::ObjectUpdateSignal_ == 1 ? "TRUE" : "FALSE";
+		ImGui::Text(GameEngineString::AnsiToUTF8Return(Text).c_str());
+	}
+
+	{
+		std::string Text = "AllActorsCount : ";
+		Text += std::to_string(GameServerObject::GetAllActorsCount());
+		ImGui::Text(GameEngineString::AnsiToUTF8Return(Text).c_str());
+	}
+
+	ImGui::NewLine();
+	{
+		std::string Text = "PlayerID : ";
+		Text += PlayerActor::MainPlayer == nullptr ? "메인 플레이어 생성되지 않았음" : std::to_string(PlayerActor::GetPlayerID());
+		ImGui::Text(GameEngineString::AnsiToUTF8Return(Text).c_str());
+	}
+	
 }

@@ -39,9 +39,9 @@ public:
 	static bool IsHost_;
 	static GameServerNet* Net;
 	static unsigned int StateChangeSignal_;
+	static unsigned int ObjectUpdateSignal_;
 	static unsigned int PlayerID_;
 	static unsigned int PlayerReady_;
-	static bool ObjectUpdate_;
 	
 	std::map<int, std::shared_ptr<class GameStatePacket>> AllPlayersInfo_;
 

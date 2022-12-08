@@ -18,11 +18,16 @@ enum class ServerObjectType
 // Ό³Έν :
 class GameServerObject
 {
-private:
+public:
 	static std::atomic<int> IdSeed;
 	static std::map<int, std::shared_ptr<GameServerObject>> AllServerActor;
 
 public:
+	static int GetAllActorsCount()
+	{
+		return static_cast<int>(AllServerActor.size());
+	}
+
 	static std::shared_ptr<GameServerObject> GetServerObject(int _ID) 
 	{
 		std::map<int, std::shared_ptr<GameServerObject>>::iterator FindIter = AllServerActor.find(_ID);

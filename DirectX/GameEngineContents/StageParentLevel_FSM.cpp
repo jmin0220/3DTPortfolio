@@ -15,12 +15,7 @@ void StageParentLevel::IdleStart(const StateInfo& _Info)
 }
 
 void StageParentLevel::IdleUpdate(float _DeltaTime, const StateInfo& _Info)
-{
-	if (true == GameEngineInput::GetInst()->IsDown(KEY_SPACEBAR))
-	{
-		GameServer::ObjectUpdate_ = true;
-	}
-	
+{	
 	if (true == GameEngineInput::GetInst()->IsDown(KEY_ENTER))
 	{
 		//StageStateManager_.ChangeState("StagePreView");

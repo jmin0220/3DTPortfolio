@@ -10,14 +10,15 @@
 float SPEED_PLAYER = 2500.0f;
 float AngularSpeed = 520.0f;
 
+PlayerActor* PlayerActor::MainPlayer = nullptr;
 bool PlayerActor::IsMainPlayerSpawned_ = false;
 
 PlayerActor::PlayerActor() :
 	CheckPointFlag_(false),
 	CheckPointPos_(float4::ZERO),
 	IsGoal_(false),
-	IsStanding_(false)
-
+	IsStanding_(false),
+	IsPlayerble_(false)
 {
 }
 
@@ -37,17 +38,12 @@ physx::PxRigidDynamic* PlayerActor::CreatePhysXActors(physx::PxScene* _Scene, ph
 
 void PlayerActor::Start()
 {
-	if (true == IsMainPlayerSpawned_)
-	{
-		int a = 0;
-	}
-
 	// 캐릭터 메쉬 로드
 	FbxRenderer_ = CreateComponent<GameEngineFBXAnimationRenderer>();
 	DynamicActorComponent_ = CreateComponent<PhysXDynamicActorComponent>();
 
 	// 메쉬 로드
-	//FbxRenderer_->SetFBXMesh("Character.FBX", "Texture");
+//FbxRenderer_->SetFBXMesh("Character.FBX", "Texture");
 	FbxRenderer_->SetFBXMesh("TestIdle.fbx", "TextureAnimationCustom");
 	SetCharacterAnimation();
 	SetCharacterTexture();
@@ -90,6 +86,7 @@ void PlayerActor::Start()
 	// CreateActor<PlayerActor> 여러번 호출하게됨, 내가 컨트롤 하지 않을 PlayerActor 제외사항
 	if (false == IsMainPlayerSpawned_)
 	{
+		MainPlayer = this;
 		IsMainPlayerSpawned_ = true;
 		IsPlayerble_ = true;
 
@@ -176,7 +173,8 @@ void PlayerActor::Update(float _DeltaTime)
 				break;
 			}
 			default:
-				MsgBoxAssert("처리할수 없는 패킷이 날아왔습니다.");
+				int a = 0;
+				//MsgBoxAssert("처리할수 없는 패킷이 날아왔습니다.");
 				break;
 			}
 		}
@@ -189,12 +187,15 @@ void PlayerActor::LevelStartEvent()
 {
 
 
+
 	// LevelStartEvent에서 플레이어를 생성하고 위치를 재지정하는 함수
 	DynamicActorComponent_->SetPlayerStartPos(GetTransform().GetWorldPosition());
 }
 
 void PlayerActor::LevelEndEvent()
 {
+	MainPlayer = nullptr;
+	IsMainPlayerSpawned_ = false;
 }
 
 void PlayerActor::InputController(float _DeltaTime)
