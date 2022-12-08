@@ -43,6 +43,7 @@ public:
 
 	//쿼터니언 관련 함수
 	float4 GetQuaternionEulerAngles(float4 rot);
+	float4 GetQuaternionEulerAngles(physx::PxQuat rot);
 	float4 NormalizeAngles(float4 angles);
 	float NormalizeAngle(float angle);
 	

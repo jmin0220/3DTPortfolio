@@ -80,12 +80,10 @@ void PhysXBoxGeometryComponent::Update(float _DeltaTime)
 		, rigidDynamic_->getGlobalPose().p.y
 		, rigidDynamic_->getGlobalPose().p.z };
 
-		float4 tmpWorldRot = { rigidDynamic_->getGlobalPose().q.x
-		, rigidDynamic_->getGlobalPose().q.y
-		, rigidDynamic_->getGlobalPose().q.z };
+		float4 EulerRot = PhysXCommonFunc::GetQuaternionEulerAngles(rigidDynamic_->getGlobalPose().q) * GameEngineMath::RadianToDegree;
 
+		ParentActor_.lock()->GetTransform().SetWorldRotation(float4{ EulerRot.x, EulerRot.y, EulerRot.z });
 		ParentActor_.lock()->GetTransform().SetWorldPosition(tmpWorldPos);
-		ParentActor_.lock()->GetTransform().SetWorldRotation(tmpWorldRot);
 	}
 	else
 	{

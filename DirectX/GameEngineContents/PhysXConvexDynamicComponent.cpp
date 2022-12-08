@@ -105,12 +105,12 @@ void PhysXConvexDynamicComponent::Update(float _DeltaTime)
 	, dynamic_->getGlobalPose().p.z };
 
 	// È¸Àü?
-	float4 tmpRot = { dynamic_->getGlobalPose().q.x, dynamic_->getGlobalPose().q.y,
-					  dynamic_->getGlobalPose().q.z, dynamic_->getGlobalPose().q.w};
-	float4 tmpEuler = float4::QuaternionToEulerAngles(tmpRot);
+	float4 EulerRot = PhysXCommonFunc::GetQuaternionEulerAngles(dynamic_->getGlobalPose().q) * GameEngineMath::RadianToDegree;
+
+	ParentActor_.lock()->GetTransform().SetWorldRotation(float4{ EulerRot.x, EulerRot.y, EulerRot.z });
 
 	ParentActor_.lock()->GetTransform().SetWorldPosition(tmpWorldPos);
-	ParentActor_.lock()->GetTransform().SetWorldRotation(tmpEuler);
+
 }
 
 void PhysXConvexDynamicComponent::CustomFBXLoad(const std::string& _MeshName)

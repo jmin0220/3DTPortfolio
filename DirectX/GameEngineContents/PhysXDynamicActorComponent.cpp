@@ -59,7 +59,7 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 	physx::PxVec3 DynamicCenter(0.0f, 0.0f, (-ScaledHeight * 0.9f - ScaledRadius * 1.3f));
 	//shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Player)
 	//	, static_cast<physx::PxU32>(PhysXFilterGroup::Ground), 0, 0));
-	physx::PxTransform relativePose(DynamicCenter, physx::PxQuat(physx::PxHalfPi, physx::PxVec3(0, 0, 1)));
+	physx::PxTransform relativePose(physx::PxQuat(physx::PxHalfPi, physx::PxVec3(0, 0, 1)));
 	shape_->setLocalPose(relativePose);
 
 	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 0.01f);
@@ -130,12 +130,8 @@ void PhysXDynamicActorComponent::Update(float _DeltaTime)
 	,dynamic_->getGlobalPose().p.y
 	, dynamic_->getGlobalPose().p.z };
 
-	float4 QuatRot = float4{ dynamic_->getGlobalPose().q.x, dynamic_->getGlobalPose().q.y, dynamic_->getGlobalPose().q.z, dynamic_->getGlobalPose().q.w };
-	float4 EulerRot = PhysXCommonFunc::GetQuaternionEulerAngles(QuatRot);
-
-	dynamic_->getGlobalPose().q;
-
-	EulerRot *= GameEngineMath::RadianToDegree;
+	//float4 QuatRot = float4{ dynamic_->getGlobalPose().q.x, dynamic_->getGlobalPose().q.y, dynamic_->getGlobalPose().q.z, dynamic_->getGlobalPose().q.w };
+	float4 EulerRot = PhysXCommonFunc::GetQuaternionEulerAngles(dynamic_->getGlobalPose().q) * GameEngineMath::RadianToDegree;
 
 	ParentActor_.lock()->GetTransform().SetWorldRotation(float4{ EulerRot.x, EulerRot.y, EulerRot.z });
 

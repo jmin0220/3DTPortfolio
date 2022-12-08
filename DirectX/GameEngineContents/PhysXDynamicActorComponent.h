@@ -96,8 +96,5 @@ private:
 	//속도제한 함수
 	void SpeedLimit();
 
-
-	float4 AnglexAxistoEuler(float4 Vec3, float angle);
-
 };
 
