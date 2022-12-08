@@ -1,6 +1,7 @@
 #pragma once
 #include "PhysXBoxGeometryComponent.h"
 #include "PhysXConvexGeometryComponent.h"
+#include "PhysXConvexDynamicComponent.h"
 #include "VirtualPhysXActor.h"
 
 struct MaskData
@@ -36,8 +37,9 @@ protected:
 private:
 	float Rot_;
 	bool Switch;
+	float Timer_;
 	std::shared_ptr<PhysXBoxGeometryComponent> PhysXBoxGeometry_;
-	std::shared_ptr<PhysXConvexGeometryComponent> PhysXConvexGeometry_;
+	std::shared_ptr<PhysXConvexDynamicComponent> PhysXConvexGeometry_;
 	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer_;
 
 

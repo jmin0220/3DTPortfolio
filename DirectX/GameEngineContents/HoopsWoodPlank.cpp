@@ -4,7 +4,8 @@
 
 HoopsWoodPlank::HoopsWoodPlank() :
 	Switch(false),
-	Rot_(90)
+	Rot_(90),
+	Timer_(3.0f)
 {
 }
 
@@ -16,11 +17,14 @@ void HoopsWoodPlank::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics*
 {
 	physx::PxCooking* Cooking = static_cast<VirtualPhysXLevel*>(GetLevel())->GetCooking();
 	float4 MeshBoundScale = Renderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
-	PhysXBoxGeometry_->CreatePhysXActors(_Scene, _physics, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y  , MeshBoundScale.z));
+	//PhysXBoxGeometry_->CreatePhysXActors(_Scene, _physics, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y  , MeshBoundScale.z));
 
-	PhysXBoxGeometry_->SetPositionSetFromParentFlag(true);
+	//PhysXBoxGeometry_->SetPositionSetFromParentFlag(true);
 
-	//PhysXConvexGeometry_->CreatePhysXActors("WoodPlank.fbx", _Scene, _physics, Cooking, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z));
+	PhysXConvexGeometry_->CreatePhysXActors("WoodPlank.fbx", _Scene, _physics, Cooking, false, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z) , 0.0f, true );
+	PhysXConvexGeometry_->SetDynamicFriction(FLOOR_DYNAMICFRICTION);
+	PhysXConvexGeometry_->SetStaticFriction(FLOOR_STATICFRICTION);
+	PhysXConvexGeometry_->SetDynamicFriction(FLOOR_DYNAMICFRICTION);
 }
 
 void HoopsWoodPlank::Start()
@@ -28,15 +32,11 @@ void HoopsWoodPlank::Start()
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
 	Renderer_->SetFBXMesh("WoodPlank.fbx", "MaskShader");
 
-	PhysXBoxGeometry_ = CreateComponent<PhysXBoxGeometryComponent>();
-	//PhysXConvexGeometry_ = CreateComponent<PhysXConvexGeometryComponent>();
+	PhysXConvexGeometry_ = CreateComponent<PhysXConvexDynamicComponent>();
 
 	Data.Data_ = float4(0, 0, 1.0f, 1.0f);
 
 	std::vector<std::vector<GameEngineRenderUnit>>& UnitSets = Renderer_->GetAllRenderUnit();
-
-	//WaterData_.WaterColor = float4::RED;
-	//WaterData_.WaterColor = float4{0.99f,0.63f,0.79f};
 
 	for (std::vector<GameEngineRenderUnit>& Units : UnitSets)
 	{
@@ -58,9 +58,6 @@ void HoopsWoodPlank::Start()
 			}
 		}
 	}
-
-
-
 }
 
 void HoopsWoodPlank::Update(float _DeltaTime)
@@ -68,23 +65,37 @@ void HoopsWoodPlank::Update(float _DeltaTime)
 
 	if (Switch==false)
 	{
-		Rotation_.x = Rotation_.x +_DeltaTime * 10.0f;
-		GetTransform().SetLocalRotation(Rotation_);
-
 		if (Rotation_.x >= 130.0f)
 		{
-			Switch = true;
+			Timer_ -= _DeltaTime;
+			if (Timer_ <= 0)
+			{
+				Switch = true;
+				Timer_ = 3.0f;
+			}
+			return;
 		}
+
+
+		Rotation_.x = Rotation_.x +_DeltaTime * 3.0f;
+		GetTransform().SetLocalRotation(Rotation_);
+
 	}
 	else
 	{
-		Rotation_.x -= _DeltaTime * 10.0f;
-		GetTransform().SetLocalRotation(Rotation_);
-
 		if (Rotation_.x <= 90.0f)
 		{
-			Switch = false;
+			Timer_ -= _DeltaTime;
+			if (Timer_ <= 0)
+			{
+				Switch = false;
+				Timer_ = 3.0f;
+			}
+			return;
 		}
+		Rotation_.x -= _DeltaTime * 3.0f;
+		GetTransform().SetLocalRotation(Rotation_);
+
 	}
 
 

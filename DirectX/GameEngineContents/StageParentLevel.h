@@ -28,7 +28,9 @@ enum class Stage_MeshEnum
 
 	// STAGE05
 	WoodPlank,
-
+	HoopsScythe,
+	HoopsScoreRing,
+	HoopsScoreRing2,
 
 	// TEST
 	Rainbow,

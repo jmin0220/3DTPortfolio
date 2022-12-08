@@ -636,6 +636,9 @@
     <ClInclude Include="UISkyBoxActor.h">
       <Filter>02_Actor\UIActor</Filter>
     </ClInclude>
+    <ClInclude Include="HoopsScoreRing.h">
+      <Filter>02_Actor\Stage05Actor\Objects</Filter>
+    </ClInclude>
     <ClInclude Include="BigShots_Spinner.h">
       <Filter>02_Actor\Stage03Actor</Filter>
     </ClInclude>
@@ -1054,6 +1057,9 @@
     </ClCompile>
     <ClCompile Include="UISkyBoxActor.cpp">
       <Filter>02_Actor\UIActor</Filter>
+    </ClCompile>
+    <ClCompile Include="HoopsScoreRing.cpp">
+      <Filter>02_Actor\Stage05Actor\Objects</Filter>
     </ClCompile>
     <ClCompile Include="BigShots_Spinner.cpp">
       <Filter>02_Actor\Stage03Actor</Filter>

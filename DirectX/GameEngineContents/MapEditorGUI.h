@@ -34,6 +34,9 @@ enum class MeshEnum
 	HoopsObjectPlatform,
 	HoopsObjectWall,
 	WoodPlank,
+	HoopsScythe,
+	HoopsScoreRing,
+	HoopsScoreRing2,
 	// TEST
 	Rainbow,
 	TestMap,

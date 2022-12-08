@@ -314,6 +314,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="HoopsScoreRing.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="HoopsScythe.h">
       <SubType>
       </SubType>
@@ -754,6 +758,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="HoopsLegendsLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="HoopsScoreRing.cpp">
       <SubType>
       </SubType>
     </ClCompile>

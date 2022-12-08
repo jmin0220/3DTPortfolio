@@ -14,6 +14,8 @@
 #include "Col_Goal.h"
 #include "Col_CheckPoint.h"
 #include "HoopsWoodPlank.h"
+#include "HoopsScythe.h"
+#include "HoopsScoreRing.h"
 
 
 
@@ -303,6 +305,23 @@ void StageParentLevel::LevelStartLoad()
 			NewObj.Actor_.lock()->GetTransform().SetLocalRotation(Rot);
 
 			std::dynamic_pointer_cast<HoopsWoodPlank>(NewObj.Actor_.lock())->SetRotation(Rot);
+			break;
+		}
+		case Stage_MeshEnum::HoopsScythe:
+		{
+			NewObj.Actor_ = CreateActor<HoopsScythe>();
+			break;
+		}
+		case Stage_MeshEnum::HoopsScoreRing:
+		{
+			NewObj.Actor_ = CreateActor<HoopsScoreRing>();
+			std::dynamic_pointer_cast<HoopsScoreRing>(NewObj.Actor_.lock())->SetFBX("HoopsScoreRing.FBX");
+			break;
+		}
+		case Stage_MeshEnum::HoopsScoreRing2:
+		{
+			NewObj.Actor_ = CreateActor<HoopsScoreRing>();
+			std::dynamic_pointer_cast<HoopsScoreRing>(NewObj.Actor_.lock())->SetFBX("HoopsScoreRing2.FBX");
 			break;
 		}
 		case Stage_MeshEnum::Col_StartPos:
