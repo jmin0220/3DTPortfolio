@@ -98,13 +98,6 @@ void ContentsCore::Update(float _DeltaTime)
 	// 호스트 포함 모든 유저의 업데이트
 	//////////////////////////////////
 
-	if (true == GameServer::IsHost_)
-	{
-		if (true == GameEngineInput::GetInst()->IsDown(KEY_SPACEBAR))
-		{
-			GameServer::ObjectUpdateSignal_ = 1;
-		}
-	}
 
 	GameServer::GetInst()->SendGameStatePacket();
 }

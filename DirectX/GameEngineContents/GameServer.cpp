@@ -9,10 +9,8 @@ bool GameServer::ServerStart_ = false;
 GameServerNet* GameServer::Net;
 GameServerNetServer GameServer::Server;
 GameServerNetClient GameServer::Client;
-unsigned int GameServer::StateChangeSignal_ = 0;
-unsigned int GameServer::ObjectUpdateSignal_ = false;
+ServerFlags GameServer::ServerSignal_ = ServerFlags::None;
 unsigned int GameServer::PlayerID_ = -1;
-unsigned int GameServer::PlayerReady_ = 0;
 
 int GameServer::GetAllPlayersReadyCount()
 {
@@ -25,14 +23,14 @@ int GameServer::GetAllPlayersReadyCount()
 	for (; Begin != End; ++Begin)
 	{
 		std::shared_ptr<GameStatePacket> Packet = (*Begin).second;
-		if (1 == Packet->PlayerReady)
+		if (true == CheckGameStatePacketSignal(Packet->ServerSignal, ServerFlags::PlayerReady))
 		{
 			++ReadyCount;
 		}
 	}
 
 	// 자기자신
-	if (1 == PlayerReady_)
+	if (CheckServerSignal(ServerFlags::PlayerReady))
 	{
 		++ReadyCount;
 	}
@@ -67,8 +65,6 @@ void GameServer::ServerStart()
 			std::shared_ptr<ClientInitPacket> Packet = std::make_shared<ClientInitPacket>();
 
 			Packet->ObjectID = GameServerObject::GetServerID();
-
-			//GameEngineDebug::OutPutString(std::to_string(Packet->ObjectID));
 
 			Server.NetSendPacket(_User, Packet);
 
@@ -142,20 +138,17 @@ void GameServer::ServerEnd()
 ////////////////////
 void GameServer::ObjectUpdatePacketProcess(std::shared_ptr<GameServerPacket> _Packet)
 {
-	if (false == ObjectUpdateSignal_)
-	{
-		return;
-	}
 
 	// 받은 패킷이 ObjectUpdatePacket
 	// ObjectUpdatePacket 중 타입을 통해 처리
 	std::shared_ptr<ObjectUpdatePacket> Packet = std::dynamic_pointer_cast<ObjectUpdatePacket>(_Packet);
 
-	std::shared_ptr<GameServerObject> FindObject = GameServerObject::GetServerObject(Packet->ObjectID);
+
+	//std::shared_ptr<GameServerObject> FindObject = GameServerObject::GetServerObject(Packet->ObjectID);
 
 	// 서버에서 보내준 패킷(플레이어, 장애물)이 클라에 없으면 무조건 만들어.
 	// -> StageParentLevel에서 수행
-	if (nullptr == FindObject)
+	/*if (nullptr == FindObject)
 	{
 
 		ServerObjectType Type = Packet->Type;
@@ -173,10 +166,13 @@ void GameServer::ObjectUpdatePacketProcess(std::shared_ptr<GameServerPacket> _Pa
 			int a = 0;
 			break;
 		}
-	}
+	}*/
+
+	// 무시용 패킷
+	//if ()
 
 	// 자신이 처리해야할 패킷 리스트에 추가
-	FindObject->PushPacket(_Packet);
+	//FindObject->PushPacket(_Packet);
 
 	// 호스트라면 모든 클라에게 전달
 	if (true == Net->GetIsHost())
@@ -217,8 +213,7 @@ void GameServer::GameStatePacketProcess(std::shared_ptr<GameServerPacket> _Packe
 	// 클라이언트 라면
 	if (false == Net->GetIsHost())
 	{
-		StateChangeSignal_ = Packet->StateChangeSignal;
-		ObjectUpdateSignal_ = Packet->ObjectUpdateSignal;
+		ServerSignal_ = static_cast<ServerFlags>(Packet->ServerSignal);
 	}
 
 	// 호스트라면 모든 클라에게 전달
@@ -234,20 +229,19 @@ void GameServer::GameStatePacketProcess(std::shared_ptr<GameServerPacket> _Packe
 
 void GameServer::SendGameStatePacket()
 {
-	std::shared_ptr<GameStatePacket> Packet = std::make_shared<GameStatePacket>();
-	Packet->StateChangeSignal = 0;
-	Packet->ObjectUpdateSignal = 0;
+	std::shared_ptr<GameStatePacket> Packet = std::make_shared<GameStatePacket>();	
+	Packet->ServerSignal = ServerSignal_;
 	Packet->PlayerID = PlayerID_;
-	Packet->PlayerReady = PlayerReady_;
 
 
 	// 호스트라면
 	if (true == Net->GetIsHost())
 	{
-		Packet->StateChangeSignal = StateChangeSignal_;
-		Packet->ObjectUpdateSignal = ObjectUpdateSignal_;
+		// 호스트의 현재 신호 저장하고
+		Packet->ServerSignal = ServerSignal_;
 
-		StateChangeSignal_ = 0;
+		// StateChange신호만 0으로
+		SubServerSignal(ServerFlags::StateChange);
 	}
 
 	Net->SendPacket(Packet);

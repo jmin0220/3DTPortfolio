@@ -57,19 +57,20 @@ void GameServerGUI::LobbyGUI()
 			ContentsCore::GetInst()->ChangeLevelByLoading(LEVEL_NAME_DOORDASH);
 
 			// 모든 사용자에게 Falling -> Loading 으로 바꾸는 신호
-			GameServer::StateChangeSignal_ = 1;
+			GameServer::GetInst()->SetServerSignal(ServerFlags::StateChange);
 		}
 	}
 }
 
 void GameServerGUI::InGameGUI()
 {
+	ImGui::Text(GameEngineString::AnsiToUTF8Return("@@@ 유저 @@@").c_str());
 	{
-		std::string Text = GameServer::IsHost_ == true ? "@@@ 호스트 @@@" : "@@@ 클라이언트 @@@";
+		std::string Text = GameServer::IsHost_ == true ? "호스트" : "클라이언트";
 		ImGui::Text(GameEngineString::AnsiToUTF8Return(Text).c_str());
 		ImGui::NewLine();
 	}
-	
+
 	{
 		std::string Text = "플레이어 수 :";
 		Text += std::to_string(GameServer::GetInst()->GetAllPlayersCount());
@@ -82,18 +83,18 @@ void GameServerGUI::InGameGUI()
 		ImGui::Text(GameEngineString::AnsiToUTF8Return(Text).c_str());
 	}
 
-
-	// 상태 디버깅
+	// 서버신호
 	ImGui::NewLine();
+	ImGui::Text(GameEngineString::AnsiToUTF8Return("@@@ 서버 신호 @@@").c_str());
 	{
 		std::string Text = "StateChangeSignal : ";
-		Text += GameServer::StateChangeSignal_ == 1 ? "TRUE" : "FALSE";
+		Text += GameServer::GetInst()->CheckServerSignal(ServerFlags::StateChange) ? "1" : "0";
 		ImGui::Text(GameEngineString::AnsiToUTF8Return(Text).c_str());
 	}
 
 	{
-		std::string Text = "ObjectUpdateSignal_ : ";
-		Text += GameServer::ObjectUpdateSignal_ == 1 ? "TRUE" : "FALSE";
+		std::string Text = "PlayerReady : ";
+		Text += GameServer::GetInst()->CheckServerSignal(ServerFlags::PlayerReady) ? "1" : "0";
 		ImGui::Text(GameEngineString::AnsiToUTF8Return(Text).c_str());
 	}
 

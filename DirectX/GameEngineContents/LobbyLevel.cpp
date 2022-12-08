@@ -145,10 +145,10 @@ void LobbyLevel::FallingStart(const StateInfo& _Info)
 
 void LobbyLevel::FallingUpdate(float _DeltaTime, const StateInfo& _Info)
 {
-	if (1 == GameServer::StateChangeSignal_)
+	if (true == GameServer::GetInst()->CheckServerSignal(ServerFlags::StateChange))
 	{
 		ContentsCore::GetInst()->ChangeLevelByLoading(LEVEL_NAME_DOORDASH);
-		GameServer::StateChangeSignal_ = 0;
+		GameServer::GetInst()->SetServerSignal(ServerFlags::None);
 		return;
 	}
 
@@ -175,7 +175,6 @@ void LobbyLevel::FallingUpdate(float _DeltaTime, const StateInfo& _Info)
 		PrevUserCount_ = GameServer::GetInst()->GetAllPlayersCount();
 		NumberFont_->SetFont(std::to_string(PrevUserCount_), "Titan One", 70.f, {800,680});
 
-		GameEngineDebug::OutPutString(std::to_string(PrevUserCount_));
 	}
 
 	// ~~~ ¼­¹ö ~~~

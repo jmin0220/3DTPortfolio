@@ -102,12 +102,13 @@ enum class StageNum
 };
 
 
-enum class ServerFlags
+enum ServerFlags
 {
-	ConnectReady = (1 << 0),
-	ResourceRoad = (1 << 1),
-	NumberCount  = (1 << 2),
-	GameEnd      = (1 << 3),
+	None,
+	StateChange		= (1 << 0),	// 00000000 00000000 00000000 00000001
+	PlayerReady		= (1 << 1), // 00000000 00000000 00000000 00000010
+	ResourceLoad	= (1 << 2),
+	ServerObjectsSpawnCompleted	= (1 << 3),
 
 };
 

@@ -42,7 +42,7 @@ void LoadingLevel::Update(float _DeltaTime)
  	if (false == LoadingComplete_ && LoadingProgress_ >= 0.999f)
 	{
 		LoadingComplete_ = true;
-		GameServer::PlayerReady_ = 1;
+		GameServer::GetInst()->AddServerSignal(ServerFlags::PlayerReady);
 	}
 
 
@@ -56,14 +56,14 @@ void LoadingLevel::Update(float _DeltaTime)
 		// 호스트는 자기가 시작하고
 		if (true == GameServer::GetInst()->IsPlayersReady())
 		{
-			GameServer::StateChangeSignal_ = 1;
+			GameServer::GetInst()->AddServerSignal(ServerFlags::StateChange);
 			GEngine::ChangeLevel(StrCurLoadingLevel_.data());
 		}
 	}
 	else
 	{
 		// 클라이언트는 호스트가 보내준 시그널로
-		if (1 == GameServer::StateChangeSignal_)
+		if (GameServer::GetInst()->CheckServerSignal(ServerFlags::StateChange))
 		{
 			GEngine::ChangeLevel(StrCurLoadingLevel_.data());
 		}

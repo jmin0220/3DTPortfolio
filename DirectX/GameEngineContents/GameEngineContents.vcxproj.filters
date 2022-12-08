@@ -603,9 +603,6 @@
     <ClInclude Include="GameServerObject.h">
       <Filter>00_Core\Server</Filter>
     </ClInclude>
-    <ClInclude Include="ServerPacket.h">
-      <Filter>00_Core\Server</Filter>
-    </ClInclude>
     <ClInclude Include="PhysXConvexDynamicComponent.h">
       <Filter>03_Component\PhysXComponent</Filter>
     </ClInclude>
@@ -641,6 +638,9 @@
     </ClInclude>
     <ClInclude Include="BigShots_Spinner.h">
       <Filter>02_Actor\Stage03Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerPacket.h">
+      <Filter>00_Core\Server</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -10,6 +10,8 @@ class GameServer
 private:
 	static std::shared_ptr<GameServer> Inst_;
 	static bool ServerStart_;
+	static GameServerNetServer Server;
+	static GameServerNetClient Client;
 
 public:
 	static std::shared_ptr<GameServer> GetInst()
@@ -38,10 +40,8 @@ public:
 
 	static bool IsHost_;
 	static GameServerNet* Net;
-	static unsigned int StateChangeSignal_;
-	static unsigned int ObjectUpdateSignal_;
+	static ServerFlags ServerSignal_;
 	static unsigned int PlayerID_;
-	static unsigned int PlayerReady_;
 	
 	std::map<int, std::shared_ptr<class GameStatePacket>> AllPlayersInfo_;
 
@@ -66,10 +66,63 @@ public:
 
 	// 서버->클라
 	void SendGameStatePacket();
+	bool CheckGameStatePacketSignal(unsigned int _Signal, ServerFlags _Flag)
+	{
+		if (ServerFlags::PlayerReady & _Signal )
+		{
+			return true;
+		}
+		else if (ServerFlags::ResourceLoad & _Signal)
+		{
+			return true;
+		}
+		else if (ServerFlags::StateChange & _Signal)
+		{
+			return true;
+		}
+		else if (ServerFlags::ServerObjectsSpawnCompleted & _Signal)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 
-private:
-	static GameServerNetServer Server;
-	static GameServerNetClient Client;
+	bool CheckServerSignal(ServerFlags _Flag)
+	{
+		return _Flag & ServerSignal_;
+	}
+
+	void SetServerSignal(ServerFlags _Flag)
+	{
+		ServerSignal_ = _Flag;
+	}
+	
+	void AddServerSignal(ServerFlags _Flag)
+	{
+		ServerSignal_ = static_cast<ServerFlags>(ServerSignal_ | _Flag);
+	}
+
+	void SubServerSignal(ServerFlags _Flag)
+	{
+		if (ServerSignal_ & _Flag)
+		{
+			ServerSignal_ = static_cast<ServerFlags>(ServerSignal_ ^ _Flag);
+		}
+	}
+
+	unsigned int GetClientSignal()
+	{
+		
+	}
+
+
+	ServerFlags& GetServerSignal()
+	{
+		return ServerSignal_;
+	}
 
 };
 
