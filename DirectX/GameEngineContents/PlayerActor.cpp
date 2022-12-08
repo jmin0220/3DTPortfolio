@@ -452,16 +452,17 @@ float4 PlayerActor::GetCameraBaseRotationAng(float4 _ActorRot, float4 _CamForRot
 
 void PlayerActor::StandUp(float _DeltaTime)
 {
-	//if (GameEngineInput::GetInst()->IsDown("StandUp"))
-	//{
-	//	IsStanding_ = true;
-	//}
+	if (GameEngineInput::GetInst()->IsDown("StandUp"))
+	{
+		IsStanding_ = true;
+	}
 
-	//if (IsStanding_ == true)
-	//{
-	//	if (DynamicActorComponent_->PlayerStandUp(_DeltaTime) == true)
-	//	{
-	//		IsStanding_ = false;
-	//	}
-	//}
+	if (IsStanding_ == true)
+	{
+		if (DynamicActorComponent_->PlayerStandUp(_DeltaTime) == true)
+		{
+			IsStanding_ = false;
+		}
+	}
+
 }

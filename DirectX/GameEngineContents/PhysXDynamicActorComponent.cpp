@@ -54,11 +54,10 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 
 	// ¸ÞÀÎ Ä¸½¶ ÄÝ¶óÀÌ´õ
 	shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxCapsuleGeometry(ScaledRadius * 1.3f, ScaledHeight * 0.9f), *material_);
-	//shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(ScaledRadius * 1.3f), *material_);
-
+	physx::PxVec3 DynamicCenter(0.0f, 0.0f, (-ScaledHeight * 0.9f - ScaledRadius * 1.3f));
 	//shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Player)
 	//	, static_cast<physx::PxU32>(PhysXFilterGroup::Ground), 0, 0));
-	physx::PxTransform relativePose(physx::PxQuat(physx::PxHalfPi, physx::PxVec3(0, 0, 1)));
+	physx::PxTransform relativePose(DynamicCenter, physx::PxQuat(physx::PxHalfPi, physx::PxVec3(0, 0, 1)));
 	shape_->setLocalPose(relativePose);
 
 	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 0.01f);
@@ -129,17 +128,13 @@ void PhysXDynamicActorComponent::Update(float _DeltaTime)
 	,dynamic_->getGlobalPose().p.y
 	, dynamic_->getGlobalPose().p.z };
 
-	float4 Rot2 = ParentActor_.lock()->GetTransform().GetWorldRotation();
 	float4 QuatRot = float4{ dynamic_->getGlobalPose().q.x, dynamic_->getGlobalPose().q.y, dynamic_->getGlobalPose().q.z, dynamic_->getGlobalPose().q.w };
 	float4 EulerRot = PhysXCommonFunc::GetQuaternionEulerAngles(QuatRot);
 
 	dynamic_->getGlobalPose().q;
 
 	EulerRot *= GameEngineMath::RadianToDegree;
-	float Angle;
-	physx::PxVec3 Vec3;
-	dynamic_->getGlobalPose().q.toRadiansAndUnitAxis(Angle, Vec3);
-	Angle *= GameEngineMath::RadianToDegree;
+
 	ParentActor_.lock()->GetTransform().SetWorldRotation(float4{ EulerRot.x, EulerRot.y, EulerRot.z });
 
 	ParentActor_.lock()->GetTransform().SetWorldPosition(tmpWorldPos);
@@ -182,38 +177,26 @@ void PhysXDynamicActorComponent::SetPlayerStartPos(float4 _Pos)
 
 bool PhysXDynamicActorComponent::PlayerStandUp(float _DeltaTime)
 {
-	float4 QuatRot = float4{ dynamic_->getGlobalPose().q.x, dynamic_->getGlobalPose().q.y, dynamic_->getGlobalPose().q.z, dynamic_->getGlobalPose().q.w };
-	float4 EulerRot = PhysXCommonFunc::GetQuaternionEulerAngles(QuatRot) * GameEngineMath::RadianToDegree;
-	bool Result1 = false;
-	bool Result2 = false;
-	physx::PxQuat K = dynamic_->getGlobalPose().q;
-	
+
 	float Angle;
 	physx::PxVec3 Vec3;
 	dynamic_->getGlobalPose().q.toRadiansAndUnitAxis(Angle, Vec3);
+	float4 YAxis(0.0f, 1.0f, 0.0f);
+	physx::PxVec3 YAxisVec3(0.0f, 1.0f, 0.0f);
 
-	float4 float4Vec3 = float4{ Vec3.x, Vec3.y, Vec3.z };
-	float4Vec3.Normalize3D();
-	Vec3.y -= cos(45.0f * _DeltaTime);
-	float YAxisDegree = acosf(float4::DotProduct3D(float4Vec3, float4{ 0.0f, 1.0f, 0.0f })) * GameEngineMath::RadianToDegree;
-	YAxisDegree -= 45.0f * _DeltaTime;
-	if (YAxisDegree < 0.0f)
-	{
-		YAxisDegree = 0.0f;
-	}
-
-	float4::VectorRotationToDegreeZAxis(float4Vec3, YAxisDegree);
-
-	physx::PxQuat Final(Angle, physx::PxVec3(float4Vec3.x, float4Vec3.y, float4Vec3.z));
+	float AngDiff = acosf(float4::DotProduct3D({ Vec3.x, Vec3.y, Vec3.z }, YAxis));
 	//float4::VectorRotationToDegreeYAxis(float4Vec3, );
 
-	float4 tmpQuat = EulerRot.DegreeRotationToQuaternionReturn();
+	physx::PxVec3 Normal = Vec3.cross(YAxisVec3);
+	float4 FinalRot = RodriguesRotate({ Vec3.x, Vec3.y, Vec3.z }, { Normal.x, Normal.y, Normal.z }, AngDiff);
+	float4 FinalPos = RodriguesRotate({ dynamic_->getGlobalPose().p.x, dynamic_->getGlobalPose().p.y, dynamic_->getGlobalPose().p.z }, 
+		{ Normal.x, Normal.y, Normal.z }, AngDiff);
+	physx::PxVec3 FinalPosVec3 = physx::PxVec3(FinalPos.x, FinalPos.y, FinalPos.z);
+	float4 tmpQuat = FinalRot.DegreeRotationToQuaternionReturn();
 	const physx::PxQuat tmpPxQuat(tmpQuat.x, tmpQuat.y, tmpQuat.z, tmpQuat.w);
-	//const physx::PxTransform tmpTansform(dynamic_->getGlobalPose().p, tmpPxQuat);
-	const physx::PxTransform tmpTansform(dynamic_->getGlobalPose().p, Final);
-	dynamic_->setGlobalPose(tmpTansform);
-
-	return Result1 && Result2;
+	const physx::PxTransform tmpTransform(dynamic_->getGlobalPose().p, tmpPxQuat);
+	dynamic_->setGlobalPose(tmpTransform);
+	return true;
 }
 
 void PhysXDynamicActorComponent::SpeedLimit()

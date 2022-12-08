@@ -99,3 +99,28 @@ float PhysXCommonFunc::NormalizeAngle(float angle)
         angle += GameEngineMath::PI * 2.0f;
     return angle;
 }
+
+float4 PhysXCommonFunc::RodriguesRotate(vector p, vector v, float a) 
+{
+    double ca = cos(a), sa = sin(a);
+    double t = 1.0 - ca;
+    double x = v.x, y = v.y, z = v.z;
+    matrix r = {
+        {ca + x * x * t, x * y * t - z * sa, x * z * t + y * sa},
+        {x * y * t + z * sa, ca + y * y * t, y * z * t - x * sa},
+        {z * x * t - y * sa, z * y * t + x * sa, ca + z * z * t}
+    };
+    vector Result = matrixMultiply(r, p);
+    return float4{ Result.x, Result.y, Result.z };
+}
+
+double PhysXCommonFunc::dotProduct(vector v1, vector v2)
+{
+    return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+}
+
+PhysXCommonFunc::vector PhysXCommonFunc::matrixMultiply(matrix m, vector v)
+{
+    vector mm = { dotProduct(m.i, v), dotProduct(m.j, v), dotProduct(m.k, v) };
+    return mm;
+}
