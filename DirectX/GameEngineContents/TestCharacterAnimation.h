@@ -1,6 +1,6 @@
 #pragma once
 
-struct LightData
+struct LightTestData
 {
 	float4 DiffuseColor;
 	float4 LightDirection;
@@ -33,7 +33,7 @@ private:
 
 
 	// ³ë¸»¸Ê + ºû
-	LightData LightData_;
+	LightTestData LightData_;
 	DiffuseData DiffuseData_;
 };
 
