@@ -122,10 +122,9 @@ void PhysXConvexDynamicComponent::Update(float _DeltaTime)
 	{
 		// PhysX Actor의 상태에 맞춰서 부모의 Transform정보를 갱신
 		float4 tmpWorldPos = { dynamic_->getGlobalPose().p.x
-		, dynamic_->getGlobalPose().p.y
+		,dynamic_->getGlobalPose().p.y
 		, dynamic_->getGlobalPose().p.z };
 
-		// 회전?
 		float4 EulerRot = PhysXCommonFunc::GetQuaternionEulerAngles(dynamic_->getGlobalPose().q) * GameEngineMath::RadianToDegree;
 
 		ParentActor_.lock()->GetTransform().SetWorldRotation(float4{ EulerRot.x, EulerRot.y, EulerRot.z });
