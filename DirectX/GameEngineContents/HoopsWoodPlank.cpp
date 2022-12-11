@@ -26,11 +26,6 @@ void HoopsWoodPlank::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics*
 
 	PhysXBoxGeometry_->SetPositionSetFromParentFlag(true);
 
-	//PhysXConvexGeometry_->CreatePhysXActors("WoodPlank.fbx", _Scene, _physics, Cooking, false, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z) , 0.0f, true );
-
-	//PhysXConvexGeometry_->SetDynamicFriction(FLOOR_DYNAMICFRICTION);
-	//PhysXConvexGeometry_->SetStaticFriction(FLOOR_STATICFRICTION);
-	//PhysXConvexGeometry_->SetDynamicFriction(FLOOR_DYNAMICFRICTION);
 }
 
 void HoopsWoodPlank::Start()

@@ -105,17 +105,33 @@ void PhysXConvexDynamicComponent::Start()
 
 void PhysXConvexDynamicComponent::Update(float _DeltaTime)
 {
-	// PhysX Actor의 상태에 맞춰서 부모의 Transform정보를 갱신
-	float4 tmpWorldPos = { dynamic_->getGlobalPose().p.x
-	, dynamic_->getGlobalPose().p.y
-	, dynamic_->getGlobalPose().p.z };
+	if (PositionSetFromParentFlag_ == true)
+	{
+		float4 tmpQuat = ParentActor_.lock()->GetTransform().GetWorldRotation().DegreeRotationToQuaternionReturn();
 
-	// 회전?
-	float4 EulerRot = PhysXCommonFunc::GetQuaternionEulerAngles(dynamic_->getGlobalPose().q) * GameEngineMath::RadianToDegree;
+		physx::PxTransform tmpPxTransform(ParentActor_.lock()->GetTransform().GetWorldPosition().x,
+			ParentActor_.lock()->GetTransform().GetWorldPosition().y,
+			ParentActor_.lock()->GetTransform().GetWorldPosition().z, physx::PxQuat(tmpQuat.x, tmpQuat.y, tmpQuat.z, tmpQuat.w));
 
-	ParentActor_.lock()->GetTransform().SetWorldRotation(float4{ EulerRot.x, EulerRot.y, EulerRot.z });
+		// 부모의 Transform정보를 바탕으로 PhysX Actor의 트랜스폼을 갱신
+		dynamic_->setKinematicTarget(tmpPxTransform);
+	}
+	else
+	{
+		// PhysX Actor의 상태에 맞춰서 부모의 Transform정보를 갱신
+		float4 tmpWorldPos = { dynamic_->getGlobalPose().p.x
+		, dynamic_->getGlobalPose().p.y
+		, dynamic_->getGlobalPose().p.z };
 
-	ParentActor_.lock()->GetTransform().SetWorldPosition(tmpWorldPos);
+		// 회전?
+		float4 EulerRot = PhysXCommonFunc::GetQuaternionEulerAngles(dynamic_->getGlobalPose().q) * GameEngineMath::RadianToDegree;
+
+		ParentActor_.lock()->GetTransform().SetWorldRotation(float4{ EulerRot.x, EulerRot.y, EulerRot.z });
+
+		ParentActor_.lock()->GetTransform().SetWorldPosition(tmpWorldPos);
+	}
+
+
 
 }
 
