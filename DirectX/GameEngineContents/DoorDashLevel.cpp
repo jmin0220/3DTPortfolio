@@ -6,6 +6,7 @@
 #include "PlayerActor.h"
 #include "SkyboxActor.h"
 
+#include "IntroduceGame.h"
 DoorDashLevel::DoorDashLevel() 
 {
 }
@@ -50,6 +51,8 @@ void DoorDashLevel::LevelStartEvent()
 	//그외 배경용 static매쉬
 	//BackGround_ = CreateActor<DoorDash_BackGroundObject>();
 	//BackGround_->GetTransform().SetWorldPosition({ 0,0,0 });
+
+	Intro_ = CreateActor<IntroduceGame>();
 }
 
 void DoorDashLevel::LevelEndEvent()

@@ -223,6 +223,9 @@
     <Filter Include="02_Actor\Stage05Actor\Objects">
       <UniqueIdentifier>{90e22ab7-d1a1-40c4-b201-8271bd0e802e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02_Actor\UIActor\IntroActor">
+      <UniqueIdentifier>{6eab3377-834d-463a-b1d5-69be0489ea75}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -644,6 +647,9 @@
     </ClInclude>
     <ClInclude Include="ServerPacket.h">
       <Filter>00_Core\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroduceGame.h">
+      <Filter>02_Actor\UIActor\IntroActor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1069,6 +1075,9 @@
     </ClCompile>
     <ClCompile Include="BigShots_Spinner.cpp">
       <Filter>02_Actor\Stage03Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="IntroduceGame.cpp">
+      <Filter>02_Actor\UIActor\IntroActor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
