@@ -24,5 +24,11 @@ protected:
 	void LevelEndEvent() override;
 private:
 	std::shared_ptr<class TestGUI> GUI_;
+	std::shared_ptr<GameEngineActor> Hoops_;
+
+	void SetHoopPosition();
+
+	int PrevPos[10];
+	float4 Pos[10];
 };
 

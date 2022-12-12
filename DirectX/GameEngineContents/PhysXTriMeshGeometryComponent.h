@@ -29,6 +29,11 @@ public:
 		}
 	}
 
+	inline void SetPositionSetFromParentFlag(bool _Flag)
+	{
+		PositionSetFromParentFlag_ = _Flag;
+	}
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -53,5 +58,6 @@ private:
 	// 이 컴포넌트를 가지고 있는 Parent에 대한 정보
 	std::weak_ptr<GameEngineActor> ParentActor_;
 
+	bool PositionSetFromParentFlag_;
 };
 

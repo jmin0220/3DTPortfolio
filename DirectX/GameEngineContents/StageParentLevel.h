@@ -57,6 +57,10 @@ struct StageObject
 class StageParentLevel : public VirtualPhysXLevel
 {
 public:
+	// 컨트롤 가능한 플레이어
+	static float4 PlayerPos;
+	static std::vector<float4> HoopsPos;
+	static std::vector<std::shared_ptr<GameEngineActor>> HoopsActor;
 	// constrcuter destructer
 	StageParentLevel();
 	~StageParentLevel();
@@ -82,8 +86,6 @@ protected:
 
 	StageNum MyStage_;
 
-	// 컨트롤 가능한 플레이어
-	static float4 PlayerPos;
 
 	// 카메라 관련
 	std::shared_ptr<GameEngineCameraActor> MainCam_;

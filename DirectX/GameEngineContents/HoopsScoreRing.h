@@ -1,6 +1,7 @@
 #pragma once
 #include "VirtualPhysXActor.h"
 #include "PhysXConvexDynamicComponent.h"
+#include "PhysXTriMeshGeometryComponent.h"
 
 // Ό³Έν :
 class HoopsScoreRing	:	public VirtualPhysXActor
@@ -28,10 +29,11 @@ protected:
 private:
 	float Rot_;
 	bool Switch;
-	//std::shared_ptr<PhysXBoxGeometryComponent> PhysXBoxGeometry_;
-	//std::shared_ptr<PhysXConvexGeometryComponent> PhysXConvexGeometry_;
+	
 	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer_;
-
+	std::shared_ptr<PhysXConvexDynamicComponent> PhysXConvexGeometry_;
+	std::shared_ptr< PhysXTriMeshGeometryComponent> PhysXTriGeometry_;
+	std::shared_ptr<GameEngineCollision> Collision_;
 public:
 	void SetFBX(std::string _Name)
 	{

@@ -125,18 +125,18 @@ void PhysXTriMeshGeometryComponent::Start()
 
 void PhysXTriMeshGeometryComponent::Update(float _DeltaTime)
 {
-	// TODO::static은 변경되지 않으니 Update할 필요가 없을지도
-	// PhysX Actor의 상태에 맞춰서 부모의 Transform정보를 갱신
-	//float4 tmpWorldPos = { rigidStatic_->getGlobalPose().p.x
-	//, rigidStatic_->getGlobalPose().p.y
-	//, rigidStatic_->getGlobalPose().p.z };
+	if (true == PositionSetFromParentFlag_)
+	{
+		float4 tmpQuat = ParentActor_.lock()->GetTransform().GetWorldRotation().DegreeRotationToQuaternionReturn();
 
-	//float4 tmpWorldRot = { rigidStatic_->getGlobalPose().q.x
-	//, rigidStatic_->getGlobalPose().q.y
-	//, rigidStatic_->getGlobalPose().q.z };
+		physx::PxTransform tmpPxTransform(ParentActor_.lock()->GetTransform().GetWorldPosition().x,
+			ParentActor_.lock()->GetTransform().GetWorldPosition().y,
+			ParentActor_.lock()->GetTransform().GetWorldPosition().z, physx::PxQuat(tmpQuat.x, tmpQuat.y, tmpQuat.z, tmpQuat.w));
 
-	//ParentActor_.lock()->GetTransform().SetWorldPosition(tmpWorldPos);
-	//ParentActor_.lock()->GetTransform().SetWorldRotation(tmpWorldRot);
+		// 부모의 Transform정보를 바탕으로 PhysX Actor의 트랜스폼을 갱신
+		rigidStatic_->setGlobalPose(tmpPxTransform);
+		// TODO::회전도 처리해야함. DegreeToQuat
+	}
 }
 
 void PhysXTriMeshGeometryComponent::CustomFBXLoad(const std::string& _MeshName, bool _InverseIndex)

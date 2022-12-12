@@ -29,7 +29,8 @@
 std::mutex SpawnLock;
 
 float4 StageParentLevel::PlayerPos = float4::ZERO;
-
+std::vector<float4> StageParentLevel::HoopsPos = std::vector<float4>();
+std::vector<std::shared_ptr<GameEngineActor>> StageParentLevel::HoopsActor = std::vector<std::shared_ptr<GameEngineActor>>();
 
 StageParentLevel::StageParentLevel() 
 	: MyStage_(StageNum::STAGE1)
@@ -346,6 +347,9 @@ void StageParentLevel::LevelStartLoad()
 		case Stage_MeshEnum::Col_Trigger:
 		{
 			NewObj.Actor_ = CreateActor<Col_Trigger>();
+			//후프의 포지션 나중에 다른 트리거를 추가하면 예외처리를 해줘야함 .
+			NewObj.Actor_.lock()->GetTransform().SetWorldPosition(Pos);
+			HoopsPos.push_back(NewObj.Actor_.lock()->GetTransform().GetWorldPosition());
 			break;
 		}
 		case Stage_MeshEnum::Col_Goal:
