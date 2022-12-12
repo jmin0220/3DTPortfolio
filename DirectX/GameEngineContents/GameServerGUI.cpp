@@ -98,17 +98,26 @@ void GameServerGUI::InGameGUI()
 		ImGui::Text(GameEngineString::AnsiToUTF8Return(Text).c_str());
 	}
 
+	ImGui::NewLine();
 	{
-		std::string Text = "AllActorsCount : ";
-		Text += std::to_string(GameServerObject::GetAllActorsCount());
+		std::string Text = "PlayerID : ";
+		Text += std::to_string(GameServer::GetInst()->PlayerID_);
 		ImGui::Text(GameEngineString::AnsiToUTF8Return(Text).c_str());
 	}
 
 	ImGui::NewLine();
 	{
-		std::string Text = "PlayerID : ";
+		std::string Text = "PlayerActorID : ";
 		Text += PlayerActor::MainPlayer == nullptr ? "메인 플레이어 생성되지 않았음" : std::to_string(PlayerActor::GetPlayerID());
 		ImGui::Text(GameEngineString::AnsiToUTF8Return(Text).c_str());
+	}
+
+	{
+		int ActorsCount = GameServerObject::GetAllActorsCount();
+		std::string Text = "모든 서버 오브젝트 수 : ";
+		Text += std::to_string(ActorsCount);
+		ImGui::Text(GameEngineString::AnsiToUTF8Return(Text).c_str());
+		
 	}
 	
 }

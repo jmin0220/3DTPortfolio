@@ -39,7 +39,6 @@ void DoorDashLevel::LevelStartEvent()
 	StageParentLevel::LevelStartEvent();
 
 	//Player_->GetDynamicActorComponent()->SetPlayerStartPos(PlayerPos);
-	Player_->GetTransform().SetWorldPosition(PlayerPos);
 
 	//collision용 매쉬 바닥, 벽 등
 	Stage_ = CreateActor<DoorDashStage>();

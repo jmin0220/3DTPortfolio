@@ -32,6 +32,8 @@ public:
 
 	physx::PxRigidDynamic* CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics);
 
+	// 렌더러, 피직스 외부에서 초기화 시점 조절하도록
+	void PlayerInit();
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;

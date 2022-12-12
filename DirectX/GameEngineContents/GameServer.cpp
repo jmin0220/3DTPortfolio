@@ -1,6 +1,5 @@
 #include "PreCompile.h"
 #include "GameServer.h"
-#include "ServerPacket.h"
 #include "PlayerActor.h"
 
 std::shared_ptr<GameServer> GameServer::Inst_ = std::make_shared<GameServer>();
@@ -11,6 +10,9 @@ GameServerNetServer GameServer::Server;
 GameServerNetClient GameServer::Client;
 ServerFlags GameServer::ServerSignal_ = ServerFlags::None;
 unsigned int GameServer::PlayerID_ = -1;
+
+#include <atomic>
+std::mutex Lock;
 
 int GameServer::GetAllPlayersReadyCount()
 {
@@ -143,36 +145,40 @@ void GameServer::ObjectUpdatePacketProcess(std::shared_ptr<GameServerPacket> _Pa
 	// ObjectUpdatePacket 중 타입을 통해 처리
 	std::shared_ptr<ObjectUpdatePacket> Packet = std::dynamic_pointer_cast<ObjectUpdatePacket>(_Packet);
 
-
-	//std::shared_ptr<GameServerObject> FindObject = GameServerObject::GetServerObject(Packet->ObjectID);
+	GameServerObject* FindObject = GameServerObject::GetServerObject(Packet->ObjectID);
 
 	// 서버에서 보내준 패킷(플레이어, 장애물)이 클라에 없으면 무조건 만들어.
 	// -> StageParentLevel에서 수행
-	/*if (nullptr == FindObject)
+	//if (nullptr == FindObject)
+	//{
+	//	ServerObjectType Type = Packet->Type;
+
+	//	switch (Type)
+	//	{
+	//	case ServerObjectType::Player:
+	//	{
+	//		std::shared_ptr<PlayerActor> NewPlayer = GEngine::GetCurrentLevel()->CreateActor<PlayerActor>();
+	//		NewPlayer->ClientInit(Packet->Type, Packet->ObjectID);
+	//		FindObject = NewPlayer;
+	//		break;
+	//	}
+	//	default:
+	//		int a = 0;
+	//		break;
+	//	}
+	//}
+
+	// 없으면 생성
+	if (nullptr == FindObject)
 	{
-
-		ServerObjectType Type = Packet->Type;
-
-		switch (Type)
-		{
-		case ServerObjectType::Player:
-		{
-			std::shared_ptr<PlayerActor> NewPlayer = GEngine::GetCurrentLevel()->CreateActor<PlayerActor>();
-			NewPlayer->ClientInit(Packet->Type, Packet->ObjectID);
-			FindObject = NewPlayer;
-			break;
-		}
-		default:
-			int a = 0;
-			break;
-		}
-	}*/
-
-	// 무시용 패킷
-	//if ()
-
-	// 자신이 처리해야할 패킷 리스트에 추가
-	//FindObject->PushPacket(_Packet);
+		std::lock_guard<std::mutex> LockGuard(Lock);
+		NewObjectUpdatePacketList_.push_back(Packet);
+	}
+	// 있으면 자신이 처리해야할 패킷 리스트에 추가
+	else
+	{
+		FindObject->PushPacket(_Packet);
+	}
 
 	// 호스트라면 모든 클라에게 전달
 	if (true == Net->GetIsHost())

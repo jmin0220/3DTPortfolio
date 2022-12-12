@@ -2,7 +2,7 @@
 #include <GameEngineBase/GameServerNetServer.h>
 #include <GameEngineBase/GameServerNetClient.h>
 #include <functional>
-
+#include "ServerPacket.h"
 
 // 설명 :
 class GameServer
@@ -43,7 +43,11 @@ public:
 	static ServerFlags ServerSignal_;
 	static unsigned int PlayerID_;
 	
+	// 모든 유저 정보
 	std::map<int, std::shared_ptr<class GameStatePacket>> AllPlayersInfo_;
+
+	// 모든 UpdateObject 정보
+	std::list<std::shared_ptr<ObjectUpdatePacket>> NewObjectUpdatePacketList_;
 
 public:
 	// constrcuter destructer
@@ -66,28 +70,9 @@ public:
 
 	// 서버->클라
 	void SendGameStatePacket();
-	bool CheckGameStatePacketSignal(unsigned int _Signal, ServerFlags _Flag)
+	bool CheckGameStatePacketSignal(unsigned int _PacketSignal, ServerFlags _Flag)
 	{
-		if (ServerFlags::PlayerReady & _Signal )
-		{
-			return true;
-		}
-		else if (ServerFlags::ResourceLoad & _Signal)
-		{
-			return true;
-		}
-		else if (ServerFlags::StateChange & _Signal)
-		{
-			return true;
-		}
-		else if (ServerFlags::ServerObjectsSpawnCompleted & _Signal)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return _PacketSignal & _Flag;
 	}
 
 	bool CheckServerSignal(ServerFlags _Flag)
@@ -112,12 +97,6 @@ public:
 			ServerSignal_ = static_cast<ServerFlags>(ServerSignal_ ^ _Flag);
 		}
 	}
-
-	unsigned int GetClientSignal()
-	{
-		
-	}
-
 
 	ServerFlags& GetServerSignal()
 	{

@@ -122,5 +122,10 @@ protected:
 	virtual void EndStart(const StateInfo& _Info);
 	virtual void EndUpdate(float _DeltaTime, const StateInfo& _Info);
 
+
+	// ¼­¹ö
+private:
+	void SpawnServerObjects();
+	int ServerSpawn = 0;
 };
 

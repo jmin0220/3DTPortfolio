@@ -12,6 +12,7 @@ enum class ServerObjectBaseState
 enum class ServerObjectType
 {
 	Player,
+	Obstacle, // 플레이어 제외, 움직이는 엑터
 };
 
 
@@ -20,17 +21,19 @@ class GameServerObject
 {
 public:
 	static std::atomic<int> IdSeed;
-	static std::map<int, std::shared_ptr<GameServerObject>> AllServerActor;
+	static std::map<int, GameServerObject*> AllServerActor;
 
 public:
+	static void ServerRelease();
+
 	static int GetAllActorsCount()
 	{
 		return static_cast<int>(AllServerActor.size());
 	}
 
-	static std::shared_ptr<GameServerObject> GetServerObject(int _ID) 
+	static GameServerObject* GetServerObject(int _ID) 
 	{
-		std::map<int, std::shared_ptr<GameServerObject>>::iterator FindIter = AllServerActor.find(_ID);
+		std::map<int, GameServerObject*>::iterator FindIter = AllServerActor.find(_ID);
 
 		if (FindIter == AllServerActor.end())
 		{

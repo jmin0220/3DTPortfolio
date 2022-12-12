@@ -104,11 +104,11 @@ enum class StageNum
 
 enum ServerFlags
 {
-	None,
+	None			= 0,
 	StateChange		= (1 << 0),	// 00000000 00000000 00000000 00000001
 	PlayerReady		= (1 << 1), // 00000000 00000000 00000000 00000010
-	ResourceLoad	= (1 << 2),
-	ServerObjectsSpawnCompleted	= (1 << 3),
+	ServerObjectsSpawnCompleted	= (1 << 2),
+	//ServerObjectsSpawnCompleted	= (1 << 3),
 
 };
 

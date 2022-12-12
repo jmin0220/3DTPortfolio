@@ -2,10 +2,14 @@
 #include "GameServerObject.h"
 
 std::atomic<int> GameServerObject::IdSeed = 0;
-std::map<int, std::shared_ptr<GameServerObject>> GameServerObject::AllServerActor;
+std::map<int, GameServerObject*> GameServerObject::AllServerActor;
 
 std::mutex PacketLock;
 
+void GameServerObject::ServerRelease()
+{
+	AllServerActor.clear();
+}
 
 void GameServerObject::PushPacket(std::shared_ptr<GameServerPacket> _Packet)
 {

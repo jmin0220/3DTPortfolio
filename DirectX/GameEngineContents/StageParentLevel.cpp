@@ -17,8 +17,6 @@
 #include "HoopsScythe.h"
 #include "HoopsScoreRing.h"
 
-
-
 #include <GameEngineBase/magic_enum.hpp>
 #include <GameEngineCore/ThirdParty/inc/json.h>
 #include <GameEngineCore/CoreMinimal.h>
@@ -26,6 +24,9 @@
 #include <fstream>
 #include "InGameSetUI.h"
 #include "PlayerActor.h"
+
+#include <atomic>
+std::mutex SpawnLock;
 
 float4 StageParentLevel::PlayerPos = float4::ZERO;
 
@@ -75,7 +76,6 @@ void StageParentLevel::Update(float _DeltaTime)
 	CinemaCam_->Update();
 
 	StageStateManager_.Update(_DeltaTime);
-
 }
 void StageParentLevel::End()
 {
@@ -88,9 +88,10 @@ void StageParentLevel::LevelStartEvent()
 	LevelStartLoad();
 
 	// 서버
-	// 호스트/클라이언트 자신의 플레이어
-	Player_ = CreateActor<PlayerActor>();
+	// 자신의 메인 플레이어 생성
+	GameServer::GetInst()->SubServerSignal(ServerFlags::PlayerReady);
 
+	Player_ = CreateActor<PlayerActor>();
 	if (true == GameServer::GetInst()->IsServerStart())
 	{
 		if (true == GameServer::IsHost_)
@@ -99,11 +100,12 @@ void StageParentLevel::LevelStartEvent()
 		}
 		else
 		{
-			Player_->ClientInit(ServerObjectType::Player, GameServer::GetInst()->PlayerID_);
+			Player_->ClientInit(ServerObjectType::Player, GameServerObject::GetServerID());
 		}
 	}
-
-
+	int PlayerID = GameServer::GetInst()->PlayerID_;
+	Player_->GetTransform().SetWorldPosition(PlayerPos + float4{ 20, 0, 0} * (PlayerID));
+	Player_->PlayerInit();
 
 	MainCam_ = GetMainCameraActor();
 	CameraArm_ = CreateActor<CameraArm>();
@@ -379,3 +381,62 @@ void StageParentLevel::LevelStartLoad()
 	}
 }
 
+
+void StageParentLevel::SpawnServerObjects()
+{
+	std::list<std::shared_ptr<ObjectUpdatePacket>>& PacketList = GameServer::GetInst()->NewObjectUpdatePacketList_;
+
+	while (false == PacketList.empty())
+	{
+		// GameServerObejcts와 비교
+		std::shared_ptr<ObjectUpdatePacket> CurPacket;
+		
+		{
+			std::lock_guard<std::mutex> Guard(SpawnLock);
+			CurPacket = PacketList.front();
+			PacketList.pop_front();
+		}
+
+		
+		GameServerObject* ServerObject = GameServerObject::GetServerObject(CurPacket->ObjectID);
+
+		if (nullptr == ServerObject)
+		{
+			// 없다면 소환
+			switch (CurPacket->Type)
+			{
+			case ServerObjectType::Player:
+			{
+				std::shared_ptr<PlayerActor> NewPlayer = CreateActor<PlayerActor>();
+				NewPlayer->ClientInit(CurPacket->Type, CurPacket->ObjectID);
+				NewPlayer->GetTransform().SetWorldPosition(CurPacket->Pos);
+				NewPlayer->GetTransform().SetWorldScale(CurPacket->Scale);
+				NewPlayer->GetTransform().SetWorldRotation(CurPacket->Rot);
+
+				NewPlayer->PlayerInit();
+				NewPlayer->PushPacket(CurPacket);
+			}
+			case ServerObjectType::Obstacle:
+			{
+
+			}
+			default:
+				break;
+			}
+		}
+		else
+		{
+			continue;
+		}
+
+		// 테스트
+		ServerSpawn++;
+		GameEngineDebug::OutPutString("서버 스폰 : " + std::to_string(ServerSpawn));
+		GameEngineDebug::OutPutString("서버 스폰ID : " + std::to_string(CurPacket->ObjectID));
+
+	}
+
+
+
+
+}

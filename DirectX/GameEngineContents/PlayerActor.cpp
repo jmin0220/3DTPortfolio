@@ -42,8 +42,11 @@ void PlayerActor::Start()
 	FbxRenderer_ = CreateComponent<GameEngineFBXAnimationRenderer>();
 	DynamicActorComponent_ = CreateComponent<PhysXDynamicActorComponent>();
 
+}
+
+void PlayerActor::PlayerInit()
+{
 	// 메쉬 로드
-//FbxRenderer_->SetFBXMesh("Character.FBX", "Texture");
 	FbxRenderer_->SetFBXMesh("TestIdle.fbx", "TextureAnimationCustom");
 	SetCharacterAnimation();
 	SetCharacterTexture();
@@ -81,7 +84,10 @@ void PlayerActor::Start()
 
 	DynamicActorComponent_->TurnOnSpeedLimit();
 
-	DynamicActorComponent_->SetPhysxMaterial(0.0f,0.0f,0.0f);
+	DynamicActorComponent_->SetPhysxMaterial(0.0f, 0.0f, 0.0f);
+
+	// LevelStartEvent에서 플레이어를 생성하고 위치를 재지정하는 함수
+	DynamicActorComponent_->SetPlayerStartPos(GetTransform().GetWorldPosition());
 
 	// 서버 메인 플레이어만 드렁모
 	// 
@@ -121,6 +127,7 @@ void PlayerActor::Update(float _DeltaTime)
 		return;
 	}
 
+	// 서버 켰을 때
 	if (true == IsPlayerble_)
 	{
 		InputController(_DeltaTime);
@@ -144,6 +151,7 @@ void PlayerActor::Update(float _DeltaTime)
 		Packet->ObjectID = GetNetID();
 		Packet->Type = ServerObjectType::Player;
 		Packet->State = ServerObjectBaseState::Base;
+		Packet->Scale = GetTransform().GetWorldScale();
 		Packet->Pos = GetTransform().GetWorldPosition();
 		Packet->Rot = GetTransform().GetWorldRotation();
 		GameServer::Net->SendPacket(Packet);
@@ -162,8 +170,18 @@ void PlayerActor::Update(float _DeltaTime)
 			case ContentsPacketType::ObjectUpdate:
 			{
 				std::shared_ptr<ObjectUpdatePacket> ObjectUpdate = std::dynamic_pointer_cast<ObjectUpdatePacket>(Packet);
+
+				GetTransform().SetWorldScale(ObjectUpdate->Scale);
 				GetTransform().SetWorldPosition(ObjectUpdate->Pos);
 				GetTransform().SetWorldRotation(ObjectUpdate->Rot);
+
+				DynamicActorComponent_->SetPlayerStartPos(ObjectUpdate->Pos);
+				DynamicActorComponent_->SetChangedRot(ObjectUpdate->Rot);
+
+				GameEngineDebug::OutPutString("NetID : " + std::to_string(GetNetID()));
+				GameEngineDebug::OutPutString("NetPos : " + std::to_string(ObjectUpdate->Pos.x) + "|"
+					+ std::to_string(ObjectUpdate->Pos.y) + "|" + std::to_string(ObjectUpdate->Pos.z));
+
 				break;
 			}
 			case ContentsPacketType::ClientInit:
@@ -180,6 +198,8 @@ void PlayerActor::Update(float _DeltaTime)
 				break;
 			}
 		}
+
+
 	}
 	
 
@@ -188,10 +208,6 @@ void PlayerActor::Update(float _DeltaTime)
 void PlayerActor::LevelStartEvent()
 {
 
-
-
-	// LevelStartEvent에서 플레이어를 생성하고 위치를 재지정하는 함수
-	DynamicActorComponent_->SetPlayerStartPos(GetTransform().GetWorldPosition());
 }
 
 void PlayerActor::LevelEndEvent()
