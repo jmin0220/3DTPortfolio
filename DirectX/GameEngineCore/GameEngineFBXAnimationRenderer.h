@@ -180,9 +180,11 @@ private:
 	std::map<size_t, std::vector<float4x4>> AnimationBoneMatrixs;
 	// std::map<size_t, std::vector<float4x4>> PrevAnimationBoneMatrixs;
 
+	// 
 	std::map<size_t, std::vector<AnimationBoneData>> AnimationBoneDatas;
 
 	//******BlendAnimation추가본*******(선생님 코드엔 없음)
+	// 이전 애니메이션 정보 -> 애니메이션 블렌딩의 시작점
 	std::map<size_t, std::vector<AnimationBoneData>> tmpAnimationBoneDatas;
 	bool IsBlending;
 	//******BlendAnimation추가본*******(선생님 코드엔 없음)

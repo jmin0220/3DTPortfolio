@@ -26,6 +26,9 @@
 //스테이지 바닥의 Resistution (반발계수)
 #define FLOOR_RESISTUTION 0.0f
 
+// 애니메이션 프레임시간
+#define ANIMATION_FRAME_TIME 0.016666666666666666666666666666666666666666667f
+
 // 디렉토리
 #define DIR_RESOURCES "Resources"
 #define DIR_PHYSXMESH "PhysxMesh"

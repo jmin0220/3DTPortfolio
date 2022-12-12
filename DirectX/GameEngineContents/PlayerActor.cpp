@@ -353,12 +353,15 @@ float4 PlayerActor::ResetCheckPointPos()
 void PlayerActor::SetCharacterAnimation()
 {
 	FbxRenderer_->CreateFBXAnimation("Idle",
-	GameEngineRenderingEvent{ "TestIdle.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
+	GameEngineRenderingEvent{ "TestIdle.fbx", ANIMATION_FRAME_TIME , true }, 0);
 
 	FbxRenderer_->CreateFBXAnimation("Run",
-		GameEngineRenderingEvent{ "TestRun.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
+		GameEngineRenderingEvent{ "TestRun.fbx", ANIMATION_FRAME_TIME , true }, 0);
 
 	FbxRenderer_->ChangeAnimation("Run");
+
+	std::vector<std::vector<GameEngineRenderUnit>>::iterator tmpUnit = FbxRenderer_->GetAllRenderUnit().begin();
+	std::vector<GameEngineRenderUnit>::iterator tmpUnitIter = tmpUnit->begin();
 }
 
 // 캐릭터 스킨
