@@ -47,11 +47,59 @@ void Cinemachine::Init(std::shared_ptr<GameEngineCameraActor> _MainCamera)
 		break;
 	}
 	case StageNum::STAGE2:
+	{
+		// 시작 정보
+		CinemachineInfo StartInfo;
+		StartInfo.POS = float4{ -205,680,860};
+		StartInfo.ROT = float4{ 40,155,0 };
+		StartInfo.TIME = 0.0f;
+		StartInfo.SPEED = 0.002f;
+		QueueInfo_.push(StartInfo);
+
+		// 다음 정보
+		CinemachineInfo TmpInfo;
+		TmpInfo.POS = float4{ -95,385,315 };
+		TmpInfo.ROT = float4{ 45,160,0 };
+		TmpInfo.TIME = 0.0f;
+		TmpInfo.SPEED = 0.002f;
+		QueueInfo_.push(TmpInfo);
+
+		TmpInfo.POS = float4{ -140,240,-45 };
+		TmpInfo.ROT = float4{ 50,70,0 };
+		TmpInfo.TIME = 0.0f;
+		TmpInfo.SPEED = 0.002f;
+		QueueInfo_.push(TmpInfo);
 		break;
+	}
 	case StageNum::STAGE3:
+	{
+		// 시작 정보
+		CinemachineInfo StartInfo;
+		StartInfo.POS = float4{ 20,65,445 };
+		StartInfo.ROT = float4{ 5,185,0 };
+		StartInfo.TIME = 0.0f;
+		StartInfo.SPEED = 0.002f;
+		QueueInfo_.push(StartInfo);
+
+		// 다음 정보
+		CinemachineInfo TmpInfo;
+		TmpInfo.POS = float4{ 385,65,5 };
+		TmpInfo.ROT = float4{ 10,270,0 };
+		TmpInfo.TIME = 0.0f;
+		TmpInfo.SPEED = 0.002f;
+		QueueInfo_.push(TmpInfo);
+
+		TmpInfo.POS = float4{ 0,45,-285 };
+		TmpInfo.ROT = float4{ 15,360,0 };
+		TmpInfo.TIME = 0.0f;
+		TmpInfo.SPEED = 0.002f;
+		QueueInfo_.push(TmpInfo);
 		break;
+	}
 	case StageNum::STAGE4:
 		break;
+	case StageNum::STAGE5:
+		break; 
 	default:
 	{
 		int a = 0;

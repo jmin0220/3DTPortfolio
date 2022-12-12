@@ -25,8 +25,8 @@ JumpClubLevel::~JumpClubLevel()
 
 void JumpClubLevel::Start()
 {
-	StageParentLevel::Start();
 	MyStage_ = StageNum::STAGE2;
+	StageParentLevel::Start();
 
 
 	std::shared_ptr<PostEffect_Bloom> Ptr = GetMainCamera()->GetCameraRenderTarget()->AddEffect<PostEffect_Bloom>();
