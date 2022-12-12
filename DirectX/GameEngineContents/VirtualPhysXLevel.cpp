@@ -78,6 +78,8 @@ void VirtualPhysXLevel::initPhysics(bool _interactive)
 	DefaultCpuDispatcher_ = physx::PxDefaultCpuDispatcherCreate(2);
 	sceneDesc.cpuDispatcher = DefaultCpuDispatcher_;
 
+	sceneDesc.broadPhaseType = physx::PxBroadPhaseType::eABP;
+
 	// Scene 생성
 	Scene_ = Physics_->createScene(sceneDesc);
 	
@@ -110,9 +112,11 @@ void VirtualPhysXLevel::initPhysics(bool _interactive)
 void VirtualPhysXLevel::stepPhysics(bool _Interactive)
 {
 	float simulateRatio = 120.0f;
-#ifndef DEBUG
-	 simulateRatio = 60.0f;
-#endif
+
+//#ifndef DEBUG
+//	 simulateRatio = 60.0f;
+//#endif
+// 
 	// TODO::현재프레임 만큼 수정할 필요가 있을지도
 	Scene_->simulate(1.0f / simulateRatio);
 	Scene_->fetchResults(true);

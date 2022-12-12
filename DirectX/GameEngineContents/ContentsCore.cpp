@@ -69,7 +69,7 @@ ContentsCore::~ContentsCore()
 
 void ContentsCore::Start()
 {
-	GameEngineTime::SetLimitFrame(60);
+	GameEngineTime::SetLimitFrame(120);
 
 	CreateKeys();
 	CreateShaders();
