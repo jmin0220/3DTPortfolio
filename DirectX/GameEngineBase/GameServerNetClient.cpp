@@ -83,6 +83,12 @@ void GameServerNetClient::RecvThreadFunction(GameEngineThread* _Thread)
 
 		std::shared_ptr<GameServerPacket> Packet = Dis.PacketReturnCallBack(PacketType, PacketSize, Ser);
 
+		// 임시방편임
+		if (Packet->GetPacketID() >= 3)
+		{
+			continue;
+		}
+
 		Dis.ProcessPacket(Packet);
 	}
 }

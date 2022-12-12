@@ -159,6 +159,12 @@ void GameServerNetServer::UserFunction(GameEngineThread* Thread, SOCKET _Socket)
 		std::shared_ptr<GameServerPacket> Packet = 
 			Dis.PacketReturnCallBack(PacketType, PacketSize, Ser);
 
+		// 임시방편임
+		if (Packet->GetPacketID() >= 3)
+		{
+			continue;
+		}
+
 		Packet->SetMaster(_Socket);
 
 		Dis.ProcessPacket(Packet);

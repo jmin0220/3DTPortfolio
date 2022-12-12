@@ -169,6 +169,7 @@ void PlayerActor::Update(float _DeltaTime)
 			{
 			case ContentsPacketType::ObjectUpdate:
 			{
+				// Player
 				std::shared_ptr<ObjectUpdatePacket> ObjectUpdate = std::dynamic_pointer_cast<ObjectUpdatePacket>(Packet);
 
 				GetTransform().SetWorldScale(ObjectUpdate->Scale);

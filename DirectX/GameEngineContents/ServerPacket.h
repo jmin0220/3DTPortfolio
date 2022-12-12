@@ -4,12 +4,12 @@
 
 enum class ContentsPacketType
 {
-	Garbage,				// 가끔씩 이상한 패킷
-
 	ClientInit,			// 클라이언트가 들어오면 서버가 보내줄 패킷
 	ObjectUpdate,
 	GameState,			// 접속자 수, 모든 플레이어 레디 등
 
+
+	Garbage,				// 가끔씩 이상한 패킷
 };
 
 class ClientInitPacket : public GameServerPacket
