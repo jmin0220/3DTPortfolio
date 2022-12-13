@@ -33,7 +33,8 @@ void Cinemachine::Init(std::shared_ptr<GameEngineCameraActor> _MainCamera)
 		CinemachineInfo StartInfo;
 		StartInfo.POS = float4{ 0,-60,200 };
 		StartInfo.ROT = float4{ 16,0,0 };
-		StartInfo.TIME = 0.0f;
+		StartInfo.INTERTIME = 0.0f;
+		StartInfo.MOVETIME= 0.0f;
 		StartInfo.SPEED = 1.0f;
 		QueueInfo_.push(StartInfo);
 		
@@ -41,7 +42,8 @@ void Cinemachine::Init(std::shared_ptr<GameEngineCameraActor> _MainCamera)
 		CinemachineInfo TmpInfo;
 		TmpInfo.POS = float4{ 0,-10,-520 };
 		TmpInfo.ROT = float4{ 16,0,0 };
-		TmpInfo.TIME = 0.0f;
+		TmpInfo.INTERTIME = 0.0f;
+		TmpInfo.MOVETIME = 20.0f;
 		TmpInfo.SPEED = 0.002f;
 		QueueInfo_.push(TmpInfo);
 		break;
@@ -52,7 +54,8 @@ void Cinemachine::Init(std::shared_ptr<GameEngineCameraActor> _MainCamera)
 		CinemachineInfo StartInfo;
 		StartInfo.POS = float4{ -205,680,860};
 		StartInfo.ROT = float4{ 40,155,0 };
-		StartInfo.TIME = 0.0f;
+		StartInfo.INTERTIME = 0.0f;
+		StartInfo.MOVETIME = 0.0f;
 		StartInfo.SPEED = 0.002f;
 		QueueInfo_.push(StartInfo);
 
@@ -60,13 +63,15 @@ void Cinemachine::Init(std::shared_ptr<GameEngineCameraActor> _MainCamera)
 		CinemachineInfo TmpInfo;
 		TmpInfo.POS = float4{ -95,385,315 };
 		TmpInfo.ROT = float4{ 45,160,0 };
-		TmpInfo.TIME = 0.0f;
+		TmpInfo.INTERTIME = 0.0f;
+		TmpInfo.MOVETIME = 9.5f;
 		TmpInfo.SPEED = 0.002f;
 		QueueInfo_.push(TmpInfo);
 
 		TmpInfo.POS = float4{ -140,240,-45 };
 		TmpInfo.ROT = float4{ 50,70,0 };
-		TmpInfo.TIME = 0.0f;
+		TmpInfo.INTERTIME = 0.0f;
+		TmpInfo.MOVETIME = 10.0f;
 		TmpInfo.SPEED = 0.002f;
 		QueueInfo_.push(TmpInfo);
 		break;
@@ -77,21 +82,24 @@ void Cinemachine::Init(std::shared_ptr<GameEngineCameraActor> _MainCamera)
 		CinemachineInfo StartInfo;
 		StartInfo.POS = float4{ 20,65,445 };
 		StartInfo.ROT = float4{ 5,185,0 };
-		StartInfo.TIME = 0.0f;
+		StartInfo.INTERTIME = 0.0f;
+		StartInfo.MOVETIME = 0.0f;
 		StartInfo.SPEED = 0.002f;
 		QueueInfo_.push(StartInfo);
 
 		// 다음 정보
 		CinemachineInfo TmpInfo;
-		TmpInfo.POS = float4{ 385,65,5 };
-		TmpInfo.ROT = float4{ 10,270,0 };
-		TmpInfo.TIME = 0.0f;
+		TmpInfo.POS = float4{ 510,130,3 }/*float4{ 385,65,5 }*/;
+		TmpInfo.ROT = float4{ 13,270,0 }/*float4{ 10,270,0 }*/;
+		TmpInfo.INTERTIME = 0.0f;
+		TmpInfo.MOVETIME = 8.5f;
 		TmpInfo.SPEED = 0.002f;
 		QueueInfo_.push(TmpInfo);
 
-		TmpInfo.POS = float4{ 0,45,-285 };
-		TmpInfo.ROT = float4{ 15,360,0 };
-		TmpInfo.TIME = 0.0f;
+		TmpInfo.POS = float4{ 0,45,-255 }/*float4{ 0,45,-285 }*/;
+		TmpInfo.ROT = float4{ 15,360,0 }/*float4{ 15,360,0 }*/;
+		TmpInfo.INTERTIME = 0.0f;
+		TmpInfo.MOVETIME = 13.0f;
 		TmpInfo.SPEED = 0.002f;
 		QueueInfo_.push(TmpInfo);
 		break;
@@ -137,9 +145,9 @@ void Cinemachine::IdleUpdate(float _DeltaTime, const StateInfo& _Info)
 
 void Cinemachine::MoveUpdate(float _DeltaTime, const StateInfo& _Info)
 {
-	if (0 < CurInfo_.TIME)
+	if (0 < CurInfo_.INTERTIME)
 	{
-		CurInfo_.TIME -= _DeltaTime;
+		CurInfo_.INTERTIME -= _DeltaTime;
 		return;
 	}
 	
@@ -151,8 +159,9 @@ void Cinemachine::MoveUpdate(float _DeltaTime, const StateInfo& _Info)
 	CurCamInfo_->GetTransform().SetWorldRotation(NextRot);
 
 	// TODO::목적지에 도달하면 Inter로 전환
-	if (true == CurCamInfo_->GetTransform().GetWorldPosition().CompareInt3D(CurInfo_.POS))
+	if (CurInfo_.MOVETIME <= _Info.StateTime/*true == CurCamInfo_->GetTransform().GetWorldPosition().CompareInt3D(CurInfo_.POS)*/)
 	{
+		//GameEngineDebug::OutPutString(std::to_string(_Info.StateTime));
 		FSM_.ChangeState("Inter");
 		return;
 	}

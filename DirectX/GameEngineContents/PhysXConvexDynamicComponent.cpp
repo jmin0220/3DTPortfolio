@@ -79,7 +79,7 @@ void PhysXConvexDynamicComponent::CreatePhysXActors(const std::string& _MeshName
 	shape_->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, true);
 
 	// 축을 Lock 걸어놓음
-	dynamic_->setAngularDamping(physx::PxReal(1.0f));
+	dynamic_->setAngularDamping(physx::PxReal(0.1f));
 
 	// Scene에 액터 추가
 	_Scene->addActor(*dynamic_);
@@ -95,6 +95,11 @@ void PhysXConvexDynamicComponent::CreatePhysXActors(const std::string& _MeshName
 void PhysXConvexDynamicComponent::AddForce(float4 _Force)
 {
 	dynamic_->addForce(physx::PxVec3(_Force.x, _Force.y, _Force.z), physx::PxForceMode::eIMPULSE);
+}
+
+void PhysXConvexDynamicComponent::AddAngularVelocity(float4 _Velocity)
+{
+	dynamic_->setAngularVelocity(physx::PxVec3(_Velocity.x, _Velocity.y, _Velocity.z));
 }
 
 void PhysXConvexDynamicComponent::Start()

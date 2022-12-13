@@ -19,6 +19,8 @@ public:
 
 	void AddForce(float4 _Force);
 
+	void AddAngularVelocity(float4 _Velocity);
+
 	inline void SetPositionSetFromParentFlag(bool _Flag)
 	{
 		PositionSetFromParentFlag_ = _Flag;

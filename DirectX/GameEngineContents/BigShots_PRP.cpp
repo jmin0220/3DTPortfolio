@@ -19,44 +19,52 @@ void BigShots_PRP::Start()
 	CurPRP_ = static_cast<PRPType>(RandomIntNum);
 
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
+	
+	float4 ThrowRot = float4::DegreeToDirection2D(20.0f);
 
-	// 각 PRP 마다 포스 지정 필요
+	// 각 PRP 마다 최대 최소 포스 지정 필요
 	switch (CurPRP_)
 	{
 	case PRPType::CONTROLLER:
 	{
 		FBXName_ = "Controller.FBX";
-		PRPForce_ = float4(0.0f, 1000000.0f, 1300000.0f);
+		ThrowRot *= 2500000.0f;
+		PRPForce_ = float4(0.0f, ThrowRot.y, ThrowRot.x);
 		break;
 	}
 	case PRPType::MAGNET:
 	{
 		FBXName_ = "Magnet.FBX";
-		PRPForce_ = float4(0.0f, 300000.0f, 450000.0f);
+		ThrowRot *= 850000.0f;
+		PRPForce_ = float4(0.0f, ThrowRot.y, ThrowRot.x);
 		break;
 	}
 	case PRPType::NUT:
 	{
 		FBXName_ = "Nut.FBX";
-		PRPForce_ = float4(0.0f, 90000.0f, 100000.0f);
+		ThrowRot *= 200000.0f;
+		PRPForce_ = float4(0.0f, ThrowRot.y, ThrowRot.x);
 		break;
 	}
 	case PRPType::PLANET:
 	{
 		FBXName_ = "Planet.FBX";
-		PRPForce_ = float4(0.0f, 900000.0f, 2050000.0f);
+		ThrowRot *= 3500000.0f;
+		PRPForce_ = float4(0.0f, ThrowRot.y, ThrowRot.x);
 		break;
 	}
 	case PRPType::STAR:
 	{
 		FBXName_ = "Star.FBX";
-		PRPForce_ = float4(0.0f, 80000.0f, 88000.0f);
+		ThrowRot *= 180000.0f;
+		PRPForce_ = float4(0.0f, ThrowRot.y, ThrowRot.x);
 		break;
 	}
 	case PRPType::TETRAPOD:
 	{
 		FBXName_ = "Tetrapod.FBX";
-		PRPForce_ = float4(0.0f, 800000.0f, 1000000.0f);
+		ThrowRot *= 2000000.0f;
+		PRPForce_ = float4(0.0f, ThrowRot.y, ThrowRot.x);
 		break;
 	}
 	default:
@@ -68,7 +76,7 @@ void BigShots_PRP::Start()
 	Renderer_->SetFBXMesh(FBXName_, "Texture");
 	PhysXConvexDynamicComponent_ = CreateComponent< PhysXConvexDynamicComponent>();
 	
-	Death(50.0f);
+	Death(30.0f);
 }
 
 void BigShots_PRP::Update(float _DeltaTime)
@@ -95,6 +103,10 @@ void BigShots_PRP::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _
 	float4 MeshBoundScale = Renderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
 	PhysXConvexDynamicComponent_->CreatePhysXActors(FBXName_, _Scene, _physics, Cooking, false, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z));
 	PhysXConvexDynamicComponent_->AddForce(PRPForce_);
+	
+	float RandomRot = GameEngineRandom::MainRandom.RandomFloat(-10.0f, 10.0f);
+	GameEngineDebug::OutPutString(std::to_string(RandomRot));
+	PhysXConvexDynamicComponent_->AddAngularVelocity(float4(RandomRot, RandomRot, RandomRot));
 }
 
 void BigShots_PRP::CreatePhysX()

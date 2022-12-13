@@ -5,7 +5,8 @@ struct CinemachineInfo
 {
 	float4 POS;
 	float4 ROT;
-	float TIME;
+	float INTERTIME;		// 이동 후 멈추는 시간
+	float MOVETIME;			// 이동하는 시간 ex)MOVETIME = 3.0f이면, 3.0f초 동안 움직여라.
 	float SPEED;
 };
 

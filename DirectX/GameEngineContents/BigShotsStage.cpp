@@ -14,6 +14,8 @@ void BigShotsStage::Start()
 {
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
 	Renderer_->SetFBXMesh("BigShatsStage.FBX", "Texture");
+
+	PhysXSeesawGeometry_ = CreateComponent<PhysXTriMeshGeometryComponent>();
 }
 
 void BigShotsStage::Update(float _DeltaTime)
@@ -39,4 +41,5 @@ void BigShotsStage::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* 
 	physx::PxCooking* Cooking = static_cast<VirtualPhysXLevel*>(GetLevel())->GetCooking();
 	
 	float4 MeshBoundScale = Renderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
+	PhysXSeesawGeometry_->CreatePhysXActors("BigShatsStage.FBX", _Scene, _physics, Cooking, true, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z));
 }
