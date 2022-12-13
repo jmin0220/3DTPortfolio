@@ -151,6 +151,17 @@ void ContentsCore::LoadCommonResources()
 		}
 	}
 
+	// ¼Ò¸®
+	{
+		GameEngineDirectory TextureDir(Dir);
+		TextureDir.Move("Sound");
+
+		std::vector<GameEngineFile> Files = TextureDir.GetAllFile(EXT_MP3);
+		for (GameEngineFile& File : Files)
+		{
+			GameEngineSound::LoadRessource(File.GetFullPath());
+		}
+	}
 }
 
 void ContentsCore::CreateLevels()

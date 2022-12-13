@@ -61,6 +61,7 @@
 // »Æ¿Â¿⁄
 #define EXT_PNG ".png"
 #define EXT_FBX ".fbx"
+#define EXT_MP3 ".mp3"
 
 
 // FBX

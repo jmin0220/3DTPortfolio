@@ -47,6 +47,8 @@ void TitleLevel::LevelStartEvent()
 	TitleLogo = CreateActor<TitleActor>();
 
 	Mouse = CreateActor<Cursor>();
+
+	GameEngineSound::SoundPlayControl("Title.mp3");
 }
 
 void TitleLevel::LevelEndEvent()
