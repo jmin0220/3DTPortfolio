@@ -15,6 +15,11 @@ void IntroduceGame::Start()
 {
 	Game_ = CreateComponent<GameEngineUIRenderer>();
 	Game_->SetTexture("Intro_DoorDash.png");
+	//Intro_DoorDash.png
+	//Intro_HexAGone.png
+	//Intro_Bigshot.png
+	//Intro_HoopsLegends.png
+	//Intro_JumpClub.png
 	Game_->GetTransform().SetWorldScale({ 1600.0f,900.0f });
 }
 
