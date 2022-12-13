@@ -3,7 +3,10 @@
 #include "VirtualPhysXLevel.h"
 #include "GameEngineBase/GameEngineRandom.h"
 
-HoopsScoreRing::HoopsScoreRing()
+HoopsScoreRing::HoopsScoreRing()	:	
+	IsCol_(false),
+	Flag_(false),
+	Timer_(3.0f)
 {
 }
 
@@ -21,17 +24,50 @@ void HoopsScoreRing::Start()
 	PhysXTriGeometry_ = CreateComponent<PhysXTriMeshGeometryComponent>();
 
 	Collision_ = CreateComponent<GameEngineCollision>();
-	Collision_->GetTransform().SetLocalScale({ 5.0f,5.0f,2.0f, });
+	Collision_->GetTransform().SetLocalScale({ 10.0f,10.0f,2.0f, });
+	Collision_->ChangeOrder(CollisionGroup::Trigger);
 
 	float Rot = GameEngineRandom::MainRandom.RandomFloat(0, 360.0f);
 
 
-	Renderer_->GetTransform().SetLocalRotate({ 0,Rot ,0 });
+	GetTransform().SetLocalRotate({ 0,Rot ,0 });
 }
 
 void HoopsScoreRing::Update(float _DeltaTime)
 {
+	if (IsCol_ == true)
+	{
+		Timer_ -= _DeltaTime;
+		if (Timer_ <= 0)
+		{
+			if (GetTransform().GetWorldPosition().y <= 200.0f)
+			{
+				GetTransform().SetWorldUpMove(50.0f, _DeltaTime);
+			}
+			else
+			{
+				Renderer_->Off();
+				Collision_->On();
+				IsCol_ = false;
+				Timer_ = 3.0f;
+			}
+		}
+		return;
+	}
 
+	if (Flag_ == true)
+	{
+
+		GetTransform().SetWorldDownMove(50.0f, _DeltaTime);
+
+		if (GetTransform().GetWorldPosition().y <= PrevPos.y)
+		{
+			Flag_ = false;
+		}
+	}
+
+	Collision_->IsCollision(CollisionType::CT_OBB, CollisionGroup::PlayerCheck, CollisionType::CT_OBB,
+		std::bind(&HoopsScoreRing::CheckCollision, this, std::placeholders::_1, std::placeholders::_2));
 }
 
 void HoopsScoreRing::LevelStartEvent()
@@ -49,3 +85,15 @@ void HoopsScoreRing::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics*
 	PhysXTriGeometry_->SetPhysxMaterial(FLOOR_STATICFRICTION, FLOOR_DYNAMICFRICTION, FLOOR_RESISTUTION);
 	PhysXTriGeometry_->SetPositionSetFromParentFlag(true);
 }
+
+CollisionReturn HoopsScoreRing::CheckCollision(std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other)
+{
+	_This->Off();
+	IsCol_ = true;
+	//스코어증가
+
+
+
+	return CollisionReturn::Break;
+}
+

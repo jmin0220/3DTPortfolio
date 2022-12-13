@@ -28,16 +28,48 @@ protected:
 	void CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics) override;
 private:
 	float Rot_;
-	bool Switch;
+	bool Flag_;;
+	float Timer_;
+	bool IsCol_;
+
+	float4 PrevPos;
 	
 	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer_;
 	std::shared_ptr<PhysXConvexDynamicComponent> PhysXConvexGeometry_;
 	std::shared_ptr< PhysXTriMeshGeometryComponent> PhysXTriGeometry_;
 	std::shared_ptr<GameEngineCollision> Collision_;
+
+	CollisionReturn CheckCollision(std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other);
 public:
 	void SetFBX(std::string _Name)
 	{
 		Renderer_->SetFBXMesh(_Name, "Texture");
 	}
+
+	std::shared_ptr<GameEngineFBXStaticRenderer> GetRenderer()
+	{
+		return Renderer_;
+	}
+
+	inline void SetRenderer()
+	{
+		Renderer_->On();
+	}
+	
+	inline void SetFlag()
+	{
+		Flag_ = !Flag_;
+	}
+
+	inline void SetPrevPos(float4 _Pos)
+	{
+		PrevPos = _Pos;
+	}
+
+	inline bool GetFlag()
+	{
+		return Flag_;
+	}
+
 };
 

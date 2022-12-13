@@ -15,7 +15,7 @@ bool PlayerActor::IsMainPlayerSpawned_ = false;
 
 PlayerActor::PlayerActor() :
 	CheckPointFlag_(false),
-	CheckPointPos_(float4::ZERO),
+	CheckPointPos_({ 0,200.0f,0 }),
 	IsGoal_(false),
 	IsStanding_(false),
 	IsPlayerble_(false)
@@ -47,6 +47,7 @@ void PlayerActor::Start()
 void PlayerActor::PlayerInit()
 {
 	// 메쉬 로드
+	CheckPointPos_ = GetTransform().GetWorldPosition();
 	FbxRenderer_->SetFBXMesh("TestIdle.fbx", "TextureAnimationCustom");
 	SetCharacterAnimation();
 	SetCharacterTexture();
@@ -66,6 +67,11 @@ void PlayerActor::PlayerInit()
 	EventCol_->ChangeOrder(CollisionGroup::Player);
 	EventCol_->GetTransform().SetWorldScale({ PLAYER_COL_SCALE });
 	EventCol_->GetTransform().SetLocalPosition({ 0.0f, -5.0f, 0.0f });
+
+	Collision_ = CreateComponent<GameEngineCollision>();
+	Collision_->ChangeOrder(CollisionGroup::PlayerCheck);
+	Collision_->GetTransform().SetWorldScale({ 1.0f,1.0f,1.0f });
+
 
 	// TODO::충격테스트용 키
 	if (false == GameEngineInput::GetInst()->IsKey("ImpulsW"))
@@ -122,6 +128,13 @@ void PlayerActor::Update(float _DeltaTime)
 		if (GameEngineInput::GetInst()->IsDown("TestPos") == true)
 		{
 			DynamicActorComponent_->SetPlayerStartPos(ResetCheckPointPos());
+		}
+
+
+		//플레이어 떨어지면 지정한 위치에 재소환
+		if (GetTransform().GetWorldPosition().y <= -140.0f)
+		{
+			DynamicActorComponent_->SetPlayerStartPos(CheckPointPos_);
 		}
 
 		return;
@@ -203,6 +216,7 @@ void PlayerActor::Update(float _DeltaTime)
 
 	}
 	
+
 
 }
 

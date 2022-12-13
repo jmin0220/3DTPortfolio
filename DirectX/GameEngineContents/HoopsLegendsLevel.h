@@ -28,7 +28,10 @@ private:
 
 	void SetHoopPosition();
 
+	int Num_;
 	int PrevPos[10];
 	float4 Pos[10];
+
+	bool SettingHoops_;
 };
 
