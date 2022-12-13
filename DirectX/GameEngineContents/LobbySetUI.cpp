@@ -8,6 +8,7 @@
 #include "SelectShowButton.h"
 #include "TopMenu.h"
 #include "Cursor.h"
+#include "OptionActor.h"
 
 LobbySetUI::LobbySetUI() 
 	:IsLevelOn_(false)
@@ -19,28 +20,6 @@ LobbySetUI::~LobbySetUI()
 }
 
 void LobbySetUI::Start()
-{
-}
-
-void LobbySetUI::Update(float _DeltaTime)
-{
-	Time_ += (_DeltaTime * 5.0f);
-
-	if (IsLevelOn_ == true)
-	{
-		Circle1_->GetTransform().SetWorldScale({ CircleSize_.x  + Time_, CircleSize_.y  + Time_, 1.0f });
-		Circle2_->GetTransform().SetWorldScale({ CircleSize_.x + 4.0f + (Time_*2.f), CircleSize_.y + 4.0f + (Time_ * 2.f), 1.0f });
-
-		if (Time_ > 125.0f)
-		{
-			Circle1_->GetTransform().SetWorldScale({ 1.0f,1.0f,1.0f });
-			Circle2_->GetTransform().SetWorldScale({ 2.0f,2.0f,1.0f });
-			Time_ = 0.0f;
-		}
-	}
-}
-
-void LobbySetUI::LevelStartEvent()
 {
 	SlicePos_ = float4(1, 0, 0, 0);
 	CircleSize_ = { 1,1 };
@@ -100,8 +79,35 @@ void LobbySetUI::LevelStartEvent()
 	NoneMoney_ = GetLevel()->CreateActor<NoneMoney>();
 	PlayButton_ = GetLevel()->CreateActor<PlayButton>();
 	SelectShowButton_ = GetLevel()->CreateActor<SelectShowButton>();
+	Option_ = GetLevel()->CreateActor<OptionActor>();
+	Option_->Off();
 	TopMenu_ = GetLevel()->CreateActor<TopMenu>();
 	Mouse_ = GetLevel()->CreateActor<Cursor>();
+}
+
+void LobbySetUI::Update(float _DeltaTime)
+{
+	Time_ += (_DeltaTime * 5.0f);
+
+	if (IsLevelOn_ == true)
+	{
+		Circle1_->GetTransform().SetWorldScale({ CircleSize_.x  + Time_, CircleSize_.y  + Time_, 1.0f });
+		Circle2_->GetTransform().SetWorldScale({ CircleSize_.x + 4.0f + (Time_*2.f), CircleSize_.y + 4.0f + (Time_ * 2.f), 1.0f });
+
+		if (Time_ > 125.0f)
+		{
+			Circle1_->GetTransform().SetWorldScale({ 1.0f,1.0f,1.0f });
+			Circle2_->GetTransform().SetWorldScale({ 2.0f,2.0f,1.0f });
+			Time_ = 0.0f;
+		}
+	}
+
+	OptionOn();
+}
+
+void LobbySetUI::LevelStartEvent()
+{
+	
 }
 
 void LobbySetUI::LevelEndEvent()
@@ -114,6 +120,7 @@ void LobbySetUI::LevelEndEvent()
 	SelectShowButton_->GetLevel()->Death();
 	TopMenu_->GetLevel()->Death();
 	Mouse_->GetLevel()->Death();
+	Option_->GetLevel()->Death();
 	IsLevelOn_ = false;
 }
 
@@ -129,7 +136,51 @@ void LobbySetUI::AllOff()
 	BG_->Off();
 	Circle1_->Off();
 	Circle2_->Off();
+	Option_->Off();
 
 	FallBG_->On();//남들꺼질때 얘는 켜짐
 	Stripe_->On();
+}
+
+void LobbySetUI::OptionOn()
+{
+	if (TopMenu_->MyState_ == MenuState::Option)
+	{
+		CrownCount_->Off();
+		NamePlate_->Off();
+		NoneButton_->Off();
+		NoneMoney_->Off();
+		PlayButton_->Off();
+		SelectShowButton_->Off();
+		Option_->On();
+		
+		{
+			//옵션창 스르륵 이동 애니메이션
+			float4 CurrentPos = Option_->GetTransform().GetWorldPosition();
+			float4 DestinationPos = (float4{ 380.0f,-10 });
+			Option_->GetTransform().SetWorldPosition({ float4::Lerp(CurrentPos, DestinationPos, GameEngineTime::GetDeltaTime() * 5.f) });
+		}
+	}
+
+	if (TopMenu_->MyState_ == MenuState::Home)
+	{
+		CrownCount_->On();
+		NamePlate_->On();
+		NoneButton_->On();
+		NoneMoney_->On();
+		PlayButton_->On();
+		SelectShowButton_->On();
+
+		{	
+			//옵션창 스르륵 이동 애니메이션
+			float4 CurrentPos = Option_->GetTransform().GetWorldPosition();
+			float4 DestinationPos = (float4{ 1300.0f,-10 });
+			Option_->GetTransform().SetWorldPosition({ float4::Lerp(CurrentPos, DestinationPos, GameEngineTime::GetDeltaTime() * 5.f) });
+
+			if (Option_->GetTransform().GetWorldPosition().x > 1290.0f)
+			{
+				Option_->Off();//화면 밖으로 나가면 끈다
+			}
+		}
+	}
 }

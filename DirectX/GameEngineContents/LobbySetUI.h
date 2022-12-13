@@ -10,6 +10,7 @@ class NoneMoney;
 class SelectShowButton;
 class TopMenu;
 class Cursor;
+class OptionActor;
 class LobbySetUI : public GameEngineActor
 {
 public:
@@ -28,8 +29,14 @@ public:
 		return PlayButton_;
 	}
 
+	std::weak_ptr<TopMenu> GetTopMenu()
+	{
+		return TopMenu_;
+	}
+
 	void AllOff();
-	
+	void OptionOn();
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -45,6 +52,7 @@ private:
 	std::shared_ptr<PlayButton> PlayButton_;
 	std::shared_ptr<SelectShowButton> SelectShowButton_;
 	std::shared_ptr<TopMenu> TopMenu_;
+	std::shared_ptr<OptionActor> Option_;
 
 	std::shared_ptr<Cursor> Mouse_;
 

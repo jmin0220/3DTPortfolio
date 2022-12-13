@@ -394,6 +394,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="OptionActor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="PhysicsBase.h" />
     <ClInclude Include="PhysicsObject.h" />
     <ClInclude Include="GlobalValues.h">
@@ -846,6 +850,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="MovingBar.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="OptionActor.cpp">
       <SubType>
       </SubType>
     </ClCompile>

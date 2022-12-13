@@ -9,7 +9,7 @@
 #include "Winner.h"
 #include "FloorActor.h"
 #include "Bingle.h"
-
+#include "TopMenu.h"
 #include "GameServer.h"
 
 LobbyLevel::LobbyLevel() 
@@ -35,11 +35,49 @@ void LobbyLevel::Start()
 	StateManager_.CreateStateMember("Falling"
 		, std::bind(&LobbyLevel::FallingUpdate, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&LobbyLevel::FallingStart, this, std::placeholders::_1));	
+
+	if (false == GameEngineInput::GetInst()->IsKey("LEFT_Q"))
+	{
+		GameEngineInput::GetInst()->CreateKey("LEFT_Q", 'Q');
+		GameEngineInput::GetInst()->CreateKey("RIGHT_E", 'E');
+	}
 }
 
 void LobbyLevel::Update(float _DeltaTime)
 {
 	StateManager_.Update(_DeltaTime);
+
+	if (LobbySet_->GetTopMenu().lock()->MyState_==MenuState::Home)
+	{
+		Player_->GetTransform().SetWorldRotation({ 0,160,0 });
+		{
+			float4 CurrentPos = Player_->GetTransform().GetWorldPosition();
+			float4 DestinationPos = (float4{ 0, -15, 0});
+			Player_->GetTransform().SetWorldPosition({ float4::Lerp(CurrentPos, DestinationPos, GameEngineTime::GetDeltaTime() * 5.f) });
+		}
+
+		{
+			float4 CurrentPos = Chair_->GetTransform().GetWorldPosition();
+			float4 DestinationPos = (float4{ 0, 0, 0 });
+			Chair_->GetTransform().SetWorldPosition({ float4::Lerp(CurrentPos, DestinationPos, GameEngineTime::GetDeltaTime() * 5.f) });
+		}
+	}
+
+	if (LobbySet_->GetTopMenu().lock()->MyState_ == MenuState::Option)
+	{
+		Player_->GetTransform().SetWorldRotation({ 0,160,0 });
+		{
+			float4 CurrentPos = Player_->GetTransform().GetWorldPosition();
+			float4 DestinationPos = (float4{ -20, -15, 0 });
+			Player_->GetTransform().SetWorldPosition({ float4::Lerp(CurrentPos, DestinationPos, GameEngineTime::GetDeltaTime() * 5.f) });
+		}
+
+		{
+			float4 CurrentPos = Chair_->GetTransform().GetWorldPosition();
+			float4 DestinationPos = (float4{ -20, 0, 0 });
+			Chair_->GetTransform().SetWorldPosition({ float4::Lerp(CurrentPos, DestinationPos, GameEngineTime::GetDeltaTime() * 5.f) });
+		}
+	}
 }
 
 void LobbyLevel::End()
@@ -65,6 +103,7 @@ void LobbyLevel::LevelStartEvent()
 	GetMainCamera()->SetProjectionMode(CAMERAPROJECTIONMODE::PersPective);
 
 	LobbySet_ = CreateActor<LobbySetUI>();
+	LobbySet_->GetTopMenu().lock()->MyState_ = MenuState::Home;
 
 	UserFont_ = CreateActor<FontActor>();
 	UserFont_->SetFont("접속자 수", "Noto Sans CJK SC", 25.f,{800,750},LeftAndRightSort::CENTER);
@@ -125,6 +164,8 @@ void LobbyLevel::LobbyUpdate(float _DeltaTime, const StateInfo& _Info)
 
 void LobbyLevel::FallingStart(const StateInfo& _Info)
 {
+	LobbySet_->GetTopMenu().lock()->MyState_ = MenuState::Fall;
+
 	Player_->ChangeAnimationFall();
 	Player_->GetTransform().SetWorldPosition({ 0, 40, 50 });
 	Player_->GetTransform().SetWorldRotation({ 0,180,0 });
@@ -151,9 +192,6 @@ void LobbyLevel::FallingUpdate(float _DeltaTime, const StateInfo& _Info)
 		GameServer::GetInst()->SetServerSignal(ServerFlags::None);
 		return;
 	}
-
-
-
 
 	FallTime_ -= GameEngineTime::GetDeltaTime()*20.0f;
 

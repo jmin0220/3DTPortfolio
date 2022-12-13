@@ -1,6 +1,15 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
 
+enum class MenuState
+{
+	Home,
+	Option,
+	Skin,
+	Shop,
+	Fall
+};
+
 // 설명 : 상단 메뉴
 class GameEngineUIRenderer;
 class TopMenu : public GameEngineActor
@@ -16,6 +25,10 @@ public:
 	TopMenu& operator=(const TopMenu& _Other) = delete;
 	TopMenu& operator=(TopMenu&& _Other) noexcept = delete;
 
+	void MyMenuUpdate();
+	void MenuAnimation();
+
+	MenuState MyState_;
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -44,5 +57,7 @@ private:
 	bool ButtonCheck2_;
 	bool ButtonCheck3_;
 	bool ButtonCheck4_;
+
+	
 };
 

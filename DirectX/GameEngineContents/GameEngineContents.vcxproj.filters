@@ -226,6 +226,9 @@
     <Filter Include="02_Actor\UIActor\IntroActor">
       <UniqueIdentifier>{6eab3377-834d-463a-b1d5-69be0489ea75}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02_Actor\UIActor\OptionActor">
+      <UniqueIdentifier>{d9e83fe2-9fe0-4746-9a78-fd6154899799}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -650,6 +653,9 @@
     </ClInclude>
     <ClInclude Include="IntroduceGame.h">
       <Filter>02_Actor\UIActor\IntroActor</Filter>
+    </ClInclude>
+    <ClInclude Include="OptionActor.h">
+      <Filter>02_Actor\UIActor\OptionActor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1078,6 +1084,9 @@
     </ClCompile>
     <ClCompile Include="IntroduceGame.cpp">
       <Filter>02_Actor\UIActor\IntroActor</Filter>
+    </ClCompile>
+    <ClCompile Include="OptionActor.cpp">
+      <Filter>02_Actor\UIActor\OptionActor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

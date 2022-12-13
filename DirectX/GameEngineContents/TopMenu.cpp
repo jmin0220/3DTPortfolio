@@ -15,6 +15,8 @@ TopMenu::~TopMenu()
 
 void TopMenu::Start()
 {
+	MyState_ = MenuState::Home;
+
 	BG_ = CreateComponent<GameEngineUIRenderer>();
 	BG_->GetTransform().SetLocalScale({ 580.0f,72.0f });
 	BG_->SetTexture("TopUI.png");
@@ -93,7 +95,7 @@ void TopMenu::Start()
 
 	Event_ = CreateComponent<GameEngineUIRenderer>();
 	Event_->GetTransform().SetLocalScale({ 32.f,36.f });
-	Event_->SetTexture("UI_EventIcon.png");
+	Event_->SetTexture("UI_icon_settings_1080p.png");
 	Event_->SetPivot(PIVOTMODE::CENTER);
 	Event_->GetTransform().SetWorldPosition({ -45.f,415.f });
 
@@ -112,16 +114,52 @@ void TopMenu::Start()
 
 void TopMenu::Update(float _DeltaTime)
 {
+	MenuAnimation();
+
+	MyMenuUpdate();
+}
+
+void TopMenu::MyMenuUpdate()
+{
+	if (MyState_ == MenuState::Home && true == GameEngineInput::GetInst()->IsDown("RIGHT_E"))
+	{
+		MyState_ = MenuState::Option;
+		Panel1_->SetTexture("UI_basic_panel.png");
+		Panel2_->SetTexture("UI_select_panel.png");
+	}
+
+	if (MyState_ == MenuState::Option && true == GameEngineInput::GetInst()->IsDown("LEFT_Q"))
+	{
+		MyState_ = MenuState::Home;
+		Panel1_->SetTexture("UI_select_panel.png");
+		Panel2_->SetTexture("UI_basic_panel.png");
+	}
+}
+
+void TopMenu::MenuAnimation()
+{
 	{
 		//이 조건문 성훈님 Pikable 코드 베껴 적음..[=]이게 뭔지 모름 ㅎ; 람다식..?함수포인터..? 암튼 해서 true false를 받음
 		ButtonCheck1_ = PanelCol1_->IsCollision(CollisionType::CT_OBB2D, UICOLLISION::Mouse, CollisionType::CT_OBB2D,
 			[=](std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other)
 			{
+				if (MyState_ == MenuState::Option && true == GameEngineInput::GetInst()->IsDown("Click"))
+				{
+					MyState_ = MenuState::Home;
+					Panel1_->SetTexture("UI_select_panel.png");
+					Panel2_->SetTexture("UI_basic_panel.png");
+				}
 				return CollisionReturn::Break;
 			});
 		ButtonCheck2_ = PanelCol2_->IsCollision(CollisionType::CT_OBB2D, UICOLLISION::Mouse, CollisionType::CT_OBB2D,
 			[=](std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other)
 			{
+				if (MyState_ == MenuState::Home && true == GameEngineInput::GetInst()->IsDown("Click"))
+				{
+					MyState_ = MenuState::Option;
+					Panel1_->SetTexture("UI_basic_panel.png");
+					Panel2_->SetTexture("UI_select_panel.png");
+				}
 				return CollisionReturn::Break;
 			});
 		ButtonCheck3_ = PanelCol3_->IsCollision(CollisionType::CT_OBB2D, UICOLLISION::Mouse, CollisionType::CT_OBB2D,
