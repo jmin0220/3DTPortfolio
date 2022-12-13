@@ -14,7 +14,7 @@ void StageParentLevel::IdleStart(const StateInfo& _Info)
 	CameraArm_->SetFollowCamera(GetMainCameraActor(), Player_);
 
 	IntroduceGame_->SetStageTexture(MyStage_);
-	IntroduceGame_->On();
+	//IntroduceGame_->On();
 }
 
 void StageParentLevel::IdleUpdate(float _DeltaTime, const StateInfo& _Info)

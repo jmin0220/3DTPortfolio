@@ -29,6 +29,7 @@ private:
 	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer_;
 	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer2_;
 	std::shared_ptr< PhysXTriMeshGeometryComponent> PhysXTriGeometry_;
+	std::shared_ptr< PhysXTriMeshGeometryComponent> PhysXTriGeometry2_;
 
 	std::string Name_;
 	std::string Name2_;
@@ -38,6 +39,8 @@ public:
 	{
 		Name_ = _Name;
 		Renderer_->SetFBXMesh(Name_, "Texture");
+		Name2_ = _Name2;
+		Renderer2_->SetFBXMesh(Name2_, "Texture");
 	}
 
 };

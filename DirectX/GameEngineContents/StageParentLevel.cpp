@@ -355,13 +355,13 @@ void StageParentLevel::LevelStartLoad()
 		case Stage_MeshEnum::HoopsRamp:
 		{
 			NewObj.Actor_ = CreateActor<HoopsRamp>();
-			std::dynamic_pointer_cast<HoopsRamp>(NewObj.Actor_.lock())->SetFBX("HoopsRamp.FBX");
+			std::dynamic_pointer_cast<HoopsRamp>(NewObj.Actor_.lock())->SetFBX("HoopsRampWall.FBX" ,"HoopsRampFloor.FBX" );
 			break;
 		}
 		case Stage_MeshEnum::HoopsRamp2:
 		{
 			NewObj.Actor_ = CreateActor<HoopsRamp>();
-			std::dynamic_pointer_cast<HoopsRamp>(NewObj.Actor_.lock())->SetFBX("HoopsRamp2.FBX");
+			std::dynamic_pointer_cast<HoopsRamp>(NewObj.Actor_.lock())->SetFBX("HoopsRampWall2.FBX", "HoopsRampFloor2.FBX");
 			break;
 		}
 		case Stage_MeshEnum::HoopsScoreRing:
