@@ -21,6 +21,7 @@ enum class CollisionGroup
 	Picking,
 	Ray,
 	Player,
+	PlayerCheck,
 	Map,
 	PhysicsGround,
 	PhysicsWall,

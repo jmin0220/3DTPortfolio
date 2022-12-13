@@ -47,6 +47,7 @@ private:
 
 	//eventtrigger¿ë collision
 	std::shared_ptr<GameEngineCollision> EventCol_;
+	std::shared_ptr<GameEngineCollision> Collision_;
 
 	//CheckPoint Position
 	float4 CheckPointPos_;

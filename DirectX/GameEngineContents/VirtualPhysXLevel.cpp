@@ -78,7 +78,7 @@ void VirtualPhysXLevel::initPhysics(bool _interactive)
 	DefaultCpuDispatcher_ = physx::PxDefaultCpuDispatcherCreate(2);
 	sceneDesc.cpuDispatcher = DefaultCpuDispatcher_;
 
-	sceneDesc.broadPhaseType = physx::PxBroadPhaseType::eABP;
+	// sceneDesc.broadPhaseType = physx::PxBroadPhaseType::eABP;
 
 	// Scene »ý¼º
 	Scene_ = Physics_->createScene(sceneDesc);

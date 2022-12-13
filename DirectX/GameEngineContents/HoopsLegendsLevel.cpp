@@ -8,7 +8,8 @@
 #include "TestGUI.h"
 #include "GameEngineBase/GameEngineRandom.h"
 
-HoopsLegendsLevel::HoopsLegendsLevel() 
+HoopsLegendsLevel::HoopsLegendsLevel() :
+	SettingHoops_(false)
 {
 }
 
@@ -64,17 +65,8 @@ void HoopsLegendsLevel::LevelStartEvent()
 
 		PrevPos[i] = -1;
 	}
-}
 
-void HoopsLegendsLevel::LevelEndEvent()
-{
-	StageParentLevel::LevelEndEvent();
-}
-
-void HoopsLegendsLevel::SetHoopPosition()
-{
-
-
+	//후프 초기위치 설정
 	for (int i = 0; i < 10; i++)
 	{
 		if (PrevPos[i] == -1)
@@ -95,6 +87,59 @@ void HoopsLegendsLevel::SetHoopPosition()
 	for (int i = 0; i < 10; i++)
 	{
 		HoopsActor[i]->GetTransform().SetWorldPosition(HoopsPos[PrevPos[i]]);
-		HoopsActor[i]->On();
+	}
+
+}
+
+void HoopsLegendsLevel::LevelEndEvent()
+{
+	StageParentLevel::LevelEndEvent();
+}
+
+void HoopsLegendsLevel::SetHoopPosition()
+{
+	for (int i = 0; i < 10; i++)
+	{
+		if (std::dynamic_pointer_cast<HoopsScoreRing>(HoopsActor[i])->GetRenderer()->IsUpdate() == false)
+		{
+			PrevPos[i] = -1;
+			SettingHoops_ = true;
+		}
+	}
+
+	if (SettingHoops_ == true)
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			if (PrevPos[i] == -1)
+			{
+				PrevPos[i] = GameEngineRandom::MainRandom.RandomInt(0, static_cast<int>(HoopsPos.size() - 1));
+				Num_ = i;
+				for (int j = 0; j < 10; j++)
+				{
+					if (i == j)
+					{
+						continue;
+					}
+
+					if (PrevPos[i] == PrevPos[j])
+					{
+						PrevPos[i] = -1;
+						i--;
+						break;
+					}
+				}
+			}
+		}
+
+		float4 Pos = HoopsPos[PrevPos[Num_]];
+		Pos.y += 200.0f;
+		HoopsActor[Num_]->GetTransform().SetWorldPosition(Pos);
+		std::dynamic_pointer_cast<HoopsScoreRing>(HoopsActor[Num_])->SetFlag(); // true
+		std::dynamic_pointer_cast<HoopsScoreRing>(HoopsActor[Num_])->SetRenderer(); //true
+		std::dynamic_pointer_cast<HoopsScoreRing>(HoopsActor[Num_])->SetPrevPos(HoopsPos[PrevPos[Num_]]);
+		 
+
+		SettingHoops_ = false;
 	}
 }

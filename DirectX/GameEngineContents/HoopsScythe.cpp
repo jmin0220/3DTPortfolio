@@ -26,7 +26,7 @@ void HoopsScythe::Start()
 
 void HoopsScythe::Update(float _DeltaTime)
 {
-	GetTransform().SetLocalRotate({ 0,0,20.0f * _DeltaTime });
+	GetTransform().SetLocalRotate({ 0,0,60.0f * _DeltaTime });
 }
 
 void HoopsScythe::LevelStartEvent()
@@ -44,8 +44,4 @@ void HoopsScythe::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _p
 	PhysXConvexGeometry_->CreatePhysXActors("ScytheCol.FBX", _Scene, _physics, Cooking,false, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z) ,0.0f , true);
 	PhysXConvexGeometry_->SetPhysxMaterial(FLOOR_STATICFRICTION, FLOOR_DYNAMICFRICTION, FLOOR_RESISTUTION);
 	PhysXConvexGeometry_->SetPositionSetFromParentFlag(true);
-
-	//PhysXBoxGeometry_->CreatePhysXActors(_Scene, _physics, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y + 3.0f, MeshBoundScale.z));
-	//PhysXBoxGeometry_->SetPositionSetFromParentFlag(true);
-	//PhysXTriGeometry_->CreatePhysXActors("HoopsScythe.fbx", _Scene, _physics, Cooking, false, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z), 0.0f);
 }
