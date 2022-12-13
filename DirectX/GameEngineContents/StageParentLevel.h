@@ -103,6 +103,7 @@ protected:
 
 	// FSM관련 엑터들
 	std::shared_ptr<class InGameSetUI> UIs_;
+	std::shared_ptr<class IntroduceGame> IntroduceGame_;
 
 	// 321땅 이전에 플레이어가 준비가 됬는지(서버..)
 	virtual void IdleStart(const StateInfo& _Info);

@@ -28,7 +28,5 @@ protected:
 private:
 	std::shared_ptr<GameEngineActor> Stage_;
 	std::shared_ptr<GameEngineActor>BackGround_;
-
-	std::shared_ptr<IntroduceGame> Intro_;
 };
 

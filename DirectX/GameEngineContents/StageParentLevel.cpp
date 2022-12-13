@@ -24,6 +24,7 @@
 #include <fstream>
 #include "InGameSetUI.h"
 #include "PlayerActor.h"
+#include "IntroduceGame.h"
 
 #include <atomic>
 std::mutex SpawnLock;
@@ -47,6 +48,9 @@ void StageParentLevel::Start()
 	VirtualPhysXLevel::Start();
 	CinemaCam_->SetStage(MyStage_);
 	CinemaCam_->Init(GetMainCameraActor());
+
+	IntroduceGame_ = CreateActor<IntroduceGame>();
+	IntroduceGame_->Off();
 
 	// 스테이지 FSM
 	StageStateManager_.CreateStateMember("Idle"

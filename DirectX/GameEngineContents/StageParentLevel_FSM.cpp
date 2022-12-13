@@ -3,6 +3,7 @@
 #include "PlayerActor.h"
 #include "InGameSetUI.h"
 #include "Cinemachine.h"
+#include "IntroduceGame.h"
 
 ///////////////////////////
 // 스테이지 시작전 준비 단계
@@ -12,6 +13,8 @@ void StageParentLevel::IdleStart(const StateInfo& _Info)
 	// 카메라암 -> 플레이어에게 세팅(나중이 이 줄 지워야됨)
 	CameraArm_->SetFollowCamera(GetMainCameraActor(), Player_);
 
+	IntroduceGame_->SetStageTexture(MyStage_);
+	IntroduceGame_->On();
 }
 
 void StageParentLevel::IdleUpdate(float _DeltaTime, const StateInfo& _Info)
