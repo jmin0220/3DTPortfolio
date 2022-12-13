@@ -28,42 +28,60 @@ void BigShots_PRP::Start()
 	case PRPType::CONTROLLER:
 	{
 		FBXName_ = "Controller.FBX";
-		ThrowRot *= 2500000.0f;
+		int RandomForce = GameEngineRandom::MainRandom.RandomInt(2300000, 2800000);
+		//ThrowRot *= 2300000.0f; 置社
+		//ThrowRot *= 2800000.0f; 置企
+		ThrowRot *= static_cast<float>(RandomForce);
 		PRPForce_ = float4(0.0f, ThrowRot.y, ThrowRot.x);
 		break;
 	}
 	case PRPType::MAGNET:
 	{
 		FBXName_ = "Magnet.FBX";
-		ThrowRot *= 850000.0f;
+		int RandomForce = GameEngineRandom::MainRandom.RandomInt(780000, 920000);
+		//ThrowRot *= 780000.0f; 置社
+		//ThrowRot *= 920000.0f; 置企
+		ThrowRot *= static_cast<float>(RandomForce);
 		PRPForce_ = float4(0.0f, ThrowRot.y, ThrowRot.x);
 		break;
 	}
 	case PRPType::NUT:
 	{
 		FBXName_ = "Nut.FBX";
-		ThrowRot *= 200000.0f;
+		int RandomForce = GameEngineRandom::MainRandom.RandomInt(188000, 220000);
+		//ThrowRot *= 188000.0f; 置社
+		//ThrowRot *= 220000.0f; 置企
+		ThrowRot *= static_cast<float>(RandomForce);
 		PRPForce_ = float4(0.0f, ThrowRot.y, ThrowRot.x);
 		break;
 	}
 	case PRPType::PLANET:
 	{
 		FBXName_ = "Planet.FBX";
-		ThrowRot *= 3500000.0f;
+		int RandomForce = GameEngineRandom::MainRandom.RandomInt(3200000, 3800000);
+		//ThrowRot *= 3200000.0f; 置社
+		//ThrowRot *= 3800000.0f; 置企
+		ThrowRot *= static_cast<float>(RandomForce);
 		PRPForce_ = float4(0.0f, ThrowRot.y, ThrowRot.x);
 		break;
 	}
 	case PRPType::STAR:
 	{
 		FBXName_ = "Star.FBX";
-		ThrowRot *= 180000.0f;
+		int RandomForce = GameEngineRandom::MainRandom.RandomInt(165000, 195000);
+		//ThrowRot *= 165000.0f; 置社
+		//ThrowRot *= 195000.0f; 置企
+		ThrowRot *= static_cast<float>(RandomForce);
 		PRPForce_ = float4(0.0f, ThrowRot.y, ThrowRot.x);
 		break;
 	}
 	case PRPType::TETRAPOD:
 	{
 		FBXName_ = "Tetrapod.FBX";
-		ThrowRot *= 2000000.0f;
+		int RandomForce = GameEngineRandom::MainRandom.RandomInt(1820000, 2180000);
+		//ThrowRot *= 1820000.0f; 置社
+		//ThrowRot *= 2180000.0f; 置企
+		ThrowRot *= static_cast<float>(RandomForce);
 		PRPForce_ = float4(0.0f, ThrowRot.y, ThrowRot.x);
 		break;
 	}
@@ -76,7 +94,7 @@ void BigShots_PRP::Start()
 	Renderer_->SetFBXMesh(FBXName_, "Texture");
 	PhysXConvexDynamicComponent_ = CreateComponent< PhysXConvexDynamicComponent>();
 	
-	Death(30.0f);
+	Death(20.0f);
 }
 
 void BigShots_PRP::Update(float _DeltaTime)

@@ -33,16 +33,19 @@ void BigShots_Cannon::Update(float _DeltaTime)
 	}
 	
 	FbxRenderer_->CastThis<GameEngineFBXAnimationRenderer>()->GetCurAni()->bOnceEnd = false;
-	FbxRenderer_->AnimationBindEnd("Idle", [=](const GameEngineRenderingEvent& _Info)
+	FbxRenderer_->AnimationBindFrame("Idle", [=](const GameEngineRenderingEvent& _Info)
 		{
-			std::shared_ptr<BigShots_PRP> PRP = GetLevel()->CreateActor<BigShots_PRP>();
-			PRP->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition() + float4{ 0.0f,0.0f,15.0f });
-			PRP->CreatePhysX();
+			if (_Info.CurFrame == 3)
+			{
+				std::shared_ptr<BigShots_PRP> PRP = GetLevel()->CreateActor<BigShots_PRP>();
+				PRP->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition() + float4{ 0.0f,0.0f,15.0f });
+				PRP->CreatePhysX();
 
-			GameEngineRandom RandomValue_;
-			float RandomFloatNum = GameEngineRandom::MainRandom.RandomFloat(2.0f, 3.0f);
+				GameEngineRandom RandomValue_;
+				float RandomFloatNum = GameEngineRandom::MainRandom.RandomFloat(2.0f, 3.0f);
 
-			ShootingTime_ = RandomFloatNum;
+				ShootingTime_ = RandomFloatNum;
+			}
 		});
 }
 
