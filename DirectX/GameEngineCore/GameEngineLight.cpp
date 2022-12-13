@@ -2,16 +2,16 @@
 #include "GameEngineLight.h"
 #include "GameEngineCamera.h"
 
-GameEngineLight::GameEngineLight() 
+GameEngineLight::GameEngineLight()
 {
 }
 
-GameEngineLight::~GameEngineLight() 
+GameEngineLight::~GameEngineLight()
 {
 }
 
 
-void GameEngineLight::Update(float _DeltaTime) 
+void GameEngineLight::Update(float _DeltaTime)
 {
 	Data.LightPos = GetTransform().GetWorldPosition();
 	Data.LightDir = GetTransform().GetForwardVector();
