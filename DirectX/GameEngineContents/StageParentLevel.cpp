@@ -15,6 +15,8 @@
 #include "Col_CheckPoint.h"
 #include "HoopsWoodPlank.h"
 #include "HoopsScythe.h"
+#include "HoopsBox.h"
+#include "HoopsRamp.h"
 #include "HoopsScoreRing.h"
 
 #include <GameEngineBase/magic_enum.hpp>
@@ -110,6 +112,13 @@ void StageParentLevel::LevelStartEvent()
 	}
 	int PlayerID = GameServer::GetInst()->PlayerID_;
 	Player_->GetTransform().SetWorldPosition(PlayerPos + float4{ 20, 0, 0} * (PlayerID));
+
+	//후프레벨 위치 임시
+	if (MyStage_ == StageNum::STAGE5)
+	{
+		Player_->GetTransform().SetWorldPosition({ 0,150.0f,0 });
+	}
+
 	Player_->PlayerInit();
 
 	MainCam_ = GetMainCameraActor();
@@ -317,6 +326,42 @@ void StageParentLevel::LevelStartLoad()
 		case Stage_MeshEnum::HoopsScythe:
 		{
 			NewObj.Actor_ = CreateActor<HoopsScythe>();
+			break;
+		}
+		case Stage_MeshEnum::HoopsBox:
+		{
+			NewObj.Actor_ = CreateActor<HoopsBox>();
+			std::dynamic_pointer_cast<HoopsBox>(NewObj.Actor_.lock())->SetFBX("HoopsBox.FBX");
+			break;
+		}
+		case Stage_MeshEnum::HoopsBox2:
+		{
+			NewObj.Actor_ = CreateActor<HoopsBox>();
+			std::dynamic_pointer_cast<HoopsBox>(NewObj.Actor_.lock())->SetFBX("HoopsBox2.FBX");
+			break;
+		}
+		case Stage_MeshEnum::HoopsBox3:
+		{
+			NewObj.Actor_ = CreateActor<HoopsBox>();
+			std::dynamic_pointer_cast<HoopsBox>(NewObj.Actor_.lock())->SetFBX("HoopsBox3.FBX");
+			break;
+		}
+		case Stage_MeshEnum::HoopsBox4:
+		{
+			NewObj.Actor_ = CreateActor<HoopsBox>();
+			std::dynamic_pointer_cast<HoopsBox>(NewObj.Actor_.lock())->SetFBX("HoopsBox4.FBX");
+			break;
+		}
+		case Stage_MeshEnum::HoopsRamp:
+		{
+			NewObj.Actor_ = CreateActor<HoopsRamp>();
+			std::dynamic_pointer_cast<HoopsRamp>(NewObj.Actor_.lock())->SetFBX("HoopsRamp.FBX");
+			break;
+		}
+		case Stage_MeshEnum::HoopsRamp2:
+		{
+			NewObj.Actor_ = CreateActor<HoopsRamp>();
+			std::dynamic_pointer_cast<HoopsRamp>(NewObj.Actor_.lock())->SetFBX("HoopsRamp2.FBX");
 			break;
 		}
 		case Stage_MeshEnum::HoopsScoreRing:

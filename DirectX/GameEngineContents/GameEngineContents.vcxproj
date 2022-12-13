@@ -310,7 +310,15 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="HoopsBox.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="HoopsLegendsLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="HoopsRamp.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -769,7 +777,15 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="HoopsBox.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="HoopsLegendsLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="HoopsRamp.cpp">
       <SubType>
       </SubType>
     </ClCompile>

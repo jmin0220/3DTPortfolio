@@ -794,6 +794,36 @@ void MapEditorGUI::CreateFBXMesh()
 		NewObj.Actor_.lock()->SetStaticMesh("HoopsScoreRing2.FBX");
 		break;
 	}
+	case MeshEnum::HoopsBox:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("HoopsBox.FBX");
+		break;
+	}
+	case MeshEnum::HoopsBox2:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("HoopsBox2.FBX");
+		break;
+	}
+	case MeshEnum::HoopsBox3:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("HoopsBox3.FBX");
+		break;
+	}
+	case MeshEnum::HoopsBox4:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("HoopsBox4.FBX");
+		break;
+	}
+	case MeshEnum::HoopsRamp:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("HoopsRamp.FBX");
+		break;
+	}
+	case MeshEnum::HoopsRamp2:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("HoopsRamp2.FBX");
+		break;
+	}
 	case MeshEnum::TestMap:
 	{
 		NewObj.Actor_.lock()->SetStaticMesh("TestMap.FBX");

@@ -88,9 +88,11 @@ void HoopsStageObjects::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysi
 
 
 	float4 MeshBoundScale2 = PlatformRenderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
+	PlatformPhysXTriMeshGeometry_->SetPhysxMaterial(FLOOR_STATICFRICTION, 2.0f, FLOOR_RESISTUTION);
 	PlatformPhysXTriMeshGeometry_->CreatePhysXActors("HoopsObjectPlatform.fbx", _Scene, _physics, Cooking, true, physx::PxVec3(MeshBoundScale2.x, MeshBoundScale2.y, MeshBoundScale2.z));
 
 
 	float4 MeshBoundScale3 = FloorRenderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
+	FloorPhysXTriMeshGeometry_->SetPhysxMaterial(FLOOR_STATICFRICTION, 2.0f, FLOOR_RESISTUTION);
 	FloorPhysXTriMeshGeometry_->CreatePhysXActors("HoopsFloor.fbx", _Scene, _physics, Cooking, true, physx::PxVec3(MeshBoundScale3.x, MeshBoundScale3.y, MeshBoundScale3.z));
 }

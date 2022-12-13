@@ -32,10 +32,11 @@ private:
 	float Timer_;
 	bool IsCol_;
 
+	int Dir_;
+
 	float4 PrevPos;
 	
 	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer_;
-	std::shared_ptr<PhysXConvexDynamicComponent> PhysXConvexGeometry_;
 	std::shared_ptr< PhysXTriMeshGeometryComponent> PhysXTriGeometry_;
 	std::shared_ptr<GameEngineCollision> Collision_;
 

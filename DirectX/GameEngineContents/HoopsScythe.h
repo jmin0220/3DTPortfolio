@@ -32,5 +32,8 @@ private:
 	std::shared_ptr<GameEngineFBXStaticRenderer> ColRenderer_;
 	float4 Rotation_;
 
+	float Speed_;
+	int Dir_;
+
 };
 

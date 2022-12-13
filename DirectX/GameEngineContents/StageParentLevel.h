@@ -31,6 +31,12 @@ enum class Stage_MeshEnum
 	HoopsScythe,
 	HoopsScoreRing,
 	HoopsScoreRing2,
+	HoopsBox,
+	HoopsBox2,
+	HoopsBox3,
+	HoopsBox4,
+	HoopsRamp,
+	HoopsRamp2,
 
 	// TEST
 	Rainbow,

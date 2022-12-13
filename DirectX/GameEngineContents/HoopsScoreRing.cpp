@@ -24,11 +24,12 @@ void HoopsScoreRing::Start()
 	PhysXTriGeometry_ = CreateComponent<PhysXTriMeshGeometryComponent>();
 
 	Collision_ = CreateComponent<GameEngineCollision>();
-	Collision_->GetTransform().SetLocalScale({ 10.0f,10.0f,2.0f, });
+	Collision_->GetTransform().SetLocalScale({ 10.0f,10.0f,1.0f, });
 	Collision_->ChangeOrder(CollisionGroup::Trigger);
 
 	float Rot = GameEngineRandom::MainRandom.RandomFloat(0, 360.0f);
 
+	Dir_ = GameEngineRandom::MainRandom.RandomInt(0, 1);
 
 	GetTransform().SetLocalRotate({ 0,Rot ,0 });
 }
@@ -66,6 +67,14 @@ void HoopsScoreRing::Update(float _DeltaTime)
 		}
 	}
 
+	if (Dir_ == 0)
+	{
+		GetTransform().SetLocalRotate({ 0, 7.0f * _DeltaTime  ,0 });
+	}
+	else
+	{
+		GetTransform().SetLocalRotate({ 0, -7.0f * _DeltaTime  ,0 });
+	}
 	Collision_->IsCollision(CollisionType::CT_OBB, CollisionGroup::PlayerCheck, CollisionType::CT_OBB,
 		std::bind(&HoopsScoreRing::CheckCollision, this, std::placeholders::_1, std::placeholders::_2));
 }

@@ -37,6 +37,12 @@ enum class MeshEnum
 	HoopsScythe,
 	HoopsScoreRing,
 	HoopsScoreRing2,
+	HoopsRamp,
+	HoopsBox,
+	HoopsBox2,
+	HoopsBox3,
+	HoopsBox4,
+	HoopsRamp2,
 	// TEST
 	Rainbow,
 	TestMap,

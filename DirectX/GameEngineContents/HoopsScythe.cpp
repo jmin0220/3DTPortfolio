@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "HoopsScythe.h"
 #include "VirtualPhysXLevel.h"
+#include "GameEngineBase/GameEngineRandom.h"
 
 HoopsScythe::HoopsScythe() 
 {
@@ -22,11 +23,21 @@ void HoopsScythe::Start()
 	ColRenderer_->Off();
 
 	PhysXConvexGeometry_ = CreateComponent<PhysXConvexDynamicComponent>();
+
+	Speed_ = GameEngineRandom::MainRandom.RandomFloat(20.0f, 60.0f);
+	Dir_ = GameEngineRandom::MainRandom.RandomInt(0, 1);
 }
 
 void HoopsScythe::Update(float _DeltaTime)
 {
-	GetTransform().SetLocalRotate({ 0,0,60.0f * _DeltaTime });
+	if (Dir_ == 0)
+	{
+		GetTransform().SetLocalRotate({ 0,0,Speed_ * _DeltaTime });
+	}
+	else
+	{
+		GetTransform().SetLocalRotate({ 0,0,-Speed_ * _DeltaTime });
+	}
 }
 
 void HoopsScythe::LevelStartEvent()

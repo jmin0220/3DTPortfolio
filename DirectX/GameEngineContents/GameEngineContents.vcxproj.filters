@@ -657,6 +657,12 @@
     <ClInclude Include="OptionActor.h">
       <Filter>02_Actor\UIActor\OptionActor</Filter>
     </ClInclude>
+    <ClInclude Include="HoopsBox.h">
+      <Filter>02_Actor\Stage05Actor\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="HoopsRamp.h">
+      <Filter>02_Actor\Stage05Actor\Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -1087,6 +1093,12 @@
     </ClCompile>
     <ClCompile Include="OptionActor.cpp">
       <Filter>02_Actor\UIActor\OptionActor</Filter>
+    </ClCompile>
+    <ClCompile Include="HoopsBox.cpp">
+      <Filter>02_Actor\Stage05Actor\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="HoopsRamp.cpp">
+      <Filter>02_Actor\Stage05Actor\Objects</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
