@@ -57,13 +57,16 @@ void BigShots_Cannon::LevelStartEvent()
 		GameEngineRenderingEvent{ "PRP_CanonLip.fbx", ANIMATION_FRAME_TIME , false }, 0);
 	FbxRenderer_->ChangeAnimation("Idle");
 
-	std::vector<std::vector<GameEngineRenderUnit>>& RenderUnits = FbxRenderer_->GetAllRenderUnit();
-	for (std::vector<GameEngineRenderUnit>& RenderUnit : RenderUnits)
+	
+	//std::vector<std::vector<GameEngineRenderUnit>>& RenderUnits = FbxRenderer_->GetAllRenderUnit();
+	std::vector<std::vector< std::shared_ptr<GameEngineRenderUnit>>>& RenderUnits = FbxRenderer_->GetAllRenderUnit();
+
+	for (std::vector<std::shared_ptr<GameEngineRenderUnit>>& RenderUnit : RenderUnits)
 	{
-		for (GameEngineRenderUnit& Unit : RenderUnit)
+		for (std::shared_ptr<GameEngineRenderUnit>& Unit : RenderUnit)
 		{
 			// ÅØ½ºÃÄ
-			Unit.ShaderResources.SetTexture("DiffuseTexture", "PRP_S04_Cannon_AM.png");
+			Unit->ShaderResources.SetTexture("DiffuseTexture", "PRP_S04_Cannon_AM.png");
 		}
 	}
 	FbxRenderer_->GetTransform().SetWorldScale({ 2.5f,2.5f,2.5f });

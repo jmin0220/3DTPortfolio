@@ -126,7 +126,7 @@ public:
 	
 	// void Effect(GameEngineMaterial* _Other, GameEngineShaderResourcesHelper* _ShaderResourcesHelper);
 
-	void Effect(class GameEngineRenderUnit& _RenderSet);
+	void Effect(std::shared_ptr<GameEngineRenderUnit> _RenderSet);
 
 	void EffectProcess();
 
@@ -141,7 +141,7 @@ protected:
 
 	ID3D11DepthStencilView* DepthStencilView;
 
-	GameEngineRenderUnit MergeUnit;
+	std::shared_ptr<GameEngineRenderUnit> MergeUnit;
 
 	//GameEngineShaderResourcesHelper MergeShaderResourcesHelper;
 	//GameEngineMaterial* MergePipeLine;

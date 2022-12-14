@@ -90,9 +90,10 @@ public:
 	GameEngineFBXAnimationRenderer& operator=(GameEngineFBXAnimationRenderer&& _Other) noexcept = delete;
 
 	void SetFBXMesh(const std::string& _Name, std::string _Material) override;
-	GameEngineRenderUnit* SetFBXMesh(const std::string& _Name, std::string _Material, size_t _MeshIndex, size_t _SubSetIndex = 0) override;
+	std::shared_ptr<GameEngineRenderUnit> SetFBXMesh(const std::string& _Name, std::string _Material, size_t _MeshIndex, size_t _SubSetIndex = 0) override;
 
 	void CreateFBXAnimation(const std::string& _AnimationName, const GameEngineRenderingEvent& _Desc, int _Index = 0);
+
 
 	void ChangeAnimation(const std::string& _AnimationName);
 
@@ -180,7 +181,6 @@ private:
 	std::map<size_t, std::vector<float4x4>> AnimationBoneMatrixs;
 	// std::map<size_t, std::vector<float4x4>> PrevAnimationBoneMatrixs;
 
-	// 
 	std::map<size_t, std::vector<AnimationBoneData>> AnimationBoneDatas;
 
 	//******BlendAnimation추가본*******(선생님 코드엔 없음)

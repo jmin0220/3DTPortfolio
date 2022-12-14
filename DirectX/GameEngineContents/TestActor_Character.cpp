@@ -47,17 +47,18 @@ void TestActor_Character::Start()
 
 
 	{
-		std::vector<std::vector<GameEngineRenderUnit>>& Units = FBXRenderer_->GetAllRenderUnit();
+		//std::vector<std::vector<GameEngineRenderUnit>>& Units = FBXRenderer_->GetAllRenderUnit();
+		std::vector<std::vector< std::shared_ptr<GameEngineRenderUnit>>>& Units = FBXRenderer_->GetAllRenderUnit();
 
-		for (std::vector<GameEngineRenderUnit>& UnitSet : Units)
+		for (std::vector< std::shared_ptr<GameEngineRenderUnit>>& UnitSet : Units)
 		{
-			for (GameEngineRenderUnit& Unit : UnitSet)
+			for (std::shared_ptr<GameEngineRenderUnit>& Unit : UnitSet)
 			{
-				Unit.ShaderResources.SetTexture("DiffuseTexture", "CH_Tanager_AM.png");
+				Unit->ShaderResources.SetTexture("DiffuseTexture", "CH_Tanager_AM.png");
 				
-				if (true == Unit.ShaderResources.IsConstantBuffer("TexPivot"))
+				if (true == Unit->ShaderResources.IsConstantBuffer("TexPivot"))
 				{
-					Unit.ShaderResources.SetConstantBufferLink("TexPivot", TexPivot_);
+					Unit->ShaderResources.SetConstantBufferLink("TexPivot", TexPivot_);
 				}
 			}
 		}

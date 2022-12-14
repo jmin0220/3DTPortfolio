@@ -20,7 +20,7 @@ void NamePlate::Start()
 	Renderer_->GetTransform().SetLocalPosition({ -670.0f,425.0f });
 
 	Font_ = CreateComponent<GameEngineFontRenderer>();
-	Font_->ChangeCamera(CAMERAORDER::UICAMERA);
+	//Font_->ChangeCamera(CAMERAORDER::UICAMERA);
 	Font_->SetSize(30.0f);
 	Font_->SetColor({ 1.0f,1.0f,1.0f });
 	Font_->SetParent(Renderer_);

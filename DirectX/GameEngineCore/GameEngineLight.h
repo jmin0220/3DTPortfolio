@@ -49,7 +49,7 @@ public:
 	GameEngineLight& operator=(const GameEngineLight& _Other) = delete;
 	GameEngineLight& operator=(GameEngineLight&& _Other) noexcept = delete;
 
-	LightData& GetLightData()
+	LightData& GetLightData() 
 	{
 		return Data;
 	}

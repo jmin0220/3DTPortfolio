@@ -18,7 +18,7 @@ void PlayButton::Start()
 	Button_ = CreateComponent<GameEngineUIRenderer>();
 	Button_->SetTexture("Play.png");
 	Button_->GetTransform().SetWorldScale({ 350.0f, 110.0f });
-	Button_->GetTransform().SetWorldPosition({ 600.0f,-380.0f });
+	Button_->GetTransform().SetWorldPosition({ 600.0f,-380.0f, 100 });
 
 	ButtonCol_ = CreateComponent<GameEngineCollision>();
 	ButtonCol_->SetDebugSetting(CollisionType::CT_OBB2D, float4{ 0.0f,1.0f,0.0f,0.3f });
@@ -33,7 +33,7 @@ void PlayButton::Start()
 	Key_->GetTransform().SetWorldPosition({ 600.0f,-420.0f });
 
 	Font_ = CreateComponent<GameEngineFontRenderer>();
-	Font_->ChangeCamera(CAMERAORDER::UICAMERA);
+	//Font_->ChangeCamera(CAMERAORDER::UICAMERA);
 	Font_->SetText("ÇÃ·¹ÀÌ!", "Noto Sans CJK SC");
 	Font_->SetSize(25.0f);
 	Font_->SetLeftAndRightSort(LeftAndRightSort::CENTER);

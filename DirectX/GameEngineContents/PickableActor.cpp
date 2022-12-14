@@ -92,14 +92,15 @@ void PickableActor::SetStaticMesh(const std::string& _FBX, const std::string& _T
 	//FBXRenderer_->GetTransform().SetLocalMove(float4(CollisionScale.x * -0.5f, CollisionScale.y * -0.5f, 0.0f));
 	if (0 != _Texture.compare(""))
 	{
-		std::vector<std::vector<GameEngineRenderUnit>>& UnitSet = FBXRenderer_->GetAllRenderUnit();
-		for (std::vector<GameEngineRenderUnit>& Units : UnitSet)
+		//std::vector<std::vector<GameEngineRenderUnit>>& UnitSet = FBXRenderer_->GetAllRenderUnit();
+		std::vector<std::vector< std::shared_ptr<GameEngineRenderUnit>>>& UnitSet = FBXRenderer_->GetAllRenderUnit();
+		for (std::vector< std::shared_ptr<GameEngineRenderUnit>>& Units : UnitSet)
 		{
-			for (GameEngineRenderUnit& Unit : Units)
+			for (std::shared_ptr<GameEngineRenderUnit>& Unit : Units)
 			{
-				if (Unit.ShaderResources.IsTexture("DiffuseTexture"))
+				if (Unit->ShaderResources.IsTexture("DiffuseTexture"))
 				{
-					Unit.ShaderResources.SetTexture("DiffuseTexture", _Texture);
+					Unit->ShaderResources.SetTexture("DiffuseTexture", _Texture);
 				}
 			}
 		}

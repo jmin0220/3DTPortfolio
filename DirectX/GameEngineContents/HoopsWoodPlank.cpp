@@ -41,25 +41,25 @@ void HoopsWoodPlank::Start()
 
 	Data.Data_ = float4(0, 0, 1.0f, 1.0f);
 
-	std::vector<std::vector<GameEngineRenderUnit>>& UnitSets = Renderer_->GetAllRenderUnit();
-
-	for (std::vector<GameEngineRenderUnit>& Units : UnitSets)
+	//std::vector<std::vector<GameEngineRenderUnit>>& UnitSets = Renderer_->GetAllRenderUnit();
+	std::vector<std::vector< std::shared_ptr<GameEngineRenderUnit>>>& UnitSets = Renderer_->GetAllRenderUnit();
+	for (std::vector < std::shared_ptr<GameEngineRenderUnit>>& Units : UnitSets)
 	{
-		for (GameEngineRenderUnit& Unit : Units)
+		for (std::shared_ptr<GameEngineRenderUnit>& Unit : Units)
 		{
-			if (true == Unit.ShaderResources.IsConstantBuffer("MaskingData"))
+			if (true == Unit->ShaderResources.IsConstantBuffer("MaskingData"))
 			{
-				Unit.ShaderResources.SetConstantBufferLink("MaskingData", Data);
+				Unit->ShaderResources.SetConstantBufferLink("MaskingData", Data);
 			}
 
-			if (true == Unit.ShaderResources.IsTexture("MaskTexture"))
+			if (true == Unit->ShaderResources.IsTexture("MaskTexture"))
 			{
-				Unit.ShaderResources.SetTexture("MaskTexture", "ENV_S02_WoodPattern_MSK.png");
+				Unit->ShaderResources.SetTexture("MaskTexture", "ENV_S02_WoodPattern_MSK.png");
 			}
 
-			if (true == Unit.ShaderResources.IsTexture("DiffuseTexture"))
+			if (true == Unit->ShaderResources.IsTexture("DiffuseTexture"))
 			{
-				Unit.ShaderResources.SetTexture("DiffuseTexture", "WoodTex.png");
+				Unit->ShaderResources.SetTexture("DiffuseTexture", "WoodTex.png");
 			}
 		}
 	}

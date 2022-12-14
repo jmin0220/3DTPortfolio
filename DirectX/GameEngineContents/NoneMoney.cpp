@@ -25,7 +25,7 @@ void NoneMoney::Start()
 	MoneyIcon_->GetTransform().SetWorldPosition({ 500.0f, 405.0f });
 
 	MoneyNumber_ = CreateComponent<GameEngineFontRenderer>();
-	MoneyNumber_->ChangeCamera(CAMERAORDER::UICAMERA);
+	//MoneyNumber_->ChangeCamera(CAMERAORDER::UICAMERA);
 	MoneyNumber_->SetSize(20.0f);
 	MoneyNumber_->SetLeftAndRightSort(LeftAndRightSort::CENTER);
 	MoneyNumber_->SetParent(MoneyCount_);

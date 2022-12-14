@@ -15,14 +15,15 @@ void SkyboxActor::Start()
 	StaticRenderer_->SetFBXMesh("Skybox_S5.fbx", "Texture");
 
 	// 텍스쳐 씌워주기
-	std::vector<std::vector<GameEngineRenderUnit>>& UnitSet = StaticRenderer_->GetAllRenderUnit();
-	for (std::vector<GameEngineRenderUnit>& Units : UnitSet)
+	//std::vector<std::vector<GameEngineRenderUnit>>& UnitSet = StaticRenderer_->GetAllRenderUnit();
+	std::vector<std::vector< std::shared_ptr<GameEngineRenderUnit>>>& UnitSet = StaticRenderer_->GetAllRenderUnit();
+	for (std::vector< std::shared_ptr<GameEngineRenderUnit>>& Units : UnitSet)
 	{
-		for (GameEngineRenderUnit& Unit : Units)
+		for (std::shared_ptr<GameEngineRenderUnit>& Unit : Units)
 		{
-			if (true == Unit.ShaderResources.IsTexture("DiffuseTexture"))
+			if (true == Unit->ShaderResources.IsTexture("DiffuseTexture"))
 			{
-				Unit.ShaderResources.SetTexture("DiffuseTexture", "S4_SkyBox.png");
+				Unit->ShaderResources.SetTexture("DiffuseTexture", "S4_SkyBox.png");
 			}
 		}
 	}

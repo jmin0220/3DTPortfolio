@@ -28,10 +28,11 @@ void FBXRendererAnimation::Init(const std::string_view& _Name, int _Index)
 	FBXAnimationData = Aniamtion->GetAnimationData(_Index);
 	Start = 0;
 	End = static_cast<unsigned int>(FBXAnimationData->TimeEndCount);
-	
+
 	//******BlendAnimation추가본*******(선생님 코드엔 없음)
 	BlendTime = 0.1f;
 }
+
 
 void FBXRendererAnimation::Update(float _DeltaTime)
 {
@@ -47,18 +48,7 @@ void FBXRendererAnimation::Update(float _DeltaTime)
 			// 여분의 시간이 남게되죠?
 			// 여분의 시간이 중요합니다.
 			Info.CurFrameTime -= Info.Inter;
-
-
-			if (Info.CurFrame == 0)
-			{
-				int a = 0;
-			}
-
-			if (Info.CurFrame == Info.Frames.size() - 1)
-			{
-				int a = 0;
-			}
-
+			++Info.CurFrame;
 
 			if (false == bOnceStart
 				&& Info.CurFrame == 0)
@@ -104,7 +94,6 @@ void FBXRendererAnimation::Update(float _DeltaTime)
 					Info.CurFrame = static_cast<unsigned int>(Info.Frames.size()) - 1;
 				}
 			}
-			++Info.CurFrame;
 		}
 	}
 
@@ -123,13 +112,13 @@ void FBXRendererAnimation::Update(float _DeltaTime)
 
 
 	// mesh      subset
-	std::vector<std::vector<GameEngineRenderUnit>>& Units = ParentRenderer->GetAllRenderUnit();
+	std::vector<std::vector< std::shared_ptr<GameEngineRenderUnit>>>& Units = ParentRenderer->GetAllRenderUnit();
 
 	for (size_t UnitSetIndex = 0; UnitSetIndex < Units.size(); ++UnitSetIndex)
 	{
 		for (size_t RenderUnitIndex = 0; RenderUnitIndex < Units[UnitSetIndex].size(); ++RenderUnitIndex)
 		{
-			GameEngineRenderUnit& Render = Units[UnitSetIndex][RenderUnitIndex];
+			std::shared_ptr<GameEngineRenderUnit>& Render = Units[UnitSetIndex][RenderUnitIndex];
 
 			// 위험!!!! 위험!!!! 뭔가 기분이 멜랑꽇ㄹㅁㄴ어ㅏ림ㄴㅇ엉라ㅣㅁㄴ
 			std::map<size_t, std::vector<float4x4>>::iterator MatrixIter = ParentRenderer->AnimationBoneMatrixs.find(UnitSetIndex);
@@ -211,14 +200,11 @@ void FBXRendererAnimation::Update(float _DeltaTime)
 	}
 }
 
-//******BlendAnimation추가본*******(선생님 코드엔 없음)
 void FBXRendererAnimation::Reset()
 {
 	Info.CurFrameTime = 0.0f;
 	Info.CurFrame = 0;
 	Info.PlayTime = 0.0f;
-	bOnceEnd = false;
-	bOnceStart = false;
 	// Start = 0;
 
 	//******BlendAnimation추가본*******(선생님 코드엔 없음)
@@ -227,7 +213,6 @@ void FBXRendererAnimation::Reset()
 	//CurFrame = 0;
 	//******BlendAnimation추가본*******(선생님 코드엔 없음)
 }
-//******BlendAnimation추가본*******(선생님 코드엔 없음)
 
 void GameEngineFBXAnimationRenderer::SetFBXMesh(const std::string& _Name, std::string _Material)
 {
@@ -249,7 +234,7 @@ void GameEngineFBXAnimationRenderer::SetFBXMesh(const std::string& _Name, std::s
 	GameEngineFBXRenderer::SetFBXMesh(_Name, _Material);
 }
 
-GameEngineRenderUnit* GameEngineFBXAnimationRenderer::SetFBXMesh(const std::string& _Name, std::string _Material, size_t _MeshIndex, size_t _SubSetIndex /*= 0*/)
+std::shared_ptr<GameEngineRenderUnit> GameEngineFBXAnimationRenderer::SetFBXMesh(const std::string& _Name, std::string _Material, size_t _MeshIndex, size_t _SubSetIndex /*= 0*/)
 {
 	std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Find(_Material);
 
@@ -286,7 +271,7 @@ GameEngineRenderUnit* GameEngineFBXAnimationRenderer::SetFBXMesh(const std::stri
 	FindFBXMesh->GetMeshInfosCount();
 
 	// 텍스처 세팅은 부모님이 맡아서 처리해주고
-	GameEngineRenderUnit* Unit = GameEngineFBXRenderer::SetFBXMesh(_Name, _Material, _MeshIndex, _SubSetIndex);
+	std::shared_ptr<GameEngineRenderUnit> Unit = GameEngineFBXRenderer::SetFBXMesh(_Name, _Material, _MeshIndex, _SubSetIndex);
 
 	if (nullptr == Unit)
 	{
@@ -437,13 +422,13 @@ void FBXRendererAnimation::BlendUpdate(float _DeltaTime)
 	unsigned int NextFrame = 0;
 
 	// mesh      subset
-	std::vector<std::vector<GameEngineRenderUnit>>& Units = ParentRenderer->GetAllRenderUnit();
+	std::vector<std::vector<std::shared_ptr<GameEngineRenderUnit>>>& Units = ParentRenderer->GetAllRenderUnit();
 
 	for (size_t UnitSetIndex = 0; UnitSetIndex < Units.size(); ++UnitSetIndex)
 	{
 		for (size_t RenderUnitIndex = 0; RenderUnitIndex < Units[UnitSetIndex].size(); ++RenderUnitIndex)
 		{
-			GameEngineRenderUnit& Render = Units[UnitSetIndex][RenderUnitIndex];
+			std::shared_ptr<GameEngineRenderUnit>& Render = Units[UnitSetIndex][RenderUnitIndex];
 
 			// 위험!!!! 위험!!!! 뭔가 기분이 멜랑꽇ㄹㅁㄴ어ㅏ림ㄴㅇ엉라ㅣㅁㄴ
 			std::map<size_t, std::vector<float4x4>>::iterator MatrixIter = ParentRenderer->AnimationBoneMatrixs.find(UnitSetIndex);

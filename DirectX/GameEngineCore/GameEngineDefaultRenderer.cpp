@@ -15,8 +15,6 @@ void GameEngineDefaultRenderer::Start()
 {
 	GameEngineRenderer::Start();
 	Unit = std::make_shared<GameEngineRenderUnit>();
-
-	// 뭔가 또 할일이 있다면 여기서 해라.
 }
 
 void GameEngineDefaultRenderer::SetMesh(const std::string& _Name)
@@ -28,6 +26,7 @@ void GameEngineDefaultRenderer::SetMaterial(const std::string& _Name)
 {
 	Unit->SetMaterial(_Name);
 	Unit->SetRenderer(std::dynamic_pointer_cast<GameEngineRenderer>(shared_from_this()));
+	Unit->PushCamera();
 }
 
 void GameEngineDefaultRenderer::Render(float _DeltaTime) 

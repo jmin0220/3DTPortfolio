@@ -478,36 +478,37 @@ void PlayerActor::SetCharacterTexture()
 {
 	SkinData_.BodyColor = float4(0.37f, 0.64f, 0.91f);
 	{
-		std::vector<std::vector<GameEngineRenderUnit>>& RenderUnits = FbxRenderer_->GetAllRenderUnit();
-		for (std::vector<GameEngineRenderUnit>& RenderUnit : RenderUnits)
+		//std::vector<std::vector<GameEngineRenderUnit>>& RenderUnits = FbxRenderer_->GetAllRenderUnit();
+		std::vector<std::vector< std::shared_ptr<GameEngineRenderUnit>>>& RenderUnits = FbxRenderer_->GetAllRenderUnit();
+		for (std::vector< std::shared_ptr<GameEngineRenderUnit>>& RenderUnit : RenderUnits)
 		{
-			for (GameEngineRenderUnit& Unit : RenderUnit)
+			for (std::shared_ptr<GameEngineRenderUnit>& Unit : RenderUnit)
 			{
 				// 텍스쳐
-				Unit.ShaderResources.SetTexture("DiffuseTexture", "CH_FallGuy_AM.png");
+				Unit->ShaderResources.SetTexture("DiffuseTexture", "CH_FallGuy_AM.png");
 
 				// 색 정보
-				if (true == Unit.ShaderResources.IsConstantBuffer("DiffuseData"))
+				if (true == Unit->ShaderResources.IsConstantBuffer("DiffuseData"))
 				{
-					Unit.ShaderResources.SetConstantBufferLink("DiffuseData", SkinData_);
+					Unit->ShaderResources.SetConstantBufferLink("DiffuseData", SkinData_);
 				}
 
 				// 마스킹
-				if (true == Unit.ShaderResources.IsTexture("FaceEyeMskTexture"))
+				if (true == Unit->ShaderResources.IsTexture("FaceEyeMskTexture"))
 				{
-					Unit.ShaderResources.SetTexture("FaceEyeMskTexture", "CH_FallGuy_faceEyes_MSK.png");
+					Unit->ShaderResources.SetTexture("FaceEyeMskTexture", "CH_FallGuy_faceEyes_MSK.png");
 				}
 
 				// 스킨
-				if (true == Unit.ShaderResources.IsTexture("BodyMskTexture"))
+				if (true == Unit->ShaderResources.IsTexture("BodyMskTexture"))
 				{
-					Unit.ShaderResources.SetTexture("BodyMskTexture", "CH_FallGuy_BackToFrontGradient_PTN.png");
+					Unit->ShaderResources.SetTexture("BodyMskTexture", "CH_FallGuy_BackToFrontGradient_PTN.png");
 				}
 
 				// 노말맵 + 빛
-				if (true == Unit.ShaderResources.IsTexture("NormalTexture"))
+				if (true == Unit->ShaderResources.IsTexture("NormalTexture"))
 				{
-					Unit.ShaderResources.SetTexture("NormalTexture", "CH_FallGuy_NM.png");
+					Unit->ShaderResources.SetTexture("NormalTexture", "CH_FallGuy_NM.png");
 				}
 
 			}

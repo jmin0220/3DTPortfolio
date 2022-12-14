@@ -27,7 +27,7 @@ void SuccessCount::Start()
 
 	SuccessFont_ = CreateComponent<GameEngineFontRenderer>();
 	SuccessFont_->SetSize(22.0f);
-	SuccessFont_->ChangeCamera(CAMERAORDER::UICAMERA);
+	//SuccessFont_->ChangeCamera(CAMERAORDER::UICAMERA);
 	SuccessFont_->SetLeftAndRightSort(LeftAndRightSort::CENTER);
 	SuccessFont_->SetText("³» Á¡¼ö", "Noto Sans CJK SC");
 	SuccessFont_->SetScreenPostion({ 1490.0f, 60.0f });
@@ -41,7 +41,7 @@ void SuccessCount::Start()
 
 	ScoreFont_ = CreateComponent<GameEngineFontRenderer>();
 	ScoreFont_->SetSize(30.0f);
-	ScoreFont_->ChangeCamera(CAMERAORDER::UICAMERA);
+	//ScoreFont_->ChangeCamera(CAMERAORDER::UICAMERA);
 	ScoreFont_->SetLeftAndRightSort(LeftAndRightSort::CENTER);
 	ScoreFont_->SetText(std::to_string(Score_), "Titan One");
 	ScoreFont_->SetScreenPostion({ 1490.0f, 90.0f });

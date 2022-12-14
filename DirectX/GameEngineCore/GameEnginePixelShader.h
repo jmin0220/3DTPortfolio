@@ -24,16 +24,18 @@ public:
 	GameEnginePixelShader();
 	~GameEnginePixelShader();
 
-private:
-
 	// delete Function
 	GameEnginePixelShader(const GameEnginePixelShader& _Other) = delete;
 	GameEnginePixelShader(GameEnginePixelShader&& _Other) noexcept = delete;
 	GameEnginePixelShader& operator=(const GameEnginePixelShader& _Other) = delete;
 	GameEnginePixelShader& operator=(GameEnginePixelShader&& _Other) noexcept = delete;
 
-public:
 	void Setting();
+
+	bool GetIsDeferred() 
+	{
+		return IsDeferred;
+	}
 
 protected:
 	void ShaderCompile(
@@ -42,6 +44,7 @@ protected:
 		UINT _VersionHigh, UINT _VersionLow);
 
 private:
+	bool IsDeferred;
 	ID3D11PixelShader* ShaderPtr;
 };
 

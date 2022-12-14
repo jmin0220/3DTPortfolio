@@ -15,7 +15,6 @@ void TitleActor::Start()
 {
 	SlicePos_ = float4(1, 0, 0, 0);
 
-
 	{
 		BG_ = CreateComponent<GameEngineTextureRenderer>();
 		BG_->GetTransform().SetWorldScale({ 1600.0f, 900.0f });
@@ -57,7 +56,7 @@ void TitleActor::Start()
 
 	{
 		Font_ = CreateComponent<GameEngineFontRenderer>();
-		Font_->ChangeCamera(CAMERAORDER::UICAMERA);
+		//Font_->ChangeCamera(CAMERAORDER::UICAMERA);
 		Font_->SetLeftAndRightSort(LeftAndRightSort::CENTER);
 		Font_->SetScreenPostion({ 825.0f,700.0f });
 		Font_->SetSize(0.0f);
@@ -82,7 +81,7 @@ void TitleActor::LevelStartEvent()
 	FontEndStart_ = false;
 	IsLevelChange_ = false;
 	FontSize_ = 0.0f;
-	Font_->Off();
+	Font_->On();
 }
 
 void TitleActor::LogoSizeAnimation()

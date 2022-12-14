@@ -13,35 +13,36 @@ void VFXWaterActor::Start()
 {
 	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer = CreateComponent<GameEngineFBXStaticRenderer>();
 	Renderer->SetFBXMesh("Water.FBX", "Water");
-	std::vector<std::vector<GameEngineRenderUnit>>& UnitSets = Renderer->GetAllRenderUnit();
+	//std::vector<std::vector<GameEngineRenderUnit>>& UnitSets = Renderer->GetAllRenderUnit();
+	std::vector<std::vector< std::shared_ptr<GameEngineRenderUnit>>>& UnitSets = Renderer->GetAllRenderUnit();
 
 	//WaterData_.WaterColor = float4::RED;
 	//WaterData_.WaterColor = float4{0.99f,0.63f,0.79f};
 
 	SmpData_.SmpInfo_ = float4(0, 0, 0.8f, 0.8f);
 
-	for (std::vector<GameEngineRenderUnit>& Units : UnitSets)
+	for (std::vector< std::shared_ptr<GameEngineRenderUnit>>& Units : UnitSets)
 	{
-		for (GameEngineRenderUnit& Unit : Units)
+		for (std::shared_ptr<GameEngineRenderUnit>& Unit : Units)
 		{
-			if (true == Unit.ShaderResources.IsConstantBuffer("PatternSmpData"))
+			if (true == Unit->ShaderResources.IsConstantBuffer("PatternSmpData"))
 			{
-				Unit.ShaderResources.SetConstantBufferLink("PatternSmpData", SmpData_);
+				Unit->ShaderResources.SetConstantBufferLink("PatternSmpData", SmpData_);
 			}
 
-			if ( true == Unit.ShaderResources.IsTexture("WaterTex"))
+			if ( true == Unit->ShaderResources.IsTexture("WaterTex"))
 			{
-				Unit.ShaderResources.SetTexture("WaterTex", "WaterColor.png");
+				Unit->ShaderResources.SetTexture("WaterTex", "WaterColor.png");
 			}
 
-			if (true == Unit.ShaderResources.IsTexture("PatternTex"))
+			if (true == Unit->ShaderResources.IsTexture("PatternTex"))
 			{
-				Unit.ShaderResources.SetTexture("PatternTex", "ENV_WaterPattern.png");
+				Unit->ShaderResources.SetTexture("PatternTex", "ENV_WaterPattern.png");
 			}
 
-			if (true == Unit.ShaderResources.IsTexture("NoiseTex"))
+			if (true == Unit->ShaderResources.IsTexture("NoiseTex"))
 			{
-				Unit.ShaderResources.SetTexture("NoiseTex", "VFX_Noise02.png");
+				Unit->ShaderResources.SetTexture("NoiseTex", "VFX_Noise02.png");
 			}
 		}
 	}

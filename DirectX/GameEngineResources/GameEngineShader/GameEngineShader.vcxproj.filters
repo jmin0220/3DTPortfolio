@@ -28,6 +28,16 @@
     <FxCompile Include="RenderOption.fx" />
     <FxCompile Include="TransformHeader.fx" />
     <FxCompile Include="LightHeader.fx" />
+    <FxCompile Include="DeferredColor.hlsl">
+      <Filter>Object</Filter>
+    </FxCompile>
+    <FxCompile Include="DeferredHeader.fx" />
+    <FxCompile Include="CalDeferredLight.hlsl">
+      <Filter>Deferred</Filter>
+    </FxCompile>
+    <FxCompile Include="CalDeferredMerge.hlsl">
+      <Filter>Deferred</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debug">
@@ -38,6 +48,9 @@
     </Filter>
     <Filter Include="TargetEffect">
       <UniqueIdentifier>{ae7b6a6e-95f0-4707-af5c-a8e2aed6810a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Deferred">
+      <UniqueIdentifier>{e5dfe191-e307-4736-a38c-fdb7af4e95a3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

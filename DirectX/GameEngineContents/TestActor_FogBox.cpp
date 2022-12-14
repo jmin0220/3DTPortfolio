@@ -21,19 +21,20 @@ void TestActor_FogBox::Start()
 	FogData_.FogBottomPos_ = GetTransform().GetWorldPosition();
 	FogData_.FogTopPos_ = FogData_.FogBottomPos_.y + Renderer_->GetTransform().GetWorldScale().y;
 
-	std::vector<std::vector<GameEngineRenderUnit>>& UnitSet = Renderer_->GetAllRenderUnit();
-	for (std::vector<GameEngineRenderUnit>& Units : UnitSet)
+	//std::vector<std::vector<GameEngineRenderUnit>>& UnitSet = Renderer_->GetAllRenderUnit();
+	std::vector<std::vector< std::shared_ptr<GameEngineRenderUnit>>>& UnitSet = Renderer_->GetAllRenderUnit();
+	for (std::vector< std::shared_ptr<GameEngineRenderUnit>>& Units : UnitSet)
 	{
-		for (GameEngineRenderUnit& Unit : Units)
+		for (std::shared_ptr<GameEngineRenderUnit>& Unit : Units)
 		{
-			if (true == Unit.ShaderResources.IsConstantBuffer("FogData"))
+			if (true == Unit->ShaderResources.IsConstantBuffer("FogData"))
 			{
-				Unit.ShaderResources.SetConstantBufferLink("FogData", FogData_);
+				Unit->ShaderResources.SetConstantBufferLink("FogData", FogData_);
 			}
 
-			if (true == Unit.ShaderResources.IsTexture("DiffuseTexture"))
+			if (true == Unit->ShaderResources.IsTexture("DiffuseTexture"))
 			{
-				Unit.ShaderResources.SetTexture("DiffuseTexture", "VFX_NoiseFog.png");
+				Unit->ShaderResources.SetTexture("DiffuseTexture", "VFX_NoiseFog.png");
 			}
 		}
 	}

@@ -117,7 +117,7 @@ void GameEngineLevel::PushRenderer(std::shared_ptr<GameEngineRenderer> _Renderer
 	std::shared_ptr<GameEngineCamera> NextCamera = Cameras[_CameraOrder];
 	// 다른 카메라로 들어갈수도 있습니다.
 	Cameras[_CameraOrder]->PushRenderer(_Renderer);
-	_Renderer->Camera = NextCamera;
+	_Renderer->Camera = NextCamera.get();
 }
 
 void GameEngineLevel::PushCamera(std::shared_ptr<GameEngineCamera> _Camera, int _CameraOrder)

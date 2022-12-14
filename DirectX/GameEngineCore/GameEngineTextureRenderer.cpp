@@ -10,7 +10,7 @@ void FrameAnimation::PauseSwtich()
 
 void FrameAnimation::Reset()
 {
-	//Info.Inter = 0.0f;
+	Info.Inter = 0.0f;
 	Info.CurFrame = 0;
 }
 
@@ -18,7 +18,7 @@ void FrameAnimation::Update(float _Delta)
 {
 	if (false == Pause)
 	{
-		Info.CurFrameTime += _Delta;
+		Info.Inter += _Delta;
 
 		if (nullptr != Time)
 		{
@@ -36,7 +36,7 @@ void FrameAnimation::Update(float _Delta)
 			bOnceEnd = false;
 		}
 
-		if (Info.Inter <= Info.CurFrameTime)
+		if (Info.Inter <= Info.Inter)
 		{
 			if (Info.CurFrame == (Info.Frames.size() - 1)
 				&& false == bOnceEnd)
@@ -68,7 +68,7 @@ void FrameAnimation::Update(float _Delta)
 					Info.CurFrame = static_cast<unsigned int>(Info.Frames.size()) - 1;
 				}
 			}
-			Info.CurFrameTime -= Info.Inter;
+			Info.Inter -= Info.Inter;
 		}
 	}
 

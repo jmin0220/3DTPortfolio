@@ -141,7 +141,7 @@ void LobbyLevel::LevelEndEvent()
 
 	Bingle_->Death();
 	
-	//ContentsCore::GetInst()->ReleaseCurLevelResource();
+	ContentsCore::GetInst()->ReleaseCurLevelResource();
 }
 
 void LobbyLevel::LobbyStart(const StateInfo& _Info)

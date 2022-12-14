@@ -30,13 +30,15 @@ void HexTile::Start()
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
 	Renderer_->SetFBXMesh("HexTile.FBX", "TextureColor");
 	//Renderer_->GetTransform().SetWorldScale({ 10.0f,10.0f,10.0f });
-	std::vector<std::vector<GameEngineRenderUnit>>& UnitSet = Renderer_->GetAllRenderUnit();
-	for (std::vector<GameEngineRenderUnit>& Units : UnitSet)
+	 
+	//std::vector<std::vector<GameEngineRenderUnit>>& UnitSet = Renderer_->GetAllRenderUnit();
+	std::vector<std::vector< std::shared_ptr<GameEngineRenderUnit>>>& UnitSet = Renderer_->GetAllRenderUnit();
+	for (std::vector< std::shared_ptr<GameEngineRenderUnit>>& Units : UnitSet)
 	{
-		for (GameEngineRenderUnit& Unit : Units)
+		for (std::shared_ptr<GameEngineRenderUnit> Unit : Units)
 		{
-			Unit.ShaderResources.SetConstantBufferLink("MeshPixelData", MeshPixelData_);
-			if (true == Unit.ShaderResources.IsTexture("DiffuseTexture"))
+			Unit->ShaderResources.SetConstantBufferLink("MeshPixelData", MeshPixelData_);
+			if (true == Unit->ShaderResources.IsTexture("DiffuseTexture"))
 			{
 				int RanNum = GameEngineRandom::MainRandom.RandomInt(0, 4);
 				if (RanNum == 0)
@@ -59,7 +61,7 @@ void HexTile::Start()
 				{
 					TexName = "HexAGoneBlue3";
 				}
-				Unit.ShaderResources.SetTexture("DiffuseTexture", TexName + ".png");
+				Unit->ShaderResources.SetTexture("DiffuseTexture", TexName + ".png");
 			}
 		}
 	}

@@ -30,12 +30,13 @@ void PlayerTestActor::Start()
 	}
 
 	{
-		std::vector<std::vector<GameEngineRenderUnit>>& RenderUnits = FbxRenderer_->GetAllRenderUnit();
-		for (std::vector<GameEngineRenderUnit>& RenderUnit : RenderUnits)
+		//std::vector<std::vector<GameEngineRenderUnit>>& RenderUnits = FbxRenderer_->GetAllRenderUnit();
+		std::vector<std::vector< std::shared_ptr<GameEngineRenderUnit>>>& RenderUnits = FbxRenderer_->GetAllRenderUnit();
+		for (std::vector< std::shared_ptr<GameEngineRenderUnit>>& RenderUnit : RenderUnits)
 		{
-			for (GameEngineRenderUnit& Unit : RenderUnit)
+			for (std::shared_ptr<GameEngineRenderUnit>& Unit : RenderUnit)
 			{
-				Unit.ShaderResources.SetTexture("DiffuseTexture", "CH_FallGuy_AM.png");
+				Unit->ShaderResources.SetTexture("DiffuseTexture", "CH_FallGuy_AM.png");
 				//Unit.ShaderResources.SetTexture("DiffuseTexture", "CH_FallGuy_NM.png");
 			}
 		}

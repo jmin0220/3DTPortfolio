@@ -39,7 +39,7 @@ void CrownCount::Start()
 	Icon_->GetTransform().SetLocalPosition({ -765.0f, 335.0f });
 
 	Font_ = CreateComponent<GameEngineFontRenderer>();
-	Font_->ChangeCamera(CAMERAORDER::UICAMERA);
+	//Font_->ChangeCamera(CAMERAORDER::UICAMERA);
 	Font_->SetSize(20.0f);
 	Font_->SetLeftAndRightSort(LeftAndRightSort::CENTER);
 	Font_->SetColor({ 1.0f,1.0f,1.0f });
