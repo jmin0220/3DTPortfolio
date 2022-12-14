@@ -3,6 +3,7 @@
 #include <math.h>
 
 PhysXCommonFunc::PhysXCommonFunc() 
+    :CommonPlayer_(nullptr)
 {
 }
 

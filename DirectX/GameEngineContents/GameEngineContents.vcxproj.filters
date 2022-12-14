@@ -223,6 +223,9 @@
     <Filter Include="02_Actor\Stage05Actor\Objects">
       <UniqueIdentifier>{90e22ab7-d1a1-40c4-b201-8271bd0e802e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02_Actor\Player">
+      <UniqueIdentifier>{0241de6c-24f2-46e1-9889-161d6c0bdaaa}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02_Actor\UIActor\IntroActor">
       <UniqueIdentifier>{6eab3377-834d-463a-b1d5-69be0489ea75}</UniqueIdentifier>
     </Filter>
@@ -398,9 +401,6 @@
     </ClInclude>
     <ClInclude Include="VirtualPhysXLevel.h">
       <Filter>01_Level\PhysXLevel</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerActor.h">
-      <Filter>02_Actor</Filter>
     </ClInclude>
     <ClInclude Include="GameManagerGUI.h">
       <Filter>98_LevelGUI</Filter>
@@ -654,6 +654,9 @@
     <ClInclude Include="IntroduceGame.h">
       <Filter>02_Actor\UIActor\IntroActor</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerActor.h">
+      <Filter>02_Actor\Player</Filter>
+    </ClInclude>
     <ClInclude Include="OptionActor.h">
       <Filter>02_Actor\UIActor\OptionActor</Filter>
     </ClInclude>
@@ -830,9 +833,6 @@
     <ClCompile Include="VirtualPhysXLevel.cpp">
       <Filter>01_Level\PhysXLevel</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerActor.cpp">
-      <Filter>02_Actor</Filter>
-    </ClCompile>
     <ClCompile Include="GameManagerGUI.cpp">
       <Filter>98_LevelGUI</Filter>
     </ClCompile>
@@ -868,9 +868,6 @@
     </ClCompile>
     <ClCompile Include="PhysXPendulaComponent.cpp">
       <Filter>999_Test\TestComponent\TestPhysX</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerActor_State.cpp">
-      <Filter>02_Actor</Filter>
     </ClCompile>
     <ClCompile Include="PhysXCCTActorComponent.cpp">
       <Filter>03_Component\PhysXComponent</Filter>
@@ -1090,6 +1087,15 @@
     </ClCompile>
     <ClCompile Include="IntroduceGame.cpp">
       <Filter>02_Actor\UIActor\IntroActor</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerActor_State.cpp">
+      <Filter>02_Actor\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerActor.cpp">
+      <Filter>02_Actor\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerActor_AnimationState.cpp">
+      <Filter>02_Actor\Player</Filter>
     </ClCompile>
     <ClCompile Include="OptionActor.cpp">
       <Filter>02_Actor\UIActor\OptionActor</Filter>

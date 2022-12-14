@@ -3,7 +3,7 @@
 #include "PhysXCommonFunc.h"
 
 // callback 이벤트를 재정의할 클래스
-class CustomSimulationEventCallback : public physx::PxSimulationEventCallback
+class CustomSimulationEventCallback : public physx::PxSimulationEventCallback, public PhysXCommonFunc
 {
 public:
 	void SetPlayer(physx::PxRigidDynamic* _Dynamic)
@@ -18,6 +18,11 @@ public:
 	void onSleep(physx::PxActor** actors, physx::PxU32 count) override {};
 	void onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count) override;
 	void onAdvance(const physx::PxRigidBody* const* bodyBuffer, const physx::PxTransform* poseBuffer, const physx::PxU32 count) override {};
+
+	inline void SetCommonPlayer(PlayerActor* Player_)
+	{
+		CommonPlayer_ = Player_;
+	}
 
 private:
 	physx::PxRigidDynamic* PlayerDynamic_ = nullptr;
@@ -57,6 +62,11 @@ public:
 	inline void SetSimulationPlayer(physx::PxRigidDynamic* _PlayerDynamic)
 	{
 		SimulationEventCallback_->SetPlayer(_PlayerDynamic);
+	}
+
+	inline void SetCommonPlayer(PlayerActor* Player_)
+	{
+		SimulationEventCallback_->SetCommonPlayer(Player_);
 	}
 
 protected:

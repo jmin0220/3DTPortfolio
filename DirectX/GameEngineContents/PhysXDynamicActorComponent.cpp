@@ -73,7 +73,7 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 	Instshape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxCapsuleGeometry(ScaledRadius * 1.3f, ScaledHeight * 0.9f), *material_);
 	// 충돌시점 콜백을 위한 세팅
 	Instshape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Player)
-		, static_cast<physx::PxU32>(PhysXFilterGroup::Ground), 0, 0));
+		, 0, 0, 0));
 	Instshape_->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
 	Instshape_->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
 
@@ -107,6 +107,14 @@ void PhysXDynamicActorComponent::SetMoveJump()
 {
 	dynamic_->addForce(physx::PxVec3(0.0f, PLAYER_JUMP_FORCE, 0.0f), physx::PxForceMode::eIMPULSE);
 }
+
+void PhysXDynamicActorComponent::SetMoveDive(float _Rot)
+{
+	float4 DirVec = float4::DegreeToDirection2D(_Rot);
+	DirVec *= 1.0f;
+	dynamic_->addForce(physx::PxVec3(DirVec.y, PLAYER_JUMP_FORCE, DirVec.x), physx::PxForceMode::eIMPULSE);
+}
+
 
 void PhysXDynamicActorComponent::SetDynamicIdle()
 {
@@ -179,26 +187,51 @@ void PhysXDynamicActorComponent::SetPlayerStartPos(float4 _Pos)
 
 bool PhysXDynamicActorComponent::PlayerStandUp(float _DeltaTime)
 {
-
+	bool Result = false;
+	dynamic_->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, true);
+	// dynamic의 Angle, Axis를 구한다
 	float Angle;
 	physx::PxVec3 Vec3;
 	dynamic_->getGlobalPose().q.toRadiansAndUnitAxis(Angle, Vec3);
+	//기준이 되는 Y-Axis  선언
 	float4 YAxis(0.0f, 1.0f, 0.0f);
+	float4 ZAxis(0.0f, 0.0f, 1.0f);
 	physx::PxVec3 YAxisVec3(0.0f, 1.0f, 0.0f);
+	float AngleDegree = Angle * GameEngineMath::RadianToDegree;
 
+	float4 XZAngle = float4{ Vec3.x, 0.0f, Vec3.z };
+	XZAngle.Normalize3D();
+	float AngDiffXZ = acosf(float4::DotProduct3D(XZAngle, ZAxis));
+
+	//dynamic의 Axis와 Y-Axis 사이의 각도
 	float AngDiff = acosf(float4::DotProduct3D({ Vec3.x, Vec3.y, Vec3.z }, YAxis));
-	//float4::VectorRotationToDegreeYAxis(float4Vec3, );
-
+	float AngDiffEuler = AngDiff * GameEngineMath::RadianToDegree;
+	//dynamic의 Axis와 Y-Axis 사이의 NoramlVector
 	physx::PxVec3 Normal = Vec3.cross(YAxisVec3);
-	float4 FinalRot = RodriguesRotate({ Vec3.x, Vec3.y, Vec3.z }, { Normal.x, Normal.y, Normal.z }, AngDiff);
-	float4 FinalPos = RodriguesRotate({ dynamic_->getGlobalPose().p.x, dynamic_->getGlobalPose().p.y, dynamic_->getGlobalPose().p.z }, 
-		{ Normal.x, Normal.y, Normal.z }, AngDiff);
-	physx::PxVec3 FinalPosVec3 = physx::PxVec3(FinalPos.x, FinalPos.y, FinalPos.z);
-	float4 tmpQuat = FinalRot.DegreeRotationToQuaternionReturn();
-	const physx::PxQuat tmpPxQuat(tmpQuat.x, tmpQuat.y, tmpQuat.z, tmpQuat.w);
-	const physx::PxTransform tmpTransform(dynamic_->getGlobalPose().p, tmpPxQuat);
+
+	//노말백터를 기준으로 YAxis로 AngDiff만큼 회전
+	float4 FinalRot = RodriguesRotate({ Vec3.x, Vec3.y, Vec3.z }, { Normal.x, Normal.y, Normal.z }, 0.01f);
+	if (FinalRot.y > 0.995f)
+	{
+		FinalRot.x = 0.0f;
+		FinalRot.z = 0.0f;
+		FinalRot.y = 1.0f;
+		Result =  true;
+	}
+	float ChangedAngle = Angle - 0.01f;
+	if (ChangedAngle <= 0.0f)
+	{
+		Result = true;
+		ChangedAngle = 0.0f;
+	}
+	physx::PxVec3 FinalRotVec3(FinalRot.x, FinalRot.y, FinalRot.z);
+	FinalRotVec3.normalize();
+	physx::PxQuat tmpQuat(ChangedAngle, Vec3);
+	//const physx::PxQuat tmpPxQuat(tmpQuat.x, tmpQuat.y, tmpQuat.z, tmpQuat.w);
+	const physx::PxTransform tmpTransform(dynamic_->getGlobalPose().p, tmpQuat);
 	dynamic_->setGlobalPose(tmpTransform);
-	return true;
+
+	return Result;
 }
 
 void PhysXDynamicActorComponent::SpeedLimit()

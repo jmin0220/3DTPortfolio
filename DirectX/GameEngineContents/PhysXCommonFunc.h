@@ -1,6 +1,7 @@
 #pragma once
 
 // 설명 : PhysX 모듈에서 공통으로 사용할 함수들
+class PlayerActor;
 class PhysXCommonFunc
 {
 	typedef struct {
@@ -72,7 +73,9 @@ protected:
 	float resitution_ = 0.0f;
 
 	float4 DynamicPivot_ = {0.0f, 0.0f, 0.0f};
+	PlayerActor* CommonPlayer_;
 private:
+
 
 };
 

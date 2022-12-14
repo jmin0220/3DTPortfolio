@@ -19,6 +19,8 @@ public:
 	void SetMoveSpeed(float4 _MoveSpeed);
 
 	void SetMoveJump();
+	void SetMoveDive(float _Rot);
+
 
 	// RigidDynamic을 CCT에서 해제하는 함수
 	void SetDynamicIdle();
@@ -69,8 +71,28 @@ public:
 		IsSpeedLimit_ = !IsSpeedLimit_;
 	}
 
+	float4 GetDynamicVelocity()
+	{
+		physx::PxVec3 Vec3 = dynamic_->getLinearVelocity();
+		return float4{ Vec3.x, Vec3.y, Vec3.z };
+	}
+
 	//회전 움직임 함수
 	void SetChangedRot(float4 _Rot);
+
+	//중력끄기
+	void TurnOffGravity()
+	{
+		dynamic_->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, true);
+	}
+
+	//중력키기
+	void TurnOnGravity()
+	{
+		dynamic_->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, false);
+	}
+
+	void LockAxis();
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;

@@ -224,7 +224,12 @@ void CustomSimulationEventCallback::onTrigger(physx::PxTriggerPair* pairs, physx
 				&& current.status & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
 			{
 				// TODO::닿았을때 처리
-				int a = 0;
+				if (CommonPlayer_ != nullptr)
+				{
+					CommonPlayer_->TouchGroundOn();
+					CommonPlayer_->DetachGroundOff();
+				}
+
 			}
 
 			// 충돌체의 filterData가 ground이면서 떨어졌을 경우
@@ -232,7 +237,11 @@ void CustomSimulationEventCallback::onTrigger(physx::PxTriggerPair* pairs, physx
 				&& current.status & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
 			{
 				// TODO::떨어졌을 때 처리
-				int a = 0;
+				if (CommonPlayer_ != nullptr)
+				{
+					CommonPlayer_->TouchGroundOff();
+					CommonPlayer_->DetachGroundOn();
+				}
 			}
 		}
 	}

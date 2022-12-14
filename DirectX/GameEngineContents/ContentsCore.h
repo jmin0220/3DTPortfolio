@@ -112,6 +112,9 @@ private:
 	void ResLoadMapEditor(GameEngineDirectory& _Dir);
 	void ResScaleTest(GameEngineDirectory& _Dir);
 
+	//캐릭터 리소스
+	void ResCharacter();
+
 	void LevelAllResourceLoad(GameEngineDirectory& _LevelDir);
 
 	float LoadingSize_;

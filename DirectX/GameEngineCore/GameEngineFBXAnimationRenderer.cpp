@@ -47,7 +47,18 @@ void FBXRendererAnimation::Update(float _DeltaTime)
 			// 여분의 시간이 남게되죠?
 			// 여분의 시간이 중요합니다.
 			Info.CurFrameTime -= Info.Inter;
-			++Info.CurFrame;
+
+
+			if (Info.CurFrame == 0)
+			{
+				int a = 0;
+			}
+
+			if (Info.CurFrame == Info.Frames.size() - 1)
+			{
+				int a = 0;
+			}
+
 
 			if (false == bOnceStart
 				&& Info.CurFrame == 0)
@@ -93,6 +104,7 @@ void FBXRendererAnimation::Update(float _DeltaTime)
 					Info.CurFrame = static_cast<unsigned int>(Info.Frames.size()) - 1;
 				}
 			}
+			++Info.CurFrame;
 		}
 	}
 
@@ -205,6 +217,8 @@ void FBXRendererAnimation::Reset()
 	Info.CurFrameTime = 0.0f;
 	Info.CurFrame = 0;
 	Info.PlayTime = 0.0f;
+	bOnceEnd = false;
+	bOnceStart = false;
 	// Start = 0;
 
 	//******BlendAnimation추가본*******(선생님 코드엔 없음)

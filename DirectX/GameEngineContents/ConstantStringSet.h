@@ -14,6 +14,9 @@
 //플레이어 점프힘
 #define PLAYER_JUMP_FORCE 10.0f
 
+//플레이어 다이브Y 힘
+#define PLAYER_DIVE_FORCE 8.0f
+
 //플레이어 eventCol 사이즈
 #define PLAYER_COL_SCALE 3.0f, 5.0f, 3.0f
 
@@ -44,6 +47,7 @@
 #define DIR_LEVEL_STAGE04 "Levels\\StageLevel\\Stage04"
 #define DIR_LEVEL_STAGE05 "Levels\\StageLevel\\Stage05"
 #define DIR_LEVEL_WINNER "Levels\\WinnerLevel"
+#define DIR_CHARACTER "CHARACTER"
 
 // 테스트용은 분리
 #define DIR_TESTLEVEL_CAMERA "Levels\\TestLevels\\CameraTestLevel"

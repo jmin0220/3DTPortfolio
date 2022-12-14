@@ -7,7 +7,7 @@
 #include "CameraArm.h"
 #include "ServerPacket.h"
 
-float SPEED_PLAYER = 2500.0f;
+float SPEED_PLAYER = 10000.0f;
 float AngularSpeed = 520.0f;
 
 PlayerActor* PlayerActor::MainPlayer = nullptr;
@@ -15,6 +15,11 @@ bool PlayerActor::IsMainPlayerSpawned_ = false;
 
 PlayerActor::PlayerActor() :
 	CheckPointFlag_(false),
+	PlayerXZSpeed_(0.0f),
+	Velocity_(float4::ZERO),
+	IsDetachGround(false),
+	IsTouchGround(false),
+	IsOnGround(false),
 	CheckPointPos_({ 0,200.0f,0 }),
 	IsGoal_(false),
 	IsStanding_(false),
@@ -47,8 +52,8 @@ void PlayerActor::Start()
 void PlayerActor::PlayerInit()
 {
 	// 메쉬 로드
-	CheckPointPos_ = GetTransform().GetWorldPosition();
-	FbxRenderer_->SetFBXMesh("TestIdle.fbx", "TextureAnimationCustom");
+//FbxRenderer_->SetFBXMesh("Character.FBX", "Texture");
+	FbxRenderer_->SetFBXMesh("Character_Idle_A.fbx", "TextureAnimationCustom");
 	SetCharacterAnimation();
 	SetCharacterTexture();
 	FbxRenderer_->GetTransform().SetWorldScale({ PLAYER_SIZE_MAGNIFICATION_RATIO });
@@ -106,6 +111,11 @@ void PlayerActor::PlayerInit()
 
 		// FSM
 		CreateFSMStates();
+		CreateAnimationFSMStates();
+	}
+	//충돌체크를 위한 CommonPlayer 에 Player 넣기
+	{
+		dynamic_cast<VirtualPhysXLevel*>(GetLevel())->SetCommonPlayer(this);
 	}
 }
 
@@ -113,15 +123,20 @@ void PlayerActor::Update(float _DeltaTime)
 {
 	// 서버 안켰을 때
 	if (false == GetIsNetInit())
-	{
-		InputController(_DeltaTime);
+	{	
+		//physx의 다이내믹의 속도를 가져옴
+		Velocity_ = DynamicActorComponent_->GetDynamicVelocity();
+		//xz 속도를 체크함 (걷기 멈춤 뛰기 애니메이션 구분용)
+		CheckXZSpeed();
 
 		PlayerStateManager_.Update(_DeltaTime);
+		PlayerAniStateManager_.Update(_DeltaTime);
 
 	//GetTransform().SetWorldMove(MoveDir_ * SPEED_PLAYER * _DeltaTime);
 	// TODO::충격테스트코드
 	ImpulseTest();
 	StandUp(_DeltaTime);
+
 
 
 		//체크포인트 실험용 나중에 지워야함
@@ -143,14 +158,19 @@ void PlayerActor::Update(float _DeltaTime)
 	// 서버 켰을 때
 	if (true == IsPlayerble_)
 	{
-		InputController(_DeltaTime);
 
 		PlayerStateManager_.Update(_DeltaTime);
+		PlayerAniStateManager_.Update(_DeltaTime);
 
 		//GetTransform().SetWorldMove(MoveDir_ * SPEED_PLAYER * _DeltaTime);
 		// TODO::충격테스트코드
 		ImpulseTest();
+		//일어서는 코드
 		StandUp(_DeltaTime);
+		//physx의 다이내믹의 속도를 가져옴
+		Velocity_ = DynamicActorComponent_->GetDynamicVelocity();
+		//xz 속도를 체크함 (걷기 멈춤 뛰기 애니메이션 구분용)
+		CheckXZSpeed();
 
 
 		//체크포인트 실험용 나중에 지워야함
@@ -231,7 +251,49 @@ void PlayerActor::LevelEndEvent()
 	IsMainPlayerSpawned_ = false;
 }
 
-void PlayerActor::InputController(float _DeltaTime)
+PlayerActType PlayerActor::InputDetect()
+{
+
+	if (true == GameEngineInput::GetInst()->IsDown(KEY_SPACEBAR))
+	{
+		return PlayerActType::Jump;
+	}
+
+	if (true == GameEngineInput::GetInst()->IsPress(KEY_W))
+	{
+		return PlayerActType::Run;
+	}
+
+	if (true == GameEngineInput::GetInst()->IsPress(KEY_A))
+	{
+		return PlayerActType::Run;
+	}
+
+	if (true == GameEngineInput::GetInst()->IsPress(KEY_S))
+	{
+		return PlayerActType::Run;
+	}
+
+	if (true == GameEngineInput::GetInst()->IsPress(KEY_D))
+	{
+		return PlayerActType::Run;
+	}
+
+
+	//if (true == GameEngineInput::GetInst()->IsPress(KEY_MOUSELEFT))
+	//{
+	//	return PlayerActType::Run;
+	//}
+
+	if (true == GameEngineInput::GetInst()->IsPress(KEY_MOUSERIGHT))
+	{
+		return PlayerActType::Dive;
+	}
+
+	return PlayerActType::Idle;
+}
+
+void PlayerActor::InputControllerMove(float _DeltaTime)
 {
 	float4 tmpMoveSpeed = float4::ZERO;
 	MoveDir_ = float4::ZERO;
@@ -246,8 +308,6 @@ void PlayerActor::InputController(float _DeltaTime)
 		float4 CamForwardVec = GetLevel()->GetMainCameraActor()->GetTransform().GetForwardVector();
 		CamForwardVec.y = 0;
 		MoveDir_ += CamForwardVec.Normalize3DReturn();
-
-
 	}
 
 	if (true == GameEngineInput::GetInst()->IsPress(KEY_A))
@@ -277,31 +337,6 @@ void PlayerActor::InputController(float _DeltaTime)
 		MoveDir_ += InstMoveDir.Normalize3DReturn();
 	}
 
-	if (true == GameEngineInput::GetInst()->IsDown(KEY_SPACEBAR))
-	{
-
-		DynamicActorComponent_->SetMoveJump();
-
-		//static bool tmp = true;
-		//if (true == tmp)
-		//{
-		//	DynamicActorComponent_->SetlockAxis();
-		//	tmp = false;
-		//}
-		//else
-		//{
-		//	DynamicActorComponent_->SetUnlockAxis();
-		//	tmp = true;
-		//}
-	}
-
-	if (true == GameEngineInput::GetInst()->IsPress(KEY_MOUSELEFT))
-	{
-	}
-
-	if (true == GameEngineInput::GetInst()->IsPress(KEY_MOUSERIGHT))
-	{
-	}
 
 	if (true == MoveDir_.IsNearlyZero())
 	{
@@ -321,6 +356,43 @@ void PlayerActor::InputController(float _DeltaTime)
 	tmpMoveSpeed = MoveDir_ * SPEED_PLAYER * _DeltaTime;
 	DynamicActorComponent_->SetMoveSpeed(tmpMoveSpeed);
 	DynamicActorComponent_->SetChangedRot(RotatedActor);
+}
+
+void PlayerActor::InputControllerJump(float _DeltaTime)
+{
+
+	if (true == GameEngineInput::GetInst()->IsDown(KEY_SPACEBAR))
+	{
+ 		DynamicActorComponent_->SetMoveJump();
+	}
+}
+
+void PlayerActor::InputControllerDive(float _DeltaTime)
+{
+	float4 tmpMoveSpeed = float4::ZERO;
+	MoveDir_ = float4::ZERO;
+	float4 RotatedActor = GetTransform().GetWorldRotation();
+	float4 CamForwardRot = GetLevel()->GetMainCameraActor()->GetTransform().GetWorldRotation();
+	float4 ActorRot = GetTransform().GetWorldRotation();
+	if (true == GameEngineInput::GetInst()->IsPress(KEY_MOUSELEFT))
+	{
+	}
+
+	if (true == GameEngineInput::GetInst()->IsPress(KEY_MOUSERIGHT))
+	{
+		DynamicActorComponent_->SetMoveDive(ActorRot.y);
+		DynamicActorComponent_->SetChangedRot(float4{ 90.0f, ActorRot.y , 0.0f });
+	}
+
+	// 2개 이상의 키가 동시에 눌리면 문제가 발생하므로 노말라이즈
+	MoveDir_.Normalize3D();
+
+
+	RotatedActor = GetCameraBaseRotationAng(ActorRot, CamForwardRot, MoveDir_, _DeltaTime);
+
+	tmpMoveSpeed = MoveDir_ * SPEED_PLAYER * _DeltaTime;
+	//DynamicActorComponent_->SetMoveSpeed(tmpMoveSpeed);
+	//DynamicActorComponent_->SetChangedRot(RotatedActor);
 
 }
 
@@ -367,15 +439,39 @@ float4 PlayerActor::ResetCheckPointPos()
 void PlayerActor::SetCharacterAnimation()
 {
 	FbxRenderer_->CreateFBXAnimation("Idle",
-	GameEngineRenderingEvent{ "TestIdle.fbx", ANIMATION_FRAME_TIME , true }, 0);
+	GameEngineRenderingEvent{ "Character_Idle_A.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
 
 	FbxRenderer_->CreateFBXAnimation("Run",
-		GameEngineRenderingEvent{ "TestRun.fbx", ANIMATION_FRAME_TIME , true }, 0);
+		GameEngineRenderingEvent{ "Character_Run_A.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
 
-	FbxRenderer_->ChangeAnimation("Run");
+	FbxRenderer_->CreateFBXAnimation("Walk",
+	GameEngineRenderingEvent{ "Character_Walk_A.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
 
-	std::vector<std::vector<GameEngineRenderUnit>>::iterator tmpUnit = FbxRenderer_->GetAllRenderUnit().begin();
-	std::vector<GameEngineRenderUnit>::iterator tmpUnitIter = tmpUnit->begin();
+	FbxRenderer_->CreateFBXAnimation("Jump_Start",
+	GameEngineRenderingEvent{ "Character_Jump_Start_A.fbx", 0.016666666666666666666666666666666666666666667f , false }, 0);
+
+	FbxRenderer_->CreateFBXAnimation("Jump_MidAir",
+	GameEngineRenderingEvent{ "Character_Jump_MidAir_A.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
+
+	FbxRenderer_->CreateFBXAnimation("Jump_Landing",
+		GameEngineRenderingEvent{ "Character_Landing_A.fbx", 0.016666666666666666666666666666666666666666667f , false }, 0);
+
+	FbxRenderer_->CreateFBXAnimation("Dive_Loop",
+		GameEngineRenderingEvent{ "Character_Dive_Loop.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
+
+	FbxRenderer_->AnimationBindEnd("Jump_Start",
+		[&](const GameEngineRenderingEvent& _Info) {
+			//FbxRenderer_->CastThis<GameEngineFBXAnimationRenderer>()->GetCurAni()->bOnceEnd = false;
+			PlayerAniStateManager_.ChangeState("Jump_MidAir");
+		});
+
+	FbxRenderer_->AnimationBindEnd("Jump_Landing",
+		[&](const GameEngineRenderingEvent& _Info) {
+			//FbxRenderer_->CastThis<GameEngineFBXAnimationRenderer>()->GetCurAni()->bOnceEnd = false;
+			PlayerAniStateManager_.ChangeState("Idle");
+		});
+
+	FbxRenderer_->ChangeAnimation("Idle");
 }
 
 // 캐릭터 스킨
@@ -490,6 +586,8 @@ void PlayerActor::StandUp(float _DeltaTime)
 {
 	if (GameEngineInput::GetInst()->IsDown("StandUp"))
 	{
+		DynamicActorComponent_->TurnOffGravity();
+		DynamicActorComponent_->SetUnlockAxis();
 		IsStanding_ = true;
 	}
 
@@ -497,8 +595,29 @@ void PlayerActor::StandUp(float _DeltaTime)
 	{
 		if (DynamicActorComponent_->PlayerStandUp(_DeltaTime) == true)
 		{
+			DynamicActorComponent_->TurnOnGravity();
+			DynamicActorComponent_->SetlockAxis();
 			IsStanding_ = false;
 		}
 	}
 
+}
+
+void PlayerActor::CheckXZSpeed()
+{
+	float4 XZVelo = float4{ Velocity_.x, 0.0f, Velocity_.z };
+
+	PlayerXZSpeed_ = XZVelo.Length();
+}
+
+bool PlayerActor::CheckOnGround()
+{
+	if (IsTouchGround == true && IsDetachGround == false)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }

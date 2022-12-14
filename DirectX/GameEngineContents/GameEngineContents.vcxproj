@@ -963,6 +963,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="PlayerActor_AnimationState.cpp" />
     <ClCompile Include="PlayerActor_State.cpp" />
     <ClCompile Include="PlayerTestActor.cpp" />
     <ClCompile Include="PlayerTestLevel.cpp" />
