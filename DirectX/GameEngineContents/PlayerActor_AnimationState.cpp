@@ -179,6 +179,12 @@ void PlayerActor::JumpMidAirAniUpdate(float _DeltaTime, const StateInfo& _Info)
 	{
 		PlayerAniStateManager_.ChangeState("Idle");
 	}
+
+	if (PlayerStateManager_.GetCurStateStateName() == "Dive")
+	{
+		PlayerAniStateManager_.ChangeState("Dive_Loop");
+		return;
+	}
 }
 
 void PlayerActor::JumpMidAirAniEnd(const StateInfo& _Info)

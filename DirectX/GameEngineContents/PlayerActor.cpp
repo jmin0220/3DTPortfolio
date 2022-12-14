@@ -254,6 +254,11 @@ void PlayerActor::LevelEndEvent()
 PlayerActType PlayerActor::InputDetect()
 {
 
+	if (true == GameEngineInput::GetInst()->IsPress(KEY_MOUSERIGHT))
+	{
+		return PlayerActType::Dive;
+	}
+
 	if (true == GameEngineInput::GetInst()->IsDown(KEY_SPACEBAR))
 	{
 		return PlayerActType::Jump;
@@ -284,12 +289,6 @@ PlayerActType PlayerActor::InputDetect()
 	//{
 	//	return PlayerActType::Run;
 	//}
-
-	if (true == GameEngineInput::GetInst()->IsPress(KEY_MOUSERIGHT))
-	{
-		return PlayerActType::Dive;
-	}
-
 	return PlayerActType::Idle;
 }
 

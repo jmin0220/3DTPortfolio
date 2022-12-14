@@ -36,6 +36,13 @@ void PlayerActor::IdleUpdate(float _DeltaTime, const StateInfo& _Info)
 	PlayerActType ActType = InputDetect();
 	bool IsOnGround = CheckOnGround();
 
+	if (ActType == PlayerActType::Dive)
+	{
+		InputControllerDive(_DeltaTime);
+		PlayerStateManager_.ChangeState("Dive");
+		return;
+	}
+
 	if (ActType == PlayerActType::Jump && CheckOnGround() == true)
 	{
 		InputControllerJump(_DeltaTime);
@@ -51,12 +58,7 @@ void PlayerActor::IdleUpdate(float _DeltaTime, const StateInfo& _Info)
 		return;
 	}
 
-	if (ActType == PlayerActType::Dive)
-	{
-		InputControllerDive(_DeltaTime);
-		PlayerStateManager_.ChangeState("Dive");
-		return;
-	}
+
 
 }
 
@@ -76,6 +78,13 @@ void PlayerActor::RunUpdate(float _DeltaTime, const StateInfo& _Info)
 
 	InputControllerMove(_DeltaTime);
 
+	if (ActType == PlayerActType::Dive)
+	{
+		InputControllerDive(_DeltaTime);
+		PlayerStateManager_.ChangeState("Dive");
+		return;
+	}
+
  	if (ActType == PlayerActType::Jump && CheckOnGround() == true)
 	{
 		InputControllerJump(_DeltaTime);
@@ -88,14 +97,6 @@ void PlayerActor::RunUpdate(float _DeltaTime, const StateInfo& _Info)
 		PlayerStateManager_.ChangeState("Idle");
 		return;
 	}
-
-	if (ActType == PlayerActType::Dive)
-	{
-		InputControllerDive(_DeltaTime);
-		PlayerStateManager_.ChangeState("Run");
-		return;
-	}
-
 }
 
 void PlayerActor::RunEnd(const StateInfo& _Info)
@@ -115,18 +116,19 @@ void PlayerActor::JumpUpdate(float _DeltaTime, const StateInfo& _Info)
 
 	InputControllerMove(_DeltaTime);
 
-	if (CheckOnGround() == true)
-	{
-		PlayerStateManager_.ChangeState("Idle");
-		return;
-	}
-
 	if (ActType == PlayerActType::Dive)
 	{
 		InputControllerDive(_DeltaTime);
 		PlayerStateManager_.ChangeState("Dive");
 		return;
 	}
+
+	if (CheckOnGround() == true)
+	{
+		PlayerStateManager_.ChangeState("Idle");
+		return;
+	}
+
 }
 
 void PlayerActor::JumpEnd(const StateInfo& _Info)
