@@ -57,7 +57,11 @@ enum class UICOLLISION //김예나 작성
 	Mouse,
 	Button,
 	PlayButton,
+	Sound
 };
+
+static GameEngineSoundPlayer BgmPlayer_;
+static float Volume_ = 1.0f;
 
 enum class LEVELS
 {

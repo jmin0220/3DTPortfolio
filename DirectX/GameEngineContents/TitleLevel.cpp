@@ -28,8 +28,10 @@ void TitleLevel::Update(float _DeltaTime)
 	if (false == EnterDown_ && true == GameEngineInput::GetInst()->IsDown(KEY_ENTER))
 	{
 		EnterDown_ = true;
+		GameEngineSound::SoundPlayOneShot("Woohoo.mp3");
 		ContentsCore::GetInst()->ChangeLevelByThread(LEVEL_NAME_LOBBY);
 	}
+
 	/// ~~~ 쓰레드 이용 레벨 변경시 호출 ~~~ ///
 }
 
@@ -48,7 +50,8 @@ void TitleLevel::LevelStartEvent()
 
 	Mouse = CreateActor<Cursor>();
 
-	GameEngineSound::SoundPlayControl("Title.mp3");
+	BgmPlayer_ = GameEngineSound::SoundPlayControl("Title.mp3");
+	BgmPlayer_.Volume(Volume_);
 }
 
 void TitleLevel::LevelEndEvent()

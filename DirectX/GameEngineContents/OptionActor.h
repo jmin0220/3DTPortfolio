@@ -25,5 +25,9 @@ protected:
 	void LevelEndEvent() override;
 private:
 	std::shared_ptr<GameEngineUIRenderer> Renderer_;
+	std::shared_ptr<GameEngineUIRenderer> Ball_;
+	std::shared_ptr<GameEngineCollision> Collision_;
+
+	bool ColCheck_;
 };
 
