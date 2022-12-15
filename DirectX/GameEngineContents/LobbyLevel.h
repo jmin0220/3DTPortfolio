@@ -49,6 +49,7 @@ private:
 
 	float FallTime_;
 
+	std::shared_ptr<GlobalBGM> bgm_;
 	// FSM
 private:
 	GameEngineStateManager StateManager_;

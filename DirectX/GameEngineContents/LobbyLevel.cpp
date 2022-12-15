@@ -47,7 +47,7 @@ void LobbyLevel::Update(float _DeltaTime)
 {
 	StateManager_.Update(_DeltaTime);
 
-	BgmPlayer_.Volume(Volume_);
+	//GlobalBGM::GetInst()->GetBGM().Volume(Volume_);
 
 	if (LobbySet_->GetTopMenu().lock()->MyState_==MenuState::Home)
 	{

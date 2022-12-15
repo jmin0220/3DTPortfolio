@@ -60,7 +60,7 @@ enum class UICOLLISION //김예나 작성
 	Sound
 };
 
-static GameEngineSoundPlayer BgmPlayer_;
+//static GameEngineSoundPlayer BgmPlayer_;
 static float Volume_ = 1.0f;
 
 enum class LEVELS

@@ -40,7 +40,7 @@ void OptionActor::Update(float _DeltaTime)
 			if (true == GameEngineInput::GetInst()->IsPress("Click"))
 			{
 				Ball_->GetTransform().SetWorldPosition({ (677*a.x+30)/675,88 });
-				Volume_ = (b/675);
+				GlobalBGM::GetInst()->GetBGM().Volume((b / 675));
 			}
 				return CollisionReturn::Break;
 		});

@@ -232,6 +232,9 @@
     <Filter Include="02_Actor\UIActor\OptionActor">
       <UniqueIdentifier>{d9e83fe2-9fe0-4746-9a78-fd6154899799}</UniqueIdentifier>
     </Filter>
+    <Filter Include="05_GloblaBGM">
+      <UniqueIdentifier>{7ea0c99a-813e-4bfa-a36c-e067f541889a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -665,6 +668,9 @@
     </ClInclude>
     <ClInclude Include="HoopsRamp.h">
       <Filter>02_Actor\Stage05Actor\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalBGM.h">
+      <Filter>05_GloblaBGM</Filter>
     </ClInclude>
     <ClInclude Include="BigShots_Puff.h">
       <Filter>02_Actor\Stage03Actor</Filter>
@@ -1108,6 +1114,9 @@
     </ClCompile>
     <ClCompile Include="HoopsRamp.cpp">
       <Filter>02_Actor\Stage05Actor\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalBGM.cpp">
+      <Filter>05_GloblaBGM</Filter>
     </ClCompile>
     <ClCompile Include="BigShots_Puff.cpp">
       <Filter>02_Actor\Stage03Actor</Filter>

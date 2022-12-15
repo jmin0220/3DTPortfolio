@@ -28,6 +28,8 @@ private:
 	std::shared_ptr<GameEngineUIRenderer> Ball_;
 	std::shared_ptr<GameEngineCollision> Collision_;
 
+	GlobalBGM* bgm_;
+
 	bool ColCheck_;
 };
 

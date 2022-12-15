@@ -63,6 +63,9 @@
 #include <GameEngineContents/GlobalValues.h>
 #include "ConstantStringSet.h"
 
+//김예나 테스트
+#include <GameEngineContents/GlobalBGM.h>
+
 // PhysX 라이브러리
 #pragma warning(disable : 4996)
 #include <GameEngineCore/ThirdParty/inc/PhysX/PxConfig.h>
