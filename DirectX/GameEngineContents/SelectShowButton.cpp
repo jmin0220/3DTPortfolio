@@ -32,7 +32,7 @@ void SelectShowButton::Start()
 	Key_->GetTransform().SetWorldPosition({ 600.0f,-305.0f });
 
 	Font_ = CreateComponent<GameEngineFontRenderer>();
-	//Font_->ChangeCamera(CAMERAORDER::UICAMERA);
+	Font_->ChangeCamera(CAMERAORDER::UICAMERA);
 	Font_->SetText("¼î ¼±ÅÃ", "Noto Sans CJK SC");
 	Font_->SetSize(25.0f);
 	Font_->SetLeftAndRightSort(LeftAndRightSort::CENTER);

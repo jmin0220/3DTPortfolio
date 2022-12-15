@@ -44,7 +44,7 @@ void LobbySetUI::Start()
 		Stripe_->Off();
 
 		Stripe_->GetRenderUnit()->SetMaterial("DownLoop");
-		Stripe_->GetRenderUnit()->EngineShaderResourcesSetting(Stripe_);
+		Stripe_->GetRenderUnit()->EngineShaderResourcesSetting(Stripe_.get());
 		Stripe_->GetRenderUnit()->ShaderResources.SetTexture("Tex", "FallBGLoop.png");
 		if (true == Stripe_->GetRenderUnit()->ShaderResources.IsConstantBuffer("SliceData"))
 		{

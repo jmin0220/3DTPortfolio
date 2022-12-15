@@ -31,7 +31,7 @@ void MidScoreBGActor::Start()
 		Pattern_->SetTexture("LogoBG.png");
 
 		Pattern_->GetRenderUnit()->SetMaterial("TextureLoop");
-		Pattern_->GetRenderUnit()->EngineShaderResourcesSetting(Pattern_);
+		Pattern_->GetRenderUnit()->EngineShaderResourcesSetting(Pattern_.get());
 		Pattern_->GetRenderUnit()->ShaderResources.SetTexture("Tex", "LogoPattern.png");
 
 		if (true == Pattern_->GetRenderUnit()->ShaderResources.IsConstantBuffer("SliceData"))

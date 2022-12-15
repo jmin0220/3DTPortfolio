@@ -26,7 +26,7 @@ void RoundEnd::Start()
 	SetRenderer_->SetPivot(PIVOTMODE::LEFT);
 	SetRenderer_->SetTexture("round-over-border-set.png");
 
-	SetRenderer_->GetRenderUnit()->EngineShaderResourcesSetting(SetRenderer_);
+	SetRenderer_->GetRenderUnit()->EngineShaderResourcesSetting(SetRenderer_.get());
 
 	if (true == SetRenderer_->GetRenderUnit()->ShaderResources.IsConstantBuffer("SliceData"))
 	{
@@ -41,7 +41,7 @@ void RoundEnd::Start()
 	CrownRenderer_->SetTexture("round-over-white.png");
 
 	CrownRenderer_->GetRenderUnit()->SetMaterial("TextureLoop");
-	CrownRenderer_->GetRenderUnit()->EngineShaderResourcesSetting(CrownRenderer_);
+	CrownRenderer_->GetRenderUnit()->EngineShaderResourcesSetting(CrownRenderer_.get());
 	CrownRenderer_->GetRenderUnit()->ShaderResources.SetTexture("Tex", "crown-pattern-black.png");
 	if (true == CrownRenderer_->GetRenderUnit()->ShaderResources.IsConstantBuffer("SliceData"))
 	{

@@ -40,14 +40,14 @@ void StartGameTitleActor::Start()
 
 	TitleFont_ = CreateComponent<GameEngineFontRenderer>();
 	TitleFont_->SetSize(40.0f);
-	//TitleFont_->ChangeCamera(CAMERAORDER::UICAMERA);
+	TitleFont_->ChangeCamera(CAMERAORDER::UICAMERA);
 	TitleFont_->SetScreenPostion({ 150.0f, 770 });
 	TitleFont_->SetLeftAndRightSort(LeftAndRightSort::CENTER);
 	TitleFont_->Off();
 
 	SubTitleFont_ = CreateComponent<GameEngineFontRenderer>();
 	SubTitleFont_->SetSize(20.0f);
-	//SubTitleFont_->ChangeCamera(CAMERAORDER::UICAMERA);
+	SubTitleFont_->ChangeCamera(CAMERAORDER::UICAMERA);
 	SubTitleFont_->SetScreenPostion({ 700.0f, 785 });
 	SubTitleFont_->SetLeftAndRightSort(LeftAndRightSort::CENTER);
 	SubTitleFont_->Off();

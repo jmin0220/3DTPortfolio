@@ -19,7 +19,7 @@ void TestActor_WaterPlane::Start()
 	
 	WaterData_.WaterColor = float4{ 0.9f,0.4f,0.7f };
 	Renderer_->GetRenderUnit()->ShaderResources.SetConstantBufferLink("WaterData", WaterData_);
-	Renderer_->GetRenderUnit()->EngineShaderResourcesSetting(Renderer_);
+	Renderer_->GetRenderUnit()->EngineShaderResourcesSetting(Renderer_.get());
 
 	Renderer_->GetTransform().SetWorldScale({ 2000, 2000, 1 });
 

@@ -37,7 +37,7 @@ void LoadingActor::Start()
 	Font_->SetSize(60.0f);
 	Font_->SetText("´ÙÀ½Àº..", "Noto Sans CJK SC");
 	Font_->SetLeftAndRightSort(LeftAndRightSort::CENTER);
-	//Font_->ChangeCamera(CAMERAORDER::UICAMERA);
+	Font_->ChangeCamera(CAMERAORDER::UICAMERA);
 	Font_->SetScreenPostion({ 800.0f, 30.0f });
 
 	Exit_ = CreateComponent<GameEngineUIRenderer>();
@@ -56,7 +56,7 @@ void LoadingActor::Start()
 	ExitFont_->SetSize(20.0f);
 	ExitFont_->SetText("³ª°¡±â", "Noto Sans CJK SC");
 	ExitFont_->SetLeftAndRightSort(LeftAndRightSort::CENTER);
-	//ExitFont_->ChangeCamera(CAMERAORDER::UICAMERA);
+	ExitFont_->ChangeCamera(CAMERAORDER::UICAMERA);
 	ExitFont_->SetScreenPostion({ 1530.0f, 855.0f });
 
 	// ¸Ê ¼ÅÇÃ

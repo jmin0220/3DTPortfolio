@@ -33,7 +33,7 @@ void TitleActor::Start()
 		Pattern_->SetTexture("LogoBG.png");
 
 		Pattern_->GetRenderUnit()->SetMaterial("TextureLoop");
-		Pattern_->GetRenderUnit()->EngineShaderResourcesSetting(Pattern_);
+		Pattern_->GetRenderUnit()->EngineShaderResourcesSetting(Pattern_.get());
 		Pattern_->GetRenderUnit()->ShaderResources.SetTexture("Tex", "LogoPattern.png");
 
 		if (true == Pattern_->GetRenderUnit()->ShaderResources.IsConstantBuffer("SliceData"))
@@ -56,7 +56,7 @@ void TitleActor::Start()
 
 	{
 		Font_ = CreateComponent<GameEngineFontRenderer>();
-		//Font_->ChangeCamera(CAMERAORDER::UICAMERA);
+		Font_->ChangeCamera(CAMERAORDER::UICAMERA);
 		Font_->SetLeftAndRightSort(LeftAndRightSort::CENTER);
 		Font_->SetScreenPostion({ 825.0f,700.0f });
 		Font_->SetSize(0.0f);

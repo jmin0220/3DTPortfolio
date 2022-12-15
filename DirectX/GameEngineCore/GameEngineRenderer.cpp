@@ -46,14 +46,14 @@ GameEngineRenderUnit::GameEngineRenderUnit(const GameEngineRenderUnit& _Render)
 	ShaderResources.ResourcesCheck(Material);
 }
 
-void GameEngineRenderUnit::EngineShaderResourcesSetting(std::shared_ptr<GameEngineRenderer> _Renderer)
+void GameEngineRenderUnit::EngineShaderResourcesSetting(GameEngineRenderer* _Renderer)
 {
 	if (nullptr == _Renderer)
 	{
 		return;
 	}
 
-	ParentRenderer = _Renderer.get();
+	ParentRenderer = _Renderer;
 
 	GameEngineCamera* Camera = ParentRenderer->GetCamera();
 
@@ -139,6 +139,8 @@ void GameEngineRenderUnit::SetMaterial(const std::string& _Name)
 
 	ShaderResources.ResourcesCheck(Material);
 
+	EngineShaderResourcesSetting(ParentRenderer);
+
 }
 
 void GameEngineRenderUnit::PushCamera()
@@ -163,9 +165,9 @@ void GameEngineRenderUnit::PushCamera()
 	Camera->PushRenderUnit(shared_from_this());
 }
 
-void GameEngineRenderUnit::SetRenderer(std::shared_ptr<GameEngineRenderer> _Renderer)
+void GameEngineRenderUnit::SetRenderer(GameEngineRenderer* _Renderer)
 {
-	ParentRenderer = _Renderer.get();
+	ParentRenderer = _Renderer;
 
 	EngineShaderResourcesSetting(_Renderer);
 }
@@ -325,6 +327,17 @@ void GameEngineRenderer::SetRenderingOrder(int _Order)
 void GameEngineRenderer::PushRendererToUICamera()
 {
 	GetActor()->GetLevel()->PushRendererToUICamera(std::dynamic_pointer_cast<GameEngineRenderer>(shared_from_this()));
+}
+
+std::shared_ptr<GameEngineRenderUnit> GameEngineRenderer::CreateRenderUnit()
+{
+	std::shared_ptr<GameEngineRenderUnit> Unit = std::make_shared<GameEngineRenderUnit>();
+
+	Unit->SetRenderer(this);
+
+	Units.push_back(Unit);
+
+	return Unit;
 }
 
 

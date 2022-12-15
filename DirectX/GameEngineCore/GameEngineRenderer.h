@@ -64,6 +64,12 @@ public:
 
 	void PushRendererToUICamera();
 
+	std::shared_ptr<GameEngineRenderUnit> CreateRenderUnit();
+
+	std::list<std::shared_ptr<GameEngineRenderUnit>>& GetUnits() 
+	{
+		return Units;
+	}
 	
 protected:
 	virtual void Start();
@@ -72,11 +78,12 @@ protected:
 
     class GameEngineCamera* Camera;
 
-	std::vector<std::shared_ptr<GameEngineRenderUnit>> Units;
 
 
 
 private:
+	std::list<std::shared_ptr<GameEngineRenderUnit>> Units;
+
 	CAMERAORDER CameraOrder;
     int RenderingOrder;
 	bool IsInstancing_;
@@ -132,11 +139,11 @@ public:
 	void SetMaterial(const std::string& _Name);
 
 	// 우리 엔진에서는 이런 이름을 가진x는 무조건 이렇게 세팅하기로 했어.
-	void EngineShaderResourcesSetting(std::shared_ptr<GameEngineRenderer> _Renderer);
+	void EngineShaderResourcesSetting(GameEngineRenderer* _Renderer);
 
 	void Render(float _DeltaTime);
 
-	void SetRenderer(std::shared_ptr < GameEngineRenderer> _Renderer);
+	void SetRenderer(GameEngineRenderer* _Renderer);
 
 	void RenderInstancing(float _DeltaTime, size_t _RanderingCount, std::shared_ptr<GameEngineInstancingBuffer> _Buffer);
 
@@ -152,9 +159,19 @@ public:
 
 	std::function<bool(float)> RenderFunction;
 
+	RENDERINGPATHORDER GetPath()
+	{
+		return Path;
+	}
+
+	void SetPath(RENDERINGPATHORDER _Path)
+	{
+		Path = _Path;
+	}
+
 private:
 	bool IsOn;
-
+	RENDERINGPATHORDER Path;
 	GameEngineRenderer* ParentRenderer;
 	std::shared_ptr < GameEngineMesh> Mesh; // 이 메쉬를
 	std::shared_ptr < GameEngineMaterial> Material; // 이 설정으로

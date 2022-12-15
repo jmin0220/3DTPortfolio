@@ -66,14 +66,13 @@ std::shared_ptr<GameEngineRenderUnit> GameEngineFBXRenderer::SetFBXMesh(const st
 			Unit[i].resize(Count);
 			for (size_t j = 0; j < Count; j++)
 			{
-				Unit[i][j] = std::make_shared<GameEngineRenderUnit>();
+				Unit[i][j] = CreateRenderUnit();
 			}
 		}
 	}
 	
 	std::shared_ptr<GameEngineRenderUnit> RenderUnit = Unit[Index][_SubSetIndex];
 	RenderUnit->SetMaterial(_Material);
-	RenderUnit->SetRenderer(std::dynamic_pointer_cast<GameEngineRenderer>(shared_from_this()));
 	RenderUnit->PushCamera();
 
 	std::shared_ptr <GameEngineMesh> FbxMesh = FBXMesh->GetGameEngineMesh(Index, _SubSetIndex);

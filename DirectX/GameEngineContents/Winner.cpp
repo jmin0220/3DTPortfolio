@@ -42,7 +42,7 @@ void Winner::LevelStartEvent()
 	Font_->ChangeCamera(CAMERAORDER::UICAMERA);
 	Font_->SetSize(40.0f);
 	Font_->SetLeftAndRightSort(LeftAndRightSort::CENTER);
-	//Font_->GetTransform().SetWorldRotation({ 0,0,5.0f }); //¾È¸ÔÈû
+	Font_->GetTransform().SetWorldRotation({ 0,0,5.0f }); //¾È¸ÔÈû
 	Font_->SetScreenPostion({ 190.0f,28.0f });
 	Font_->SetText("ÇÃ·¹ÀÌ¾îTest", "Noto Sans CJK SC");
 }
