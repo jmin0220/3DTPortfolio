@@ -19,8 +19,8 @@ HexAGoneLevel::~HexAGoneLevel()
 
 void HexAGoneLevel::Start()
 {
-	StageParentLevel::Start();
 	MyStage_ = StageNum::STAGE4;
+	StageParentLevel::Start();
 
 	
 }

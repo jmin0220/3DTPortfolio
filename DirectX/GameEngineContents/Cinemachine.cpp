@@ -34,10 +34,10 @@ void Cinemachine::Init(std::shared_ptr<GameEngineCameraActor> _MainCamera)
 		StartInfo.POS = float4{ 0,-60,200 };
 		StartInfo.ROT = float4{ 16,0,0 };
 		StartInfo.INTERTIME = 0.0f;
-		StartInfo.MOVETIME= 0.0f;
+		StartInfo.MOVETIME = 0.0f;
 		StartInfo.SPEED = 1.0f;
 		QueueInfo_.push(StartInfo);
-		
+
 		// 다음 정보
 		CinemachineInfo TmpInfo;
 		TmpInfo.POS = float4{ 0,-10,-520 };
@@ -52,7 +52,7 @@ void Cinemachine::Init(std::shared_ptr<GameEngineCameraActor> _MainCamera)
 	{
 		// 시작 정보
 		CinemachineInfo StartInfo;
-		StartInfo.POS = float4{ -205,680,860};
+		StartInfo.POS = float4{ -205,680,860 };
 		StartInfo.ROT = float4{ 40,155,0 };
 		StartInfo.INTERTIME = 0.0f;
 		StartInfo.MOVETIME = 0.0f;
@@ -105,9 +105,82 @@ void Cinemachine::Init(std::shared_ptr<GameEngineCameraActor> _MainCamera)
 		break;
 	}
 	case StageNum::STAGE4:
+	{
+		CinemachineInfo StartInfo;
+		StartInfo.POS = float4{ 276.19,71.43f,159.49f };
+		StartInfo.ROT = float4{ 14.15f,239.0f,0 };
+		QueueInfo_.push(StartInfo);
+
+		StartInfo.POS = float4{ 276.19,433.78f,159.49f };
+		StartInfo.ROT = float4{ 14.15f,239.0f,0 };
+		StartInfo.INTERTIME = 0.0f;
+		StartInfo.MOVETIME = 9.0f;
+		StartInfo.SPEED = 0.002f;
+		QueueInfo_.push(StartInfo);
+
+		StartInfo.POS = float4{ -82.0f,264.25f,87.28f };
+		StartInfo.ROT = float4{ -0.64f, 97.5f,0 };
+		StartInfo.ResetPos = true;
+		QueueInfo_.push(StartInfo);
+
+		StartInfo.POS = float4{ -110.81,209.62f,31.53f };
+		StartInfo.ROT = float4{ 1.07f, 134.16f,0 };
+		StartInfo.INTERTIME = 0.0f;
+		StartInfo.MOVETIME = 20.0f;
+		StartInfo.SPEED = 0.0005f;
+		StartInfo.ResetPos = false;
+		QueueInfo_.push(StartInfo);
+
+		StartInfo.POS = float4{ 222.6f,425.0f,128.0f };
+		StartInfo.ROT = float4{ 4.5f, 240.16f,0 };
+		StartInfo.ResetPos = true;
+		QueueInfo_.push(StartInfo);
+
+		StartInfo.POS = float4{ 222.6f,425.0f,128.0f };
+		StartInfo.ROT = float4{ 13.3f, 239.73f,0 };
+		StartInfo.INTERTIME = 0.0f;
+		StartInfo.MOVETIME = 15.0f;
+		StartInfo.SPEED = 0.0005f;
+		StartInfo.ResetPos = false;
+		QueueInfo_.push(StartInfo);
+
 		break;
+	}
 	case StageNum::STAGE5:
-		break; 
+	{
+		CinemachineInfo StartInfo;
+		StartInfo.POS = float4{ -308.0f,248.5f,110.3f };
+		StartInfo.ROT = float4{ 35.3f,102.42f,0 };
+		StartInfo.INTERTIME = 0.0f;
+		StartInfo.MOVETIME = 0.0f;
+		StartInfo.SPEED = 0.002f;
+		QueueInfo_.push(StartInfo);
+
+
+		StartInfo.POS = float4{ -29.5f,248.5f,-72.8f };
+		StartInfo.ROT = float4{ 74.5f,30.18f,0 };
+		StartInfo.INTERTIME = 0.0f;
+		StartInfo.MOVETIME = 16.0f;
+		StartInfo.SPEED = 0.0005f;
+		QueueInfo_.push(StartInfo);
+
+		StartInfo.POS = float4{ 55.22f,192.51f,235.64f };
+		StartInfo.ROT = float4{ 33.54f,-152.0f,0 };
+		StartInfo.INTERTIME = 2.0f;
+		StartInfo.MOVETIME = 0.0f;
+		StartInfo.SPEED = 0.0005f;
+		StartInfo.ResetPos = true;
+		QueueInfo_.push(StartInfo);
+
+		StartInfo.POS = float4{ 320.0f,248.5f,-156.6f };
+		StartInfo.ROT = float4{ 21.91f,-58.41f,0 };
+		StartInfo.INTERTIME = 0.0f;
+		StartInfo.MOVETIME = 25.0f;
+		StartInfo.SPEED = 0.0005f;
+		StartInfo.ResetPos = false;
+		QueueInfo_.push(StartInfo);
+		break;
+	}
 	default:
 	{
 		int a = 0;
@@ -148,6 +221,14 @@ void Cinemachine::MoveUpdate(float _DeltaTime, const StateInfo& _Info)
 	if (0 < CurInfo_.INTERTIME)
 	{
 		CurInfo_.INTERTIME -= _DeltaTime;
+		return;
+	}
+
+	if (CurInfo_.ResetPos == true)
+	{
+		CurCamInfo_->GetTransform().SetWorldPosition(CurInfo_.POS);
+		CurCamInfo_->GetTransform().SetWorldRotation(CurInfo_.ROT);
+		FSM_.ChangeState("Inter");
 		return;
 	}
 	

@@ -19,8 +19,8 @@ HoopsLegendsLevel::~HoopsLegendsLevel()
 
 void HoopsLegendsLevel::Start()
 {
-	StageParentLevel::Start();
 	MyStage_ = StageNum::STAGE5;
+	StageParentLevel::Start();
 
 	GUI_ = GameEngineGUI::CreateGUIWindow<TestGUI>("MapEditorGUI", this);
 	GUI_->Off();
