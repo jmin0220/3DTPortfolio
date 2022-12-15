@@ -56,6 +56,7 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 
 	// 메인 캡슐 콜라이더
 	shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxCapsuleGeometry(ScaledRadius * 1.3f, ScaledHeight * 0.9f), *material_);
+	//shape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxBoxGeometry(ScaledHeight * 0.9f, ScaledRadius * 1.3f + ScaledHeight * 0.9f, ScaledHeight * 0.9f), *material_);
 	float CapsuleHeight = (ScaledHeight * 0.9f);
 	physx::PxVec3 DynamicCenter(0.0f, CapsuleHeight, 0.0f );
 
@@ -64,8 +65,9 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 	//피벗설정
 	physx::PxTransform relativePose(physx::PxQuat(physx::PxHalfPi, physx::PxVec3(0, 0, 1)));
 	relativePose.p = DynamicCenter;
-	//physx::PxTransform relativePose(physx::PxQuat(physx::PxHalfPi, physx::PxVec3(0, 0, 1)));
+	physx::PxTransform relativePose2(DynamicCenter);
 	shape_->setLocalPose(relativePose);
+	//physx::PxTransform relativePose(physx::PxQuat(physx::PxHalfPi, physx::PxVec3(0, 0, 1)));
 
 	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 0.01f);
 	
@@ -188,50 +190,29 @@ void PhysXDynamicActorComponent::SetPlayerStartPos(float4 _Pos)
 bool PhysXDynamicActorComponent::PlayerStandUp(float _DeltaTime)
 {
 	bool Result = false;
-	dynamic_->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, true);
-	// dynamic의 Angle, Axis를 구한다
-	float Angle;
-	physx::PxVec3 Vec3;
-	dynamic_->getGlobalPose().q.toRadiansAndUnitAxis(Angle, Vec3);
-	//기준이 되는 Y-Axis  선언
-	float4 YAxis(0.0f, 1.0f, 0.0f);
-	float4 ZAxis(0.0f, 0.0f, 1.0f);
-	physx::PxVec3 YAxisVec3(0.0f, 1.0f, 0.0f);
-	float AngleDegree = Angle * GameEngineMath::RadianToDegree;
 
-	float4 XZAngle = float4{ Vec3.x, 0.0f, Vec3.z };
-	XZAngle.Normalize3D();
-	float AngDiffXZ = acosf(float4::DotProduct3D(XZAngle, ZAxis));
+	physx::PxVec3 GlobalPose(dynamic_->getGlobalPose().p);
+	physx::PxVec3 YAxis(0.0f, 1.0f, 0.0f);
+	//float YAixsGlobalAngle = std::acosf();
+	physx::PxQuat GlobalRot = dynamic_->getGlobalPose().q;
+	float4 GlobalRotEuler = PhysXCommonFunc::GetQuaternionEulerAngles(GlobalRot);
+	float4 GlobalRotEuler = float4{ 1.0f, 0.0f, 0.0f }.DegreeRotationToQuaternionReturn();
+	float4 AddedRotX = float4{ 1.0f, 0.0f, 0.0f }.DegreeRotationToQuaternionReturn();
+	float4 AddedRotY = float4{ 1.0f, 0.0f, 0.0f }.DegreeRotationToQuaternionReturn();
 
-	//dynamic의 Axis와 Y-Axis 사이의 각도
-	float AngDiff = acosf(float4::DotProduct3D({ Vec3.x, Vec3.y, Vec3.z }, YAxis));
-	float AngDiffEuler = AngDiff * GameEngineMath::RadianToDegree;
-	//dynamic의 Axis와 Y-Axis 사이의 NoramlVector
-	physx::PxVec3 Normal = Vec3.cross(YAxisVec3);
-
-	//노말백터를 기준으로 YAxis로 AngDiff만큼 회전
-	float4 FinalRot = RodriguesRotate({ Vec3.x, Vec3.y, Vec3.z }, { Normal.x, Normal.y, Normal.z }, 0.01f);
-	if (FinalRot.y > 0.995f)
-	{
-		FinalRot.x = 0.0f;
-		FinalRot.z = 0.0f;
-		FinalRot.y = 1.0f;
-		Result =  true;
-	}
-	float ChangedAngle = Angle - 0.01f;
-	if (ChangedAngle <= 0.0f)
-	{
-		Result = true;
-		ChangedAngle = 0.0f;
-	}
-	physx::PxVec3 FinalRotVec3(FinalRot.x, FinalRot.y, FinalRot.z);
-	FinalRotVec3.normalize();
-	physx::PxQuat tmpQuat(ChangedAngle, Vec3);
-	//const physx::PxQuat tmpPxQuat(tmpQuat.x, tmpQuat.y, tmpQuat.z, tmpQuat.w);
-	const physx::PxTransform tmpTransform(dynamic_->getGlobalPose().p, tmpQuat);
-	dynamic_->setGlobalPose(tmpTransform);
-
+	physx::PxQuat AddedRotQuat(AddedRotX.x, AddedRotX.y, AddedRotX.z, AddedRotX.w);
+	physx::PxQuat FinalRot = GlobalRot * AddedRotQuat;
+	physx::PxTransform FinalTransform(dynamic_->getGlobalPose().p, FinalRot);
+	float4 EulerFinalRot = PhysXCommonFunc::GetQuaternionEulerAngles(FinalRot);
+	std::string Asdf = std::to_string(EulerFinalRot.x * GameEngineMath::RadianToDegree) + ", " +
+		std::to_string(EulerFinalRot.y * GameEngineMath::RadianToDegree) + ", " 
+		+ std::to_string(EulerFinalRot.z * GameEngineMath::RadianToDegree)+ "\n";
+	OutputDebugString(Asdf.c_str());
+ 
+	dynamic_->setGlobalPose(FinalTransform);
+	//physx::PxQuat newLocalRotation = dynamic_->getGlobalPose().q * Quaternion.Inverse(transform.parent.rotation)
 	return Result;
+		
 }
 
 void PhysXDynamicActorComponent::SpeedLimit()
