@@ -666,6 +666,9 @@
     <ClInclude Include="HoopsRamp.h">
       <Filter>02_Actor\Stage05Actor\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="BigShots_Puff.h">
+      <Filter>02_Actor\Stage03Actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -1105,6 +1108,9 @@
     </ClCompile>
     <ClCompile Include="HoopsRamp.cpp">
       <Filter>02_Actor\Stage05Actor\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="BigShots_Puff.cpp">
+      <Filter>02_Actor\Stage03Actor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

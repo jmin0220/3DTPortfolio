@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "BigShots_Cannon.h"
 #include "BigShots_PRP.h"
+#include "BigShots_Puff.h"
 #include <GameEngineBase/GameEngineRandom.h>
 
 BigShots_Cannon::BigShots_Cannon() 
@@ -37,6 +38,10 @@ void BigShots_Cannon::Update(float _DeltaTime)
 		{
 			if (_Info.CurFrame == 3)
 			{
+				//연기 효과
+				std::shared_ptr<GameEngineActor> Puff = GetLevel()->CreateActor<BigShots_Puff>();
+				Puff->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition() + float4{ 0.0f,0.0f,30.0f });
+
 				std::shared_ptr<BigShots_PRP> PRP = GetLevel()->CreateActor<BigShots_PRP>();
 				PRP->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition() + float4{ 0.0f,0.0f,15.0f });
 				PRP->CreatePhysX();

@@ -190,6 +190,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="BigShots_Puff.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="BigShots_Spinner.h">
       <SubType>
       </SubType>
@@ -655,6 +659,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="BigShots_PRP.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="BigShots_Puff.cpp">
       <SubType>
       </SubType>
     </ClCompile>
