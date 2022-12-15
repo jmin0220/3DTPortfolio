@@ -331,25 +331,25 @@ void StageParentLevel::LevelStartLoad()
 		case Stage_MeshEnum::HoopsBox:
 		{
 			NewObj.Actor_ = CreateActor<HoopsBox>();
-			std::dynamic_pointer_cast<HoopsBox>(NewObj.Actor_.lock())->SetFBX("HoopsBox.FBX");
+			std::dynamic_pointer_cast<HoopsBox>(NewObj.Actor_.lock())->SetFBX("HoopsBoxWall.FBX", "HoopsBoxFloor.FBX");
 			break;
 		}
 		case Stage_MeshEnum::HoopsBox2:
 		{
 			NewObj.Actor_ = CreateActor<HoopsBox>();
-			std::dynamic_pointer_cast<HoopsBox>(NewObj.Actor_.lock())->SetFBX("HoopsBox2.FBX");
+			std::dynamic_pointer_cast<HoopsBox>(NewObj.Actor_.lock())->SetFBX("HoopsBoxWall2.FBX", "HoopsBoxFloor2.FBX");
 			break;
 		}
 		case Stage_MeshEnum::HoopsBox3:
 		{
 			NewObj.Actor_ = CreateActor<HoopsBox>();
-			std::dynamic_pointer_cast<HoopsBox>(NewObj.Actor_.lock())->SetFBX("HoopsBox3.FBX");
+			std::dynamic_pointer_cast<HoopsBox>(NewObj.Actor_.lock())->SetFBX("HoopsBoxWall3.FBX", "HoopsBoxFloor3.FBX");
 			break;
 		}
 		case Stage_MeshEnum::HoopsBox4:
 		{
 			NewObj.Actor_ = CreateActor<HoopsBox>();
-			std::dynamic_pointer_cast<HoopsBox>(NewObj.Actor_.lock())->SetFBX("HoopsBox4.FBX");
+			std::dynamic_pointer_cast<HoopsBox>(NewObj.Actor_.lock())->SetFBX("HoopsBoxWall4.FBX", "HoopsBoxFloor4.FBX");
 			break;
 		}
 		case Stage_MeshEnum::HoopsRamp:

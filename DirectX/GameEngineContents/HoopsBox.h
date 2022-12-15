@@ -28,15 +28,21 @@ protected:
 	void CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics) override;
 private:
 	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer_;
+	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer2_;
 	std::shared_ptr< PhysXTriMeshGeometryComponent> PhysXTriGeometry_;
-	std::shared_ptr< PhysXBoxGeometryComponent> PhysXBoxGeometry_;
+	std::shared_ptr< PhysXTriMeshGeometryComponent> PhysXTriGeometry2_;
+
 	std::string Name_;
+	std::string Name2_;
 public:
-	void SetFBX(std::string _Name)
+	void SetFBX(std::string _Name, std::string _Name2)
 	{
 		Name_ = _Name;
 		Renderer_->SetFBXMesh(Name_, "Texture");
+		Name2_ = _Name2;
+		Renderer2_->SetFBXMesh(Name2_, "Texture");
 	}
+
 
 };
 

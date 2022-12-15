@@ -90,8 +90,8 @@ void HoopsScoreRing::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics*
 	physx::PxCooking* Cooking = static_cast<VirtualPhysXLevel*>(GetLevel())->GetCooking();
 	float4 MeshBoundScale = Renderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
 	PhysXTriGeometry_->SetDynamicPivot(Renderer_->GetTransform().GetLocalPosition());
+	PhysXTriGeometry_->SetPhysxMaterial(0, 0, 0);
 	PhysXTriGeometry_->CreatePhysXActors("HoopsScoreRing2.FBX", _Scene, _physics, Cooking, true, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z), 0.0f);
-	PhysXTriGeometry_->SetPhysxMaterial(FLOOR_STATICFRICTION, FLOOR_DYNAMICFRICTION, FLOOR_RESISTUTION);
 	PhysXTriGeometry_->SetPositionSetFromParentFlag(true);
 }
 
