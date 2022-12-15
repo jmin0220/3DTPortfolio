@@ -196,7 +196,7 @@ bool PhysXDynamicActorComponent::PlayerStandUp(float _DeltaTime)
 	//float YAixsGlobalAngle = std::acosf();
 	physx::PxQuat GlobalRot = dynamic_->getGlobalPose().q;
 	float4 GlobalRotEuler = PhysXCommonFunc::GetQuaternionEulerAngles(GlobalRot);
-	float4 GlobalRotEuler = float4{ 1.0f, 0.0f, 0.0f }.DegreeRotationToQuaternionReturn();
+	//float4 GlobalRotEuler = float4{ 1.0f, 0.0f, 0.0f }.DegreeRotationToQuaternionReturn();
 	float4 AddedRotX = float4{ 1.0f, 0.0f, 0.0f }.DegreeRotationToQuaternionReturn();
 	float4 AddedRotY = float4{ 1.0f, 0.0f, 0.0f }.DegreeRotationToQuaternionReturn();
 
@@ -207,7 +207,7 @@ bool PhysXDynamicActorComponent::PlayerStandUp(float _DeltaTime)
 	std::string Asdf = std::to_string(EulerFinalRot.x * GameEngineMath::RadianToDegree) + ", " +
 		std::to_string(EulerFinalRot.y * GameEngineMath::RadianToDegree) + ", " 
 		+ std::to_string(EulerFinalRot.z * GameEngineMath::RadianToDegree)+ "\n";
-	OutputDebugString(Asdf.c_str());
+	//OutputDebugString(Asdf.c_str());
  
 	dynamic_->setGlobalPose(FinalTransform);
 	//physx::PxQuat newLocalRotation = dynamic_->getGlobalPose().q * Quaternion.Inverse(transform.parent.rotation)
