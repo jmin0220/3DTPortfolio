@@ -32,39 +32,7 @@ void HexTile::Start()
 	//Renderer_->GetTransform().SetWorldScale({ 10.0f,10.0f,10.0f });
 	 
 	//std::vector<std::vector<GameEngineRenderUnit>>& UnitSet = Renderer_->GetAllRenderUnit();
-	std::vector<std::vector< std::shared_ptr<GameEngineRenderUnit>>>& UnitSet = Renderer_->GetAllRenderUnit();
-	for (std::vector< std::shared_ptr<GameEngineRenderUnit>>& Units : UnitSet)
-	{
-		for (std::shared_ptr<GameEngineRenderUnit> Unit : Units)
-		{
-			Unit->ShaderResources.SetConstantBufferLink("MeshPixelData", MeshPixelData_);
-			if (true == Unit->ShaderResources.IsTexture("DiffuseTexture"))
-			{
-				int RanNum = GameEngineRandom::MainRandom.RandomInt(0, 4);
-				if (RanNum == 0)
-				{
-					TexName = "ENV_TerrainFoam_AM_S04";
-				}
-				else if (RanNum == 1)
-				{
-					TexName = "HexAGoneBlue";
-				}
-				else if (RanNum == 2)
-				{
-					TexName = "HexAGoneBlue2";
-				}
-				else if (RanNum == 3)
-				{
-					TexName = "ENV_DarkerYellow";
-				}
-				else if (RanNum == 4)
-				{
-					TexName = "HexAGoneBlue3";
-				}
-				Unit->ShaderResources.SetTexture("DiffuseTexture", TexName + ".png");
-			}
-		}
-	}
+	
 
 	StateManager_.CreateStateMember("Move"
 		, std::bind(&HexTile::MoveUpdate, this, std::placeholders::_1, std::placeholders::_2)
@@ -222,6 +190,37 @@ void HexTile::ShakeUpdate(float _DeltaTime, const StateInfo& _Info)
 		else
 		{
 			StateManager_.ChangeState("Move");
+		}
+	}
+}
+
+void HexTile::SetTex(std::string _Name)
+{
+	std::vector<std::vector< std::shared_ptr<GameEngineRenderUnit>>>& UnitSet = Renderer_->GetAllRenderUnit();
+	for (std::vector< std::shared_ptr<GameEngineRenderUnit>>& Units : UnitSet)
+	{
+		for (std::shared_ptr<GameEngineRenderUnit> Unit : Units)
+		{
+			Unit->ShaderResources.SetConstantBufferLink("MeshPixelData", MeshPixelData_);
+			if (true == Unit->ShaderResources.IsTexture("DiffuseTexture"))
+			{
+				int RanNum = GameEngineRandom::MainRandom.RandomInt(1, 3);
+
+				if (RanNum == 1)
+				{
+					TexName = "Hex" + _Name + std::to_string(RanNum);
+				}
+				else if (RanNum == 2)
+				{
+					TexName = "Hex" + _Name + std::to_string(RanNum);
+				}
+				else if (RanNum == 3)
+				{
+					TexName = "Hex" + _Name + std::to_string(RanNum);
+				}
+
+				Unit->ShaderResources.SetTexture("DiffuseTexture", TexName + ".png");
+			}
 		}
 	}
 }

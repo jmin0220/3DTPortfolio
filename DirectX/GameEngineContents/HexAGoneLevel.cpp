@@ -50,52 +50,80 @@ void HexAGoneLevel::LevelStartEvent()
 	//Tiles_->GetTransform().SetWorldPosition({ 0,300.0f,0 });
 
 	// InitPhysic는 레벨이 시작될때 실행되므로 LevelStartEvent가 실행되기 전에 포지션을 결정해야함.
-	Player_->GetTransform().SetWorldPosition({ 0.0f, 400.0f, 0.0f });
 
 	float XPos = 0;
 	float ZPos = 0;
+	float YPos = 50.0f;
 	Num_ = 0;
 	Col_ = 45;
 	Row_ = 5;
-
-	for (int i = 0; i < Col_; i++)
+	for (int k = 0; k < 5; k++)
 	{
-		XPos = Num_ * TileScale_.x * -0.75f;
-		ZPos = i * TileScale_.z * -0.5f;
-
-		for (int j = 0; j < Row_; j++)
+		for (int i = 0; i < Col_; i++)
 		{
-			std::shared_ptr<HexTile> Tile = CreateActor<HexTile>();
-			TileScale_ = Tile->GetRenderer()->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
-			Tile->GetTransform().SetWorldPosition({ XPos - 30,300.0f,ZPos + 70 });
-			XPos += Tile->GetRenderer()->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox.x * 1.5;
-			TilesVec_.push_back(Tile);
-		}
+			XPos = Num_ * TileScale_.x * -0.75f;
+			ZPos = i * TileScale_.z * -0.5f;
 
-		if (i >= Col_ / 2)
-		{
-			Row_--;
-
-			Num_--;
-		}
-		else
-		{
-			if (Row_ >= 10)
+			for (int j = 0; j < Row_; j++)
 			{
-				Row_--;
-				Num_--;
-				continue;
+				std::shared_ptr<HexTile> Tile = CreateActor<HexTile>();
+				if (k == 0)
+				{
+					Tile->SetTex("Yellow");
+				}
+				else if (k == 1)
+				{
+					Tile->SetTex("Blue");
+				}
+				else if (k == 2)
+				{
+					Tile->SetTex("Purple");
+				}
+				else if (k == 3)
+				{
+					Tile->SetTex("WhiteBlue");
+				}
+				else if (k == 4)
+				{
+					Tile->SetTex("Yellow");
+				}
+				else if (k == 5)
+				{
+					Tile->SetTex("Purple");
+				}
+				TileScale_ = Tile->GetRenderer()->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
+				Tile->GetTransform().SetWorldPosition({ XPos - 30,YPos,ZPos + 70 });
+				XPos += Tile->GetRenderer()->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox.x * 1.5;
+				TilesVec_.push_back(Tile);
 			}
 
-			Row_++;
-			Num_++;
+			if (i >= Col_ / 2)
+			{
+				Row_--;
 
-		}
+				Num_--;
+			}
+			else
+			{
 
-		if (Row_ < 5)
-		{
-			break;
+				if (Row_ >= 10)
+				{
+					Row_--;
+					Num_--;
+					continue;
+				}
+
+				Row_++;
+				Num_++;
+
+			}
+
+			if (Row_ < 5)
+			{
+				break;
+			}
 		}
+		YPos += 70.0f;
 	}
 
 

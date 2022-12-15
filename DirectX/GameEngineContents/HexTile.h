@@ -60,6 +60,7 @@ public:
 		return Renderer_;
 	}
 
+	void SetTex(std::string _Name);
 	//CollisionReturn CheckCol(std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other);
 };
 

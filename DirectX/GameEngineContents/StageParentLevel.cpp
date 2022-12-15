@@ -114,7 +114,11 @@ void StageParentLevel::LevelStartEvent()
 	Player_->GetTransform().SetWorldPosition(PlayerPos + float4{ 20, 0, 0} * (PlayerID));
 
 	//후프레벨 위치 임시
-	if (MyStage_ == StageNum::STAGE5)
+	if (MyStage_ == StageNum::STAGE4)
+	{
+		Player_->GetTransform().SetWorldPosition({ 0,500.0f,0 });
+	}
+	else if (MyStage_ == StageNum::STAGE5)
 	{
 		Player_->GetTransform().SetWorldPosition({ 0,150.0f,0 });
 	}
