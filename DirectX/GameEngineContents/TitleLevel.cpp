@@ -50,7 +50,7 @@ void TitleLevel::LevelStartEvent()
 
 	Mouse = CreateActor<Cursor>();
 
-	GlobalBGM::GetInst()->GetBGM() = GameEngineSound::SoundPlayControl("Title.mp3");
+	GlobalBGM::GetInst()->SetBGM(GameEngineSound::SoundPlayControl("Title.mp3"));
 
 	GlobalBGM::GetInst()->GetBGM().Volume(Volume_);
 }

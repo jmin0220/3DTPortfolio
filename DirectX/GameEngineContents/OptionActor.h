@@ -3,6 +3,7 @@
 
 // 설명 : 로비에서 볼륨 조절 옵션창
 class GameEngineUIRenderer;
+class GameEngineCollision;
 class OptionActor : public GameEngineActor
 {
 public:
@@ -16,6 +17,11 @@ public:
 	OptionActor& operator=(const OptionActor& _Other) = delete;
 	OptionActor& operator=(OptionActor&& _Other) noexcept = delete;
 
+	float GetVolumeRatio()
+	{
+		return VolumeRatio_;
+	}
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -28,8 +34,9 @@ private:
 	std::shared_ptr<GameEngineUIRenderer> Ball_;
 	std::shared_ptr<GameEngineCollision> Collision_;
 
-	GlobalBGM* bgm_;
-
 	bool ColCheck_;
+	float4 MousePos_;
+	float RealPos_;
+	float VolumeRatio_;
 };
 

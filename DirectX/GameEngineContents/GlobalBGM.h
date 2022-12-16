@@ -25,6 +25,10 @@ private:
 public:
 	static GlobalBGM* GetInst()
 	{
+		if (nullptr == Inst_)
+		{
+			Inst_ = new GlobalBGM();
+		}
 		return Inst_;
 	}
 
@@ -40,6 +44,11 @@ public:
 	GameEngineSoundPlayer GetBGM()
 	{
 		return BGM_;
+	}
+
+	void  SetBGM(GameEngineSoundPlayer _BGM)
+	{
+		BGM_ = _BGM;
 	}
 };
 

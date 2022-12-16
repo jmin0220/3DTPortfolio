@@ -34,16 +34,17 @@ void OptionActor::Update(float _DeltaTime)
 	ColCheck_ = Collision_->IsCollision(CollisionType::CT_OBB2D, UICOLLISION::Mouse, CollisionType::CT_OBB2D,
 		[=](std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other)
 		{
-			float4 a = _Other->GetTransform().GetWorldPosition();
-			float b = a.x - 30.0f;
-
+			MousePos_ = _Other->GetTransform().GetWorldPosition();
+			RealPos_ = MousePos_.x - 30.0f;
+			VolumeRatio_ = RealPos_ / 675;
 			if (true == GameEngineInput::GetInst()->IsPress("Click"))
 			{
-				Ball_->GetTransform().SetWorldPosition({ (677*a.x+30)/675,88 });
-				GlobalBGM::GetInst()->GetBGM().Volume((b / 675));
+				Ball_->GetTransform().SetWorldPosition({ (677* MousePos_.x +30)/675,88 });
+				GlobalBGM::GetInst()->GetBGM().Volume(VolumeRatio_);
 			}
 				return CollisionReturn::Break;
 		});
+
 }
 
 void OptionActor::LevelStartEvent()
