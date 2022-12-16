@@ -39,7 +39,7 @@ private:
 	bool IsUpdate_ = true;
 
 public:
-	bool IsUpdate() 
+	bool IsUpdate()
 	{
 		return IsUpdate_;
 	}
@@ -58,7 +58,7 @@ public:
 	virtual void EffectInit() = 0;
 	virtual void Effect(class std::shared_ptr<GameEngineRenderTarget> _Render) = 0;
 
-	virtual ~GameEnginePostEffect() 
+	virtual ~GameEnginePostEffect()
 	{
 
 	}
@@ -107,7 +107,7 @@ public:
 
 	void SettingDepthTexture(std::shared_ptr<GameEngineTexture> _Texture);
 
-	void Clear();
+	void Clear(bool _IsDepthClear = true);
 
 	void Setting();
 
@@ -123,7 +123,7 @@ public:
 	void Copy(std::shared_ptr < GameEngineRenderTarget> _Other, int _Index = 0);
 
 	void Merge(std::shared_ptr < GameEngineRenderTarget> _Other, int _Index = 0);
-	
+
 	// void Effect(GameEngineMaterial* _Other, GameEngineShaderResourcesHelper* _ShaderResourcesHelper);
 
 	void Effect(std::shared_ptr<GameEngineRenderUnit> _RenderSet);

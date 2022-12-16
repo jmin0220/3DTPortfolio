@@ -4,7 +4,7 @@
 ID3D11RenderTargetView* GameEngineRenderTarget::PrevRenderTargetViews = nullptr;
 ID3D11DepthStencilView* GameEngineRenderTarget::PrevDepthStencilView = nullptr;
 
-GameEngineRenderTarget::GameEngineRenderTarget() 
+GameEngineRenderTarget::GameEngineRenderTarget()
 	: DepthStencilView(nullptr)
 	, DepthTexture(nullptr)
 {
@@ -14,7 +14,7 @@ GameEngineRenderTarget::GameEngineRenderTarget()
 	MergeUnit->SetMaterial("TargetMerge");
 }
 
-GameEngineRenderTarget::~GameEngineRenderTarget() 
+GameEngineRenderTarget::~GameEngineRenderTarget()
 {
 	//for (GameEnginePostEffect* Effect : Effects)
 	//{
@@ -64,7 +64,7 @@ std::shared_ptr<GameEngineTexture> GameEngineRenderTarget::GetRenderTargetTextur
 	return RenderTargets[_Index];
 }
 
-void GameEngineRenderTarget::Copy(std::shared_ptr<GameEngineRenderTarget> _Other, int _Index )
+void GameEngineRenderTarget::Copy(std::shared_ptr<GameEngineRenderTarget> _Other, int _Index)
 {
 	Clear();
 
@@ -105,7 +105,7 @@ void GameEngineRenderTarget::SettingDepthTexture(std::shared_ptr<GameEngineTextu
 
 void GameEngineRenderTarget::CreateRenderTargetTexture(float4 _Size, DXGI_FORMAT _Format, float4 _Color)
 {
-	D3D11_TEXTURE2D_DESC NewData = {0};
+	D3D11_TEXTURE2D_DESC NewData = { 0 };
 	NewData.ArraySize = 1; // 한번에 10장짜리도 만들수 있어요
 	NewData.Width = _Size.uix();
 	NewData.Height = _Size.uiy();
@@ -134,11 +134,16 @@ void GameEngineRenderTarget::CreateRenderTargetTexture(D3D11_TEXTURE2D_DESC _Dat
 	CreateRenderTargetTexture(NewTexture, _Color);
 }
 
-void GameEngineRenderTarget::Clear()
+void GameEngineRenderTarget::Clear(bool _IsDepthClear /*= true*/)
 {
 	for (size_t i = 0; i < RenderTargetViews.size(); i++)
 	{
 		GameEngineDevice::GetContext()->ClearRenderTargetView(RenderTargetViews[i], ClearColors[i].Arr1D);
+	}
+
+	if (false == _IsDepthClear)
+	{
+		return;
 	}
 
 	if (nullptr != DepthStencilView)
@@ -147,7 +152,7 @@ void GameEngineRenderTarget::Clear()
 	}
 }
 
-void GameEngineRenderTarget::CreateDepthTexture(int _Index) 
+void GameEngineRenderTarget::CreateDepthTexture(int _Index)
 {
 	D3D11_TEXTURE2D_DESC Desc = { 0 };
 	Desc.ArraySize = 1;
