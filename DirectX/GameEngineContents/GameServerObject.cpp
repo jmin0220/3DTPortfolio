@@ -13,46 +13,49 @@ void GameServerObject::ServerRelease()
 
 void GameServerObject::PushPacket(std::shared_ptr<GameServerPacket> _Packet)
 {
-	PacketLock.lock();
+	std::lock_guard L(PacketLock);
+	// PacketLock.lock();
 	PacketList.push_back(_Packet);
-	PacketLock.unlock();
+	// PacketLock.unlock();
 }
 bool GameServerObject::IsPacketEmpty()
 {
-	PacketLock.lock();
+	std::lock_guard L(PacketLock);
+	// PacketLock.lock();
 	bool Check = PacketList.empty();
-	PacketLock.unlock();
+	// PacketLock.unlock();
 
 	return Check;
 }
 
 std::shared_ptr<GameServerPacket> GameServerObject::PopPacket()
 {
-	std::lock_guard L(PacketLock);
-	//PacketLock.lock();
+
+	// PacketLock.lock();
 	if (PacketList.empty())
 	{
 		return nullptr;
 	}
 
+	std::lock_guard L(PacketLock);
 	std::shared_ptr<GameServerPacket> Packet = PacketList.front();
 	PacketList.pop_front();
-	//PacketLock.unlock();
+	// PacketLock.unlock();
 	return Packet;
 }
 
 GameServerObject::GameServerObject(/*ServerObjectType _Type*/)
 	: IsNetInit(false)
 {
-	
+
 }
 
-GameServerObject::~GameServerObject() 
+GameServerObject::~GameServerObject()
 {
 }
 
 
-// 호스트가 생성하는 ServerObject 초기화
+
 void GameServerObject::ServerInit(ServerObjectType _Type)
 {
 	ServerType = _Type;
@@ -63,7 +66,6 @@ void GameServerObject::ServerInit(ServerObjectType _Type)
 	AllServerActor.insert(std::make_pair(ID, this));
 }
 
-// 클라가 생성하는 ServerObject 초기화
 void GameServerObject::ClientInit(ServerObjectType _Type, int _ID)
 {
 	ServerType = _Type;
