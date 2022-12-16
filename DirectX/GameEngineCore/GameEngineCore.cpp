@@ -11,6 +11,8 @@
 #include "GameEngineCameraActor.h"
 #include "GameEngineCoreDebug.h"
 
+#include "GameEngineContents/GlobalBGM.h"//±è¿¹³ª Ãß°¡
+
 #pragma comment(lib, "GameEngineBase.lib")
 
 GameEngineLevel* GameEngineCore::CurrentLevel = nullptr;
@@ -172,6 +174,8 @@ void GameEngineCore::CoreEnd(GameEngineCore* _UserCore)
 	GameEngineDebug::Debug3DDestroy();
 
 	EngineResourcesDestroy();
+
+	GlobalBGM::Destroy();//±è¿¹³ª Ãß°¡
 
 	GameEngineWindow::Destroy();
 	GameEngineInput::Destroy();
