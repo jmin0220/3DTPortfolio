@@ -94,7 +94,7 @@ void GameServerNetServer::Accept(int Port)
 }
 
 
-void GameServerNetServer::AcceptFunction(GameEngineThread* Thread) 
+void GameServerNetServer::AcceptFunction(GameEngineThread* Thread)
 {
 	// 쓰레드에서 따로 돌아갈 겁니다.
 	while (ServerAccpetSocket)
@@ -134,40 +134,69 @@ void GameServerNetServer::AcceptFunction(GameEngineThread* Thread)
 
 void GameServerNetServer::UserFunction(GameEngineThread* Thread, SOCKET _Socket)
 {
+	// 1500 - 1024
 	char Packet[1024] = { 0 };
+	std::vector<char> PacketVector;
 
 	while (true)
 	{
+		// 476
 		int Result = recv(_Socket, Packet, sizeof(Packet), 0);
+
+		//if (Result == 1024)
+		//{
+		//	MsgBoxAssert("최대치가 왔습니다.");
+		//}
+		// -> 클라이언트 잠깐 멈추면 서버 일로 들어옴
 
 		if (-1 == Result)
 		{
-			// MsgBoxAssert("네트워크 에러");
-			// 서버가 꺼졌어.
-			// 상대가 꺼졌어.
+			MsgBoxAssert("네트워크 에러");
 			return;
 		}
 
-		GameServerSerializer Ser = GameServerSerializer(Packet, 1024);
+		size_t PrevSize = PacketVector.size();
 
-		int PacketType;
-		int PacketSize;
+		PacketVector.resize(PacketVector.size() + Result);
 
-		memcpy_s(&PacketType, sizeof(int), Ser.GetDataPtr(), sizeof(int));
-		memcpy_s(&PacketSize, sizeof(int), Ser.GetDataPtr() + 4, sizeof(int));
+		memcpy_s(&PacketVector[PrevSize], PacketVector.size() - PrevSize, Packet, Result);
 
-		std::shared_ptr<GameServerPacket> Packet = 
-			Dis.PacketReturnCallBack(PacketType, PacketSize, Ser);
-
-		// 임시방편임
-		if (Packet->GetPacketID() >= 3)
+		while (true)
 		{
-			continue;
+			if (8 >= PacketVector.size())
+			{
+				break;
+			}
+
+			int PacketType;
+			int PacketSize;
+
+			memcpy_s(&PacketType, sizeof(int), &PacketVector[0], sizeof(int));
+			memcpy_s(&PacketSize, sizeof(int), &PacketVector[4], sizeof(int));
+
+			if (PacketVector.size() < PacketSize)
+			{
+				break;
+			}
+
+			GameServerSerializer Ser = GameServerSerializer(&PacketVector[0], PacketSize);
+
+			// 패킷을 만들어 낸다.
+			std::shared_ptr<GameServerPacket> Packet =
+				Dis.PacketReturnCallBack(PacketType, PacketSize, Ser);
+
+			Packet->SetMaster(_Socket);
+
+			Dis.ProcessPacket(Packet);
+
+			if (PacketVector.size() > PacketSize)
+			{
+				memcpy_s(&PacketVector[0], PacketVector.size(), &PacketVector[PacketSize], PacketVector.size() - PacketSize);
+			}
+
+			PacketVector.resize(PacketVector.size() - PacketSize);
 		}
 
-		Packet->SetMaster(_Socket);
-
-		Dis.ProcessPacket(Packet);
 	}
 }
 

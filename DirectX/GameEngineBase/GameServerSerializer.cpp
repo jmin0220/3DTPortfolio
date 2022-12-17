@@ -75,6 +75,10 @@ void GameServerSerializer::operator>>(std::string& _Value)
 {
 	int Size;
 	operator>>(Size);
+	if (0 >= Size)
+	{
+		return;
+	}
 	_Value.resize(Size);
 	Read(&_Value[0], Size);
 }
