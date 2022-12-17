@@ -14,9 +14,6 @@
 //플레이어 점프힘
 #define PLAYER_JUMP_FORCE 10.0f
 
-//플레이어 다이브Y 힘
-#define PLAYER_DIVE_FORCE 8.0f
-
 //플레이어 eventCol 사이즈
 #define PLAYER_COL_SCALE 3.0f, 5.0f, 3.0f
 
@@ -131,5 +128,6 @@
 ////////////////
 
 // 호스트 주소
-#define IP_HOST "10.0.4.83" 
-//#define IP_HOST "172.30.1.86" 
+//#define IP_HOST "10.0.4.83" 
+//#define IP_HOST "172.30.1.37" 
+#define IP_HOST "127.0.0.1" 

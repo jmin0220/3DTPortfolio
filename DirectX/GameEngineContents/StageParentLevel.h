@@ -116,8 +116,8 @@ protected:
 	virtual void IdleUpdate(float _DeltaTime, const StateInfo& _Info);
 
 	// 카메라 시네마틱 무브 + BGM
-	virtual void StagePreViewStart(const StateInfo& _Info) {};
-	virtual void StagePreViewUpdate(float _DeltaTime, const StateInfo& _Info) {};
+	virtual void StagePreviewStart(const StateInfo& _Info);
+	virtual void StagePreviewUpdate(float _DeltaTime, const StateInfo& _Info);
 
 	// 321땅
 	virtual void ReadyStart(const StateInfo& _Info);
@@ -135,6 +135,8 @@ protected:
 	// 서버
 private:
 	void SpawnServerObjects();
-	int ServerSpawn = 0;
+	
+public:
+	static bool AllPlayersReady_;
 };
 

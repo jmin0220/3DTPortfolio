@@ -69,7 +69,7 @@ ContentsCore::~ContentsCore()
 
 void ContentsCore::Start()
 {
-	GameEngineTime::SetLimitFrame(120);
+	GameEngineTime::SetLimitFrame(60);
 
 	CreateKeys();
 	CreateShaders();
@@ -88,18 +88,50 @@ void ContentsCore::Update(float _DeltaTime)
 		return;
 	}
 	
-	// ID를 받지 않은 유저는 패킷 못보냄
+	// ID를 받지 않은 유저(유저 : 호스트, 클라이언트) 는 패킷 못보냄
 	if (-1 == GameServer::GetInst()->PlayerID_)
 	{
 		return;
 	}
 
-	//////////////////////////////////
-	// 호스트 포함 모든 유저의 업데이트
-	//////////////////////////////////
 
+	////////////////////////////
+	// 호스트와 유저 동기화 관련
+	// - 로비 -> 로딩화면 넘어가는 부분
+	// - 로딩 -> 스테이지 넘어가는 부분
+	// - 스테이지 -> 게임상태(준비, 경주, 종료) 넘어가는 부분
+	////////////////////////////
 
-	GameServer::GetInst()->SendGameStatePacket();
+	// 서버(호스트)
+	if (true == GameServer::IsHost_)
+	{
+		// GUI에서 게임시작 버튼 눌렀음
+		if (true == ServerGUI_->GameStart_)
+		{
+			GameServer::GetInst()->SetServerSignal(ServerFlag::S_GameStartChangeReady);
+			ServerGUI_->GameStart_ = false;
+		}
+
+		//// 로딩레벨
+		//if (true == LoadingLevel::AllPlayersReady_)
+		//{
+		//	GameServer::GetInst()->AddServerSignal(ServerFlag::StateChange);
+		//	LoadingLevel::AllPlayersReady_ = false;
+		//}
+
+		//// 스테이지레벨
+		//if (true == StageParentLevel::AllPlayersReady_)
+		//{
+		//	GameServer::GetInst()->AddServerSignal(ServerFlag::StateChange);
+		//}
+
+		// 호스트는 전체 게임 신호 보냄
+		GameServer::GetInst()->SendGameStatePacket();
+	}
+
+	// 호스트 포함 모든 유저의 정보 서로 전송
+	GameServer::GetInst()->SendPlayerStatePacket();
+
 }
 
 void ContentsCore::End()

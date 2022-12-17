@@ -8,36 +8,35 @@ bool GameServer::ServerStart_ = false;
 GameServerNet* GameServer::Net;
 GameServerNetServer GameServer::Server;
 GameServerNetClient GameServer::Client;
-ServerFlags GameServer::ServerSignal_ = ServerFlags::None;
+ServerFlag GameServer::ServerSignal_ = ServerFlag::S_None;
+PlayerFlag GameServer::PlayerSignal_ = PlayerFlag::P_None;
 unsigned int GameServer::PlayerID_ = -1;
 
 #include <atomic>
 std::mutex Lock;
 
-int GameServer::GetAllPlayersReadyCount()
+bool GameServer::CheckOtherPlayersFlag(PlayerFlag _Flag)
 {
-	std::map<int, std::shared_ptr<class GameStatePacket>>::iterator Begin = AllPlayersInfo_.begin();
-	std::map<int, std::shared_ptr<class GameStatePacket>>::iterator End = AllPlayersInfo_.end();
+	std::map<int, std::shared_ptr<class PlayerStatePacket>>::iterator Begin = AllPlayersInfo_.begin();
+	std::map<int, std::shared_ptr<class PlayerStatePacket>>::iterator End = AllPlayersInfo_.end();
 
-	int ReadyCount = 0;
+	// 혼자면 접속 못해요ㅠㅠ
+	if (0 == AllPlayersInfo_.size())
+	{
+		return false;
+	}
 
-	// 다른 사람들
+	bool Result = true;
 	for (; Begin != End; ++Begin)
 	{
-		std::shared_ptr<GameStatePacket> Packet = (*Begin).second;
-		if (true == CheckGameStatePacketSignal(Packet->ServerSignal, ServerFlags::PlayerReady))
+		Result = (static_cast<bool>((*Begin).second->PlayerStateSignal & _Flag));
+		if (false == Result)
 		{
-			++ReadyCount;
+			return Result;
 		}
 	}
 
-	// 자기자신
-	if (CheckServerSignal(ServerFlags::PlayerReady))
-	{
-		++ReadyCount;
-	}
-
-	return ReadyCount;
+	return Result;
 }
 
 GameServer::GameServer()
@@ -54,6 +53,8 @@ GameServer::~GameServer()
 void GameServer::ServerStart()
 {
 	ServerStart_ = true;
+	ServerSignal_ = ServerFlag::S_None;
+	PlayerSignal_ = PlayerFlag::P_None;
 
 	////// 호스트 : 서버 생성 //////
 	if (true == IsHost_)
@@ -98,6 +99,9 @@ void GameServer::ServerStart()
 		case ContentsPacketType::GameState:
 			NewPacket = std::make_shared<GameStatePacket>();
 			break;
+		case ContentsPacketType::PlayerState:
+			NewPacket = std::make_shared<PlayerStatePacket>();
+			break;
 		default:
 			// 이상한 패킷이 날라왔다
 			NewPacket = std::make_shared<GarbagePacket>();
@@ -114,7 +118,8 @@ void GameServer::ServerStart()
 	// 공통
 	Net->Dis.AddHandler(ContentsPacketType::ObjectUpdate, std::bind(&GameServer::ObjectUpdatePacketProcess, this, std::placeholders::_1));
 
-	Net->Dis.AddHandler(ContentsPacketType::GameState, std::bind(&GameServer::GameStatePacketProcess, this, std::placeholders::_1));
+	// 자신의 상태 패킷 처리, 상태 : 유저 준비, 
+	Net->Dis.AddHandler(ContentsPacketType::PlayerState, std::bind(&GameServer::PlayerStatePacketProcess, this, std::placeholders::_1));
 
 	// 분리
 	if (true == Net->GetIsHost())
@@ -125,6 +130,9 @@ void GameServer::ServerStart()
 	{
 		// 내가 클라이언트 일때만 등록해야하는 패킷처리
 		Net->Dis.AddHandler(ContentsPacketType::ClientInit, std::bind(&GameServer::ClientInitPacketProcess, this, std::placeholders::_1));
+
+		// 서버가 보내주는 신호패킷 처리
+		Net->Dis.AddHandler(ContentsPacketType::GameState, std::bind(&GameServer::GameStatePacketProcess, this, std::placeholders::_1));
 	}
 
 }
@@ -146,27 +154,6 @@ void GameServer::ObjectUpdatePacketProcess(std::shared_ptr<GameServerPacket> _Pa
 	std::shared_ptr<ObjectUpdatePacket> Packet = std::dynamic_pointer_cast<ObjectUpdatePacket>(_Packet);
 
 	GameServerObject* FindObject = GameServerObject::GetServerObject(Packet->ObjectID);
-
-	// 서버에서 보내준 패킷(플레이어, 장애물)이 클라에 없으면 무조건 만들어.
-	// -> StageParentLevel에서 수행
-	//if (nullptr == FindObject)
-	//{
-	//	ServerObjectType Type = Packet->Type;
-
-	//	switch (Type)
-	//	{
-	//	case ServerObjectType::Player:
-	//	{
-	//		std::shared_ptr<PlayerActor> NewPlayer = GEngine::GetCurrentLevel()->CreateActor<PlayerActor>();
-	//		NewPlayer->ClientInit(Packet->Type, Packet->ObjectID);
-	//		FindObject = NewPlayer;
-	//		break;
-	//	}
-	//	default:
-	//		int a = 0;
-	//		break;
-	//	}
-	//}
 
 	// 없으면 생성
 	if (nullptr == FindObject)
@@ -213,42 +200,71 @@ void GameServer::GameStatePacketProcess(std::shared_ptr<GameServerPacket> _Packe
 {
 	std::shared_ptr<GameStatePacket> Packet = std::dynamic_pointer_cast<GameStatePacket>(_Packet);
 
+	if (Packet->ServerSignal != 0)
+	{
+		GameEngineDebug::OutPutString("GameStatePacketProcess >> " + std::to_string(Packet->ServerSignal));
+	}
+
+	// 클라이언트만 서버 신호 받음
+	if (false == Net->GetIsHost())
+	{
+		//ServerSignal_ = static_cast<ServerFlag>(ServerSignal_ | Packet->ServerSignal);
+		ServerSignal_ = static_cast<ServerFlag>(Packet->ServerSignal);
+		
+	}
+
+}
+
+// 모든 유저가 서로의 정보를 알고 있음
+void GameServer::PlayerStatePacketProcess(std::shared_ptr<GameServerPacket> _Packet)
+{
+	std::shared_ptr<PlayerStatePacket> Packet = std::dynamic_pointer_cast<PlayerStatePacket>(_Packet);
+
 	// 모든 플레이어 정보 저장
 	AllPlayersInfo_[Packet->PlayerID] = Packet;
 
-	// 클라이언트 라면
-	if (false == Net->GetIsHost())
-	{
-		ServerSignal_ = static_cast<ServerFlags>(Packet->ServerSignal);
-	}
 
-	// 호스트라면 모든 클라에게 전달
 	if (true == Net->GetIsHost())
 	{
 		GameServer::Net->SendPacket(Packet);
 	}
 }
+
 ////////////////////
 ///	 ~ 패킷 처리
 ////////////////////
 
-
+// *호스트만 호출
 void GameServer::SendGameStatePacket()
 {
-	std::shared_ptr<GameStatePacket> Packet = std::make_shared<GameStatePacket>();	
-	Packet->ServerSignal = ServerSignal_;
-	Packet->PlayerID = PlayerID_;
-
-
-	// 호스트라면
-	if (true == Net->GetIsHost())
+	if (ServerFlag::S_None == ServerSignal_)
 	{
-		// 호스트의 현재 신호 저장하고
-		Packet->ServerSignal = ServerSignal_;
-
-		// StateChange신호만 0으로
-		SubServerSignal(ServerFlags::StateChange);
+		return;
 	}
+
+	std::shared_ptr<GameStatePacket> Packet = std::make_shared<GameStatePacket>();	
+
+	// 서버가 모든 클라이언트에게 주는 신호
+	Packet->ServerSignal = static_cast<unsigned int>(ServerSignal_);
+
+	// 현재 서버가 송신할 신호, 클라이언트들이 모두 알고 있다면
+	//if (true == CheckOtherPlayersFlag(static_cast<PlayerFlag>(ServerSignal_)))
+	//{
+	//	return;
+	//}
+
+	Net->SendPacket(Packet);
+}
+
+// 모두 호출
+void GameServer::SendPlayerStatePacket()
+{ 
+	std::shared_ptr<PlayerStatePacket> Packet = std::make_shared<PlayerStatePacket>();
+
+	Packet->PlayerID = PlayerID_;
+	
+	// 자신의 상태를 알림
+	Packet->PlayerStateSignal = static_cast<unsigned int>(PlayerSignal_);
 
 	Net->SendPacket(Packet);
 }

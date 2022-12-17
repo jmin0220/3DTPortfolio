@@ -35,5 +35,8 @@ private:
 	bool Switch_;
 
 	void Move(float _DeltaTime);
+
+private:
+	bool ServerActivated_;
 };
 

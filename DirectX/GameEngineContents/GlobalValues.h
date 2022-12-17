@@ -107,14 +107,54 @@ enum class StageNum
 };
 
 
-enum ServerFlags
+// 중복 플래그 없음
+enum ServerFlag
 {
-	None			= 0,
-	StateChange		= (1 << 0),	// 00000000 00000000 00000000 00000001
-	PlayerReady		= (1 << 1), // 00000000 00000000 00000000 00000010
-	ServerObjectsSpawnCompleted	= (1 << 2),
-	//ServerObjectsSpawnCompleted	= (1 << 3),
+	S_None					= 0,
+	S_GameStartChangeReady			= (1 << 1),
+	S_GameStartChangeOver			= (1 << 2),	
+	S_LoadingChangeReady		= (1 << 3),
+	S_LoadingChangeOver	= (1 << 4),	
 
+	S_StageIdleChangeReady			= (1 << 5),
+	S_StageIdleChangeOver			= (1 << 6),
+	S_StagePreviewChangeReady		= (1 << 7),	
+	S_StagePreviewChangeOver		= (1 << 8),	
+
+	S_StageReadyChangeReady			= (1 << 9),
+	S_StageReadyChangeOver		= (1 << 10),
+
+	S_StageRaceChangeReady			= (1 << 11),
+	S_StageRaceChangeOver			= (1 << 12),
+	S_StageEndChangeReady			= (1 << 13),
+	S_StageEndChangeOver			= (1 << 14), 
+	
+};
+
+// 게임플레이에 관련된 상태 아님
+// 유저가 다음 화면으로 넘어갈지에 대한 상태
+// 중복 플래그 없음
+// 하나만 켜지는거로
+enum PlayerFlag
+{
+	P_None					= 0,
+	P_GameStartChangeReady			= (1 << 1),
+	P_GameStartChangeOver			= (1 << 2),	
+	P_LoadingChangeReady		= (1 << 3),
+	P_LoadingChangeOver	= (1 << 4),	
+
+	P_StageIdleChangeReady			= (1 << 5),
+	P_StageIdleChangeOver			= (1 << 6),
+	P_StagePreviewChangeReady		= (1 << 7),	
+	P_StagePreviewChangeOver		= (1 << 8),	
+
+	P_StageReadyChangeReady			= (1 << 9),
+	P_StageReadyChangeOver		= (1 << 10),	
+
+	P_StageRaceChangeReady			= (1 << 11),
+	P_StageRaceChangeOver			= (1 << 12),	
+	P_StageEndChangeReady			= (1 << 13),
+	P_StageEndChangeOver			= (1 << 14),
 };
 
 enum class MapSelect

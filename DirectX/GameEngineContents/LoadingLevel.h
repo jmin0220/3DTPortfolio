@@ -7,6 +7,7 @@ class LoadingLevel : public GameEngineLevel
 {
 public:
 	static void SetLoadingStage(std::string_view _Level);
+	static bool AllPlayersReady_;
 
 private:
 	static LEVELS CurLoadingLevel_;
@@ -45,4 +46,7 @@ private:
 
 	bool LoadingComplete_;
 	float LoadingProgress_;
+
+private:
+	bool LevelChangeReady_;
 };

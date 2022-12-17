@@ -6,8 +6,8 @@ enum class ContentsPacketType
 {
 	ClientInit,			// 클라이언트가 들어오면 서버가 보내줄 패킷
 	ObjectUpdate,
-	GameState,			// 접속자 수, 모든 플레이어 레디 등
-
+	GameState,			// 게임 전체 상태 컨트롤
+	PlayerState,		// 플레이어의 정보(준비, 점수 등)
 
 	Garbage,				// 가끔씩 이상한 패킷
 };
@@ -79,12 +79,6 @@ class GameStatePacket : public GameServerPacket
 public:
 	// 서버만, 서버가 클라에게 보내주는 "신호"
 	unsigned int ServerSignal; 
-	//unsigned int ObjectUpdateSignal;
-
-
-	// 호스트, 클라 전부 다 보내는 정보
-	unsigned int PlayerID;
-	//unsigned int PlayerReady; // 0 or 1
 
 	GameStatePacket()
 	{
@@ -95,20 +89,45 @@ public:
 	{
 		GameServerPacket::Serialize(_Ser);
 		_Ser << ServerSignal;
-		_Ser << PlayerID;
 	}
 	virtual void DeSerialize(GameServerSerializer& _Ser)
 	{
 		GameServerPacket::DeSerialize(_Ser);
 		_Ser >> ServerSignal;
-		_Ser >> PlayerID;
 	}
 };
 
+class PlayerStatePacket : public GameServerPacket
+{
+public:
+	// 호스트, 클라 전부 다 보내는 정보
+	unsigned int PlayerID;
+	unsigned int PlayerStateSignal;
+
+	PlayerStatePacket()
+	{
+		SetPacketID(ContentsPacketType::PlayerState);
+	}
+
+	virtual void Serialize(GameServerSerializer& _Ser)
+	{
+		GameServerPacket::Serialize(_Ser);
+		_Ser << PlayerID;
+		_Ser << PlayerStateSignal;
+	}
+	virtual void DeSerialize(GameServerSerializer& _Ser)
+	{
+		GameServerPacket::DeSerialize(_Ser);
+		_Ser >> PlayerID;
+		_Ser >> PlayerStateSignal;
+	}
+};
+
+// 혹시나
 class GarbagePacket : public GameServerPacket
 {
 public:
-	unsigned int Garbage = 0; // 서버만, 서버가 클라에게 보내주는 신호
+	unsigned int Garbage = 0;
 
 	GarbagePacket()
 	{

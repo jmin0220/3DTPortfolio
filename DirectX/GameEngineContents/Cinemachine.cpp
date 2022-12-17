@@ -4,6 +4,8 @@
 Cinemachine::Cinemachine() 
 	: InterTime_(0.0f)
 	, FSM_()
+	, Activated_(false)
+	, End_(false)
 {
 }
 
@@ -16,7 +18,8 @@ void Cinemachine::Init(std::shared_ptr<GameEngineCameraActor> _MainCamera)
 	FSM_.CreateStateMember("Idle", std::bind(&Cinemachine::IdleUpdate, this, std::placeholders::_1, std::placeholders::_2));
 	FSM_.CreateStateMember("Move", std::bind(&Cinemachine::MoveUpdate, this, std::placeholders::_1, std::placeholders::_2));
 	FSM_.CreateStateMember("Inter", std::bind(&Cinemachine::InterUpdate, this, std::placeholders::_1, std::placeholders::_2));
-	FSM_.CreateStateMember("End", std::bind(&Cinemachine::EndUpdate, this, std::placeholders::_1, std::placeholders::_2));
+	FSM_.CreateStateMember("End", std::bind(&Cinemachine::EndUpdate, this, std::placeholders::_1, std::placeholders::_2),
+		std::bind(&Cinemachine::EndStart, this, std::placeholders::_1));
 
 	CurCamInfo_ = _MainCamera;
 
@@ -37,7 +40,7 @@ void Cinemachine::Init(std::shared_ptr<GameEngineCameraActor> _MainCamera)
 		StartInfo.MOVETIME = 0.0f;
 		StartInfo.SPEED = 1.0f;
 		QueueInfo_.push(StartInfo);
-
+		
 		// 다음 정보
 		CinemachineInfo TmpInfo;
 		TmpInfo.POS = float4{ 0,-10,-520 };
@@ -179,7 +182,7 @@ void Cinemachine::Init(std::shared_ptr<GameEngineCameraActor> _MainCamera)
 		StartInfo.SPEED = 0.0005f;
 		StartInfo.ResetPos = false;
 		QueueInfo_.push(StartInfo);
-		break;
+		break; 
 	}
 	default:
 	{
@@ -223,7 +226,7 @@ void Cinemachine::MoveUpdate(float _DeltaTime, const StateInfo& _Info)
 		CurInfo_.INTERTIME -= _DeltaTime;
 		return;
 	}
-
+	
 	if (CurInfo_.ResetPos == true)
 	{
 		CurCamInfo_->GetTransform().SetWorldPosition(CurInfo_.POS);
@@ -266,7 +269,13 @@ void Cinemachine::InterUpdate(float _DeltaTime, const StateInfo& _Info)
 	}
 }
 
+void Cinemachine::EndStart(const StateInfo& _Info)
+{
+	End_ = true;
+}
+
 void Cinemachine::EndUpdate(float _DeltaTime, const StateInfo& _Info)
 {
-	// TODO::서버처리
+
 }
+

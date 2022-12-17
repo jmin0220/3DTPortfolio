@@ -14,6 +14,22 @@ struct CinemachineInfo
 // 설명 :
 class Cinemachine 
 {
+	// 서버
+public:
+	void SetActivated()
+	{
+		Activated_ = true;
+	}
+
+	bool IsEnd()
+	{
+		return End_;
+	}
+
+private:
+	bool Activated_;
+	bool End_;
+
 public:
 	// constrcuter destructer
 	Cinemachine();
@@ -49,6 +65,7 @@ private:
 	void MoveUpdate(float _DeltaTime, const StateInfo& _Info);
 	void InterUpdate(float _DeltaTime, const StateInfo& _Info);
 	void EndUpdate(float _DeltaTime, const StateInfo& _Info);
+	void EndStart(const StateInfo& _Info);
 
 };
 

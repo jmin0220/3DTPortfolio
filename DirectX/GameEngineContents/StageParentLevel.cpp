@@ -28,12 +28,14 @@
 #include "PlayerActor.h"
 #include "IntroduceGame.h"
 
+#include "LoadingLevel.h"
 #include <atomic>
 std::mutex SpawnLock;
 
 float4 StageParentLevel::PlayerPos = float4::ZERO;
 std::vector<float4> StageParentLevel::HoopsPos = std::vector<float4>();
 std::vector<std::shared_ptr<GameEngineActor>> StageParentLevel::HoopsActor = std::vector<std::shared_ptr<GameEngineActor>>();
+bool StageParentLevel::AllPlayersReady_ = false;
 
 StageParentLevel::StageParentLevel() 
 	: MyStage_(StageNum::STAGE1)
@@ -59,9 +61,9 @@ void StageParentLevel::Start()
 		, std::bind(&StageParentLevel::IdleUpdate, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&StageParentLevel::IdleStart, this, std::placeholders::_1));
 
-	StageStateManager_.CreateStateMember("StagePreView"
-		, std::bind(&StageParentLevel::StagePreViewUpdate, this, std::placeholders::_1, std::placeholders::_2)
-		, std::bind(&StageParentLevel::StagePreViewStart, this, std::placeholders::_1));
+	StageStateManager_.CreateStateMember("StagePreview"
+		, std::bind(&StageParentLevel::StagePreviewUpdate, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&StageParentLevel::StagePreviewStart, this, std::placeholders::_1));
 
 	StageStateManager_.CreateStateMember("Ready"
 		, std::bind(&StageParentLevel::ReadyUpdate, this, std::placeholders::_1, std::placeholders::_2)
@@ -91,13 +93,21 @@ void StageParentLevel::End()
 
 void StageParentLevel::LevelStartEvent()
 {
+	AllPlayersReady_ = false;
+
 	VirtualPhysXLevel::LevelStartEvent();
 	LevelStartLoad();
 
 	// 서버
-	// 자신의 메인 플레이어 생성
-	GameServer::GetInst()->SubServerSignal(ServerFlags::PlayerReady);
+	// 로딩레벨에서 넘어온 유저들
+	GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_LoadingChangeOver);
+	if (true == GameServer::IsHost_)
+	{
+		GameServer::GetInst()->SetServerSignal(ServerFlag::S_LoadingChangeOver);
+	}
+	
 
+	// 자신의 메인 플레이어 생성
 	Player_ = CreateActor<PlayerActor>();
 	if (true == GameServer::GetInst()->IsServerStart())
 	{
@@ -111,8 +121,7 @@ void StageParentLevel::LevelStartEvent()
 		}
 	}
 	int PlayerID = GameServer::GetInst()->PlayerID_;
-	Player_->GetTransform().SetWorldPosition(PlayerPos + float4{ 20, 0, 0} * (PlayerID));
-
+	Player_->GetTransform().SetWorldPosition(PlayerPos + float4{ PlayerID * 20.0f, 0, 0 });
 	//후프레벨 위치 임시
 	if (MyStage_ == StageNum::STAGE4)
 	{
@@ -129,12 +138,11 @@ void StageParentLevel::LevelStartEvent()
 	CameraArm_ = CreateActor<CameraArm>();
 
 	UIs_ = CreateActor<InGameSetUI>();
+	UIs_->Off();
 
 	StageStateManager_.ChangeState("Idle");
-
-
-
 }
+
 void StageParentLevel::LevelEndEvent()
 {
 	VirtualPhysXLevel::LevelEndEvent();
@@ -486,14 +494,7 @@ void StageParentLevel::SpawnServerObjects()
 			continue;
 		}
 
-		// 테스트
-		ServerSpawn++;
-		GameEngineDebug::OutPutString("서버 스폰 : " + std::to_string(ServerSpawn));
-		GameEngineDebug::OutPutString("서버 스폰ID : " + std::to_string(CurPacket->ObjectID));
-
 	}
-
-
 
 
 }

@@ -5,6 +5,9 @@
 class GameServerGUI : public GameEngineGUIWindow
 {
 public:
+	static bool GameStart_;
+
+public:
 	// constrcuter destructer
 	GameServerGUI();
 	~GameServerGUI();

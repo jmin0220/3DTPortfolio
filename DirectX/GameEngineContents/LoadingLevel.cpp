@@ -4,9 +4,11 @@
 #include "CustomableGUI.h"
 
 #include <GameEngineBase/magic_enum.hpp>
+#include "GameServerGUI.h"
 
 LEVELS LoadingLevel::CurLoadingLevel_(LEVELS::NONE);
 std::string_view LoadingLevel::StrCurLoadingLevel_;
+bool LoadingLevel::AllPlayersReady_ = false;
 
 void LoadingLevel::SetLoadingStage(std::string_view _Level)
 {
@@ -30,52 +32,83 @@ void LoadingLevel::Start()
 
 void LoadingLevel::Update(float _DeltaTime)
 {
+	// 서버 안켰을때도 스테이지 입장 가능하도록
 	if (false == GameServer::GetInst()->IsServerStart())
 	{
 		if (LoadingProgress_ >= 0.999f)
 		{
 			GEngine::ChangeLevel(StrCurLoadingLevel_.data());
+			return;
 		}
 	}
 
-
- 	if (false == LoadingComplete_ && LoadingProgress_ >= 0.999f)
+	// 3. 각자 상태변경
+	// 호스트
+	if (true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_LoadingChangeReady))
 	{
-		LoadingComplete_ = true;
-		GameServer::GetInst()->AddServerSignal(ServerFlags::PlayerReady);
-	}
 
-
-	if (false == LoadingComplete_)
-	{
-		return;
-	}
-
-	if (true == GameServer::IsHost_)
-	{
-		// 호스트는 자기가 시작하고
-		if (true == GameServer::GetInst()->IsPlayersReady())
+		if (true == GameServer::IsHost_)
 		{
-			GameServer::GetInst()->AddServerSignal(ServerFlags::StateChange);
-			GEngine::ChangeLevel(StrCurLoadingLevel_.data());
+			// 호스트는 유저들이 다 바꾼 뒤에 바꿈
+			if (true == GameServer::GetInst()->CheckOtherPlayersFlag(PlayerFlag::P_LoadingChangeOver))
+			{
+				GEngine::ChangeLevel(StrCurLoadingLevel_.data());
+				return;
+			}
 		}
-	}
-	else
-	{
-		// 클라이언트는 호스트가 보내준 시그널로
-		if (GameServer::GetInst()->CheckServerSignal(ServerFlags::StateChange))
+		// 유저
+		else
 		{
-			GEngine::ChangeLevel(StrCurLoadingLevel_.data());
+			if (true == GameServer::GetInst()->CheckPlayerSignal(PlayerFlag::P_LoadingChangeReady))
+			{
+				GEngine::ChangeLevel(StrCurLoadingLevel_.data());
+				return;
+			}
 		}
+
 	}
 
 	
+	// 2. 서버는 서버신호 변경 (호스트)
+	if (!GameServer::GetInst()->CheckServerSignal(ServerFlag::S_LoadingChangeReady) && true == GameServer::IsHost_)
+	{
+		// 플레이어 모두, 자기자신 상태 확인
+		if (true == GameServer::GetInst()->CheckOtherPlayersFlag(PlayerFlag::P_LoadingChangeReady)
+			&& true == GameServer::GetInst()->CheckPlayerSignal(PlayerFlag::P_LoadingChangeReady))
+		{
+			GameServer::GetInst()->SetServerSignal(ServerFlag::S_LoadingChangeReady);
+			return;
+		}
+	}
 
+
+
+	// 1. 로딩 완료시 상태변경 준비(호스트, 유저)
+	if (LoadingProgress_ >= 0.999f && !GameServer::GetInst()->CheckPlayerSignal(PlayerFlag::P_LoadingChangeReady))
+	{
+		GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_LoadingChangeReady);
+	}
 }
 
 // 랜덤으로 스테이지를 시작하는게 아니라 원하는 스테이지를 선택할 수 있도록
 void LoadingLevel::LevelStartEvent()
 {
+	LevelChangeReady_ = false;
+	LoadingComplete_ = false;
+
+	// 서버 
+	// 유저들 로딩레벨에 다 들어왔으면 호스트도 넘어오라고 해주어야함
+	if (false == GameServer::IsHost_)
+	{
+		GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_GameStartChangeOver);
+	}
+	// 호스트
+	else
+	{
+		GameServer::GetInst()->SetServerSignal(ServerFlag::S_GameStartChangeOver);
+	}
+	// ~~ 서버
+
 	LoadingGUI_ = GameEngineGUI::CreateGUIWindow<CustomableGUI>("LoadingGUI", this);
 	LoadingGUI_->SetGUIDebugFunc([=]() {ShowLoadingProgress(); });
 
@@ -95,7 +128,6 @@ void LoadingLevel::LevelStartEvent()
 		);
 	}
 
-	LoadingComplete_ = false;
 }
 
 void LoadingLevel::LevelEndEvent()
@@ -104,6 +136,8 @@ void LoadingLevel::LevelEndEvent()
 	Loadings_->Death();
 
 	LoadingGUI_->Death();
+
+
 }
 
 void LoadingLevel::ShowLoadingProgress()

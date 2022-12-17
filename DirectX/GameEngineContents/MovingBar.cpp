@@ -7,7 +7,8 @@ int MovingBar::Num = 0;
 MovingBar::MovingBar() :
 	MyNum(0),
 	Switch_(false),
-	Speed_(30.0f)
+	Speed_(30.0f),
+	ServerActivated_(false)
 {
 	MyNum = Num;
 	Num++;
@@ -205,6 +206,16 @@ void MovingBar::Start()
 
 void MovingBar::Update(float _DeltaTime)
 {
+	if (true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageIdleChangeOver))
+	{
+		ServerActivated_ = true;
+	}
+
+	if (false == ServerActivated_)
+	{
+		return;
+	}
+
 	Move(_DeltaTime);
 }
 

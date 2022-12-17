@@ -51,5 +51,7 @@ private:
 	std::shared_ptr<PhysXBoxGeometryComponent> PhysXBoxGeometry_;
 	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer_;
 
+	// ¼­¹ö
+	bool ServerActivated_;
 };
 

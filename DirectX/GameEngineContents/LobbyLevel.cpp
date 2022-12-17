@@ -144,6 +144,7 @@ void LobbyLevel::LevelEndEvent()
 	Bingle_->Death();
 	
 	ContentsCore::GetInst()->ReleaseCurLevelResource();
+	GameServerGUI::GameStart_ = false;
 }
 
 void LobbyLevel::LobbyStart(const StateInfo& _Info)
@@ -156,7 +157,7 @@ void LobbyLevel::LobbyStart(const StateInfo& _Info)
 
 void LobbyLevel::LobbyUpdate(float _DeltaTime, const StateInfo& _Info)
 {
-
+	// 플레이 버튼 누름
 	if (true == LobbySet_->GetPlayButton().lock()->GetIsLevelChange())
 	{
 		StateManager_.ChangeState("Falling");
@@ -181,19 +182,35 @@ void LobbyLevel::FallingStart(const StateInfo& _Info)
 	WaitingFont_->On();
 	Bingle_->On();
 
-	// ★★★ 서버 ★★★
+	//서버
 	GameServer::GetInst()->ServerStart();
-	// ~~~ 서버 ~~~
+	
 }
 
 void LobbyLevel::FallingUpdate(float _DeltaTime, const StateInfo& _Info)
 {
-	if (true == GameServer::GetInst()->CheckServerSignal(ServerFlags::StateChange))
+
+
+	// 호스트는 모든 유저 다 넘어가면 상태변경
+	if (true == GameServer::IsHost_)
 	{
-		ContentsCore::GetInst()->ChangeLevelByLoading(LEVEL_NAME_DOORDASH);
-		GameServer::GetInst()->SetServerSignal(ServerFlags::None);
-		return;
+		if (true == GameServer::GetInst()->CheckOtherPlayersFlag(PlayerFlag::P_GameStartChangeOver))
+		{
+			ContentsCore::GetInst()->ChangeLevelByLoading(LEVEL_NAME_DOORDASH);
+			return;
+		}
 	}
+	// 유저 서버시그널 확인되면 변경
+	else
+	{
+		if (true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_GameStartChangeReady))
+		{
+			GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_GameStartChangeReady);
+			ContentsCore::GetInst()->ChangeLevelByLoading(LEVEL_NAME_DOORDASH);
+			return;
+		}
+	}
+
 
 	FallTime_ -= GameEngineTime::GetDeltaTime()*20.0f;
 

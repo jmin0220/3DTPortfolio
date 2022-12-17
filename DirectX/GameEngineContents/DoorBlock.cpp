@@ -8,7 +8,8 @@ DoorBlock::DoorBlock() :
 	Switch_(false),
 	Speed_(0.0f),
 	UpTimer_(0.0f),
-	DownTimer_(0.0f)
+	DownTimer_(0.0f),
+	ServerActivated_(false)
 {
 	MyNum = Num;
 	Num++;
@@ -33,6 +34,16 @@ void DoorBlock::Start()
 
 void DoorBlock::Update(float _DeltaTime)
 {
+	if (true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageIdleChangeOver))
+	{
+		ServerActivated_ = true;
+	}
+
+	if (false == ServerActivated_)
+	{
+		return;
+	}
+
 	DoorMove(_DeltaTime);
 	
 }
@@ -282,7 +293,7 @@ void DoorBlock::Init()
 		break;
 	case 23:
 		DownTime_ = 0.8f;
-		UpTime_ = 0.8;
+		UpTime_ = 0.8f;
 		Speed_ = 20.0f;
 
 		WaitTimer_ = 0;
