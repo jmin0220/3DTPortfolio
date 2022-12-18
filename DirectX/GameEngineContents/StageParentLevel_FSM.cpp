@@ -15,12 +15,20 @@ void StageParentLevel::IdleStart(const StateInfo& _Info)
 {
 	IdleEnd = false;
 
-	IntroduceGame_->On();
+	if (true == GameServer::GetInst()->IsServerStart())
+	{
+		IntroduceGame_->On();
+	}
 	CameraArm_->SetFollowCamera(MainCam_, Player_);
 }
 
 void StageParentLevel::IdleUpdate(float _DeltaTime, const StateInfo& _Info)
 {
+	if (false == GameServer::GetInst()->IsServerStart())
+	{
+		return;
+	}
+
 	SpawnServerObjects();
 
 
