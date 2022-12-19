@@ -89,11 +89,9 @@ void BigShots_PRP::Start()
 		break;
 	}
 
-	GameEngineDebug::OutPutString(FBXName_);
-
 	Renderer_->SetFBXMesh(FBXName_, "Texture");
 	PhysXConvexDynamicComponent_ = CreateComponent< PhysXConvexDynamicComponent>();
-	
+
 	Death(20.0f);
 }
 
@@ -123,8 +121,9 @@ void BigShots_PRP::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _
 	PhysXConvexDynamicComponent_->AddForce(PRPForce_);
 	
 	float RandomRot = GameEngineRandom::MainRandom.RandomFloat(-10.0f, 10.0f);
-	GameEngineDebug::OutPutString(std::to_string(RandomRot));
 	PhysXConvexDynamicComponent_->AddAngularVelocity(float4(RandomRot, RandomRot, RandomRot));
+
+	GameEngineDebug::OutPutString(FBXName_ + " Mass Value >> " +std::to_string(static_cast<float>(PhysXConvexDynamicComponent_->GetMass())));
 }
 
 void BigShots_PRP::CreatePhysX()

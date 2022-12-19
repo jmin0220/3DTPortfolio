@@ -17,13 +17,22 @@ public:
 	void CreatePhysXActors(const std::string& _MeshName, physx::PxScene* _Scene, physx::PxPhysics* _physics,
 		physx::PxCooking* _cooking, bool _InverseIndex = true, physx::PxVec3 _GeoMetryScale = physx::PxVec3(2.0f), float4 _GeoMetryRot = { 0.0f }, bool _Gravity = false);
 
+	// 힘을 추가
 	void AddForce(float4 _Force);
 
+	// 가속도를 추가
 	void AddAngularVelocity(float4 _Velocity);
 
+	// RigidBody->Actor || Actor->RigidBody 플래그
 	inline void SetPositionSetFromParentFlag(bool _Flag)
 	{
 		PositionSetFromParentFlag_ = _Flag;
+	}
+
+	// RigidBody의 질량을 취득
+	inline physx::PxReal GetMass()
+	{
+		return dynamic_->getMass();
 	}
 
 protected:
