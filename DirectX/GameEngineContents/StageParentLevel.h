@@ -136,7 +136,5 @@ protected:
 private:
 	void SpawnServerObjects();
 	
-public:
-	static bool AllPlayersReady_;
 };
 

@@ -29,7 +29,7 @@ bool GameServer::CheckOtherPlayersFlag(PlayerFlag _Flag)
 	bool Result = true;
 	for (; Begin != End; ++Begin)
 	{
-		Result = (static_cast<bool>((*Begin).second->PlayerStateSignal & _Flag));
+		Result = (static_cast<bool>((*Begin).second->PlayerStateSignal == _Flag));
 		if (false == Result)
 		{
 			return Result;

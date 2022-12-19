@@ -15,20 +15,12 @@ void StageParentLevel::IdleStart(const StateInfo& _Info)
 {
 	IdleEnd = false;
 
-	if (true == GameServer::GetInst()->IsServerStart())
-	{
-		IntroduceGame_->On();
-	}
+	IntroduceGame_->On();
 	CameraArm_->SetFollowCamera(MainCam_, Player_);
 }
 
 void StageParentLevel::IdleUpdate(float _DeltaTime, const StateInfo& _Info)
 {
-	if (false == GameServer::GetInst()->IsServerStart())
-	{
-		return;
-	}
-
 	SpawnServerObjects();
 
 
@@ -108,7 +100,7 @@ void StageParentLevel::StagePreviewStart(const StateInfo& _Info)
 	}
 
 	IntroduceGame_->Off();
-	MainCam_->OnFreeCameraMode();
+	MainCam_->OffFreeCameraMode();
 
 	// 시네머신 작동
 	CinemaCam_->SetActivated();
@@ -116,8 +108,61 @@ void StageParentLevel::StagePreviewStart(const StateInfo& _Info)
 
 void StageParentLevel::StagePreviewUpdate(float _DeltaTime, const StateInfo& _Info)
 {
-	
-	// 1. 시네머신 끝나면 준비완료
+	// 1. 유저가 먼저 신호 끔
+	if (false == GameServer::IsHost_
+		&& GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageIdleChangeOver))
+	{
+		GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_None);
+	}
+
+	// 2. 호스트도 신호 끔
+	if (true == GameServer::IsHost_)
+	{
+		if (GameServer::GetInst()->CheckOtherPlayersFlag(PlayerFlag::P_None))
+		{
+			GameServer::GetInst()->SetServerSignal(ServerFlag::S_None);
+			GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_None);
+		}
+	}
+
+	// 5. 상태변경
+	if (GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StagePreviewChangeReady))
+	{
+		if (true == GameServer::IsHost_)
+		{
+			// 호스트는 유저 다 변경시 들감
+			if (true == GameServer::GetInst()->CheckOtherPlayersFlag(PlayerFlag::P_StagePreviewChangeOver))
+			{
+				StageStateManager_.ChangeState("Ready");
+				return;
+			}
+		}
+		else
+		{
+			// 유저먼저 보냄
+			StageStateManager_.ChangeState("Ready");
+			return;
+		}
+	}
+
+	// 4. 서버가 유저들 준비 됐는지 확인
+	if (true == GameServer::IsHost_ && GameServer::GetInst()->CheckServerSignal(ServerFlag::S_None))
+	{
+		// 자기 자신 + 유저 준비 확인
+		if (true == GameServer::GetInst()->CheckPlayerSignal(PlayerFlag::P_StagePreviewChangeReady)
+			&& true == GameServer::GetInst()->CheckOtherPlayersFlag(PlayerFlag::P_StagePreviewChangeReady))
+		{
+			GameServer::GetInst()->SetServerSignal(ServerFlag::S_StagePreviewChangeReady);
+		}
+	}
+
+
+	// 3. 시네머신 끝나면 준비완료
+	if (true == CinemaCam_->IsEnd() 
+		&& GameServer::GetInst()->CheckPlayerSignal(PlayerFlag::P_None))
+	{
+		GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_StagePreviewChangeReady);
+	}
 }
 
 ///////////////////////////
@@ -126,14 +171,11 @@ void StageParentLevel::StagePreviewUpdate(float _DeltaTime, const StateInfo& _In
 void StageParentLevel::ReadyStart(const StateInfo& _Info)
 {
 	// 유저나 호스트나 신호 끔
-	//GameServer::GetInst()->SubServerSignal(ServerFlag::StateChange);
-
-	// 모든 유저 다음에 호스트가 마지막으로 들어왔다
+	GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_StagePreviewChangeOver);
 	if (true == GameServer::IsHost_)
 	{
-		AllPlayersReady_ = false;
+		GameServer::GetInst()->SetServerSignal(ServerFlag::S_StagePreviewChangeOver);
 	}
-
 
 
 	// 카메라암 -> 플레이어에게 세팅
@@ -146,22 +188,12 @@ void StageParentLevel::ReadyStart(const StateInfo& _Info)
 
 void StageParentLevel::ReadyUpdate(float _DeltaTime, const StateInfo& _Info)
 {
-	// 유저는 호스트가 마지막으로 들어왔는지 확인한 후에 신호 끔
-	// 이래야지 호스트도 이전상태에서 넘어올 수 있음
-	// 호스트가 들어왔으면 신호 끔
-	if (false == AllPlayersReady_)
-	{
-		//GameServer::GetInst()->SetPlayerSignal(PlayerFlag::Wait);
-	}
 
 
 
-
-
-
-
-
-	if (true == GameEngineInput::GetInst()->IsDown(KEY_ENTER))
+	// 카운트다운 종료되면 상태변경
+	// 플레이어 움직일 수 있음
+	if (true == UIs_->IsCountDownEnd())
 	{
 		StageStateManager_.ChangeState("Race");
 		return;
@@ -178,27 +210,126 @@ void StageParentLevel::RaceStart(const StateInfo& _Info)
 
 void StageParentLevel::RaceUpdate(float _DeltaTime, const StateInfo& _Info)
 {
+	// 1. 유저가 먼저 신호 끔
+	if (false == GameServer::IsHost_
+		&& GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StagePreviewChangeOver))
+	{
+		GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_None);
+	}
+
+	// 2. 호스트도 신호 끔
+	if (true == GameServer::IsHost_)
+	{
+		if (GameServer::GetInst()->CheckOtherPlayersFlag(PlayerFlag::P_None))
+		{
+			GameServer::GetInst()->SetServerSignal(ServerFlag::S_None);
+			GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_None);
+		}
+	}
+
+
+	// 5. 상태변경
+	if (GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageRaceChangeReady))
+	{
+		if (true == GameServer::IsHost_)
+		{
+			// 호스트는 유저 다 변경시 들감
+			if (true == GameServer::GetInst()->CheckOtherPlayersFlag(PlayerFlag::P_StageRaceChangeOver))
+			{
+				StageStateManager_.ChangeState("End");
+				return;
+			}
+		}
+		else
+		{
+			// 유저먼저 보냄
+			StageStateManager_.ChangeState("End");
+			return;
+		}
+	}
+
+	// 임시
 	if (true == GameEngineInput::GetInst()->IsDown(KEY_ENTER))
 	{
-		UIs_->OnOffSuccessCount();
-		StageStateManager_.ChangeState("End");
-		return;
+		Player_->SetIsGoal();
 	}
+
+	// 4. 호스트는 모든 플레이어 준비확인
+	if (true == GameServer::IsHost_ 
+		&& true == GameServer::GetInst()->CheckOtherPlayersFlag(PlayerFlag::P_StageRaceChangeReady))
+	{
+		// 자기 자신 + 유저 준비 확인
+		if (true == GameServer::GetInst()->CheckPlayerSignal(PlayerFlag::P_StageRaceChangeReady)
+			&& true == GameServer::GetInst()->CheckOtherPlayersFlag(PlayerFlag::P_StageRaceChangeReady))
+		{
+			GameServer::GetInst()->SetServerSignal(ServerFlag::S_StageRaceChangeReady);
+		}
+	}
+
+	// 3. 플레이어 준비
+	if (true == Player_->GetIsGoal() && !GameServer::GetInst()->CheckPlayerSignal(PlayerFlag::P_StageRaceChangeReady))
+	{
+		GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_StageRaceChangeReady);
+	}
+	
 }
 
 ///////////////////////////
 // 종료 
 ///////////////////////////
+bool CheckOnce;
 void StageParentLevel::EndStart(const StateInfo& _Info)
 {
+	CheckOnce = false;
+
+	// 유저나 호스트나 신호 끔
+	GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_StageRaceChangeOver);
+	if (true == GameServer::IsHost_)
+	{
+		GameServer::GetInst()->SetServerSignal(ServerFlag::S_StageRaceChangeOver);
+	}
+
+
+
 	UIs_->OnOffEnd();
 }
 
 void StageParentLevel::EndUpdate(float _DeltaTime, const StateInfo& _Info)
 {
-	if (true == GameEngineInput::GetInst()->IsDown(KEY_ENTER))
+	// 1. 유저가 먼저 신호 끔
+	if (false == GameServer::IsHost_
+		&& !GameServer::GetInst()->CheckPlayerSignal(PlayerFlag::P_None)
+		&& GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageRaceChangeOver))
 	{
-		return;
+		GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_None);
 	}
+
+
+	// 다음레벨로
+	if (false == CheckOnce && true == GameServer::GetInst()->CheckPlayerSignal(PlayerFlag::P_None))
+	{
+		CheckOnce = true;
+		UIs_->Off();
+		// 끝나는 시점
+
+		ContentsCore::GetInst()->ChangeLevelByThread(LEVEL_NAME_MIDSCORE);
+	}
+
+	if (1 <= ContentsCore::GetInst()->GetLoadingProgress() && true == CheckOnce)
+	{
+		GEngine::ChangeLevel(LEVEL_NAME_MIDSCORE);
+	}
+
+
+	// 2. 호스트도 신호 끔
+	if (true == GameServer::IsHost_)
+	{
+		if (GameServer::GetInst()->CheckOtherPlayersFlag(PlayerFlag::P_None))
+		{
+			GameServer::GetInst()->SetServerSignal(ServerFlag::S_None);
+			GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_None);
+		}
+	}
+
 }
 

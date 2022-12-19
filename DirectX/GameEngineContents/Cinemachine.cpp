@@ -196,7 +196,7 @@ void Cinemachine::Init(std::shared_ptr<GameEngineCameraActor> _MainCamera)
 
 void Cinemachine::Activate()
 {
-	if (true == GameEngineInput::GetInst()->IsDown(KEY_ENTER))
+	if (true == Activated_)
 	{
 		// 첫 시작 정보 대입
 		CurInfo_ = QueueInfo_.front();

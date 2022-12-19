@@ -12,7 +12,7 @@ LobbyPlayer::~LobbyPlayer()
 void LobbyPlayer::Start()
 {
 	FBXRenderer_ = CreateComponent<GameEngineFBXAnimationRenderer>();
-	FBXRenderer_->SetFBXMesh("Character_Idle_A.fbx", "TextureAnimationCustom");
+	FBXRenderer_->SetFBXMesh("Lobby_Character_Idle_A.fbx", "TextureAnimationCustom");
 	SetCharacterAnimation();
 	SetCharacterTexture();
 }
@@ -31,17 +31,17 @@ void LobbyPlayer::LevelStartEvent()
 void LobbyPlayer::SetCharacterAnimation()
 {
 	FBXRenderer_->CreateFBXAnimation("Idle",
-		GameEngineRenderingEvent{ "Character_Idle_A.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
+		GameEngineRenderingEvent{ "Lobby_Character_Idle_A.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
 	FBXRenderer_->CreateFBXAnimation("Win",
-		GameEngineRenderingEvent{ "Character_Victory_Default_A.fbx", 0.016666666666666666666666666666666666666666667f , false }, 0);
+		GameEngineRenderingEvent{ "Lobby_Character_Victory_Default_A.fbx", 0.016666666666666666666666666666666666666666667f , false }, 0);
 	FBXRenderer_->CreateFBXAnimation("Fall",
-		GameEngineRenderingEvent{ "Character_LobbyDive_A.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
+		GameEngineRenderingEvent{ "Lobby_Character_LobbyDive_A.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
 	FBXRenderer_->CreateFBXAnimation("Tumble",
-		GameEngineRenderingEvent{ "Character_Fall_A.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
+		GameEngineRenderingEvent{ "Lobby_Character_Fall_A.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
 	FBXRenderer_->CreateFBXAnimation("Jogging",
-		GameEngineRenderingEvent{ "Character_JoggingOnSpot.fbx", 0.018f , true }, 0);
+		GameEngineRenderingEvent{ "Lobby_Character_JoggingOnSpot.fbx", 0.018f , true }, 0);
 	FBXRenderer_->CreateFBXAnimation("Gasp",
-		GameEngineRenderingEvent{ "Character_Victory_Gasp.fbx", 0.018f , true }, 0);
+		GameEngineRenderingEvent{ "Lobby_Character_Victory_Gasp.fbx", 0.018f , true }, 0);
 	FBXRenderer_->ChangeAnimation("Idle");
 }
 

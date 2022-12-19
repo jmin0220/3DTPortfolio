@@ -82,19 +82,7 @@ public:
 
 	bool CheckServerSignal(ServerFlag _Flag)
 	{
-		if (_Flag & ServerSignal_)
-		{
-			int tmp = static_cast<int>(ServerSignal_);
-			if (tmp != 0)
-			{
-				GameEngineDebug::OutPutString("ServerSignalSended!! >> " + std::to_string(tmp));
-			}
-
-			//ServerSignal_ = static_cast<ServerFlag>(ServerSignal_ - _Flag);
-
-			return true;
-		}
-		return false;
+		return _Flag == ServerSignal_;
 	}
 
 	void SetServerSignal(ServerFlag _Flag)
@@ -121,7 +109,7 @@ public:
 
 	bool CheckPlayerSignal(PlayerFlag _Flag)
 	{
-		return _Flag & PlayerSignal_;
+		return _Flag == PlayerSignal_;
 	}
 
 	void SetPlayerSignal(PlayerFlag _Flag)

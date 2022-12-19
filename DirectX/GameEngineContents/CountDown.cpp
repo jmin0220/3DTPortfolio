@@ -11,6 +11,7 @@ CountDown::CountDown()
 	,IsAniOn_(false)
 	,IsGoEnd_(false)
 	,IsGoPop_(false)
+	,IsCountDownEnd_(false)
 {
 }
 
@@ -341,6 +342,8 @@ void CountDown::CountDownStart()
 			if (Go_->GetTransform().GetWorldScale().x <= 1.0f)
 			{
 				Go_->Off();
+
+				IsCountDownEnd_ = true;
 			}
 		}
 	}

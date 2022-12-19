@@ -149,11 +149,11 @@ void GameServerNetServer::UserFunction(GameEngineThread* Thread, SOCKET _Socket)
 		//}
 		// -> 클라이언트 잠깐 멈추면 서버 일로 들어옴
 
-		if (-1 == Result)
-		{
-			MsgBoxAssert("네트워크 에러");
-			return;
-		}
+		//if (-1 == Result)
+		//{
+		//	MsgBoxAssert("네트워크 에러");
+		//	return;
+		//}
 
 		size_t PrevSize = PacketVector.size();
 

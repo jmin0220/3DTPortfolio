@@ -35,7 +35,6 @@ std::mutex SpawnLock;
 float4 StageParentLevel::PlayerPos = float4::ZERO;
 std::vector<float4> StageParentLevel::HoopsPos = std::vector<float4>();
 std::vector<std::shared_ptr<GameEngineActor>> StageParentLevel::HoopsActor = std::vector<std::shared_ptr<GameEngineActor>>();
-bool StageParentLevel::AllPlayersReady_ = false;
 
 StageParentLevel::StageParentLevel() 
 	: MyStage_(StageNum::STAGE1)
@@ -55,6 +54,9 @@ void StageParentLevel::Start()
 
 	IntroduceGame_ = CreateActor<IntroduceGame>();
 	IntroduceGame_->Off();
+
+	UIs_ = CreateActor<InGameSetUI>();
+	UIs_->On();
 
 	// 스테이지 FSM
 	StageStateManager_.CreateStateMember("Idle"
@@ -93,8 +95,6 @@ void StageParentLevel::End()
 
 void StageParentLevel::LevelStartEvent()
 {
-	AllPlayersReady_ = false;
-
 	VirtualPhysXLevel::LevelStartEvent();
 	LevelStartLoad();
 
@@ -122,6 +122,7 @@ void StageParentLevel::LevelStartEvent()
 	}
 	int PlayerID = GameServer::GetInst()->PlayerID_;
 	Player_->GetTransform().SetWorldPosition(PlayerPos + float4{ PlayerID * 20.0f, 0, 0 });
+
 	//후프레벨 위치 임시
 	if (MyStage_ == StageNum::STAGE4)
 	{
@@ -137,22 +138,22 @@ void StageParentLevel::LevelStartEvent()
 	MainCam_ = GetMainCameraActor();
 	CameraArm_ = CreateActor<CameraArm>();
 
-	UIs_ = CreateActor<InGameSetUI>();
-	UIs_->Off();
-
 	StageStateManager_.ChangeState("Idle");
 }
 
 void StageParentLevel::LevelEndEvent()
 {
 	VirtualPhysXLevel::LevelEndEvent();
-	ContentsCore::GetInst()->ReleaseCurLevelResource();
+	//ContentsCore::GetInst()->ReleaseCurLevelResource();
+	GameServerObject::ServerRelease();
 
 	Player_->Death();
 
 	CameraArm_->Death();
 	
 	UIs_->Death();
+
+	AllClear();
 }
 
 void StageParentLevel::LevelStartLoad()

@@ -7,12 +7,12 @@
 #include "MidScoreBGActor.h"
 #include "FontActor.h"
 
-MidScoreLevel::MidScoreLevel() 
+MidScoreLevel::MidScoreLevel()
 	:FallingTime_(0.0f)
 {
 }
 
-MidScoreLevel::~MidScoreLevel() 
+MidScoreLevel::~MidScoreLevel()
 {
 }
 
@@ -96,7 +96,7 @@ void MidScoreLevel::LevelStartEvent()
 		//1등 닉네임+점수 표시
 		Font1_ = CreateActor<FontActor>();
 		Font1_->SetFont("1st.   " + Player1Name_, FONT_TITAN_ONE, 60.0f, { 20,200 }, LeftAndRightSort::LEFT);
-		
+
 		Font1Score_ = CreateActor<FontActor>();
 		Font1Score_->SetFont("123120", FONT_NOTO_SANS_CJK_SC, 50.0f, { 20,250 }, LeftAndRightSort::LEFT);
 	}

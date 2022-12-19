@@ -16,6 +16,10 @@ public:
 	CountDown& operator=(CountDown&& _Other) noexcept = delete;
 
 	void CountDownStart();
+	bool CountDownEnd()
+	{
+		return IsCountDownEnd_;
+	}
 	void PopEnd();
 	void Reset();
 protected:
@@ -48,5 +52,7 @@ private:
 	bool IsOneEnd_;
 	bool IsGoEnd_;
 	bool IsAniOn_;
+
+	bool IsCountDownEnd_;
 };
 

@@ -112,19 +112,6 @@ void ContentsCore::Update(float _DeltaTime)
 			ServerGUI_->GameStart_ = false;
 		}
 
-		//// 로딩레벨
-		//if (true == LoadingLevel::AllPlayersReady_)
-		//{
-		//	GameServer::GetInst()->AddServerSignal(ServerFlag::StateChange);
-		//	LoadingLevel::AllPlayersReady_ = false;
-		//}
-
-		//// 스테이지레벨
-		//if (true == StageParentLevel::AllPlayersReady_)
-		//{
-		//	GameServer::GetInst()->AddServerSignal(ServerFlag::StateChange);
-		//}
-
 		// 호스트는 전체 게임 신호 보냄
 		GameServer::GetInst()->SendGameStatePacket();
 	}
