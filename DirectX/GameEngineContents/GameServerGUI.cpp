@@ -6,6 +6,9 @@
 #include "GameServerObject.h"
 #include "ServerPacket.h"
 #include "PlayerActor.h"
+#include "LobbyPlayer.h"
+
+#include <GameEngineBase/magic_enum.hpp>
 
 bool GameServerGUI::GameStart_ = false;
 
@@ -20,6 +23,14 @@ GameServerGUI::~GameServerGUI()
 void GameServerGUI::Initialize(GameEngineLevel* _Level)
 {
 	LobbyLevel_ = _Level;
+
+	for (int i = 0; i < static_cast<int>(PlayerColor::MAX); i++)
+	{
+		auto ColorName = magic_enum::enum_name<PlayerColor>(static_cast<PlayerColor>(i));
+		PlayerColors_[i] = ColorName.data();
+	}
+
+	PrevColorIdx_ = -1;
 }
 
 void GameServerGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
@@ -58,6 +69,40 @@ void GameServerGUI::LobbyGUI()
 			GameStart_ = true;	
 		}
 	}
+
+	// 플레이어 색 설정?
+	ImGui::Text(GameEngineString::AnsiToUTF8Return("캐릭터 색상 선택").c_str());
+	
+	//const char* items[] = { "AAAA", "BBBB", "CCCC", "DDDD", "EEEE", "FFFF", "GGGG", "HHHH", "IIII", "JJJJ", "KKKK", "LLLLLLL", "MMMM", "OOOOOOO", "PPPP", "QQQQQQQQQQ", "RRR", "SSSS" };
+
+	static const char* current_item = NULL;
+	
+	static int ColorIdx = -1;
+	if (ImGui::BeginCombo("##combo", current_item))
+	{
+		for (int n = 0; n < static_cast<int>(PlayerColor::MAX); n++)
+		{
+			bool is_selected = (current_item == PlayerColors_[n]);
+			if (ImGui::Selectable(PlayerColors_[n], is_selected))
+			{
+				current_item = PlayerColors_[n];
+				if (is_selected)
+				{
+					ImGui::SetItemDefaultFocus();
+				}
+				ColorIdx = n;
+			}
+		}
+		ImGui::EndCombo();
+	}
+
+	if (PrevColorIdx_ != ColorIdx)
+	{
+		GameServer::GetInst()->SetPlayerColorID(ColorIdx);
+		LobbyPlayer::SetPlayerColor();
+		PrevColorIdx_ = ColorIdx;
+	}
+
 }
 
 void GameServerGUI::InGameGUI()

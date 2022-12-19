@@ -26,6 +26,9 @@ public:
 		return MainPlayer->GetNetID();
 	}
 
+	void SetNetPlayerColor(unsigned int _Color);
+	bool IsNetPlayerColorExist_;
+
 private:
 	bool IsPlayerble_;
 

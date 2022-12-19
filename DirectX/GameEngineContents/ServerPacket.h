@@ -44,7 +44,8 @@ public:
 	float4 Rot;
 	float4 Scale;
 	std::string Animation;
-
+	unsigned int PlayerColor;
+	
 	ObjectUpdatePacket()
 	{
 		SetPacketID(ContentsPacketType::ObjectUpdate);
@@ -60,6 +61,7 @@ public:
 		_Ser << Rot;
 		_Ser << Scale;
 		_Ser << Animation;
+		_Ser << PlayerColor;
 	}
 	virtual void DeSerialize(GameServerSerializer& _Ser)
 	{
@@ -71,6 +73,7 @@ public:
 		_Ser >> Rot;
 		_Ser >> Scale;
 		_Ser >> Animation;
+		_Ser >> PlayerColor;
 	}
 };
 
@@ -104,6 +107,7 @@ public:
 	unsigned int PlayerID;
 	unsigned int PlayerStateSignal;
 
+	//TODO :: 플레이어 점수
 	PlayerStatePacket()
 	{
 		SetPacketID(ContentsPacketType::PlayerState);

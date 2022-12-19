@@ -11,6 +11,8 @@ GameServerNetClient GameServer::Client;
 ServerFlag GameServer::ServerSignal_ = ServerFlag::S_None;
 PlayerFlag GameServer::PlayerSignal_ = PlayerFlag::P_None;
 unsigned int GameServer::PlayerID_ = -1;
+unsigned int GameServer::PlayerColorID_ = 0;
+float4 GameServer::PlayerColor_ = float4::ZERO;
 
 #include <atomic>
 std::mutex Lock;
@@ -164,6 +166,7 @@ void GameServer::ObjectUpdatePacketProcess(std::shared_ptr<GameServerPacket> _Pa
 	// 있으면 자신이 처리해야할 패킷 리스트에 추가
 	else
 	{
+		std::lock_guard<std::mutex> LockGuard(Lock);
 		FindObject->PushPacket(_Packet);
 	}
 
@@ -222,7 +225,6 @@ void GameServer::PlayerStatePacketProcess(std::shared_ptr<GameServerPacket> _Pac
 
 	// 모든 플레이어 정보 저장
 	AllPlayersInfo_[Packet->PlayerID] = Packet;
-
 
 	if (true == Net->GetIsHost())
 	{

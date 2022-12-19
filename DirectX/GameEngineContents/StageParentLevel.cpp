@@ -481,6 +481,7 @@ void StageParentLevel::SpawnServerObjects()
 
 				NewPlayer->PlayerInit();
 				NewPlayer->PushPacket(CurPacket);
+
 			}
 			case ServerObjectType::Obstacle:
 			{

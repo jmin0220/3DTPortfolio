@@ -13,6 +13,19 @@ float AngularSpeed = 520.0f;
 PlayerActor* PlayerActor::MainPlayer = nullptr;
 bool PlayerActor::IsMainPlayerSpawned_ = false;
 
+void PlayerActor::SetNetPlayerColor(unsigned int _Color)
+{
+	if (true == IsNetPlayerColorExist_)
+	{
+		return;
+	}
+
+	float4 Color = GameServer::GetInst()->GetPlayerColorReturn(static_cast<PlayerColor>(_Color));
+
+	SkinData_.BodyColor = Color;
+	IsNetPlayerColorExist_ = true;
+}
+
 PlayerActor::PlayerActor() :
 	CheckPointFlag_(false),
 	PlayerXZSpeed_(0.0f),
@@ -23,7 +36,8 @@ PlayerActor::PlayerActor() :
 	CheckPointPos_({ 0,200.0f,0 }),
 	IsGoal_(false),
 	IsStanding_(false),
-	IsPlayerble_(false)
+	IsPlayerble_(false),
+	IsNetPlayerColorExist_(false)
 {
 }
 
@@ -187,6 +201,7 @@ void PlayerActor::Update(float _DeltaTime)
 		Packet->Scale = GetTransform().GetWorldScale();
 		Packet->Pos = GetTransform().GetWorldPosition();
 		Packet->Rot = GetTransform().GetWorldRotation();
+		Packet->PlayerColor = GameServer::GetInst()->PlayerColorID_;
 		GameServer::Net->SendPacket(Packet);
 	}
 	// 서버가 조종하는 PlayerActor
@@ -204,6 +219,8 @@ void PlayerActor::Update(float _DeltaTime)
 			{
 				// Player
 				std::shared_ptr<ObjectUpdatePacket> ObjectUpdate = std::dynamic_pointer_cast<ObjectUpdatePacket>(Packet);
+
+				SetNetPlayerColor(ObjectUpdate->PlayerColor);
 
 				GetTransform().SetWorldScale(ObjectUpdate->Scale);
 				GetTransform().SetWorldPosition(ObjectUpdate->Pos);
@@ -476,7 +493,7 @@ void PlayerActor::SetCharacterAnimation()
 // 캐릭터 스킨
 void PlayerActor::SetCharacterTexture()
 {
-	SkinData_.BodyColor = float4(0.37f, 0.64f, 0.91f);
+	SkinData_.BodyColor = GameServer::GetInst()->PlayerColor_;
 	{
 		//std::vector<std::vector<GameEngineRenderUnit>>& RenderUnits = FbxRenderer_->GetAllRenderUnit();
 		std::vector<std::vector< std::shared_ptr<GameEngineRenderUnit>>>& RenderUnits = FbxRenderer_->GetAllRenderUnit();

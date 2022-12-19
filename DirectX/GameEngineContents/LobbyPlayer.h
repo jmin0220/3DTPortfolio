@@ -6,6 +6,10 @@ class GameEngineFBXAnimationRenderer;
 class LobbyPlayer : public GameEngineActor
 {
 public:
+	// ¼­¹ö
+	static void SetPlayerColor();
+
+public:
 	// constrcuter destructer
 	LobbyPlayer();
 	~LobbyPlayer();
@@ -36,12 +40,7 @@ private:
 
 	void SetCharacterTexture();
 
-	struct SkinData
-	{
-		float4 BodyColor;
-	};
-
-	SkinData SkinData_;
+	static SkinData SkinData_;
 
 
 private:

@@ -1,7 +1,15 @@
 #include "PreCompile.h"
 #include "LobbyPlayer.h"
 
-LobbyPlayer::LobbyPlayer() 
+SkinData LobbyPlayer::SkinData_;
+
+void LobbyPlayer::SetPlayerColor()
+{
+	float4 Color = GameServer::GetInst()->PlayerColor_;
+	SkinData_.BodyColor = Color;
+}
+
+LobbyPlayer::LobbyPlayer()
 {
 }
 
@@ -19,6 +27,7 @@ void LobbyPlayer::Start()
 
 void LobbyPlayer::Update(float _DeltaTime)
 {
+
 }
 
 void LobbyPlayer::LevelStartEvent()

@@ -3,6 +3,7 @@
 #include <GameEngineBase/GameServerNetClient.h>
 #include <functional>
 #include "ServerPacket.h"
+#include "GlobalValues.h"
 
 // 설명 :
 class GameServer
@@ -37,12 +38,97 @@ public:
 	{
 		return AllPlayersInfo_;
 	}
+	
+	// ID + float4
+	void SetPlayerColorID(unsigned int _PlayerColor)
+	{
+		PlayerColorID_ = _PlayerColor;
+
+		switch (static_cast<PlayerColor>(PlayerColorID_))
+		{
+		case PlayerColor::PINK:
+			{
+				PlayerColor_ = float4(0.93f, 0.21f, 0.54f);
+				break;
+			}
+		case PlayerColor::RED:
+		{
+			PlayerColor_ = float4(0.93f, 0.21f, 0.21f);
+			break;
+		}
+		case PlayerColor::GREEN:
+		{
+			PlayerColor_ = float4(0.21f, 0.93f, 0.21f);
+			break;
+		}
+		case PlayerColor::BLUE:
+		{
+			PlayerColor_ = float4(0.37f, 0.64f, 0.91f);
+			break;
+		}
+		case PlayerColor::BLACK:
+		{
+			PlayerColor_ = float4(0.21f, 0.21f, 0.21f);
+			break;
+		}
+		case PlayerColor::WHITE:
+		{
+			PlayerColor_ = float4(0.93f, 0.93f, 0.93f);
+			break;
+		}
+		default:
+			PlayerColor_ = float4::ZERO;
+			break;
+		}
+	}
+
+	float4 GetPlayerColorReturn(PlayerColor _PlayerColor)
+	{
+		switch (static_cast<PlayerColor>(_PlayerColor))
+		{
+		case PlayerColor::PINK:
+		{
+			return float4(0.93f, 0.21f, 0.54f);
+			break;
+		}
+		case PlayerColor::RED:
+		{
+			return float4(0.93f, 0.21f, 0.21f);
+			break;
+		}
+		case PlayerColor::GREEN:
+		{
+			return float4(0.21f, 0.93f, 0.21f);
+			break;
+		}
+		case PlayerColor::BLUE:
+		{
+			return float4(0.37f, 0.64f, 0.91f);
+			break;
+		}
+		case PlayerColor::BLACK:
+		{
+			return float4(0.21f, 0.21f, 0.21f);
+			break;
+		}
+		case PlayerColor::WHITE:
+		{
+			return float4(0.93f, 0.93f, 0.93f);
+			break;
+		}
+		default:
+			return float4::ZERO;
+			break;
+		}
+	}
 
 	static bool IsHost_;
 	static GameServerNet* Net;
 	static ServerFlag ServerSignal_;
 	static PlayerFlag PlayerSignal_;
 	static unsigned int PlayerID_;
+	static unsigned int PlayerColorID_;
+	static float4 PlayerColor_;
 	
 	// 모든 유저 정보
 	std::map<int, std::shared_ptr<class PlayerStatePacket>> AllPlayersInfo_;
@@ -89,23 +175,6 @@ public:
 	{
 		ServerSignal_ = _Flag;
 	}
-	
-	//void AddServerSignal(ServerFlag _Flag)
-	//{
-	//	if (false == (ServerSignal_ & _Flag))
-	//	{
-	//		ServerSignal_ = static_cast<ServerFlag>(ServerSignal_ | _Flag);
-	//	}
-	//}
-
-	//void SubServerSignal(ServerFlag _Flag)
-	//{
-	//	if (ServerSignal_ & _Flag)
-	//	{
-	//		ServerSignal_ = static_cast<ServerFlag>(ServerSignal_ ^ _Flag);
-	//	}
-	//}
-
 
 	bool CheckPlayerSignal(PlayerFlag _Flag)
 	{
@@ -116,22 +185,6 @@ public:
 	{
 		PlayerSignal_ = _Flag;
 	}
-
-	//void AddPlayerSignal(PlayerFlag _Flag)
-	//{
-	//	if (false == (PlayerStateSignal_ & _Flag))
-	//	{
-	//		PlayerStateSignal_ = static_cast<PlayerFlag>(PlayerStateSignal_ | _Flag);
-	//	}
-	//}
-
-	//void SubPlayerSignal(PlayerFlag _Flag)
-	//{
-	//	if (PlayerStateSignal_ & _Flag)
-	//	{
-	//		PlayerStateSignal_ = static_cast<PlayerFlag>(PlayerStateSignal_ ^ _Flag);
-	//	}
-	//}
 
 };
 

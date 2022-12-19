@@ -1,4 +1,5 @@
 #pragma once
+#include <GameEngineBase/GameEngineMath.h>
 
 struct MeshPixelData
 {
@@ -243,4 +244,22 @@ enum class MapSelect
 	Splash_Whirligig,
 
 	NONE
+};
+
+enum class PlayerColor
+{
+	PINK,
+	RED,
+	GREEN,
+	BLUE,
+	BLACK,
+	WHITE,
+	// ...
+
+	MAX,
+};
+
+struct SkinData
+{
+	float4 BodyColor;
 };

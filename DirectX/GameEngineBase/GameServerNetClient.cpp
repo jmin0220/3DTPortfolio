@@ -73,11 +73,11 @@ void GameServerNetClient::RecvThreadFunction(GameEngineThread* _Thread)
 		//	MsgBoxAssert("최대치가 왔습니다.");
 		//}
 
-		if (-1 == Result)
-		{
-			MsgBoxAssert("네트워크 에러");
-			return;
-		}
+		//if (-1 == Result)
+		//{
+		//	MsgBoxAssert("네트워크 에러");
+		//	return;
+		//}
 
 		size_t PrevSize = PacketVector.size();
 

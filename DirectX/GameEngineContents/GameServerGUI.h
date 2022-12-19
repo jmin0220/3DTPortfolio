@@ -1,5 +1,7 @@
 #pragma once
 #include <GameEngineCore/GameEngineGUI.h>
+#include <vector>
+#include "GlobalValues.h"
 
 // Ό³Έν :
 class GameServerGUI : public GameEngineGUIWindow
@@ -28,6 +30,7 @@ private:
 
 private:
 	class GameEngineLevel* LobbyLevel_;
-
+	const char* PlayerColors_[static_cast<int>(PlayerColor::MAX)];
+	int PrevColorIdx_;
 };
 
