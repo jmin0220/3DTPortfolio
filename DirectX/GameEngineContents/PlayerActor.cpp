@@ -26,6 +26,17 @@ void PlayerActor::SetNetPlayerColor(unsigned int _Color)
 	IsNetPlayerColorExist_ = true;
 }
 
+void PlayerActor::SetNetPlayerAnimation(std::string_view _Animation)
+{
+	if (0 == PrevAnimation_.compare(_Animation.data()))
+	{
+		return;
+	}
+
+	FbxRenderer_->ChangeAnimation("Idle");
+	PrevAnimation_ = _Animation;
+}
+
 PlayerActor::PlayerActor() :
 	CheckPointFlag_(false),
 	PlayerXZSpeed_(0.0f),
@@ -37,7 +48,8 @@ PlayerActor::PlayerActor() :
 	IsGoal_(false),
 	IsStanding_(false),
 	IsPlayerble_(false),
-	IsNetPlayerColorExist_(false)
+	IsNetPlayerColorExist_(false),
+	PrevAnimation_("")
 {
 }
 
@@ -220,7 +232,11 @@ void PlayerActor::Update(float _DeltaTime)
 				// Player
 				std::shared_ptr<ObjectUpdatePacket> ObjectUpdate = std::dynamic_pointer_cast<ObjectUpdatePacket>(Packet);
 
+				// 스킨
 				SetNetPlayerColor(ObjectUpdate->PlayerColor);
+
+				// 애니메이션
+				SetNetPlayerAnimation(ObjectUpdate->Animation.c_str());
 
 				GetTransform().SetWorldScale(ObjectUpdate->Scale);
 				GetTransform().SetWorldPosition(ObjectUpdate->Pos);
