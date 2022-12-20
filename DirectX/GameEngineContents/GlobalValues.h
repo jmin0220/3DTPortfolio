@@ -122,13 +122,16 @@ enum ServerFlag
 	S_StagePreviewChangeReady		= (1 << 7),	
 	S_StagePreviewChangeOver		= (1 << 8),	
 
-	S_StageReadyChangeReady			= (1 << 9),
-	S_StageReadyChangeOver		= (1 << 10),
 
-	S_StageRaceChangeReady			= (1 << 11),
-	S_StageRaceChangeOver			= (1 << 12),
-	S_StageEndChangeReady			= (1 << 13),
-	S_StageEndChangeOver			= (1 << 14), 
+	S_StageRaceChangeReady			= (1 << 9),
+	S_StageRaceChangeOver			= (1 << 10),
+
+	S_StageEndChangeReady			= (1 << 11),
+	S_StageEndChangeOver			= (1 << 12), 
+
+	// MidScoreLevel
+	S_StageMidScoreChangeReady = (1 << 13),
+	S_StageMidScoreChangeOver = (1 << 14),
 	
 };
 
@@ -149,13 +152,16 @@ enum PlayerFlag
 	P_StagePreviewChangeReady		= (1 << 7),	
 	P_StagePreviewChangeOver		= (1 << 8),	
 
-	P_StageReadyChangeReady			= (1 << 9),
-	P_StageReadyChangeOver		= (1 << 10),	
 
-	P_StageRaceChangeReady			= (1 << 11),
-	P_StageRaceChangeOver			= (1 << 12),	
-	P_StageEndChangeReady			= (1 << 13),
-	P_StageEndChangeOver			= (1 << 14),
+	P_StageRaceChangeReady			= (1 << 9),
+	P_StageRaceChangeOver			= (1 << 10),	
+
+	P_StageEndChangeReady			= (1 << 11),
+	P_StageEndChangeOver			= (1 << 12),
+
+	// MidScoreLevel
+	P_StageMidScoreChangeReady		= (1 << 13),
+	P_StageMidScoreChangeOver		= (1 << 14),
 };
 
 enum class MapSelect

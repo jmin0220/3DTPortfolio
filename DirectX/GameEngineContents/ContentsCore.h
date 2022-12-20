@@ -130,7 +130,17 @@ public:
 		ServerGUI_->On();
 	}
 
+	std::string_view GetCurStage()
+	{
+		return CurStageName_;
+	}
+
+	std::string_view GetNextStage();
+
 private:
 	static std::shared_ptr<GameServerGUI> ServerGUI_;
+
+	// 현재까지 진행된 스테이지
+	std::string_view CurStageName_;
 };
 

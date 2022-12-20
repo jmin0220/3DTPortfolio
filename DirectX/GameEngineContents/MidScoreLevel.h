@@ -62,5 +62,11 @@ private:
 	//std::string Player2Name_;
 
 	float FallingTime_;
+
+	// ¼­¹ö
+private:
+	float MidScoreTime_;
+	bool LevelChanged_;
+
 };
 

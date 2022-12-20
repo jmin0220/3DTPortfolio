@@ -115,6 +115,13 @@ void GameServerGUI::InGameGUI()
 	}
 
 	{
+		std::string Text = "현재 스테이지 :";
+		Text += ContentsCore::GetInst()->GetCurStage();
+		ImGui::Text(GameEngineString::AnsiToUTF8Return(Text).c_str());
+	}
+
+
+	{
 		std::string Text = "플레이어 수 :";
 		Text += std::to_string(GameServer::GetInst()->GetAllPlayersCount());
 		ImGui::Text(GameEngineString::AnsiToUTF8Return(Text).c_str());
@@ -147,9 +154,9 @@ void GameServerGUI::InGameGUI()
 		{
 			Text += "S_StagePreviewChangeReady";
 		}
-		else if (ServerFlag::S_StageReadyChangeReady & GameServer::ServerSignal_)
+		else if (ServerFlag::S_StageMidScoreChangeReady & GameServer::ServerSignal_)
 		{
-			Text += "S_StageReadyChangeReady";
+			Text += "S_StageMidScoreChangeReady";
 		}
 		else if (ServerFlag::S_StageRaceChangeReady & GameServer::ServerSignal_)
 		{
@@ -175,9 +182,9 @@ void GameServerGUI::InGameGUI()
 		{
 			Text += "S_StagePreviewChangeOver";
 		}
-		else if (ServerFlag::S_StageReadyChangeOver & GameServer::ServerSignal_)
+		else if (ServerFlag::S_StageMidScoreChangeOver & GameServer::ServerSignal_)
 		{
-			Text += "S_StageReadyChangeOver";
+			Text += "S_StageMidScoreChangeOver";
 		}
 		else if (ServerFlag::S_StageRaceChangeOver & GameServer::ServerSignal_)
 		{
@@ -215,9 +222,9 @@ void GameServerGUI::InGameGUI()
 		{
 			Text += "P_StagePreviewChangeReady";
 		}
-		else if (PlayerFlag::P_StageReadyChangeReady & GameServer::PlayerSignal_)
+		else if (PlayerFlag::P_StageMidScoreChangeReady & GameServer::PlayerSignal_)
 		{
-			Text += "P_StageReadyChangeReady";
+			Text += "P_StageMidScoreChangeReady";
 		}
 		else if (PlayerFlag::P_StageRaceChangeReady & GameServer::PlayerSignal_)
 		{
@@ -243,9 +250,9 @@ void GameServerGUI::InGameGUI()
 		{
 			Text += "P_StagePreviewChangeOver";
 		}
-		else if (PlayerFlag::P_StageReadyChangeOver & GameServer::PlayerSignal_)
+		else if (PlayerFlag::P_StageMidScoreChangeOver & GameServer::PlayerSignal_)
 		{
-			Text += "P_StageReadyChangeOver";
+			Text += "P_StageMidScoreChangeOver";
 		}
 		else if (PlayerFlag::P_StageRaceChangeOver & GameServer::PlayerSignal_)
 		{
@@ -296,9 +303,9 @@ void GameServerGUI::InGameGUI()
 				{
 					Text += "P_StagePreviewChangeReady";
 				}
-				else if (PlayerFlag::P_StageReadyChangeReady & Flag)
+				else if (PlayerFlag::P_StageMidScoreChangeReady & Flag)
 				{
-					Text += "P_StageReadyChangeReady";
+					Text += "P_StageMidScoreChangeReady";
 				}
 				else if (PlayerFlag::P_StageRaceChangeReady & Flag)
 				{
@@ -324,9 +331,9 @@ void GameServerGUI::InGameGUI()
 				{
 					Text += "P_StagePreviewChangeOver";
 				}
-				else if (PlayerFlag::P_StageReadyChangeOver & Flag)
+				else if (PlayerFlag::P_StageMidScoreChangeOver & Flag)
 				{
-					Text += "P_StageReadyChangeOver";
+					Text += "P_StageMidScoreChangeOver";
 				}
 				else if (PlayerFlag::P_StageRaceChangeOver & Flag)
 				{

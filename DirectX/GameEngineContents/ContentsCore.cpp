@@ -41,6 +41,8 @@ void ContentsCore::ChangeLevelByLoading(std::string_view _Level)
 	InitLoadingProgress();
 	LoadingLevel::SetLoadingStage(_Level);
 	ChangeLevel(LEVEL_NAME_LOADING);
+
+	CurStageName_ = _Level;
 }
 
 void ContentsCore::ChangeLevelByThread(std::string_view _Level)
@@ -689,4 +691,28 @@ std::string_view ContentsCore::StringLevelToStringSetLevel(std::string_view _Str
 	}
 
 	return "";
+}
+
+std::string_view ContentsCore::GetNextStage()
+{
+	std::string_view NextStageName = "None";
+
+	if (CurStageName_ == LEVEL_NAME_DOORDASH)
+	{
+		NextStageName = LEVEL_NAME_JUMPCLUB;
+	}
+	else if (CurStageName_ == LEVEL_NAME_JUMPCLUB)
+	{
+		NextStageName = LEVEL_NAME_BIGSHOTS;
+	}
+	else if (CurStageName_ == LEVEL_NAME_BIGSHOTS)
+	{
+		NextStageName = LEVEL_NAME_HEXAGONE;
+	}
+	else if (CurStageName_ == LEVEL_NAME_HEXAGONE)
+	{
+		NextStageName = LEVEL_NAME_HOOPSLEGENDS;
+	}
+
+	return NextStageName;
 }

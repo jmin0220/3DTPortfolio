@@ -12,6 +12,10 @@ bool LoadingLevel::AllPlayersReady_ = false;
 
 void LoadingLevel::SetLoadingStage(std::string_view _Level)
 {
+	if (_Level == LEVEL_NAME_JUMPCLUB)
+	{
+		int a = 0;
+	}
 	CurLoadingLevel_ = ContentsCore::GetInst()->StringLevelToLEVELS(_Level);
 	StrCurLoadingLevel_ = ContentsCore::GetInst()->StringLevelToStringSetLevel(_Level);
 }
@@ -39,6 +43,27 @@ void LoadingLevel::Update(float _DeltaTime)
 		{
 			GEngine::ChangeLevel(StrCurLoadingLevel_.data());
 			return;
+		}
+	}
+
+	// *. MidScore에서 온 유저들
+	// 유저가 먼저 신호 끔
+	if (true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageMidScoreChangeOver))
+	{
+		// 유저
+		if (false == GameServer::IsHost_)
+		{
+			GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_None);
+		}
+
+		// 그다음 호스트
+		else
+		{
+			if (GameServer::GetInst()->CheckOtherPlayersFlag(PlayerFlag::P_None))
+			{
+				GameServer::GetInst()->SetServerSignal(ServerFlag::S_None);
+				GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_None);
+			}
 		}
 	}
 
@@ -88,6 +113,7 @@ void LoadingLevel::Update(float _DeltaTime)
 	{
 		GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_LoadingChangeReady);
 	}
+
 }
 
 // 랜덤으로 스테이지를 시작하는게 아니라 원하는 스테이지를 선택할 수 있도록
@@ -98,15 +124,35 @@ void LoadingLevel::LevelStartEvent()
 
 	// 서버 
 	// 유저들 로딩레벨에 다 들어왔으면 호스트도 넘어오라고 해주어야함
-	if (false == GameServer::IsHost_)
+	// MidScore에서 옴
+	// 유저들은 호스트가 들어오면 ChangeOver신호를 꺼야됨
+
+	// 로비에서 온 유저들
+	if (false == GameServer::GetInst()->CheckPlayerSignal(PlayerFlag::P_StageMidScoreChangeReady))
 	{
-		GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_GameStartChangeOver);
+		if (false == GameServer::IsHost_)
+		{
+			GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_GameStartChangeOver);
+		}
+		// 호스트
+		else
+		{
+			GameServer::GetInst()->SetServerSignal(ServerFlag::S_GameStartChangeOver);
+		}
 	}
-	// 호스트
-	else
+	// MidScore에서 온 유저들
+	else if (true == GameServer::GetInst()->CheckPlayerSignal(PlayerFlag::P_StageMidScoreChangeReady))
 	{
-		GameServer::GetInst()->SetServerSignal(ServerFlag::S_GameStartChangeOver);
+		// 유저나 호스트나 신호 끔
+		GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_StageMidScoreChangeOver);
+		if (true == GameServer::IsHost_)
+		{
+			GameServer::GetInst()->SetServerSignal(ServerFlag::S_StageMidScoreChangeOver);
+		}
 	}
+
+
+
 	// ~~ 서버
 
 	LoadingGUI_ = GameEngineGUI::CreateGUIWindow<CustomableGUI>("LoadingGUI", this);

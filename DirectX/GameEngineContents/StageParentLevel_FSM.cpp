@@ -323,6 +323,7 @@ void StageParentLevel::EndUpdate(float _DeltaTime, const StateInfo& _Info)
 		ContentsCore::GetInst()->ChangeLevelByThread(LEVEL_NAME_MIDSCORE);
 	}
 
+	// 미드스코어레벨 리소스 로딩 끝나면 레벨 체인지
 	if (1 <= ContentsCore::GetInst()->GetLoadingProgress() && true == CheckOnce)
 	{
 		GEngine::ChangeLevel(LEVEL_NAME_MIDSCORE);
@@ -339,5 +340,7 @@ void StageParentLevel::EndUpdate(float _DeltaTime, const StateInfo& _Info)
 		}
 	}
 
+
+	// TODO::<성훈>LEVEL_NAME_HOOPSLEGENDS 레벨이면 위너레벨로
 }
 

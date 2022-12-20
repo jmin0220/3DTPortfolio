@@ -12,6 +12,8 @@
 MidScoreLevel::MidScoreLevel() 
 	: FallingTime_(0.0f)
 	, PlayerScores_{}
+	, LevelChanged_(false)
+	, MidScoreTime_(0.0f)
 {
 }
 
@@ -25,6 +27,70 @@ void MidScoreLevel::Start()
 
 void MidScoreLevel::Update(float _DeltaTime)
 {
+	// 서버
+	if (true == GameServer::GetInst()->IsServerStart())
+	{
+		MidScoreTime_ += _DeltaTime;
+		if (MidScoreTime_ < 7.0f)
+		{
+			return;
+		}
+
+		// 3. 유저/호스트 상태변경
+		if (false == LevelChanged_
+			&& true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageMidScoreChangeReady))
+		{
+			if (true == GameServer::IsHost_)
+			{
+				// 호스트는 모든 유저가 넘어가면 넘어간다
+				if (true == GameServer::GetInst()->CheckPlayerSignal(PlayerFlag::P_StageMidScoreChangeReady)
+					&& true == GameServer::GetInst()->CheckOtherPlayersFlag(PlayerFlag::P_StageMidScoreChangeOver))
+				{
+					// 다음 스테이지로
+					std::string_view NextStage = ContentsCore::GetInst()->GetNextStage();
+					ContentsCore::GetInst()->ChangeLevelByLoading(ContentsCore::GetInst()->GetNextStage());
+					LevelChanged_ = true;
+					return;
+				}
+			}
+			else
+			{
+				// 유저는 서버신호 받으면 바로 넘어감
+				if (true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageMidScoreChangeReady))
+				{
+					// 다음 스테이지로
+					std::string_view NextStage = ContentsCore::GetInst()->GetNextStage();
+					ContentsCore::GetInst()->ChangeLevelByLoading(ContentsCore::GetInst()->GetNextStage());
+					LevelChanged_ = true;
+					return;
+				}
+			}
+		}
+
+
+		// 2. 서버가 모든 유저 준비됐는지 확인
+		if (true == GameServer::IsHost_
+			&& !GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageMidScoreChangeReady))
+		{
+			// 서버는 자신과 플레이어들 준비 다 됐는지 확인하면
+			if (GameServer::GetInst()->CheckPlayerSignal(PlayerFlag::P_StageMidScoreChangeReady)
+				&& GameServer::GetInst()->CheckOtherPlayersFlag(PlayerFlag::P_StageMidScoreChangeReady))
+			{
+				// 서버신호 '다음으로넘어가라'로
+				GameServer::GetInst()->SetServerSignal(ServerFlag::S_StageMidScoreChangeReady);
+			}
+		}
+
+
+		// 1. 시간 지나면 유저 준비됨
+		if (true == GameServer::GetInst()->CheckPlayerSignal(PlayerFlag::P_None))
+		{
+			GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_StageMidScoreChangeReady);
+		}
+	}
+	// ~~~~~~ 서버
+
+
 	{
 		//꼴찌 플레이어 추락 애니메이션
 		if (Player4_->GetTransform().GetWorldPosition().y > -400.0f)
@@ -62,18 +128,26 @@ void MidScoreLevel::Update(float _DeltaTime)
 
 }
 
+
+
 void MidScoreLevel::End()
 {
 }
 
 void MidScoreLevel::LevelStartEvent()
 {
+	// 서버
+	// 모든 플레이어의 점수 정보를 자료구조로 던져줄 예정
+	MidScoreTime_ = 0.0f;
+	LevelChanged_ = false;
+	// ~ 서버
+
+
 	if (false == GameEngineInput::GetInst()->IsKey("RandomScore"))
 	{
 		GameEngineInput::GetInst()->CreateKey("RandomScore", VK_RETURN);
 	}
 
-	
 
 	FallingTime_ = 0.0f;
 
@@ -184,6 +258,9 @@ void MidScoreLevel::LevelEndEvent()
 	FontScore_[0]->Death();
 	Font2_->Death();
 	FontScore_[1]->Death();
+
+
+	ContentsCore::GetInst()->ReleaseCurLevelResource();
 }
 
 
@@ -227,6 +304,7 @@ void MidScoreLevel::FakeSort()
 			FontScore_[1]->GetFont().lock()->SetScreenPostion({float4::Lerp(f4CurrentScale2s, f4DestinationScale2s, GameEngineTime::GetDeltaTime() * 10.f)});
 		}
 	}
+
 }
 
 void MidScoreLevel::BubbleSort()
@@ -252,3 +330,4 @@ void MidScoreLevel::BubbleSort()
 		}
 	}
 }
+
