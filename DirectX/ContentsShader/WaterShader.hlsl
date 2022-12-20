@@ -57,8 +57,8 @@ float4 WaterShader_PS(Output _Input) : SV_Target0
     }
     else
     {
-        WaterColor.rgb = WaterColor.rgb * 0.6 + PatternColor.rgb * 0.4;
-        WaterColor.a = WaterColor.a * 0.6 + PatternColor.a * 0.4;
+        //WaterColor.rgb = WaterColor.rgb * 0.6 + PatternColor.rgb * 0.4;
+        //WaterColor.a = WaterColor.a * 0.6 + PatternColor.a * 0.4;
     }
     
   

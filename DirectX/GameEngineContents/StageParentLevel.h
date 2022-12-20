@@ -101,9 +101,9 @@ protected:
 	std::shared_ptr<GameEngineCameraActor> MainCam_;
 	std::shared_ptr<CameraArm> CameraArm_;
 
-
 private:
 	std::vector<StageObject> StageObjects_;
+	std::vector<float4>	StartPositions_;
 	void LevelStartLoad();
 
 	// FSM : 321 땅, 경기종료, 등의 레벨 상태(점점 많아질 수 있음 feat.서버)

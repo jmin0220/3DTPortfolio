@@ -414,6 +414,8 @@ void StageParentLevel::LevelStartLoad()
 			NewObj.Actor_.lock()->GetTransform().SetWorldScale(Size);
 			NewObj.Actor_.lock()->GetTransform().SetLocalRotation(Rot);
 
+			StartPositions_.push_back(NewObj.Actor_.lock()->GetTransform().GetWorldPosition());
+			
 			//플레이어 포지션을 가지고있어야하는 static 전역변수
 			PlayerPos = NewObj.Actor_.lock()->GetTransform().GetWorldPosition();
 
