@@ -15,6 +15,11 @@ public:
 	BigShots_Puff& operator=(const BigShots_Puff& _Other) = delete;
 	BigShots_Puff& operator=(BigShots_Puff&& _Other) noexcept = delete;
 
+	inline void SetRenderingOrder(int _Value)
+	{
+		PuffRenderer_->SetRenderingOrder(_Value);
+	}
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime);

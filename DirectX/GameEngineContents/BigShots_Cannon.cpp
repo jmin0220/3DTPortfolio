@@ -39,8 +39,18 @@ void BigShots_Cannon::Update(float _DeltaTime)
 			if (_Info.CurFrame == 3)
 			{
 				//연기 효과
-				std::shared_ptr<GameEngineActor> Puff = GetLevel()->CreateActor<BigShots_Puff>();
-				Puff->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition() + float4{ 0.0f,0.0f,30.0f });
+				/*std::shared_ptr<GameEngineActor> Puff = GetLevel()->CreateActor<BigShots_Puff>();
+				Puff->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition() + float4{ 0.0f,0.0f,30.0f });*/
+				for (int i = 0; i < 8; i++)
+				{
+					GameEngineRandom RandomValue_;
+					float RandomFloatNum = GameEngineRandom::MainRandom.RandomFloat(45.0f * i, 45.0f * (i + 1));
+
+					std::shared_ptr<BigShots_Puff> Puff = GetLevel()->CreateActor<BigShots_Puff>();
+					Puff->SetRenderingOrder(10 + i);
+					Puff->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition() + float4{ 0.0f,5.0f,30.0f + 0.1f * i });
+					Puff->GetTransform().SetLocalRotation(float4{ 0.0f,0.0f,RandomFloatNum });
+				}
 
 				std::shared_ptr<BigShots_PRP> PRP = GetLevel()->CreateActor<BigShots_PRP>();
 				PRP->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition() + float4{ 0.0f,0.0f,15.0f });

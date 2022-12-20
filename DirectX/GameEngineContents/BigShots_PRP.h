@@ -45,5 +45,7 @@ private:
 	PRPType CurPRP_;
 	std::string FBXName_;
 	float4 PRPForce_;
+
+	float RandomRot_;
 };
 

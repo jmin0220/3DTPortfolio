@@ -20,6 +20,8 @@ public:
 	// 힘을 추가
 	void AddForce(float4 _Force);
 
+	void AddTorque(float4 _Torque);
+
 	// 가속도를 추가
 	void AddAngularVelocity(float4 _Velocity);
 
@@ -33,6 +35,17 @@ public:
 	inline physx::PxReal GetMass()
 	{
 		return dynamic_->getMass();
+	}
+
+	inline void ReleaseRigidBody()
+	{
+		dynamic_->release();
+		this->Death();
+	}
+
+	inline void SetUpdateForce(physx::PxVec3 _UpdateForce)
+	{
+		AddUpdateForce_ = _UpdateForce;
 	}
 
 protected:
@@ -58,6 +71,8 @@ private:
 
 	// 이 컴포넌트를 가지고 있는 Parent에 대한 정보
 	std::weak_ptr<GameEngineActor> ParentActor_;
+
+	physx::PxVec3 AddUpdateForce_;
 
 	bool PositionSetFromParentFlag_;
 };

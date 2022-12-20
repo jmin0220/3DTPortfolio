@@ -4,7 +4,7 @@
 BigShots_Puff::BigShots_Puff() 
 	: IsTransTexture_(false)
 	, SumTime_(0.0f)
-	, SumValue_(20.0f)
+	, SumValue_(10.0f)
 {
 }
 
@@ -17,7 +17,6 @@ void BigShots_Puff::Start()
 	PuffRenderer_ = CreateComponent<GameEngineTextureRenderer>();
 	PuffRenderer_->SetTexture("VFX_SomePuff_02.png");
 	PuffRenderer_->GetTransform().SetWorldScale({ SumValue_,SumValue_,0 });
-	PuffRenderer_->SetRenderingOrder(10);
 }
 
 void BigShots_Puff::Update(float _DeltaTime)
@@ -28,6 +27,7 @@ void BigShots_Puff::Update(float _DeltaTime)
 		SumValue_ += 0.1f;
 		PuffRenderer_->GetPixelData().MulColor.a -= _DeltaTime * 0.8f;
 		PuffRenderer_->GetTransform().SetWorldScale(GetTransform().GetWorldScale() + float4{ SumValue_ ,SumValue_ });
+		PuffRenderer_->GetTransform().SetWorldRightMove(15.0f, _DeltaTime);
 	}
 	else if (false == IsTransTexture_ && 1.0f < SumTime_)
 	{
@@ -42,6 +42,7 @@ void BigShots_Puff::Update(float _DeltaTime)
 		SumValue_ += 0.1f;
 		PuffRenderer_->GetPixelData().MulColor.a -= _DeltaTime;
 		PuffRenderer_->GetTransform().SetWorldScale(GetTransform().GetWorldScale() + float4{ SumValue_ ,SumValue_ });
+		PuffRenderer_->GetTransform().SetWorldRightMove(15.0f, _DeltaTime);
 	}
 	else if(true == IsTransTexture_ && 1.0f < SumTime_)
 	{
