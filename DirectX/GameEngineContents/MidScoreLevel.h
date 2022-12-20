@@ -20,6 +20,10 @@ public:
 	MidScoreLevel& operator=(const MidScoreLevel& _Other) = delete;
 	MidScoreLevel& operator=(MidScoreLevel&& _Other) noexcept = delete;
 
+	void FakeSort();
+	void BubbleSort();
+
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -43,12 +47,19 @@ private:
 	std::shared_ptr<MidScoreBGActor> BG_;
 
 	std::shared_ptr<FontActor> Font1_;
-	std::shared_ptr<FontActor> Font1Score_;
+	//std::shared_ptr<FontActor> Font1_PlayerName;
+	//std::shared_ptr<FontActor> Font1Score_;
 	std::shared_ptr<FontActor> Font2_;
-	std::shared_ptr<FontActor> Font2Score_;
+	//std::shared_ptr<FontActor> Font2_PlayerName;
+	//std::shared_ptr<FontActor> Font2Score_;
 
-	std::string Player1Name_;
-	std::string Player2Name_;
+	std::shared_ptr<FontActor> Font_PlayerName[5];
+	std::shared_ptr<FontActor> FontScore_[5];
+
+	int PlayerScores_[5];
+
+	std::string PlayerName_[5];
+	//std::string Player2Name_;
 
 	float FallingTime_;
 };

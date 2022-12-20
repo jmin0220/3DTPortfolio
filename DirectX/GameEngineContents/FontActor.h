@@ -21,11 +21,23 @@ public:
 		return Font_;
 	}
 
+	void SetFont(std::string _Text, std::string _Font)
+	{
+		Font_->SetText(_Text, _Font);
+	}
+	
 	void SetFont(std::string _Text, std::string _Font, float _Size, float4 _Pos , LeftAndRightSort _Value)
 	{
 		Font_->SetText(_Text, _Font);
 		Font_->SetSize(_Size);
 		Font_->SetScreenPostion(_Pos);
+		Font_->SetLeftAndRightSort(_Value);
+	}
+
+	void SetFont(std::string _Text, std::string _Font, float _Size, LeftAndRightSort _Value)
+	{
+		Font_->SetText(_Text, _Font);
+		Font_->SetSize(_Size);
 		Font_->SetLeftAndRightSort(_Value);
 	}
 

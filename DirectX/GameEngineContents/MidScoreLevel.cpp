@@ -7,8 +7,11 @@
 #include "MidScoreBGActor.h"
 #include "FontActor.h"
 
-MidScoreLevel::MidScoreLevel()
-	:FallingTime_(0.0f)
+#include <GameEngineBase/GameEngineRandom.h>
+
+MidScoreLevel::MidScoreLevel() 
+	: FallingTime_(0.0f)
+	, PlayerScores_{}
 {
 }
 
@@ -35,6 +38,28 @@ void MidScoreLevel::Update(float _DeltaTime)
 			FallingTime_ = 0.0f;
 		}
 	}
+
+	{	
+		//엔터누르면 랜덤 점수 배정
+		if (true == GameEngineInput::GetInst()->IsDown("RandomScore"))
+		{
+			for (int i = 0; i < 5; ++i)
+			{
+				PlayerScores_[i] = GameEngineRandom::MainRandom.RandomInt(10, 200);
+			}
+			BubbleSort();
+			FontScore_[0]->SetFont(std::to_string(PlayerScores_[0]), FONT_NOTO_SANS_CJK_SC, 50.0f, LeftAndRightSort::LEFT);
+			FontScore_[1]->SetFont(std::to_string(PlayerScores_[1]), FONT_NOTO_SANS_CJK_SC, 50.0f, LeftAndRightSort::LEFT);
+			FontScore_[2]->SetFont(std::to_string(PlayerScores_[2]), FONT_NOTO_SANS_CJK_SC, 50.0f, LeftAndRightSort::LEFT);
+			FontScore_[3]->SetFont(std::to_string(PlayerScores_[3]), FONT_NOTO_SANS_CJK_SC, 50.0f, LeftAndRightSort::LEFT);
+			FontScore_[4]->SetFont(std::to_string(PlayerScores_[4]), FONT_NOTO_SANS_CJK_SC, 50.0f, LeftAndRightSort::LEFT);
+			
+		}
+		
+	}
+	
+	//FakeSort();
+
 }
 
 void MidScoreLevel::End()
@@ -43,6 +68,13 @@ void MidScoreLevel::End()
 
 void MidScoreLevel::LevelStartEvent()
 {
+	if (false == GameEngineInput::GetInst()->IsKey("RandomScore"))
+	{
+		GameEngineInput::GetInst()->CreateKey("RandomScore", VK_RETURN);
+	}
+
+	
+
 	FallingTime_ = 0.0f;
 
 	GetMainCamera()->SetProjectionMode(CAMERAPROJECTIONMODE::PersPective);
@@ -59,7 +91,11 @@ void MidScoreLevel::LevelStartEvent()
 		Player1_->GetTransform().SetWorldRotation({ 0,160,0 });
 		Player1_->ChangeAnimationJogging();
 
-		Player1Name_ = "Player 1";
+		PlayerName_[0] = "CAT";
+		PlayerName_[1] = "DOG";
+		PlayerName_[2] = "COW";
+		PlayerName_[3] = "ANT";
+		PlayerName_[4] = "NOM";
 
 		Chair1_ = CreateActor<FloorActor>();
 		Chair1_->GetTransform().SetWorldPosition({ -20.0f, 15.5f, 100.0f });
@@ -71,7 +107,7 @@ void MidScoreLevel::LevelStartEvent()
 		Player2_->GetTransform().SetWorldRotation({ 0,170,0 });
 		Player2_->ChangeAnimationGasp();
 
-		Player2Name_ = "Player 2";
+		//Player2Name_ = "Player 2";
 
 		Chair2_ = CreateActor<FloorActor>();
 		Chair2_->GetTransform().SetWorldPosition({ 20.0f, 0.5f, 100.0f });
@@ -95,18 +131,41 @@ void MidScoreLevel::LevelStartEvent()
 	{
 		//1등 닉네임+점수 표시
 		Font1_ = CreateActor<FontActor>();
-		Font1_->SetFont("1st.   " + Player1Name_, FONT_TITAN_ONE, 60.0f, { 20,200 }, LeftAndRightSort::LEFT);
-
-		Font1Score_ = CreateActor<FontActor>();
-		Font1Score_->SetFont("123120", FONT_NOTO_SANS_CJK_SC, 50.0f, { 20,250 }, LeftAndRightSort::LEFT);
+		Font1_->SetFont("1st.   ", FONT_TITAN_ONE, 60.0f, { 20,200 }, LeftAndRightSort::LEFT);
+		
+		Font_PlayerName[0] = CreateActor<FontActor>();
+		Font_PlayerName[0]->SetFont(PlayerName_[0], FONT_TITAN_ONE, 60.0f, { 170,200 }, LeftAndRightSort::LEFT);
+	
+		FontScore_[0] = CreateActor<FontActor>();
+		FontScore_[0]->SetFont(std::to_string(PlayerScores_[0]), FONT_NOTO_SANS_CJK_SC, 50.0f, { 170,250 }, LeftAndRightSort::LEFT);
 	}
 	{
 		//2등 닉네임+점수 표시
 		Font2_ = CreateActor<FontActor>();
-		Font2_->SetFont("2nd. " + Player2Name_, FONT_TITAN_ONE, 60.0f, { 20,320 }, LeftAndRightSort::LEFT);
+		Font2_->SetFont("2nd. ", FONT_TITAN_ONE, 60.0f, { 20,320 }, LeftAndRightSort::LEFT);
 
-		Font2Score_ = CreateActor<FontActor>();
-		Font2Score_->SetFont("77777", FONT_NOTO_SANS_CJK_SC, 50.0f, { 20,370 }, LeftAndRightSort::LEFT);
+		Font_PlayerName[1] = CreateActor<FontActor>();
+		Font_PlayerName[1]->SetFont(PlayerName_[1], FONT_TITAN_ONE, 60.0f, { 170,320 }, LeftAndRightSort::LEFT);
+
+		FontScore_[1] = CreateActor<FontActor>();
+		FontScore_[1]->SetFont(std::to_string(PlayerScores_[1]), FONT_NOTO_SANS_CJK_SC, 50.0f, { 170,370 }, LeftAndRightSort::LEFT);
+
+		{
+			Font_PlayerName[2] = CreateActor<FontActor>();
+			Font_PlayerName[2]->SetFont(PlayerName_[2], FONT_TITAN_ONE, 60.0f, { 170,440 }, LeftAndRightSort::LEFT);
+			FontScore_[2] = CreateActor<FontActor>();
+			FontScore_[2]->SetFont(std::to_string(PlayerScores_[2]), FONT_NOTO_SANS_CJK_SC, 50.0f, { 170,490 }, LeftAndRightSort::LEFT);
+
+			Font_PlayerName[3] = CreateActor<FontActor>();
+			Font_PlayerName[3]->SetFont(PlayerName_[3], FONT_TITAN_ONE, 60.0f, { 170,560 }, LeftAndRightSort::LEFT);
+			FontScore_[3] = CreateActor<FontActor>();
+			FontScore_[3]->SetFont(std::to_string(PlayerScores_[3]), FONT_NOTO_SANS_CJK_SC, 50.0f, { 170,610 }, LeftAndRightSort::LEFT);
+
+			Font_PlayerName[4] = CreateActor<FontActor>();
+			Font_PlayerName[4]->SetFont(PlayerName_[4], FONT_TITAN_ONE, 60.0f, { 170,680 }, LeftAndRightSort::LEFT);
+			FontScore_[4] = CreateActor<FontActor>();
+			FontScore_[4]->SetFont(std::to_string(PlayerScores_[4]), FONT_NOTO_SANS_CJK_SC, 50.0f, { 170,730 }, LeftAndRightSort::LEFT);
+		}
 	}
 }
 
@@ -122,7 +181,74 @@ void MidScoreLevel::LevelEndEvent()
 	Score_->Death();
 
 	Font1_->Death();
-	Font1Score_->Death();
+	FontScore_[0]->Death();
 	Font2_->Death();
-	Font2Score_->Death();
+	FontScore_[1]->Death();
+}
+
+
+void MidScoreLevel::FakeSort()
+{
+	{
+		if (PlayerScores_[0] < PlayerScores_[1])
+		{
+			float4 f4CurrentScale1 = Font_PlayerName[0]->GetFont().lock()->GetScreenPosition();
+			float4 f4DestinationScale1 = { 170.0f,320.0f };
+			Font_PlayerName[0]->GetFont().lock()->SetScreenPostion({float4::Lerp(f4CurrentScale1, f4DestinationScale1, GameEngineTime::GetDeltaTime() * 10.f)});
+
+			float4 f4CurrentScale1s = FontScore_[0]->GetFont().lock()->GetScreenPosition();
+			float4 f4DestinationScale1s = { 170.0f,370.0f };
+			FontScore_[0]->GetFont().lock()->SetScreenPostion({float4::Lerp(f4CurrentScale1s, f4DestinationScale1s, GameEngineTime::GetDeltaTime() * 10.f)});
+
+			float4 f4CurrentScale2 = Font_PlayerName[1]->GetFont().lock()->GetScreenPosition();
+			float4 f4DestinationScale2 = { 170.0f,200.0f };
+			Font_PlayerName[1]->GetFont().lock()->SetScreenPostion({float4::Lerp(f4CurrentScale2, f4DestinationScale2, GameEngineTime::GetDeltaTime() * 10.f)});
+
+			float4 f4CurrentScale2s = FontScore_[1]->GetFont().lock()->GetScreenPosition();
+			float4 f4DestinationScale2s = { 170.0f,250.0f };
+			FontScore_[1]->GetFont().lock()->SetScreenPostion({float4::Lerp(f4CurrentScale2s, f4DestinationScale2s, GameEngineTime::GetDeltaTime() * 10.f)});
+		}
+		else
+		{
+			float4 f4CurrentScale1 = Font_PlayerName[0]->GetFont().lock()->GetScreenPosition();
+			float4 f4DestinationScale1 = { 170.0f,200.0f };
+			Font_PlayerName[0]->GetFont().lock()->SetScreenPostion({float4::Lerp(f4CurrentScale1, f4DestinationScale1, GameEngineTime::GetDeltaTime() * 10.f)});
+
+			float4 f4CurrentScale1s = FontScore_[0]->GetFont().lock()->GetScreenPosition();
+			float4 f4DestinationScale1s = { 170.0f,250.0f };
+			FontScore_[0]->GetFont().lock()->SetScreenPostion({float4::Lerp(f4CurrentScale1s, f4DestinationScale1s, GameEngineTime::GetDeltaTime() * 10.f)});
+
+			float4 f4CurrentScale2 = Font_PlayerName[1]->GetFont().lock()->GetScreenPosition();
+			float4 f4DestinationScale2 = { 170.0f,320.0f };
+			Font_PlayerName[1]->GetFont().lock()->SetScreenPostion({float4::Lerp(f4CurrentScale2, f4DestinationScale2, GameEngineTime::GetDeltaTime() * 10.f)});
+
+			float4 f4CurrentScale2s = FontScore_[1]->GetFont().lock()->GetScreenPosition();
+			float4 f4DestinationScale2s = { 170.0f,370.0f };
+			FontScore_[1]->GetFont().lock()->SetScreenPostion({float4::Lerp(f4CurrentScale2s, f4DestinationScale2s, GameEngineTime::GetDeltaTime() * 10.f)});
+		}
+	}
+}
+
+void MidScoreLevel::BubbleSort()
+{
+	//흑흑
+	for (int i = 4; i > 0; --i)//5개를 두개씩 비교하면 4번해야함->4부터 시작해야 죽 훑음 0부터해서 ++하니 안됨
+	{
+		for (int j = 0; j < i; ++j)
+		{
+			if (PlayerScores_[j] < PlayerScores_[j + 1])//앞에거보다 뒤에게 크면 앞으로(자리바꿈)
+			{
+				int Temp = PlayerScores_[j];
+				PlayerScores_[j] = PlayerScores_[j + 1];
+				PlayerScores_[j + 1] = Temp;
+
+				std::string Temps = PlayerName_[j];
+				PlayerName_[j] = PlayerName_[j + 1];
+				PlayerName_[j + 1] = Temps;
+
+				Font_PlayerName[j]->SetFont(PlayerName_[j], FONT_TITAN_ONE);
+				Font_PlayerName[j+1]->SetFont(PlayerName_[j+1], FONT_TITAN_ONE);
+			}
+		}
+	}
 }
