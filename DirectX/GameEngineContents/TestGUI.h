@@ -23,9 +23,12 @@ protected:
 	void OnGUI(GameEngineLevel* _Level, float _DeltaTime) override;
 
 public:
-
+	void SetLight(std::shared_ptr<GameEngineLight> _Light)
+	{
+		Light_ = _Light;
+	}
 private:
-
+	std::shared_ptr<GameEngineLight> Light_;
 	GameEngineLevel* ConnectedLevel;
 };
 

@@ -140,6 +140,8 @@ protected:
 	// ¼­¹ö
 private:
 	void SpawnServerObjects();
+
+	std::shared_ptr<GameEngineLight> LightObject_;
 	
 public:
 	//static bool AllPlayersReady_;

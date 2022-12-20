@@ -61,9 +61,10 @@ void StageParentLevel::Start()
 	GUI_->Off();
 
 	{
-		LightObject = CreateActor<GameEngineLight>();
-		GetMainCamera()->PushLight(LightObject);
-		LightObject->GetLightData().DifLightPower = 0.7f;
+		LightObject_ = CreateActor<GameEngineLight>();
+		GUI_->SetLight(LightObject_);
+		GetMainCamera()->PushLight(LightObject_);
+		//LightObject->GetLightData().DifLightPower = 0.7f;
 	}
 
 	IntroduceGame_ = CreateActor<IntroduceGame>();
