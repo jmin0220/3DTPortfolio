@@ -22,6 +22,17 @@ public:
 		SpinSpeed_ = _SpinSpeed;
 	}
 
+	// ¼­¹ö
+	inline void SetCurRot(float _Rot)
+	{
+		CurRot_ = _Rot;
+	}
+
+	inline float GetCurRot()
+	{
+		return CurRot_;
+	}
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;

@@ -124,6 +124,11 @@ void PhysXSpinBarComponent::Start()
 
 void PhysXSpinBarComponent::Update(float _DeltaTime)
 {
+	if (nullptr == dynamic_)
+	{
+		return;
+	}
+
 	// PhysX Actor의 상태에 맞춰서 부모의 Transform정보를 갱신
 	float4 tmpWorldPos = { dynamic_->getGlobalPose().p.x
 	, dynamic_->getGlobalPose().p.y

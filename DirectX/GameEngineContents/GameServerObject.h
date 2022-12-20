@@ -12,7 +12,8 @@ enum class ServerObjectBaseState
 enum class ServerObjectType
 {
 	Player,
-	Obstacle, // 플레이어 제외, 움직이는 엑터
+	SpinBarDouble,
+	SpinBarSingle,
 };
 
 
@@ -84,6 +85,5 @@ private:
 	bool IsNetInit;
 	ServerObjectType ServerType;
 	int ID;
-
 };
 

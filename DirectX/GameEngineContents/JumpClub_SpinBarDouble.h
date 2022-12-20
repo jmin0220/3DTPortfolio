@@ -3,7 +3,7 @@
 #include "PhysXSpinBarComponent.h"
 
 // Ό³Έν :
-class JumpClub_SpinBarDouble : public VirtualPhysXActor
+class JumpClub_SpinBarDouble : public VirtualPhysXActor, public GameServerObject
 {
 public:
 	// constrcuter destructer
@@ -15,6 +15,13 @@ public:
 	JumpClub_SpinBarDouble(JumpClub_SpinBarDouble&& _Other) noexcept = delete;
 	JumpClub_SpinBarDouble& operator=(const JumpClub_SpinBarDouble& _Other) = delete;
 	JumpClub_SpinBarDouble& operator=(JumpClub_SpinBarDouble&& _Other) noexcept = delete;
+
+	std::shared_ptr<PhysXSpinBarComponent>& GetPhysXSpinBarComponent()
+	{
+		return PhysXSpinBarComponent_;
+	}
+
+	void PhysXInit();
 
 protected:
 	void Start() override;

@@ -38,8 +38,6 @@ void StageParentLevel::IdleUpdate(float _DeltaTime, const StateInfo& _Info)
 		return;
 	}
 
-	SpawnServerObjects();
-
 	// 1. 유저들은 호스트 들어온거 확인했으면 ChangeOver신호 끔
 	if (false == GameServer::IsHost_ 
 		&& GameServer::GetInst()->CheckServerSignal(ServerFlag::S_LoadingChangeOver)

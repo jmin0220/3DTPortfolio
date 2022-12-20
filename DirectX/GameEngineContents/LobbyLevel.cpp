@@ -12,6 +12,9 @@
 #include "TopMenu.h"
 #include "GameServer.h"
 
+// 서버테스트시 첫 스테이지 선택
+const std::string FirstStage = LEVEL_NAME_JUMPCLUB;
+
 LobbyLevel::LobbyLevel() 
 	:Swap(false)
 	,FallTime_(0.0f)
@@ -196,7 +199,7 @@ void LobbyLevel::FallingUpdate(float _DeltaTime, const StateInfo& _Info)
 	{
 		if (true == GameServer::GetInst()->CheckOtherPlayersFlag(PlayerFlag::P_GameStartChangeOver))
 		{
-			ContentsCore::GetInst()->ChangeLevelByLoading(LEVEL_NAME_DOORDASH);
+			ContentsCore::GetInst()->ChangeLevelByLoading(FirstStage);
 			return;
 		}
 	}
@@ -206,7 +209,7 @@ void LobbyLevel::FallingUpdate(float _DeltaTime, const StateInfo& _Info)
 		if (true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_GameStartChangeReady))
 		{
 			GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_GameStartChangeReady);
-			ContentsCore::GetInst()->ChangeLevelByLoading(LEVEL_NAME_DOORDASH);
+			ContentsCore::GetInst()->ChangeLevelByLoading(FirstStage);
 			return;
 		}
 	}

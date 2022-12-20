@@ -10,6 +10,12 @@ JumpClub_SpinBarDouble::~JumpClub_SpinBarDouble()
 {
 }
 
+void JumpClub_SpinBarDouble::PhysXInit()
+{
+		CreatePhysXActors(static_cast<VirtualPhysXLevel*>(GetLevel())->GetScene(),
+		static_cast<VirtualPhysXLevel*>(GetLevel())->GetPhysics());
+}
+
 void JumpClub_SpinBarDouble::Start()
 {
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
@@ -20,7 +26,59 @@ void JumpClub_SpinBarDouble::Start()
 
 void JumpClub_SpinBarDouble::Update(float _DeltaTime)
 {
-	PhysXSpinBarComponent_->SetSpinSpeedRot(50.0f * _DeltaTime);
+	// 서버 안켰을 때
+	if (false == GameServer::GetInst()->IsServerStart())
+	{
+		PhysXSpinBarComponent_->SetSpinSpeedRot(50.0f * _DeltaTime);
+	}
+
+	if (true == GameServer::IsHost_)
+	{
+		PhysXSpinBarComponent_->SetSpinSpeedRot(50.0f * _DeltaTime);
+
+		// 패킷 보냄
+		std::shared_ptr<ObjectUpdatePacket> Packet = std::make_shared<ObjectUpdatePacket>();
+		Packet->ObjectID = GetNetID();
+		Packet->Type = ServerObjectType::SpinBarDouble;
+		Packet->State = ServerObjectBaseState::Base;
+		Packet->Scale = GetTransform().GetWorldScale();
+		Packet->Pos = GetTransform().GetWorldPosition();
+		Packet->Rot = PhysXSpinBarComponent_->GetCurRot();
+		GameServer::Net->SendPacket(Packet);
+	}
+	// 유저들은 서버가 보내주는 패킷을 받아서 움직인다
+	else
+	{
+		while (false == IsPacketEmpty())
+		{
+			std::shared_ptr<GameServerPacket> Packet = PopPacket();
+
+			ContentsPacketType PacketType = Packet->GetPacketIDToEnum<ContentsPacketType>();
+
+			switch (PacketType)
+			{
+			case ContentsPacketType::ObjectUpdate:
+			{
+				std::shared_ptr<ObjectUpdatePacket> ObjectUpdate = std::dynamic_pointer_cast<ObjectUpdatePacket>(Packet);
+
+				if (ObjectUpdate->Type == ServerObjectType::SpinBarDouble)
+				{
+					//ObjectUpdate->Rot;
+					PhysXSpinBarComponent_->SetCurRot(ObjectUpdate->Rot.y);
+				}
+				else
+				{
+					continue;
+				}
+
+				break;
+			}
+			default:
+				break;
+			}
+		}
+		
+	}
 }
 
 void JumpClub_SpinBarDouble::End()
@@ -29,8 +87,7 @@ void JumpClub_SpinBarDouble::End()
 
 void JumpClub_SpinBarDouble::LevelStartEvent()
 {
-	CreatePhysXActors(static_cast<VirtualPhysXLevel*>(GetLevel())->GetScene(),
-		static_cast<VirtualPhysXLevel*>(GetLevel())->GetPhysics());
+
 }
 
 void JumpClub_SpinBarDouble::LevelEndEvent()

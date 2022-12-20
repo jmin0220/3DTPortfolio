@@ -18,6 +18,8 @@
 #include "HoopsBox.h"
 #include "HoopsRamp.h"
 #include "HoopsScoreRing.h"
+#include "JumpClub_SpinBarDouble.h"
+#include "JumpClub_SpinBarSingle.h"
 
 #include <GameEngineBase/magic_enum.hpp>
 #include <GameEngineCore/ThirdParty/inc/json.h>
@@ -97,6 +99,8 @@ void StageParentLevel::Start()
 
 void StageParentLevel::Update(float _DeltaTime)
 {
+	SpawnServerObjects();
+
 	VirtualPhysXLevel::Update(_DeltaTime);
 
 	CinemaCam_->Update();
@@ -504,10 +508,22 @@ void StageParentLevel::SpawnServerObjects()
 				NewPlayer->PushPacket(CurPacket);
 				
 				NetPlayers_.push_back(NewPlayer);
-			}
-			case ServerObjectType::Obstacle:
-			{
 
+				break;
+			}
+			case ServerObjectType::SpinBarDouble:
+			{
+				std::shared_ptr<JumpClub_SpinBarDouble> SpinBarDouble = CreateActor<JumpClub_SpinBarDouble>();
+				SpinBarDouble->ClientInit(CurPacket->Type, CurPacket->ObjectID);
+				SpinBarDouble->GetTransform().SetWorldPosition(CurPacket->Pos);
+				SpinBarDouble->GetTransform().SetWorldScale(CurPacket->Scale);
+				SpinBarDouble->GetPhysXSpinBarComponent()->SetCurRot(CurPacket->Rot.y);
+
+				SpinBarDouble->PhysXInit();
+				SpinBarDouble->PushPacket(CurPacket);
+				NetObstacles_.push_back(SpinBarDouble);
+
+				break;
 			}
 			default:
 				break;
