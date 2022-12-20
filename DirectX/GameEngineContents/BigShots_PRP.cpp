@@ -20,69 +20,40 @@ void BigShots_PRP::Start()
 
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
 	
-	float4 ThrowRot = float4::DegreeToDirection2D(20.0f);
+	PhysXConvexDynamicComponent_ = CreateComponent< PhysXConvexDynamicComponent>();
+	PhysXConvexDynamicComponent_->SetRestitution(0.3f);
 
-	// 각 PRP 마다 최대 최소 포스 지정 필요
 	switch (CurPRP_)
 	{
 	case PRPType::CONTROLLER:
 	{
 		FBXName_ = "Controller.FBX";
-		int RandomForce = GameEngineRandom::MainRandom.RandomInt(2300000, 2800000);
-		//ThrowRot *= 2300000.0f; 최소
-		//ThrowRot *= 2800000.0f; 최대
-		ThrowRot *= static_cast<float>(RandomForce);
-		PRPForce_ = float4(0.0f, ThrowRot.y, ThrowRot.x);
 		break;
 	}
 	case PRPType::MAGNET:
 	{
 		FBXName_ = "Magnet.FBX";
-		int RandomForce = GameEngineRandom::MainRandom.RandomInt(780000, 920000);
-		//ThrowRot *= 780000.0f; 최소
-		//ThrowRot *= 920000.0f; 최대
-		ThrowRot *= static_cast<float>(RandomForce);
-		PRPForce_ = float4(0.0f, ThrowRot.y, ThrowRot.x);
+		PhysXConvexDynamicComponent_->SetRestitution(0.8f);
 		break;
 	}
 	case PRPType::NUT:
 	{
 		FBXName_ = "Nut.FBX";
-		int RandomForce = GameEngineRandom::MainRandom.RandomInt(188000, 220000);
-		//ThrowRot *= 188000.0f; 최소
-		//ThrowRot *= 220000.0f; 최대
-		ThrowRot *= static_cast<float>(RandomForce);
-		PRPForce_ = float4(0.0f, ThrowRot.y, ThrowRot.x);
 		break;
 	}
 	case PRPType::PLANET:
 	{
 		FBXName_ = "Planet.FBX";
-		int RandomForce = GameEngineRandom::MainRandom.RandomInt(3200000, 3800000);
-		//ThrowRot *= 3200000.0f; 최소
-		//ThrowRot *= 3800000.0f; 최대
-		ThrowRot *= static_cast<float>(RandomForce);
-		PRPForce_ = float4(0.0f, ThrowRot.y, ThrowRot.x);
 		break;
 	}
 	case PRPType::STAR:
 	{
 		FBXName_ = "Star.FBX";
-		int RandomForce = GameEngineRandom::MainRandom.RandomInt(165000, 195000);
-		//ThrowRot *= 165000.0f; 최소
-		//ThrowRot *= 195000.0f; 최대
-		ThrowRot *= static_cast<float>(RandomForce);
-		PRPForce_ = float4(0.0f, ThrowRot.y, ThrowRot.x);
 		break;
 	}
 	case PRPType::TETRAPOD:
 	{
 		FBXName_ = "Tetrapod.FBX";
-		int RandomForce = GameEngineRandom::MainRandom.RandomInt(1820000, 2180000);
-		//ThrowRot *= 1820000.0f; 최소
-		//ThrowRot *= 2180000.0f; 최대
-		ThrowRot *= static_cast<float>(RandomForce);
-		PRPForce_ = float4(0.0f, ThrowRot.y, ThrowRot.x);
 		break;
 	}
 	default:
@@ -90,13 +61,17 @@ void BigShots_PRP::Start()
 	}
 
 	Renderer_->SetFBXMesh(FBXName_, "Texture");
-	PhysXConvexDynamicComponent_ = CreateComponent< PhysXConvexDynamicComponent>();
-
-	Death(20.0f);
 }
 
 void BigShots_PRP::Update(float _DeltaTime)
 {
+	if (this->GetTransform().GetWorldPosition().y < -70.0f)
+	{
+		this->Death();
+		PhysXConvexDynamicComponent_->ReleaseRigidBody();
+
+		return;
+	}
 }
 
 void BigShots_PRP::End()
@@ -118,12 +93,38 @@ void BigShots_PRP::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _
 	// Tip..3번째 매개변수인 GeometryScale은 액터가 가질 물리강체의 크기
 	float4 MeshBoundScale = Renderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
 	PhysXConvexDynamicComponent_->CreatePhysXActors(FBXName_, _Scene, _physics, Cooking, false, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z));
+
+	// 여기서 힘을 정해줌 
+	// FBXName_에 맞는 밀도
+	float tmpMass = static_cast<float>(PhysXConvexDynamicComponent_->GetMass());
+	// 힘 * 밀도
+	int RandomForce = GameEngineRandom::MainRandom.RandomInt(430 * tmpMass, 470 * tmpMass);
+
+	// 밀도에 따른 y,z축 이동 추가
+	PhysXConvexDynamicComponent_->SetUpdateForce(physx::PxVec3(0.0f, -400.0f * tmpMass, 700.0f * tmpMass));
+	// 던져지는 각도 벡터
+	float4 ThrowRot = float4::DegreeToDirection2D(2.0f);
+	// 던지는 벡터값 * (힘 * 밀도)
+	ThrowRot *= static_cast<float>(RandomForce);
+	PRPForce_ = float4(0.0f, ThrowRot.y, ThrowRot.x);
+	
+	// 최종적으로 던져질 prp의 방향 * 힘 * 밀도의 수치로 던져라
 	PhysXConvexDynamicComponent_->AddForce(PRPForce_);
 	
-	float RandomRot = GameEngineRandom::MainRandom.RandomFloat(-10.0f, 10.0f);
-	PhysXConvexDynamicComponent_->AddAngularVelocity(float4(RandomRot, RandomRot, RandomRot));
+	// 던져지는 PRP의 회전 값 부여
+	if (GameEngineRandom::MainRandom.RandomInt(0, 1))
+	{
+		RandomRot_ = GameEngineRandom::MainRandom.RandomFloat(4.0f, 9.0f);
+	}
+	else
+	{
+		RandomRot_ = GameEngineRandom::MainRandom.RandomFloat(-9.0f, -4.0f);
+	}
 
-	GameEngineDebug::OutPutString(FBXName_ + " Mass Value >> " +std::to_string(static_cast<float>(PhysXConvexDynamicComponent_->GetMass())));
+
+	PhysXConvexDynamicComponent_->AddAngularVelocity(float4(RandomRot_, RandomRot_, RandomRot_));
+
+	//GameEngineDebug::OutPutString(FBXName_ + " Mass Value >> " +std::to_string(static_cast<float>(PhysXConvexDynamicComponent_->GetMass())));
 }
 
 void BigShots_PRP::CreatePhysX()
