@@ -191,7 +191,7 @@ void MidScoreLevel::LevelStartEvent()
 		Player1_->GetTransform().SetWorldRotation({ 0,160,0 });
 		Player1_->ChangeAnimationJogging();
 
-		PlayerName_[0] = "CAT";
+		PlayerName_[0] = "CAT";//임의로 이름정함
 		PlayerName_[1] = "DOG";
 		PlayerName_[2] = "COW";
 		PlayerName_[3] = "ANT";
@@ -385,5 +385,5 @@ void MidScoreLevel::BubbleSortLerp()
 	}
 	
 }
-}
+
 
