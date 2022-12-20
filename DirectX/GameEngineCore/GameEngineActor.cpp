@@ -1,7 +1,6 @@
 #include "PreCompile.h"
 #include "GameEngineActor.h"
 #include "GameEngineLevel.h"
-#include "GameEngineComponent.h"
 #include "GameEngineTransformComponent.h"
 
 GameEngineActor::GameEngineActor()

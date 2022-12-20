@@ -6,8 +6,17 @@ struct LightData
 {
 	friend GameEngineLight;
 
+	float4x4 LightViewMatrix;
+	float4x4 LightProjectionMatrix;
+	float LightTargetSizeX;
+	float LightTargetSizeY;
+	float LightNear;
+	float LightFar;
+
 	float4 LightColor = float4(1.0f, 1.0f, 1.0f, 1.0f);
 	float4 AmbientLight = float4(0.1f, 0.1f, 0.1f, 1.0f);
+
+
 	float DifLightPower = 1.0f;
 	float SpcLightPower = 1.0f;
 	float AmbLightPower = 1.0f;
@@ -54,12 +63,18 @@ public:
 		return Data;
 	}
 
+	void Start() override;
+
 	void Update(float _DeltaTime) override;
+
+	void ShadowTargetSetting();
 
 protected:
 
 private:
 	void LightDataUpdate(GameEngineCamera* _Camera);
+
+	std::shared_ptr<class GameEngineRenderTarget> ShadowTarget;
 
 	LightData Data;
 };

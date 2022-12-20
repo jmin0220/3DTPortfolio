@@ -95,7 +95,7 @@ public:
 		return MouseDir;
 	}
 
-	inline void SetProjectionSize(const float4& _Value)
+	inline void SetProjectionSize(const float4& _Value) 
 	{
 		Size = _Value;
 		// return float4();
@@ -156,11 +156,19 @@ private:
 
 	std::shared_ptr<class GameEngineRenderTarget> CameraDeferredRenderTarget;
 
+	std::shared_ptr<GameEngineRenderUnit> ShadowRenderUnit;
+
+	TransformData ShadowTrans;
+
+	class GameEngineConstantBufferSetter* ShadowTransformSetter;
+
 	std::map<int, std::list<std::shared_ptr<class GameEngineRenderer>>> AllRenderer_;
 
 	std::map<RENDERINGPATHORDER, std::map<int, std::list<std::shared_ptr<class GameEngineRenderUnit>>>> AllRenderUnit_;
 
 	std::unordered_map<std::string, GameEngineInstancing> InstancingMap;
+
+	
 
 	std::set<std::shared_ptr<class GameEngineLight>> AllLight;
 
