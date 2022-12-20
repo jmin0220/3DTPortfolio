@@ -110,7 +110,7 @@ void StageParentLevel::End()
 
 void StageParentLevel::LevelStartEvent()
 {
-	AllPlayersReady_ = false;
+	//AllPlayersReady_ = false;
 
 	GUI_->On();
 	VirtualPhysXLevel::LevelStartEvent();

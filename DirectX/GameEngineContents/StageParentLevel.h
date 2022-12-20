@@ -142,7 +142,7 @@ private:
 	void SpawnServerObjects();
 	
 public:
-	static bool AllPlayersReady_;
+	//static bool AllPlayersReady_;
 
 	std::shared_ptr<class TestGUI> GUI_;
 };
