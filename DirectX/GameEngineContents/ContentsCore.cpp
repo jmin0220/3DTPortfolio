@@ -363,6 +363,13 @@ void ContentsCore::LoadShaders()
 		Material->SetPixelShader("Fog.hlsl");
 	}
 
+	//ºû ½¦ÀÌ´õ
+	{
+		std::shared_ptr<GameEngineMaterial> Material = GameEngineMaterial::Create("CustomDefferedColor");
+		Material->SetVertexShader("CustomDefferedColor.hlsl");
+		Material->SetPixelShader("CustomDefferedColor.hlsl");
+	}
+
 
 	// Æ÷½ºÆ® ÀÌÆåÆ®¿ë
 	{

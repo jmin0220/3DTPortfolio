@@ -2,9 +2,11 @@
 #include "DoorDashLevel.h"
 
 #include "DoorDashStage.h"
-#include "DoorDash_BackGroundObject.h"
 #include "PlayerActor.h"
 #include "SkyboxActor.h"
+
+#include <GameEngineCore/GameEngineBlur.h>
+#include "GameEngineStatusWindow.h"
 
 DoorDashLevel::DoorDashLevel() 
 {
@@ -16,6 +18,20 @@ DoorDashLevel::~DoorDashLevel()
 
 void DoorDashLevel::Start()
 {
+
+	GetMainCamera()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
+	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+
+	GameEngineStatusWindow::AddDebugRenderTarget("GBuffer", GetMainCamera()->GetCameraDeferredLightRenderTarget());
+
+	//ºû
+	//{
+	//	LightObject = CreateActor<GameEngineLight>();
+	//	LightObject->GetTransform().SetWorldRotation({ 0.0f,100.0f, 0.0f });
+	//	GetMainCamera()->PushLight(LightObject);
+	//	LightObject->GetLightData().DifLightPower = 0.5f;
+	//}
+
 	StageParentLevel::Start();
 	MyStage_ = StageNum::STAGE1;
 

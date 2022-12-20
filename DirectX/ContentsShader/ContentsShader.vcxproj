@@ -137,6 +137,8 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
     </FxCompile>
+    <FxCompile Include="CustomDefferedColor.hlsl" />
+    <FxCompile Include="DeferredHeader.fx" />
     <FxCompile Include="DownLoop.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
@@ -149,6 +151,7 @@
     </FxCompile>
     <FxCompile Include="Fog.hlsl" />
     <FxCompile Include="CustomColor.hlsl" />
+    <FxCompile Include="LightHeader.fx" />
     <FxCompile Include="MaskShader.hlsl" />
     <FxCompile Include="RenderOption.fx" />
     <FxCompile Include="RtoLSlice.hlsl">

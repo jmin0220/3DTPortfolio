@@ -14,13 +14,13 @@ void DoorDashStage::Start()
 {
 	// 2. 메쉬세팅 Static renderer
 	PlatformRenderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
-	PlatformRenderer_->SetFBXMesh("DoorDashPlatformCollisionMesh.FBX", "Texture");
+	PlatformRenderer_->SetFBXMesh("DoorDashPlatformCollisionMesh.FBX", "CustomDefferedColor");
 
 	WallRenderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
-	WallRenderer_->SetFBXMesh("DoorDashWallCollisionMesh.FBX", "Texture");
+	WallRenderer_->SetFBXMesh("DoorDashWallCollisionMesh.FBX", "CustomDefferedColor");
 
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
-	Renderer_->SetFBXMesh("DoodrDashEnv.FBX", "Texture");
+	Renderer_->SetFBXMesh("DoodrDashEnv.FBX", "CustomDefferedColor");
 
 
 	WallPhysXTriMeshGeometry_ = CreateComponent<PhysXTriMeshGeometryComponent>();

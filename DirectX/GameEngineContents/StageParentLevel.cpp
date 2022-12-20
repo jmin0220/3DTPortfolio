@@ -27,14 +27,19 @@
 #include "InGameSetUI.h"
 #include "PlayerActor.h"
 #include "IntroduceGame.h"
-
 #include "LoadingLevel.h"
 #include <atomic>
+
+#include "TestGUI.h"
+
+
 std::mutex SpawnLock;
 
 float4 StageParentLevel::PlayerPos = float4::ZERO;
 std::vector<float4> StageParentLevel::HoopsPos = std::vector<float4>();
 std::vector<std::shared_ptr<GameEngineActor>> StageParentLevel::HoopsActor = std::vector<std::shared_ptr<GameEngineActor>>();
+
+std::shared_ptr<GameEngineLight> StageParentLevel::LightObject = nullptr;
 
 StageParentLevel::StageParentLevel() 
 	: MyStage_(StageNum::STAGE1)
@@ -51,6 +56,15 @@ void StageParentLevel::Start()
 	VirtualPhysXLevel::Start();
 	CinemaCam_->SetStage(MyStage_);
 	CinemaCam_->Init(GetMainCameraActor());
+
+	GUI_ = GameEngineGUI::CreateGUIWindow<TestGUI>("StageGUI", this);
+	GUI_->Off();
+
+	{
+		LightObject = CreateActor<GameEngineLight>();
+		GetMainCamera()->PushLight(LightObject);
+		LightObject->GetLightData().DifLightPower = 0.7f;
+	}
 
 	IntroduceGame_ = CreateActor<IntroduceGame>();
 	IntroduceGame_->Off();
@@ -86,6 +100,7 @@ void StageParentLevel::Update(float _DeltaTime)
 
 	CinemaCam_->Update();
 
+	
 	StageStateManager_.Update(_DeltaTime);
 }
 void StageParentLevel::End()
@@ -95,6 +110,9 @@ void StageParentLevel::End()
 
 void StageParentLevel::LevelStartEvent()
 {
+	AllPlayersReady_ = false;
+
+	GUI_->On();
 	VirtualPhysXLevel::LevelStartEvent();
 	LevelStartLoad();
 

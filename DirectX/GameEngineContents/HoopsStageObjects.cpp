@@ -17,33 +17,7 @@ void HoopsStageObjects::Start()
 	FloorRenderer_->SetFBXMesh("HoopsFloor.FBX", "Texture");
 
 	PlatformRenderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
-	PlatformRenderer_->SetFBXMesh("HoopsObjectPlatform.FBX", "MaskShader");
-
-	Data.Data_ = float4(0, 0, 1.0f, 1.0f);
-
-
-	//std::vector<std::vector<GameEngineRenderUnit>>& UnitSets = PlatformRenderer_->GetAllRenderUnit();
-	std::vector<std::vector< std::shared_ptr<GameEngineRenderUnit>>>& UnitSets = PlatformRenderer_->GetAllRenderUnit();
-	for (std::vector< std::shared_ptr<GameEngineRenderUnit>>& Units : UnitSets)
-	{
-		for (std::shared_ptr<GameEngineRenderUnit>& Unit : Units)
-		{
-			if (true == Unit->ShaderResources.IsConstantBuffer("MaskingData"))
-			{
-				Unit->ShaderResources.SetConstantBufferLink("MaskingData", Data);
-			}
-
-			if (true == Unit->ShaderResources.IsTexture("MaskTexture"))
-			{
-				Unit->ShaderResources.SetTexture("MaskTexture", "ENV_S02_MedievalPattern_MSK.png");
-			}
-
-			if (true == Unit->ShaderResources.IsTexture("DiffuseTexture"))
-			{
-				Unit->ShaderResources.SetTexture("DiffuseTexture", "HoopPurple3.png");
-			}
-		}
-	}
+	PlatformRenderer_->SetFBXMesh("HoopsObjectPlatform.FBX", "Texture");
 
 
 	WallRenderer_ = CreateComponent<GameEngineFBXStaticRenderer>();

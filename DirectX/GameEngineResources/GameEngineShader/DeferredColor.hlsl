@@ -73,5 +73,7 @@ DeferredOutPut Color_PS(Output _Input) : SV_Target0
     OutPut.Nor = _Input.ViewNormal;
     OutPut.Nor.w = 1.0f;
     
+    
+    
     return OutPut;
 }

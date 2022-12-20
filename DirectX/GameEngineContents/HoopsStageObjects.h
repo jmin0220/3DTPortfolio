@@ -2,11 +2,6 @@
 #include "VirtualPhysXActor.h"
 #include "PhysXTriMeshGeometryComponent.h"
 
-struct MaskData
-{
-	float4 Data_;
-};
-
 // Ό³Έν :
 class HoopsStageObjects : public VirtualPhysXActor
 {
@@ -41,32 +36,5 @@ private:
 
 	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer_;
 
-	MaskData Data;
-
-public:
-	void SetDataPosX(float X)
-	{
-		Data.Data_.x = X;
-	}
-
-	void SetDataPosY(float Y)
-	{
-		Data.Data_.y = Y;
-	}
-
-	void SetDataScaleX(float X)
-	{
-		Data.Data_.z = X;
-	}
-
-	void SetDataScaleY(float Y)
-	{
-		Data.Data_.w = Y;
-	}
-
-	MaskData& GetData()
-	{
-		return Data;
-	}
 };
 

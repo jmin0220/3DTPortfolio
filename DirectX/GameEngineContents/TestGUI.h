@@ -24,13 +24,8 @@ protected:
 
 public:
 
-	inline void SetObj(std::shared_ptr<HoopsStageObjects> _Obj)
-	{
-		Obj = _Obj;
-	}
-
 private:
-	std::shared_ptr<HoopsStageObjects> Obj;
+
 	GameEngineLevel* ConnectedLevel;
 };
 

@@ -67,6 +67,10 @@ public:
 	static float4 PlayerPos;
 	static std::vector<float4> HoopsPos;
 	static std::vector<std::shared_ptr<GameEngineActor>> HoopsActor;
+	static 	std::shared_ptr<GameEngineLight> LightObject;
+
+
+
 	// constrcuter destructer
 	StageParentLevel();
 	~StageParentLevel();
@@ -96,6 +100,7 @@ protected:
 	// 카메라 관련
 	std::shared_ptr<GameEngineCameraActor> MainCam_;
 	std::shared_ptr<CameraArm> CameraArm_;
+
 
 private:
 	std::vector<StageObject> StageObjects_;
@@ -136,5 +141,9 @@ protected:
 private:
 	void SpawnServerObjects();
 	
+public:
+	static bool AllPlayersReady_;
+
+	std::shared_ptr<class TestGUI> GUI_;
 };
 

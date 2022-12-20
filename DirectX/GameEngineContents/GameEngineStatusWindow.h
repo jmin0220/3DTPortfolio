@@ -29,7 +29,7 @@ public:
 	GameEngineStatusWindow& operator=(const GameEngineStatusWindow& _Other) = delete;
 	GameEngineStatusWindow& operator=(GameEngineStatusWindow&& _Other) noexcept = delete;
 
-	static void AddDebugRenderTarget(const std::string& _DebugName, GameEngineRenderTarget* _RenderTarget);
+	static void AddDebugRenderTarget(const std::string& _DebugName, std::shared_ptr<GameEngineRenderTarget> _RenderTarget);
 
 protected:
 
@@ -39,6 +39,6 @@ private:
 
 	std::list<GameEngineImageShotWindow*> Window;
 
-	static std::map<std::string, GameEngineRenderTarget*> DebugRenderTarget;
+	static std::map<std::string, std::shared_ptr<GameEngineRenderTarget>> DebugRenderTarget;
 };
 

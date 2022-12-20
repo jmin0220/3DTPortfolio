@@ -5,7 +5,7 @@
 #include "HoopsStageObjects.h"
 
 #include "HoopsScoreRing.h"
-#include "TestGUI.h"
+//#include "TestGUI.h"
 #include "GameEngineBase/GameEngineRandom.h"
 
 HoopsLegendsLevel::HoopsLegendsLevel() :
@@ -22,8 +22,8 @@ void HoopsLegendsLevel::Start()
 	MyStage_ = StageNum::STAGE5;
 	StageParentLevel::Start();
 
-	GUI_ = GameEngineGUI::CreateGUIWindow<TestGUI>("MapEditorGUI", this);
-	GUI_->Off();
+	//GUI_ = GameEngineGUI::CreateGUIWindow<TestGUI>("MapEditorGUI", this);
+	//GUI_->Off();
 
 	
 
@@ -54,8 +54,8 @@ void HoopsLegendsLevel::LevelStartEvent()
 	Skybox->SetSkyTexture("Respawn_SkyBox_S02.png");
 	//그외 배경용 static매쉬
 	std::shared_ptr<HoopsStageObjects> BackGround_ = CreateActor<HoopsStageObjects>();
-	GUI_->SetObj(BackGround_);
-	GUI_->On();
+	//GUI_->SetObj(BackGround_);
+	//GUI_->On();
 
 	for (int i = 0; i < 10; i++)
 	{

@@ -47,9 +47,6 @@ private:
 
 	float4 Rotation_;
 
-
-
-
 	MaskData Data;
 public:
 	inline void SetRotation(float4 _Rot)

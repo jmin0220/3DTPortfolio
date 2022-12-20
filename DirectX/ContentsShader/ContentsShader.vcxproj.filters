@@ -7,6 +7,9 @@
     <Filter Include="PostEfffect">
       <UniqueIdentifier>{9321d7fa-abc2-4327-8d8f-cc21551dda4c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Light">
+      <UniqueIdentifier>{5344f3f0-50d5-46b2-b909-3660c75c024b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="WaterShader.hlsl">
@@ -44,5 +47,10 @@
     <FxCompile Include="MaskShader.hlsl">
       <Filter>Texture</Filter>
     </FxCompile>
+    <FxCompile Include="CustomDefferedColor.hlsl">
+      <Filter>Light</Filter>
+    </FxCompile>
+    <FxCompile Include="DeferredHeader.fx" />
+    <FxCompile Include="LightHeader.fx" />
   </ItemGroup>
 </Project>

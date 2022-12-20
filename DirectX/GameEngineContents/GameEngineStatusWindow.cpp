@@ -4,7 +4,7 @@
 #include <GameEngineCore/GameEngineCameraActor.h>
 #include <GameEngineCore/GEngine.h>
 
-std::map<std::string, GameEngineRenderTarget*> GameEngineStatusWindow::DebugRenderTarget;
+std::map<std::string, std::shared_ptr<GameEngineRenderTarget>> GameEngineStatusWindow::DebugRenderTarget;
 
 void GameEngineImageShotWindow::RenderTextureSetting(ImTextureID _RenderTexture, ImVec2 _Size) 
 {
@@ -36,7 +36,7 @@ void GameEngineStatusWindow::Initialize(class GameEngineLevel* _Level)
 
 }
 
-void GameEngineStatusWindow::AddDebugRenderTarget(const std::string& _DebugName, GameEngineRenderTarget* _RenderTarget)
+void GameEngineStatusWindow::AddDebugRenderTarget(const std::string& _DebugName, std::shared_ptr<GameEngineRenderTarget> _RenderTarget)
 {
 	if (DebugRenderTarget.end() != DebugRenderTarget.find(_DebugName))
 	{
@@ -95,13 +95,13 @@ void GameEngineStatusWindow::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 	std::string AllRenderTarget = "AllRenderTarget";
 	ImGui::Text(AllRenderTarget.c_str());
 
-	for (std::pair<std::string, GameEngineRenderTarget*> RenderTargetPair : DebugRenderTarget)
+	for (std::pair<std::string, std::shared_ptr<GameEngineRenderTarget>> RenderTargetPair : DebugRenderTarget)
 	{
 		// ImGui::Text(RenderTarget.first.c_str());
 
 		if (true == ImGui::TreeNodeEx(RenderTargetPair.first.c_str(), 0))
 		{
-			GameEngineRenderTarget* RenderTarget = RenderTargetPair.second;
+			std::shared_ptr<GameEngineRenderTarget> RenderTarget = RenderTargetPair.second;
 
 			for (ID3D11ShaderResourceView* _View : RenderTarget->ShaderResourceViews)
 			{

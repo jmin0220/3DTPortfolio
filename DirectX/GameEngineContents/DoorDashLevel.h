@@ -3,8 +3,6 @@
 
 // Ό³Έν :
 class DoorDashStage;
-class DoorDash_BackGroundObject;
-
 class IntroduceGame;
 class DoorDashLevel	:	public StageParentLevel
 {
@@ -28,5 +26,6 @@ protected:
 private:
 	std::shared_ptr<GameEngineActor> Stage_;
 	std::shared_ptr<GameEngineActor>BackGround_;
+
 };
 
