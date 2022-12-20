@@ -27,9 +27,9 @@ public:
 	}
 
 	void SetNetPlayerColor(unsigned int _Color);
-	void SetNetPlayerAnimation(std::string_view _Animation);
+	void SetNetPlayerAnimation(const std::string& _Animation);
 	bool IsNetPlayerColorExist_;
-	std::string_view PrevAnimation_;
+	std::string PrevAnimation_;
 
 private:
 	bool IsPlayerble_;

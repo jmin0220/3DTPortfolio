@@ -26,14 +26,14 @@ void PlayerActor::SetNetPlayerColor(unsigned int _Color)
 	IsNetPlayerColorExist_ = true;
 }
 
-void PlayerActor::SetNetPlayerAnimation(std::string_view _Animation)
+void PlayerActor::SetNetPlayerAnimation(const std::string& _Animation)
 {
-	if (0 == PrevAnimation_.compare(_Animation.data()))
+	if (PrevAnimation_ == _Animation)
 	{
 		return;
 	}
 
-	FbxRenderer_->ChangeAnimation("Idle");
+	FbxRenderer_->ChangeAnimation(_Animation);
 	PrevAnimation_ = _Animation;
 }
 
@@ -214,6 +214,7 @@ void PlayerActor::Update(float _DeltaTime)
 		Packet->Pos = GetTransform().GetWorldPosition();
 		Packet->Rot = GetTransform().GetWorldRotation();
 		Packet->PlayerColor = GameServer::GetInst()->PlayerColorID_;
+		Packet->Animation = PlayerAniStateManager_.GetCurStateStateName();
 		GameServer::Net->SendPacket(Packet);
 	}
 	// 서버가 조종하는 PlayerActor
@@ -236,7 +237,7 @@ void PlayerActor::Update(float _DeltaTime)
 				SetNetPlayerColor(ObjectUpdate->PlayerColor);
 
 				// 애니메이션
-				SetNetPlayerAnimation(ObjectUpdate->Animation.c_str());
+				SetNetPlayerAnimation(ObjectUpdate->Animation);
 
 				GetTransform().SetWorldScale(ObjectUpdate->Scale);
 				GetTransform().SetWorldPosition(ObjectUpdate->Pos);
