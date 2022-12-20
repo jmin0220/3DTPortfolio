@@ -12,7 +12,7 @@ UISkyBoxActor::~UISkyBoxActor()
 void UISkyBoxActor::Start()
 {
 	StaticRenderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
-	StaticRenderer_->SetFBXMesh("Skybox.fbx", "Texture");
+	StaticRenderer_->SetFBXMesh("Winner_Skybox.fbx", "Texture");
 
 	// 텍스쳐 씌워주기
 	//std::vector<std::vector<GameEngineRenderUnit>>& UnitSet = StaticRenderer_->GetAllRenderUnit();

@@ -45,8 +45,12 @@ void ContentsCore::ChangeLevelByLoading(std::string_view _Level)
 	CurStageName_ = _Level;
 }
 
+// 스테이지 레벨 -> 미드스코어 레벨 용도
+// 스테이지 레벨 -> 위너레벨 용도
 void ContentsCore::ChangeLevelByThread(std::string_view _Level)
 {
+
+
 	InitLoadingProgress();
 	
 	GameEngineCore::EngineThreadPool.Work(

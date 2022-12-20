@@ -143,9 +143,11 @@ private:
 
 	std::shared_ptr<GameEngineLight> LightObject_;
 	
+	std::vector<std::shared_ptr<GameEngineActor>> NetPlayers_;
 public:
 	//static bool AllPlayersReady_;
 
 	std::shared_ptr<class TestGUI> GUI_;
+
 };
 

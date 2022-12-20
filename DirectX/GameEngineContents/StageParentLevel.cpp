@@ -117,14 +117,6 @@ void StageParentLevel::LevelStartEvent()
 	VirtualPhysXLevel::LevelStartEvent();
 	LevelStartLoad();
 
-	// 서버
-	// 로딩레벨에서 넘어온 유저들
-	GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_LoadingChangeOver);
-	if (true == GameServer::IsHost_)
-	{
-		GameServer::GetInst()->SetServerSignal(ServerFlag::S_LoadingChangeOver);
-	}
-	
 
 	// 자신의 메인 플레이어 생성
 	Player_ = CreateActor<PlayerActor>();
@@ -172,7 +164,15 @@ void StageParentLevel::LevelEndEvent()
 	
 	UIs_->Death();
 
-	AllClear();
+	for (StageObject StageObj : StageObjects_)
+	{
+		StageObj.Actor_.lock()->Death();
+	}
+
+	for (std::shared_ptr<GameEngineActor> NetPlayer : NetPlayers_)
+	{
+		NetPlayer->Death();
+	}
 }
 
 void StageParentLevel::LevelStartLoad()
@@ -502,7 +502,8 @@ void StageParentLevel::SpawnServerObjects()
 
 				NewPlayer->PlayerInit();
 				NewPlayer->PushPacket(CurPacket);
-
+				
+				NetPlayers_.push_back(NewPlayer);
 			}
 			case ServerObjectType::Obstacle:
 			{

@@ -259,7 +259,7 @@ void MidScoreLevel::LevelEndEvent()
 	Font2_->Death();
 	FontScore_[1]->Death();
 
-
+	Player4_->Death();
 	ContentsCore::GetInst()->ReleaseCurLevelResource();
 }
 

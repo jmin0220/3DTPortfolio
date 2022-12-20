@@ -13,6 +13,15 @@ bool IdleEnd = false;
 bool AllUserOver = false;
 void StageParentLevel::IdleStart(const StateInfo& _Info)
 {
+	// 서버
+	// 로딩레벨에서 넘어온 유저들
+	GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_LoadingChangeOver);
+	if (true == GameServer::IsHost_)
+	{
+		GameServer::GetInst()->SetServerSignal(ServerFlag::S_LoadingChangeOver);
+	}
+
+
 	IdleEnd = false;
 
 	if (true == GameServer::GetInst()->IsServerStart())
@@ -31,20 +40,18 @@ void StageParentLevel::IdleUpdate(float _DeltaTime, const StateInfo& _Info)
 
 	SpawnServerObjects();
 
-
 	// 1. 유저들은 호스트 들어온거 확인했으면 ChangeOver신호 끔
-	if (false == GameServer::IsHost_ && GameServer::GetInst()->CheckPlayerSignal(PlayerFlag::P_LoadingChangeOver))
+	if (false == GameServer::IsHost_ 
+		&& GameServer::GetInst()->CheckServerSignal(ServerFlag::S_LoadingChangeOver)
+		&& GameServer::GetInst()->CheckPlayerSignal(PlayerFlag::P_LoadingChangeOver))
 	{
-		if (false == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_LoadingChangeOver))
-		{
-			GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_None);
-		}
+		GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_None);
 	}
 
 	// 2. 호스트도 들어오면 끔
 	if (true == GameServer::IsHost_ && GameServer::GetInst()->CheckServerSignal(ServerFlag::S_LoadingChangeOver))
 	{
-		if (true == GameServer::GetInst()->CheckOtherPlayersFlag(PlayerFlag::P_LoadingChangeOver))
+		if (true == GameServer::GetInst()->CheckOtherPlayersFlag(PlayerFlag::P_None))
 		{
 			GameServer::GetInst()->SetServerSignal(ServerFlag::S_None);
 			GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_None);
@@ -86,7 +93,7 @@ void StageParentLevel::IdleUpdate(float _DeltaTime, const StateInfo& _Info)
 
 
 	// 3. UI띄우고 몇초 기다림 -> 준비완료
-	if (false == IdleEnd && _Info.StateTime > 7.0f)
+	if (false == IdleEnd && _Info.StateTime > 8.0f)
 	{
 		IdleEnd = true;
 		GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_StageIdleChangeReady);
@@ -312,24 +319,6 @@ void StageParentLevel::EndUpdate(float _DeltaTime, const StateInfo& _Info)
 		GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_None);
 	}
 
-
-	// 다음레벨로
-	if (false == CheckOnce && true == GameServer::GetInst()->CheckPlayerSignal(PlayerFlag::P_None))
-	{
-		CheckOnce = true;
-		UIs_->Off();
-		// 끝나는 시점
-
-		ContentsCore::GetInst()->ChangeLevelByThread(LEVEL_NAME_MIDSCORE);
-	}
-
-	// 미드스코어레벨 리소스 로딩 끝나면 레벨 체인지
-	if (1 <= ContentsCore::GetInst()->GetLoadingProgress() && true == CheckOnce)
-	{
-		GEngine::ChangeLevel(LEVEL_NAME_MIDSCORE);
-	}
-
-
 	// 2. 호스트도 신호 끔
 	if (true == GameServer::IsHost_)
 	{
@@ -341,6 +330,46 @@ void StageParentLevel::EndUpdate(float _DeltaTime, const StateInfo& _Info)
 	}
 
 
-	// TODO::<성훈>LEVEL_NAME_HOOPSLEGENDS 레벨이면 위너레벨로
+
+	// 다음레벨로
+	if (true == GameServer::GetInst()->CheckPlayerSignal(PlayerFlag::P_None))
+	{
+
+		if (false == CheckOnce)
+		{
+			CheckOnce = true;
+			UIs_->Off();
+
+			if (LEVEL_NAME_HOOPSLEGENDS == ContentsCore::GetInst()->GetCurStage())
+			{
+				ContentsCore::GetInst()->ChangeLevelByThread(LEVEL_NAME_WINNER);
+				return;
+			}
+			else
+			{
+				ContentsCore::GetInst()->ChangeLevelByThread(LEVEL_NAME_MIDSCORE);
+				return;
+			}
+		}
+
+		// 미드스코어레벨 리소스 로딩 끝나면 레벨 체인지
+		if (1 <= ContentsCore::GetInst()->GetLoadingProgress() && true == CheckOnce)
+		{
+
+			if (LEVEL_NAME_HOOPSLEGENDS == ContentsCore::GetInst()->GetCurStage())
+			{
+				GEngine::ChangeLevel(LEVEL_NAME_WINNER);
+				return;
+			}
+			else
+			{
+				GEngine::ChangeLevel(LEVEL_NAME_MIDSCORE);
+				return;
+			}
+		}
+
+	}
+
+
 }
 

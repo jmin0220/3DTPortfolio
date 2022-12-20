@@ -58,7 +58,7 @@ void WinnerLevel::LevelStartEvent()
 void WinnerLevel::LevelEndEvent()
 {
 	Sky_->Death();
-	//BG_->Death();
+	BG_->Death();
 	Winner_->Death();
 	Player_->Death();
 	Chair_->Death();
