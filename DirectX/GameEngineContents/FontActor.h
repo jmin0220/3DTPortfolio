@@ -25,6 +25,12 @@ public:
 	{
 		Font_->SetText(_Text, _Font);
 	}
+
+	void SetFont(std::string _Text, std::string _Font, float4 _Pos)
+	{
+		Font_->SetText(_Text, _Font);
+		Font_->SetScreenPostion(_Pos);
+	}
 	
 	void SetFont(std::string _Text, std::string _Font, float _Size, float4 _Pos , LeftAndRightSort _Value)
 	{

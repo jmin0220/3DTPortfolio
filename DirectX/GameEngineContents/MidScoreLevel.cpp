@@ -9,9 +9,14 @@
 
 #include <GameEngineBase/GameEngineRandom.h>
 
-MidScoreLevel::MidScoreLevel() 
+MidScoreLevel::MidScoreLevel()
 	: FallingTime_(0.0f)
 	, PlayerScores_{}
+	, BeforeScoreTime_(0.0f)
+	, IsScoreOn_(false)
+	, Index_{}
+	, IsLerpStart_(false)
+	, Once_(false)
 	, LevelChanged_(false)
 	, MidScoreTime_(0.0f)
 {
@@ -112,20 +117,41 @@ void MidScoreLevel::Update(float _DeltaTime)
 			for (int i = 0; i < 5; ++i)
 			{
 				PlayerScores_[i] = GameEngineRandom::MainRandom.RandomInt(10, 200);
+
+				Font_PlayerName[i]->SetFont(PlayerName_[i], FONT_TITAN_ONE);
+				FontScore_[i]->SetFont(std::to_string(PlayerScores_[i]), FONT_NOTO_SANS_CJK_SC, 50.0f, LeftAndRightSort::LEFT);
 			}
-			BubbleSort();
-			FontScore_[0]->SetFont(std::to_string(PlayerScores_[0]), FONT_NOTO_SANS_CJK_SC, 50.0f, LeftAndRightSort::LEFT);
-			FontScore_[1]->SetFont(std::to_string(PlayerScores_[1]), FONT_NOTO_SANS_CJK_SC, 50.0f, LeftAndRightSort::LEFT);
-			FontScore_[2]->SetFont(std::to_string(PlayerScores_[2]), FONT_NOTO_SANS_CJK_SC, 50.0f, LeftAndRightSort::LEFT);
-			FontScore_[3]->SetFont(std::to_string(PlayerScores_[3]), FONT_NOTO_SANS_CJK_SC, 50.0f, LeftAndRightSort::LEFT);
-			FontScore_[4]->SetFont(std::to_string(PlayerScores_[4]), FONT_NOTO_SANS_CJK_SC, 50.0f, LeftAndRightSort::LEFT);
-			
+			IsScoreOn_ = true;
 		}
 		
-	}
-	
-	//FakeSort();
+		if (IsScoreOn_ == true)
+		{
+			BeforeScoreTime_ += _DeltaTime;
+		}
 
+		if (BeforeScoreTime_ > 2.0f)
+		{
+			BubbleSortLerp();
+			IsScoreOn_ = false;
+			BeforeScoreTime_ = 0.0f;
+			Once_ = true;
+		}
+	}
+
+	if (Once_ == true)
+	{
+		for (int i = 0; i < 5; ++i)
+		{
+			for (int j = 0; j < 5; ++j)
+			{
+				if (FontScore_[i]->GetFont().lock()->GetText() == std::to_string(PlayerScores_[j]))
+				{
+					float4 Temp = FontScore_[i]->GetFont().lock()->GetScreenPosition();
+					FontScore_[i]->GetFont().lock()->SetScreenPostion(float4::Lerp(Temp, { 170.0f, 250.0f + (120.0f * static_cast<float>(j)) }, _DeltaTime * 10.0f));
+				}
+			}
+		}
+	}
 }
 
 
@@ -319,6 +345,8 @@ void MidScoreLevel::BubbleSort()
 				int Temp = PlayerScores_[j];
 				PlayerScores_[j] = PlayerScores_[j + 1];
 				PlayerScores_[j + 1] = Temp;
+				FontScore_[j]->SetFont(std::to_string(PlayerScores_[j]), FONT_NOTO_SANS_CJK_SC, 50.0f, LeftAndRightSort::LEFT);
+				FontScore_[j+1]->SetFont(std::to_string(PlayerScores_[j+1]), FONT_NOTO_SANS_CJK_SC, 50.0f, LeftAndRightSort::LEFT);
 
 				std::string Temps = PlayerName_[j];
 				PlayerName_[j] = PlayerName_[j + 1];
@@ -329,5 +357,33 @@ void MidScoreLevel::BubbleSort()
 			}
 		}
 	}
+}
+
+void MidScoreLevel::BubbleSortLerp()
+{
+	for (int i = 4; i > 0; --i)//5개를 두개씩 비교하면 4번해야함->4부터 시작해야 죽 훑음 0부터해서 ++하니 안됨
+	{
+		for (int j = 0; j < i; ++j)
+		{
+			if (PlayerScores_[j] < PlayerScores_[j + 1])//앞에거보다 뒤에게 크면 앞으로(자리바꿈)
+			{
+				int Temp = PlayerScores_[j];
+				PlayerScores_[j] = PlayerScores_[j + 1];
+				PlayerScores_[j + 1] = Temp;
+
+			/*	FontScore_[j]->SetFont(std::to_string(PlayerScores_[j]), FONT_NOTO_SANS_CJK_SC, 50.0f, LeftAndRightSort::LEFT);
+				FontScore_[j + 1]->SetFont(std::to_string(PlayerScores_[j + 1]), FONT_NOTO_SANS_CJK_SC, 50.0f, LeftAndRightSort::LEFT);
+
+				std::string Temps = PlayerName_[j];
+				PlayerName_[j] = PlayerName_[j + 1];
+				PlayerName_[j + 1] = Temps;
+
+				Font_PlayerName[j]->SetFont(PlayerName_[j], FONT_TITAN_ONE);
+				Font_PlayerName[j + 1]->SetFont(PlayerName_[j + 1], FONT_TITAN_ONE);*/
+			}
+		}
+	}
+	
+}
 }
 

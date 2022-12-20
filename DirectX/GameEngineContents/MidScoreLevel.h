@@ -22,8 +22,8 @@ public:
 
 	void FakeSort();
 	void BubbleSort();
-
-
+	void BubbleSortLerp();
+	void SwitchCasePos();
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -58,10 +58,18 @@ private:
 
 	int PlayerScores_[5];
 
-	std::string PlayerName_[5];
-	//std::string Player2Name_;
+	int Index_[5];
 
+	std::string PlayerName_[5];
+	
+	float4 Temp[5];
+	float4 GoTo[5];
+
+	float BeforeScoreTime_;
 	float FallingTime_;
+	bool IsScoreOn_;
+	bool IsLerpStart_;
+	bool Once_;
 
 	// ¼­¹ö
 private:
