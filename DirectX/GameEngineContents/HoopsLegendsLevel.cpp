@@ -22,6 +22,11 @@ void HoopsLegendsLevel::Start()
 	MyStage_ = StageNum::STAGE5;
 	StageParentLevel::Start();
 
+	LightObject_->GetLightData().DifLightPower = 0.5f;
+	LightObject_->GetLightData().SpcLightPower = 0.1f;
+	LightObject_->GetLightData().AmbLightPower = 7.3f;
+	LightObject_->GetTransform().SetWorldRotation({ 299.4f,80.7f,0 });
+
 	//GUI_ = GameEngineGUI::CreateGUIWindow<TestGUI>("MapEditorGUI", this);
 	//GUI_->Off();
 
@@ -89,6 +94,8 @@ void HoopsLegendsLevel::LevelStartEvent()
 		HoopsActor[i]->GetTransform().SetWorldPosition(HoopsPos[PrevPos[i]]);
 	}
 
+
+	CinemaCam_->SetActivated();
 }
 
 void HoopsLegendsLevel::LevelEndEvent()

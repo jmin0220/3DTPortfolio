@@ -38,9 +38,9 @@ public:
 	void SetFBX(std::string _Name, std::string _Name2)
 	{
 		Name_ = _Name;
-		Renderer_->SetFBXMesh(Name_, "Texture");
+		Renderer_->SetFBXMesh(Name_, "CustomDefferedColor");
 		Name2_ = _Name2;
-		Renderer2_->SetFBXMesh(Name2_, "Texture");
+		Renderer2_->SetFBXMesh(Name2_, "CustomDefferedColor");
 	}
 
 

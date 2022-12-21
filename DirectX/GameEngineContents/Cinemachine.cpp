@@ -163,7 +163,7 @@ void Cinemachine::Init(std::shared_ptr<GameEngineCameraActor> _MainCamera)
 		StartInfo.POS = float4{ -29.5f,248.5f,-72.8f };
 		StartInfo.ROT = float4{ 74.5f,30.18f,0 };
 		StartInfo.INTERTIME = 0.0f;
-		StartInfo.MOVETIME = 10.0f;
+		StartInfo.MOVETIME = 18.0f;
 		StartInfo.SPEED = 0.0005f;
 		QueueInfo_.push(StartInfo);
 
@@ -178,7 +178,7 @@ void Cinemachine::Init(std::shared_ptr<GameEngineCameraActor> _MainCamera)
 		StartInfo.POS = float4{ 320.0f,248.5f,-156.6f };
 		StartInfo.ROT = float4{ 21.91f,-58.41f,0 };
 		StartInfo.INTERTIME = 0.0f;
-		StartInfo.MOVETIME = 15.0f;
+		StartInfo.MOVETIME = 30.0f;
 		StartInfo.SPEED = 0.0005f;
 		StartInfo.ResetPos = false;
 		QueueInfo_.push(StartInfo);

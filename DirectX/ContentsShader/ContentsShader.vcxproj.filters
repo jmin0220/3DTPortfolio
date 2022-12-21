@@ -52,5 +52,8 @@
     </FxCompile>
     <FxCompile Include="DeferredHeader.fx" />
     <FxCompile Include="LightHeader.fx" />
+    <FxCompile Include="HexDefferedColor.hlsl">
+      <Filter>Light</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

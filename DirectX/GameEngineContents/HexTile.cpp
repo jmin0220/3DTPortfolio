@@ -28,7 +28,7 @@ void HexTile::Start()
 
 	// 2. 메쉬세팅 Static renderer
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
-	Renderer_->SetFBXMesh("HexTile.FBX", "TextureColor");
+	Renderer_->SetFBXMesh("HexTile.FBX", "HexDefferedColor");
 	//Renderer_->GetTransform().SetWorldScale({ 10.0f,10.0f,10.0f });
 	 
 	//std::vector<std::vector<GameEngineRenderUnit>>& UnitSet = Renderer_->GetAllRenderUnit();
@@ -80,7 +80,7 @@ void HexTile::Update(float _DeltaTime)
 		MeshPixelData_.MulColor = 0.7f;
 		MeshPixelData_.PlusColor += 1.0f * _DeltaTime;
 
-		if (MeshPixelData_.PlusColor.x >= 1.0f)
+		if (MeshPixelData_.PlusColor.x >= 2.0f)
 		{
 		
 			PhysXHexTileGeometry_->ReleasePhysX();

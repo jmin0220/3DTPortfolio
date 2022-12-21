@@ -41,6 +41,8 @@ private:
 
 	MeshPixelData MeshPixelData_;
 
+	LightData Data;
+
 	float Speed_;
 	bool Trigger_;
 	bool Shake_;

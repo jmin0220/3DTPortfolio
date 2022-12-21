@@ -14,17 +14,17 @@ HoopsScythe::~HoopsScythe()
 void HoopsScythe::Start()
 {
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
-	Renderer_->SetFBXMesh("HoopsScythe.FBX", "Texture");
+	Renderer_->SetFBXMesh("HoopsScythe.FBX", "CustomDefferedColor");
 	Renderer_->GetTransform().SetLocalPosition({ 0,-19.0f,0 });
 
 
 	ColRenderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
-	ColRenderer_->SetFBXMesh("ScytheCol.FBX", "Texture");
+	ColRenderer_->SetFBXMesh("ScytheCol.FBX", "CustomDefferedColor");
 	ColRenderer_->Off();
 
 	PhysXConvexGeometry_ = CreateComponent<PhysXConvexDynamicComponent>();
 
-	Speed_ = GameEngineRandom::MainRandom.RandomFloat(20.0f, 60.0f);
+	Speed_ = GameEngineRandom::MainRandom.RandomFloat(40.0f, 80.0f);
 	Dir_ = GameEngineRandom::MainRandom.RandomInt(0, 1);
 }
 

@@ -28,7 +28,7 @@ private:
 public:
 	void SetMesh(std::string _Name)
 	{
-		Renderer_->SetFBXMesh(_Name, "Texture");
+		Renderer_->SetFBXMesh(_Name, "CustomDefferedColor");
 	}
 
 	void AddNum()

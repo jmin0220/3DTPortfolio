@@ -17,7 +17,7 @@ HoopsScoreRing::~HoopsScoreRing()
 void HoopsScoreRing::Start()
 {
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
-	Renderer_->SetFBXMesh("HoopsScoreRing2.FBX", "Texture");
+	Renderer_->SetFBXMesh("HoopsScoreRing2.FBX", "CustomDefferedColor");
 
 	//PhysXConvexGeometry_ = CreateComponent<PhysXConvexDynamicComponent>();
 

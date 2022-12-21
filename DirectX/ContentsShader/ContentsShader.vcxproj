@@ -151,6 +151,7 @@
     </FxCompile>
     <FxCompile Include="Fog.hlsl" />
     <FxCompile Include="CustomColor.hlsl" />
+    <FxCompile Include="HexDefferedColor.hlsl" />
     <FxCompile Include="LightHeader.fx" />
     <FxCompile Include="MaskShader.hlsl" />
     <FxCompile Include="RenderOption.fx" />

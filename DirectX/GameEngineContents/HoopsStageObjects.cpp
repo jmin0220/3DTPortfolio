@@ -14,17 +14,17 @@ void HoopsStageObjects::Start()
 {
 	// 2. 메쉬세팅 Static renderer
 	FloorRenderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
-	FloorRenderer_->SetFBXMesh("HoopsFloor.FBX", "Texture");
+	FloorRenderer_->SetFBXMesh("HoopsFloor.FBX", "CustomDefferedColor");
 
 	PlatformRenderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
-	PlatformRenderer_->SetFBXMesh("HoopsObjectPlatform.FBX", "Texture");
+	PlatformRenderer_->SetFBXMesh("HoopsObjectPlatform.FBX", "CustomDefferedColor");
 
 
 	WallRenderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
-	WallRenderer_->SetFBXMesh("HoopsObjectWall.FBX", "Texture");
+	WallRenderer_->SetFBXMesh("HoopsObjectWall.FBX", "CustomDefferedColor");
 
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
-	Renderer_->SetFBXMesh("HoopsBackGround.FBX", "Texture");
+	Renderer_->SetFBXMesh("HoopsBackGround.FBX", "CustomDefferedColor");
 
 
 	WallPhysXTriMeshGeometry_ = CreateComponent<PhysXTriMeshGeometryComponent>();

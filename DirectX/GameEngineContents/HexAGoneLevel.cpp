@@ -44,6 +44,13 @@ void HexAGoneLevel::LevelStartEvent()
 {
 
 	StageParentLevel::LevelStartEvent();
+
+	LightObject_->GetLightData().LightColor = float4{ 0.6f,0.8f,1.0f,1.0f };
+	LightObject_->GetLightData().DifLightPower = 0.7f;
+	LightObject_->GetLightData().SpcLightPower = 0.8f;
+	LightObject_->GetLightData().AmbLightPower = 5.7f;
+	LightObject_->GetTransform().SetWorldRotation({ 289.3,178.3f,0.0f });
+
 	//ContentsCore::GetInst()->LoadLevelResource(LEVELS::STAGE04_HEX_A_GONE);
 	BackGroundObj_ = CreateActor<Hex_BackGroundObject>();
 	//Tiles_ = CreateActor<HexTile>();
@@ -160,6 +167,9 @@ void HexAGoneLevel::LevelStartEvent()
 	// 스카이박스 생성
 	std::shared_ptr<SkyboxActor> Skybox = CreateActor<SkyboxActor>();
 	Skybox->SetSkyTexture("S5_SkyBox_Respawn.png");
+
+
+	CinemaCam_->SetActivated();
 }
 
 void HexAGoneLevel::LevelEndEvent()

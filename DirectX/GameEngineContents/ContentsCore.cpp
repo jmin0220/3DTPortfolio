@@ -376,6 +376,12 @@ void ContentsCore::LoadShaders()
 		Material->SetPixelShader("CustomDefferedColor.hlsl");
 	}
 
+	{
+		std::shared_ptr<GameEngineMaterial> Material = GameEngineMaterial::Create("HexDefferedColor");
+		Material->SetVertexShader("HexDefferedColor.hlsl");
+		Material->SetPixelShader("HexDefferedColor.hlsl");
+	}
+
 
 	// 포스트 이펙트용
 	{

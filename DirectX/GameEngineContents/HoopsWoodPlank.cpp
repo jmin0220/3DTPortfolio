@@ -32,37 +32,37 @@ void HoopsWoodPlank::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics*
 void HoopsWoodPlank::Start()
 {
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
-	Renderer_->SetFBXMesh("WoodPlank.fbx", "MaskShader");
+	Renderer_->SetFBXMesh("WoodPlank.fbx", "CustomDefferedColor");
 
 	Renderer_->GetTransform().SetLocalPosition({ 0,-18.0f,0 });
 
 	//PhysXConvexGeometry_ = CreateComponent<PhysXConvexDynamicComponent>();
 	PhysXBoxGeometry_ = CreateComponent<PhysXBoxGeometryComponent>();
 
-	Data.Data_ = float4(0, 0, 1.0f, 1.0f);
+	//Data.Data_ = float4(0, 0, 1.0f, 1.0f);
 
-	//std::vector<std::vector<GameEngineRenderUnit>>& UnitSets = Renderer_->GetAllRenderUnit();
-	std::vector<std::vector< std::shared_ptr<GameEngineRenderUnit>>>& UnitSets = Renderer_->GetAllRenderUnit();
-	for (std::vector < std::shared_ptr<GameEngineRenderUnit>>& Units : UnitSets)
-	{
-		for (std::shared_ptr<GameEngineRenderUnit>& Unit : Units)
-		{
-			if (true == Unit->ShaderResources.IsConstantBuffer("MaskingData"))
-			{
-				Unit->ShaderResources.SetConstantBufferLink("MaskingData", Data);
-			}
+	////std::vector<std::vector<GameEngineRenderUnit>>& UnitSets = Renderer_->GetAllRenderUnit();
+	//std::vector<std::vector< std::shared_ptr<GameEngineRenderUnit>>>& UnitSets = Renderer_->GetAllRenderUnit();
+	//for (std::vector < std::shared_ptr<GameEngineRenderUnit>>& Units : UnitSets)
+	//{
+	//	for (std::shared_ptr<GameEngineRenderUnit>& Unit : Units)
+	//	{
+	//		if (true == Unit->ShaderResources.IsConstantBuffer("MaskingData"))
+	//		{
+	//			Unit->ShaderResources.SetConstantBufferLink("MaskingData", Data);
+	//		}
 
-			if (true == Unit->ShaderResources.IsTexture("MaskTexture"))
-			{
-				Unit->ShaderResources.SetTexture("MaskTexture", "ENV_S02_WoodPattern_MSK.png");
-			}
+	//		if (true == Unit->ShaderResources.IsTexture("MaskTexture"))
+	//		{
+	//			Unit->ShaderResources.SetTexture("MaskTexture", "ENV_S02_WoodPattern_MSK.png");
+	//		}
 
-			if (true == Unit->ShaderResources.IsTexture("DiffuseTexture"))
-			{
-				Unit->ShaderResources.SetTexture("DiffuseTexture", "WoodTex.png");
-			}
-		}
-	}
+	//		if (true == Unit->ShaderResources.IsTexture("DiffuseTexture"))
+	//		{
+	//			Unit->ShaderResources.SetTexture("DiffuseTexture", "WoodTex.png");
+	//		}
+	//	}
+	//}
 }
 
 void HoopsWoodPlank::Update(float _DeltaTime)
@@ -82,7 +82,7 @@ void HoopsWoodPlank::Update(float _DeltaTime)
 		}
 
 
-		Rotation_.x = Rotation_.x +_DeltaTime * 3.0f;
+		Rotation_.x = Rotation_.x +_DeltaTime * 5.0f;
 		GetTransform().SetLocalRotation(Rotation_);
 
 	}

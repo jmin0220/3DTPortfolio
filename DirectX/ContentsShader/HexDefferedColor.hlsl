@@ -62,17 +62,47 @@ Output Color_VS(Input _Input)
     return NewOutPut;
 }
 
+
+cbuffer MeshPixelData : register(b0)
+{
+    float4 MulColor;
+    float4 PlusColor;
+    float4 Slice;
+}
+
+
 Texture2D DiffuseTexture : register(t0);
 SamplerState LINEARWRAP : register(s0);
 DeferredOutPut Color_PS(Output _Input) : SV_Target0
 {
-   float4 TexColor = DiffuseTexture.Sample(LINEARWRAP, _Input.Tex.xy);
+    float4 Color = DiffuseTexture.Sample(LINEARWRAP, _Input.Tex.xy);
+    
+    if (Color.a <= 0.0f)
+    {
+        clip(-1);
+    }
+    
+    if (_Input.Tex.x < Slice.x)
+    {
+        clip(-1);
+    }
+    
+    if (_Input.Tex.y < Slice.y)
+    {
+        clip(-1);
+    }
     
 
- 
+    float4 Result = (DiffuseTexture.Sample(LINEARWRAP, _Input.Tex.xy) * MulColor) + PlusColor;
+    
+    if (1 <= Result.a)
+    {
+        Result.a = 1.0f;
+
+    }
     DeferredOutPut OutPut;
     
-    OutPut.Dif = TexColor;
+    OutPut.Dif = Result;
     OutPut.Pos = _Input.ViewPos;
     OutPut.Nor = _Input.ViewNormal;
    // OutPut.Tex = DiffuseTexture.Sample(LINEARWRAP, _Input.Tex.xy);
