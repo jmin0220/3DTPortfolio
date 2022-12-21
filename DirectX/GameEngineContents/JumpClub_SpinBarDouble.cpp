@@ -12,8 +12,8 @@ JumpClub_SpinBarDouble::~JumpClub_SpinBarDouble()
 
 void JumpClub_SpinBarDouble::PhysXInit()
 {
-		CreatePhysXActors(static_cast<VirtualPhysXLevel*>(GetLevel())->GetScene(),
-		static_cast<VirtualPhysXLevel*>(GetLevel())->GetPhysics());
+	CreatePhysXActors(static_cast<VirtualPhysXLevel*>(GetLevel())->GetScene(),
+	static_cast<VirtualPhysXLevel*>(GetLevel())->GetPhysics());
 }
 
 void JumpClub_SpinBarDouble::Start()

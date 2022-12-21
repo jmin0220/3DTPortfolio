@@ -177,6 +177,11 @@ void StageParentLevel::LevelEndEvent()
 	{
 		NetPlayer->Death();
 	}
+
+	for (std::shared_ptr<GameEngineActor> NetObstacle : NetObstacles_)
+	{
+		NetObstacle->Death();
+	}
 }
 
 void StageParentLevel::LevelStartLoad()
@@ -525,6 +530,20 @@ void StageParentLevel::SpawnServerObjects()
 
 				break;
 			}
+			case ServerObjectType::SpinBarSingle:
+			{
+				std::shared_ptr<JumpClub_SpinBarSingle> SpinBarSingle = CreateActor<JumpClub_SpinBarSingle>();
+				SpinBarSingle->ClientInit(CurPacket->Type, CurPacket->ObjectID);
+				SpinBarSingle->GetTransform().SetWorldPosition(CurPacket->Pos);
+				SpinBarSingle->GetTransform().SetWorldScale(CurPacket->Scale);
+				SpinBarSingle->GetPhysXSpinBarComponent()->SetCurRot(CurPacket->Rot.y);
+				
+				SpinBarSingle->PhysXInit();
+				SpinBarSingle->PushPacket(CurPacket);
+				NetObstacles_.push_back(SpinBarSingle);
+				break;
+			}
+
 			default:
 				break;
 			}

@@ -3,7 +3,7 @@
 #include "PhysXSpinBarComponent.h"
 
 // 설명 :
-class JumpClub_SpinBarSingle : public VirtualPhysXActor
+class JumpClub_SpinBarSingle : public VirtualPhysXActor, public GameServerObject
 {
 public:
 	// constrcuter destructer
@@ -32,5 +32,14 @@ private:
 
 	float AccSpeed_;
 	float AccTime_;
+
+	// 서버
+public:
+	void PhysXInit();
+
+	std::shared_ptr<PhysXSpinBarComponent>& GetPhysXSpinBarComponent()
+	{
+		return PhysXSpinBarComponent_;
+	}
 };
 

@@ -66,11 +66,14 @@ void JumpClubLevel::LevelStartEvent()
 		BarDouble->ServerInit(ServerObjectType::SpinBarDouble);
 		BarDouble->GetTransform().SetWorldPosition({ 0.0f, 77.0f, 0.0f });
 		BarDouble->PhysXInit();
-	}
-	
 
-	//std::shared_ptr<JumpClub_SpinBarSingle> BarSingle = CreateActor<JumpClub_SpinBarSingle>();
-	//BarSingle->GetTransform().SetWorldPosition({ 0.0f, 62.0f, 0.0f });
+
+		std::shared_ptr<JumpClub_SpinBarSingle> BarSingle = CreateActor<JumpClub_SpinBarSingle>();
+		BarSingle->ServerInit(ServerObjectType::SpinBarSingle);
+		BarSingle->GetTransform().SetWorldPosition({ 0.0f, 62.0f, 0.0f });
+		BarSingle->PhysXInit();
+	}
+
 
 	std::shared_ptr<GameEngineActor> Skybox = CreateActor<SkyboxActor>();
 	Skybox->GetTransform().SetWorldScale({ 100, 100, 100 });

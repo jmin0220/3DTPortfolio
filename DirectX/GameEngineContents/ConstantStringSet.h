@@ -129,5 +129,5 @@
 
 // 호스트 주소
 //#define IP_HOST "10.0.4.83" 
-#define IP_HOST "172.30.1.37" 
-//#define IP_HOST "127.0.0.1" 
+//#define IP_HOST "172.30.1.37" 
+#define IP_HOST "127.0.0.1" 
