@@ -73,13 +73,48 @@ void TestGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 	}
 
 
+	//{
+	//	ImGui::Text("LightTargetSizeX : ");
+	//	ImGui::SameLine();
+	//	float Power = Light_->GetLightData().LightTargetSizeX;
+	//	ImGui::SliderFloat("                ", &Power, 0.0f, 10000.0f, "%.1f", 1.0f);
+	//	Light_->GetLightData().LightTargetSizeX = Power;
+	//}
+
+
+	//{
+	//	ImGui::Text("LightTargetSizeY : ");
+	//	ImGui::SameLine();
+	//	float Power = Light_->GetLightData().LightTargetSizeY;
+	//	ImGui::SliderFloat(" ", &Power, 0.0f, 10000.0f, "%.1f", 1.0f);
+	//	Light_->GetLightData().LightTargetSizeY = Power;
+	//}
+
+
+	//{
+	//	ImGui::Text("LightNear : ");
+	//	ImGui::SameLine();
+	//	float Power = Light_->GetLightData().LightNear;
+	//	ImGui::SliderFloat("                      ", &Power, 0.0f, 100.0f, "%.1f", 1.0f);
+	//	Light_->GetLightData().LightNear = Power;
+	//}
+
+
+	//{
+	//	ImGui::Text("LightFar : ");
+	//	ImGui::SameLine();
+	//	float Power = Light_->GetLightData().LightFar;
+	//	ImGui::SliderFloat("                                ", &Power, 0.0f, 10000.0f, "%.1f", 1.0f);
+	//	Light_->GetLightData().LightFar = Power;
+	//}
+
 
 
 	{
 		ImGui::Text("DifLightPower : ");
 		ImGui::SameLine();
 		float Power = Light_->GetLightData().DifLightPower;
-		ImGui::SliderFloat(" ", &Power, 0.0f, 100.0f, "%.1f",1.0f);
+		ImGui::SliderFloat("                                       ", &Power, 0.0f, 100.0f, "%.1f",1.0f);
 		Light_->GetLightData().DifLightPower = Power;
 	}
 
@@ -91,6 +126,13 @@ void TestGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 		Light_->GetLightData().SpcLightPower = Power;
 	}
 	
+	{
+		ImGui::Text("AmbLightPower : ");
+		ImGui::SameLine();
+		float Power = Light_->GetLightData().AmbLightPower;
+		ImGui::SliderFloat("          ", &Power, 0.0f, 100.0f, "%.1f", 1.0f);
+		Light_->GetLightData().AmbLightPower = Power;
+	}
 
 	{
 		ImGui::Text("LightPower : ");
@@ -118,6 +160,31 @@ void TestGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 		Light_->GetTransform().SetWorldRotation({ Rotation[0],Rotation[1],Rotation[2]});
 	}
 
+
+	{
+		ImGui::Text("LightColor : ");
+		ImGui::SameLine();
+		float4 Power = Light_->GetLightData().LightColor;
+		float Color[4] = { Power.x,Power.y,Power.z,Power.w };
+		ImGui::SliderFloat4("                                      ", Color, 0.0f, 1.0f, "%.1f", 1.0f);
+		Light_->GetLightData().LightColor.x = Color[0];
+		Light_->GetLightData().LightColor.y = Color[1];
+		Light_->GetLightData().LightColor.z = Color[2];
+		Light_->GetLightData().LightColor.w = Color[3];
+	}
+
+
+	{
+		ImGui::Text("AmbientLightColor : ");
+		ImGui::SameLine();
+		float4 Power = Light_->GetLightData().AmbientLight;
+		float Color[4] = { Power.x,Power.y,Power.z,Power.w };
+		ImGui::SliderFloat4("                                   ", Color, 0.0f, 1.0f, "%.1f", 1.0f);
+		Light_->GetLightData().AmbientLight.x = Color[0];
+		Light_->GetLightData().AmbientLight.y = Color[1];
+		Light_->GetLightData().AmbientLight.z = Color[2];
+		Light_->GetLightData().AmbientLight.w = Color[3];
+	}
 }
 
 

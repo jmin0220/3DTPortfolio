@@ -19,22 +19,12 @@ DoorDashLevel::~DoorDashLevel()
 void DoorDashLevel::Start()
 {
 
-	GetMainCamera()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
-	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
-
-	GameEngineStatusWindow::AddDebugRenderTarget("GBuffer", GetMainCamera()->GetCameraDeferredLightRenderTarget());
-
-	//빛
-	//{
-	//	LightObject = CreateActor<GameEngineLight>();
-	//	LightObject->GetTransform().SetWorldRotation({ 0.0f,100.0f, 0.0f });
-	//	GetMainCamera()->PushLight(LightObject);
-	//	LightObject->GetLightData().DifLightPower = 0.5f;
-	//}
-
 	StageParentLevel::Start();
 	MyStage_ = StageNum::STAGE1;
 
+	LightObject_->GetLightData().DifLightPower = 0.7f;
+	LightObject_->GetLightData().AmbLightPower = 8.3f;
+	LightObject_->GetTransform().SetWorldRotation({ 90.0f,26.7f,0 });
 
 	// InitPhysic는 레벨이 시작될때 실행되므로 LevelStartEvent가 실행되기 전에 포지션을 결정해야함.
 	//Player_->GetTransform().SetWorldPosition({ 10.0f, -70.0f, -390.0f });

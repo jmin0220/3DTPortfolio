@@ -67,7 +67,6 @@ public:
 	static float4 PlayerPos;
 	static std::vector<float4> HoopsPos;
 	static std::vector<std::shared_ptr<GameEngineActor>> HoopsActor;
-	static 	std::shared_ptr<GameEngineLight> LightObject;
 
 
 
@@ -112,6 +111,9 @@ protected:
 	GameEngineStateManager StageStateManager_;
 	std::shared_ptr<Cinemachine> CinemaCam_;
 
+	std::shared_ptr<GameEngineLight> LightObject_;
+
+
 	// FSM°ü·Ã ¿¢ÅÍµé
 	std::shared_ptr<class InGameSetUI> UIs_;
 	std::shared_ptr<class IntroduceGame> IntroduceGame_;
@@ -141,8 +143,6 @@ protected:
 private:
 	void SpawnServerObjects();
 
-	std::shared_ptr<GameEngineLight> LightObject_;
-	
 	std::vector<std::shared_ptr<GameEngineActor>> NetPlayers_;
 	std::vector<std::shared_ptr<GameEngineActor>> NetObstacles_;
 public:

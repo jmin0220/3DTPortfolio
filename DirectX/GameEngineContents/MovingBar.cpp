@@ -200,7 +200,7 @@ void MovingBar::Start()
 
 	// 2. 메쉬세팅 Static renderer
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
-	Renderer_->SetFBXMesh("MovingBar.FBX", "Texture");
+	Renderer_->SetFBXMesh("MovingBar.FBX", "CustomDefferedColor");
 
 }
 

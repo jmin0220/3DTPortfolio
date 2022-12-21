@@ -26,7 +26,7 @@ void DoorBlock::Start()
 
 	// 2. 메쉬세팅 Static renderer
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
-	Renderer_->SetFBXMesh("DoorBlock.FBX", "Texture");
+	Renderer_->SetFBXMesh("DoorBlock.FBX", "CustomDefferedColor");
 
 
 	Init();

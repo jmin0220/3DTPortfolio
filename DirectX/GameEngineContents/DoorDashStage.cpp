@@ -52,6 +52,7 @@ void DoorDashStage::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* 
 	physx::PxCooking* Cooking = static_cast<VirtualPhysXLevel*>(GetLevel())->GetCooking();
 	// Tip..3번째 매개변수인 GeometryScale은 액터가 가질 물리강체의 크기
 	float4 MeshBoundScale = WallRenderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
+	WallPhysXTriMeshGeometry_->SetPhysxMaterial(0, 0, 0);
 	WallPhysXTriMeshGeometry_->CreatePhysXActors("DoorDashWallCollisionMesh.fbx", _Scene, _physics, Cooking, false, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z));
 
 

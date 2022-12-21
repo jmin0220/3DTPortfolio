@@ -32,6 +32,8 @@
 #include "LoadingLevel.h"
 #include <atomic>
 
+#include <GameEngineCore/GameEngineBlur.h>
+
 #include "TestGUI.h"
 
 
@@ -41,7 +43,6 @@ float4 StageParentLevel::PlayerPos = float4::ZERO;
 std::vector<float4> StageParentLevel::HoopsPos = std::vector<float4>();
 std::vector<std::shared_ptr<GameEngineActor>> StageParentLevel::HoopsActor = std::vector<std::shared_ptr<GameEngineActor>>();
 
-std::shared_ptr<GameEngineLight> StageParentLevel::LightObject = nullptr;
 
 StageParentLevel::StageParentLevel() 
 	: MyStage_(StageNum::STAGE1)
@@ -64,10 +65,14 @@ void StageParentLevel::Start()
 
 	{
 		LightObject_ = CreateActor<GameEngineLight>();
+		LightObject_->GetTransform().SetWorldPosition({ 0,-300.0f,0 });
 		GUI_->SetLight(LightObject_);
 		GetMainCamera()->PushLight(LightObject_);
-		//LightObject->GetLightData().DifLightPower = 0.7f;
 	}
+
+	GetMainCamera()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
+	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+
 
 	IntroduceGame_ = CreateActor<IntroduceGame>();
 	IntroduceGame_->Off();
