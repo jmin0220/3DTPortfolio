@@ -128,6 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <FxCompile Include="AnimationHeader.fx" />
     <FxCompile Include="Blur.hlsl" />
     <FxCompile Include="CalDeferredLight.hlsl" />
     <FxCompile Include="CalDeferredMerge.hlsl" />
@@ -138,7 +139,8 @@
     <FxCompile Include="DeferredTextureAnimation.hlsl" />
     <FxCompile Include="LightHeader.fx" />
     <FxCompile Include="RenderOption.fx" />
-    <FxCompile Include="Shadow.hlsl" />
+    <FxCompile Include="ShadowAnimation.hlsl" />
+    <FxCompile Include="ShadowStatic.hlsl" />
     <FxCompile Include="TargetMerge.hlsl" />
     <FxCompile Include="Texture.hlsl" />
     <FxCompile Include="TextureAnimation.hlsl" />

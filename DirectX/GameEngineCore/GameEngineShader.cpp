@@ -31,6 +31,10 @@ void GameEngineSamplerSetter::Setting() const
 
 void GameEngineStructuredBufferSetter::Setting() const
 {
+	//if (nullptr == SetData)
+	//{
+	//}
+
 	Res->ChangeData(SetData, Size * Count);
 	SettingFunction();
 }

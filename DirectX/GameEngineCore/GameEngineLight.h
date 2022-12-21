@@ -7,7 +7,11 @@ struct LightData
 	friend GameEngineLight;
 
 	float4x4 LightViewMatrix;
+	float4x4 LightViewInverseMatrix;
 	float4x4 LightProjectionMatrix;
+	float4x4 LightProjectionInverseMatrix;
+	float4x4 LightViewProjectionMatrix;
+	float4x4 CameraViewInverseMatrix;
 	float LightTargetSizeX;
 	float LightTargetSizeY;
 	float LightNear;
@@ -38,7 +42,7 @@ private:
 struct LightDatas
 {
 	int Count;
-	LightData Lights[128];
+	LightData Lights[64];
 };
 
 // Ό³Έν :
@@ -69,6 +73,18 @@ public:
 
 	void ShadowTargetSetting();
 
+	inline std::shared_ptr<class GameEngineRenderTarget> GetShadowTarget() 
+	{
+		return ShadowTarget;
+	}
+
+	inline const D3D11_VIEWPORT& GetViewPortDesc()
+	{
+		return ViewPortDesc;
+	}
+
+	
+
 protected:
 
 private:
@@ -77,5 +93,7 @@ private:
 	std::shared_ptr<class GameEngineRenderTarget> ShadowTarget;
 
 	LightData Data;
+
+	D3D11_VIEWPORT ViewPortDesc;
 };
 

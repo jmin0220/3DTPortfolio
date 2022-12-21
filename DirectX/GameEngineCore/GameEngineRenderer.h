@@ -5,14 +5,8 @@
 #include "GameEngineMaterial.h"
 #include "GameEngineShaderResourcesHelper.h"
 #include "GameEngineMesh.h"
+#include "ShaderStruct.h"
 
-struct RenderOption 
-{
-    float DeltaTime = 0.0f;
-    float SumDeltaTime = 0.0f;
-	int IsAnimation = 0;
-	int Temp1;
-};
 
 
 // 추상클래스

@@ -4,6 +4,9 @@
 #include <list>
 #include <map>
 #include "GameEngineActor.h"
+#include "ShaderStruct.h"
+
+
 
 enum class CAMERAORDER
 {

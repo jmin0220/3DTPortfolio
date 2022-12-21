@@ -1,5 +1,8 @@
 #include "LightHeader.fx"
 #include "TransformHeader.fx"
+#include "RenderOption.fx"
+#include "AnimationHeader.fx"
+
 // SV_POSITION 시맨틱
 // 그래픽카드에게 이녀석은 이런 부류니까 니가 자동으로 처리하는 녀석이 있으면 하고.
 
@@ -23,7 +26,14 @@ Output Shadow_VS(Input _Input)
 {
     Output NewOutPut = (Output)0;
     
-    NewOutPut.POSITION = mul(_Input.POSITION, WorldViewProjection);
+    if (0 != IsAnimation)
+    {
+        NewOutPut.POSITION = _Input.POSITION;
+        Skinning(NewOutPut.POSITION, _Input.WEIGHT, _Input.INDICES, ArrAniMationMatrix);
+        NewOutPut.POSITION.w = 1.0f;
+    }
+    
+    NewOutPut.POSITION = mul(NewOutPut.POSITION, WorldViewProjection);
     NewOutPut.VPPOSITION = mul(_Input.POSITION, WorldViewProjection);
     
     return NewOutPut;
