@@ -15,10 +15,10 @@ MidScoreLevel::MidScoreLevel()
 	, BeforeScoreTime_(0.0f)
 	, IsScoreOn_(false)
 	, Index_{}
-	, IsLerpStart_(false)
 	, Once_(false)
 	, LevelChanged_(false)
 	, MidScoreTime_(0.0f)
+	, LerpTime_(0.0f)
 {
 }
 
@@ -111,18 +111,7 @@ void MidScoreLevel::Update(float _DeltaTime)
 	}
 
 	{	
-		//엔터누르면 랜덤 점수 배정
-		if (true == GameEngineInput::GetInst()->IsDown("RandomScore"))
-		{
-			for (int i = 0; i < 5; ++i)
-			{
-				PlayerScores_[i] = GameEngineRandom::MainRandom.RandomInt(10, 200);
-
-				Font_PlayerName[i]->SetFont(PlayerName_[i], FONT_TITAN_ONE);
-				FontScore_[i]->SetFont(std::to_string(PlayerScores_[i]), FONT_NOTO_SANS_CJK_SC, 50.0f, LeftAndRightSort::LEFT);
-			}
-			IsScoreOn_ = true;
-		}
+		RandomSocre();
 		
 		if (IsScoreOn_ == true)
 		{
@@ -138,20 +127,17 @@ void MidScoreLevel::Update(float _DeltaTime)
 		}
 	}
 
-	if (Once_ == true)
 	{
-		for (int i = 0; i < 5; ++i)
+		RenderBubbleSort();
+
+		if (LerpTime_ > 1.5f)
 		{
-			for (int j = 0; j < 5; ++j)
-			{
-				if (FontScore_[i]->GetFont().lock()->GetText() == std::to_string(PlayerScores_[j]))
-				{
-					float4 Temp = FontScore_[i]->GetFont().lock()->GetScreenPosition();
-					FontScore_[i]->GetFont().lock()->SetScreenPostion(float4::Lerp(Temp, { 170.0f, 250.0f + (120.0f * static_cast<float>(j)) }, _DeltaTime * 10.0f));
-				}
-			}
+			Once_ = false;//flase를 켜줘야 다시 갱신해서 엔터눌렀을때 러프 안함
+			LerpTime_ = 0.0f;
 		}
 	}
+
+	ChaseNameToScore();
 }
 
 
@@ -174,6 +160,9 @@ void MidScoreLevel::LevelStartEvent()
 		GameEngineInput::GetInst()->CreateKey("RandomScore", VK_RETURN);
 	}
 
+	Once_ = false;
+	IsScoreOn_ = false;
+	BeforeScoreTime_ = 0.0f;
 
 	FallingTime_ = 0.0f;
 
@@ -232,39 +221,43 @@ void MidScoreLevel::LevelStartEvent()
 		//1등 닉네임+점수 표시
 		Font1_ = CreateActor<FontActor>();
 		Font1_->SetFont("1st.   ", FONT_TITAN_ONE, 60.0f, { 20,200 }, LeftAndRightSort::LEFT);
-		
-		Font_PlayerName[0] = CreateActor<FontActor>();
-		Font_PlayerName[0]->SetFont(PlayerName_[0], FONT_TITAN_ONE, 60.0f, { 170,200 }, LeftAndRightSort::LEFT);
-	
+
 		FontScore_[0] = CreateActor<FontActor>();
 		FontScore_[0]->SetFont(std::to_string(PlayerScores_[0]), FONT_NOTO_SANS_CJK_SC, 50.0f, { 170,250 }, LeftAndRightSort::LEFT);
+
+		Font_PlayerName[0] = CreateActor<FontActor>();
+		Font_PlayerName[0]->SetFont(PlayerName_[0], FONT_TITAN_ONE, 60.0f, { 170,FontScore_[0]->GetFont()->GetScreenPosition().y - 50.0f }, LeftAndRightSort::LEFT);
 	}
+
 	{
 		//2등 닉네임+점수 표시
 		Font2_ = CreateActor<FontActor>();
 		Font2_->SetFont("2nd. ", FONT_TITAN_ONE, 60.0f, { 20,320 }, LeftAndRightSort::LEFT);
 
-		Font_PlayerName[1] = CreateActor<FontActor>();
-		Font_PlayerName[1]->SetFont(PlayerName_[1], FONT_TITAN_ONE, 60.0f, { 170,320 }, LeftAndRightSort::LEFT);
-
 		FontScore_[1] = CreateActor<FontActor>();
 		FontScore_[1]->SetFont(std::to_string(PlayerScores_[1]), FONT_NOTO_SANS_CJK_SC, 50.0f, { 170,370 }, LeftAndRightSort::LEFT);
 
+		Font_PlayerName[1] = CreateActor<FontActor>();
+		Font_PlayerName[1]->SetFont(PlayerName_[1], FONT_TITAN_ONE, 60.0f, { 170,FontScore_[1]->GetFont()->GetScreenPosition().y - 50.0f }, LeftAndRightSort::LEFT);
+
 		{
-			Font_PlayerName[2] = CreateActor<FontActor>();
-			Font_PlayerName[2]->SetFont(PlayerName_[2], FONT_TITAN_ONE, 60.0f, { 170,440 }, LeftAndRightSort::LEFT);
 			FontScore_[2] = CreateActor<FontActor>();
 			FontScore_[2]->SetFont(std::to_string(PlayerScores_[2]), FONT_NOTO_SANS_CJK_SC, 50.0f, { 170,490 }, LeftAndRightSort::LEFT);
 
-			Font_PlayerName[3] = CreateActor<FontActor>();
-			Font_PlayerName[3]->SetFont(PlayerName_[3], FONT_TITAN_ONE, 60.0f, { 170,560 }, LeftAndRightSort::LEFT);
+			Font_PlayerName[2] = CreateActor<FontActor>();
+			Font_PlayerName[2]->SetFont(PlayerName_[2], FONT_TITAN_ONE, 60.0f, { 170,FontScore_[2]->GetFont()->GetScreenPosition().y - 50.0f }, LeftAndRightSort::LEFT);
+
 			FontScore_[3] = CreateActor<FontActor>();
 			FontScore_[3]->SetFont(std::to_string(PlayerScores_[3]), FONT_NOTO_SANS_CJK_SC, 50.0f, { 170,610 }, LeftAndRightSort::LEFT);
 
-			Font_PlayerName[4] = CreateActor<FontActor>();
-			Font_PlayerName[4]->SetFont(PlayerName_[4], FONT_TITAN_ONE, 60.0f, { 170,680 }, LeftAndRightSort::LEFT);
+			Font_PlayerName[3] = CreateActor<FontActor>();
+			Font_PlayerName[3]->SetFont(PlayerName_[3], FONT_TITAN_ONE, 60.0f, { 170,FontScore_[3]->GetFont()->GetScreenPosition().y - 50.0f }, LeftAndRightSort::LEFT);
+
 			FontScore_[4] = CreateActor<FontActor>();
 			FontScore_[4]->SetFont(std::to_string(PlayerScores_[4]), FONT_NOTO_SANS_CJK_SC, 50.0f, { 170,730 }, LeftAndRightSort::LEFT);
+		
+			Font_PlayerName[4] = CreateActor<FontActor>();
+			Font_PlayerName[4]->SetFont(PlayerName_[4], FONT_TITAN_ONE, 60.0f, { 170,FontScore_[4]->GetFont()->GetScreenPosition().y - 50.0f }, LeftAndRightSort::LEFT);
 		}
 	}
 }
@@ -289,73 +282,19 @@ void MidScoreLevel::LevelEndEvent()
 	ContentsCore::GetInst()->ReleaseCurLevelResource();
 }
 
-
-void MidScoreLevel::FakeSort()
+void MidScoreLevel::RandomSocre()
 {
+	//엔터누르면 랜덤 점수 배정
+	if (true == GameEngineInput::GetInst()->IsDown("RandomScore"))
 	{
-		if (PlayerScores_[0] < PlayerScores_[1])
+		for (int i = 0; i < 5; ++i)
 		{
-			float4 f4CurrentScale1 = Font_PlayerName[0]->GetFont().lock()->GetScreenPosition();
-			float4 f4DestinationScale1 = { 170.0f,320.0f };
-			Font_PlayerName[0]->GetFont().lock()->SetScreenPostion({float4::Lerp(f4CurrentScale1, f4DestinationScale1, GameEngineTime::GetDeltaTime() * 10.f)});
+			PlayerScores_[i] = GameEngineRandom::MainRandom.RandomInt(10, 15);
 
-			float4 f4CurrentScale1s = FontScore_[0]->GetFont().lock()->GetScreenPosition();
-			float4 f4DestinationScale1s = { 170.0f,370.0f };
-			FontScore_[0]->GetFont().lock()->SetScreenPostion({float4::Lerp(f4CurrentScale1s, f4DestinationScale1s, GameEngineTime::GetDeltaTime() * 10.f)});
-
-			float4 f4CurrentScale2 = Font_PlayerName[1]->GetFont().lock()->GetScreenPosition();
-			float4 f4DestinationScale2 = { 170.0f,200.0f };
-			Font_PlayerName[1]->GetFont().lock()->SetScreenPostion({float4::Lerp(f4CurrentScale2, f4DestinationScale2, GameEngineTime::GetDeltaTime() * 10.f)});
-
-			float4 f4CurrentScale2s = FontScore_[1]->GetFont().lock()->GetScreenPosition();
-			float4 f4DestinationScale2s = { 170.0f,250.0f };
-			FontScore_[1]->GetFont().lock()->SetScreenPostion({float4::Lerp(f4CurrentScale2s, f4DestinationScale2s, GameEngineTime::GetDeltaTime() * 10.f)});
+			Font_PlayerName[i]->SetFont(PlayerName_[i], FONT_TITAN_ONE);
+			FontScore_[i]->SetFont(std::to_string(PlayerScores_[i]), FONT_NOTO_SANS_CJK_SC, 50.0f, LeftAndRightSort::LEFT);
 		}
-		else
-		{
-			float4 f4CurrentScale1 = Font_PlayerName[0]->GetFont().lock()->GetScreenPosition();
-			float4 f4DestinationScale1 = { 170.0f,200.0f };
-			Font_PlayerName[0]->GetFont().lock()->SetScreenPostion({float4::Lerp(f4CurrentScale1, f4DestinationScale1, GameEngineTime::GetDeltaTime() * 10.f)});
-
-			float4 f4CurrentScale1s = FontScore_[0]->GetFont().lock()->GetScreenPosition();
-			float4 f4DestinationScale1s = { 170.0f,250.0f };
-			FontScore_[0]->GetFont().lock()->SetScreenPostion({float4::Lerp(f4CurrentScale1s, f4DestinationScale1s, GameEngineTime::GetDeltaTime() * 10.f)});
-
-			float4 f4CurrentScale2 = Font_PlayerName[1]->GetFont().lock()->GetScreenPosition();
-			float4 f4DestinationScale2 = { 170.0f,320.0f };
-			Font_PlayerName[1]->GetFont().lock()->SetScreenPostion({float4::Lerp(f4CurrentScale2, f4DestinationScale2, GameEngineTime::GetDeltaTime() * 10.f)});
-
-			float4 f4CurrentScale2s = FontScore_[1]->GetFont().lock()->GetScreenPosition();
-			float4 f4DestinationScale2s = { 170.0f,370.0f };
-			FontScore_[1]->GetFont().lock()->SetScreenPostion({float4::Lerp(f4CurrentScale2s, f4DestinationScale2s, GameEngineTime::GetDeltaTime() * 10.f)});
-		}
-	}
-
-}
-
-void MidScoreLevel::BubbleSort()
-{
-	//흑흑
-	for (int i = 4; i > 0; --i)//5개를 두개씩 비교하면 4번해야함->4부터 시작해야 죽 훑음 0부터해서 ++하니 안됨
-	{
-		for (int j = 0; j < i; ++j)
-		{
-			if (PlayerScores_[j] < PlayerScores_[j + 1])//앞에거보다 뒤에게 크면 앞으로(자리바꿈)
-			{
-				int Temp = PlayerScores_[j];
-				PlayerScores_[j] = PlayerScores_[j + 1];
-				PlayerScores_[j + 1] = Temp;
-				FontScore_[j]->SetFont(std::to_string(PlayerScores_[j]), FONT_NOTO_SANS_CJK_SC, 50.0f, LeftAndRightSort::LEFT);
-				FontScore_[j+1]->SetFont(std::to_string(PlayerScores_[j+1]), FONT_NOTO_SANS_CJK_SC, 50.0f, LeftAndRightSort::LEFT);
-
-				std::string Temps = PlayerName_[j];
-				PlayerName_[j] = PlayerName_[j + 1];
-				PlayerName_[j + 1] = Temps;
-
-				Font_PlayerName[j]->SetFont(PlayerName_[j], FONT_TITAN_ONE);
-				Font_PlayerName[j+1]->SetFont(PlayerName_[j+1], FONT_TITAN_ONE);
-			}
-		}
+		IsScoreOn_ = true;
 	}
 }
 
@@ -371,19 +310,45 @@ void MidScoreLevel::BubbleSortLerp()
 				PlayerScores_[j] = PlayerScores_[j + 1];
 				PlayerScores_[j + 1] = Temp;
 
-			/*	FontScore_[j]->SetFont(std::to_string(PlayerScores_[j]), FONT_NOTO_SANS_CJK_SC, 50.0f, LeftAndRightSort::LEFT);
-				FontScore_[j + 1]->SetFont(std::to_string(PlayerScores_[j + 1]), FONT_NOTO_SANS_CJK_SC, 50.0f, LeftAndRightSort::LEFT);
-
-				std::string Temps = PlayerName_[j];
-				PlayerName_[j] = PlayerName_[j + 1];
-				PlayerName_[j + 1] = Temps;
-
-				Font_PlayerName[j]->SetFont(PlayerName_[j], FONT_TITAN_ONE);
-				Font_PlayerName[j + 1]->SetFont(PlayerName_[j + 1], FONT_TITAN_ONE);*/
+				std::shared_ptr<FontActor> FTemp = FontScore_[j];
+				FontScore_[j] = FontScore_[j + 1];
+				FontScore_[j + 1] = FTemp;
 			}
 		}
 	}
 	
 }
 
+void MidScoreLevel::RenderBubbleSort()
+{
+	if (Once_ == true) //버블소트로 실제 정돈이 끝난후 그걸 토대로 러프 하는 부분(함수로 정돈하자)
+	{
+		for (int i = 0; i < 5; ++i)
+		{
+			for (int j = 0; j < 5; ++j)
+			{
+				if (FontScore_[i]->GetFont()->GetText() == std::to_string(PlayerScores_[j]) && i==j)
+				{
+					float4 Temp = FontScore_[i]->GetFont()->GetScreenPosition();
+					FontScore_[i]->GetFont()->SetScreenPostion(float4::Lerp(Temp, { 170.0f, 250.0f + (120.0f * static_cast<float>(j)) }, GameEngineTime::GetDeltaTime() * 10.0f));
+					//문제 하나 있음 같은 점수+둘다 러프해야하면 위치가 겹침
+				}
+				
+				if (FontScore_[4]->GetFont()->GetScreenPosition().y == (250.0f + (120.0f * static_cast<float>(j))))
+				{
+					LerpTime_ += GameEngineTime::GetDeltaTime();
+				}
+			}
+		}
+	}
 
+	
+}
+
+void MidScoreLevel::ChaseNameToScore()
+{
+	for (int i = 0; i < 5; ++i)
+	{
+		Font_PlayerName[i]->SetFont(PlayerName_[i], FONT_TITAN_ONE, 60.0f, { FontScore_[i]->GetFont()->GetScreenPosition().x,FontScore_[i]->GetFont()->GetScreenPosition().y - 50.0f }, LeftAndRightSort::LEFT);
+	}
+}

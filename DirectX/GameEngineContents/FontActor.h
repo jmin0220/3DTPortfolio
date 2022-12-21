@@ -16,7 +16,7 @@ public:
 	FontActor& operator=(const FontActor& _Other) = delete;
 	FontActor& operator=(FontActor&& _Other) noexcept = delete;
 
-	std::weak_ptr<GameEngineFontRenderer> GetFont()
+	std::shared_ptr<GameEngineFontRenderer> GetFont()
 	{
 		return Font_;
 	}

@@ -20,10 +20,11 @@ public:
 	MidScoreLevel& operator=(const MidScoreLevel& _Other) = delete;
 	MidScoreLevel& operator=(MidScoreLevel&& _Other) noexcept = delete;
 
-	void FakeSort();
-	void BubbleSort();
+	void RandomSocre();
 	void BubbleSortLerp();
-	void SwitchCasePos();
+	void RenderBubbleSort();
+	void ChaseNameToScore();
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -47,11 +48,9 @@ private:
 	std::shared_ptr<MidScoreBGActor> BG_;
 
 	std::shared_ptr<FontActor> Font1_;
-	//std::shared_ptr<FontActor> Font1_PlayerName;
-	//std::shared_ptr<FontActor> Font1Score_;
+
 	std::shared_ptr<FontActor> Font2_;
-	//std::shared_ptr<FontActor> Font2_PlayerName;
-	//std::shared_ptr<FontActor> Font2Score_;
+
 
 	std::shared_ptr<FontActor> Font_PlayerName[5];
 	std::shared_ptr<FontActor> FontScore_[5];
@@ -61,14 +60,11 @@ private:
 	int Index_[5];
 
 	std::string PlayerName_[5];
-	
-	float4 Temp[5];
-	float4 GoTo[5];
 
 	float BeforeScoreTime_;
 	float FallingTime_;
+	float LerpTime_;
 	bool IsScoreOn_;
-	bool IsLerpStart_;
 	bool Once_;
 
 	// ¼­¹ö
