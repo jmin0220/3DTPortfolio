@@ -12,8 +12,13 @@ enum class ServerObjectBaseState
 enum class ServerObjectType
 {
 	Player,
+
+	// Stage1
 	SpinBarDouble,
 	SpinBarSingle,
+	
+	// Stage2
+	Cannon,
 };
 
 

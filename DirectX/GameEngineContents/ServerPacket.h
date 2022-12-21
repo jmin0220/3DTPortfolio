@@ -43,8 +43,9 @@ public:
 	float4 Pos;
 	float4 Rot;
 	float4 Scale;
-	std::string Animation;
-	unsigned int PlayerColor;
+	std::string Animation;		// 플레이어 : 애니메이션, 기타 : 문자열 정보 필요하면 보냄
+	unsigned int PlayerColor;	// 플레이어 : 스킨색상, 기타 : ...
+	float4 CannonInfo;
 	
 	ObjectUpdatePacket()
 	{
@@ -62,6 +63,7 @@ public:
 		_Ser << Scale;
 		_Ser << Animation;
 		_Ser << PlayerColor;
+		_Ser << CannonInfo;
 	}
 	virtual void DeSerialize(GameServerSerializer& _Ser)
 	{
@@ -74,6 +76,7 @@ public:
 		_Ser >> Scale;
 		_Ser >> Animation;
 		_Ser >> PlayerColor;
+		_Ser >> CannonInfo;
 	}
 };
 

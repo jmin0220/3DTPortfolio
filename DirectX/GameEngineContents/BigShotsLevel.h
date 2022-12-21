@@ -27,5 +27,10 @@ private:
 	std::shared_ptr<GameEngineActor> BackGroundObj_;;
 	std::shared_ptr<GameEngineActor> VFXWaterObj_;;
 
+	// ¼­¹ö
+private:
+	std::vector<std::shared_ptr<class BigShots_Cannon>> Cannons_;
+	float SumShootingTime_;
+	bool ServerActivated_;
 };
 

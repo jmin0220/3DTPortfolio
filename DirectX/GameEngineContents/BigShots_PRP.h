@@ -9,7 +9,8 @@ enum class PRPType
 	NUT,
 	PLANET,
 	STAR,
-	TETRAPOD
+	TETRAPOD,
+	MAX
 };
 
 // 설명 :
@@ -46,6 +47,14 @@ private:
 	std::string FBXName_;
 	float4 PRPForce_;
 
-	float RandomRot_;
+
+	// 서버
+public:
+	void InitPRP(float4 _ShootSetting);
+	
+
+private:
+	float4 SettingRot_;
+	float SettingForce_; // x : 회전값, y : 회전값, z : 회전값, w : 힘
 };
 

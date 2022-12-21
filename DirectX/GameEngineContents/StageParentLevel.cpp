@@ -20,6 +20,7 @@
 #include "HoopsScoreRing.h"
 #include "JumpClub_SpinBarDouble.h"
 #include "JumpClub_SpinBarSingle.h"
+#include "BigShots_Cannon.h"
 
 #include <GameEngineBase/magic_enum.hpp>
 #include <GameEngineCore/ThirdParty/inc/json.h>
@@ -548,7 +549,18 @@ void StageParentLevel::SpawnServerObjects()
 				NetObstacles_.push_back(SpinBarSingle);
 				break;
 			}
+			case ServerObjectType::Cannon:
+			{
+				std::shared_ptr<BigShots_Cannon> Cannon = CreateActor<BigShots_Cannon>();
+				Cannon->ClientInit(CurPacket->Type, CurPacket->ObjectID);
+				Cannon->GetTransform().SetWorldPosition(CurPacket->Pos);
+				Cannon->GetTransform().SetWorldScale(CurPacket->Scale);
+				Cannon->GetTransform().SetWorldRotation(CurPacket->Rot);
 
+				Cannon->PushPacket(CurPacket);
+				NetObstacles_.push_back(Cannon);
+				break;
+			}
 			default:
 				break;
 			}
