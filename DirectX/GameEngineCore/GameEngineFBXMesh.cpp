@@ -1057,6 +1057,24 @@ std::shared_ptr<GameEngineMesh> GameEngineFBXMesh::GetGameEngineMesh(size_t _Mes
 			GameEngineTexture::Load(FilePath);
 		}
 	}
+
+	if (
+		false == Unit.MaterialData[_SubIndex].NorTextureName.empty()
+		&& "" != Unit.MaterialData[_SubIndex].NorTextureName
+		)
+	{
+		std::shared_ptr<GameEngineTexture> Texture = GameEngineTexture::Find(Unit.MaterialData[_SubIndex].NorTextureName);
+
+		if (nullptr == Texture)
+		{
+			Path = GameEngineDirectory::GetFolderPath(GetPath());
+
+			// CH_NPC_MOB_Anashar_A01_Lower_D_KGW.tga
+
+			std::string FilePath = Path + Unit.MaterialData[_SubIndex].NorTextureName;
+			GameEngineTexture::Load(FilePath);
+		}
+	}
 	
 
 	return Unit.Meshs[_SubIndex];

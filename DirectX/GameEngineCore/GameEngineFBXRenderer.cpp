@@ -17,6 +17,8 @@ void GameEngineFBXRenderer::SetFBXMesh(const std::string& _Name, std::string _Ma
 	{
 		size_t SubSet = FindFBXMesh->GetSubSetCount(UnitCount);
 
+
+
 		SetFBXMesh(_Name, _Material, UnitCount);
 	}
 }
@@ -86,6 +88,19 @@ std::shared_ptr<GameEngineRenderUnit> GameEngineFBXRenderer::SetFBXMesh(const st
 		{
 			RenderUnit->ShaderResources.SetTexture("DiffuseTexture", MatData.DifTextureName);
 		}
+	}
+
+
+	if (RenderUnit->ShaderResources.IsTexture("NormalTexture"))
+	{
+		const FbxExMaterialSettingData& MatData = FBXMesh->GetMaterialSettingData(Index, _SubSetIndex);
+
+		if (nullptr != GameEngineTexture::Find(MatData.NorTextureName))
+		{
+			RenderUnit->ShaderResources.SetTexture("NormalTexture", MatData.DifTextureName);
+		}
+
+		RenderOptionInst.IsNormal = 1;
 	}
 
 

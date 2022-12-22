@@ -286,12 +286,26 @@ void GameEngineCamera::Render(float _DeltaTime)
 
 
 	CameraDeferredLightRenderTarget->Clear();
+
+	// 1. 빛의 배열 텍스처를 넣어줘서 n개의 빛을 한번에 연산하는 방식으로 할건지
+	// 2. 각 빛들이 자기의 깊은 버퍼 텍스처를 세팅해서 그게 그려지는 라이트 타겟이 1개이기 때문에.
+	//    빛을 머지하는 블랜드를 사용해서 중첩시켜야 합니다.
+
 	for (std::shared_ptr<class GameEngineLight> Light : AllLight)
 	{
+		LightDataObject.Count = 1;
+		LightDataObject.Lights[0] = Light->GetLightData();
+
 		DeferredCalLightUnit->ShaderResources.SetTexture("ShadowTex", Light->GetShadowTarget()->GetRenderTargetTexture(0));
 		CameraDeferredLightRenderTarget->Effect(DeferredCalLightUnit);
 	}
 
+	//if (0 != AllLight.size())
+	//{
+	//	std::set<std::shared_ptr<class GameEngineLight>>::iterator StartIter = AllLight.begin();
+	//	DeferredCalLightUnit->ShaderResources.SetTexture("ShadowTex", (*StartIter)->GetShadowTarget()->GetRenderTargetTexture(0));
+	//	CameraDeferredLightRenderTarget->Effect(DeferredCalLightUnit);
+	//}
 
 	CameraDeferredRenderTarget->Clear();
 	CameraDeferredRenderTarget->Effect(DeferredMergeUnit);
