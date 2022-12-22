@@ -49,10 +49,5 @@ void BigShots_Puff::Update(float _DeltaTime)
 		IsTransTexture_ = false;
 		Death();
 	}
-
-	if (0.0f >= PuffRenderer_->GetPixelData().MulColor.a)
-	{
-		PuffRenderer_->GetPixelData().MulColor.a = 0.0f;
-	}
 }
 

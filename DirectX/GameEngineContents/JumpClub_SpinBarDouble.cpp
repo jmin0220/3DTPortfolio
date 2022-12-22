@@ -19,7 +19,7 @@ void JumpClub_SpinBarDouble::PhysXInit()
 void JumpClub_SpinBarDouble::Start()
 {
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
-	Renderer_->SetFBXMesh("SpinBarDouble.FBX", "Texture");
+	Renderer_->SetFBXMesh("SpinBarDouble.FBX", "CustomDefferedColor");
 
 	PhysXSpinBarComponent_ = CreateComponent<PhysXSpinBarComponent>();
 }

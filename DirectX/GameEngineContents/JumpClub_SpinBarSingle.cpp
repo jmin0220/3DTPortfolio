@@ -15,7 +15,7 @@ JumpClub_SpinBarSingle::~JumpClub_SpinBarSingle()
 void JumpClub_SpinBarSingle::Start()
 {
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
-	Renderer_->SetFBXMesh("SpinBarSingle.FBX", "Texture");
+	Renderer_->SetFBXMesh("SpinBarSingle.FBX", "CustomDefferedColor");
 
 	PhysXSpinBarComponent_ = CreateComponent<PhysXSpinBarComponent>();
 }

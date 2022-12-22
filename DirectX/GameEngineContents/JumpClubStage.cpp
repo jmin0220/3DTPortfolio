@@ -13,7 +13,7 @@ JumpClubStage::~JumpClubStage()
 void JumpClubStage::Start()
 {
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
-	Renderer_->SetFBXMesh("JumpClubStage.FBX", "Texture");
+	Renderer_->SetFBXMesh("JumpClubStage.FBX", "CustomDefferedColor");
 
 	PhysXTriMeshGeometry_ = CreateComponent<PhysXTriMeshGeometryComponent>();
 }

@@ -410,6 +410,19 @@ void GameEngineCamera::PushRenderUnit(std::shared_ptr < GameEngineRenderUnit> _R
 
 	_RenderUnit->SetPath(Path);
 
+	// ***** SetRenderingOrder 적용 때문에 넣은 임시 코드(선생님 코드엔 없음.) *****
+	/*for (size_t i = 0; i < static_cast<size_t>(RENDERINGPATHORDER::MAX); i++)
+	{
+		std::map<int, std::list<std::shared_ptr<class GameEngineRenderUnit>>>& Group = AllRenderUnit_[static_cast<RENDERINGPATHORDER>(i)];
+		std::map<int, std::list<std::shared_ptr<class GameEngineRenderUnit>>>::iterator StartIter = Group.begin();
+		std::map<int, std::list<std::shared_ptr<class GameEngineRenderUnit>>>::iterator End = Group.end();
+		for (; StartIter != End; ++StartIter)
+		{
+			std::list<std::shared_ptr<class GameEngineRenderUnit>>& List = Group[(*StartIter).first];
+			List.remove(_RenderUnit);
+		}
+	}*/
+
 	AllRenderUnit_[Path][_RenderUnit->GetRenderer()->RenderingOrder].push_back(_RenderUnit);
 }
 

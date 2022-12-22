@@ -12,7 +12,7 @@ JumpClub_BackGroundObject::~JumpClub_BackGroundObject()
 void JumpClub_BackGroundObject::Start()
 {
 	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer = CreateComponent<GameEngineFBXStaticRenderer>();
-	Renderer->SetFBXMesh("JumpClubMap.FBX", "Texture");
+	Renderer->SetFBXMesh("JumpClubMap.FBX", "CustomDefferedColor");
 }
 
 void JumpClub_BackGroundObject::Update(float _DeltaTime)
