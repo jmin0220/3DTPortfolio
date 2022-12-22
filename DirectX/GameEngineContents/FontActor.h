@@ -1,7 +1,7 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
 
-// 설명 : 폰트 출력용 액터(레벨에다 폰트렌더러 그냥 넣으려니 안됨)
+// 설명 : 폰트 출력용 액터(레벨에다 폰트렌더러 그냥 넣으려니 안됨)=레벨에 직접 쓸 폰트용
 class GameEngineFontRenderer;
 class FontActor : public GameEngineActor
 {

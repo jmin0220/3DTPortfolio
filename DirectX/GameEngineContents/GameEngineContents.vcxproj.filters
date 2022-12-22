@@ -235,6 +235,9 @@
     <Filter Include="05_GloblaBGM">
       <UniqueIdentifier>{7ea0c99a-813e-4bfa-a36c-e067f541889a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02_Actor\UIActor\TimerActor">
+      <UniqueIdentifier>{148f2461-3ffc-4a3e-a00f-a260296af28a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -671,6 +674,9 @@
     </ClInclude>
     <ClInclude Include="BigShots_Puff.h">
       <Filter>02_Actor\Stage03Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="TimerActor.h">
+      <Filter>02_Actor\UIActor\TimerActor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1114,6 +1120,9 @@
     </ClCompile>
     <ClCompile Include="BigShots_Puff.cpp">
       <Filter>02_Actor\Stage03Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="TimerActor.cpp">
+      <Filter>02_Actor\UIActor\TimerActor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
