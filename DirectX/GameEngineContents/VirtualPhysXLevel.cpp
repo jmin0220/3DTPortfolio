@@ -72,12 +72,12 @@ void VirtualPhysXLevel::initPhysics(bool _interactive)
 	sceneDesc.simulationEventCallback = SimulationEventCallback_;
 
 	// callback을 호출 처리할 filtershader 세팅
-	sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
-	//sceneDesc.filterShader = CustomFilterShader;
+	//sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
+	sceneDesc.filterShader = CustomFilterShader;
 
 	DefaultCpuDispatcher_ = physx::PxDefaultCpuDispatcherCreate(2);
 	sceneDesc.cpuDispatcher = DefaultCpuDispatcher_;
-
+	sceneDesc.flags |= physx::PxSceneFlag::eENABLE_CCD;
 	// sceneDesc.broadPhaseType = physx::PxBroadPhaseType::eABP;
 
 	// Scene 생성
@@ -184,88 +184,109 @@ void VirtualPhysXLevel::cleanupPhysics(bool _Interactive)
 
 void CustomSimulationEventCallback::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)
 {
-	while (count--)
+	while(count--)
 	{
 		physx::PxTriggerPair& current = *pairs++;
 
 		// 액터가 가지고 있는 쉐이프를 모두 가져옴
-		physx::PxShape* shape;
 		physx::PxRigidActor& tmpOtherActor = *current.otherActor;
+		physx::PxFilterData OtherFilterdata = current.otherShape->getSimulationFilterData();
+		physx::PxFilterData TriggerFilterdata  = current.triggerShape->getSimulationFilterData();
 		physx::PxU16 tmpnbShape = current.otherActor->getNbShapes();
-
-		for (physx::PxU32 i = 0; i < tmpnbShape; i++)
-		{
-			tmpOtherActor.getShapes(&shape, 1, i);
-
-			// 나와 충돌한 shape가 Dynamic이라면 hit처리
-			physx::PxRigidDynamic* actor = shape->getActor()->is<physx::PxRigidDynamic>();
-			if (actor)
-			{
-				int a = 0;
-
-				// 날아가는 처리는 physx에 맡기는게 낫나?
-				//if (hit.dir.y == 0.0f)
-				//{
-				//	physx::PxReal coeff = actor->getMass() * hit.length;
-				//	physx::PxRigidBodyExt::addForceAtLocalPos(*actor, hit.dir * coeff, physx::PxVec3(0, 0, 0), physx::PxForceMode::eIMPULSE);
-				//}
-			}
-
-
-			// 나와 충돌한 shape가 Static이라면 지면 처리등
-			// Static은 충돌처리를 하지 않음
-			// retrieve current group mask
-			physx::PxFilterData resultFd = shape->getSimulationFilterData();
 
 			// C26813  : 비트플래그로 사용된 enum끼리의 비교는 == 이 아닌 bitwise and(&)로 비교하는 것이 좋음
 			// WARNING : resultFd.word0 == static_cast<physx::PxU32>(PhysXFilterGroup::Ground
 			// 충돌체의 filterData가 ground이면서 닿았을 경우
-			if (resultFd.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::Ground)
-				&& current.status & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
+			if (OtherFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::Ground) && 
+				TriggerFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::Player) &&
+				current.status & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND )
 			{
-				// TODO::닿았을때 처리
 				if (CommonPlayer_ != nullptr)
 				{
 					CommonPlayer_->TouchGroundOn();
-					CommonPlayer_->DetachGroundOff();
+  					CommonPlayer_->DetachGroundOff();
+  					CommonPlayer_->Setwaitphysx(true);
+					return;
 				}
 
 			}
 
 			// 충돌체의 filterData가 ground이면서 떨어졌을 경우
-			if (resultFd.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::Ground)
-				&& current.status & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
+			if (OtherFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::Ground) &&
+				TriggerFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::Player) &&
+				current.status & physx::PxPairFlag::eNOTIFY_TOUCH_LOST )
 			{
-				// TODO::떨어졌을 때 처리
 				if (CommonPlayer_ != nullptr)
 				{
 					CommonPlayer_->TouchGroundOff();
 					CommonPlayer_->DetachGroundOn();
+					//CommonPlayer_->Setwaitphysx(true);
+					return;
+
 				}
 			}
+
+			if (OtherFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::Ground) &&
+				TriggerFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::PlayerFace) &&
+				current.status & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
+			{
+				if (CommonPlayer_ != nullptr)
+				{
+					CommonPlayer_->SetIsStandingReady(true);
+					return;
+				}
+			}
+
+			if (OtherFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::Obstacle) &&
+				TriggerFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::Player) &&
+				current.status & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
+			{
+				if (CommonPlayer_ != nullptr)
+				{
+					CommonPlayer_->SetIsStandingReady(true);
+					return;
+				}
+			}
+	}
+}
+
+void CustomSimulationEventCallback::onContact(const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs)
+{
+	while (nbPairs--)
+	{
+		physx::PxContactPair current = *pairs++;
+		// 액터가 가지고 있는 쉐이프를 모두 가져옴
+		physx::PxShape* tmpContactActor = current.shapes[0];
+		physx::PxShape* tmpOtherActor = current.shapes[1];
+		physx::PxFilterData OtherFilterdata = tmpOtherActor->getSimulationFilterData();
+		physx::PxFilterData TriggerFilterdata = tmpContactActor->getSimulationFilterData();
+
+		if (OtherFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::Ground) &&
+			TriggerFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic) && 
+			current.events & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
+		{
+			CommonPlayer_->TouchGroundOn();
+			CommonPlayer_->DetachGroundOff();
+			CommonPlayer_->Setwaitphysx(true);
 		}
 	}
 }
 
 
-//physx::PxFilterFlags CustomFilterShader(physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0, physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1, physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize)
-//{
-//	// SampleSubmarineFilterShader로부터 가져옴
-//	// 
-//	// let triggers through
-//	if (physx::PxFilterObjectIsTrigger(attributes0) || physx::PxFilterObjectIsTrigger(attributes1))
-//	{
-//		pairFlags = physx::PxPairFlag::eTRIGGER_DEFAULT;
-//		return physx::PxFilterFlag::eDEFAULT;
-//	}
-//	// generate contacts for all that were not filtered above
-//	pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
-//
-//	// trigger the contact callback for pairs (A,B) where 
-//	// the filtermask of A contains the ID of B and vice versa.
-//	if ((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1))
-//		pairFlags |= physx::PxPairFlag::eNOTIFY_TOUCH_FOUND;
-//
-//	return physx::PxFilterFlag::eDEFAULT;
-//}
-//
+physx::PxFilterFlags CustomFilterShader(physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0, physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1, physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize)
+{
+	// SampleSubmarineFilterShader로부터 가져옴
+	// 
+	// let triggers through
+	if (physx::PxFilterObjectIsTrigger(attributes0) || physx::PxFilterObjectIsTrigger(attributes1))
+	{
+		pairFlags = physx::PxPairFlag::eTRIGGER_DEFAULT;
+		return physx::PxFilterFlag::eDEFAULT;
+	}
+	 //generate contacts for all that were not filtered above
+	pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
+
+
+	return physx::PxFilterFlag::eDEFAULT;
+}
+

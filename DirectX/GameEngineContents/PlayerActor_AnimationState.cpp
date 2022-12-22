@@ -38,6 +38,11 @@ void PlayerActor::CreateAnimationFSMStates()
 		, std::bind(&PlayerActor::DiveLoopAniStart, this, std::placeholders::_1)
 		, std::bind(&PlayerActor::DiveLoopAniEnd, this, std::placeholders::_1));
 
+	PlayerAniStateManager_.CreateStateMember("Dive_GetUp"
+		, std::bind(&PlayerActor::DiveGetUpAniUpdate, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&PlayerActor::DiveGetUpAniStart, this, std::placeholders::_1)
+		, std::bind(&PlayerActor::DiveGetUpAniEnd, this, std::placeholders::_1));
+
 	PlayerAniStateManager_.ChangeState("Idle");
 }
 
@@ -45,6 +50,7 @@ void PlayerActor::CreateAnimationFSMStates()
 void PlayerActor::IdleAniStart(const StateInfo& _Info)
 {
 	FbxRenderer_->ChangeAnimation("Idle");
+	CurAniName = "Idle";
 }
 
 void PlayerActor::IdleAniUpdate(float _DeltaTime, const StateInfo& _Info)
@@ -79,6 +85,7 @@ void PlayerActor::IdleAniEnd(const StateInfo& _Info)
 void PlayerActor::WalkAniStart(const StateInfo& _Info)
 {
 	FbxRenderer_->ChangeAnimation("Walk");
+	CurAniName = "Walk";
 }
 
 void PlayerActor::WalkAniUpdate(float _DeltaTime, const StateInfo& _Info)
@@ -120,6 +127,7 @@ void PlayerActor::WalkAniEnd(const StateInfo& _Info)
 void PlayerActor::RunAniStart(const StateInfo& _Info)
 {
 	FbxRenderer_->ChangeAnimation("Run");
+	CurAniName = "Run";
 }
 
 void PlayerActor::RunAniUpdate(float _DeltaTime, const StateInfo& _Info)
@@ -156,6 +164,7 @@ void PlayerActor::JumpStartAniStart(const StateInfo& _Info)
 {
 	//Jump_Start 애니메이션이 끝나면 알아서 Idle 상태로 이동 (B애니메이션 생성때 AnimationBindEnd 함수 활용함
 	FbxRenderer_->ChangeAnimation("Jump_Start");
+	CurAniName = "Jump_Start";
 }
 
 void PlayerActor::JumpStartAniUpdate(float _DeltaTime, const StateInfo& _Info)
@@ -171,6 +180,7 @@ void PlayerActor::JumpStartAniEnd(const StateInfo& _Info)
 void PlayerActor::JumpMidAirAniStart(const StateInfo& _Info)
 {
 	FbxRenderer_->ChangeAnimation("Jump_MidAir");
+	CurAniName = "Jump_MidAir";
 }
 
 void PlayerActor::JumpMidAirAniUpdate(float _DeltaTime, const StateInfo& _Info)
@@ -210,17 +220,38 @@ void PlayerActor::DiveLoopAniStart(const StateInfo& _Info)
 {
 	//Jump_Landing 애니메이션이 끝나면 알아서 Idle 상태로 이동 (B애니메이션 생성때 AnimationBindEnd 함수 활용함
 	FbxRenderer_->ChangeAnimation("Dive_Loop");
+	CurAniName = "Dive_Loop";
 }
 
 void PlayerActor::DiveLoopAniUpdate(float _DeltaTime, const StateInfo& _Info)
 {
-	if (CheckOnGround() == true)
+	if (StandUpDelay_ > 0.01f)
 	{
-		PlayerAniStateManager_.ChangeState("Idle");
+		PlayerAniStateManager_.ChangeState("Dive_GetUp");
 	}
 }
 
 void PlayerActor::DiveLoopAniEnd(const StateInfo& _Info)
+{
+}
+
+void PlayerActor::DiveGetUpAniStart(const StateInfo& _Info)
+{
+	//Jump_Landing 애니메이션이 끝나면 알아서 Idle 상태로 이동 (B애니메이션 생성때 AnimationBindEnd 함수 활용함
+	FbxRenderer_->ChangeAnimation("Dive_GetUp");
+	CurAniName = "Dive_GetUp";
+}
+
+void PlayerActor::DiveGetUpAniUpdate(float _DeltaTime, const StateInfo& _Info)
+{
+	if (PlayerStateManager_.GetCurStateStateName() == "Idle")
+	{
+		PlayerAniStateManager_.ChangeState("Idle");
+		return;
+	}
+}
+
+void PlayerActor::DiveGetUpAniEnd(const StateInfo& _Info)
 {
 }
 

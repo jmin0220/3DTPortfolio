@@ -54,7 +54,8 @@ public:
 	void PushImpulse(float4 _ImpulsePower);
 	void PushImpulseAtLocalPos(float4 _ImpulsePower, float4 _Pos);
 	
-	bool PlayerStandUp(float _DeltaTime);
+	bool PlayerStandUp(float _DeltaTime, bool _IsXAixisRotReady);
+	bool StandUp2(float _DeltaTime, bool _IsXAixisRotReady);
 
 	void TurnOffSpeedLimit()
 	{
@@ -106,6 +107,7 @@ private:
 
 	physx::PxMaterial* material_;
 	physx::PxShape* shape_;
+	physx::PxShape* faceshape_;
 	physx::PxShape* Flagshape_;
 	physx::PxRigidDynamic* dynamic_;
 

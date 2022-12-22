@@ -47,6 +47,10 @@ PlayerActor::PlayerActor() :
 	CheckPointPos_({ 0,200.0f,0 }),
 	IsGoal_(false),
 	IsStanding_(false),
+	StandUpDelay_(0.0f),
+	UnControllableTime_(0.0f),
+	IsStandingReady_(false),
+	IsDiving_(false),
 	IsPlayerble_(false),
 	IsNetPlayerColorExist_(false),
 	PrevAnimation_("")
@@ -60,7 +64,7 @@ PlayerActor::~PlayerActor()
 
 physx::PxRigidDynamic* PlayerActor::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics)
 {
-
+	DynamicActorComponent_->SetPhysxMaterial(0.0f,0.0f,0.0f);
 	return DynamicActorComponent_->CreatePhysXActors(_Scene, _physics, 
 		physx::PxVec3(MeshBoundScale.x, 
 		MeshBoundScale.y, 
@@ -161,7 +165,7 @@ void PlayerActor::Update(float _DeltaTime)
 	//GetTransform().SetWorldMove(MoveDir_ * SPEED_PLAYER * _DeltaTime);
 	// TODO::충격테스트코드
 	ImpulseTest();
-	StandUp(_DeltaTime);
+	//StandUp(_DeltaTime);
 
 
 
@@ -472,25 +476,32 @@ float4 PlayerActor::ResetCheckPointPos()
 void PlayerActor::SetCharacterAnimation()
 {
 	FbxRenderer_->CreateFBXAnimation("Idle",
-	GameEngineRenderingEvent{ "Character_Idle_A.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
+	GameEngineRenderingEvent{ "Character_Idle_A.fbx", ANIMATION_FRAME_TIME , true }, 0);
 
 	FbxRenderer_->CreateFBXAnimation("Run",
-		GameEngineRenderingEvent{ "Character_Run_A.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
+		GameEngineRenderingEvent{ "Character_Run_A.fbx", ANIMATION_FRAME_TIME , true }, 0);
 
 	FbxRenderer_->CreateFBXAnimation("Walk",
-	GameEngineRenderingEvent{ "Character_Walk_A.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
+	GameEngineRenderingEvent{ "Character_Walk_A.fbx", ANIMATION_FRAME_TIME , true }, 0);
 
 	FbxRenderer_->CreateFBXAnimation("Jump_Start",
-	GameEngineRenderingEvent{ "Character_Jump_Start_A.fbx", 0.016666666666666666666666666666666666666666667f , false }, 0);
+	GameEngineRenderingEvent{ "Character_Jump_Start_A.fbx", ANIMATION_FRAME_TIME , false }, 0);
 
 	FbxRenderer_->CreateFBXAnimation("Jump_MidAir",
-	GameEngineRenderingEvent{ "Character_Jump_MidAir_A.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
+	GameEngineRenderingEvent{ "Character_Jump_MidAir_A.fbx", ANIMATION_FRAME_TIME , true }, 0);
 
 	FbxRenderer_->CreateFBXAnimation("Jump_Landing",
-		GameEngineRenderingEvent{ "Character_Landing_A.fbx", 0.016666666666666666666666666666666666666666667f , false }, 0);
+		GameEngineRenderingEvent{ "Character_Landing_A.fbx", ANIMATION_FRAME_TIME , false }, 0);
 
 	FbxRenderer_->CreateFBXAnimation("Dive_Loop",
-		GameEngineRenderingEvent{ "Character_Dive_Loop.fbx", 0.016666666666666666666666666666666666666666667f , true }, 0);
+		GameEngineRenderingEvent{ "Character_Dive_Loop.fbx", ANIMATION_FRAME_TIME , true }, 0);
+
+	FbxRenderer_->CreateFBXAnimation("Dive_GetUp",
+		GameEngineRenderingEvent{ "Character_Dive_GetUp.fbx", ANIMATION_FRAME_TIME , false }, 0);
+
+	FbxRenderer_->CreateFBXAnimation("Ragdoll",
+		GameEngineRenderingEvent{ "Character_RagDoll_A.fbx", ANIMATION_FRAME_TIME , true }, 0);
+
 
 	FbxRenderer_->AnimationBindEnd("Jump_Start",
 		[&](const GameEngineRenderingEvent& _Info) {
@@ -616,25 +627,17 @@ float4 PlayerActor::GetCameraBaseRotationAng(float4 _ActorRot, float4 _CamForRot
 	return ChangedActorRot;
 }
 
-void PlayerActor::StandUp(float _DeltaTime)
+bool PlayerActor::StandUp(float _DeltaTime)
 {
-	if (GameEngineInput::GetInst()->IsDown("StandUp"))
+	if (DynamicActorComponent_->StandUp2(_DeltaTime, IsStandingReady_) == true)
 	{
-		DynamicActorComponent_->TurnOffGravity();
-		DynamicActorComponent_->SetUnlockAxis();
-		IsStanding_ = true;
+		//DynamicActorComponent_->TurnOnGravity();
+		DynamicActorComponent_->SetlockAxis();
+		IsStandingReady_ = false;
+		IsStanding_ = false;
+		return true;
 	}
-
-	if (IsStanding_ == true)
-	{
-		if (DynamicActorComponent_->PlayerStandUp(_DeltaTime) == true)
-		{
-			DynamicActorComponent_->TurnOnGravity();
-			DynamicActorComponent_->SetlockAxis();
-			IsStanding_ = false;
-		}
-	}
-
+	return false;
 }
 
 void PlayerActor::CheckXZSpeed()

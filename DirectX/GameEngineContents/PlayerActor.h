@@ -80,6 +80,10 @@ private:
 	void CreateAnimationFSMStates();
 
 	// PlayerStateFSM
+	void ReadyStart(const StateInfo& _Info);
+	void ReadyUpdate(float _DeltaTime, const StateInfo& _Info);
+	void ReadyEnd(const StateInfo& _Info);
+
 	void IdleStart(const StateInfo& _Info);
 	void IdleUpdate(float _DeltaTime, const StateInfo& _Info);
 	void IdleEnd(const StateInfo& _Info);
@@ -95,6 +99,11 @@ private:
 	void DiveStart(const StateInfo& _Info);
 	void DiveUpdate(float _DeltaTime, const StateInfo& _Info);
 	void DiveEnd(const StateInfo& _Info);
+
+	void DiveGetUpStart(const StateInfo& _Info);
+	void DiveGetUpUpdate(float _DeltaTime, const StateInfo& _Info);
+	void DiveGetUpEnd(const StateInfo& _Info);
+
 
 	// PlayerAnimationFSM
 	void IdleAniStart(const StateInfo& _Info);
@@ -125,6 +134,14 @@ private:
 	void DiveLoopAniUpdate(float _DeltaTime, const StateInfo& _Info);
 	void DiveLoopAniEnd(const StateInfo& _Info);
 
+	void DiveGetUpAniStart(const StateInfo& _Info);
+	void DiveGetUpAniUpdate(float _DeltaTime, const StateInfo& _Info);
+	void DiveGetUpAniEnd(const StateInfo& _Info);
+
+	void CannotControllStart(const StateInfo& _Info);
+	void CannotControllUpdate(float _DeltaTime, const StateInfo& _Info);
+	void CannotControllEnd(const StateInfo& _Info);
+
 
 	// 입력 & 움직임
 	void InputControllerMove(float _DeltaTime);
@@ -136,14 +153,23 @@ private:
 	bool IsTouchGround;
 	bool IsDetachGround;
 	bool IsOnGround;
+	bool IsOnGround2;
 	float PlayerXZSpeed_;
 	void CheckXZSpeed();
 	bool CheckOnGround();
+	bool waitphysx_;
+	bool IsDiving_;
+
+	float UnControllableTime_;
+	// 일어서기
+	bool StandUp(float _DeltaTime);
+	bool IsStandingReady_;
+	float StandUpDelay_;
 
 	// TODO::테스트코드
 	void ImpulseTest();
-	void StandUp(float _DeltaTime);
 	bool IsStanding_;
+
 	float4 ResetCheckPointPos();
 
 
@@ -151,6 +177,7 @@ private:
 private:
 	void SetCharacterAnimation();
 	void SetCharacterTexture();
+	std::string CurAniName;
 
 	struct SkinData
 	{
@@ -196,7 +223,7 @@ public:
 	}
 
 	float4 MeshBoundScale;
-	
+
 
 	//움직임 Setter Getter
 	inline void TouchGroundOff()
@@ -217,6 +244,21 @@ public:
 	inline void DetachGroundOn()
 	{
 		IsDetachGround = true;
+	}
+
+	inline void SetIsStandingReady(bool _Result)
+	{
+		IsStandingReady_ = _Result;
+	}
+
+	inline void SetIsOngGround2()
+	{
+		IsOnGround2 = true;
+	}
+
+	inline void Setwaitphysx(bool _Bool)
+	{
+		waitphysx_ = _Bool;
 	}
 };
 

@@ -88,7 +88,7 @@ void PhysXTriMeshGeometryComponent::CreatePhysXActors(const std::string& _MeshNa
 
 		// 충돌시점 콜백을 위한 세팅
 		shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Ground)
-															, static_cast<physx::PxU32>(PhysXFilterGroup::Player), 0, 0));
+															, 0, 0, 0));
 
 		//콜백피벗 설정
 		shape_->setLocalPose(physx::PxTransform(Pivot));

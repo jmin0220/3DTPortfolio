@@ -23,6 +23,16 @@ void PlayerActor::CreateFSMStates()
 		, std::bind(&PlayerActor::DiveStart, this, std::placeholders::_1)
 		, std::bind(&PlayerActor::DiveEnd, this, std::placeholders::_1));
 
+	PlayerStateManager_.CreateStateMember("DiveGetUp"
+		, std::bind(&PlayerActor::DiveGetUpUpdate, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&PlayerActor::DiveGetUpStart, this, std::placeholders::_1)
+		, std::bind(&PlayerActor::DiveGetUpEnd, this, std::placeholders::_1));
+
+	PlayerStateManager_.CreateStateMember("CannotControll"
+		, std::bind(&PlayerActor::CannotControllUpdate, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&PlayerActor::CannotControllStart, this, std::placeholders::_1)
+		, std::bind(&PlayerActor::CannotControllEnd, this, std::placeholders::_1));
+
 	PlayerStateManager_.ChangeState("Idle");
 }
 
@@ -105,8 +115,9 @@ void PlayerActor::RunEnd(const StateInfo& _Info)
 
 void PlayerActor::JumpStart(const StateInfo& _Info)
 {
-	IsTouchGround = false;
-	IsDetachGround = true;
+	//IsTouchGround = false;
+	//IsDetachGround = true;
+	waitphysx_ = false;
 }
 
 void PlayerActor::JumpUpdate(float _DeltaTime, const StateInfo& _Info)
@@ -123,7 +134,7 @@ void PlayerActor::JumpUpdate(float _DeltaTime, const StateInfo& _Info)
 		return;
 	}
 
-	if (CheckOnGround() == true)
+	if (CheckOnGround() == true && waitphysx_ == true)
 	{
 		PlayerStateManager_.ChangeState("Idle");
 		return;
@@ -137,22 +148,77 @@ void PlayerActor::JumpEnd(const StateInfo& _Info)
 
 void PlayerActor::DiveStart(const StateInfo& _Info)
 {
-	IsTouchGround = false;
-	IsDetachGround = true;
+	//IsTouchGround = false;
+	//IsDetachGround = true;
+	StandUpDelay_ = 0.0f;
+	waitphysx_ = false;
+	IsDiving_ = false;
 }
 
 void PlayerActor::DiveUpdate(float _DeltaTime, const StateInfo& _Info)
 {
-
+	
 	PlayerActType ActType = InputDetect();
-	if (CheckOnGround() == true)
+	if ((CheckOnGround() == true  && waitphysx_ == true) ||
+		IsDiving_ == true)
 	{
-		PlayerStateManager_.ChangeState("Idle");
-		return;
+		IsDiving_ = true;
+		StandUpDelay_ += _DeltaTime;
+		if (StandUpDelay_ > 0.1f)
+		{
+			PlayerStateManager_.ChangeState("DiveGetUp");
+		}
 	}
+
+
 }
 
 void PlayerActor::DiveEnd(const StateInfo& _Info)
 {
 }
+
+void PlayerActor::DiveGetUpStart(const StateInfo& _Info)
+{
+}
+
+void PlayerActor::DiveGetUpUpdate(float _DeltaTime, const StateInfo& _Info)
+{
+	if (StandUp(_DeltaTime) == true)
+	{
+		PlayerStateManager_.ChangeState("Idle");
+		IsTouchGround = true;
+		IsDetachGround = false;
+	}
+
+
+}
+
+void PlayerActor::DiveGetUpEnd(const StateInfo& _Info)
+{
+}
+
+void PlayerActor::CannotControllStart(const StateInfo& _Info)
+{
+}
+
+void PlayerActor::CannotControllUpdate(float _DeltaTime, const StateInfo& _Info)
+{
+	if (UnControllableTime_ > 2.0f)
+	{
+		if (StandUp(_DeltaTime) == true)
+		{
+			PlayerStateManager_.ChangeState("Idle");
+			IsTouchGround = true;
+			IsDetachGround = false;
+		}
+	}
+
+
+}
+
+void PlayerActor::CannotControllEnd(const StateInfo& _Info)
+{
+}
+
+
 
