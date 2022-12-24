@@ -26,6 +26,11 @@ void BigShotsLevel::Start()
 	MyStage_ = StageNum::STAGE3;
 	StageParentLevel::Start();
 
+
+	LightObject_->GetLightData().DifLightPower = 0.7f;
+	LightObject_->GetLightData().AmbLightPower = 2.5;
+	LightObject_->GetTransform().SetWorldRotation({ 90.0f,0.0f,0 });
+
 }
 
 void BigShotsLevel::Update(float _DeltaTime)
@@ -43,6 +48,8 @@ void BigShotsLevel::End()
 void BigShotsLevel::LevelStartEvent()
 {
 	StageParentLevel::LevelStartEvent();
+
+
 	BackGroundObj_ = CreateActor<BigShots_BackGroundObject>();
 	// 물 쉐이더 이상 추후 확인 필요
 	VFXWaterObj_ = CreateActor<VFXWaterActor>();

@@ -13,7 +13,7 @@ BigShotsStage::~BigShotsStage()
 void BigShotsStage::Start()
 {
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
-	Renderer_->SetFBXMesh("BigShatsStage.FBX", "Texture");
+	Renderer_->SetFBXMesh("BigShatsStage.FBX", "CustomDefferedColor");
 
 	PhysXSeesawGeometry_ = CreateComponent<PhysXTriMeshGeometryComponent>();
 }
