@@ -3,7 +3,7 @@ cbuffer RenderOption : register(b10)
     float DeltaTime;
     float SumDeltaTime;
     int IsAnimation;
-    int IsBump;
+    int IsNormal;
 };
 
 float4 BumpNormalCalculate(Texture2D NormalTex, SamplerState Smp, float4 UV, float4 _Tangent, float4 _BiNormal, float4 _Normal)

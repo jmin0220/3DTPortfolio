@@ -53,7 +53,7 @@ LightOutPut CalDeferredLight_PS(Output _Input)
 
     LightOutPut Out = (LightOutPut)0.0f;
 
-    Out.DifLight = CalDiffuseLights(Normal);
+    Out.DifLight = CalDiffuseLights(Position, Normal);
     Out.SpcLight = CalSpacularLight(Position, Normal);
     Out.AmbLight = CalAmbientLight();
 

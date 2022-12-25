@@ -97,7 +97,7 @@ std::shared_ptr<GameEngineRenderUnit> GameEngineFBXRenderer::SetFBXMesh(const st
 
 		if (nullptr != GameEngineTexture::Find(MatData.NorTextureName))
 		{
-			RenderUnit->ShaderResources.SetTexture("NormalTexture", MatData.DifTextureName);
+			RenderUnit->ShaderResources.SetTexture("NormalTexture", MatData.NorTextureName);
 		}
 
 		RenderOptionInst.IsNormal = 1;

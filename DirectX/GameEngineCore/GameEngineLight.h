@@ -20,13 +20,11 @@ struct LightData
 	float4 LightColor = float4(1.0f, 1.0f, 1.0f, 1.0f);
 	float4 AmbientLight = float4(0.1f, 0.1f, 0.1f, 1.0f);
 
-
 	float DifLightPower = 1.0f;
 	float SpcLightPower = 1.0f;
 	float AmbLightPower = 1.0f;
 	float SpcPow = 50.0f;
 
-private:
 	float4 LightPos;
 	float4 LightDir;
 	float4 LightRevDir;
@@ -36,6 +34,11 @@ private:
 	float4 ViewLightRevDir;
 
 	float4 CameraPosition;
+
+	int LightType = 0;
+	float PointLightRange = 100.0f;
+	int Temp2;
+	int Temp3;
 
 };
 
@@ -62,7 +65,7 @@ public:
 	GameEngineLight& operator=(const GameEngineLight& _Other) = delete;
 	GameEngineLight& operator=(GameEngineLight&& _Other) noexcept = delete;
 
-	LightData& GetLightData() 
+	LightData& GetLightData()
 	{
 		return Data;
 	}
@@ -73,7 +76,7 @@ public:
 
 	void ShadowTargetSetting();
 
-	inline std::shared_ptr<class GameEngineRenderTarget> GetShadowTarget() 
+	inline std::shared_ptr<class GameEngineRenderTarget> GetShadowTarget()
 	{
 		return ShadowTarget;
 	}
@@ -83,7 +86,7 @@ public:
 		return ViewPortDesc;
 	}
 
-	
+
 
 protected:
 

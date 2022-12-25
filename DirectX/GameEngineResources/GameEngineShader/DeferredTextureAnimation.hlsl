@@ -50,6 +50,13 @@ Output TextureAnimation_VS(Input _Input)
     NewOutPut.VIEWNORMAL = normalize(mul(_Input.NORMAL, WorldView));
     NewOutPut.VIEWNORMAL.w = 0.0f;
 
+    _Input.TANGENT.w = 0.0f;
+    NewOutPut.VIEWTANGENT = normalize(mul(_Input.TANGENT, WorldView));
+    NewOutPut.VIEWTANGENT.w = 0.0f;
+
+    _Input.BINORMAL.w = 0.0f;
+    NewOutPut.VIEWBINORMAL = normalize(mul(_Input.BINORMAL, WorldView));
+    NewOutPut.VIEWBINORMAL.w = 0.0f;
 
     return NewOutPut;
 }
@@ -74,7 +81,7 @@ DeferredOutPut TextureAnimation_PS(Output _Input) : SV_Target0
     OutPut.Nor = _Input.VIEWNORMAL;
     OutPut.Nor.w = 1.0f;
 
-    if (0 != IsBump)
+    if (0 != IsNormal)
     {
         OutPut.Nor = BumpNormalCalculate(NormalTexture, LINEARWRAP, _Input.TEXCOORD, _Input.VIEWTANGENT, _Input.VIEWBINORMAL, _Input.VIEWNORMAL);
         OutPut.Nor.w = 1.0f;

@@ -71,8 +71,8 @@ void StageParentLevel::Start()
 		GetMainCamera()->PushLight(LightObject_);
 	}
 
-	GetMainCamera()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
-	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	//GetMainCamera()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
+	//GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 
 
 	IntroduceGame_ = CreateActor<IntroduceGame>();

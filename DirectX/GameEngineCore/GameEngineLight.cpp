@@ -3,7 +3,7 @@
 #include "GameEngineCamera.h"
 #include "GameEngineRenderTarget.h"
 
-GameEngineLight::GameEngineLight() 
+GameEngineLight::GameEngineLight()
 {
 	Data.LightTargetSizeX = 4096;
 	Data.LightTargetSizeY = 4096;
@@ -11,7 +11,7 @@ GameEngineLight::GameEngineLight()
 	Data.LightFar = 1000.0f;
 }
 
-GameEngineLight::~GameEngineLight() 
+GameEngineLight::~GameEngineLight()
 {
 }
 
@@ -21,7 +21,7 @@ void GameEngineLight::ShadowTargetSetting()
 	ShadowTarget->Setting();
 }
 
-void GameEngineLight::Start() 
+void GameEngineLight::Start()
 {
 	ShadowTarget = GameEngineRenderTarget::Create();
 
@@ -36,7 +36,7 @@ void GameEngineLight::Start()
 	ShadowTarget->CreateDepthTexture();
 }
 
-void GameEngineLight::Update(float _DeltaTime) 
+void GameEngineLight::Update(float _DeltaTime)
 {
 	Data.LightPos = GetTransform().GetWorldPosition();
 	Data.LightDir = GetTransform().GetForwardVector();
@@ -65,7 +65,7 @@ void GameEngineLight::LightDataUpdate(GameEngineCamera* _Camera)
 
 	float4x4 WorldView = GetTransform().GetTransformData().WorldViewMatrix;
 
-	Data.ViewLightPos = Data.ViewLightPos * GetTransform().GetViewMatrix();
+	Data.ViewLightPos = GetTransform().GetWorldPosition() * GetTransform().GetViewMatrix();
 	Data.ViewLightDir = Data.LightDir * GetTransform().GetViewMatrix();
 	Data.ViewLightDir.Normalize3D();
 	Data.ViewLightDir.w = 0.0f;
