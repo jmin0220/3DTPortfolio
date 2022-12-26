@@ -65,7 +65,7 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 	relativePose.p = DynamicCenter;
 	physx::PxTransform relativePose2(DynamicCenter);
 	shape_->setLocalPose(relativePose);
-	shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic), 0, 0, 0));
+	shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic), static_cast<physx::PxU32>(PhysXFilterGroup::Ground), 0, 0));
 	//physx::PxTransform relativePose(physx::PxQuat(physx::PxHalfPi, physx::PxVec3(0, 0, 1)));
 
 	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 0.01f);

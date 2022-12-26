@@ -1,17 +1,17 @@
 #include "PreCompile.h"
 #include "PhysXTriMeshGeometryComponent.h"
 
-PhysXTriMeshGeometryComponent::PhysXTriMeshGeometryComponent() 
+PhysXTriMeshGeometryComponent::PhysXTriMeshGeometryComponent()
 {
 }
 
-PhysXTriMeshGeometryComponent::~PhysXTriMeshGeometryComponent() 
+PhysXTriMeshGeometryComponent::~PhysXTriMeshGeometryComponent()
 {
 }
 
 //_MeshName(불러올 매시의 이름), _Scene, _Physics, _Cooking (InitPhysics 에서 불러온 값), _InverseIndex(Index를 역순으로 할지에 대한 bool값), 
 // _GeoMetryScale(스케일값), _GeoMetryRot(로테이션값)
-void PhysXTriMeshGeometryComponent::CreatePhysXActors(const std::string& _MeshName, physx::PxScene* _Scene, physx::PxPhysics* _physics, 
+void PhysXTriMeshGeometryComponent::CreatePhysXActors(const std::string& _MeshName, physx::PxScene* _Scene, physx::PxPhysics* _physics,
 	physx::PxCooking* _cooking, bool _InverseIndex, physx::PxVec3 _GeoMetryScale, float4 _GeoMetryRot)
 {
 	CustomFBXLoad(_MeshName, _InverseIndex);
@@ -37,8 +37,8 @@ void PhysXTriMeshGeometryComponent::CreatePhysXActors(const std::string& _MeshNa
 	//							   _GeoMetryScale.z * tmpMagnification.z * 0.5f);
 
 	physx::PxVec3 tmpGeoMetryScale(_GeoMetryScale.x * 0.5f,
-								   _GeoMetryScale.y * 0.5f,
-								   _GeoMetryScale.z * 0.5f);
+		_GeoMetryScale.y * 0.5f,
+		_GeoMetryScale.z * 0.5f);
 
 	// 충돌체의 형태
 	// 충돌체의 크기는 절반의 크기를 설정하므로 실제 Renderer의 스케일은 충돌체의 2배로 설정되어야 함
@@ -88,14 +88,14 @@ void PhysXTriMeshGeometryComponent::CreatePhysXActors(const std::string& _MeshNa
 
 		// 충돌시점 콜백을 위한 세팅
 		shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Ground)
-															, 0, 0, 0));
+			, static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic),0, 0));
 
 		//콜백피벗 설정
 		shape_->setLocalPose(physx::PxTransform(Pivot));
 
-			
+
 	}
-	
+
 
 
 	//// 충돌체의 종류
@@ -161,7 +161,7 @@ void PhysXTriMeshGeometryComponent::CustomFBXLoad(const std::string& _MeshName, 
 		//만약 매시가 존재할경우는 그대로 얻어온다.
 		Mesh = FindFBXMesh;
 	}
-	
+
 	//랜더유닛카운트를 불러와 백터에 reserve를 한다
 	int RenderinfoCount = Mesh->GetRenderUnitCount();
 
@@ -205,7 +205,7 @@ void PhysXTriMeshGeometryComponent::CustomFBXLoad(const std::string& _MeshName, 
 		VertexVec.push_back(InstVertVec);
 		IndexVec.push_back(InstIndexVec);
 	}
-	
+
 
 	//Mesh->UserLoad();
 }

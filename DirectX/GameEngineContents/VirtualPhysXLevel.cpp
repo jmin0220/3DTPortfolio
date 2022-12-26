@@ -286,6 +286,8 @@ physx::PxFilterFlags CustomFilterShader(physx::PxFilterObjectAttributes attribut
 	 //generate contacts for all that were not filtered above
 	pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
 
+	if ((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1))
+		pairFlags |= physx::PxPairFlag::eNOTIFY_TOUCH_FOUND;
 
 	return physx::PxFilterFlag::eDEFAULT;
 }
