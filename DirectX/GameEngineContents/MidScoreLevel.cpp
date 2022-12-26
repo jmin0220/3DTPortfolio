@@ -9,16 +9,20 @@
 
 #include <GameEngineBase/GameEngineRandom.h>
 
+float4 FirstActorPos = float4(-20, 0, 100); // 다음+ (40, -15, 0) 체어  y+ 15.5f
+float4 FirstActorRot = float4(0, 160, 0);
+
+
 MidScoreLevel::MidScoreLevel()
 	: FallingTime_(0.0f)
 	, PlayerScores_{}
 	, BeforeScoreTime_(0.0f)
 	, IsScoreOn_(false)
-	, Index_{}
 	, Once_(false)
 	, LevelChanged_(false)
 	, MidScoreTime_(0.0f)
 	, LerpTime_(0.0f)
+	, ScoreSetted_(false)
 {
 }
 
@@ -32,10 +36,55 @@ void MidScoreLevel::Start()
 
 void MidScoreLevel::Update(float _DeltaTime)
 {
+	{
+		//꼴찌 플레이어 추락 애니메이션
+
+		if (LobbyPlayers_[AllServerPlayersCount_ - 1]->GetTransform().GetWorldPosition().y > -400.0f)
+		{
+			FallingTime_ += _DeltaTime * 100.0f;
+			LobbyPlayers_[AllServerPlayersCount_ - 1]->GetTransform().SetWorldMove(float4::DOWN * _DeltaTime * 100.0f);
+		}
+		else
+		{
+			LobbyPlayers_[AllServerPlayersCount_ - 1]->GetTransform().SetWorldPosition(LastActorPos_);
+			FallingTime_ = 0.0f;
+		}
+	}
+
+	{
+		RandomSocre();
+
+		if (IsScoreOn_ == true)
+		{
+			BeforeScoreTime_ += _DeltaTime;
+		}
+
+		if (BeforeScoreTime_ > 2.0f)
+		{
+			BubbleSortLerp();
+			IsScoreOn_ = false;
+			BeforeScoreTime_ = 0.0f;
+			Once_ = true;
+		}
+	}
+
+	{
+		RenderBubbleSort();
+
+		if (LerpTime_ > 1.5f)
+		{
+			Once_ = false;//flase를 켜줘야 다시 갱신해서 엔터눌렀을때 러프 안함
+			LerpTime_ = 0.0f;
+		}
+	}
+
+	ChaseNameToScore();
+
+
 	// 서버
+	MidScoreTime_ += _DeltaTime;
 	if (true == GameServer::GetInst()->IsServerStart())
 	{
-		MidScoreTime_ += _DeltaTime;
 		if (MidScoreTime_ < 7.0f)
 		{
 			return;
@@ -55,7 +104,6 @@ void MidScoreLevel::Update(float _DeltaTime)
 					std::string_view NextStage = ContentsCore::GetInst()->GetNextStage();
 					ContentsCore::GetInst()->ChangeLevelByLoading(ContentsCore::GetInst()->GetNextStage());
 					LevelChanged_ = true;
-					return;
 				}
 			}
 			else
@@ -67,7 +115,6 @@ void MidScoreLevel::Update(float _DeltaTime)
 					std::string_view NextStage = ContentsCore::GetInst()->GetNextStage();
 					ContentsCore::GetInst()->ChangeLevelByLoading(ContentsCore::GetInst()->GetNextStage());
 					LevelChanged_ = true;
-					return;
 				}
 			}
 		}
@@ -95,49 +142,6 @@ void MidScoreLevel::Update(float _DeltaTime)
 	}
 	// ~~~~~~ 서버
 
-
-	{
-		//꼴찌 플레이어 추락 애니메이션
-		if (Player4_->GetTransform().GetWorldPosition().y > -400.0f)
-		{
-			FallingTime_ += _DeltaTime * 100.0f;
-			Player4_->GetTransform().SetWorldPosition({ 40, 100 - FallingTime_, 140 });
-		}
-		else
-		{
-			Player4_->GetTransform().SetWorldPosition({ 40, 100, 140 });
-			FallingTime_ = 0.0f;
-		}
-	}
-
-	{	
-		RandomSocre();
-		
-		if (IsScoreOn_ == true)
-		{
-			BeforeScoreTime_ += _DeltaTime;
-		}
-
-		if (BeforeScoreTime_ > 2.0f)
-		{
-			BubbleSortLerp();
-			IsScoreOn_ = false;
-			BeforeScoreTime_ = 0.0f;
-			Once_ = true;
-		}
-	}
-
-	{
-		RenderBubbleSort();
-
-		if (LerpTime_ > 1.5f)
-		{
-			Once_ = false;//flase를 켜줘야 다시 갱신해서 엔터눌렀을때 러프 안함
-			LerpTime_ = 0.0f;
-		}
-	}
-
-	ChaseNameToScore();
 }
 
 
@@ -148,11 +152,26 @@ void MidScoreLevel::End()
 
 void MidScoreLevel::LevelStartEvent()
 {
+	// 1st, 2nd
+	Font1st_ = CreateActor<FontActor>();
+	Font1st_->SetFont("1st.   ", FONT_TITAN_ONE, 60.0f, { 20,200 }, LeftAndRightSort::LEFT);
+	Font2nd_ = CreateActor<FontActor>();
+	Font2nd_->SetFont("2nd. ", FONT_TITAN_ONE, 60.0f, { 20,320 }, LeftAndRightSort::LEFT);
+
 	// 서버
 	// 모든 플레이어의 점수 정보를 자료구조로 던져줄 예정
-	MidScoreTime_ = 0.0f;
-	LevelChanged_ = false;
-	// ~ 서버
+	if (true == GameServer::GetInst()->IsServerStart())
+	{
+		MidScoreTime_ = 0.0f;
+		LevelChanged_ = false;
+
+		ServerSetting();
+	}
+	// 서버 안킴
+	else
+	{
+		NoServerSetting();
+	}
 
 
 	if (false == GameEngineInput::GetInst()->IsKey("RandomScore"))
@@ -173,134 +192,83 @@ void MidScoreLevel::LevelStartEvent()
 	Score_ = CreateActor<GoalTipActor>();
 	Score_->GetFont().lock()->SetText("현재 점수!", FONT_NOTO_SANS_CJK_SC);
 
-	{
-		//플레이어 1번
-		Player1_ = CreateActor<LobbyPlayer>();
-		Player1_->GetTransform().SetWorldPosition({ -20, 0, 100 });
-		Player1_->GetTransform().SetWorldRotation({ 0,160,0 });
-		Player1_->ChangeAnimationJogging();
-
-		PlayerName_[0] = "CAT";//임의로 이름정함
-		PlayerName_[1] = "DOG";
-		PlayerName_[2] = "COW";
-		PlayerName_[3] = "ANT";
-		PlayerName_[4] = "NOM";
-
-		Chair1_ = CreateActor<FloorActor>();
-		Chair1_->GetTransform().SetWorldPosition({ -20.0f, 15.5f, 100.0f });
-	}
-	{
-		//플레이어 2번
-		Player2_ = CreateActor<LobbyPlayer>();
-		Player2_->GetTransform().SetWorldPosition({ 20, -15, 100 });
-		Player2_->GetTransform().SetWorldRotation({ 0,170,0 });
-		Player2_->ChangeAnimationGasp();
-
-		//Player2Name_ = "Player 2";
-
-		Chair2_ = CreateActor<FloorActor>();
-		Chair2_->GetTransform().SetWorldPosition({ 20.0f, 0.5f, 100.0f });
-	}
-	{
-		//플레이어 3번
-		Player3_ = CreateActor<LobbyPlayer>();
-		Player3_->GetTransform().SetWorldPosition({ 60, -30, 100 });
-		Player3_->GetTransform().SetWorldRotation({ 0,180,0 });
-
-		Chair3_ = CreateActor<FloorActor>();
-		Chair3_->GetTransform().SetWorldPosition({ 60.0f, -14.5f, 100.0f });
-	}
-	{
-		Player4_ = CreateActor<LobbyPlayer>();
-		Player4_->GetTransform().SetWorldPosition({ 40, -100, 140 });
-		Player4_->GetTransform().SetWorldRotation({ 0,180,0 });
-		Player4_->ChangeAnimationTumbel();
-	}
-
-	{
-		//1등 닉네임+점수 표시
-		Font1_ = CreateActor<FontActor>();
-		Font1_->SetFont("1st.   ", FONT_TITAN_ONE, 60.0f, { 20,200 }, LeftAndRightSort::LEFT);
-
-		FontScore_[0] = CreateActor<FontActor>();
-		FontScore_[0]->SetFont(std::to_string(PlayerScores_[0]), FONT_NOTO_SANS_CJK_SC, 50.0f, { 170,250 }, LeftAndRightSort::LEFT);
-
-		Font_PlayerName[0] = CreateActor<FontActor>();
-		Font_PlayerName[0]->SetFont(PlayerName_[0], FONT_TITAN_ONE, 60.0f, { 170,FontScore_[0]->GetFont()->GetScreenPosition().y - 50.0f }, LeftAndRightSort::LEFT);
-	}
-
-	{
-		//2등 닉네임+점수 표시
-		Font2_ = CreateActor<FontActor>();
-		Font2_->SetFont("2nd. ", FONT_TITAN_ONE, 60.0f, { 20,320 }, LeftAndRightSort::LEFT);
-
-		FontScore_[1] = CreateActor<FontActor>();
-		FontScore_[1]->SetFont(std::to_string(PlayerScores_[1]), FONT_NOTO_SANS_CJK_SC, 50.0f, { 170,370 }, LeftAndRightSort::LEFT);
-
-		Font_PlayerName[1] = CreateActor<FontActor>();
-		Font_PlayerName[1]->SetFont(PlayerName_[1], FONT_TITAN_ONE, 60.0f, { 170,FontScore_[1]->GetFont()->GetScreenPosition().y - 50.0f }, LeftAndRightSort::LEFT);
-
-		{
-			FontScore_[2] = CreateActor<FontActor>();
-			FontScore_[2]->SetFont(std::to_string(PlayerScores_[2]), FONT_NOTO_SANS_CJK_SC, 50.0f, { 170,490 }, LeftAndRightSort::LEFT);
-
-			Font_PlayerName[2] = CreateActor<FontActor>();
-			Font_PlayerName[2]->SetFont(PlayerName_[2], FONT_TITAN_ONE, 60.0f, { 170,FontScore_[2]->GetFont()->GetScreenPosition().y - 50.0f }, LeftAndRightSort::LEFT);
-
-			FontScore_[3] = CreateActor<FontActor>();
-			FontScore_[3]->SetFont(std::to_string(PlayerScores_[3]), FONT_NOTO_SANS_CJK_SC, 50.0f, { 170,610 }, LeftAndRightSort::LEFT);
-
-			Font_PlayerName[3] = CreateActor<FontActor>();
-			Font_PlayerName[3]->SetFont(PlayerName_[3], FONT_TITAN_ONE, 60.0f, { 170,FontScore_[3]->GetFont()->GetScreenPosition().y - 50.0f }, LeftAndRightSort::LEFT);
-
-			FontScore_[4] = CreateActor<FontActor>();
-			FontScore_[4]->SetFont(std::to_string(PlayerScores_[4]), FONT_NOTO_SANS_CJK_SC, 50.0f, { 170,730 }, LeftAndRightSort::LEFT);
-		
-			Font_PlayerName[4] = CreateActor<FontActor>();
-			Font_PlayerName[4]->SetFont(PlayerName_[4], FONT_TITAN_ONE, 60.0f, { 170,FontScore_[4]->GetFont()->GetScreenPosition().y - 50.0f }, LeftAndRightSort::LEFT);
-		}
-	}
 }
 
 void MidScoreLevel::LevelEndEvent()
 {
-	Player1_->Death();
-	Chair1_->Death();
-	Player2_->Death();
-	Chair2_->Death();
-	Player3_->Death();
-	Chair3_->Death();
-
 	Score_->Death();
 
-	Font1_->Death();
-	FontScore_[0]->Death();
-	Font2_->Death();
-	FontScore_[1]->Death();
+	Font1st_->Death();
+	Font2nd_->Death();
 
-	Player4_->Death();
+	for (std::shared_ptr<FontActor> Font : FontScore_)
+	{
+		Font->Death();
+	}
+
+	for (std::shared_ptr<FontActor> Font : Font_PlayerName)
+	{
+		Font->Death();
+	}
+
+	for (std::shared_ptr<LobbyPlayer> LobbyPlayer : LobbyPlayers_)
+	{
+		LobbyPlayer->Death();
+	}
+
+	for (std::shared_ptr<FloorActor> Chair : Chairs_)
+	{
+		Chair->Death();
+	}
+
 	ContentsCore::GetInst()->ReleaseCurLevelResource();
 }
 
 void MidScoreLevel::RandomSocre()
 {
-	//엔터누르면 랜덤 점수 배정
-	if (true == GameEngineInput::GetInst()->IsDown("RandomScore"))
+	if (false == IsScoreOn_ && false == ScoreSetted_)
 	{
-		for (int i = 0; i < 5; ++i)
+		for (int i = 0; i < PlayerScores_.size(); ++i)
 		{
-			PlayerScores_[i] = GameEngineRandom::MainRandom.RandomInt(10, 15);
+			PlayerScores_[i] = GameEngineRandom::MainRandom.RandomInt(0, 999);
 
 			Font_PlayerName[i]->SetFont(PlayerName_[i], FONT_TITAN_ONE);
 			FontScore_[i]->SetFont(std::to_string(PlayerScores_[i]), FONT_NOTO_SANS_CJK_SC, 50.0f, LeftAndRightSort::LEFT);
 		}
-		IsScoreOn_ = true;
 	}
+
+	if (MidScoreTime_ < 3.0f)
+	{
+		return;
+	}
+	
+
+	// 점수 세팅하고 러프시작
+	if (false == ScoreSetted_ && MidScoreTime_ > 3.0f)
+	{
+		ScoreSetted_ = true;
+		IsScoreOn_ = true;
+
+		for (int i = 0; i < PlayerScores_.size(); ++i)
+		{
+			//PlayerScores_[i] = GameEngineRandom::MainRandom.RandomInt(300, 400);
+			//Font_PlayerName[i]->SetFont(PlayerName_[i], FONT_TITAN_ONE);
+			//FontScore_[i]->SetFont(std::to_string(PlayerScores_[i]), FONT_NOTO_SANS_CJK_SC, 50.0f, LeftAndRightSort::LEFT);
+
+			PlayerScores_[i] = AllServerPlayers_[i].Score_;
+			Font_PlayerName[i]->SetFont(PlayerName_[i], FONT_TITAN_ONE);
+			FontScore_[i]->SetFont(std::to_string(PlayerScores_[i]), FONT_NOTO_SANS_CJK_SC, 50.0f, LeftAndRightSort::LEFT);
+		}
+
+	}
+
+
+
 }
 
 void MidScoreLevel::BubbleSortLerp()
 {
-	for (int i = 4; i > 0; --i)//5개를 두개씩 비교하면 4번해야함->4부터 시작해야 죽 훑음 0부터해서 ++하니 안됨
+	for (int i = static_cast<int>(PlayerScores_.size()-1); i > 0; --i)//5개를 두개씩 비교하면 4번해야함->4부터 시작해야 죽 훑음 0부터해서 ++하니 안됨
 	{
 		for (int j = 0; j < i; ++j)
 		{
@@ -323,9 +291,9 @@ void MidScoreLevel::RenderBubbleSort()
 {
 	if (Once_ == true) //버블소트로 실제 정돈이 끝난후 그걸 토대로 러프 하는 부분(함수로 정돈하자)
 	{
-		for (int i = 0; i < 5; ++i)
+		for (int i = 0; i < FontScore_.size(); ++i)
 		{
-			for (int j = 0; j < 5; ++j)
+			for (int j = 0; j < FontScore_.size(); ++j)
 			{
 				if (FontScore_[i]->GetFont()->GetText() == std::to_string(PlayerScores_[j]) && i==j)
 				{
@@ -334,7 +302,7 @@ void MidScoreLevel::RenderBubbleSort()
 					//문제 하나 있음 같은 점수+둘다 러프해야하면 위치가 겹침
 				}
 				
-				if (FontScore_[4]->GetFont()->GetScreenPosition().y == (250.0f + (120.0f * static_cast<float>(j))))
+				if (FontScore_[FontScore_.size()-1]->GetFont()->GetScreenPosition().y == (250.0f + (120.0f * static_cast<float>(j))))
 				{
 					LerpTime_ += GameEngineTime::GetDeltaTime();
 				}
@@ -347,8 +315,195 @@ void MidScoreLevel::RenderBubbleSort()
 
 void MidScoreLevel::ChaseNameToScore()
 {
-	for (int i = 0; i < 5; ++i)
+	for (int i = 0; i < Font_PlayerName.size(); ++i)
 	{
 		Font_PlayerName[i]->SetFont(PlayerName_[i], FONT_TITAN_ONE, 60.0f, { FontScore_[i]->GetFont()->GetScreenPosition().x,FontScore_[i]->GetFont()->GetScreenPosition().y - 50.0f }, LeftAndRightSort::LEFT);
 	}
+}
+
+void MidScoreLevel::ServerSetting()
+{
+	// 자기제외 모든 플레이어 + 자신
+	AllServerPlayersCount_ = static_cast<int>(GameServer::GetInst()->AllPlayersInfo_.size() + 1);
+	AllServerPlayers_.clear();
+
+	std::map<int, std::shared_ptr<class PlayerStatePacket>>::iterator StartIt = GameServer::GetInst()->AllPlayersInfo_.begin();
+	std::map<int, std::shared_ptr<class PlayerStatePacket>>::iterator EndIt = GameServer::GetInst()->AllPlayersInfo_.end();
+
+	int ListIdx = 0;
+	for (; StartIt != EndIt; ++StartIt)
+	{
+		std::shared_ptr<PlayerStatePacket> Packet = (*StartIt).second;
+		AllServerPlayers_.emplace_back(Packet->PlayerID, Packet->PlayerColor, Packet->PlayerScore);
+	}
+	// 자기정보도 넣는다
+	std::shared_ptr<GameServer>& Server = GameServer::GetInst();
+	ServerPlayerInfo MyInfo;
+	MyInfo.ID_ = Server->PlayerID_;
+	MyInfo.Color_ = Server->PlayerColorID_;
+	MyInfo.Score_ = Server->PlayerScore_;
+	AllServerPlayers_.push_back(MyInfo);
+
+	// 점수 설정
+	PlayerScores_.resize(AllServerPlayersCount_);
+
+
+	// 폰트 정보 설정
+	for (int i = 0; i < AllServerPlayers_.size(); i++)
+	{
+		// UI
+		// 플레이어 이름
+		PlayerName_.push_back("Player " + std::to_string(AllServerPlayers_[i].ID_));
+
+		// 플레이어 점수 '폰트엑터'
+		std::shared_ptr<FontActor> FontScore = CreateActor<FontActor>();
+		FontScore->SetFont(std::to_string(000), FONT_NOTO_SANS_CJK_SC, 50.0f, { 170,250 + i * 120.0f }, LeftAndRightSort::LEFT);
+		FontScore_.push_back(FontScore);
+
+		// 플레이어 이름 '폰트엑터'
+		std::shared_ptr<FontActor> FontPlayerName = CreateActor<FontActor>();
+		FontPlayerName->SetFont(PlayerName_[i], FONT_TITAN_ONE, 60.0f, { 170, 200 + i * 120.0f }, LeftAndRightSort::LEFT);
+		Font_PlayerName.push_back(FontPlayerName);
+	}
+
+	
+	// *최상위 4명의 색정보 필요
+	std::sort(AllServerPlayers_.begin(), AllServerPlayers_.end(), ScoreBigger);
+
+	int LobbyPlayersCount = AllServerPlayersCount_ > 4 ? 4 : AllServerPlayersCount_;
+
+	// 로비 플레이어, 발판 생성
+	for (int i = 0; i < LobbyPlayersCount; i++)
+	{
+		// 로비플레이어 엑터 2명 생성
+		std::shared_ptr<LobbyPlayer> Player = CreateActor<LobbyPlayer>();
+		float4 PlayerColor = GameServer::GetInst()->GetPlayerColorReturn(AllServerPlayers_[i].Color_);
+		Player->SetPlayerColor(PlayerColor);
+
+		float4 PlayerPos = FirstActorPos + float4(i * 40.0f, i * -15.0f, 0);
+		Player->GetTransform().SetWorldPosition(PlayerPos);
+		Player->GetTransform().SetWorldRotation(FirstActorRot + float4(0, i * 10.0f, 0));
+
+		LobbyPlayers_.push_back(Player);
+
+		// 의자는 로비플레이어 -1 개 생성
+		// 마지막 로비플레이어
+		if (i == LobbyPlayersCount - 1)
+		{
+			Player->GetTransform().SetWorldMove({ 0, 300, 140 });
+			LastActorPos_ = Player->GetTransform().GetWorldPosition();
+
+			break;
+		}
+
+		std::shared_ptr<FloorActor> Chair = CreateActor<FloorActor>();
+
+		Chair->GetTransform().SetWorldPosition(PlayerPos + float4(0, 15.5f, 0));
+
+		Chairs_.push_back(Chair);
+
+	}
+
+	// 애니메이션 설정
+	if (AllServerPlayersCount_ == 2)
+	{
+		LobbyPlayers_[0]->ChangeAnimationGasp();
+		LobbyPlayers_[1]->ChangeAnimationTumbel();
+	}
+	else if (AllServerPlayersCount_ == 3)
+	{
+		LobbyPlayers_[0]->ChangeAnimationGasp();
+		LobbyPlayers_[1]->ChangeAnimationJogging();
+		LobbyPlayers_[2]->ChangeAnimationFall();
+	}
+	else if (AllServerPlayersCount_ >= 4)
+	{
+		LobbyPlayers_[0]->ChangeAnimationGasp();
+		LobbyPlayers_[1]->ChangeAnimationJogging();
+		LobbyPlayers_[2]->ChangeAnimationIdle();
+		LobbyPlayers_[3]->ChangeAnimationTumbel();
+	}
+
+}
+
+void MidScoreLevel::NoServerSetting()
+{
+	// 2명만 생성해라
+	AllServerPlayersCount_ = 4;
+
+	// 점수 설정
+	PlayerScores_.resize(AllServerPlayersCount_);
+
+	for (int i = 0; i < AllServerPlayersCount_; i++)
+	{
+		// 로비플레이어 엑터 2명 생성
+		std::shared_ptr<LobbyPlayer> Player = CreateActor<LobbyPlayer>();
+		float4 PlayerPos = FirstActorPos + float4(i * 40.0f, i * -15.0f, 0);
+		Player->GetTransform().SetWorldPosition(PlayerPos);
+		Player->GetTransform().SetWorldRotation(FirstActorRot + float4(0, i * 10.0f, 0));
+
+		LobbyPlayers_.push_back(Player);
+		
+		// UI
+		// 플레이어 이름
+		PlayerName_.push_back("Player" + std::to_string(i));
+
+		// 플레이어 점수 '폰트엑터'
+		std::shared_ptr<FontActor> FontScore = CreateActor<FontActor>();
+		FontScore->SetFont("Score" + std::to_string(PlayerScores_[i]), FONT_NOTO_SANS_CJK_SC, 50.0f, {170,250 + i * 120.0f}, LeftAndRightSort::LEFT);
+		FontScore_.push_back(FontScore);
+
+		// 플레이어 이름 '폰트엑터'
+		std::shared_ptr<FontActor> FontPlayerName = CreateActor<FontActor>();
+		FontPlayerName->SetFont(PlayerName_[i] + "번 플레이어", FONT_TITAN_ONE, 60.0f, {170, 200 + i * 120.0f}, LeftAndRightSort::LEFT);
+		Font_PlayerName.push_back(FontPlayerName);
+
+		// 의자는 로비플레이어 -1 개 생성
+		// 마지막 로비플레이어
+		if (i == AllServerPlayersCount_ - 1)
+		{
+			Player->GetTransform().SetWorldMove({ 0, 300, 140 });
+			LastActorPos_ = Player->GetTransform().GetWorldPosition();
+
+			break;
+		}
+
+		std::shared_ptr<FloorActor> Chair = CreateActor<FloorActor>();
+
+		Chair->GetTransform().SetWorldPosition(PlayerPos + float4(0, 15.5f, 0));
+
+		Chairs_.push_back(Chair);
+	}
+
+	// 애니메이션 설정
+	if (AllServerPlayersCount_ == 2)
+	{
+		LobbyPlayers_[0]->ChangeAnimationGasp();
+		LobbyPlayers_[1]->ChangeAnimationTumbel();
+	}
+	else if (AllServerPlayersCount_ == 3)
+	{
+		LobbyPlayers_[0]->ChangeAnimationGasp();
+		LobbyPlayers_[1]->ChangeAnimationJogging();
+		LobbyPlayers_[2]->ChangeAnimationFall();
+	}
+	else if (AllServerPlayersCount_ >= 4)
+	{
+		LobbyPlayers_[0]->ChangeAnimationGasp();
+		LobbyPlayers_[1]->ChangeAnimationJogging();
+		LobbyPlayers_[2]->ChangeAnimationIdle();
+		LobbyPlayers_[3]->ChangeAnimationTumbel();
+	}
+
+
+	PlayerName_[0] = "kim";
+	PlayerName_[1] = "nana";
+	PlayerName_[2] = "jason";
+	PlayerName_[3] = "dfd";
+
+	LobbyPlayers_[0]->SetPlayerColor(GameServer::GetInst()->GetPlayerColorReturn(0));
+	LobbyPlayers_[1]->SetPlayerColor(GameServer::GetInst()->GetPlayerColorReturn(1));
+	LobbyPlayers_[2]->SetPlayerColor(GameServer::GetInst()->GetPlayerColorReturn(2));
+	LobbyPlayers_[3]->SetPlayerColor(GameServer::GetInst()->GetPlayerColorReturn(3));
+
 }

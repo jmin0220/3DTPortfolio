@@ -47,19 +47,18 @@ private:
 	std::shared_ptr<GoalTipActor> Score_;
 	std::shared_ptr<MidScoreBGActor> BG_;
 
-	std::shared_ptr<FontActor> Font1_;
+	std::shared_ptr<FontActor> Font1st_;
+	std::shared_ptr<FontActor> Font2nd_;
 
-	std::shared_ptr<FontActor> Font2_;
 
+	std::vector<std::shared_ptr<FontActor>> Font_PlayerName;
+	std::vector<std::shared_ptr<FontActor>> FontScore_;
+	std::vector<int> PlayerScores_;
+	std::vector<std::string> PlayerName_;
 
-	std::shared_ptr<FontActor> Font_PlayerName[5];
-	std::shared_ptr<FontActor> FontScore_[5];
+	std::vector<std::shared_ptr<LobbyPlayer>> LobbyPlayers_;
+	std::vector<std::shared_ptr<FloorActor>> Chairs_;
 
-	int PlayerScores_[5];
-
-	int Index_[5];
-
-	std::string PlayerName_[5];
 
 	float BeforeScoreTime_;
 	float FallingTime_;
@@ -69,8 +68,28 @@ private:
 
 	// ¼­¹ö
 private:
+	struct ServerPlayerInfo
+	{
+		unsigned int ID_;
+		unsigned int Color_;
+		unsigned int Score_;
+	};
+
+	static bool ScoreBigger(ServerPlayerInfo _Left, ServerPlayerInfo _Right)
+	{
+		return _Left.Score_ > _Right.Score_;
+	}
+
+	void ServerSetting();
+	void NoServerSetting();
+
+	std::vector<ServerPlayerInfo> AllServerPlayers_;
+
+	int AllServerPlayersCount_;
 	float MidScoreTime_;
 	bool LevelChanged_;
+	bool ScoreSetted_;
+	float4 LastActorPos_;
 
 };
 

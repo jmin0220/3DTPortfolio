@@ -13,6 +13,7 @@ PlayerFlag GameServer::PlayerSignal_ = PlayerFlag::P_None;
 unsigned int GameServer::PlayerID_ = -1;
 unsigned int GameServer::PlayerColorID_ = 0;
 float4 GameServer::PlayerColor_ = float4::ZERO;
+unsigned int GameServer::PlayerScore_ = 0;
 
 #include <atomic>
 std::mutex Lock;
@@ -73,6 +74,8 @@ void GameServer::ServerStart()
 
 			Server.NetSendPacket(_User, Packet);
 
+			// 점수테스트용
+			PlayerScore_ = 400 - static_cast<unsigned int>(Packet->ObjectID * 100);
 		};
 
 	}
@@ -267,6 +270,12 @@ void GameServer::SendPlayerStatePacket()
 	
 	// 자신의 상태를 알림
 	Packet->PlayerStateSignal = static_cast<unsigned int>(PlayerSignal_);
+
+	// 점수
+	Packet->PlayerScore = PlayerScore_;
+
+	// 플레이어 스킨정보(색상)
+	Packet->PlayerColor = PlayerColorID_;
 
 	Net->SendPacket(Packet);
 }

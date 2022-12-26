@@ -15,7 +15,7 @@ private:
 	static GameServerNetClient Client;
 
 public:
-	static std::shared_ptr<GameServer> GetInst()
+	static std::shared_ptr<GameServer>& GetInst()
 	{
 		return Inst_;
 	}
@@ -47,10 +47,10 @@ public:
 		switch (static_cast<PlayerColor>(PlayerColorID_))
 		{
 		case PlayerColor::PINK:
-			{
-				PlayerColor_ = float4(0.93f, 0.21f, 0.54f);
-				break;
-			}
+		{
+			PlayerColor_ = float4(0.93f, 0.21f, 0.54f);
+			break;
+		}
 		case PlayerColor::RED:
 		{
 			PlayerColor_ = float4(0.93f, 0.21f, 0.21f);
@@ -82,7 +82,7 @@ public:
 		}
 	}
 
-	float4 GetPlayerColorReturn(PlayerColor _PlayerColor)
+	float4 GetPlayerColorReturn(unsigned int _PlayerColor)
 	{
 		switch (static_cast<PlayerColor>(_PlayerColor))
 		{
@@ -129,6 +129,7 @@ public:
 	static unsigned int PlayerID_;
 	static unsigned int PlayerColorID_;
 	static float4 PlayerColor_;
+	static unsigned int PlayerScore_;
 	
 	// 모든 유저 정보
 	std::map<int, std::shared_ptr<class PlayerStatePacket>> AllPlayersInfo_;

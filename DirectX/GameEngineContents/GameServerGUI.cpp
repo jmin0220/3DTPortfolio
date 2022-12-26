@@ -99,7 +99,7 @@ void GameServerGUI::LobbyGUI()
 	if (PrevColorIdx_ != ColorIdx)
 	{
 		GameServer::GetInst()->SetPlayerColorID(ColorIdx);
-		LobbyPlayer::SetPlayerColor();
+		//LobbyPlayer::SetPlayerColor();
 		PrevColorIdx_ = ColorIdx;
 	}
 
@@ -122,7 +122,7 @@ void GameServerGUI::InGameGUI()
 
 
 	{
-		std::string Text = "플레이어 수 :";
+		std::string Text = "유저 수 :";
 		Text += std::to_string(GameServer::GetInst()->GetAllPlayersCount());
 		ImGui::Text(GameEngineString::AnsiToUTF8Return(Text).c_str());
 	}
@@ -130,9 +130,8 @@ void GameServerGUI::InGameGUI()
 
 	// 서버신호의 상태
 	ImGui::NewLine();
-	ImGui::NewLine();
 	{
-		std::string Text = "서버신호 : ";
+		std::string Text = "서버 신호(호스트) : ";
 
 		if (ServerFlag::S_None == GameServer::ServerSignal_)
 		{
@@ -199,6 +198,8 @@ void GameServerGUI::InGameGUI()
 	}
 
 	// 자신의 상태
+	ImGui::NewLine();
+	ImGui::Text(GameEngineString::AnsiToUTF8Return("< 내 정보 >").c_str());
 	{
 		std::string Text = "플레이어 신호 : ";
 
@@ -263,12 +264,14 @@ void GameServerGUI::InGameGUI()
 			Text += "P_StageEndChangeOver";
 		}
 
+		Text += "\n- 플레이어 점수 : " + std::to_string(GameServer::GetInst()->PlayerScore_);
 		ImGui::Text(GameEngineString::AnsiToUTF8Return(Text).c_str());
 
 	}
 
 	ImGui::NewLine();
 	// 다른 사람들의 상태
+	ImGui::Text(GameEngineString::AnsiToUTF8Return("< 다른 플레이어 정보 >").c_str());
 	{
 		std::map<int, std::shared_ptr<class PlayerStatePacket>> PlayersInfo = GameServer::GetInst()->GetAllPlayersInfo();
 		std::map<int, std::shared_ptr<class PlayerStatePacket>>::iterator Start = PlayersInfo.begin();
@@ -276,11 +279,12 @@ void GameServerGUI::InGameGUI()
 
 		for (; Start != End; ++Start)
 		{
+			unsigned int PlayerID = (*Start).second->PlayerID;
 			PlayerFlag Flag = static_cast<PlayerFlag>((*Start).second->PlayerStateSignal);
-			
+			unsigned int Score = (*Start).second->PlayerScore;
 			{
-				std::string Text = "PlayerID : ";
-				Text += std::to_string(GameServer::GetInst()->PlayerID_);
+				std::string Text = " PlayerID : ";
+				Text += std::to_string(PlayerID);
 				Text += "  [";
 
 				if (false == Flag)
@@ -344,17 +348,11 @@ void GameServerGUI::InGameGUI()
 					Text += "P_StageEndChangeOver";
 				}
 
-				Text += " ]";
+				Text += " ]\n";
+				Text += " - 플레이어 점수 : " + std::to_string(Score);
 				ImGui::Text(GameEngineString::AnsiToUTF8Return(Text).c_str());
 			}
 		}
-	}
-
-	ImGui::NewLine();
-	{
-		std::string Text = "메인플레이어ID : ";
-		Text += PlayerActor::MainPlayer == nullptr ? "메인 플레이어 생성되지 않았음" : std::to_string(PlayerActor::GetPlayerID());
-		ImGui::Text(GameEngineString::AnsiToUTF8Return(Text).c_str());
 	}
 	
 }

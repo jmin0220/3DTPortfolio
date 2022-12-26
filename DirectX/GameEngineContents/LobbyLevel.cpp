@@ -13,7 +13,7 @@
 #include "GameServer.h"
 
 // 서버테스트시 첫 스테이지 선택
-const std::string FirstStage = LEVEL_NAME_BIGSHOTS;
+const std::string FirstStage = LEVEL_NAME_DOORDASH;
 
 LobbyLevel::LobbyLevel() 
 	:Swap(false)
@@ -48,6 +48,8 @@ void LobbyLevel::Start()
 
 void LobbyLevel::Update(float _DeltaTime)
 {
+	Player_->SetPlayerColor(GameServer::GetInst()->PlayerColor_);
+
 	StateManager_.Update(_DeltaTime);
 
 	//GlobalBGM::GetInst()->GetBGM().Volume(Volume_);

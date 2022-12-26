@@ -46,13 +46,6 @@ void JumpClubLevel::End()
 void JumpClubLevel::LevelStartEvent()
 {
 	StageParentLevel::LevelStartEvent();
-	
-	LightObject_->GetLightData().AmbientLight= float4{ 0.7f,0.7f,0.7f,1.0f };
-	LightObject_->GetLightData().DifLightPower = 0.5f;
-	LightObject_->GetLightData().SpcLightPower = 1.0f;
-	LightObject_->GetLightData().AmbLightPower = 1.0f;
-	LightObject_->GetTransform().SetWorldRotation({ 260.0f,230.0f,0.0f });
-	
 	BackGroundObj_ = CreateActor<JumpClub_BackGroundObject>();
 	VFXWaterObj_ = CreateActor<VFXWaterActor>();
 
@@ -66,6 +59,22 @@ void JumpClubLevel::LevelStartEvent()
 	// Bar Y축 조정 필요
 	// 호스트 : 생성하고 서버초기화
 	// 유저 : 패킷받아서생성, 움직임은 서버 패킷받아서 움직임
+	
+	// 서버 안키고 디버깅 할 때
+	{
+		if (false == GameServer::GetInst()->IsServerStart())
+		{
+			std::shared_ptr<JumpClub_SpinBarDouble> BarDouble = CreateActor<JumpClub_SpinBarDouble>();
+			BarDouble->GetTransform().SetWorldPosition({ 0.0f, 77.0f, 0.0f });
+			BarDouble->PhysXInit();
+
+
+			std::shared_ptr<JumpClub_SpinBarSingle> BarSingle = CreateActor<JumpClub_SpinBarSingle>();
+			BarSingle->GetTransform().SetWorldPosition({ 0.0f, 62.0f, 0.0f });
+			BarSingle->PhysXInit();
+		}
+	}
+
 
 	if (true == GameServer::IsHost_)
 	{
@@ -80,20 +89,10 @@ void JumpClubLevel::LevelStartEvent()
 		BarSingle->GetTransform().SetWorldPosition({ 0.0f, 62.0f, 0.0f });
 		BarSingle->PhysXInit();
 	}
-	else
-	{
-		std::shared_ptr<JumpClub_SpinBarDouble> BarDouble = CreateActor<JumpClub_SpinBarDouble>();
-		BarDouble->GetTransform().SetWorldPosition({ 0.0f, 77.0f, 0.0f });
-		BarDouble->PhysXInit();
 
 
-		std::shared_ptr<JumpClub_SpinBarSingle> BarSingle = CreateActor<JumpClub_SpinBarSingle>();
-		BarSingle->GetTransform().SetWorldPosition({ 0.0f, 62.0f, 0.0f });
-		BarSingle->PhysXInit();
-	}
-
-	std::shared_ptr<SkyboxActor> Skybox = CreateActor<SkyboxActor>();
-	Skybox->SetSkyTexture("S5_SkyBox_Respawn.png");
+	std::shared_ptr<GameEngineActor> Skybox = CreateActor<SkyboxActor>();
+	Skybox->GetTransform().SetWorldScale({ 100, 100, 100 });
 }
 
 void JumpClubLevel::LevelEndEvent()

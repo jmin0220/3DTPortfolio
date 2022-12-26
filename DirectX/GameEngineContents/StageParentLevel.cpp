@@ -127,9 +127,14 @@ void StageParentLevel::End()
 
 void StageParentLevel::LevelStartEvent()
 {
-	//AllPlayersReady_ = false;
-
-	GUI_->On();
+	if (true == GameServer::GetInst()->IsServerStart())
+	{
+		GUI_->Off();
+	}
+	else
+	{
+		GUI_->On();
+	}
 	VirtualPhysXLevel::LevelStartEvent();
 	LevelStartLoad();
 
@@ -149,6 +154,9 @@ void StageParentLevel::LevelStartEvent()
 	}
 	int PlayerID = GameServer::GetInst()->PlayerID_;
 	Player_->GetTransform().SetWorldPosition(PlayerPos + float4{ PlayerID * 20.0f, 0, 0 });
+
+	// 점수 테스트
+	GameServer::GetInst()->PlayerScore_ = static_cast<unsigned int>(PlayerID * 100);
 
 	//후프레벨 위치 임시
 	if (MyStage_ == StageNum::STAGE4)

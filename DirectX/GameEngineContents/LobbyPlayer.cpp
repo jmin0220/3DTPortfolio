@@ -1,12 +1,15 @@
 #include "PreCompile.h"
 #include "LobbyPlayer.h"
 
-SkinData LobbyPlayer::SkinData_;
+//void LobbyPlayer::SetPlayerColor()
+//{
+//	float4 Color = GameServer::GetInst()->PlayerColor_;
+//	SkinData_.BodyColor = Color;
+//}
 
-void LobbyPlayer::SetPlayerColor()
+void LobbyPlayer::SetPlayerColor(float4 _Color)
 {
-	float4 Color = GameServer::GetInst()->PlayerColor_;
-	SkinData_.BodyColor = Color;
+	SkinData_.BodyColor = _Color;
 }
 
 LobbyPlayer::LobbyPlayer()

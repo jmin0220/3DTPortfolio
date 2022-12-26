@@ -98,7 +98,7 @@ private:
 	void initPhysics(bool _interactive);
 
 	// PhysX Update
-	void stepPhysics(bool _Interactive = true);
+	void stepPhysics(float _DeltaTime, bool _Interactive = true);
 
 	// Memory Release
 	void cleanupPhysics(bool _Interactive = true);

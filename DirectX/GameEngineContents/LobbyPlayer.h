@@ -7,7 +7,8 @@ class LobbyPlayer : public GameEngineActor
 {
 public:
 	// ¼­¹ö
-	static void SetPlayerColor();
+	//static void SetPlayerColor();
+	void SetPlayerColor(float4 _Color);
 
 public:
 	// constrcuter destructer
@@ -40,7 +41,7 @@ private:
 
 	void SetCharacterTexture();
 
-	static SkinData SkinData_;
+	SkinData SkinData_;
 
 
 private:

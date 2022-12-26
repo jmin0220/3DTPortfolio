@@ -27,7 +27,7 @@ void VirtualPhysXLevel::Start()
 void VirtualPhysXLevel::Update(float _DeltaTIme)
 {
 	// 물리연산 업데이트
-	stepPhysics(true);
+	stepPhysics(_DeltaTIme, true);
 }
 
 void VirtualPhysXLevel::End()
@@ -109,16 +109,16 @@ void VirtualPhysXLevel::initPhysics(bool _interactive)
 }
 
 // PhysX 업데이트
-void VirtualPhysXLevel::stepPhysics(bool _Interactive)
+void VirtualPhysXLevel::stepPhysics(float _DeltaTime, bool _Interactive)
 {
-	float simulateRatio = 120.0f;
+	float simulateRatio = 60.0f;
 
 //#ifndef DEBUG
 //	 simulateRatio = 60.0f;
 //#endif
 // 
 	// TODO::현재프레임 만큼 수정할 필요가 있을지도
-	Scene_->simulate(1.0f / simulateRatio);
+	Scene_->simulate(1 / simulateRatio);
 	Scene_->fetchResults(true);
 }
 

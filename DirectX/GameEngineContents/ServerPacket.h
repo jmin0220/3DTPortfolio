@@ -110,7 +110,9 @@ public:
 	unsigned int PlayerID;
 	unsigned int PlayerStateSignal;
 
-	//TODO :: 플레이어 점수
+	unsigned int PlayerScore;
+	unsigned int PlayerColor;	// 플레이어 : 스킨색상, 기타 : ...
+
 	PlayerStatePacket()
 	{
 		SetPacketID(ContentsPacketType::PlayerState);
@@ -121,12 +123,16 @@ public:
 		GameServerPacket::Serialize(_Ser);
 		_Ser << PlayerID;
 		_Ser << PlayerStateSignal;
+		_Ser << PlayerScore;
+		_Ser << PlayerColor;
 	}
 	virtual void DeSerialize(GameServerSerializer& _Ser)
 	{
 		GameServerPacket::DeSerialize(_Ser);
 		_Ser >> PlayerID;
 		_Ser >> PlayerStateSignal;
+		_Ser >> PlayerScore;
+		_Ser >> PlayerColor;
 	}
 };
 
