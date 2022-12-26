@@ -21,10 +21,23 @@ struct Output
 Output CalDeferredLight_VS(Input _Input)
 {
     Output NewOutPut = (Output)0;
-    NewOutPut.Pos = _Input.Pos;
-    NewOutPut.Tex = _Input.Tex;
+
+    if (0 == Lights[0].LightType)
+    {
+        NewOutPut.Pos = _Input.Pos;
+        NewOutPut.Tex = _Input.Tex;
+    }
+    else if (0 != Lights[0].LightType)
+    {
+        // 월드 뷰 프로젝션을 곱해줘야 한다.
+        NewOutPut.Pos = _Input.Pos;
+        NewOutPut.Tex = _Input.Tex;
+    }
     return NewOutPut;
 }
+
+// 디렉션 라이트에는 볼륨이 필요없습니다.
+// 포인트 라이트랑 스폿라이트같은 
 
 Texture2D PositionTex : register(t0);
 Texture2D NormalTex : register(t1);

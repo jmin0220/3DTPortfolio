@@ -66,41 +66,13 @@ float4 CalDirectionDiffuseLight(float4 _ViewNormal, LightData _LightData)
     return DiffuseLight * _LightData.DifLightPower;
 }
 
-
-float4 CalPointDiffuseLight(float4 _ViewPosition, float4 _ViewNormal, LightData _LightData)
-{
-    _ViewNormal = normalize(_ViewNormal);
-    float4 LightRevDir = normalize(_LightData.ViewLightPos - _ViewPosition);
-    LightRevDir.w = 0.0f;
-
-    float4 DiffuseLight = max(0.0f, dot(_ViewNormal.xyz, LightRevDir.xyz));
-
-    // 2           1000의 범위를 가진 포인트 라이트이다.          이거리가 1000이야
-    float Ratio = 1.0f - (length(_LightData.ViewLightPos - _ViewPosition) / _LightData.PointLightRange);
-
-    //if (length(_LightData.ViewLightPos - _ViewPosition) > _LightData.PointLightRange)
-    //{
-    //    DiffuseLight.xyzw = (float4)0.0f;
-    //}
-
-    return DiffuseLight * _LightData.DifLightPower * Ratio;
-}
-
 float4 CalDiffuseLights(float4 _ViewPosition, float4 _ViewNormal)
 {
     float4 ResultLights = (float4) 0.0f;
 
     for (int i = 0; i < LightCount; ++i)
     {
-        switch (Lights[i].LightType)
-        {
-        case 0: // dir
-            ResultLights += CalDirectionDiffuseLight(_ViewNormal, Lights[i]);
-            break;
-        case 1: // Point
-            ResultLights += CalPointDiffuseLight(_ViewPosition, _ViewNormal, Lights[i]);
-            break;
-        }
+        ResultLights += CalDirectionDiffuseLight(_ViewNormal, Lights[i]);
     }
 
     ResultLights.w = ResultLights.x;
@@ -150,29 +122,6 @@ float4 CalDirectionSpacularLight(float4 _ViewPosition, float4 _ViewNormal, Light
     return SpacularLight * _LightData.SpcLightPower;
 }
 
-
-float4 CalPointSpacularLight(float4 _ViewPosition, float4 _ViewNormal, LightData _LightData)
-{
-    float4 SpacularLight = (float4) 0.0f;
-
-    _ViewNormal.xyz = normalize(_ViewNormal.xyz);
-    _LightData.ViewLightRevDir.xyz = normalize(_LightData.ViewLightPos.xyz - _ViewPosition.xyz);
-
-    // N
-    float3 Reflection = normalize(2.0f * _ViewNormal.xyz * dot(_LightData.ViewLightRevDir.xyz, _ViewNormal.xyz) - _LightData.ViewLightRevDir.xyz);
-    // L
-    float3 Eye = normalize(_LightData.CameraPosition.xyz - _ViewPosition.xyz);
-
-    float Result = max(0.0f, dot(Reflection.xyz, Eye.xyz));
-    SpacularLight.xyzw = pow(Result, _LightData.SpcPow);
-
-    float Ratio = length(_LightData.ViewLightPos - _ViewPosition) / _LightData.PointLightRange;
-
-    return SpacularLight * _LightData.SpcLightPower * Ratio;
-}
-
-
-
 float4 CalSpacularLight(float4 _ViewPosition, float4 _ViewNormal)
 {
     float4 ResultLights = (float4) 0.0f;
@@ -180,17 +129,7 @@ float4 CalSpacularLight(float4 _ViewPosition, float4 _ViewNormal)
     for (int i = 0; i < LightCount; ++i)
     {
 
-        // ResultLights += CalDirectionSpacularLight(_ViewPosition, _ViewNormal, Lights[i]);
-
-        switch (Lights[i].LightType)
-        {
-        case 0: // dir
-            ResultLights += CalDirectionSpacularLight(_ViewPosition, _ViewNormal, Lights[i]);
-            break;
-        case 1: // Point
-            ResultLights += CalDirectionSpacularLight(_ViewPosition, _ViewNormal, Lights[i]);
-            break;
-        }
+        ResultLights += CalDirectionSpacularLight(_ViewPosition, _ViewNormal, Lights[i]);
     }
 
     ResultLights.w = ResultLights.x;
