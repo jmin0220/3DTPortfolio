@@ -21,6 +21,7 @@
 #include "JumpClub_SpinBarDouble.h"
 #include "JumpClub_SpinBarSingle.h"
 #include "BigShots_Cannon.h"
+#include "BigShots_Spinner.h"
 
 #include <GameEngineBase/magic_enum.hpp>
 #include <GameEngineCore/ThirdParty/inc/json.h>
@@ -226,10 +227,10 @@ void StageParentLevel::LevelStartLoad()
 		break;
 	}
 	case StageNum::STAGE2:
-		//CurStageName = "\\stage2.json";
+		CurStageName = JSON_NAME_JUMPCLUB;
 		break;
 	case StageNum::STAGE3:
-		//CurStageName = "\\stage3.json";
+		CurStageName = JSON_NAME_BIGSHOTS;
 		break;
 	case StageNum::STAGE4:
 		CurStageName = JSON_NAME_HEXAGONE;
@@ -284,6 +285,11 @@ void StageParentLevel::LevelStartLoad()
 		case Stage_MeshEnum::START:
 		{
 			int a = 0;
+			break;
+		}
+		case Stage_MeshEnum::S04Chevron_low1_TopRotater_low_MainTriRotater2_low:
+		{
+			NewObj.Actor_ = CreateActor<BigShots_Spinner>();
 			break;
 		}
 		case Stage_MeshEnum::HexAGoneMap:

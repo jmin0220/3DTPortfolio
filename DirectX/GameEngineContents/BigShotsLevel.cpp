@@ -106,11 +106,6 @@ void BigShotsLevel::LevelStartEvent()
 		//Cannon3->GetTransform().SetWorldRotation({ -10.0f, 0.0f, 0.0f });
 	}
 
-
-	// Test용
-	std::shared_ptr<BigShots_Spinner> Spinner1 = CreateActor<BigShots_Spinner>();
-	Spinner1->GetTransform().SetWorldPosition({ 50.0f, -20.0f, 0.0f });
-
 	//스카이박스
 	std::shared_ptr<SkyboxActor> Skybox = CreateActor<SkyboxActor>();
 	Skybox->SetSkyTexture("S4_SkyBox.png");

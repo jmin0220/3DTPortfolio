@@ -15,7 +15,12 @@ enum class MeshEnum
 	// STAGE01
 	// STAGE02
 	JumpClubMap,
+	JumpClubStage,
 	// STAGE03
+	BigShatsStage,
+	BigShotsMap,
+	PRP_CanonLip,
+	S04Chevron_low1_TopRotater_low_MainTriRotater2_low,
 	// STAGE04
 	HexAGoneMap,
 	HexTile,

@@ -13,6 +13,7 @@ enum class Stage_MeshEnum
 	Chevron,
 	// STAGE02
 	// STAGE03
+	S04Chevron_low1_TopRotater_low_MainTriRotater2_low,
 	// STAGE04
 	HexAGoneMap,
 	HexTile,

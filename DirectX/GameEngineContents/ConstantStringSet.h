@@ -79,6 +79,8 @@
 
 //JSON
 #define JSON_NAME_DOORDASH "\\DoorDash.Json"
+#define JSON_NAME_JUMPCLUB "\\JumpClub.Json"
+#define JSON_NAME_BIGSHOTS "\\BigShots.Json"
 #define JSON_NAME_HEXAGONE "\\HexAGone.json"
 #define JSON_NAME_HOOPSLEGENDS "\\HoopsMap.json"
 

@@ -663,11 +663,39 @@ void MapEditorGUI::CreateFBXMesh()
 		int a = 0;
 		break;
 	}
+	// STAGE02
 	case MeshEnum::JumpClubMap:
 	{
 		NewObj.Actor_.lock()->SetStaticMesh("JumpClubMap.FBX");
 		break;
 	}
+	case MeshEnum::JumpClubStage:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("JumpClubStage.FBX");
+		break;
+	}
+	// STAGE03
+	case MeshEnum::BigShatsStage:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("BigShatsStage.FBX");
+		break;
+	}
+	case MeshEnum::BigShotsMap:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("BigShotsMap.FBX");
+		break;
+	}
+	case MeshEnum::PRP_CanonLip:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("PRP_CanonLip.FBX");
+		break;
+	}
+	case MeshEnum::S04Chevron_low1_TopRotater_low_MainTriRotater2_low:
+	{
+		NewObj.Actor_.lock()->SetStaticMesh("S04Chevron_low1_TopRotater_low_MainTriRotater2_low.FBX");
+		break;
+	}
+	// STAGE04
 	case MeshEnum::HexAGoneMap:
 	{
 		NewObj.Actor_.lock()->SetStaticMesh("HexAGoneMap.FBX");
