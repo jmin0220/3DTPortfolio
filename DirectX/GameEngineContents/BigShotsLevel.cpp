@@ -56,6 +56,8 @@ void BigShotsLevel::LevelStartEvent()
 	// 물 위아래 위치 조정 필요
 	VFXWaterObj_->GetTransform().SetWorldPosition(float4{ 0.0f,-60.0f,0.0f });
 
+	// TODO::Player의 위치가 대략 -55이하면 게임오버
+
 	//// TODO::테스트용 임시 포지션
 	//Player_->GetTransform().SetWorldPosition(float4(0.0f, 8.0f, 0.0f));
 	//// *플레이어 생성 후 카메라암 세팅 해줘야함*

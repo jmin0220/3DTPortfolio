@@ -16,6 +16,7 @@ void BigShots_Puff::Start()
 {
 	PuffRenderer_ = CreateComponent<GameEngineTextureRenderer>();
 	PuffRenderer_->SetTexture("VFX_SomePuff_02.png");
+	//PuffRenderer_->SetMaterial("CustomDefferedColor");
 	PuffRenderer_->GetTransform().SetWorldScale({ SumValue_,SumValue_,0 });
 }
 

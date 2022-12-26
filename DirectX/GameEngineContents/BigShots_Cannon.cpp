@@ -189,7 +189,7 @@ void BigShots_Cannon::Update(float _DeltaTime)
 	// 서버 안켰을 때
 	else
 	{
-		if (true == GameEngineInput::GetInst()->IsDown(KEY_SPACEBAR))
+		if (true == GameEngineInput::GetInst()->IsDown(KEY_ENTER))
 		{
 			// 발사
 			SetShootSetting();

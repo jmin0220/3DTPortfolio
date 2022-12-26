@@ -15,7 +15,7 @@ void BigShotsStage::Start()
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
 	Renderer_->SetFBXMesh("BigShatsStage.FBX", "CustomDefferedColor");
 
-	PhysXSeesawGeometry_ = CreateComponent<PhysXTriMeshGeometryComponent>();
+	PhysXSeesawGeometry_ = CreateComponent<PhysXConvexSeesawComponent>();
 }
 
 void BigShotsStage::Update(float _DeltaTime)
@@ -30,6 +30,8 @@ void BigShotsStage::LevelStartEvent()
 {
 	CreatePhysXActors(static_cast<VirtualPhysXLevel*>(GetLevel())->GetScene(),
 		static_cast<VirtualPhysXLevel*>(GetLevel())->GetPhysics());
+
+	PhysXSeesawGeometry_->AddTorque(float4(0.0f, 0.0f, 100000.0f));
 }
 
 void BigShotsStage::LevelEndEvent()

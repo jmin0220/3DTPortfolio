@@ -675,6 +675,9 @@
     <ClInclude Include="BigShots_Puff.h">
       <Filter>02_Actor\Stage03Actor</Filter>
     </ClInclude>
+    <ClInclude Include="PhysXConvexSeesawComponent.h">
+      <Filter>03_Component\PhysXComponent</Filter>
+    </ClInclude>
     <ClInclude Include="TimerActor.h">
       <Filter>02_Actor\UIActor\TimerActor</Filter>
     </ClInclude>
@@ -1120,6 +1123,9 @@
     </ClCompile>
     <ClCompile Include="BigShots_Puff.cpp">
       <Filter>02_Actor\Stage03Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXConvexSeesawComponent.cpp">
+      <Filter>03_Component\PhysXComponent</Filter>
     </ClCompile>
     <ClCompile Include="TimerActor.cpp">
       <Filter>02_Actor\UIActor\TimerActor</Filter>
