@@ -43,7 +43,6 @@ private:
 		InterTime_ = _Inter;
 	}
 
-	bool ServerActivated_;
 	bool IsShoot_;
 	float InterTime_;
 	float SumShootingTime_;

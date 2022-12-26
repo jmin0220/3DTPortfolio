@@ -74,8 +74,6 @@ void GameServer::ServerStart()
 
 			Server.NetSendPacket(_User, Packet);
 
-			// 점수테스트용
-			PlayerScore_ = 400 - static_cast<unsigned int>(Packet->ObjectID * 100);
 		};
 
 	}

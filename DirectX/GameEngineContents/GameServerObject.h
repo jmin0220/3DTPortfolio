@@ -90,5 +90,19 @@ private:
 	bool IsNetInit;
 	ServerObjectType ServerType;
 	int ID;
+
+public:
+	void SetMoveStartActivate(bool _MoveStart)
+	{
+		MoveStartActiaved_ = _MoveStart;
+	}
+
+	bool GetMoveStartActivate()
+	{
+		return MoveStartActiaved_;
+	}
+
+private:
+	bool MoveStartActiaved_ = false;
 };
 

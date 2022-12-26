@@ -27,6 +27,7 @@ void StageParentLevel::IdleStart(const StateInfo& _Info)
 	if (true == GameServer::GetInst()->IsServerStart())
 	{
 		IntroduceGame_->On();
+		IntroduceGame_->SetStageTexture(MyStage_);
 	}
 	CameraArm_->SetFollowCamera(MainCam_, Player_);
 }

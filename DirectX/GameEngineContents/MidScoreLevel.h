@@ -80,6 +80,11 @@ private:
 		return _Left.Score_ > _Right.Score_;
 	}
 
+	static bool IDSmaller(ServerPlayerInfo _Left, ServerPlayerInfo _Right)
+	{
+		return _Left.ID_ < _Right.ID_;
+	}
+
 	void ServerSetting();
 	void NoServerSetting();
 

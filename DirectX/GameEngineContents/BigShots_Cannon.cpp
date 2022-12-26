@@ -7,7 +7,6 @@
 BigShots_Cannon::BigShots_Cannon()
 	: ShootingTime_(5.0f)
 	, SumShootingTime_(ShootingTime_)
-	, ServerActivated_(false)
 {
 }
 
@@ -89,15 +88,15 @@ void BigShots_Cannon::Update(float _DeltaTime)
 	if (true == GameServer::GetInst()->IsServerStart())
 	{
 		if (true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StagePreviewChangeOver)
-			&& false == ServerActivated_)
+			&& false == GetMoveStartActivate())
 		{
-			ServerActivated_ = true;
+			SetMoveStartActivate(true);
 		}
 
 		if (true == GameServer::IsHost_)
 		{
 
-			if (false == ServerActivated_)
+			if (false == GetMoveStartActivate())
 			{
 				std::shared_ptr<ObjectUpdatePacket> Packet = std::make_shared<ObjectUpdatePacket>();
 				Packet->ObjectID = GetNetID();

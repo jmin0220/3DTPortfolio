@@ -264,6 +264,7 @@ void GameServerGUI::InGameGUI()
 			Text += "P_StageEndChangeOver";
 		}
 
+		Text += "\n 플레이어 ID : " + std::to_string(GameServer::GetInst()->PlayerID_);
 		Text += "\n- 플레이어 점수 : " + std::to_string(GameServer::GetInst()->PlayerScore_);
 		ImGui::Text(GameEngineString::AnsiToUTF8Return(Text).c_str());
 

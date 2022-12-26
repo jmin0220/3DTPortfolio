@@ -143,6 +143,9 @@ void ContentsCore::CreateKeys()
 	GameEngineInput::GetInst()->CreateKey(AXIS_ROTATE, 'E');
 	GameEngineInput::GetInst()->CreateKey(KEY_SPACEBAR, VK_SPACE);
 	GameEngineInput::GetInst()->CreateKey(KEY_ENTER, VK_RETURN);
+
+	// 점수 디버깅용
+	GameEngineInput::GetInst()->CreateKey("P", 'P');
 }
 
 // 기본적인 리소스(UI, 로비, ...)

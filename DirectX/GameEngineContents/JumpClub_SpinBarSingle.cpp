@@ -46,7 +46,16 @@ void JumpClub_SpinBarSingle::Update(float _DeltaTime)
 
 	if (true == GameServer::IsHost_)
 	{
-		PhysXSpinBarComponent_->SetSpinSpeedRot(AccSpeed_ * _DeltaTime);
+		if (true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StagePreviewChangeOver)
+			&& false == GetMoveStartActivate())
+		{
+			SetMoveStartActivate(true);
+		}
+
+		if (true == GetMoveStartActivate())
+		{
+			PhysXSpinBarComponent_->SetSpinSpeedRot(AccSpeed_ * _DeltaTime);
+		}
 
 		// ÆÐÅ¶ º¸³¿
 		std::shared_ptr<ObjectUpdatePacket> Packet = std::make_shared<ObjectUpdatePacket>();

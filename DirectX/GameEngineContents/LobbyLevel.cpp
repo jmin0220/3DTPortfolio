@@ -44,6 +44,9 @@ void LobbyLevel::Start()
 		GameEngineInput::GetInst()->CreateKey("LEFT_Q", 'Q');
 		GameEngineInput::GetInst()->CreateKey("RIGHT_E", 'E');
 	}
+
+	// 플레이어 기본 색상
+	GameServer::GetInst()->SetPlayerColorID(0);
 }
 
 void LobbyLevel::Update(float _DeltaTime)

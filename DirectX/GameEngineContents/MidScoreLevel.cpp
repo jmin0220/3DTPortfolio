@@ -85,7 +85,7 @@ void MidScoreLevel::Update(float _DeltaTime)
 	MidScoreTime_ += _DeltaTime;
 	if (true == GameServer::GetInst()->IsServerStart())
 	{
-		if (MidScoreTime_ < 7.0f)
+		if (MidScoreTime_ < 100.0f)
 		{
 			return;
 		}
@@ -423,6 +423,9 @@ void MidScoreLevel::ServerSetting()
 		LobbyPlayers_[2]->ChangeAnimationIdle();
 		LobbyPlayers_[3]->ChangeAnimationTumbel();
 	}
+
+	// 처음에 보여줄때는 ID순서대로
+	std::sort(AllServerPlayers_.begin(), AllServerPlayers_.end(), IDSmaller);
 
 }
 
