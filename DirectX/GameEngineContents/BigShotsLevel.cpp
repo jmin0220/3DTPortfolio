@@ -123,7 +123,7 @@ void BigShotsLevel::LevelEndEvent()
 
 bool BigShotsLevel::GameEndingFlag()
 {
-	if (Player_->GetTransform().GetWorldPosition().y <= -20.0f)
+	if (Player_->GetTransform().GetWorldPosition().y <= -65.0f)
 	{
 		return true;
 	}

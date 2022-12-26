@@ -47,6 +47,13 @@ void JumpClubLevel::End()
 void JumpClubLevel::LevelStartEvent()
 {
 	StageParentLevel::LevelStartEvent();
+	
+	LightObject_->GetLightData().AmbientLight = float4{ 0.7f,0.7f,0.7f,1.0f };
+	LightObject_->GetLightData().DifLightPower = 0.5f;
+	LightObject_->GetLightData().SpcLightPower = 1.0f;
+	LightObject_->GetLightData().AmbLightPower = 1.0f;
+	LightObject_->GetTransform().SetWorldRotation({ 260.0f,230.0f,0.0f });
+
 	BackGroundObj_ = CreateActor<JumpClub_BackGroundObject>();
 	VFXWaterObj_ = CreateActor<VFXWaterActor>();
 
@@ -92,8 +99,8 @@ void JumpClubLevel::LevelStartEvent()
 	}
 
 
-	std::shared_ptr<GameEngineActor> Skybox = CreateActor<SkyboxActor>();
-	Skybox->GetTransform().SetWorldScale({ 100, 100, 100 });
+	std::shared_ptr<SkyboxActor> Skybox = CreateActor<SkyboxActor>();
+	Skybox->SetSkyTexture("S5_SkyBox_Respawn.png");
 }
 
 void JumpClubLevel::LevelEndEvent()

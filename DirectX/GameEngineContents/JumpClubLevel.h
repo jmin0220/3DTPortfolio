@@ -25,7 +25,7 @@ protected:
 	void LevelEndEvent() override;
 
 	// 게임 종료조건
-	bool GameEndingFlag();
+	bool GameEndingFlag() override;
 private:
 	std::shared_ptr<InGameSetUI> UIs_;
 
