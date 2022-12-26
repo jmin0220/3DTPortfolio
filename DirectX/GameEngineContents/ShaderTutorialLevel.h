@@ -24,6 +24,6 @@ protected:
 	void LevelEndEvent() override;
 
 private:
-
+	std::shared_ptr<GameEngineLight> LightObject;
 };
 

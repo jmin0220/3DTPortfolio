@@ -681,6 +681,12 @@
     <ClInclude Include="TimerActor.h">
       <Filter>02_Actor\UIActor\TimerActor</Filter>
     </ClInclude>
+    <ClInclude Include="ShaderTutorialActor.h">
+      <Filter>990_Tutorial\Shader\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderTutorialFloor.h">
+      <Filter>990_Tutorial\Shader\Level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -1129,6 +1135,12 @@
     </ClCompile>
     <ClCompile Include="TimerActor.cpp">
       <Filter>02_Actor\UIActor\TimerActor</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderTutorialActor.cpp">
+      <Filter>990_Tutorial\Shader\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderTutorialFloor.cpp">
+      <Filter>990_Tutorial\Shader\Level</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

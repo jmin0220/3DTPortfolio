@@ -47,12 +47,12 @@
     <FxCompile Include="MaskShader.hlsl">
       <Filter>Texture</Filter>
     </FxCompile>
-    <FxCompile Include="CustomDefferedColor.hlsl">
+    <FxCompile Include="LightHeader.fx" />
+    <FxCompile Include="HexDefferedColor.hlsl">
       <Filter>Light</Filter>
     </FxCompile>
     <FxCompile Include="DeferredHeader.fx" />
-    <FxCompile Include="LightHeader.fx" />
-    <FxCompile Include="HexDefferedColor.hlsl">
+    <FxCompile Include="CustomDefferedColor.hlsl">
       <Filter>Light</Filter>
     </FxCompile>
   </ItemGroup>

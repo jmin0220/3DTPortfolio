@@ -530,6 +530,14 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ServerPacket.h" />
+    <ClInclude Include="ShaderTutorialActor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ShaderTutorialFloor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ShaderTutorialLevel.h">
       <SubType>
       </SubType>
@@ -1014,6 +1022,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ServerPacket.cpp" />
+    <ClCompile Include="ShaderTutorialActor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ShaderTutorialFloor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ShaderTutorialLevel.cpp">
       <SubType>
       </SubType>

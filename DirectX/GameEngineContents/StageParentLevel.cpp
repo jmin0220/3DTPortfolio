@@ -73,7 +73,7 @@ void StageParentLevel::Start()
 		GetMainCamera()->PushLight(LightObject_);
 	}
 
-	//GetMainCamera()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
+	GetMainCamera()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
 	//GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 
 
