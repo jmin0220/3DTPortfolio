@@ -39,6 +39,13 @@ void DoorDashLevel::Update(float _DeltaTime)
 	{
 		Player_->ResetPlayerPos();
 	}
+
+	// 플레이어 각자 점수갱신 ~~~
+	GameScoreType_;
+	// 서버에서 확인한 순위;
+
+
+	// ~~~ 플레이어 각자 점수갱신
 }
 
 void DoorDashLevel::End()

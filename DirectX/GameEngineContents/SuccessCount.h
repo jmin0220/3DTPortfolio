@@ -16,10 +16,10 @@ public:
 	SuccessCount& operator=(SuccessCount&& _Other) noexcept = delete;
 
 	static int Score_;
-	static int Player1Score_;
-	static int Player2Score_;
-	static int Player3Score_;
-	static int Player4Score_;
+	//static int Player1Score_;
+	//static int Player2Score_;
+	//static int Player3Score_;
+	//static int Player4Score_;
 
 protected:
 	void Start() override;

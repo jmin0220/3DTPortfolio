@@ -2,10 +2,10 @@
 #include "SuccessCount.h"
 
 int SuccessCount::Score_ = 0;
-int SuccessCount::Player1Score_ = 0;
-int SuccessCount::Player2Score_ = 0;
-int SuccessCount::Player3Score_ = 0;
-int SuccessCount::Player4Score_ = 0;//나중에 멀티용 다른 플레이어 점수
+//int SuccessCount::Player1Score_ = 0;
+//int SuccessCount::Player2Score_ = 0;
+//int SuccessCount::Player3Score_ = 0;
+//int SuccessCount::Player4Score_ = 0;//나중에 멀티용 다른 플레이어 점수
 
 SuccessCount::SuccessCount() 
 	:MaxCount_(30)

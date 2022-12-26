@@ -48,6 +48,7 @@ std::vector<std::shared_ptr<GameEngineActor>> StageParentLevel::HoopsActor = std
 
 StageParentLevel::StageParentLevel() 
 	: MyStage_(StageNum::STAGE1)
+	, GameScoreType_(GameScoreType::NONE)
 {
 	CinemaCam_ = std::make_shared<Cinemachine>();
 }
@@ -122,7 +123,7 @@ void StageParentLevel::Update(float _DeltaTime)
 	
 	StageStateManager_.Update(_DeltaTime);
 
-	//점수추가
+	// 점수추가
 	if (true == GameEngineInput::GetInst()->IsDown("P"))
 	{
 		GameServer::GetInst()->PlayerScore_ += 100;

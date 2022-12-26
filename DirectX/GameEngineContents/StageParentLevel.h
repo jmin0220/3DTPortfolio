@@ -149,8 +149,21 @@ private:
 
 	std::vector<std::shared_ptr<GameEngineActor>> NetPlayers_;
 	std::vector<std::shared_ptr<GameEngineActor>> NetObstacles_;
+
+protected:
+	enum class GameScoreType
+	{
+		NONE,
+		RACE,			// 1등이 100점
+		SURVIVAL,		// 1등이 0점
+	};
+
+	GameScoreType GameScoreType_;
+
+	virtual void PlayerScoreUpdate() {};
+
+	// 빛
 public:
-	//static bool AllPlayersReady_;
 
 	std::shared_ptr<class TestGUI> GUI_;
 

@@ -52,33 +52,29 @@ void MidScoreLevel::Update(float _DeltaTime)
 	}
 
 	{
+		// 파칭코마냥 돌리다가
+		// 시간지나면 점수 세팅
 		RandomSocre();
 
+		// 점수가 세팅됬으면(UI도) 자기점수 보여주는 시간 업데이트 시작
 		if (IsScoreOn_ == true)
 		{
 			BeforeScoreTime_ += _DeltaTime;
 		}
 
-		if (BeforeScoreTime_ > 2.0f)
+		// 그 시간이 2초 지나면 정렬 시작
+		if (BeforeScoreTime_ > 2.0f && true == IsScoreOn_)
 		{
 			BubbleSortLerp();
 			IsScoreOn_ = false;
 			BeforeScoreTime_ = 0.0f;
-			Once_ = true;
+			Once_ = true;	// 정렬 다했으면 UI러프 시작신호 On
 		}
-	}
 
-	{
 		RenderBubbleSort();
 
-		if (LerpTime_ > 1.5f)
-		{
-			Once_ = false;//flase를 켜줘야 다시 갱신해서 엔터눌렀을때 러프 안함
-			LerpTime_ = 0.0f;
-		}
+		ChaseNameToScore();
 	}
-
-	ChaseNameToScore();
 
 
 	// 서버
@@ -251,10 +247,6 @@ void MidScoreLevel::RandomSocre()
 
 		for (int i = 0; i < PlayerScores_.size(); ++i)
 		{
-			//PlayerScores_[i] = GameEngineRandom::MainRandom.RandomInt(300, 400);
-			//Font_PlayerName[i]->SetFont(PlayerName_[i], FONT_TITAN_ONE);
-			//FontScore_[i]->SetFont(std::to_string(PlayerScores_[i]), FONT_NOTO_SANS_CJK_SC, 50.0f, LeftAndRightSort::LEFT);
-
 			PlayerScores_[i] = AllServerPlayers_[i].Score_;
 			Font_PlayerName[i]->SetFont(PlayerName_[i], FONT_TITAN_ONE);
 			FontScore_[i]->SetFont(std::to_string(PlayerScores_[i]), FONT_NOTO_SANS_CJK_SC, 50.0f, LeftAndRightSort::LEFT);
@@ -281,6 +273,10 @@ void MidScoreLevel::BubbleSortLerp()
 				std::shared_ptr<FontActor> FTemp = FontScore_[j];
 				FontScore_[j] = FontScore_[j + 1];
 				FontScore_[j + 1] = FTemp;
+
+				std::string STemp = PlayerName_[j];
+				PlayerName_[j] = PlayerName_[j + 1];
+				PlayerName_[j + 1] = STemp;
 			}
 		}
 	}
@@ -317,7 +313,7 @@ void MidScoreLevel::ChaseNameToScore()
 {
 	for (int i = 0; i < Font_PlayerName.size(); ++i)
 	{
-		Font_PlayerName[i]->SetFont(PlayerName_[i], FONT_TITAN_ONE, 60.0f, { FontScore_[i]->GetFont()->GetScreenPosition().x,FontScore_[i]->GetFont()->GetScreenPosition().y - 50.0f }, LeftAndRightSort::LEFT);
+		Font_PlayerName[i]->SetFont(PlayerName_[i], FONT_TITAN_ONE, 60.0f, {FontScore_[i]->GetFont()->GetScreenPosition().x,FontScore_[i]->GetFont()->GetScreenPosition().y - 50.0f}, LeftAndRightSort::LEFT);
 	}
 }
 
@@ -344,6 +340,10 @@ void MidScoreLevel::ServerSetting()
 	MyInfo.Score_ = Server->PlayerScore_;
 	AllServerPlayers_.push_back(MyInfo);
 
+	// ID순으로 정렬
+	std::sort(AllServerPlayers_.begin(), AllServerPlayers_.end(), IDSmaller);
+	AllServerPlayers_;
+
 	// 점수 설정
 	PlayerScores_.resize(AllServerPlayersCount_);
 
@@ -357,7 +357,7 @@ void MidScoreLevel::ServerSetting()
 
 		// 플레이어 점수 '폰트엑터'
 		std::shared_ptr<FontActor> FontScore = CreateActor<FontActor>();
-		FontScore->SetFont(std::to_string(000), FONT_NOTO_SANS_CJK_SC, 50.0f, { 170,250 + i * 120.0f }, LeftAndRightSort::LEFT);
+		FontScore->SetFont(std::to_string(AllServerPlayers_[i].Score_), FONT_NOTO_SANS_CJK_SC, 50.0f, { 170,250 + i * 120.0f }, LeftAndRightSort::LEFT);
 		FontScore_.push_back(FontScore);
 
 		// 플레이어 이름 '폰트엑터'
@@ -434,6 +434,11 @@ void MidScoreLevel::NoServerSetting()
 	// 2명만 생성해라
 	AllServerPlayersCount_ = 4;
 
+	AllServerPlayers_.emplace_back(0, 0, 200);
+	AllServerPlayers_.emplace_back(1, 3, 500);
+	AllServerPlayers_.emplace_back(2, 2, 100);
+	AllServerPlayers_.emplace_back(3, 4, 400);
+
 	// 점수 설정
 	PlayerScores_.resize(AllServerPlayersCount_);
 
@@ -499,14 +504,9 @@ void MidScoreLevel::NoServerSetting()
 	}
 
 
-	PlayerName_[0] = "kim";
-	PlayerName_[1] = "nana";
-	PlayerName_[2] = "jason";
-	PlayerName_[3] = "dfd";
-
-	LobbyPlayers_[0]->SetPlayerColor(GameServer::GetInst()->GetPlayerColorReturn(0));
-	LobbyPlayers_[1]->SetPlayerColor(GameServer::GetInst()->GetPlayerColorReturn(1));
-	LobbyPlayers_[2]->SetPlayerColor(GameServer::GetInst()->GetPlayerColorReturn(2));
-	LobbyPlayers_[3]->SetPlayerColor(GameServer::GetInst()->GetPlayerColorReturn(3));
+	LobbyPlayers_[0]->SetPlayerColor(GameServer::GetInst()->GetPlayerColorReturn(AllServerPlayers_[0].Color_));
+	LobbyPlayers_[1]->SetPlayerColor(GameServer::GetInst()->GetPlayerColorReturn(AllServerPlayers_[1].Color_));
+	LobbyPlayers_[2]->SetPlayerColor(GameServer::GetInst()->GetPlayerColorReturn(AllServerPlayers_[2].Color_));
+	LobbyPlayers_[3]->SetPlayerColor(GameServer::GetInst()->GetPlayerColorReturn(AllServerPlayers_[3].Color_));
 
 }

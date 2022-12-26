@@ -103,6 +103,11 @@ void InGameSetUI::Update(float _DeltaTime)
 	{
 		SuccessCount::Score_ += 100;
 	}
+
+	if (true == GameServer::GetInst()->IsServerStart())
+	{
+		SuccessCount::Score_ = GameServer::GetInst()->PlayerScore_;
+	}
 }
 
 void InGameSetUI::LevelStartEvent()
