@@ -107,10 +107,16 @@ void StageParentLevel::Update(float _DeltaTime)
 {
 	SpawnServerObjects();
 
+	// PhysX업데이트
 	VirtualPhysXLevel::Update(_DeltaTime);
 
 	CinemaCam_->Update();
 
+	// 게임 종료 조건을 체크
+	if (true == GameEndingFlag())
+	{
+		Player_->SetIsGoal();
+	}
 	
 	StageStateManager_.Update(_DeltaTime);
 }

@@ -93,6 +93,9 @@ protected:
 	void LevelStartEvent() override;
 	void LevelEndEvent() override;
 
+	// 게임 종료 조건
+	virtual bool GameEndingFlag() { return false; };
+
 	StageNum MyStage_;
 
 
