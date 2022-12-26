@@ -25,11 +25,11 @@ protected:
 	void LevelEndEvent() override;
 
 	// 게임 종료조건
-	bool GameEndingFlag() override { return false; };
+	bool GameEndingFlag() override;
 
 private:
 	std::shared_ptr<GameEngineActor> Stage_;
-	std::shared_ptr<GameEngineActor>BackGround_;
+	std::shared_ptr<GameEngineActor> BackGround_;
 
 };
 

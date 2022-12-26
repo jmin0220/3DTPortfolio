@@ -260,5 +260,10 @@ public:
 	{
 		waitphysx_ = _Bool;
 	}
+
+	inline void ResetPlayerPos()
+	{
+		DynamicActorComponent_->SetPlayerStartPos(CheckPointPos_);
+	}
 };
 

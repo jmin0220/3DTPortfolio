@@ -36,6 +36,7 @@ void JumpClubLevel::Start()
 void JumpClubLevel::Update(float _DeltaTime)
 {
 	StageParentLevel::Update(_DeltaTime);
+
 }
 
 void JumpClubLevel::End()
@@ -98,4 +99,14 @@ void JumpClubLevel::LevelStartEvent()
 void JumpClubLevel::LevelEndEvent()
 {
 	StageParentLevel::LevelEndEvent();
+}
+
+bool JumpClubLevel::GameEndingFlag()
+{
+	if (Player_->GetTransform().GetWorldPosition().y <= -20.0f)
+	{
+		return true;
+	}
+
+	return false;
 }

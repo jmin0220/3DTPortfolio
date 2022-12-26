@@ -169,10 +169,20 @@ void HexAGoneLevel::LevelStartEvent()
 	Skybox->SetSkyTexture("S5_SkyBox_Respawn.png");
 
 
-	CinemaCam_->SetActivated();
+	//CinemaCam_->SetActivated();
 }
 
 void HexAGoneLevel::LevelEndEvent()
 {
 	StageParentLevel::LevelEndEvent();
+}
+
+bool HexAGoneLevel::GameEndingFlag()
+{
+	if (Player_->GetTransform().GetWorldPosition().y <= -20.0f)
+	{
+		return true;
+	}
+
+	return false;
 }

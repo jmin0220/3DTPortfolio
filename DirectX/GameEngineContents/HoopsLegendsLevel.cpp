@@ -103,6 +103,16 @@ void HoopsLegendsLevel::LevelEndEvent()
 	StageParentLevel::LevelEndEvent();
 }
 
+bool HoopsLegendsLevel::GameEndingFlag()
+{
+	if (Player_->GetTransform().GetWorldPosition().y <= -20.0f)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 void HoopsLegendsLevel::SetHoopPosition()
 {
 	for (int i = 0; i < 10; i++)

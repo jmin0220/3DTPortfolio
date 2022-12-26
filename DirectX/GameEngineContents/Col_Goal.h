@@ -24,5 +24,19 @@ private:
 	std::shared_ptr<GameEngineCollision> GoalCol_;
 
 	CollisionReturn CheckCol(std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other);
+
+
+public:
+	static bool IsPlayerGoal_;
+
+	static void SetIsPlayerGoal()
+	{
+		IsPlayerGoal_ = !IsPlayerGoal_;
+	}
+
+	static bool GetIsPlayerGoal_()
+	{
+		return IsPlayerGoal_;
+	}
 };
 

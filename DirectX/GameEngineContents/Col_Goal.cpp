@@ -2,6 +2,9 @@
 #include "Col_Goal.h"
 #include "PlayerActor.h"
 
+
+bool Col_Goal::IsPlayerGoal_ = false;
+
 Col_Goal::Col_Goal() 
 {
 }
@@ -13,6 +16,7 @@ Col_Goal::~Col_Goal()
 void Col_Goal::Start()
 {
 	GoalCol_ = CreateComponent<GameEngineCollision>();
+	GoalCol_->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
 	GoalCol_->ChangeOrder(CollisionGroup::Trigger);
 }
 
@@ -28,7 +32,7 @@ void Col_Goal::End()
 
 void Col_Goal::LevelStartEvent()
 {
-	GoalCol_->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
+	/*GoalCol_->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());*/
 }
 
 CollisionReturn Col_Goal::CheckCol(std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other)
@@ -37,7 +41,7 @@ CollisionReturn Col_Goal::CheckCol(std::shared_ptr<GameEngineCollision> _This, s
 	{
 		std::shared_ptr<PlayerActor> Player_ = _Other->GetActor()->CastThis<PlayerActor>();
 
-		Player_->SetIsGoal(); //true
+		IsPlayerGoal_ = true;
 
 	}
 

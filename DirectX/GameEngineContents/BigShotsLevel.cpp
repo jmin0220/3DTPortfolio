@@ -125,3 +125,13 @@ void BigShotsLevel::LevelEndEvent()
 		Cannon->Death();
 	}
 }
+
+bool BigShotsLevel::GameEndingFlag()
+{
+	if (Player_->GetTransform().GetWorldPosition().y <= -20.0f)
+	{
+		return true;
+	}
+
+	return false;
+}

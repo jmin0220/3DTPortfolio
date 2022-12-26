@@ -113,6 +113,7 @@ void StageParentLevel::Update(float _DeltaTime)
 	CinemaCam_->Update();
 
 	// 게임 종료 조건을 체크
+
 	if (true == GameEndingFlag())
 	{
 		Player_->SetIsGoal();

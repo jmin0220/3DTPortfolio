@@ -107,6 +107,7 @@ void PlayerActor::PlayerInit()
 	Collision_->ChangeOrder(CollisionGroup::PlayerCheck);
 	Collision_->GetTransform().SetWorldScale({ 1.0f,1.0f,1.0f });
 
+	CheckPointPos_ = GetTransform().GetWorldPosition();
 
 	// TODO::충격테스트용 키
 	if (false == GameEngineInput::GetInst()->IsKey("ImpulsW"))
@@ -176,11 +177,11 @@ void PlayerActor::Update(float _DeltaTime)
 		}
 
 
-		//플레이어 떨어지면 지정한 위치에 재소환
-		if (GetTransform().GetWorldPosition().y <= -140.0f)
-		{
-			DynamicActorComponent_->SetPlayerStartPos(CheckPointPos_);
-		}
+		////플레이어 떨어지면 지정한 위치에 재소환
+		//if (GetTransform().GetWorldPosition().y <= -140.0f)
+		//{
+		//	DynamicActorComponent_->SetPlayerStartPos(CheckPointPos_);
+		//}
 
 		return;
 	}
