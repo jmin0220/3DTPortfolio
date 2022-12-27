@@ -181,7 +181,6 @@ private:
 
 	float4 ResetCheckPointPos();
 
-
 	// 캐릭터 애니메이션 & 스킨
 private:
 	void SetCharacterAnimation();
@@ -283,6 +282,11 @@ public:
 	inline void ResetPlayerPos()
 	{
 		DynamicActorComponent_->SetPlayerStartPos(CheckPointPos_);
+	}
+
+	inline void InitStandUp2()
+	{
+		DynamicActorComponent_->InitializeStandUp2();
 	}
 };
 

@@ -101,6 +101,9 @@ public:
 
 	//플레이어 멈추는거 푸는 함수
 	void WakeUpDynamic();
+
+	//일어설때 목표 각도구하는 함수
+	void InitializeStandUp2();
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -127,6 +130,13 @@ private:
 
 	//속도제한 함수
 	void SpeedLimit();
+
+	float StandUpTargetYAxisAngle_;
+	float StandUpStartYAxisAngle_;
+	float StandUpProgressYAxisAngle_;
+
+	physx::PxVec3 InitVec3_;
+	physx::PxVec3 TargetVec3_;
 
 };
 

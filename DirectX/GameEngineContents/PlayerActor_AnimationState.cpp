@@ -214,7 +214,7 @@ void PlayerActor::JumpMidAirAniUpdate(float _DeltaTime, const StateInfo& _Info)
 		return;
 	}
 
-	if (CheckOnGround() == true)
+	if (PlayerStateManager_.GetCurStateStateName() == "Idle")
 	{
 		PlayerAniStateManager_.ChangeState("Idle");
 	}

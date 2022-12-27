@@ -4,6 +4,7 @@
 
 PhysXDynamicActorComponent::PhysXDynamicActorComponent() 
 	:IsSpeedLimit_(false)
+	, StandUpProgressYAxisAngle_(0.0f)
 {
 }
 
@@ -69,7 +70,7 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 		static_cast<physx::PxU32>(PhysXFilterGroup::Ground), 
 		static_cast<physx::PxU32>(PhysXFilterGroup::Obstacle), 0));
 	//physx::PxTransform relativePose(physx::PxQuat(physx::PxHalfPi, physx::PxVec3(0, 0, 1)));
-
+	shape_->setContactOffset(0.2f);
 	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 0.01f);
 
 
@@ -271,7 +272,7 @@ bool PhysXDynamicActorComponent::StandUp2(float _DeltaTime, bool _IsXAixisRotRea
 
 	if (ASDASFFASGG.x < 0.0f && ASDASFFASGG.z < 0.0f)
 	{
-		AngDiffXZ += GameEngineMath::PI * 0.5f;
+		AngDiffXZ += GameEngineMath::PI;
 	}
 
 
@@ -289,30 +290,24 @@ bool PhysXDynamicActorComponent::StandUp2(float _DeltaTime, bool _IsXAixisRotRea
 
 	float AngDiff = acosf(float4::DotProduct3D({ Vec3.x, Vec3.y, Vec3.z }, YAxis));
 	float AngDiffEuler = AngDiff * GameEngineMath::RadianToDegree;
-	if (AngDiffEuler);
+	//if (AngDiffEuler);
 	//dynamic의 Axis와 Y-Axis 사이의 NoramlVector
 	physx::PxVec3 Normal = Vec3.cross(YAxisVec3);
 	Normal.normalize();
-
+	StandUpProgressYAxisAngle_ += _DeltaTime;
+	float ChangedAngle =  GameEngineMath::LerpLimit(StandUpStartYAxisAngle_, StandUpTargetYAxisAngle_, StandUpProgressYAxisAngle_ * 3.0f);
 
 	//노말백터를 기준으로 YAxis로 AngDiff만큼 회전
-	float4 FinalRot = RodriguesRotate({ Vec3.x, Vec3.y, Vec3.z }, { Normal.x, Normal.y, Normal.z }, 0.05f);
+	float4 FinalRot = RodriguesRotate({ Vec3.x, Vec3.y, Vec3.z }, { Normal.x, Normal.y, Normal.z }, 0.08f);
 	if (abs(FinalRot.y) > 0.97f)
 	{
 		FinalRot.x = 0.0f;
 		FinalRot.z = 0.0f;
 		FinalRot.y = 1.0f;
 		Result = true;
+
 	}
-	float ChangedAngle = 0.0f;
-	if (AngDiffXZ > Angle)
-	{
-		ChangedAngle = Angle + 0.1f;
-	}
-	else
-	{
-		ChangedAngle = Angle - 0.1f;
-	}
+
 
 	physx::PxVec3 FinalRotVec3(FinalRot.x, FinalRot.y, FinalRot.z);
 	FinalRotVec3.normalize();
@@ -361,5 +356,39 @@ void PhysXDynamicActorComponent::FreezeDynamic()
 void PhysXDynamicActorComponent::WakeUpDynamic()
 {
 	dynamic_->wakeUp();
+}
+
+void PhysXDynamicActorComponent::InitializeStandUp2()
+{
+	physx::PxVec3 ASDASFFASGG = dynamic_->getGlobalPose().q.getBasisVector1();
+	float4 XZAngle = float4{ ASDASFFASGG.x, 0.0f, ASDASFFASGG.z };
+	XZAngle.Normalize3D();
+	float AngDiffXZ = atanf(XZAngle.x / XZAngle.z);
+
+	if (ASDASFFASGG.x < 0.0f && ASDASFFASGG.z < 0.0f)
+	{
+		AngDiffXZ += GameEngineMath::PI;
+	}
+
+
+	if (ASDASFFASGG.x > 0.0f && ASDASFFASGG.z < 0.0f)
+	{
+		AngDiffXZ -= GameEngineMath::PI;
+	}
+
+	if (AngDiffXZ < 0.0f)
+	{
+		AngDiffXZ += GameEngineMath::PI * 2.0f;
+	}
+
+	StandUpTargetYAxisAngle_ = AngDiffXZ;
+
+	float Angle;
+	physx::PxVec3 Vec3;
+	dynamic_->getGlobalPose().q.toRadiansAndUnitAxis(Angle, Vec3);
+
+	StandUpStartYAxisAngle_ = Angle;
+
+	StandUpProgressYAxisAngle_ = 0.0f;
 }
 

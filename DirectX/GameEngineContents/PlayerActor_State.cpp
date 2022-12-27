@@ -44,7 +44,7 @@ void PlayerActor::IdleStart(const StateInfo& _Info)
 void PlayerActor::IdleUpdate(float _DeltaTime, const StateInfo& _Info)
 {
 	PlayerActType ActType = InputDetect();
-	bool IsOnGround = CheckOnGround();
+	bool IsOnGround = IsTouchGround;
 
 	if (IsUnControlable_ == true)
 	{
@@ -61,7 +61,7 @@ void PlayerActor::IdleUpdate(float _DeltaTime, const StateInfo& _Info)
 		return;
 	}
 
-	if (ActType == PlayerActType::Jump && CheckOnGround() == true)
+	if (ActType == PlayerActType::Jump && IsTouchGround == true)
 	{
 		InputControllerJump(_DeltaTime);
 		PlayerStateManager_.ChangeState("Jump");
@@ -89,7 +89,7 @@ void PlayerActor::RunUpdate(float _DeltaTime, const StateInfo& _Info)
 {
 	PlayerActType ActType = InputDetect();
 
-	bool IsOnGround = CheckOnGround();
+	bool IsOnGround = IsTouchGround;
 
 	InputControllerMove(_DeltaTime);
 
@@ -107,7 +107,7 @@ void PlayerActor::RunUpdate(float _DeltaTime, const StateInfo& _Info)
 		return;
 	}
 
- 	if (ActType == PlayerActType::Jump && CheckOnGround() == true)
+ 	if (ActType == PlayerActType::Jump && IsTouchGround == true)
 	{
 		InputControllerJump(_DeltaTime);
 		PlayerStateManager_.ChangeState("Jump");
@@ -127,7 +127,7 @@ void PlayerActor::RunEnd(const StateInfo& _Info)
 
 void PlayerActor::JumpStart(const StateInfo& _Info)
 {
-	//IsTouchGround = false;
+	IsTouchGround = false;
 	//IsDetachGround = true;
 	waitphysx_ = false;
 }
@@ -153,7 +153,7 @@ void PlayerActor::JumpUpdate(float _DeltaTime, const StateInfo& _Info)
 		return;
 	}
 
-	if (CheckOnGround() == true && waitphysx_ == true)
+	if (IsTouchGround == true && waitphysx_ == true)
 	{
 		PlayerStateManager_.ChangeState("Idle");
 		return;
@@ -167,7 +167,7 @@ void PlayerActor::JumpEnd(const StateInfo& _Info)
 
 void PlayerActor::DiveStart(const StateInfo& _Info)
 {
-	//IsTouchGround = false;
+	IsTouchGround = false;
 	//IsDetachGround = true;
 	StandUpDelay_ = 0.0f;
 	waitphysx_ = false;
@@ -187,7 +187,7 @@ void PlayerActor::DiveUpdate(float _DeltaTime, const StateInfo& _Info)
 	}
 
 
-	if ((CheckOnGround() == true  && waitphysx_ == true) ||
+	if ((IsTouchGround == true  && waitphysx_ == true && IsStandingReady_ == true) ||
 		IsDiving_ == true)
 	{
 		IsDiving_ = true;
@@ -243,7 +243,7 @@ void PlayerActor::CannotControlUpdate(float _DeltaTime, const StateInfo& _Info)
 
 	UnControlableTime_ += _DeltaTime;
 
-	if (UnControlableTime_ > 2.0f && CheckOnGround() == true)
+	if (UnControlableTime_ > 2.0f && IsTouchGround)
 	{
 		if (StandUp(_DeltaTime) == true)
 		{
