@@ -20,6 +20,7 @@ HoopsLegendsLevel::~HoopsLegendsLevel()
 void HoopsLegendsLevel::Start()
 {
 	MyStage_ = StageNum::STAGE5;
+	GameScoreType_ = GameScoreType::NONE;
 	StageParentLevel::Start();
 
 	LightObject_->GetLightData().DifLightPower = 0.5f;

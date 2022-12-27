@@ -39,7 +39,7 @@ void JumpClub_SpinBarDouble::Update(float _DeltaTime)
 		if (true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StagePreviewChangeOver)
 			&& false == GetMoveStartActivate())
 		{
-			SetMoveStartActivate(true);
+			//SetMoveStartActivate(true);
 		}
 
 		if (true == GetMoveStartActivate())

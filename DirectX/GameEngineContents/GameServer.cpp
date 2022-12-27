@@ -20,11 +20,11 @@ std::mutex Lock;
 
 bool GameServer::CheckOtherPlayersFlag(PlayerFlag _Flag)
 {
-	std::map<int, std::shared_ptr<class PlayerStatePacket>>::iterator Begin = AllPlayersInfo_.begin();
-	std::map<int, std::shared_ptr<class PlayerStatePacket>>::iterator End = AllPlayersInfo_.end();
+	std::map<int, std::shared_ptr<class PlayerStatePacket>>::iterator Begin = OtherPlayersInfo_.begin();
+	std::map<int, std::shared_ptr<class PlayerStatePacket>>::iterator End = OtherPlayersInfo_.end();
 
 	// 혼자면 접속 못해요ㅠㅠ
-	if (0 == AllPlayersInfo_.size())
+	if (0 == OtherPlayersInfo_.size())
 	{
 		return false;
 	}
@@ -42,6 +42,29 @@ bool GameServer::CheckOtherPlayersFlag(PlayerFlag _Flag)
 	return Result;
 }
 
+unsigned int GameServer::CheckOtherPlayersFlagCount(PlayerFlag _Flag)
+{
+	std::map<int, std::shared_ptr<class PlayerStatePacket>>::iterator Begin = OtherPlayersInfo_.begin();
+	std::map<int, std::shared_ptr<class PlayerStatePacket>>::iterator End = OtherPlayersInfo_.end();
+
+	// 혼자면 접속 못해요ㅠㅠ
+	if (0 == OtherPlayersInfo_.size())
+	{
+		return 0;
+	}
+
+	int Result = 0;
+	for (; Begin != End; ++Begin)
+	{
+		if ((*Begin).second->PlayerStateSignal == static_cast<unsigned int>(_Flag))
+		{
+			Result++;
+		}
+	}
+
+	return Result;
+}
+
 GameServer::GameServer()
 {
 }
@@ -49,7 +72,7 @@ GameServer::GameServer()
 GameServer::~GameServer()
 {
 	Inst_.reset();
-	AllPlayersInfo_.clear();
+	OtherPlayersInfo_.clear();
 }
 
 // Lobby에서 게임시작 버튼 누르면 호출
@@ -225,7 +248,7 @@ void GameServer::PlayerStatePacketProcess(std::shared_ptr<GameServerPacket> _Pac
 	std::shared_ptr<PlayerStatePacket> Packet = std::dynamic_pointer_cast<PlayerStatePacket>(_Packet);
 
 	// 모든 플레이어 정보 저장
-	AllPlayersInfo_[Packet->PlayerID] = Packet;
+	OtherPlayersInfo_[Packet->PlayerID] = Packet;
 
 	if (true == Net->GetIsHost())
 	{

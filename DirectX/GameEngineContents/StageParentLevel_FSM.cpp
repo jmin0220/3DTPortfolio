@@ -262,7 +262,7 @@ void StageParentLevel::RaceUpdate(float _DeltaTime, const StateInfo& _Info)
 		}
 	}
 
-	// 임시
+	// 강제로 자신의 레이스 종료상태 만드는 키
 	if (true == GameEngineInput::GetInst()->IsDown(KEY_ENTER))
 	{
 		Player_->SetIsGoal();
@@ -283,6 +283,9 @@ void StageParentLevel::RaceUpdate(float _DeltaTime, const StateInfo& _Info)
 	// 3. 플레이어 준비
 	if (true == Player_->GetIsGoal() && !GameServer::GetInst()->CheckPlayerSignal(PlayerFlag::P_StageRaceChangeReady))
 	{
+		// 점수 획득
+		GetGameScoreByCurrentType();
+
 		GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_StageRaceChangeReady);
 	}
 	

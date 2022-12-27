@@ -81,7 +81,7 @@ void MidScoreLevel::Update(float _DeltaTime)
 	MidScoreTime_ += _DeltaTime;
 	if (true == GameServer::GetInst()->IsServerStart())
 	{
-		if (MidScoreTime_ < 100.0f)
+		if (MidScoreTime_ < 10.0f)
 		{
 			return;
 		}
@@ -320,11 +320,11 @@ void MidScoreLevel::ChaseNameToScore()
 void MidScoreLevel::ServerSetting()
 {
 	// 자기제외 모든 플레이어 + 자신
-	AllServerPlayersCount_ = static_cast<int>(GameServer::GetInst()->AllPlayersInfo_.size() + 1);
+	AllServerPlayersCount_ = static_cast<int>(GameServer::GetInst()->OtherPlayersInfo_.size() + 1);
 	AllServerPlayers_.clear();
 
-	std::map<int, std::shared_ptr<class PlayerStatePacket>>::iterator StartIt = GameServer::GetInst()->AllPlayersInfo_.begin();
-	std::map<int, std::shared_ptr<class PlayerStatePacket>>::iterator EndIt = GameServer::GetInst()->AllPlayersInfo_.end();
+	std::map<int, std::shared_ptr<class PlayerStatePacket>>::iterator StartIt = GameServer::GetInst()->OtherPlayersInfo_.begin();
+	std::map<int, std::shared_ptr<class PlayerStatePacket>>::iterator EndIt = GameServer::GetInst()->OtherPlayersInfo_.end();
 
 	int ListIdx = 0;
 	for (; StartIt != EndIt; ++StartIt)

@@ -274,7 +274,7 @@ void GameServerGUI::InGameGUI()
 	// 다른 사람들의 상태
 	ImGui::Text(GameEngineString::AnsiToUTF8Return("< 다른 플레이어 정보 >").c_str());
 	{
-		std::map<int, std::shared_ptr<class PlayerStatePacket>> PlayersInfo = GameServer::GetInst()->GetAllPlayersInfo();
+		std::map<int, std::shared_ptr<class PlayerStatePacket>> PlayersInfo = GameServer::GetInst()->GetOtherPlayersInfo();
 		std::map<int, std::shared_ptr<class PlayerStatePacket>>::iterator Start = PlayersInfo.begin();
 		std::map<int, std::shared_ptr<class PlayerStatePacket>>::iterator End = PlayersInfo.end();
 

@@ -26,6 +26,7 @@ JumpClubLevel::~JumpClubLevel()
 void JumpClubLevel::Start()
 {
 	MyStage_ = StageNum::STAGE2;
+	GameScoreType_ = GameScoreType::SURVIVAL;
 	StageParentLevel::Start();
 
 

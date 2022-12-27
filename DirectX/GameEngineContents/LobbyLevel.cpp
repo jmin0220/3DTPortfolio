@@ -13,7 +13,7 @@
 #include "GameServer.h"
 
 // 서버테스트시 첫 스테이지 선택
-const std::string FirstStage = LEVEL_NAME_DOORDASH;
+const std::string FirstStage = LEVEL_NAME_JUMPCLUB;
 
 LobbyLevel::LobbyLevel() 
 	:Swap(false)

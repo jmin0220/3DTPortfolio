@@ -27,16 +27,16 @@ public:
 
 	int GetAllPlayersCount()
 	{
-		return static_cast<int>(AllPlayersInfo_.size()) + 1;
+		return static_cast<int>(OtherPlayersInfo_.size()) + 1;
 	}
 
 
 	bool CheckOtherPlayersFlag(PlayerFlag _Flag);
-	//int CheckOtherPlayersFlagCount(PlayerFlag _Flag);
+	unsigned int CheckOtherPlayersFlagCount(PlayerFlag _Flag);
 
-	const std::map<int, std::shared_ptr<class PlayerStatePacket>>& GetAllPlayersInfo()
+	const std::map<int, std::shared_ptr<class PlayerStatePacket>>& GetOtherPlayersInfo()
 	{
-		return AllPlayersInfo_;
+		return OtherPlayersInfo_;
 	}
 	
 	// ID + float4
@@ -132,7 +132,7 @@ public:
 	static unsigned int PlayerScore_;
 	
 	// 모든 유저 정보
-	std::map<int, std::shared_ptr<class PlayerStatePacket>> AllPlayersInfo_;
+	std::map<int, std::shared_ptr<class PlayerStatePacket>> OtherPlayersInfo_;
 
 	// 모든 UpdateObject 정보
 	std::list<std::shared_ptr<ObjectUpdatePacket>> NewObjectUpdatePacketList_;

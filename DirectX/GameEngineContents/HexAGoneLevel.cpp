@@ -20,6 +20,7 @@ HexAGoneLevel::~HexAGoneLevel()
 void HexAGoneLevel::Start()
 {
 	MyStage_ = StageNum::STAGE4;
+	GameScoreType_ = GameScoreType::SURVIVAL;
 	StageParentLevel::Start();
 
 	

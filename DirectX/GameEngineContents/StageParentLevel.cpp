@@ -161,9 +161,8 @@ void StageParentLevel::LevelStartEvent()
 			Player_->ClientInit(ServerObjectType::Player, GameServerObject::GetServerID());
 		}
 	}
-	int PlayerID = GameServer::GetInst()->PlayerID_;
-	Player_->GetTransform().SetWorldPosition(PlayerPos + float4{ PlayerID * 20.0f, 0, 0 });
 
+	Player_->PlayerInit();
 
 	//후프레벨 위치 임시
 	if (MyStage_ == StageNum::STAGE4)
@@ -175,7 +174,7 @@ void StageParentLevel::LevelStartEvent()
 		Player_->GetTransform().SetWorldPosition({ 0,150.0f,0 });
 	}
 
-	Player_->PlayerInit();
+
 
 	MainCam_ = GetMainCameraActor();
 	CameraArm_ = CreateActor<CameraArm>();
@@ -541,6 +540,7 @@ void StageParentLevel::SpawnServerObjects()
 				NewPlayer->GetTransform().SetWorldScale(CurPacket->Scale);
 				NewPlayer->GetTransform().SetWorldRotation(CurPacket->Rot);
 
+
 				NewPlayer->PlayerInit();
 				NewPlayer->PushPacket(CurPacket);
 				
@@ -599,4 +599,64 @@ void StageParentLevel::SpawnServerObjects()
 	}
 
 
+}
+
+// *점수를 얻고 P_StageRaceChangeReady로 바꾸어야 함
+void StageParentLevel::GetGameScoreByCurrentType()
+{
+	unsigned int AllPlayersCount = GameServer::GetInst()->GetAllPlayersCount();
+
+	// 1. 순위확인  PlayerFlag::P_StageRaceChangeReady -> (결승에 들어온 플레이어/먼저 탈락한 플레이어) '신호'
+	unsigned int FinishedPlayersCount = GameServer::GetInst()->CheckOtherPlayersFlagCount(PlayerFlag::P_StageRaceChangeReady);
+
+	// 2. 순위에 따른 점수
+	unsigned int EarnedScore = 0;
+
+	// ex) 10명 플레이
+	// DoorDash : 상위 4명이 점수 얻음 (400, 300, 200, 100, ..., 0, 0)
+	// Hexagone : 하위 4명이 점수 얻음 (0, 0, ... , 100, 200, 300, 400)
+
+	switch (GameScoreType_)
+	{
+	case StageParentLevel::GameScoreType::NONE:
+		MsgBoxAssert("GameScoreType이 세팅되지 않은 레벨입니다");
+		break;
+	case StageParentLevel::GameScoreType::RACE:
+	{
+		// FinishedPlayersCount, 0 이면 1등
+		EarnedScore = (AllPlayersCount * 100) - (FinishedPlayersCount * 100);
+
+		if (EarnedScore <= 0)
+		{
+			EarnedScore = 0;
+		}
+
+		break;
+	}
+	case StageParentLevel::GameScoreType::SURVIVAL:
+	{
+		// FinishedPlayersCount, 0면 꼴등
+
+		
+		unsigned int Ranking = AllPlayersCount - FinishedPlayersCount;
+		// 뒤에서 4등부터 4위, 3위, 2위, 1위
+
+		if (Ranking <= 4)
+		{
+			// 4등 100점, 3등 200점, ...
+			EarnedScore = ((AllPlayersCount + 1) * 100) - (100 * Ranking);
+		}
+		else
+		{
+			EarnedScore = 0;
+		}
+
+		break;
+	}
+	default:
+		return;
+		break;
+	}
+
+	GameServer::GetInst()->PlayerScore_ += EarnedScore;
 }

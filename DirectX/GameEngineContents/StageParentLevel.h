@@ -106,12 +106,12 @@ protected:
 
 private:
 	std::vector<StageObject> StageObjects_;
-	std::vector<float4>	StartPositions_;
 	void LevelStartLoad();
 
 	// FSM : 321 땅, 경기종료, 등의 레벨 상태(점점 많아질 수 있음 feat.서버)
 	// 특정 레벨에만 다르게 동작해야 된다면, Override해서 사용할 수 있음
 protected:
+	std::vector<float4>	StartPositions_;
 	GameEngineStateManager StageStateManager_;
 	std::shared_ptr<Cinemachine> CinemaCam_;
 
@@ -145,6 +145,7 @@ protected:
 
 	// 서버
 private:
+	//virtual void SpawnMyServerPlayer() = 0;
 	void SpawnServerObjects();
 
 	std::vector<std::shared_ptr<GameEngineActor>> NetPlayers_;
@@ -160,7 +161,12 @@ protected:
 
 	GameScoreType GameScoreType_;
 
-	virtual void PlayerScoreUpdate() {};
+	// IsGoal일 때 점수 부여 : RACE, SURVIVAL
+	void GetGameScoreByCurrentType();
+
+	// 후프를 얻으면 점수 부여 : 레벨에서 함
+
+
 
 	// 빛
 public:

@@ -22,6 +22,7 @@ void DoorDashLevel::Start()
 
 	StageParentLevel::Start();
 	MyStage_ = StageNum::STAGE1;
+	GameScoreType_ = GameScoreType::RACE;
 
 	LightObject_->GetLightData().DifLightPower = 0.7f;
 	LightObject_->GetLightData().AmbLightPower = 8.3f;
@@ -40,12 +41,6 @@ void DoorDashLevel::Update(float _DeltaTime)
 		Player_->ResetPlayerPos();
 	}
 
-	// 플레이어 각자 점수갱신 ~~~
-	GameScoreType_;
-	// 서버에서 확인한 순위;
-
-
-	// ~~~ 플레이어 각자 점수갱신
 }
 
 void DoorDashLevel::End()
@@ -71,6 +66,10 @@ void DoorDashLevel::LevelStartEvent()
 	//BackGround_ = CreateActor<DoorDash_BackGroundObject>();
 	//BackGround_->GetTransform().SetWorldPosition({ 0,0,0 });
 
+
+	// 플레이어 포지션 임시
+	int PlayerID = GameServer::GetInst()->PlayerID_;
+	Player_->GetTransform().SetWorldPosition(PlayerPos + float4{ PlayerID * 20.0f, 0, 0 });
 }
 
 void DoorDashLevel::LevelEndEvent()

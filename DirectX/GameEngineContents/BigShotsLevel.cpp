@@ -24,6 +24,7 @@ BigShotsLevel::~BigShotsLevel()
 void BigShotsLevel::Start()
 {
 	MyStage_ = StageNum::STAGE3;
+	GameScoreType_ = GameScoreType::SURVIVAL;
 	StageParentLevel::Start();
 
 
