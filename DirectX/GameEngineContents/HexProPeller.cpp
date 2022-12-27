@@ -5,7 +5,8 @@ int HexProPeller::Num = 0;
 
 
 HexProPeller::HexProPeller() :
-	JumboNum(0)
+	JumboNum(0),
+	ServerActivated_(false)
 {
 }
 
@@ -20,6 +21,16 @@ void HexProPeller::Start()
 
 void HexProPeller::Update(float _DeltaTime)
 {
+	if (true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageIdleChangeOver))
+	{
+		ServerActivated_ = true;
+	}
+
+	if (false == ServerActivated_)
+	{
+		return;
+	}
+
 	if (JumboNum % 2 == 0)
 	{
 		Renderer_->GetTransform().SetLocalRotate({ 0,180.0f * _DeltaTime });

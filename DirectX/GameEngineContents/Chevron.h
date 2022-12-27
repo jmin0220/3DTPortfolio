@@ -24,5 +24,8 @@ private:
 	float RotY;
 	std::shared_ptr<GameEngineFBXStaticRenderer> ChevronRenderer_;
 	std::shared_ptr<GameEngineFBXStaticRenderer> PropellerRenderer_;
+
+	// ¼­¹ö
+	bool ServerActivated_;
 };
 

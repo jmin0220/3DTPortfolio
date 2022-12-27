@@ -6,7 +6,8 @@
 HoopsScoreRing::HoopsScoreRing()	:	
 	IsCol_(false),
 	Flag_(false),
-	Timer_(3.0f)
+	Timer_(3.0f),
+	ServerActivated_(false)
 {
 }
 
@@ -36,6 +37,16 @@ void HoopsScoreRing::Start()
 
 void HoopsScoreRing::Update(float _DeltaTime)
 {
+	if (true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageIdleChangeOver))
+	{
+		ServerActivated_ = true;
+	}
+
+	if (false == ServerActivated_)
+	{
+		return;
+	}
+
 	if (IsCol_ == true)
 	{
 		Timer_ -= _DeltaTime;

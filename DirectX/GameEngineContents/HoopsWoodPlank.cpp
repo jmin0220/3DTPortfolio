@@ -7,7 +7,8 @@ int HoopsWoodPlank::Num = 0;
 HoopsWoodPlank::HoopsWoodPlank() :
 	Switch(false),
 	Rot_(90),
-	Timer_(3.0f)
+	Timer_(3.0f),
+	ServerActivated_(false)
 {
 	MyNum = Num;
 	Num++;
@@ -68,6 +69,15 @@ void HoopsWoodPlank::Start()
 
 void HoopsWoodPlank::Update(float _DeltaTime)
 {
+	if (true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageIdleChangeOver))
+	{
+		ServerActivated_ = true;
+	}
+
+	if (false == ServerActivated_)
+	{
+		return;
+	}
 
 	if (Switch==false)
 	{

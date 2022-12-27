@@ -4,7 +4,8 @@
 int Chevron::Num = 0;
 
 Chevron::Chevron() :
-	RotY(420.0f)
+	RotY(420.0f),
+	ServerActivated_(false)
 {
 
 	Num++;
@@ -29,6 +30,17 @@ void Chevron::Start()
 
 void Chevron::Update(float _DeltaTime)
 {
+
+	if (true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageIdleChangeOver))
+	{
+		ServerActivated_ = true;
+	}
+
+	if (false == ServerActivated_)
+	{
+		return;
+	}
+
 	if (MyNum >= 7)
 	{
 		PropellerRenderer_->GetTransform().SetLocalRotate({ 0,RotY * -_DeltaTime ,0 });

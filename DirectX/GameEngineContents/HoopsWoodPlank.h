@@ -48,6 +48,11 @@ private:
 	float4 Rotation_;
 
 	MaskData Data;
+
+	// ¼­¹ö
+	bool ServerActivated_;
+
+
 public:
 	inline void SetRotation(float4 _Rot)
 	{

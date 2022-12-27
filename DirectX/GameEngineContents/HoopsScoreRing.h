@@ -34,6 +34,10 @@ private:
 
 	int Dir_;
 
+	// ¼­¹ö
+	bool ServerActivated_;
+
+
 	float4 PrevPos;
 	
 	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer_;

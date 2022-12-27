@@ -25,6 +25,8 @@ private:
 	static int Num;
 	int JumboNum;
 
+	// ¼­¹ö
+	bool ServerActivated_;
 public:
 	void SetMesh(std::string _Name)
 	{

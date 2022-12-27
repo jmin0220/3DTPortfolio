@@ -2,7 +2,7 @@
 #include "VirtualPhysXLevel.h"
 #include "HoopsBox.h"
 
-HoopsBox::HoopsBox() 
+HoopsBox::HoopsBox()
 {
 }
 

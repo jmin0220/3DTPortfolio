@@ -3,7 +3,8 @@
 #include "VirtualPhysXLevel.h"
 #include "GameEngineBase/GameEngineRandom.h"
 
-HoopsScythe::HoopsScythe() 
+HoopsScythe::HoopsScythe() :
+	ServerActivated_(false)
 {
 }
 
@@ -30,6 +31,17 @@ void HoopsScythe::Start()
 
 void HoopsScythe::Update(float _DeltaTime)
 {
+
+	if (true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageIdleChangeOver))
+	{
+		ServerActivated_ = true;
+	}
+
+	if (false == ServerActivated_)
+	{
+		return;
+	}
+
 	if (Dir_ == 0)
 	{
 		GetTransform().SetLocalRotate({ 0,0,Speed_ * _DeltaTime });

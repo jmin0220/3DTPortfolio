@@ -8,7 +8,8 @@ HexTile::HexTile() :
 	Trigger_(false),
 	Shake_(false),
 	Flag_(false),
-	Speed_(3.0f)
+	Speed_(3.0f),
+	ServerActivated_(false)
 {
 }
 
@@ -29,10 +30,7 @@ void HexTile::Start()
 	// 2. 메쉬세팅 Static renderer
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
 	Renderer_->SetFBXMesh("HexTile.FBX", "HexDefferedColor");
-	//Renderer_->GetTransform().SetWorldScale({ 10.0f,10.0f,10.0f });
-	 
-	//std::vector<std::vector<GameEngineRenderUnit>>& UnitSet = Renderer_->GetAllRenderUnit();
-	
+
 
 	StateManager_.CreateStateMember("Move"
 		, std::bind(&HexTile::MoveUpdate, this, std::placeholders::_1, std::placeholders::_2)
@@ -50,6 +48,16 @@ void HexTile::Start()
 
 void HexTile::Update(float _DeltaTime)
 {
+	if (true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageIdleChangeOver))
+	{
+		ServerActivated_ = true;
+	}
+
+	if (false == ServerActivated_)
+	{
+		return;
+	}
+
 	if(true == Collision_->IsCollision(CollisionType::CT_OBB, CollisionGroup::Player, CollisionType::CT_OBB))
 	{
 		Collision_->Off();
@@ -63,16 +71,7 @@ void HexTile::Update(float _DeltaTime)
 	{
 		StateManager_.Update(_DeltaTime);
 
-		//PhysXBoxGeometry_->ReleasePhysX();
-		/*if (GetTransform().GetWorldPosition().y >= CurPos.y)
-		{
-			GetTransform().SetWorldDownMove(10.0f, _DeltaTime);
-			if (GetTransform().GetWorldPosition().y <= CurPos.y)
-			{
-				Trigger_ = false;
-				Shake_ = true;
-			}
-		}*/
+
 	}
 
 	if (Flag_ == true)

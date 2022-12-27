@@ -50,6 +50,8 @@ private:
 
 	GameEngineStateManager StateManager_;
 
+	// ¼­¹ö
+	bool ServerActivated_;
 
 	void MoveStart(const StateInfo& _Info);
 	void MoveUpdate(float _DeltaTime, const StateInfo& _Info);

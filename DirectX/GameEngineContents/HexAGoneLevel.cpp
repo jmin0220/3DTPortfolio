@@ -218,31 +218,8 @@ void HexAGoneLevel::LevelStartEvent()
 	std::shared_ptr<SkyboxActor> Skybox = CreateActor<SkyboxActor>();
 	Skybox->SetSkyTexture("S5_SkyBox_Respawn.png");
 
+	//CinemaCam_->SetActivated();
 
-//	for(int i=0;i<10;i++)
-//	{
-//		int Num = GameEngineRandom::MainRandom.RandomInt(0, TilesVec_.size() - 1);
-//		TilesVec_[Num]->On();
-//		PositionList_.push_back(TilesVec_[Num]->GetTransform().GetWorldPosition() - float4( 0 , -60.0f, 0));
-//	}
-//
-//	int Size = TilesVec_.size() - 1;
-//
-//	for (int i = 0; i < 10; i++)
-//	{
-//		if (TilesVec_[i]->IsUpdate() == false)
-//		{
-//			TilesVec_[i]->Death();
-//		}
-//	}
-//
-//	TilesVec_.clear();
-//
-////	CinemaCam_->SetActivated();
-//
-//
-//
-//
 //	//플레이어 위치 수정
 //
 	int PlayerID = GameServer::GetInst()->PlayerID_;

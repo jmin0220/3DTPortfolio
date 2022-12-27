@@ -35,5 +35,9 @@ private:
 	float Speed_;
 	int Dir_;
 
+	// ¼­¹ö
+	bool ServerActivated_;
+
+
 };
 
