@@ -60,4 +60,12 @@ void DoorDashStage::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* 
 	PlatformPhysXTriMeshGeometry_->SetPhysxMaterial(FLOOR_STATICFRICTION, FLOOR_DYNAMICFRICTION, FLOOR_RESISTUTION);
 	PlatformPhysXTriMeshGeometry_->SetObjectGround();
 	PlatformPhysXTriMeshGeometry_->CreatePhysXActors("DoorDashPlatformCollisionMesh.fbx", _Scene, _physics, Cooking, false, physx::PxVec3(MeshBoundScale2.x, MeshBoundScale2.y, MeshBoundScale2.z));
+
+
+
+	//
+	//SetObjectGround    -> 땅 
+	//SetObjectObstacle  -> 닿으면 넘어진다
+
+
 }

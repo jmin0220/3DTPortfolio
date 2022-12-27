@@ -26,7 +26,7 @@ void MovingBar::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _phy
 	float4 MeshBoundScale = Renderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
 	MeshBoundScale *= Scale;
 	PhysXBoxGeometry_->CreatePhysXActors(_Scene, _physics, physx::PxVec3(MeshBoundScale.x- 1.0f , MeshBoundScale.y- 5.0f, MeshBoundScale.z -1.5f));
-
+	PhysXBoxGeometry_->SetObjectObstacle();
 	PhysXBoxGeometry_->SetPositionSetFromParentFlag(true);
 }
 

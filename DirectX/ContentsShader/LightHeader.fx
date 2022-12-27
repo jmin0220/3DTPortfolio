@@ -57,30 +57,30 @@ float4 CalDiffuseLight(float4 _ViewPosition, float4 _ViewNormal, LightData _Ligh
 {
     _ViewNormal = normalize(_ViewNormal);
     float4 LightRevDir = normalize(_LightData.ViewLightRevDir);
-
+    
     if (1 == _LightData.LightType)
     {
         LightRevDir.xyz = normalize(_LightData.ViewLightPos - _ViewPosition).xyz;
         LightRevDir.w = 0.0f;
     }
-
+    
     // 라이트 포지션 - 월드 포지션
-
+    
     float4 DiffuseLight = max(0.0f, dot(_ViewNormal.xyz, LightRevDir.xyz));
     DiffuseLight *= _LightData.LightColor;
-
+    
     return DiffuseLight * _LightData.DifLightPower;
 }
 
 float4 CalDiffuseLights(float4 _ViewPosition, float4 _ViewNormal)
 {
     float4 ResultLights = (float4) 0.0f;
-
+    
     for (int i = 0; i < LightCount; ++i)
     {
         ResultLights += CalDiffuseLight(_ViewPosition, _ViewNormal, Lights[i]);
     }
-
+    
     ResultLights.w = ResultLights.x;
     return ResultLights;
 
@@ -95,12 +95,12 @@ float4 CalAmbientLight(LightData _LightData)
 float4 CalAmbientLight()
 {
     float4 ResultLights = (float4) 0.0f;
-
+    
     for (int i = 0; i < LightCount; ++i)
     {
         ResultLights += CalAmbientLight(Lights[i]);
     }
-
+    
     ResultLights.w = ResultLights.x;
     return ResultLights;
 }
@@ -108,43 +108,43 @@ float4 CalAmbientLight()
 
 float4 CalSpacularLight(float4 _ViewPosition, float4 _ViewNormal, LightData _LightData)
 {
-    float4 SpacularLight = (float4)0.0f;
-
+    float4 SpacularLight = (float4) 0.0f;
+    
     _ViewNormal.xyz = normalize(_ViewNormal.xyz);
     _LightData.ViewLightRevDir.xyz = normalize(_LightData.ViewLightRevDir.xyz);
-
+    
     float3 LightDir = _LightData.ViewLightRevDir.xyz;
-
+    
     if (1 == _LightData.LightType)
     {
         LightDir.xyz = normalize(_LightData.ViewLightPos - _ViewPosition).xyz;
     }
-
+    
     // N
     float3 Reflection = normalize(2.0f * _ViewNormal.xyz * dot(LightDir.xyz, _ViewNormal.xyz) - LightDir.xyz);
     // L
     float3 Eye = normalize(_LightData.CameraPosition.xyz - _ViewPosition.xyz);
-
+    
     // 1인 부분만 살리고 나머지 부분은 
     // 0~1사이의 값이 나오니까.
     // 0.5
     float Result = max(0.0f, dot(Reflection.xyz, Eye.xyz));
     SpacularLight.xyzw = pow(Result, _LightData.SpcPow);
     // SpacularLight.w = 1.0f;
-
+    
     return SpacularLight * _LightData.SpcLightPower;
 }
 
 float4 CalSpacularLight(float4 _ViewPosition, float4 _ViewNormal)
 {
     float4 ResultLights = (float4) 0.0f;
-
+    
     for (int i = 0; i < LightCount; ++i)
     {
-
+        
         ResultLights += CalSpacularLight(_ViewPosition, _ViewNormal, Lights[i]);
     }
-
+    
     ResultLights.w = ResultLights.x;
     return ResultLights;
 }

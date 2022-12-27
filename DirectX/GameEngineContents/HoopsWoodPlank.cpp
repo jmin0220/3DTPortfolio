@@ -23,6 +23,7 @@ void HoopsWoodPlank::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics*
 	float4 MeshBoundScale = Renderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
 	PhysXBoxGeometry_->SetDynamicPivot(Renderer_->GetTransform().GetLocalPosition());
 	PhysXBoxGeometry_->SetPhysxMaterial(1.5f, 1.0f, FLOOR_RESISTUTION);
+	PhysXBoxGeometry_->SetObjectGround();
 	PhysXBoxGeometry_->CreatePhysXActors(_Scene, _physics, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y  , MeshBoundScale.z));
 
 	PhysXBoxGeometry_->SetPositionSetFromParentFlag(true);

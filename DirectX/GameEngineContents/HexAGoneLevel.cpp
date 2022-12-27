@@ -9,6 +9,8 @@
 
 #include "SkyboxActor.h"
 
+#include <GameEngineBase/GameEngineRandom.h>
+
 HexAGoneLevel::HexAGoneLevel() 
 {
 }
@@ -43,8 +45,9 @@ void HexAGoneLevel::End()
 
 void HexAGoneLevel::LevelStartEvent()
 {
-
 	StageParentLevel::LevelStartEvent();
+
+
 
 	LightObject_->GetLightData().LightColor = float4{ 0.6f,0.8f,1.0f,1.0f };
 	LightObject_->GetLightData().DifLightPower = 0.7f;
@@ -95,14 +98,13 @@ void HexAGoneLevel::LevelStartEvent()
 				{
 					Tile->SetTex("Yellow");
 				}
-				else if (k == 5)
-				{
-					Tile->SetTex("Purple");
-				}
 				TileScale_ = Tile->GetRenderer()->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
 				Tile->GetTransform().SetWorldPosition({ XPos - 30,YPos,ZPos + 70 });
 				XPos += Tile->GetRenderer()->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox.x * 1.5;
-				TilesVec_.push_back(Tile);
+				if (k == 5)
+				{
+					TilesVec_.push_back(Tile);
+				}
 			}
 
 			if (i >= Col_ / 2)
@@ -130,10 +132,57 @@ void HexAGoneLevel::LevelStartEvent()
 			{
 				break;
 			}
-		}
-		YPos += 70.0f;
-	}
 
+
+		}
+
+		YPos += 70.0f;
+
+	}
+	
+	{
+		float XPos = 0;
+		float ZPos = 0;
+
+		float SumPos = 0;
+
+		Num_ = 0;
+		Col_ = 5;
+		Row_ = 1;
+		for (int i = 0; i < Col_; i++)
+		{
+			XPos = 0 - Num_ * SumPos;
+			ZPos = 0 + i * 25;
+
+
+			for (int j = 1; j <= Row_; j++)
+			{
+				std::shared_ptr<HexTile> Tile = CreateActor<HexTile>();
+				Tile->SetTex("WhiteBlue");
+				Tile->GetTransform().SetWorldPosition({ XPos , 350.0f , ZPos - 50.0f });
+				PositionList_.push_back(Tile->GetTransform().GetWorldPosition());
+
+				XPos += Tile->GetRenderer()->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox.x * 3.0f;
+				SumPos = Tile->GetRenderer()->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox.x * 1.5f;
+			}
+
+
+			if (i >= Col_ / 2)
+			{
+				Row_--;
+				Num_--;
+			}
+			else
+			{
+				Row_++;
+				Num_++;
+			}
+
+
+		}
+
+
+	}
 
 	//for (int i = 0; i < Col_; i++)
 	//{
@@ -170,7 +219,36 @@ void HexAGoneLevel::LevelStartEvent()
 	Skybox->SetSkyTexture("S5_SkyBox_Respawn.png");
 
 
-	//CinemaCam_->SetActivated();
+//	for(int i=0;i<10;i++)
+//	{
+//		int Num = GameEngineRandom::MainRandom.RandomInt(0, TilesVec_.size() - 1);
+//		TilesVec_[Num]->On();
+//		PositionList_.push_back(TilesVec_[Num]->GetTransform().GetWorldPosition() - float4( 0 , -60.0f, 0));
+//	}
+//
+//	int Size = TilesVec_.size() - 1;
+//
+//	for (int i = 0; i < 10; i++)
+//	{
+//		if (TilesVec_[i]->IsUpdate() == false)
+//		{
+//			TilesVec_[i]->Death();
+//		}
+//	}
+//
+//	TilesVec_.clear();
+//
+////	CinemaCam_->SetActivated();
+//
+//
+//
+//
+//	//플레이어 위치 수정
+//
+	int PlayerID = GameServer::GetInst()->PlayerID_;
+	Player_->SetCheckPoint(PositionList_[0] + float4(0, 0, 0));
+	Player_->ResetPlayerPos();
+
 }
 
 void HexAGoneLevel::LevelEndEvent()

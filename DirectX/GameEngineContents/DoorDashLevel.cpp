@@ -62,14 +62,14 @@ void DoorDashLevel::LevelStartEvent()
 	//스카이박스
 	std::shared_ptr<SkyboxActor> Skybox = CreateActor<SkyboxActor>();
 	Skybox->SetSkyTexture("Respawn_SkyBox.png");
-	//그외 배경용 static매쉬
-	//BackGround_ = CreateActor<DoorDash_BackGroundObject>();
-	//BackGround_->GetTransform().SetWorldPosition({ 0,0,0 });
 
 
 	// 플레이어 포지션 임시
 	int PlayerID = GameServer::GetInst()->PlayerID_;
-	Player_->GetTransform().SetWorldPosition(PlayerPos + float4{ PlayerID * 20.0f, 0, 0 });
+	Player_->SetCheckPoint(PlayerPos + float4{ PlayerID * 20.0f, 0, 0 });
+	Player_->ResetPlayerPos();
+
+
 }
 
 void DoorDashLevel::LevelEndEvent()

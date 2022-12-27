@@ -53,6 +53,7 @@ void HoopsScythe::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _p
 	float4 MeshBoundScale = ColRenderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
 	PhysXConvexGeometry_->SetDynamicPivot(Renderer_->GetTransform().GetLocalPosition());
 	PhysXConvexGeometry_->SetPhysxMaterial(0, 0, 10.0f);
+	PhysXConvexGeometry_->SetObjectObstacle();
 	PhysXConvexGeometry_->CreatePhysXActors("ScytheCol.FBX", _Scene, _physics, Cooking,false, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z) ,0.0f , true);
 	PhysXConvexGeometry_->SetPositionSetFromParentFlag(true);
 }

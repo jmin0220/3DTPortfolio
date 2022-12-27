@@ -39,7 +39,7 @@ void HoopsBox::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _phys
 {
 	physx::PxCooking* Cooking = static_cast<VirtualPhysXLevel*>(GetLevel())->GetCooking();
 	float4 MeshBoundScale = Renderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
-
+	PhysXTriGeometry_->SetObjectGround();
 	PhysXTriGeometry_->SetPhysxMaterial(0, 0, 0);
 	PhysXTriGeometry_->CreatePhysXActors(Name_, _Scene, _physics, Cooking, true, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z), 0.0f);
 	PhysXTriGeometry_->SetPositionSetFromParentFlag(true);
@@ -48,7 +48,7 @@ void HoopsBox::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _phys
 
 	physx::PxCooking* Cooking2 = static_cast<VirtualPhysXLevel*>(GetLevel())->GetCooking();
 	float4 MeshBoundScale2 = Renderer2_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
-
+	PhysXTriGeometry2_->SetObjectGround();
 	PhysXTriGeometry2_->SetPhysxMaterial(FLOOR_STATICFRICTION, 1.5f, FLOOR_RESISTUTION);
 	PhysXTriGeometry2_->CreatePhysXActors(Name2_, _Scene, _physics, Cooking2, true, physx::PxVec3(MeshBoundScale2.x, MeshBoundScale2.y, MeshBoundScale2.z), 0.0f);
 	PhysXTriGeometry2_->SetPositionSetFromParentFlag(true);

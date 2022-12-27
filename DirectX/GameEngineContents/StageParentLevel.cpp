@@ -68,7 +68,7 @@ void StageParentLevel::Start()
 
 	{
 		LightObject_ = CreateActor<GameEngineLight>();
-		LightObject_->GetTransform().SetWorldPosition({ 0,-300.0f,0 });
+		LightObject_->GetTransform().SetWorldPosition({ 0, 0, 0 });
 		GUI_->SetLight(LightObject_);
 		GetMainCamera()->PushLight(LightObject_);
 	}
@@ -167,7 +167,7 @@ void StageParentLevel::LevelStartEvent()
 	//후프레벨 위치 임시
 	if (MyStage_ == StageNum::STAGE4)
 	{
-		Player_->GetTransform().SetWorldPosition({ 0,500.0f,0 });
+		//Player_->GetTransform().SetWorldPosition({ 0,500.0f,0 });
 	}
 	else if (MyStage_ == StageNum::STAGE5)
 	{

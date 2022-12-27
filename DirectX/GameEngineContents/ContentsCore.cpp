@@ -29,6 +29,8 @@
 #include <GameEngineCore/GameEngineRes.h>
 #include <GameEngineBase/GameEnginePath.h>
 
+#include <GameEngineCore/GameEngineRasterizer.h>
+
 std::shared_ptr<ContentsCore> ContentsCore::Inst_ = std::make_shared<ContentsCore>();
 std::vector<GameEngineLevel*> ContentsCore::TestLevels_;
 std::vector<GameEngineLevel*> ContentsCore::GameLevels_;
@@ -85,6 +87,27 @@ void ContentsCore::Start()
 
 	//GameEngineGUI::CreateGUIWindow<GameEngineStatusWindow>("GameEngineStatusWindow", nullptr); //GUI Ãß°¡ 
 	GameEngineGUI::CreateGUIWindow<GameManagerGUI>("GameManager", nullptr);
+
+	{
+		//D3D11_FILL_MODE FillMode = D3D11_FILL_SOLID;
+		//D3D11_CULL_MODE CullMode = D3D11_CULL_NONE;
+		//BOOL FrontCounterClockwise = FALSE;
+		//INT DepthBias = D3D11_DEFAULT_DEPTH_BIAS;
+		//FLOAT DepthBiasClamp = D3D11_DEFAULT_DEPTH_BIAS_CLAMP;
+		//FLOAT SlopeScaledDepthBias = D3D11_DEFAULT_SLOPE_SCALED_DEPTH_BIAS;
+		//BOOL DepthClipEnable = TRUE;
+		//BOOL ScissorEnable = FALSE;
+		//BOOL MultisampleEnable = TRUE;
+		//BOOL AntialiasedLineEnable = FALSE;
+
+		//D3D11_RASTERIZER_DESC Desc = { D3D11_FILL_SOLID, D3D11_CULL_NONE, FALSE,
+		//	D3D11_DEFAULT_DEPTH_BIAS, D3D11_DEFAULT_DEPTH_BIAS_CLAMP,
+		//	D3D11_DEFAULT_SLOPE_SCALED_DEPTH_BIAS, TRUE, FALSE, TRUE, FALSE };
+
+		D3D11_RASTERIZER_DESC Desc = { D3D11_FILL_SOLID, D3D11_CULL_BACK };
+
+		GameEngineRasterizer::Create("SkyboxRasterizer", Desc);
+	}
 }
 
 void ContentsCore::Update(float _DeltaTime)

@@ -35,6 +35,7 @@ private:
 	//std::shared_ptr<InGameSetUI> UIs_;
 
 	std::vector<std::shared_ptr<GameEngineActor>> TilesVec_;
+	std::vector<float4> PositionList_;
 	int Row_;  //За
 	int Col_;  //ї­ 
 	int Num_;
