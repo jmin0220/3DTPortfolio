@@ -25,6 +25,8 @@ public:
 	void RenderBubbleSort();
 	void ChaseNameToScore();
 
+	void QuickSort(int arr[], int _Up,int _Down);
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
