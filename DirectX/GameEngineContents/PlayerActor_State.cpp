@@ -28,10 +28,10 @@ void PlayerActor::CreateFSMStates()
 		, std::bind(&PlayerActor::DiveGetUpStart, this, std::placeholders::_1)
 		, std::bind(&PlayerActor::DiveGetUpEnd, this, std::placeholders::_1));
 
-	PlayerStateManager_.CreateStateMember("CannotControll"
-		, std::bind(&PlayerActor::CannotControllUpdate, this, std::placeholders::_1, std::placeholders::_2)
-		, std::bind(&PlayerActor::CannotControllStart, this, std::placeholders::_1)
-		, std::bind(&PlayerActor::CannotControllEnd, this, std::placeholders::_1));
+	PlayerStateManager_.CreateStateMember("CannotControl"
+		, std::bind(&PlayerActor::CannotControlUpdate, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&PlayerActor::CannotControlStart, this, std::placeholders::_1)
+		, std::bind(&PlayerActor::CannotControlEnd, this, std::placeholders::_1));
 
 	PlayerStateManager_.ChangeState("Idle");
 }
@@ -45,6 +45,14 @@ void PlayerActor::IdleUpdate(float _DeltaTime, const StateInfo& _Info)
 {
 	PlayerActType ActType = InputDetect();
 	bool IsOnGround = CheckOnGround();
+
+	if (IsUnControlable_ == true)
+	{
+		InputControllerMove(_DeltaTime);
+		PlayerStateManager_.ChangeState("CannotControl");
+		return;
+	}
+
 
 	if (ActType == PlayerActType::Dive)
 	{
@@ -67,9 +75,6 @@ void PlayerActor::IdleUpdate(float _DeltaTime, const StateInfo& _Info)
 		PlayerStateManager_.ChangeState("Run");
 		return;
 	}
-
-
-
 }
 
 void PlayerActor::IdleEnd(const StateInfo& _Info)
@@ -87,6 +92,13 @@ void PlayerActor::RunUpdate(float _DeltaTime, const StateInfo& _Info)
 	bool IsOnGround = CheckOnGround();
 
 	InputControllerMove(_DeltaTime);
+
+	if (IsUnControlable_ == true)
+	{
+		InputControllerMove(_DeltaTime);
+		PlayerStateManager_.ChangeState("CannotControl");
+		return;
+	}
 
 	if (ActType == PlayerActType::Dive)
 	{
@@ -122,6 +134,13 @@ void PlayerActor::JumpStart(const StateInfo& _Info)
 
 void PlayerActor::JumpUpdate(float _DeltaTime, const StateInfo& _Info)
 {
+
+	if (IsUnControlable_ == true)
+	{
+		InputControllerMove(_DeltaTime);
+		PlayerStateManager_.ChangeState("CannotControl");
+		return;
+	}
 
 	PlayerActType ActType = InputDetect();
 
@@ -159,6 +178,15 @@ void PlayerActor::DiveUpdate(float _DeltaTime, const StateInfo& _Info)
 {
 	
 	PlayerActType ActType = InputDetect();
+
+	if (IsUnControlable_ == true)
+	{
+		InputControllerMove(_DeltaTime);
+		PlayerStateManager_.ChangeState("CannotControl");
+		return;
+	}
+
+
 	if ((CheckOnGround() == true  && waitphysx_ == true) ||
 		IsDiving_ == true)
 	{
@@ -183,6 +211,14 @@ void PlayerActor::DiveGetUpStart(const StateInfo& _Info)
 
 void PlayerActor::DiveGetUpUpdate(float _DeltaTime, const StateInfo& _Info)
 {
+
+	if (IsUnControlable_ == true)
+	{
+		InputControllerMove(_DeltaTime);
+		PlayerStateManager_.ChangeState("CannotControl");
+		return;
+	}
+
 	if (StandUp(_DeltaTime) == true)
 	{
 		PlayerStateManager_.ChangeState("Idle");
@@ -197,26 +233,30 @@ void PlayerActor::DiveGetUpEnd(const StateInfo& _Info)
 {
 }
 
-void PlayerActor::CannotControllStart(const StateInfo& _Info)
+void PlayerActor::CannotControlStart(const StateInfo& _Info)
 {
+	DynamicActorComponent_->SetUnlockAxis();
 }
 
-void PlayerActor::CannotControllUpdate(float _DeltaTime, const StateInfo& _Info)
+void PlayerActor::CannotControlUpdate(float _DeltaTime, const StateInfo& _Info)
 {
-	if (UnControllableTime_ > 2.0f)
+
+	UnControlableTime_ += _DeltaTime;
+
+	if (UnControlableTime_ > 2.0f && CheckOnGround() == true)
 	{
 		if (StandUp(_DeltaTime) == true)
 		{
-			PlayerStateManager_.ChangeState("Idle");
-			IsTouchGround = true;
-			IsDetachGround = false;
+			IsUnControlable_ = false;
+			DynamicActorComponent_->SetlockAxis();
+			PlayerStateManager_.ChangeState("DiveGetUp");
 		}
 	}
 
 
 }
 
-void PlayerActor::CannotControllEnd(const StateInfo& _Info)
+void PlayerActor::CannotControlEnd(const StateInfo& _Info)
 {
 }
 

@@ -77,7 +77,7 @@ void VirtualPhysXLevel::initPhysics(bool _interactive)
 
 	DefaultCpuDispatcher_ = physx::PxDefaultCpuDispatcherCreate(2);
 	sceneDesc.cpuDispatcher = DefaultCpuDispatcher_;
-	sceneDesc.flags |= physx::PxSceneFlag::eENABLE_CCD;
+	//sceneDesc.flags |= physx::PxSceneFlag::eENABLE_CCD;
 	// sceneDesc.broadPhaseType = physx::PxBroadPhaseType::eABP;
 
 	// Scene »ý¼º
@@ -259,15 +259,22 @@ void CustomSimulationEventCallback::onContact(const physx::PxContactPairHeader& 
 		physx::PxShape* tmpContactActor = current.shapes[0];
 		physx::PxShape* tmpOtherActor = current.shapes[1];
 		physx::PxFilterData OtherFilterdata = tmpOtherActor->getSimulationFilterData();
-		physx::PxFilterData TriggerFilterdata = tmpContactActor->getSimulationFilterData();
+		physx::PxFilterData ContactFilterdata = tmpContactActor->getSimulationFilterData();
 
 		if (OtherFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::Ground) &&
-			TriggerFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic) && 
+			ContactFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic) && 
 			current.events & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
 		{
 			CommonPlayer_->TouchGroundOn();
 			CommonPlayer_->DetachGroundOff();
 			CommonPlayer_->Setwaitphysx(true);
+		}
+
+		if (OtherFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic) &&
+			ContactFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::Obstacle) &&
+			current.events & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
+		{
+			CommonPlayer_->OnUnControlable();
 		}
 	}
 }
@@ -287,7 +294,17 @@ physx::PxFilterFlags CustomFilterShader(physx::PxFilterObjectAttributes attribut
 	pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
 
 	if ((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1))
+	{
+		pairFlags |= physx::PxPairFlag::eNOTIFY_CONTACT_POINTS;
 		pairFlags |= physx::PxPairFlag::eNOTIFY_TOUCH_FOUND;
+	}
+
+	if ((filterData0.word0 & filterData1.word2) && (filterData1.word0 & filterData0.word2))
+	{
+		pairFlags |= physx::PxPairFlag::eNOTIFY_CONTACT_POINTS;
+		pairFlags |= physx::PxPairFlag::eMODIFY_CONTACTS;
+		pairFlags |= physx::PxPairFlag::eNOTIFY_TOUCH_FOUND;
+	}
 
 	return physx::PxFilterFlag::eDEFAULT;
 }

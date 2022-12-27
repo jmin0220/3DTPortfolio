@@ -4,15 +4,15 @@
 #define SIZE_MAGNIFICATION_RATIO 1.0f, 1.0f, 1.0f
 #define PLAYER_SIZE_MAGNIFICATION_RATIO 3.0f, 3.0f, 3.0f
 
-// 중력 -98.1f * 0.8f
-//#define PHYSX_GRAVITY -78.48f
-#define PHYSX_GRAVITY -50.48f
+// 중력 -98.1f * 0.8 * 0.8f
+#define PHYSX_GRAVITY -160.0f
+//#define PHYSX_GRAVITY -50.48f
 
 // 플레이어 최대속력
-#define PLAYER_MAX_SPEED 25.0f
+#define PLAYER_MAX_SPEED 40.0f
 
 //플레이어 점프힘
-#define PLAYER_JUMP_FORCE 10.0f
+#define PLAYER_JUMP_FORCE 20.0f
 
 //플레이어 eventCol 사이즈
 #define PLAYER_COL_SCALE 3.0f, 5.0f, 3.0f

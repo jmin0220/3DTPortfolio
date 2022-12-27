@@ -80,6 +80,9 @@ void PhysXConvexSeesawComponent::CreatePhysXActors(const std::string& _MeshName,
 	// 제동비율
 	dynamic_->setAngularDamping(physx::PxReal(0.5f));
 
+	//최대 각속도
+	dynamic_->setMaxAngularVelocity(0.3f);
+
 	// Scene에 액터 추가
 	_Scene->addActor(*dynamic_);
 
@@ -99,8 +102,17 @@ void PhysXConvexSeesawComponent::Start()
 
 void PhysXConvexSeesawComponent::Update(float _DeltaTime)
 {
+	dynamic_->wakeUp();
 	// 포지션을 고정시키고 회전값만 넘겨줌
 	dynamic_->setGlobalPose(physx::PxTransform(SeesawPos_, dynamic_->getGlobalPose().q));
+	physx::PxVec3 AngVel = dynamic_->getAngularVelocity();
+	float AngVelX = AngVel.x;
+	float AngVelY = AngVel.y;
+	float AngVelZ = AngVel.z;
+	std::string LOG = "X >> " + std::to_string(AngVelX)
+		+ "Y >> " + std::to_string(AngVelY)
+		+ "Z >> " + std::to_string(AngVelZ);
+	GameEngineDebug::OutPutString(LOG);
 	
 	// PhysX Actor의 상태에 맞춰서 부모의 Transform정보를 갱신
 	float4 tmpWorldPos = { dynamic_->getGlobalPose().p.x

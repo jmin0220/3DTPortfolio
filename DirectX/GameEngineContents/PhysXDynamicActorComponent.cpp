@@ -65,7 +65,9 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 	relativePose.p = DynamicCenter;
 	physx::PxTransform relativePose2(DynamicCenter);
 	shape_->setLocalPose(relativePose);
-	shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic), static_cast<physx::PxU32>(PhysXFilterGroup::Ground), 0, 0));
+	shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic), 
+		static_cast<physx::PxU32>(PhysXFilterGroup::Ground), 
+		static_cast<physx::PxU32>(PhysXFilterGroup::Obstacle), 0));
 	//physx::PxTransform relativePose(physx::PxQuat(physx::PxHalfPi, physx::PxVec3(0, 0, 1)));
 
 	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 0.01f);
@@ -206,8 +208,8 @@ bool PhysXDynamicActorComponent::PlayerStandUp(float _DeltaTime, bool _IsXAixisR
 	physx::PxQuat GlobalRot = dynamic_->getGlobalPose().q;
 	float4 GlobalRotEuler = PhysXCommonFunc::GetQuaternionEulerAngles(GlobalRot);
 	float4 AddedRotX = float4{ -1.0f, 0.0f, 0.0f }.DegreeRotationToQuaternionReturn();
-	float4 AddedRotY = float4{ 0.0f, 3.0f, 0.0f }.DegreeRotationToQuaternionReturn();
-	float4 AddedRotmY = float4{ 0.0f, -3.0f, 0.0f }.DegreeRotationToQuaternionReturn();
+	float4 AddedRotY = float4{ 0.0f, 5.0f, 0.0f }.DegreeRotationToQuaternionReturn();
+	float4 AddedRotmY = float4{ 0.0f, -5.0f, 0.0f }.DegreeRotationToQuaternionReturn();
 	float4 AddedRot = float4{ 0.0f, 0.0f, 0.0f }.DegreeRotationToQuaternionReturn();
 	physx::PxQuat FinalRot;
 	physx::PxQuat AddedRotQuat(AddedRotY.x, AddedRotY.y, AddedRotY.z, AddedRotY.w);
@@ -223,8 +225,6 @@ bool PhysXDynamicActorComponent::PlayerStandUp(float _DeltaTime, bool _IsXAixisR
 	//	physx::PxQuat AddedRotQuat(AddedRotmY.x, AddedRotmY.y, AddedRotmY.z, AddedRotmY.w);
 	//	FinalRot = GlobalRot * AddedRotQuat;
 	//}
-
-
 
 	physx::PxTransform FinalTransform(dynamic_->getGlobalPose().p, FinalRot);
 	float4 EulerFinalRot = PhysXCommonFunc::GetQuaternionEulerAngles(FinalRot);

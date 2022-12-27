@@ -90,9 +90,8 @@ void PhysXSpinBarComponent::CreatePhysXActors(const std::string& _MeshName, phys
 		//shape_->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
 
 		// 충돌시점 콜백을 위한 세팅
-		shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Ground)
-			, static_cast<physx::PxU32>(PhysXFilterGroup::Player), 0, 0));
-
+		shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Obstacle)
+			, 0, static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic), 0));
 	}
 
 

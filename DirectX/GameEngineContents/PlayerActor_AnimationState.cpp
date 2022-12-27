@@ -43,6 +43,11 @@ void PlayerActor::CreateAnimationFSMStates()
 		, std::bind(&PlayerActor::DiveGetUpAniStart, this, std::placeholders::_1)
 		, std::bind(&PlayerActor::DiveGetUpAniEnd, this, std::placeholders::_1));
 
+	PlayerAniStateManager_.CreateStateMember("CannotControl"
+		, std::bind(&PlayerActor::CannotControlAniUpdate, this, std::placeholders::_1, std::placeholders::_2)
+		, std::bind(&PlayerActor::CannotControlAniStart, this, std::placeholders::_1)
+		, std::bind(&PlayerActor::CannotControlAniEnd, this, std::placeholders::_1));
+
 	PlayerAniStateManager_.ChangeState("Idle");
 }
 
@@ -55,6 +60,12 @@ void PlayerActor::IdleAniStart(const StateInfo& _Info)
 
 void PlayerActor::IdleAniUpdate(float _DeltaTime, const StateInfo& _Info)
 {
+	if (PlayerStateManager_.GetCurStateStateName() == "CannotControl")
+	{
+		PlayerAniStateManager_.ChangeState("CannotControl");
+		return;
+	}
+
 	if (PlayerStateManager_.GetCurStateStateName() == "Run"
 		|| PlayerStateManager_.GetCurStateStateName() == "Idle")
 	{
@@ -90,6 +101,12 @@ void PlayerActor::WalkAniStart(const StateInfo& _Info)
 
 void PlayerActor::WalkAniUpdate(float _DeltaTime, const StateInfo& _Info)
 {
+	if (PlayerStateManager_.GetCurStateStateName() == "CannotControl")
+	{
+		PlayerAniStateManager_.ChangeState("CannotControl");
+		return;
+	}
+
 	if (PlayerStateManager_.GetCurStateStateName() == "Run"
 		|| PlayerStateManager_.GetCurStateStateName() == "Idle")
 	{
@@ -132,6 +149,12 @@ void PlayerActor::RunAniStart(const StateInfo& _Info)
 
 void PlayerActor::RunAniUpdate(float _DeltaTime, const StateInfo& _Info)
 {
+	if (PlayerStateManager_.GetCurStateStateName() == "CannotControl")
+	{
+		PlayerAniStateManager_.ChangeState("CannotControl");
+		return;
+	}
+
 	if (PlayerStateManager_.GetCurStateStateName() == "Run" 
 		|| PlayerStateManager_.GetCurStateStateName() == "Idle")
 	{
@@ -185,6 +208,12 @@ void PlayerActor::JumpMidAirAniStart(const StateInfo& _Info)
 
 void PlayerActor::JumpMidAirAniUpdate(float _DeltaTime, const StateInfo& _Info)
 {
+	if (PlayerStateManager_.GetCurStateStateName() == "CannotControl")
+	{
+		PlayerAniStateManager_.ChangeState("CannotControl");
+		return;
+	}
+
 	if (CheckOnGround() == true)
 	{
 		PlayerAniStateManager_.ChangeState("Idle");
@@ -225,6 +254,12 @@ void PlayerActor::DiveLoopAniStart(const StateInfo& _Info)
 
 void PlayerActor::DiveLoopAniUpdate(float _DeltaTime, const StateInfo& _Info)
 {
+	if (PlayerStateManager_.GetCurStateStateName() == "CannotControl")
+	{
+		PlayerAniStateManager_.ChangeState("CannotControl");
+		return;
+	}
+
 	if (StandUpDelay_ > 0.01f)
 	{
 		PlayerAniStateManager_.ChangeState("Dive_GetUp");
@@ -244,6 +279,12 @@ void PlayerActor::DiveGetUpAniStart(const StateInfo& _Info)
 
 void PlayerActor::DiveGetUpAniUpdate(float _DeltaTime, const StateInfo& _Info)
 {
+	if (PlayerStateManager_.GetCurStateStateName() == "CannotControl")
+	{
+		PlayerAniStateManager_.ChangeState("CannotControl");
+		return;
+	}
+
 	if (PlayerStateManager_.GetCurStateStateName() == "Idle")
 	{
 		PlayerAniStateManager_.ChangeState("Idle");
@@ -254,5 +295,26 @@ void PlayerActor::DiveGetUpAniUpdate(float _DeltaTime, const StateInfo& _Info)
 void PlayerActor::DiveGetUpAniEnd(const StateInfo& _Info)
 {
 }
+
+void PlayerActor::CannotControlAniStart(const StateInfo& _Info)
+{
+	//Jump_Landing 애니메이션이 끝나면 알아서 Idle 상태로 이동 (B애니메이션 생성때 AnimationBindEnd 함수 활용함
+	FbxRenderer_->ChangeAnimation("Ragdoll");
+	CurAniName = "Ragdoll";
+}
+
+void PlayerActor::CannotControlAniUpdate(float _DeltaTime, const StateInfo& _Info)
+{
+	if (PlayerStateManager_.GetCurStateStateName() == "Idle")
+	{
+		PlayerAniStateManager_.ChangeState("Idle");
+		return;
+	}
+}
+
+void PlayerActor::CannotControlAniEnd(const StateInfo& _Info)
+{
+}
+
 
 

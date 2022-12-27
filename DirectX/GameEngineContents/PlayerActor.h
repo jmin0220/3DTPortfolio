@@ -104,6 +104,10 @@ private:
 	void DiveGetUpUpdate(float _DeltaTime, const StateInfo& _Info);
 	void DiveGetUpEnd(const StateInfo& _Info);
 
+	void CannotControlAniStart(const StateInfo& _Info);
+	void CannotControlAniUpdate(float _DeltaTime, const StateInfo& _Info);
+	void CannotControlAniEnd(const StateInfo& _Info);
+
 
 	// PlayerAnimationFSM
 	void IdleAniStart(const StateInfo& _Info);
@@ -138,9 +142,9 @@ private:
 	void DiveGetUpAniUpdate(float _DeltaTime, const StateInfo& _Info);
 	void DiveGetUpAniEnd(const StateInfo& _Info);
 
-	void CannotControllStart(const StateInfo& _Info);
-	void CannotControllUpdate(float _DeltaTime, const StateInfo& _Info);
-	void CannotControllEnd(const StateInfo& _Info);
+	void CannotControlStart(const StateInfo& _Info);
+	void CannotControlUpdate(float _DeltaTime, const StateInfo& _Info);
+	void CannotControlEnd(const StateInfo& _Info);
 
 
 	// 입력 & 움직임
@@ -160,7 +164,8 @@ private:
 	bool waitphysx_;
 	bool IsDiving_;
 
-	float UnControllableTime_;
+	float UnControlableTime_;
+	bool IsUnControlable_;
 	// 일어서기
 	bool StandUp(float _DeltaTime);
 	bool IsStandingReady_;
@@ -259,6 +264,16 @@ public:
 	inline void Setwaitphysx(bool _Bool)
 	{
 		waitphysx_ = _Bool;
+	}
+
+	inline void OnUnControlable()
+	{
+		IsUnControlable_ = true;
+	}
+
+	inline void OffUnControlable()
+	{
+		IsUnControlable_ = false;
 	}
 
 	inline void ResetPlayerPos()
