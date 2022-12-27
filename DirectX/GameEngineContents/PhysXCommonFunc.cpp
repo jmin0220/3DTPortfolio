@@ -3,7 +3,9 @@
 #include <math.h>
 
 PhysXCommonFunc::PhysXCommonFunc() 
-    :CommonPlayer_(nullptr)
+    : CommonPlayer_(nullptr)
+    , IsObstacle_(false)
+    , IsGround_(false)
 {
 }
 

@@ -53,6 +53,8 @@ PlayerActor::PlayerActor() :
 	IsStandingReady_(false),
 	IsDiving_(false),
 	IsPlayerble_(false),
+	IsInputOn_(true),
+	IsPlayerFrozen_(false),
 	IsNetPlayerColorExist_(false),
 	PrevAnimation_("")
 {
@@ -118,8 +120,8 @@ void PlayerActor::PlayerInit()
 		GameEngineInput::GetInst()->CreateKey("ImpulsS", VK_DOWN);
 		GameEngineInput::GetInst()->CreateKey("ImpulsD", VK_RIGHT);
 
-		//일어서기 시험용
-		GameEngineInput::GetInst()->CreateKey("StandUp", 'K');
+		//플레이어 멈추기 실험용
+		GameEngineInput::GetInst()->CreateKey("Freeze", 'K');
 
 		//체크포인트 실험용
 		GameEngineInput::GetInst()->CreateKey("TestPos", 'J');
@@ -163,6 +165,13 @@ void PlayerActor::Update(float _DeltaTime)
 
 		PlayerStateManager_.Update(_DeltaTime);
 		PlayerAniStateManager_.Update(_DeltaTime);
+
+		if (GameEngineInput::GetInst()->IsDown("Freeze") == true)
+		{
+			IsInputOn_ = false;
+			DynamicActorComponent_->FreezeDynamic();
+			FbxRenderer_->PauseSwtich();
+		}
 
 	//GetTransform().SetWorldMove(MoveDir_ * SPEED_PLAYER * _DeltaTime);
 	// TODO::충격테스트코드
@@ -300,6 +309,11 @@ void PlayerActor::LevelEndEvent()
 PlayerActType PlayerActor::InputDetect()
 {
 
+	if (IsInputOn_ == false)
+	{
+		return PlayerActType::Idle;
+	}
+
 	if (true == GameEngineInput::GetInst()->IsPress(KEY_MOUSERIGHT))
 	{
 		return PlayerActType::Dive;
@@ -340,6 +354,10 @@ PlayerActType PlayerActor::InputDetect()
 
 void PlayerActor::InputControllerMove(float _DeltaTime)
 {
+	if (IsInputOn_ == false)
+	{
+		return;
+	}
 	float4 tmpMoveSpeed = float4::ZERO;
 	MoveDir_ = float4::ZERO;
 	float4 RotatedActor= GetTransform().GetWorldRotation();

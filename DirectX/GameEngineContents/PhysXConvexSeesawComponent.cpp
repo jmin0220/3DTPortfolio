@@ -72,7 +72,19 @@ void PhysXConvexSeesawComponent::CreatePhysXActors(const std::string& _MeshName,
 
 	// 충돌시점 콜백을 위한 세팅
 	shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Ground)
-		, static_cast<physx::PxU32>(PhysXFilterGroup::Player), 0, 0));
+		, static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic), 0, 0));
+
+	if (IsObstacle_ == true)
+	{
+		shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Obstacle)
+			, static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic), 0, 0));
+	}
+
+	else if (IsGround_ == true)
+	{
+		shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Ground)
+			, static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic), 0, 0));
+	}
 	//dynamic_->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, true);
 
 	dynamic_->setRigidDynamicLockFlags(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_X | physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y);

@@ -54,9 +54,18 @@ void PhysXBoxGeometryComponent::CreatePhysXActors(physx::PxScene* _Scene, physx:
 	physx::PxVec3 Pivot(DynamicPivot_.x, DynamicPivot_.y, DynamicPivot_.z);
 	shape_->setLocalPose(physx::PxTransform(Pivot));
 
-	// 충돌시점 콜백을 위한 세팅
-	shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Obstacle)
-		, static_cast<physx::PxU32>(PhysXFilterGroup::Player), 0, 0));
+	//충돌할때 필요한 필터 데이터
+	if (IsObstacle_ == true)
+	{
+		shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Obstacle)
+			, static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic), 0, 0));
+	}
+
+	else if (IsGround_ == true)
+	{
+		shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Ground)
+			, static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic), 0, 0));
+	}
 
 	//콜백피벗 설정
 	shape_->setLocalPose(physx::PxTransform(Pivot));

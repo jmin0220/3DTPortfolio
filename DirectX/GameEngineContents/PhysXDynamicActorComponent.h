@@ -94,6 +94,13 @@ public:
 	}
 
 	void LockAxis();
+
+
+	//플레이어 멈추는 함수
+	void FreezeDynamic();
+
+	//플레이어 멈추는거 푸는 함수
+	void WakeUpDynamic();
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;

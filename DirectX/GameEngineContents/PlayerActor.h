@@ -33,6 +33,10 @@ public:
 
 private:
 	bool IsPlayerble_;
+	//인풋을 받는가
+	bool IsInputOn_;
+	//플레이어가 멈추는가
+	bool IsPlayerFrozen_;
 
 public:
 	// constrcuter destructer

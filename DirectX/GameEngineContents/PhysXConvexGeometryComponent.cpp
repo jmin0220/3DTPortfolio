@@ -64,7 +64,21 @@ void PhysXConvexGeometryComponent::CreatePhysXActors(const std::string& _MeshNam
 	physx::PxVec3 Pivot(DynamicPivot_.x, DynamicPivot_.y, DynamicPivot_.z);
 	shape_->setLocalPose(physx::PxTransform(Pivot));
 
-	shape_->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
+	//shape_->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
+
+	if (IsObstacle_ == true)
+	{
+		shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Obstacle)
+			, static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic), 0, 0));
+	}
+
+	else if (IsGround_ == true)
+	{
+		shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Ground)
+			, static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic), 0, 0));
+	}
+
+
 
 	//createExclusiveShapefh RigidStatic에 Shape를 넣어준다.
 	// Scene에 액터 추가

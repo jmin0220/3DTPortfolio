@@ -352,4 +352,14 @@ void PhysXDynamicActorComponent::SetChangedRot(float4 _Rot)
 	dynamic_->setGlobalPose(tmpTansform);
 }
 
+//플레이어 멈추는 함수
+void PhysXDynamicActorComponent::FreezeDynamic()
+{
+	dynamic_->putToSleep();
+}
+
+void PhysXDynamicActorComponent::WakeUpDynamic()
+{
+	dynamic_->wakeUp();
+}
 
