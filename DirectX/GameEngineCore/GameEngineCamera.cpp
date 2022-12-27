@@ -183,7 +183,7 @@ void GameEngineCamera::Render(float _DeltaTime)
 		}
 	}
 
-	// 포워드 타겟이 세팅되고
+	// 디퍼드 타겟이 세팅되고
 	CameraDeferredGBufferRenderTarget->Clear(false);
 	CameraDeferredGBufferRenderTarget->Setting();
 	CurTarget = CameraDeferredGBufferRenderTarget;
@@ -228,6 +228,11 @@ void GameEngineCamera::Render(float _DeltaTime)
 			{
 				std::map<RENDERINGPATHORDER, std::map<int, std::list<std::shared_ptr<class GameEngineRenderUnit>>>>::iterator ForwardIter
 					= AllRenderUnit_.find(static_cast<RENDERINGPATHORDER>(i));
+
+				if (ForwardIter == AllRenderUnit_.end())
+				{
+					continue;
+				}
 
 				std::map<int, std::list<std::shared_ptr<class GameEngineRenderUnit>>>& OrderMap = ForwardIter->second;
 
@@ -284,6 +289,8 @@ void GameEngineCamera::Render(float _DeltaTime)
 
 	}
 
+
+
 	GameEngineDevice::GetContext()->RSSetViewports(1, &ViewPortDesc);
 
 
@@ -334,10 +341,46 @@ void GameEngineCamera::Render(float _DeltaTime)
 	CameraDeferredRenderTarget->Effect(DeferredMergeUnit);
 
 
+
+
 	CameraRenderTarget->Clear();
 	CameraRenderTarget->Merge(CameraForwardRenderTarget);
 	CameraRenderTarget->Merge(CameraDeferredRenderTarget);
 
+
+	// TODO::이펙트 렌더 추가
+	CurTarget = CameraRenderTarget;
+	{
+		std::map<RENDERINGPATHORDER, std::map<int, std::list<std::shared_ptr<class GameEngineRenderUnit>>>>::iterator ForwardIter
+			= AllRenderUnit_.find(RENDERINGPATHORDER::ALPHAEFFECT);
+
+		if (ForwardIter != AllRenderUnit_.end())
+		{
+			std::map<int, std::list<std::shared_ptr<class GameEngineRenderUnit>>>& OrderMap = ForwardIter->second;
+
+			std::map<int, std::list<std::shared_ptr<class GameEngineRenderUnit>>>::iterator OrderStartIter = OrderMap.begin();
+			std::map<int, std::list<std::shared_ptr<class GameEngineRenderUnit>>>::iterator OrderEndIter = OrderMap.end();
+
+			for (std::pair<const int, std::list<std::shared_ptr<GameEngineRenderUnit>>>& Group : OrderMap)
+			{
+				float ScaleTime = GameEngineTime::GetInst()->GetDeltaTime(Group.first);
+
+				std::list<std::shared_ptr<GameEngineRenderUnit>>& RenderList = Group.second;
+				RenderList.sort(ZSortUnit);
+
+				for (std::shared_ptr<GameEngineRenderUnit>& Unit : Group.second)
+				{
+					if (false == Unit->GetIsOn())
+					{
+						continue;
+					}
+					// 인스턴싱 정보 수집
+					Unit->Render(ScaleTime);
+				}
+			}
+		}
+	}
+	//CameraRenderTarget->Merge(AlphaEffectRenderTarget);
 }
 
 void GameEngineCamera::SetCameraOrder(CAMERAORDER _Order)
@@ -360,6 +403,13 @@ void GameEngineCamera::Start()
 
 	// CameraForwardRenderTarget->CreateDepthTexture();
 	CameraForwardRenderTarget->SettingDepthTexture(GameEngineDevice::GetBackBuffer()->GetDepthTexture());
+
+	// 이펙트용 렌더타겟
+	AlphaEffectRenderTarget = GameEngineRenderTarget::Create();
+
+	AlphaEffectRenderTarget->CreateRenderTargetTexture(GameEngineWindow::GetScale(), DXGI_FORMAT::DXGI_FORMAT_R32G32B32A32_FLOAT, float4::ZERO);
+
+	AlphaEffectRenderTarget->SettingDepthTexture(GameEngineDevice::GetBackBuffer()->GetDepthTexture());
 
 	// 디퍼드 타겟 만들기
 	CameraDeferredGBufferRenderTarget = GameEngineRenderTarget::Create();
@@ -429,6 +479,11 @@ void GameEngineCamera::PushRenderUnit(std::shared_ptr < GameEngineRenderUnit> _R
 		{
 			Path = RENDERINGPATHORDER::DEFERRED;
 		}
+
+		if (true == _RenderUnit->GetMaterial()->GetPixelShader()->GetIsAlphaEffect())
+		{
+			Path = RENDERINGPATHORDER::ALPHAEFFECT;
+		}
 	}
 
 	_RenderUnit->SetPath(Path);
@@ -444,6 +499,11 @@ void GameEngineCamera::Release(float _DelataTime)
 		{
 			std::map<RENDERINGPATHORDER, std::map<int, std::list<std::shared_ptr<class GameEngineRenderUnit>>>>::iterator ForwardIter
 				= AllRenderUnit_.find(static_cast<RENDERINGPATHORDER>(i));
+
+			if (ForwardIter == AllRenderUnit_.end())
+			{
+				continue;
+			}
 
 			std::map<int, std::list<std::shared_ptr<class GameEngineRenderUnit>>>& OrderMap = ForwardIter->second;
 
@@ -578,6 +638,11 @@ void GameEngineCamera::OverRenderer(std::shared_ptr < GameEngineCamera> _NextCam
 	{
 		std::map<RENDERINGPATHORDER, std::map<int, std::list<std::shared_ptr<class GameEngineRenderUnit>>>>::iterator ForwardIter
 			= AllRenderUnit_.find(static_cast<RENDERINGPATHORDER>(i));
+
+		if (ForwardIter == AllRenderUnit_.end())
+		{
+			continue;
+		}
 
 		std::map<int, std::list<std::shared_ptr<class GameEngineRenderUnit>>>& OrderMap = ForwardIter->second;
 		std::map<int, std::list<std::shared_ptr<class GameEngineRenderUnit>>>::iterator OrderStartIter = OrderMap.begin();

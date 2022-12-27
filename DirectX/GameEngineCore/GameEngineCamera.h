@@ -18,6 +18,7 @@ enum class RENDERINGPATHORDER
 {
 	FORWARD,
 	DEFERRED,
+	ALPHAEFFECT,
 	MAX,
 };
 
@@ -152,6 +153,9 @@ private:
 	TransformData LightTrans;
 
 	std::shared_ptr<class GameEngineRenderTarget> CameraDeferredGBufferRenderTarget;
+
+	// AlphaEffect∑ª¥ı≈∏∞Ÿ
+	std::shared_ptr<class GameEngineRenderTarget> AlphaEffectRenderTarget;
 
 	std::shared_ptr<GameEngineRenderUnit> DeferredMergeUnit;
 

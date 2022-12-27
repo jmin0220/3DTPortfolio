@@ -37,6 +37,16 @@ public:
 		return IsDeferred;
 	}
 
+	bool GetIsAlphaEffect()
+	{
+		return IsAlphaEffect_;
+	}
+
+	void SetIsAlphaEffect(bool _IsAlphaEffect)
+	{
+		IsAlphaEffect_ = _IsAlphaEffect;
+	}
+
 protected:
 	void ShaderCompile(
 		const std::string& _Path,
@@ -46,5 +56,8 @@ protected:
 private:
 	bool IsDeferred;
 	ID3D11PixelShader* ShaderPtr;
+
+	// AlphaEffectÇÃ·¡±×
+	bool IsAlphaEffect_;
 };
 

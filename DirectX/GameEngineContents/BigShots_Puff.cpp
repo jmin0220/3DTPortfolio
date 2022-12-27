@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "BigShots_Puff.h"
+#include <GameEngineCore/GameEnginePixelShader.h>
 
 BigShots_Puff::BigShots_Puff() 
 	: IsTransTexture_(false)
@@ -18,6 +19,7 @@ void BigShots_Puff::Start()
 	PuffRenderer_->SetTexture("VFX_SomePuff_02.png");
 	//PuffRenderer_->SetMaterial("CustomDefferedColor");
 	PuffRenderer_->GetTransform().SetWorldScale({ SumValue_,SumValue_,0 });
+	PuffRenderer_->GetRenderUnit()->GetMaterial()->GetPixelShader()->SetIsAlphaEffect(true);
 }
 
 void BigShots_Puff::Update(float _DeltaTime)
