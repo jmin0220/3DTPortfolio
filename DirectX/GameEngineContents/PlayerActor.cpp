@@ -166,7 +166,7 @@ void PlayerActor::Update(float _DeltaTime)
 		PlayerStateManager_.Update(_DeltaTime);
 		PlayerAniStateManager_.Update(_DeltaTime);
 
-		if (GameEngineInput::GetInst()->IsDown("Freeze") == true)
+		if (IsPlayerFrozen_ == true)
 		{
 			IsInputOn_ = false;
 			DynamicActorComponent_->FreezeDynamic();
@@ -210,15 +210,15 @@ void PlayerActor::Update(float _DeltaTime)
 
 		//GetTransform().SetWorldMove(MoveDir_ * SPEED_PLAYER * _DeltaTime);
 		// TODO::충격테스트코드
-		ImpulseTest();
+		//ImpulseTest();
 		//일어서는 코드
 		//StandUp(_DeltaTime);
 
 		//플레이어 떨어지면 지정한 위치에 재소환
-		if (GetTransform().GetWorldPosition().y <= -140.0f)
-		{
-			DynamicActorComponent_->SetPlayerStartPos(CheckPointPos_);
-		}
+		//if (GetTransform().GetWorldPosition().y <= -140.0f)
+		//{
+		//	DynamicActorComponent_->SetPlayerStartPos(CheckPointPos_);
+		//}
 
 		//체크포인트 실험용 나중에 지워야함
 		if (GameEngineInput::GetInst()->IsDown("TestPos") == true)

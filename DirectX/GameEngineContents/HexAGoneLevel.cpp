@@ -222,9 +222,19 @@ void HexAGoneLevel::LevelStartEvent()
 
 //	//플레이어 위치 수정
 //
-	int PlayerID = GameServer::GetInst()->PlayerID_;
-	Player_->SetCheckPoint(PositionList_[0] + float4(0, 0, 0));
-	Player_->ResetPlayerPos();
+	if (false == GameServer::GetInst()->IsServerStart())
+	{
+		Player_->SetCheckPoint(PositionList_[0] + float4(0, 0, 0));
+		Player_->ResetPlayerPos();
+
+	}
+	else
+	{
+		int PlayerID = GameServer::GetInst()->PlayerID_;
+		Player_->SetCheckPoint(PositionList_[PlayerID] + float4(0, 0, 0));
+		Player_->ResetPlayerPos();
+	}
+
 
 }
 
