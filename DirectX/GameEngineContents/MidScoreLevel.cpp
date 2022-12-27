@@ -510,3 +510,57 @@ void MidScoreLevel::NoServerSetting()
 	LobbyPlayers_[3]->SetPlayerColor(GameServer::GetInst()->GetPlayerColorReturn(AllServerPlayers_[3].Color_));
 
 }
+
+
+void MidScoreLevel::QuickSort(int arr[], int _First, int _Last)
+{
+	if (_First >= _Last)
+	{
+		//비교할 인덱스가 겹치거나 넘어간다면
+		return;
+	}
+
+	int Pivot = _First;
+	int i = _First + 1;//맨 처음걸 피봇(기준)잡기에 그 다음걸 First로 두기위해 + 1
+	int j = _Last;
+	int Temp;
+
+	while (i <= j)
+	{
+		while ((arr[i] > arr[Pivot]) && (i <= _Last))
+		{
+			//arr[i]값이 arr[Pivot]의 값보다 작고 인덱스i가 _Last인덱스보다 작거나 같다면(작은게 앞으로 오는 기준)
+			i++;
+		}
+		while ((arr[j] <= arr[Pivot]) && (j > _First))
+		{
+			//끝에서부터 한칸한칸 왼쪽으로 이동하니 --
+			j--;
+		}
+
+		if (i >= j)//i가 j와 겹쳐지거나 넘어간다면 while문을 멈춘다
+		{
+			break;
+		}
+
+		//서로 자리를 바꾼다
+		Temp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = Temp;
+
+		std::shared_ptr<FontActor> FTemp = FontScore_[i];
+		FontScore_[i] = FontScore_[j];
+		FontScore_[j] = FTemp;
+	}
+
+	Temp = arr[j];
+	arr[j] = arr[Pivot];
+	arr[Pivot] = Temp;
+
+	std::shared_ptr<FontActor> FTemp = FontScore_[j];
+	FontScore_[j] = FontScore_[Pivot];
+	FontScore_[Pivot] = FTemp;
+
+	QuickSort(arr, _First, j - 1);
+	QuickSort(arr, j + 1, _Last);
+}
