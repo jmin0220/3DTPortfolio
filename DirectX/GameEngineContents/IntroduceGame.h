@@ -14,16 +14,16 @@ public:
 			Game_->SetTexture("Intro_DoorDash.png");
 			break;
 		case StageNum::STAGE2:
-			Game_->SetTexture("Intro_HexAGone.png");
+			Game_->SetTexture("Intro_JumpClub.png");
 			break;
 		case StageNum::STAGE3:
 			Game_->SetTexture("Intro_Bigshot.png");
 			break;
 		case StageNum::STAGE4:
-			Game_->SetTexture("Intro_HoopsLegends.png");
+			Game_->SetTexture("Intro_HexAGone.png");
 			break;
 		case StageNum::STAGE5:
-			Game_->SetTexture("Intro_JumpClub.png");
+			Game_->SetTexture("Intro_HoopsLegends.png");
 			break;
 		default:
 			break;

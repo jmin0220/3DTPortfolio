@@ -217,9 +217,12 @@ void StageParentLevel::ReadyUpdate(float _DeltaTime, const StateInfo& _Info)
 ///////////////////////////
 // Áö±ÝºÎÅÍ ´Þ¸± ¼ö ÀÖÀ½
 ///////////////////////////
+bool FinishScoreSetted;
 void StageParentLevel::RaceStart(const StateInfo& _Info)
 {
 	UIs_->OnOffSuccessCount();
+
+	FinishScoreSetted = false;
 }
 
 void StageParentLevel::RaceUpdate(float _DeltaTime, const StateInfo& _Info)
@@ -280,12 +283,18 @@ void StageParentLevel::RaceUpdate(float _DeltaTime, const StateInfo& _Info)
 		}
 	}
 
+	// Á¡¼öÈ¹µæ
+	if (true == Player_->GetIsGoal() && false == FinishScoreSetted)
+	{
+		FinishScoreSetted = true;
+
+		// Á¡¼ö È¹µæ
+		GetGameScoreByCurrentType();
+	}
+
 	// 3. ÇÃ·¹ÀÌ¾î ÁØºñ
 	if (true == Player_->GetIsGoal() && !GameServer::GetInst()->CheckPlayerSignal(PlayerFlag::P_StageRaceChangeReady))
 	{
-		// Á¡¼ö È¹µæ
-		GetGameScoreByCurrentType();
-
 		GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_StageRaceChangeReady);
 	}
 	
