@@ -14,7 +14,7 @@
 
 
 
-GameEngineCamera::GameEngineCamera()
+GameEngineCamera::GameEngineCamera() 
 	: CameraForwardRenderTarget(nullptr)
 	, CameraDeferredRenderTarget(nullptr)
 {
@@ -40,6 +40,8 @@ GameEngineCamera::GameEngineCamera()
 	DeferredCalLightUnit->SetMesh("FullRect");
 	DeferredCalLightUnit->SetMaterial("CalDeferredLight");
 	DeferredCalLightUnit->ShaderResources.SetConstantBufferLink("LightDatas", LightDataObject);
+	DeferredCalLightUnit->ShaderResources.SetConstantBufferLink("TransformData", LightTrans);
+	
 
 	DeferredMergeUnit = std::make_shared<GameEngineRenderUnit>();
 
@@ -56,7 +58,7 @@ GameEngineCamera::GameEngineCamera()
 	ShadowRenderAnimationUnit->ShaderResources.SetConstantBufferLink("RenderOption", ShadowRenderOption);
 }
 
-GameEngineCamera::~GameEngineCamera()
+GameEngineCamera::~GameEngineCamera() 
 {
 }
 
@@ -83,8 +85,8 @@ void GameEngineCamera::Render(float _DeltaTime)
 
 	// 랜더하기 전에 
 	View.LookToLH(
-		GetActor()->GetTransform().GetLocalPosition(),
-		GetActor()->GetTransform().GetForwardVector(),
+		GetActor()->GetTransform().GetLocalPosition(), 
+		GetActor()->GetTransform().GetForwardVector(), 
 		GetActor()->GetTransform().GetUpVector());
 
 	switch (Mode)
@@ -104,7 +106,7 @@ void GameEngineCamera::Render(float _DeltaTime)
 	{
 		LightDataObject.Count = static_cast<int>(AllLight.size());
 		int LightCount = 0;
-		for (std::shared_ptr<GameEngineLight> Light : AllLight)
+		for ( std::shared_ptr<GameEngineLight> Light : AllLight)
 		{
 			Light->LightDataUpdate(this);
 			LightDataObject.Lights[LightCount++] = Light->GetLightData();
@@ -142,7 +144,7 @@ void GameEngineCamera::Render(float _DeltaTime)
 	}
 
 	{
-		std::map<RENDERINGPATHORDER, std::map<int, std::list<std::shared_ptr<class GameEngineRenderUnit>>>>::iterator ForwardIter
+		std::map<RENDERINGPATHORDER, std::map<int, std::list<std::shared_ptr<class GameEngineRenderUnit>>>>::iterator ForwardIter 
 			= AllRenderUnit_.find(RENDERINGPATHORDER::FORWARD);
 
 		std::map<int, std::list<std::shared_ptr<class GameEngineRenderUnit>>>& OrderMap = ForwardIter->second;
@@ -187,7 +189,7 @@ void GameEngineCamera::Render(float _DeltaTime)
 	CurTarget = CameraDeferredGBufferRenderTarget;
 
 	{
-		std::map<RENDERINGPATHORDER, std::map<int, std::list<std::shared_ptr<class GameEngineRenderUnit>>>>::iterator ForwardIter
+		std::map<RENDERINGPATHORDER, std::map<int, std::list<std::shared_ptr<class GameEngineRenderUnit>>>>::iterator ForwardIter 
 			= AllRenderUnit_.find(RENDERINGPATHORDER::DEFERRED);
 
 		std::map<int, std::list<std::shared_ptr<class GameEngineRenderUnit>>>& OrderMap = ForwardIter->second;
@@ -293,15 +295,22 @@ void GameEngineCamera::Render(float _DeltaTime)
 
 	for (std::shared_ptr<class GameEngineLight> Light : AllLight)
 	{
+		LightTrans = Light->GetTransformData();
+		LightTrans.ViewMatrix = View;
+		LightTrans.ProjectionMatrix = Projection;
+		LightTrans.CalculateWorldViewProjection();
+
 		LightDataObject.Count = 1;
 		LightDataObject.Lights[0] = Light->GetLightData();
 
 		switch (LightDataObject.Lights[0].LightType)
 		{
 		case 0: // dir
+			DeferredCalLightUnit->GetMaterial()->SetRasterizer("EngineRasterizer");
 			DeferredCalLightUnit->SetMesh("FullRect");
 			break;
 		case 1: // point
+			DeferredCalLightUnit->GetMaterial()->SetRasterizer("FrontRasterizer");
 			DeferredCalLightUnit->SetMesh("Sphere");
 			break;
 		case 2: // spot
@@ -310,7 +319,7 @@ void GameEngineCamera::Render(float _DeltaTime)
 			break;
 		}
 
-		DeferredCalLightUnit->ShaderResources.SetTexture("ShadowTex", Light->GetShadowTarget()->GetRenderTargetTexture(0));
+		// DeferredCalLightUnit->ShaderResources.SetTexture("ShadowTex", Light->GetShadowTarget()->GetRenderTargetTexture(0));
 		CameraDeferredLightRenderTarget->Effect(DeferredCalLightUnit);
 	}
 
@@ -424,19 +433,6 @@ void GameEngineCamera::PushRenderUnit(std::shared_ptr < GameEngineRenderUnit> _R
 
 	_RenderUnit->SetPath(Path);
 
-	// ***** SetRenderingOrder 적용 때문에 넣은 임시 코드(선생님 코드엔 없음.) *****
-	/*for (size_t i = 0; i < static_cast<size_t>(RENDERINGPATHORDER::MAX); i++)
-	{
-		std::map<int, std::list<std::shared_ptr<class GameEngineRenderUnit>>>& Group = AllRenderUnit_[static_cast<RENDERINGPATHORDER>(i)];
-		std::map<int, std::list<std::shared_ptr<class GameEngineRenderUnit>>>::iterator StartIter = Group.begin();
-		std::map<int, std::list<std::shared_ptr<class GameEngineRenderUnit>>>::iterator End = Group.end();
-		for (; StartIter != End; ++StartIter)
-		{
-			std::list<std::shared_ptr<class GameEngineRenderUnit>>& List = Group[(*StartIter).first];
-			List.remove(_RenderUnit);
-		}
-	}*/
-
 	AllRenderUnit_[Path][_RenderUnit->GetRenderer()->RenderingOrder].push_back(_RenderUnit);
 }
 
@@ -503,7 +499,7 @@ void GameEngineCamera::Release(float _DelataTime)
 	}
 }
 
-float4 GameEngineCamera::GetMouseScreenPosition()
+float4 GameEngineCamera::GetMouseScreenPosition() 
 {
 	POINT P;
 
@@ -514,7 +510,7 @@ float4 GameEngineCamera::GetMouseScreenPosition()
 	return { static_cast<float>(P.x), static_cast<float>(P.y) };
 }
 
-void GameEngineCamera::Update(float _DeltaTime)
+void GameEngineCamera::Update(float _DeltaTime) 
 {
 	float4 MousePos = GetMouseWorldPosition();
 	MousePos.w = 0.0f;

@@ -55,5 +55,6 @@
     <FxCompile Include="CustomDefferedColor.hlsl">
       <Filter>Light</Filter>
     </FxCompile>
+    <FxCompile Include="AnimationHeader.fx" />
   </ItemGroup>
 </Project>

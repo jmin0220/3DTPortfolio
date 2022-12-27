@@ -149,6 +149,8 @@ private:
 
 	std::shared_ptr<GameEngineRenderUnit> DeferredCalLightUnit;
 
+	TransformData LightTrans;
+
 	std::shared_ptr<class GameEngineRenderTarget> CameraDeferredGBufferRenderTarget;
 
 	std::shared_ptr<GameEngineRenderUnit> DeferredMergeUnit;

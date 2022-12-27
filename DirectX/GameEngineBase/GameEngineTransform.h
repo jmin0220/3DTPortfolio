@@ -57,8 +57,13 @@ struct TransformData
 	float4x4 WorldViewMatrix;
 	float4x4 WorldViewProjectionMatrix;
 
+	float4x4 ViewInverse;
+	float4x4 WorldInverse;
+
 	void CalculateWorldViewProjection() 
 	{
+		ViewInverse = ViewMatrix.InverseReturn();
+		WorldInverse = WorldWorldMatrix.InverseReturn();
 		WorldViewMatrix = WorldWorldMatrix * ViewMatrix;
 		WorldViewProjectionMatrix = WorldViewMatrix * ProjectionMatrix;
 	}

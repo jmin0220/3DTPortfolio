@@ -36,7 +36,7 @@ float4 CalDeferredMerge_PS(Output _Input) : SV_Target0
     {
         clip(-1);
     }
-
+    
     float4 LightEffectResult = DiffuseColor * (DiffuseLight + SpacularLight + AmbientLight);
     LightEffectResult.w = 1.0f;
     

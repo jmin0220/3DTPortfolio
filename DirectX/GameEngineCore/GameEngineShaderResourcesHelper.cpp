@@ -211,7 +211,7 @@ std::shared_ptr<GameEngineTexture> GameEngineShaderResourcesHelper::SetTexture(c
 {
 	if (false == IsTexture(_Name))
 	{
-		MsgBox("쉐이더에서 이러한 이름의 텍스처세팅를 사용한 적이 없습니다.");
+		MsgBoxAssertString("쉐이더에서 이러한 이름의 텍스처세팅를 사용한 적이 없습니다." + _Name);
 		return nullptr;
 	}
 
@@ -224,7 +224,7 @@ std::shared_ptr < GameEngineTexture> GameEngineShaderResourcesHelper::SetTexture
 {
 	if (false == IsTexture(_Name))
 	{
-		MsgBox("쉐이더에서 이러한 이름의 텍스처세팅를 사용한 적이 없습니다.");
+		MsgBoxAssertString("쉐이더에서 이러한 이름의 텍스처세팅를 사용한 적이 없습니다." + _Name);
 		return nullptr;
 	}
 
@@ -248,7 +248,7 @@ std::shared_ptr < GameEngineTexture> GameEngineShaderResourcesHelper::SetTexture
 
 	if (false == IsTexture(_Name))
 	{
-		MsgBox("쉐이더에서 이러한 이름의 텍스처세팅를 사용한 적이 없습니다.");
+		MsgBoxAssertString("쉐이더에서 이러한 이름의 텍스처세팅를 사용한 적이 없습니다." + _Name);
 		return nullptr;
 	}
 
@@ -272,7 +272,7 @@ std::shared_ptr < GameEngineSampler> GameEngineShaderResourcesHelper::SetSampler
 {
 	if (false == IsSampler(_Name))
 	{
-		MsgBox("쉐이더에서 이러한 이름의 텍스처세팅를 사용한 적이 없습니다.");
+		MsgBoxAssertString("쉐이더에서 이러한 이름의 샘플러세팅를 사용한 적이 없습니다." + _Name);
 		return nullptr;
 	}
 

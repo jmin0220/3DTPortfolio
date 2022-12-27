@@ -56,6 +56,7 @@ Output Color_VS(Input _Input)
     NewOutPut.ViewNormal = normalize(mul(_Input.Normal, WorldView));
     NewOutPut.ViewNormal.w = 0.0f;
     
+    
     return NewOutPut;
 }
 
@@ -72,8 +73,6 @@ DeferredOutPut Color_PS(Output _Input) : SV_Target0
     OutPut.Pos = _Input.ViewPos;
     OutPut.Nor = _Input.ViewNormal;
     OutPut.Nor.w = 1.0f;
-    
-    
     
     return OutPut;
 }

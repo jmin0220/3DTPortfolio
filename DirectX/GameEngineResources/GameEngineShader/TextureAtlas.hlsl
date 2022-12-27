@@ -49,7 +49,7 @@ Output TextureAtlas_VS(Input _Input)
     // -0.5, 0.5,     0.5 0.5
     // 0.5, 0.5,     0.5 0.5
     
-    Output NewOutPut = (Output) 0;
+    Output NewOutPut = (Output)0;
     _Input.Pos += PivotPos;
     NewOutPut.Pos = mul(_Input.Pos, WorldViewProjection);
     NewOutPut.PosLocal = _Input.Pos;
@@ -94,10 +94,10 @@ float4 TextureAtlas_PS(Output _Input) : SV_Target0
     
     float4 TexColor = Tex.Sample(LINEARWRAP, _Input.Tex.xy);
     
-    //if (TexColor.a <= 0.0f)
-    //{
-    //    clip(-1);
-    //}
+    if (TexColor.a == 0)
+    {
+        clip(-1);
+    }
     
     float4 Result = (Tex.Sample(LINEARWRAP, _Input.Tex.xy) * MulColor) + PlusColor;
     
@@ -107,17 +107,12 @@ float4 TextureAtlas_PS(Output _Input) : SV_Target0
 
     }
     
-    if (Result.a <= 0.0f)
-    {
-        clip(-1);
-    }
-    
     // Result.a = 1.0f;
     
     return Result;
 }
 
-struct InstAtlasData
+struct InstAtlasData 
 {
     float2 TextureFramePos;
     float2 TextureFrameSize;
@@ -125,6 +120,7 @@ struct InstAtlasData
 };
 
 
+// Inst_
 StructuredBuffer<InstTransformData> Inst_TransformData : register(t12);
 StructuredBuffer<InstAtlasData> Inst_AtlasData : register(t13);
 

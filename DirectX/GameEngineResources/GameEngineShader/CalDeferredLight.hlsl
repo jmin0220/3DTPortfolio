@@ -1,4 +1,5 @@
 #include "LightHeader.fx"
+#include "TransformHeader.fx"
 
 // SV_POSITION 시맨틱
 // 그래픽카드에게 이녀석은 이런 부류니까 니가 자동으로 처리하는 녀석이 있으면 하고.
@@ -13,6 +14,7 @@ struct Input
 struct Output
 {
     float4 Pos : SV_POSITION;
+    float4 ProjectionPos : POSITION;
     float4 Tex : TEXCOORD;
 };
 
@@ -21,16 +23,17 @@ struct Output
 Output CalDeferredLight_VS(Input _Input)
 {
     Output NewOutPut = (Output)0;
-
+    
     if (0 == Lights[0].LightType)
     {
         NewOutPut.Pos = _Input.Pos;
         NewOutPut.Tex = _Input.Tex;
     }
-    else if (0 != Lights[0].LightType)
+    else if (1 == Lights[0].LightType)
     {
         // 월드 뷰 프로젝션을 곱해줘야 한다.
-        NewOutPut.Pos = _Input.Pos;
+        NewOutPut.Pos = mul(_Input.Pos, WorldViewProjection);
+        NewOutPut.ProjectionPos = NewOutPut.Pos;
         NewOutPut.Tex = _Input.Tex;
     }
     return NewOutPut;
@@ -54,68 +57,90 @@ struct LightOutPut
 
 LightOutPut CalDeferredLight_PS(Output _Input)
 {
-    float4 Position = PositionTex.Sample(POINTWRAP, _Input.Tex.xy);
-    float4 Normal = NormalTex.Sample(POINTWRAP, _Input.Tex.xy);
+    float2 UV;
+    if (0 == Lights[0].LightType)
+    {
+        UV = _Input.Tex.xy;
+    }
+    else if (1 == Lights[0].LightType)
+    {
+        UV = _Input.ProjectionPos.xy / _Input.ProjectionPos.ww;
+        UV = float2(UV.x * 0.5f + 0.5f, UV.y * -0.5f + 0.5f);
+    }
 
-    if (Position.a <= 0.0f)
+    
+    float4 Position = PositionTex.Sample(POINTWRAP, UV);
+    float4 Normal = NormalTex.Sample(POINTWRAP, UV);
+    
+    float4 WorldPos = mul(float4(Position.xyz, 1.0f), ViewInverse);
+    float4 LocalPos = mul(float4(WorldPos.xyz, 1.0f), WorldInverse);
+    
+    // 원충돌 하면 된다.
+    
+    if (1 == Lights[0].LightType && length(LocalPos.xyz) > 0.5f)
     {
         clip(-1);
     }
-
+    
+    //if (Position.a <= 0.0f)
+    //{
+    //    clip(-1);
+    //}
+    
     Normal.w = 0.0f;
-
-    LightOutPut Out = (LightOutPut)0.0f;
-
+    
+    LightOutPut Out = (LightOutPut) 0.0f;
+    
     Out.DifLight = CalDiffuseLights(Position, Normal);
     Out.SpcLight = CalSpacularLight(Position, Normal);
     Out.AmbLight = CalAmbientLight();
-
+    
     int Count = 0;
-
-    if (Out.DifLight.x > 0.0f)
-    {
-        // 카메라의 view에서 왔죠 ViewPosition
-        // 빛의 view 카메라의 view공간은 둘다.
-        // 둘다 각자의 view공간에 있습니다.
-        // 서로의 view의 역행렬을 곱해줘야.
-        // 월드 -> 뷰 -> 프로젝션 -> 뷰포트(SV_POSTION)
-
-        // Position 월드 * 카메라view
-
-        // ViewPosition카메라 공간에 있기 때문에 카메라의 역행렬을 얻어와야 한다.
-        float4 WorldPosition = mul(float4(Position.xyz, 1.0f), Lights[0].CameraViewInverseMatrix);
-
-        // WorldPosition 카메라의 공간ㅇ => 빛의 투영으로 끌어들여야 합니다.
-        float4 LightPos = mul(WorldPosition, Lights[0].LightViewProjectionMatrix);
-
-        float fDepth = LightPos.z / LightPos.w; // 0 ~ 1 
-        float fUvX = LightPos.x / LightPos.w; // -1 1
-        float fUvY = LightPos.y / LightPos.w; // -1 1
-
-        // fUvX -1 1
-        // fUvY -1 1
-        // ShaodwPos
-
-        // 그림자를 가져오기 위한 uv값
-        float2 ShadowUv = float2(fUvX * 0.5f + 0.5f, fUvY * -0.5f + 0.5f);
-
-        // UV공간 외부라면 굳이 가져오지 않는다.
-        if (
-            0.001f < ShadowUv.x && 0.999f > ShadowUv.x &&
-            0.001f < ShadowUv.y && 0.999f > ShadowUv.y
-            )
-        {
-            // Texture2DArray.Sample
-
-            float fShadowDepth = ShadowTex.Sample(LINEARWRAP, float2(ShadowUv.x, ShadowUv.y)).r;
-
-            if (0.0f < fShadowDepth && fDepth > fShadowDepth + 0.001f)
-            {
-                Out.DifLight = 0.01f;
-                Out.SpcLight = 0.01f;
-            }
-        }
-    }
-
+    
+        //if (Out.DifLight.x > 0.0f)
+        //{
+        //    // 카메라의 view에서 왔죠 ViewPosition
+        //    // 빛의 view 카메라의 view공간은 둘다.
+        //    // 둘다 각자의 view공간에 있습니다.
+        //    // 서로의 view의 역행렬을 곱해줘야.
+        //    // 월드 -> 뷰 -> 프로젝션 -> 뷰포트(SV_POSTION)
+            
+        //    // Position 월드 * 카메라view
+            
+        //    // ViewPosition카메라 공간에 있기 때문에 카메라의 역행렬을 얻어와야 한다.
+        //    float4 WorldPosition = mul(float4(Position.xyz, 1.0f), Lights[0].CameraViewInverseMatrix);
+            
+        //    // WorldPosition 카메라의 공간ㅇ => 빛의 투영으로 끌어들여야 합니다.
+        //    float4 LightPos = mul(WorldPosition, Lights[0].LightViewProjectionMatrix);
+            
+        //    float fDepth = LightPos.z / LightPos.w; // 0 ~ 1 
+        //    float fUvX = LightPos.x / LightPos.w; // -1 1
+        //    float fUvY = LightPos.y / LightPos.w; // -1 1
+            
+        //    // fUvX -1 1
+        //    // fUvY -1 1
+        //    // ShaodwPos
+            
+        //    // 그림자를 가져오기 위한 uv값
+        //    float2 ShadowUv = float2(fUvX * 0.5f + 0.5f, fUvY * -0.5f + 0.5f);
+            
+        //    // UV공간 외부라면 굳이 가져오지 않는다.
+        //    if (
+        //        0.001f < ShadowUv.x && 0.999f > ShadowUv.x &&
+        //        0.001f < ShadowUv.y && 0.999f > ShadowUv.y
+        //        )
+        //    {
+        //        // Texture2DArray.Sample
+                
+        //        float fShadowDepth = ShadowTex.Sample(LINEARWRAP, float2(ShadowUv.x, ShadowUv.y)).r;
+                
+        //        if (0.0f < fShadowDepth && fDepth > fShadowDepth + 0.001f)
+        //        {
+        //            Out.DifLight = 0.01f;
+        //            Out.SpcLight = 0.01f;
+        //        }
+        //    }
+        //}
+    
     return Out;
 }

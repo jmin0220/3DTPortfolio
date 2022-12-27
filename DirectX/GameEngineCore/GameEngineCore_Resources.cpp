@@ -133,6 +133,12 @@ void EngineSubSetting()
 		GameEngineBlend::Create("TransparentBlend", Desc);
 	}
 
+
+	{
+		D3D11_RASTERIZER_DESC Desc = { D3D11_FILL_SOLID, D3D11_CULL_FRONT };
+		GameEngineRasterizer::Create("FrontRasterizer", Desc);
+	}
+
 	{
 		//D3D11_FILL_MODE FillMode = D3D11_FILL_SOLID;
 		//D3D11_CULL_MODE CullMode = D3D11_CULL_NONE;
@@ -293,7 +299,8 @@ void EngineRenderingPipeLine()
 		NewPipe->SetVertexShader("CalDeferredLight.hlsl");
 		NewPipe->SetPixelShader("CalDeferredLight.hlsl");
 		NewPipe->SetOutputMergerBlend("TransparentBlend");
-		
+		NewPipe->SetRasterizer("FrontRasterizer");
+		// FrontRasterizer
 	}
 
 	{

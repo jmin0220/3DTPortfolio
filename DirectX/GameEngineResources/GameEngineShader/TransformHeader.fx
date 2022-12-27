@@ -19,6 +19,9 @@ cbuffer TransformData : register(b0)
     
     float4x4 WorldView;
     float4x4 WorldViewProjection;
+    
+    float4x4 ViewInverse;
+    float4x4 WorldInverse;
 };
 
 struct InstTransformData
