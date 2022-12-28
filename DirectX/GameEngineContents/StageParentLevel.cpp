@@ -452,16 +452,28 @@ void StageParentLevel::LevelStartLoad()
 		}
 		case Stage_MeshEnum::Col_StartPos:
 		{
-			NewObj.Actor_ = CreateActor<Col_StartPos>();
-			NewObj.Actor_.lock()->GetTransform().SetWorldPosition(Pos);
-			NewObj.Actor_.lock()->GetTransform().SetWorldScale(Size);
-			NewObj.Actor_.lock()->GetTransform().SetLocalRotation(Rot);
+			if (MyStage_ == StageNum::STAGE5)
+			{
+				NewObj.Actor_ = CreateActor<Col_StartPos>();
+				NewObj.Actor_.lock()->GetTransform().SetWorldPosition(Pos);
+				NewObj.Actor_.lock()->GetTransform().SetWorldScale(Size);
+				NewObj.Actor_.lock()->GetTransform().SetLocalRotation(Rot);
 
-			StartPositions_.push_back(NewObj.Actor_.lock()->GetTransform().GetWorldPosition());
-			
-			//플레이어 포지션을 가지고있어야하는 static 전역변수
-			PlayerPos = NewObj.Actor_.lock()->GetTransform().GetWorldPosition();
+				HoopsStartPos_.push_back(NewObj.Actor_.lock()->GetTransform().GetWorldPosition());
+			}
+			else
+			{
 
+				NewObj.Actor_ = CreateActor<Col_StartPos>();
+				NewObj.Actor_.lock()->GetTransform().SetWorldPosition(Pos);
+				NewObj.Actor_.lock()->GetTransform().SetWorldScale(Size);
+				NewObj.Actor_.lock()->GetTransform().SetLocalRotation(Rot);
+
+				StartPositions_.push_back(NewObj.Actor_.lock()->GetTransform().GetWorldPosition());
+
+				//플레이어 포지션을 가지고있어야하는 static 전역변수
+				PlayerPos = NewObj.Actor_.lock()->GetTransform().GetWorldPosition();
+			}
 			break;
 		}
 		case Stage_MeshEnum::Col_CheckPoint:

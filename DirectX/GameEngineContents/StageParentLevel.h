@@ -112,6 +112,7 @@ private:
 	// 특정 레벨에만 다르게 동작해야 된다면, Override해서 사용할 수 있음
 protected:
 	std::vector<float4>	StartPositions_;
+	std::vector<float4> HoopsStartPos_;
 	GameEngineStateManager StageStateManager_;
 	std::shared_ptr<Cinemachine> CinemaCam_;
 

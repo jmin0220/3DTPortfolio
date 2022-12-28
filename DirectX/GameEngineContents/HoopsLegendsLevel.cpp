@@ -100,7 +100,19 @@ void HoopsLegendsLevel::LevelStartEvent()
 	}
 
 
-	CinemaCam_->SetActivated();
+	//CinemaCam_->SetActivated();
+
+	if (false == GameServer::GetInst()->IsServerStart())
+	{
+		Player_->SetCheckPoint(HoopsStartPos_[0] + float4(0, 0, 0));
+		Player_->ResetPlayerPos();
+	}
+	else
+	{
+		unsigned int PlayerID = GameServer::GetInst()->PlayerID_;
+		Player_->SetCheckPoint(HoopsStartPos_[PlayerID] + float4(0, 0, 0));
+		Player_->ResetPlayerPos();
+	}
 }
 
 void HoopsLegendsLevel::LevelEndEvent()
