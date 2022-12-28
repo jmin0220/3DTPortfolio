@@ -111,7 +111,7 @@ void VirtualPhysXLevel::initPhysics(bool _interactive)
 // PhysX 업데이트
 void VirtualPhysXLevel::stepPhysics(float _DeltaTime, bool _Interactive)
 {
-	float simulateRatio = 60.0f;
+	float simulateRatio = 120.0f;
 
 //#ifndef DEBUG
 //	 simulateRatio = 60.0f;

@@ -29,7 +29,7 @@ void BigShots_PRP::Start()
 
 void BigShots_PRP::Update(float _DeltaTime)
 {
-	if (this->GetTransform().GetWorldPosition().y < -70.0f)
+	if (this->GetTransform().GetWorldPosition().y < -80.0f)
 	{
 		this->Death();
 		PhysXConvexDynamicComponent_->ReleaseRigidBody();
@@ -74,7 +74,7 @@ void BigShots_PRP::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _
 	// 밀도에 따른 y,z축 이동 추가
 	PhysXConvexDynamicComponent_->SetUpdateForce(physx::PxVec3(0.0f, -400.0f * tmpMass, 700.0f * tmpMass));
 	// 던져지는 각도 벡터
-	float4 ThrowRot = float4::DegreeToDirection2D(2.0f);
+	float4 ThrowRot = float4::DegreeToDirection2D(3.0f);
 	// 던지는 벡터값 * (힘 * 밀도)
 	ThrowRot *= static_cast<float>(RandomForce);
 	PRPForce_ = float4(0.0f, ThrowRot.y, ThrowRot.x);
