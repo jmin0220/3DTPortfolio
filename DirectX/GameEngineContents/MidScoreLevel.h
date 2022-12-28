@@ -7,6 +7,7 @@ class FloorActor;
 class GoalTipActor;
 class MidScoreBGActor;
 class FontActor;
+class RankingActor;
 class MidScoreLevel : public GameEngineLevel
 {
 public:
@@ -61,6 +62,7 @@ private:
 	std::vector<std::shared_ptr<LobbyPlayer>> LobbyPlayers_;
 	std::vector<std::shared_ptr<FloorActor>> Chairs_;
 
+	std::shared_ptr<RankingActor> Rank_;
 
 	float BeforeScoreTime_;
 	float FallingTime_;

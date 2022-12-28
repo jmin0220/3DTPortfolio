@@ -238,6 +238,9 @@
     <Filter Include="02_Actor\UIActor\TimerActor">
       <UniqueIdentifier>{148f2461-3ffc-4a3e-a00f-a260296af28a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02_Actor\UIActor\RankingActor">
+      <UniqueIdentifier>{e62b7816-7e2d-418b-aaf2-c46037d891f5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -686,6 +689,9 @@
     </ClInclude>
     <ClInclude Include="ShaderTutorialFloor.h">
       <Filter>990_Tutorial\Shader\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="RankingActor.h">
+      <Filter>02_Actor\UIActor\RankingActor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1141,6 +1147,9 @@
     </ClCompile>
     <ClCompile Include="ShaderTutorialFloor.cpp">
       <Filter>990_Tutorial\Shader\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="RankingActor.cpp">
+      <Filter>02_Actor\UIActor\RankingActor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
