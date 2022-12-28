@@ -35,7 +35,7 @@ private:
 public:
 	void SetWinnerFont(const std::string& _PlayerName)
 	{
-		Font_->SetText("플레이어Test", "Noto Sans CJK SC");
+		Font_->SetText(_PlayerName, "Noto Sans CJK SC");
 	}
 
 };
