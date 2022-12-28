@@ -254,10 +254,6 @@ void GameServer::PlayerStatePacketProcess(std::shared_ptr<GameServerPacket> _Pac
 	{
 		GameServer::Net->SendPacket(Packet);
 	}
-	else
-	{
-		PlayTime_ = Packet->PlayTime;
-	}
 }
 
 ////////////////////

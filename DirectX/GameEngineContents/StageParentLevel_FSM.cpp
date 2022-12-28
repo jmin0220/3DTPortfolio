@@ -115,6 +115,14 @@ void StageParentLevel::StagePreviewStart(const StateInfo& _Info)
 		GameServer::GetInst()->SetServerSignal(ServerFlag::S_StageIdleChangeOver);
 	}
 
+	UIs_->OnOffSuccessCount();
+	
+	if (GameScoreType_ == GameScoreType::TIMEATTACK)
+	{
+		TimerUI_->On();
+		TimerUI_->SetNetTime(TimerLimit_);
+	}
+
 	IntroduceGame_->Off();
 	MainCam_->OffFreeCameraMode();
 
@@ -221,14 +229,10 @@ bool FinishScoreSetted;
 bool LastPlayerReady;
 void StageParentLevel::RaceStart(const StateInfo& _Info)
 {
-	UIs_->OnOffSuccessCount();
-
 	FinishScoreSetted = false;
 
 	// 플레이어 입력 가능
 	Player_->SetInputAvailable(true);
-
-	TimerUI_->On();
 }
 
 void StageParentLevel::RaceUpdate(float _DeltaTime, const StateInfo& _Info)

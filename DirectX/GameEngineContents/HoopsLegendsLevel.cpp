@@ -54,20 +54,25 @@ void HoopsLegendsLevel::Update(float _DeltaTime)
 	{
 		if (true == GameServer::IsHost_)
 		{
+			// 호스트만 실시간 후프위치 조절
 			SetHoopPosition();
 
-
-
+			// 호스트만 남은시간 조절
 			if (true == ServerActivated_)
 			{
 				TimerLimit_ -= _DeltaTime;
 			}
 
 			GameServer::GetInst()->PlayTime_ = static_cast<unsigned int>(TimerLimit_);
+			TimerUI_->SetNetTime(TimerLimit_);
 		}
 		else
 		{
-			float Time = static_cast<float>(GameServer::GetInst()->PlayTime_);
+			// 클라이언트는 호스트 유저플레이어의 시간 받아와야됨
+			std::map<int, std::shared_ptr<class PlayerStatePacket>>& Players = GameServer::GetInst()->GetOtherPlayersInfo();
+			Players[0]->PlayTime;
+			
+			float Time = static_cast<float>(Players[0]->PlayTime);
 			TimerUI_->SetNetTime(Time);
 		}
 
@@ -146,8 +151,8 @@ void HoopsLegendsLevel::LevelStartEvent()
 
 	// 타이머 UI
 	TimerUI_->On();
+	TimerUI_->SetNetTime(0.0f);
 	TimerLimit_ = 120.0f;
-	TimerUI_->SetNetTime(TimerLimit_);
 }
 
 void HoopsLegendsLevel::LevelEndEvent()

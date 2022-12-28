@@ -70,7 +70,7 @@ void TimerActor::Update(float _DeltaTime)
 	FontTenSecond_->SetText(std::to_string(TenSecond_), FONT_TITAN_ONE);
 	FontOneSecond_->SetText(std::to_string(OneSecond_), FONT_TITAN_ONE);
 
-	if (Time_ <= 0.0f)
+	if (Time_ < 0.0f)
 	{
 		Time_ = 0.0f;
 		TimerEnd_ = true;
@@ -83,7 +83,6 @@ void TimerActor::LevelStartEvent()
 	//TenSecond_ = 0;
 	//OneMinute_ = 2;
 	//Time_ = 120.0f;
-	Time_ = 70.0f;
 }
 
 void TimerActor::SetNetTime(float _Time)
