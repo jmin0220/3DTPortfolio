@@ -9,6 +9,8 @@
 
 #include <GameEngineBase/GameEngineRandom.h>
 
+#include "RankingActor.h"
+
 float4 FirstActorPos = float4(-20, 0, 100); // 다음+ (40, -15, 0) 체어  y+ 15.5f
 float4 FirstActorRot = float4(0, 160, 0);
 
@@ -146,6 +148,8 @@ void MidScoreLevel::End()
 
 void MidScoreLevel::LevelStartEvent()
 {
+	Rank_ = CreateActor<RankingActor>();
+
 	// 1st, 2nd
 	Font1st_ = CreateActor<FontActor>();
 	Font1st_->SetFont("1st.   ", FONT_TITAN_ONE, 60.0f, { 20,200 }, LeftAndRightSort::LEFT);
@@ -167,11 +171,10 @@ void MidScoreLevel::LevelStartEvent()
 		NoServerSetting();
 	}
 
-
-	if (false == GameEngineInput::GetInst()->IsKey("RandomScore"))
-	{
-		GameEngineInput::GetInst()->CreateKey("RandomScore", VK_RETURN);
-	}
+	//if (false == GameEngineInput::GetInst()->IsKey("RandomScore"))
+	//{
+	//	GameEngineInput::GetInst()->CreateKey("RandomScore", VK_RETURN);
+	//}
 
 	Once_ = false;
 	IsScoreOn_ = false;

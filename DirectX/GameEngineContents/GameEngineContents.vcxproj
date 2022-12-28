@@ -515,6 +515,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="PreCompile.h" />
+    <ClInclude Include="RankingActor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="RoundEnd.h">
       <SubType>
       </SubType>
@@ -1006,6 +1010,10 @@
     <ClCompile Include="PreCompile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="RankingActor.cpp">
+      <SubType>
+      </SubType>
     </ClCompile>
     <ClCompile Include="RoundEnd.cpp">
       <SubType>
