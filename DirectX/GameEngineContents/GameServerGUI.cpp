@@ -212,7 +212,7 @@ void GameServerGUI::InGameGUI()
 	ImGui::NewLine();
 	ImGui::Text(GameEngineString::AnsiToUTF8Return("< 내 정보 >").c_str());
 	{
-		std::string Text = "플레이어 신호 : ";
+		std::string Text = GameServer::GetInst()->UserName_ + " ( ID : " + std::to_string(GameServer::GetInst()->PlayerID_) + " )  [ ";
 
 		if (PlayerFlag::P_None == GameServer::PlayerSignal_)
 		{
@@ -275,7 +275,7 @@ void GameServerGUI::InGameGUI()
 			Text += "P_StageEndChangeOver";
 		}
 
-		Text += "\n" + GameServer::GetInst()->UserName_ + "[ ID :" + std::to_string(GameServer::GetInst()->PlayerID_) + " ]";
+		Text += " ]";
 		Text += "\n- 점수 : " + std::to_string(GameServer::GetInst()->PlayerScore_);
 		ImGui::Text(GameEngineString::AnsiToUTF8Return(Text).c_str());
 
@@ -296,9 +296,9 @@ void GameServerGUI::InGameGUI()
 			unsigned int Score = (*Start).second->PlayerScore;
 			const std::string& UserName = (*Start).second->PlayerName;
 			{
-				std::string Text = UserName + " ID : ";
+				std::string Text = UserName + " ( ID : ";
 				Text += std::to_string(PlayerID);
-				Text += "  [";
+				Text += ") [";
 
 				if (false == Flag)
 				{
