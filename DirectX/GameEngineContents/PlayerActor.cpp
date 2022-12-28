@@ -150,7 +150,10 @@ void PlayerActor::PlayerInit()
 	}
 	//충돌체크를 위한 CommonPlayer 에 Player 넣기
 	{
-		dynamic_cast<VirtualPhysXLevel*>(GetLevel())->SetCommonPlayer(this);
+		if (this == PlayerActor::MainPlayer)
+		{
+			dynamic_cast<VirtualPhysXLevel*>(GetLevel())->SetCommonPlayer(this);
+		}
 	}
 }
 
