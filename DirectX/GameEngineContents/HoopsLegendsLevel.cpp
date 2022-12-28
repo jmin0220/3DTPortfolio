@@ -11,6 +11,7 @@
 
 HoopsLegendsLevel::HoopsLegendsLevel() :
 	SettingHoops_(false)
+	, ServerActivated_(false)
 {
 }
 
@@ -42,6 +43,11 @@ void HoopsLegendsLevel::Update(float _DeltaTime)
 {
 	StageParentLevel::Update(_DeltaTime);
 
+	if (false == ServerActivated_
+		&& true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StagePreviewChangeOver))
+	{
+		ServerActivated_ = true;
+	}
 
 	// 이거 서버만 돌려야됨
 	if (true == GameServer::GetInst()->IsServerStart())
@@ -50,13 +56,24 @@ void HoopsLegendsLevel::Update(float _DeltaTime)
 		{
 			SetHoopPosition();
 
-			TimerLimit_ -= _DeltaTime;
+
+
+			if (true == ServerActivated_)
+			{
+				TimerLimit_ -= _DeltaTime;
+			}
+
 			GameServer::GetInst()->PlayTime_ = static_cast<unsigned int>(TimerLimit_);
 		}
+		else
+		{
+			float Time = static_cast<float>(GameServer::GetInst()->PlayTime_);
+			TimerUI_->SetNetTime(Time);
+		}
 
-		// 호스트/클라 둘다
-		TimerUI_->SetNetTime(GameServer::GetInst()->PlayTime_);
 	}
+
+
 
 }
 
@@ -130,6 +147,7 @@ void HoopsLegendsLevel::LevelStartEvent()
 	// 타이머 UI
 	TimerUI_->On();
 	TimerLimit_ = 120.0f;
+	TimerUI_->SetNetTime(TimerLimit_);
 }
 
 void HoopsLegendsLevel::LevelEndEvent()

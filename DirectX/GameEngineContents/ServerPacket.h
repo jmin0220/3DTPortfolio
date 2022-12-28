@@ -86,8 +86,6 @@ public:
 	// 서버만, 서버가 클라에게 보내주는 "신호"
 	unsigned int ServerSignal; 
 
-	unsigned int PlayTime;
-
 	GameStatePacket()
 	{
 		SetPacketID(ContentsPacketType::GameState);
@@ -97,13 +95,11 @@ public:
 	{
 		GameServerPacket::Serialize(_Ser);
 		_Ser << ServerSignal;
-		_Ser << PlayTime;
 	}
 	virtual void DeSerialize(GameServerSerializer& _Ser)
 	{
 		GameServerPacket::DeSerialize(_Ser);
 		_Ser >> ServerSignal;
-		_Ser >> PlayTime;
 	}
 };
 
@@ -117,6 +113,8 @@ public:
 	unsigned int PlayerScore;
 	unsigned int PlayerColor;	// 플레이어 : 스킨색상, 기타 : ...
 
+	unsigned int PlayTime;		// 후프레벨 남은 시간
+
 	PlayerStatePacket()
 	{
 		SetPacketID(ContentsPacketType::PlayerState);
@@ -129,6 +127,7 @@ public:
 		_Ser << PlayerStateSignal;
 		_Ser << PlayerScore;
 		_Ser << PlayerColor;
+		_Ser << PlayTime;
 	}
 	virtual void DeSerialize(GameServerSerializer& _Ser)
 	{
@@ -137,6 +136,7 @@ public:
 		_Ser >> PlayerStateSignal;
 		_Ser >> PlayerScore;
 		_Ser >> PlayerColor;
+		_Ser >> PlayTime;
 	}
 };
 

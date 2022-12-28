@@ -238,8 +238,6 @@ void GameServer::GameStatePacketProcess(std::shared_ptr<GameServerPacket> _Packe
 	{
 		//ServerSignal_ = static_cast<ServerFlag>(ServerSignal_ | Packet->ServerSignal);
 		ServerSignal_ = static_cast<ServerFlag>(Packet->ServerSignal);
-		
-		PlayTime_ = Packet->PlayTime;
 	}
 
 }
@@ -255,6 +253,10 @@ void GameServer::PlayerStatePacketProcess(std::shared_ptr<GameServerPacket> _Pac
 	if (true == Net->GetIsHost())
 	{
 		GameServer::Net->SendPacket(Packet);
+	}
+	else
+	{
+		PlayTime_ = Packet->PlayTime;
 	}
 }
 
@@ -275,9 +277,6 @@ void GameServer::SendGameStatePacket()
 	// 서버가 모든 클라이언트에게 주는 신호
 	Packet->ServerSignal = static_cast<unsigned int>(ServerSignal_);
 
-	// 현재 서버가 송신할 신호, 클라이언트들이 모두 알고 있다면
-	Packet->PlayTime = PlayTime_;
-
 	Net->SendPacket(Packet);
 }
 
@@ -296,6 +295,16 @@ void GameServer::SendPlayerStatePacket()
 
 	// 플레이어 스킨정보(색상)
 	Packet->PlayerColor = PlayerColorID_;
+
+	// 시간
+	if (true == IsHost_)
+	{
+		Packet->PlayTime = PlayTime_;
+	}
+	else
+	{
+		Packet->PlayTime = 0;
+	}
 
 	Net->SendPacket(Packet);
 }

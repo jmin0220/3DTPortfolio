@@ -37,5 +37,6 @@ private:
 	float4 Pos[10];
 
 	bool SettingHoops_;
+	bool ServerActivated_;
 };
 
