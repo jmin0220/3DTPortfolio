@@ -27,11 +27,10 @@ void StageParentLevel::IdleStart(const StateInfo& _Info)
 	{
 		IntroduceGame_->On();
 		IntroduceGame_->SetStageTexture(MyStage_);
+		Player_->SetInputAvailable(false);
 	}
 	CameraArm_->SetFollowCamera(MainCam_, Player_);
 
-	// 플레이어 입력 못함
-	Player_->SetInputAvailable(false);
 }
 
 void StageParentLevel::IdleUpdate(float _DeltaTime, const StateInfo& _Info)
@@ -316,9 +315,10 @@ void StageParentLevel::RaceUpdate(float _DeltaTime, const StateInfo& _Info)
 		if (GameScoreType_ == GameScoreType::RACE)
 		{
 			// TODO::객체 OFF하고 관전 or 투명하게하고 관전
-			Player_->Off();
-
-			//Player_->SetPlayerInvisible();
+			//Player_->Off();
+			
+			Player_->SetPlayerNetDeath(true);
+			Player_->SetPlayerInvisible();
 		}
 
 	}

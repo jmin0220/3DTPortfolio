@@ -37,6 +37,8 @@
 #include <GameEngineCore/GameEngineBlur.h>
 
 #include "TestGUI.h"
+#include "TimerActor.h"
+#include "HoopsScoreRing.h"
 
 
 std::mutex SpawnLock;
@@ -84,6 +86,9 @@ void StageParentLevel::Start()
 	UIs_ = CreateActor<InGameSetUI>();
 	UIs_->On();
 
+	TimerUI_ = CreateActor<TimerActor>();
+	TimerUI_->Off();
+
 	// 스테이지 FSM
 	StageStateManager_.CreateStateMember("Idle"
 		, std::bind(&StageParentLevel::IdleUpdate, this, std::placeholders::_1, std::placeholders::_2)
@@ -129,6 +134,7 @@ void StageParentLevel::Update(float _DeltaTime)
 	{
 		GameServer::GetInst()->PlayerScore_ += 100;
 	}
+
 }
 void StageParentLevel::End()
 {
@@ -451,16 +457,28 @@ void StageParentLevel::LevelStartLoad()
 		}
 		case Stage_MeshEnum::Col_StartPos:
 		{
-			NewObj.Actor_ = CreateActor<Col_StartPos>();
-			NewObj.Actor_.lock()->GetTransform().SetWorldPosition(Pos);
-			NewObj.Actor_.lock()->GetTransform().SetWorldScale(Size);
-			NewObj.Actor_.lock()->GetTransform().SetLocalRotation(Rot);
+			if (MyStage_ == StageNum::STAGE5)
+			{
+				NewObj.Actor_ = CreateActor<Col_StartPos>();
+				NewObj.Actor_.lock()->GetTransform().SetWorldPosition(Pos);
+				NewObj.Actor_.lock()->GetTransform().SetWorldScale(Size);
+				NewObj.Actor_.lock()->GetTransform().SetLocalRotation(Rot);
 
-			StartPositions_.push_back(NewObj.Actor_.lock()->GetTransform().GetWorldPosition());
-			
-			//플레이어 포지션을 가지고있어야하는 static 전역변수
-			PlayerPos = NewObj.Actor_.lock()->GetTransform().GetWorldPosition();
+				HoopsStartPos_.push_back(NewObj.Actor_.lock()->GetTransform().GetWorldPosition());
+			}
+			else
+			{
 
+				NewObj.Actor_ = CreateActor<Col_StartPos>();
+				NewObj.Actor_.lock()->GetTransform().SetWorldPosition(Pos);
+				NewObj.Actor_.lock()->GetTransform().SetWorldScale(Size);
+				NewObj.Actor_.lock()->GetTransform().SetLocalRotation(Rot);
+
+				StartPositions_.push_back(NewObj.Actor_.lock()->GetTransform().GetWorldPosition());
+
+				//플레이어 포지션을 가지고있어야하는 static 전역변수
+				PlayerPos = NewObj.Actor_.lock()->GetTransform().GetWorldPosition();
+			}
 			break;
 		}
 		case Stage_MeshEnum::Col_CheckPoint:
@@ -588,6 +606,18 @@ void StageParentLevel::SpawnServerObjects()
 				NetObstacles_.push_back(Cannon);
 				break;
 			}
+			case ServerObjectType::HoopRing:
+			{
+				std::shared_ptr<HoopsScoreRing> Ring = CreateActor<HoopsScoreRing>();
+				Ring->ClientInit(CurPacket->Type, CurPacket->ObjectID);
+				Ring->GetTransform().SetWorldPosition(CurPacket->Pos);
+				Ring->GetTransform().SetWorldScale(CurPacket->Scale);
+				Ring->GetTransform().SetWorldRotation(CurPacket->Rot);
+
+				Ring->PushPacket(CurPacket);
+				NetObstacles_.push_back(Ring);
+				break;
+			}
 			default:
 				break;
 			}
@@ -637,8 +667,6 @@ void StageParentLevel::GetGameScoreByCurrentType()
 	case StageParentLevel::GameScoreType::SURVIVAL:
 	{
 		// FinishedPlayersCount, 0면 꼴등
-
-		
 		unsigned int Ranking = AllPlayersCount - FinishedPlayersCount;
 		// 뒤에서 4등부터 4위, 3위, 2위, 1위
 
@@ -671,6 +699,7 @@ void StageParentLevel::SetWatchCamNextPlayer()
 	WatchPlayers_.clear();
 	for (std::shared_ptr<GameEngineActor> LivePlayer : NetPlayers_)
 	{
+		// TODO::UPDATE방식 안됨
 		if (true == LivePlayer->IsUpdate())
 		{
 			WatchPlayers_.push_back(LivePlayer);

@@ -4,7 +4,7 @@
 #include "PhysXTriMeshGeometryComponent.h"
 
 // 설명 :
-class HoopsScoreRing	:	public VirtualPhysXActor
+class HoopsScoreRing	:	public VirtualPhysXActor, public GameServerObject
 {
 public:
 	// constrcuter destructer
@@ -33,10 +33,6 @@ private:
 	bool IsCol_;
 
 	int Dir_;
-
-	// 서버
-	bool ServerActivated_;
-
 
 	float4 PrevPos;
 	
@@ -76,5 +72,11 @@ public:
 		return Flag_;
 	}
 
+	// 서버
+public:
+	void PhysXInit();
+	void UpdateHoops(float _DeltaTime);
+
+	bool ServerActivated_;
 };
 

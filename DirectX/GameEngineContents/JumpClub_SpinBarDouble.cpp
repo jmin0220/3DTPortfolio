@@ -109,6 +109,9 @@ void JumpClub_SpinBarDouble::CreatePhysXActors(physx::PxScene* _Scene, physx::Px
 {
 	physx::PxCooking* Cooking = static_cast<VirtualPhysXLevel*>(GetLevel())->GetCooking();
 	
+	PhysXSpinBarComponent_->SetPhysxMaterial(FLOOR_STATICFRICTION, 0.7f, 0.5f);
+	PhysXSpinBarComponent_->SetObjectObstacle();
+
 	float4 MeshBoundScale = Renderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
 	PhysXSpinBarComponent_->CreatePhysXActors("SpinBarDouble.fbx", _Scene, _physics, Cooking, true, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z));
 

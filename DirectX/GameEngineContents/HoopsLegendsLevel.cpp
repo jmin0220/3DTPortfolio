@@ -7,6 +7,7 @@
 #include "HoopsScoreRing.h"
 //#include "TestGUI.h"
 #include "GameEngineBase/GameEngineRandom.h"
+#include "TimerActor.h"
 
 HoopsLegendsLevel::HoopsLegendsLevel() :
 	SettingHoops_(false)
@@ -20,7 +21,7 @@ HoopsLegendsLevel::~HoopsLegendsLevel()
 void HoopsLegendsLevel::Start()
 {
 	MyStage_ = StageNum::STAGE5;
-	GameScoreType_ = GameScoreType::NONE;
+	GameScoreType_ = GameScoreType::TIMEATTACK;
 	StageParentLevel::Start();
 
 	LightObject_->GetLightData().DifLightPower = 0.5f;
@@ -41,7 +42,13 @@ void HoopsLegendsLevel::Update(float _DeltaTime)
 {
 	StageParentLevel::Update(_DeltaTime);
 
-	SetHoopPosition();
+
+	// 이거 서버만 돌려야됨
+	if (true == GameServer::GetInst()->IsServerStart()
+		&& true == GameServer::IsHost_)
+	{
+		SetHoopPosition();
+	}
 }
 
 void HoopsLegendsLevel::End()
@@ -54,7 +61,7 @@ void HoopsLegendsLevel::LevelStartEvent()
 
 	StageParentLevel::LevelStartEvent();
 
-	Player_->GetTransform().SetWorldPosition({ 0,100.0f,0 });
+	
 	//스카이박스
 	std::shared_ptr<SkyboxActor> Skybox = CreateActor<SkyboxActor>();
 	Skybox->SetSkyTexture("Respawn_SkyBox_S02.png");
@@ -63,15 +70,93 @@ void HoopsLegendsLevel::LevelStartEvent()
 	//GUI_->SetObj(BackGround_);
 	//GUI_->On();
 
+
+
+	if (true == GameServer::GetInst()->IsServerStart())
+	{
+		//////////////
+		// 서버 ON
+		//////////////
+
+		// 1. 플레이어 소환
+		int PositionCount = static_cast<int>(HoopsStartPos_.size());
+		unsigned int PositionIdx = GameServer::GetInst()->PlayerID_;
+		if (PositionIdx < PositionCount)
+		{
+			Player_->SetCheckPoint(HoopsStartPos_[PositionIdx] + float4(0, 0, 0));
+			Player_->ResetPlayerPos();
+		}
+		else
+		{
+			// ex 플레이어 13명 -> 13 / 6 = 2 ... 1
+			// 1은 포지션 리스트의 인덱스, 2는 그 포지션의 3번째(0, 1, 2) 사람
+			PositionIdx = PositionIdx % PositionCount;
+			int PositionIdxPlus = PositionIdx / PositionCount;
+
+			// 1번째 : 0도 돌림, 2번째 중복 : 20도 돌림, 3번째 중복 : 40도 돌림
+			float4 Position = HoopsStartPos_[PositionIdx];
+			Position = float4::VectorRotationToDegreeYAxis(Position, PositionIdxPlus * 20.0f);
+			Player_->SetCheckPoint(Position);
+			Player_->ResetPlayerPos();
+		}
+
+		// 2. 호스트는 후프 소환
+		if (true == GameServer::GetInst()->IsHost_)
+		{
+			SpawnHoops();
+		}
+
+
+	}
+	else
+	{
+		//////////////
+		// 서버 OFF
+		//////////////
+
+		Player_->SetCheckPoint(HoopsStartPos_[0] + float4(0, 0, 0));
+		Player_->ResetPlayerPos();
+	}
+
+	// 타이머 UI
+	TimerUI_->On();
+}
+
+void HoopsLegendsLevel::LevelEndEvent()
+{
+	StageParentLevel::LevelEndEvent();
+
+	TimerUI_->Off();
+}
+
+bool HoopsLegendsLevel::GameEndingFlag()
+{
+	if (Player_->GetTransform().GetWorldPosition().y <= -20.0f)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+void HoopsLegendsLevel::SpawnHoops()
+{
+	//std::shared_ptr<JumpClub_SpinBarDouble> BarDouble = CreateActor<JumpClub_SpinBarDouble>();
+	//BarDouble->ServerInit(ServerObjectType::SpinBarDouble);
+	//BarDouble->GetTransform().SetWorldPosition({ 0.0f, 77.0f, 0.0f });
+	//BarDouble->PhysXInit();
+
 	for (int i = 0; i < 10; i++)
 	{
 		Hoops_ = CreateActor<HoopsScoreRing>();
-		//Hoops_->Off();
+
 		HoopsActor.push_back(Hoops_);
 
 		PrevPos[i] = -1;
 	}
 
+
+	// 이거도 서버가 해야됨
 	//후프 초기위치 설정
 	for (int i = 0; i < 10; i++)
 	{
@@ -93,25 +178,12 @@ void HoopsLegendsLevel::LevelStartEvent()
 	for (int i = 0; i < 10; i++)
 	{
 		HoopsActor[i]->GetTransform().SetWorldPosition(HoopsPos[PrevPos[i]]);
+
+		// 호스트의 서버 초기화
+		HoopsActor[i]->CastThis<HoopsScoreRing>()->ServerInit(ServerObjectType::HoopRing);
+		HoopsActor[i]->CastThis<HoopsScoreRing>()->PhysXInit();
 	}
 
-
-	CinemaCam_->SetActivated();
-}
-
-void HoopsLegendsLevel::LevelEndEvent()
-{
-	StageParentLevel::LevelEndEvent();
-}
-
-bool HoopsLegendsLevel::GameEndingFlag()
-{
-	if (Player_->GetTransform().GetWorldPosition().y <= -20.0f)
-	{
-		return true;
-	}
-
-	return false;
 }
 
 void HoopsLegendsLevel::SetHoopPosition()

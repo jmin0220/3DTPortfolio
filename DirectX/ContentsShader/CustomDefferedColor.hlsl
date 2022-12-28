@@ -9,6 +9,7 @@
 #include "TransformHeader.fx"
 #include "LightHeader.fx"
 #include "DeferredHeader.fx"
+#include "RenderOption.fx"
 
 // cbuffer Color : 
 // TestColor;
@@ -16,6 +17,8 @@ struct Input
 {
     float4 Pos : POSITION;
     float4 Normal : NORMAL;
+    float4 Tangent : TANGENT;
+    float4 Binormal : BINORMAL;
     float4 Tex : TEXCOORD;
 };
 
@@ -25,6 +28,8 @@ struct Output
     float4 ViewPos : POSITION;
     float4 ViewNormal : NORMAL;
     float4 Tex : TEXCOORD;
+    float4 ViewTangent : TANGENT;
+    float4 ViewBinormal : BINORMAL;
 };
 
 
@@ -52,17 +57,26 @@ Output Color_VS(Input _Input)
     Output NewOutPut = (Output)0;
     
     NewOutPut.Pos = mul(_Input.Pos, WorldViewProjection);
-    NewOutPut.ViewPos = mul(_Input.Pos, WorldView);
+    NewOutPut.ViewPos = normalize(mul(_Input.Pos, WorldView));
     NewOutPut.Tex = _Input.Tex;
     
     _Input.Normal.w = 0.0f;
     NewOutPut.ViewNormal = normalize(mul(_Input.Normal, WorldView));
     NewOutPut.ViewNormal.w = 0.0f;
     
+    _Input.Tangent.w = 0.0f;
+    NewOutPut.ViewTangent= normalize(mul(_Input.Tangent, WorldView));
+    NewOutPut.ViewTangent.w = 0.0f;
+    
+    _Input.Binormal.w = 0.0f;
+    NewOutPut.ViewBinormal= normalize(mul(_Input.Binormal, WorldView));
+    NewOutPut.ViewBinormal.w = 0.0f;
+    
     return NewOutPut;
 }
 
 Texture2D DiffuseTexture : register(t0);
+Texture2D NormalTexture : register(t1);
 SamplerState LINEARWRAP : register(s0);
 DeferredOutPut Color_PS(Output _Input) : SV_Target0
 {
@@ -78,6 +92,14 @@ DeferredOutPut Color_PS(Output _Input) : SV_Target0
    // OutPut.Tex = DiffuseTexture.Sample(LINEARWRAP, _Input.Tex.xy);
     OutPut.Nor.w = 1.0f;
     
+    if (0 != IsNormal)
+    {
+        OutPut.Nor = BumpNormalCalculate(NormalTexture, LINEARWRAP, _Input.Tex, _Input.ViewTangent, _Input.ViewBinormal, _Input.ViewNormal);
+        // 노말 강도 수치
+        OutPut.Nor *= 10.0f;
+        
+        OutPut.Nor.w = 1.0f;
+    }
     
     return OutPut;
 }

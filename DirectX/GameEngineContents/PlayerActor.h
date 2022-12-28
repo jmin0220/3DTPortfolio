@@ -38,6 +38,7 @@ private:
 	//플레이어가 멈추는가
 	bool IsPlayerFrozen_;
 
+	bool IsNetDeath_;
 	// 서버
 public:
 	void SetInputAvailable(bool _Value)
@@ -53,6 +54,11 @@ public:
 	void SetPlayerInvisible()
 	{
 		FbxRenderer_->Off();
+	}
+
+	void SetPlayerNetDeath(bool _Value)
+	{
+		IsNetDeath_ = _Value;
 	}
 
 public:

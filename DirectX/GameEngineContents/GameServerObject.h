@@ -19,6 +19,9 @@ enum class ServerObjectType
 	
 	// Stage2
 	Cannon,
+
+	// Stage5
+	HoopRing,
 };
 
 

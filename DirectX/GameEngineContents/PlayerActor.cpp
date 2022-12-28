@@ -56,7 +56,8 @@ PlayerActor::PlayerActor() :
 	IsInputOn_(true),
 	IsPlayerFrozen_(false),
 	IsNetPlayerColorExist_(false),
-	PrevAnimation_("")
+	PrevAnimation_(""),
+	IsNetDeath_(false)
 {
 }
 
@@ -149,7 +150,10 @@ void PlayerActor::PlayerInit()
 	}
 	//충돌체크를 위한 CommonPlayer 에 Player 넣기
 	{
-		dynamic_cast<VirtualPhysXLevel*>(GetLevel())->SetCommonPlayer(this);
+		if (this == PlayerActor::MainPlayer)
+		{
+			dynamic_cast<VirtualPhysXLevel*>(GetLevel())->SetCommonPlayer(this);
+		}
 	}
 }
 
@@ -166,12 +170,6 @@ void PlayerActor::Update(float _DeltaTime)
 		PlayerStateManager_.Update(_DeltaTime);
 		PlayerAniStateManager_.Update(_DeltaTime);
 
-		if (IsPlayerFrozen_ == true)
-		{
-			IsInputOn_ = false;
-			DynamicActorComponent_->FreezeDynamic();
-			FbxRenderer_->PauseSwtich();
-		}
 
 		ImpulseTest();
 
@@ -221,7 +219,17 @@ void PlayerActor::Update(float _DeltaTime)
 		std::shared_ptr<ObjectUpdatePacket> Packet = std::make_shared<ObjectUpdatePacket>();
 		Packet->ObjectID = GetNetID();
 		Packet->Type = ServerObjectType::Player;
-		Packet->State = ServerObjectBaseState::Base;
+	
+		if (true == IsNetDeath_)
+		{
+
+			Packet->State = ServerObjectBaseState::Death;
+		}
+		else
+		{
+			Packet->State = ServerObjectBaseState::Base;
+		}
+
 		Packet->Scale = GetTransform().GetWorldScale();
 		Packet->Pos = GetTransform().GetWorldPosition();
 		Packet->Rot = GetTransform().GetWorldRotation();
@@ -244,6 +252,14 @@ void PlayerActor::Update(float _DeltaTime)
 			{
 				// Player
 				std::shared_ptr<ObjectUpdatePacket> ObjectUpdate = std::dynamic_pointer_cast<ObjectUpdatePacket>(Packet);
+
+				// 네트워크상 죽음
+				if (true == (ObjectUpdate->State == ServerObjectBaseState::Death))
+				{
+					this->Off();
+
+					// invisible?
+				}
 
 				// 스킨
 				SetNetPlayerColor(ObjectUpdate->PlayerColor);

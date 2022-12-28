@@ -112,6 +112,7 @@ private:
 	// 특정 레벨에만 다르게 동작해야 된다면, Override해서 사용할 수 있음
 protected:
 	std::vector<float4>	StartPositions_;
+	std::vector<float4> HoopsStartPos_;
 	GameEngineStateManager StageStateManager_;
 	std::shared_ptr<Cinemachine> CinemaCam_;
 
@@ -160,6 +161,7 @@ protected:
 		NONE,
 		RACE,			// 1등이 100점
 		SURVIVAL,		// 1등이 0점
+		TIMEATTACK,		// 후프레벨
 	};
 
 	GameScoreType GameScoreType_;
@@ -167,11 +169,9 @@ protected:
 	// IsGoal일 때 점수 부여 : RACE, SURVIVAL
 	void GetGameScoreByCurrentType();
 
-	// 후프를 얻으면 점수 부여 : 레벨에서 함
+	// 후프레벨
+	std::shared_ptr<class TimerActor> TimerUI_;
 
-
-
-	// 빛
 public:
 
 	std::shared_ptr<class TestGUI> GUI_;

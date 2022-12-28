@@ -23,7 +23,7 @@ void BigShots_PRP::Start()
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
 	
 	PhysXConvexDynamicComponent_ = CreateComponent< PhysXConvexDynamicComponent>();
-	PhysXConvexDynamicComponent_->SetRestitution(0.3f);
+	//PhysXConvexDynamicComponent_->SetRestitution(0.3f);
 
 }
 
@@ -54,6 +54,10 @@ void BigShots_PRP::LevelEndEvent()
 void BigShots_PRP::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics)
 {
 	physx::PxCooking* Cooking = static_cast<VirtualPhysXLevel*>(GetLevel())->GetCooking();
+	
+	PhysXConvexDynamicComponent_->SetPhysxMaterial(FLOOR_STATICFRICTION, FLOOR_DYNAMICFRICTION, 0.3f);
+	PhysXConvexDynamicComponent_->SetObjectObstacle();
+	
 	// Tip..3번째 매개변수인 GeometryScale은 액터가 가질 물리강체의 크기
 	float4 MeshBoundScale = Renderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
 	PhysXConvexDynamicComponent_->CreatePhysXActors(FBXName_, _Scene, _physics, Cooking, false, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z));
