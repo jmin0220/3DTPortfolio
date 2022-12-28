@@ -38,6 +38,7 @@
 
 #include "TestGUI.h"
 #include "TimerActor.h"
+#include "HoopsScoreRing.h"
 
 
 std::mutex SpawnLock;
@@ -603,6 +604,18 @@ void StageParentLevel::SpawnServerObjects()
 
 				Cannon->PushPacket(CurPacket);
 				NetObstacles_.push_back(Cannon);
+				break;
+			}
+			case ServerObjectType::HoopRing:
+			{
+				std::shared_ptr<HoopsScoreRing> Ring = CreateActor<HoopsScoreRing>();
+				Ring->ClientInit(CurPacket->Type, CurPacket->ObjectID);
+				Ring->GetTransform().SetWorldPosition(CurPacket->Pos);
+				Ring->GetTransform().SetWorldScale(CurPacket->Scale);
+				Ring->GetTransform().SetWorldRotation(CurPacket->Rot);
+
+				Ring->PushPacket(CurPacket);
+				NetObstacles_.push_back(Ring);
 				break;
 			}
 			default:

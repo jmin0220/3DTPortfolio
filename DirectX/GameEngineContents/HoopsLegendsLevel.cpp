@@ -47,7 +47,7 @@ void HoopsLegendsLevel::Update(float _DeltaTime)
 	if (true == GameServer::GetInst()->IsServerStart()
 		&& true == GameServer::IsHost_)
 	{
-		//SetHoopPosition();
+		SetHoopPosition();
 	}
 }
 
@@ -72,12 +72,15 @@ void HoopsLegendsLevel::LevelStartEvent()
 
 
 
-	// 플레이어 소환
-	int PositionCount = static_cast<int>(HoopsStartPos_.size());
 	if (true == GameServer::GetInst()->IsServerStart())
 	{
-		unsigned int PositionIdx = GameServer::GetInst()->PlayerID_;
+		//////////////
+		// 서버 ON
+		//////////////
 
+		// 1. 플레이어 소환
+		int PositionCount = static_cast<int>(HoopsStartPos_.size());
+		unsigned int PositionIdx = GameServer::GetInst()->PlayerID_;
 		if (PositionIdx < PositionCount)
 		{
 			Player_->SetCheckPoint(HoopsStartPos_[PositionIdx] + float4(0, 0, 0));
@@ -96,14 +99,24 @@ void HoopsLegendsLevel::LevelStartEvent()
 			Player_->SetCheckPoint(Position);
 			Player_->ResetPlayerPos();
 		}
+
+		// 2. 호스트는 후프 소환
+		if (true == GameServer::GetInst()->IsHost_)
+		{
+			SpawnHoops();
+		}
+
+
 	}
 	else
 	{
+		//////////////
+		// 서버 OFF
+		//////////////
+
 		Player_->SetCheckPoint(HoopsStartPos_[0] + float4(0, 0, 0));
 		Player_->ResetPlayerPos();
 	}
-
-	//CinemaCam_->SetActivated();
 
 	// 타이머 UI
 	TimerUI_->On();
@@ -128,10 +141,15 @@ bool HoopsLegendsLevel::GameEndingFlag()
 
 void HoopsLegendsLevel::SpawnHoops()
 {
+	//std::shared_ptr<JumpClub_SpinBarDouble> BarDouble = CreateActor<JumpClub_SpinBarDouble>();
+	//BarDouble->ServerInit(ServerObjectType::SpinBarDouble);
+	//BarDouble->GetTransform().SetWorldPosition({ 0.0f, 77.0f, 0.0f });
+	//BarDouble->PhysXInit();
+
 	for (int i = 0; i < 10; i++)
 	{
 		Hoops_ = CreateActor<HoopsScoreRing>();
-		//Hoops_->Off();
+
 		HoopsActor.push_back(Hoops_);
 
 		PrevPos[i] = -1;
@@ -160,22 +178,12 @@ void HoopsLegendsLevel::SpawnHoops()
 	for (int i = 0; i < 10; i++)
 	{
 		HoopsActor[i]->GetTransform().SetWorldPosition(HoopsPos[PrevPos[i]]);
+
+		// 호스트의 서버 초기화
+		HoopsActor[i]->CastThis<HoopsScoreRing>()->ServerInit(ServerObjectType::HoopRing);
+		HoopsActor[i]->CastThis<HoopsScoreRing>()->PhysXInit();
 	}
 
-
-	//CinemaCam_->SetActivated();
-
-	if (false == GameServer::GetInst()->IsServerStart())
-	{
-		Player_->SetCheckPoint(HoopsStartPos_[0] + float4(0, 0, 0));
-		Player_->ResetPlayerPos();
-	}
-	else
-	{
-		unsigned int PlayerID = GameServer::GetInst()->PlayerID_;
-		Player_->SetCheckPoint(HoopsStartPos_[PlayerID] + float4(0, 0, 0));
-		Player_->ResetPlayerPos();
-	}
 }
 
 void HoopsLegendsLevel::SetHoopPosition()

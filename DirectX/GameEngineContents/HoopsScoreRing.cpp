@@ -37,16 +37,108 @@ void HoopsScoreRing::Start()
 
 void HoopsScoreRing::Update(float _DeltaTime)
 {
-	if (true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageIdleChangeOver))
-	{
-		ServerActivated_ = true;
-	}
 
-	if (false == ServerActivated_)
+	if (true == GameServer::IsHost_)
 	{
-		return;
-	}
+		if (true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StagePreviewChangeOver))
+		{
+			ServerActivated_ = true;
+		}
 
+		if (false == ServerActivated_)
+		{
+			std::shared_ptr<ObjectUpdatePacket> Packet = std::make_shared<ObjectUpdatePacket>();
+			Packet->ObjectID = GetNetID();
+			Packet->Type = ServerObjectType::HoopRing;
+			Packet->State = ServerObjectBaseState::Base;
+			Packet->Scale = GetTransform().GetWorldScale();
+			Packet->Pos = GetTransform().GetWorldPosition();
+			Packet->Rot = GetTransform().GetLocalRotation();
+			GameServer::Net->SendPacket(Packet);
+			return;
+		}
+
+		// 호스트만 가능하도록
+		UpdateHoops(_DeltaTime);
+
+		// 패킷 보냄
+		std::shared_ptr<ObjectUpdatePacket> Packet = std::make_shared<ObjectUpdatePacket>();
+		Packet->ObjectID = GetNetID();
+		Packet->Type = ServerObjectType::HoopRing;
+		Packet->State = ServerObjectBaseState::Base;
+		Packet->Scale = GetTransform().GetWorldScale();
+		Packet->Pos = GetTransform().GetWorldPosition();
+		Packet->Rot = GetTransform().GetLocalRotation();
+		GameServer::Net->SendPacket(Packet);
+	}
+	// 유저들은 서버가 보내주는 패킷을 받아서 움직인다
+	else
+	{
+		while (false == IsPacketEmpty())
+		{
+			std::shared_ptr<GameServerPacket> Packet = PopPacket();
+
+			ContentsPacketType PacketType = Packet->GetPacketIDToEnum<ContentsPacketType>();
+
+			switch (PacketType)
+			{
+			case ContentsPacketType::ObjectUpdate:
+			{
+				std::shared_ptr<ObjectUpdatePacket> ObjectUpdate = std::dynamic_pointer_cast<ObjectUpdatePacket>(Packet);
+
+				if (ObjectUpdate->Type == ServerObjectType::HoopRing)
+				{
+					//ObjectUpdate->Rot;
+					
+				}
+				else
+				{
+					continue;
+				}
+
+				break;
+			}
+			default:
+				break;
+			}
+		}
+
+	}
+}
+
+void HoopsScoreRing::LevelStartEvent()
+{
+
+}
+
+void HoopsScoreRing::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics)
+{
+	physx::PxCooking* Cooking = static_cast<VirtualPhysXLevel*>(GetLevel())->GetCooking();
+	float4 MeshBoundScale = Renderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
+	PhysXTriGeometry_->SetDynamicPivot(Renderer_->GetTransform().GetLocalPosition());
+	PhysXTriGeometry_->SetPhysxMaterial(0, 0, 0);
+	PhysXTriGeometry_->CreatePhysXActors("HoopsScoreRing2.FBX", _Scene, _physics, Cooking, true, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z), 0.0f);
+	PhysXTriGeometry_->SetPositionSetFromParentFlag(true);
+}
+
+CollisionReturn HoopsScoreRing::CheckCollision(std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other)
+{
+	_This->Off();
+	IsCol_ = true;
+	//스코어증가
+
+
+	return CollisionReturn::Break;
+}
+
+void HoopsScoreRing::PhysXInit()
+{
+	CreatePhysXActors(static_cast<VirtualPhysXLevel*>(GetLevel())->GetScene(),
+		static_cast<VirtualPhysXLevel*>(GetLevel())->GetPhysics());
+}
+
+void HoopsScoreRing::UpdateHoops(float _DeltaTime)
+{
 	if (IsCol_ == true)
 	{
 		Timer_ -= _DeltaTime;
@@ -88,32 +180,6 @@ void HoopsScoreRing::Update(float _DeltaTime)
 	}
 	Collision_->IsCollision(CollisionType::CT_OBB, CollisionGroup::PlayerCheck, CollisionType::CT_OBB,
 		std::bind(&HoopsScoreRing::CheckCollision, this, std::placeholders::_1, std::placeholders::_2));
-}
 
-void HoopsScoreRing::LevelStartEvent()
-{
-	CreatePhysXActors(static_cast<VirtualPhysXLevel*>(GetLevel())->GetScene(),
-		static_cast<VirtualPhysXLevel*>(GetLevel())->GetPhysics());
-}
-
-void HoopsScoreRing::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics)
-{
-	physx::PxCooking* Cooking = static_cast<VirtualPhysXLevel*>(GetLevel())->GetCooking();
-	float4 MeshBoundScale = Renderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
-	PhysXTriGeometry_->SetDynamicPivot(Renderer_->GetTransform().GetLocalPosition());
-	PhysXTriGeometry_->SetPhysxMaterial(0, 0, 0);
-	PhysXTriGeometry_->CreatePhysXActors("HoopsScoreRing2.FBX", _Scene, _physics, Cooking, true, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z), 0.0f);
-	PhysXTriGeometry_->SetPositionSetFromParentFlag(true);
-}
-
-CollisionReturn HoopsScoreRing::CheckCollision(std::shared_ptr<GameEngineCollision> _This, std::shared_ptr<GameEngineCollision> _Other)
-{
-	_This->Off();
-	IsCol_ = true;
-	//스코어증가
-
-
-
-	return CollisionReturn::Break;
 }
 
