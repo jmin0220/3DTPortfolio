@@ -130,8 +130,12 @@ CollisionReturn HoopsScoreRing::CheckCollision(std::shared_ptr<GameEngineCollisi
 {
 	_This->Off();
 	IsCol_ = true;
-	//스코어증가
 
+	//스코어증가
+	if (true == GameServer::GetInst()->IsServerStart())
+	{
+		GameServer::GetInst()->PlayerScore_ += 100;
+	}
 
 	return CollisionReturn::Break;
 }

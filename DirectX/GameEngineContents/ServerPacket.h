@@ -86,6 +86,8 @@ public:
 	// 서버만, 서버가 클라에게 보내주는 "신호"
 	unsigned int ServerSignal; 
 
+	unsigned int PlayTime;
+
 	GameStatePacket()
 	{
 		SetPacketID(ContentsPacketType::GameState);
@@ -95,11 +97,13 @@ public:
 	{
 		GameServerPacket::Serialize(_Ser);
 		_Ser << ServerSignal;
+		_Ser << PlayTime;
 	}
 	virtual void DeSerialize(GameServerSerializer& _Ser)
 	{
 		GameServerPacket::DeSerialize(_Ser);
 		_Ser >> ServerSignal;
+		_Ser >> PlayTime;
 	}
 };
 

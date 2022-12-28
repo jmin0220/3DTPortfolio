@@ -14,6 +14,7 @@ unsigned int GameServer::PlayerID_ = -1;
 unsigned int GameServer::PlayerColorID_ = 0;
 float4 GameServer::PlayerColor_ = float4::ZERO;
 unsigned int GameServer::PlayerScore_ = 0;
+unsigned int GameServer::PlayTime_ = 0;
 
 #include <atomic>
 std::mutex Lock;
@@ -238,6 +239,7 @@ void GameServer::GameStatePacketProcess(std::shared_ptr<GameServerPacket> _Packe
 		//ServerSignal_ = static_cast<ServerFlag>(ServerSignal_ | Packet->ServerSignal);
 		ServerSignal_ = static_cast<ServerFlag>(Packet->ServerSignal);
 		
+		PlayTime_ = Packet->PlayTime;
 	}
 
 }
@@ -274,10 +276,7 @@ void GameServer::SendGameStatePacket()
 	Packet->ServerSignal = static_cast<unsigned int>(ServerSignal_);
 
 	// 현재 서버가 송신할 신호, 클라이언트들이 모두 알고 있다면
-	//if (true == CheckOtherPlayersFlag(static_cast<PlayerFlag>(ServerSignal_)))
-	//{
-	//	return;
-	//}
+	Packet->PlayTime = PlayTime_;
 
 	Net->SendPacket(Packet);
 }

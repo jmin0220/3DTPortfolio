@@ -171,6 +171,7 @@ protected:
 
 	// 후프레벨
 	std::shared_ptr<class TimerActor> TimerUI_;
+	float TimerLimit_;
 
 public:
 

@@ -32,5 +32,10 @@ private:
 	float Time_;
 
 	std::shared_ptr<GameEngineUIRenderer> Plate_;
+
+	// ¼­¹ö
+public:
+	void SetNetTime(float _Time);
+	bool TimerEnd_;
 };
 

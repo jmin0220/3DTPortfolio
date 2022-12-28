@@ -52,6 +52,7 @@ StageParentLevel::StageParentLevel()
 	: MyStage_(StageNum::STAGE1)
 	, GameScoreType_(GameScoreType::NONE)
 	, WatchCamIdx(0)
+	, TimerLimit_(0.0f)
 {
 	CinemaCam_ = std::make_shared<Cinemachine>();
 }

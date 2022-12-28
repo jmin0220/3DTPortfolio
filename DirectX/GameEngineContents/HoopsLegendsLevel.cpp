@@ -44,11 +44,20 @@ void HoopsLegendsLevel::Update(float _DeltaTime)
 
 
 	// 이거 서버만 돌려야됨
-	if (true == GameServer::GetInst()->IsServerStart()
-		&& true == GameServer::IsHost_)
+	if (true == GameServer::GetInst()->IsServerStart())
 	{
-		SetHoopPosition();
+		if (true == GameServer::IsHost_)
+		{
+			SetHoopPosition();
+
+			TimerLimit_ -= _DeltaTime;
+			GameServer::GetInst()->PlayTime_ = static_cast<unsigned int>(TimerLimit_);
+		}
+
+		// 호스트/클라 둘다
+		TimerUI_->SetNetTime(GameServer::GetInst()->PlayTime_);
 	}
+
 }
 
 void HoopsLegendsLevel::End()
@@ -120,6 +129,7 @@ void HoopsLegendsLevel::LevelStartEvent()
 
 	// 타이머 UI
 	TimerUI_->On();
+	TimerLimit_ = 120.0f;
 }
 
 void HoopsLegendsLevel::LevelEndEvent()

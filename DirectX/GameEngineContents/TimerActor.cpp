@@ -1,10 +1,11 @@
 #include "PreCompile.h"
 #include "TimerActor.h"
 
-const float PivotX = -400;
-const float PivotY = 100;
+const float PivotX = 0;
+const float PivotY = 120;
 
 TimerActor::TimerActor() 
+	: TimerEnd_(false)
 {
 }
 
@@ -17,7 +18,7 @@ void TimerActor::Start()
 	Plate_ = CreateComponent<GameEngineUIRenderer>();
 	Plate_->GetTransform().SetWorldScale({ 452, 103,1 });
 	Plate_->SetPivot(PIVOTMODE::RIGHTTOP);
-	Plate_->GetTransform().SetWorldPosition({ 1000.0f + PivotX, 400.0f + PivotY, 0 });
+	Plate_->GetTransform().SetWorldPosition({ 1000.0f + PivotX, 400.0f - PivotY, 0 });
 	Plate_->SetTexture("Success.png");
 
 	FontOneMinute_ = CreateComponent<GameEngineFontRenderer>();
@@ -51,11 +52,19 @@ void TimerActor::Start()
 
 void TimerActor::Update(float _DeltaTime)
 {
-	Time_ -= _DeltaTime;
+	if (true == TimerEnd_)
+	{
+		return;
+	}
+
+	// 서버에서 타임 계산해야됨
+	//Time_ -= _DeltaTime;
 
 	OneMinute_ = static_cast<int>(Time_) / 60;
 	OneSecond_ = static_cast<int>(Time_) % 10;
 	TenSecond_ = static_cast<int>(Time_) % 60 / 10;
+
+	// ~서버에서 타임 계산해야됨
 
 	FontOneMinute_->SetText(std::to_string(OneMinute_), FONT_TITAN_ONE);
 	FontTenSecond_->SetText(std::to_string(TenSecond_), FONT_TITAN_ONE);
@@ -64,13 +73,20 @@ void TimerActor::Update(float _DeltaTime)
 	if (Time_ <= 0.0f)
 	{
 		Time_ = 0.0f;
+		TimerEnd_ = true;
 	}
 }
 
 void TimerActor::LevelStartEvent()
 {
-	OneSecond_ = 0;
-	TenSecond_ = 0;
-	OneMinute_ = 2;
-	Time_ = 120.0f;
+	//OneSecond_ = 0;
+	//TenSecond_ = 0;
+	//OneMinute_ = 2;
+	//Time_ = 120.0f;
+	Time_ = 70.0f;
+}
+
+void TimerActor::SetNetTime(float _Time)
+{
+	Time_ = _Time;
 }
