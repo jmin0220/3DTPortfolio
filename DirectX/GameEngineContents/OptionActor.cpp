@@ -1,6 +1,8 @@
 #include "PreCompile.h"
 #include "OptionActor.h"
 
+float OptionActor::VolumeRatio_ = 1.0f;
+
 OptionActor::OptionActor() 
 {
 }

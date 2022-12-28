@@ -22,6 +22,8 @@ public:
 		return VolumeRatio_;
 	}
 
+	static float VolumeRatio_;
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -37,6 +39,6 @@ private:
 	bool ColCheck_;
 	float4 MousePos_;
 	float RealPos_;
-	float VolumeRatio_;
+	
 };
 

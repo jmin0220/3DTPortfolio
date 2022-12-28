@@ -7,6 +7,8 @@
 #include "FloorActor.h"
 #include "UISkyBoxActor.h"
 
+#include "OptionActor.h"
+
 WinnerLevel::WinnerLevel() 
 	:ChairTime_(0.0f)
 {
@@ -35,6 +37,10 @@ void WinnerLevel::End()
 
 void WinnerLevel::LevelStartEvent()
 {
+	GlobalBGM::GetInst()->GetBGM().Stop();
+	GlobalBGM::GetInst()->SetBGM(GameEngineSound::SoundPlayControl("6 - Didn't Fall! (You Win).mp3"));
+	GlobalBGM::GetInst()->GetBGM().Volume(OptionActor::VolumeRatio_);
+
 	ChairTime_ = 0.0f;
 
 	GetMainCamera()->SetProjectionMode(CAMERAPROJECTIONMODE::PersPective);
