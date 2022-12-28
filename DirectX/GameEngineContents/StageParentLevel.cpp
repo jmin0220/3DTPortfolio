@@ -37,6 +37,7 @@
 #include <GameEngineCore/GameEngineBlur.h>
 
 #include "TestGUI.h"
+#include "TimerActor.h"
 
 
 std::mutex SpawnLock;
@@ -83,6 +84,9 @@ void StageParentLevel::Start()
 
 	UIs_ = CreateActor<InGameSetUI>();
 	UIs_->On();
+
+	TimerUI_ = CreateActor<TimerActor>();
+	TimerUI_->Off();
 
 	// 스테이지 FSM
 	StageStateManager_.CreateStateMember("Idle"

@@ -169,9 +169,9 @@ protected:
 	// IsGoal일 때 점수 부여 : RACE, SURVIVAL
 	void GetGameScoreByCurrentType();
 
-	// 후프를 얻으면 점수 부여 : 레벨에서 함
+	// 후프레벨
+	std::shared_ptr<class TimerActor> TimerUI_;
 
-	// 빛
 public:
 
 	std::shared_ptr<class TestGUI> GUI_;

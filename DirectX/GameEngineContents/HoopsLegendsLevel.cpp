@@ -7,6 +7,7 @@
 #include "HoopsScoreRing.h"
 //#include "TestGUI.h"
 #include "GameEngineBase/GameEngineRandom.h"
+#include "TimerActor.h"
 
 HoopsLegendsLevel::HoopsLegendsLevel() :
 	SettingHoops_(false)
@@ -43,7 +44,10 @@ void HoopsLegendsLevel::Update(float _DeltaTime)
 
 
 	// 이거 서버만 돌려야됨
-	SetHoopPosition();
+	if (true == GameServer::GetInst()->IsServerStart())
+	{
+		SetHoopPosition();
+	}
 }
 
 void HoopsLegendsLevel::End()
@@ -56,7 +60,7 @@ void HoopsLegendsLevel::LevelStartEvent()
 
 	StageParentLevel::LevelStartEvent();
 
-	Player_->GetTransform().SetWorldPosition({ 0,100.0f,0 });
+	
 	//스카이박스
 	std::shared_ptr<SkyboxActor> Skybox = CreateActor<SkyboxActor>();
 	Skybox->SetSkyTexture("Respawn_SkyBox_S02.png");
@@ -65,6 +69,64 @@ void HoopsLegendsLevel::LevelStartEvent()
 	//GUI_->SetObj(BackGround_);
 	//GUI_->On();
 
+
+
+	// 플레이어 소환
+	int PositionCount = static_cast<int>(HoopsStartPos_.size());
+	if (true == GameServer::GetInst()->IsServerStart())
+	{
+		unsigned int PositionIdx = GameServer::GetInst()->PlayerID_;
+
+		if (PositionIdx < PositionCount)
+		{
+			Player_->SetCheckPoint(HoopsStartPos_[PositionIdx] + float4(0, 0, 0));
+			Player_->ResetPlayerPos();
+		}
+		else
+		{
+			// ex 플레이어 13명 -> 13 / 6 = 2 ... 1
+			// 1은 포지션 리스트의 인덱스, 2는 그 포지션의 3번째(0, 1, 2) 사람
+			PositionIdx = PositionIdx % PositionCount;
+			int PositionIdxPlus = PositionIdx / PositionCount;
+
+			// 1번째 : 0도 돌림, 2번째 중복 : 20도 돌림, 3번째 중복 : 40도 돌림
+			float4 Position = HoopsStartPos_[PositionIdx];
+			Position = float4::VectorRotationToDegreeYAxis(Position, PositionIdxPlus * 20.0f);
+			Player_->SetCheckPoint(Position);
+			Player_->ResetPlayerPos();
+		}
+	}
+	else
+	{
+		Player_->SetCheckPoint(HoopsStartPos_[0] + float4(0, 0, 0));
+		Player_->ResetPlayerPos();
+	}
+
+	//CinemaCam_->SetActivated();
+
+	// 타이머 UI
+	TimerUI_->On();
+}
+
+void HoopsLegendsLevel::LevelEndEvent()
+{
+	StageParentLevel::LevelEndEvent();
+
+	TimerUI_->Off();
+}
+
+bool HoopsLegendsLevel::GameEndingFlag()
+{
+	if (Player_->GetTransform().GetWorldPosition().y <= -20.0f)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+void HoopsLegendsLevel::SpawnHoops()
+{
 	for (int i = 0; i < 10; i++)
 	{
 		Hoops_ = CreateActor<HoopsScoreRing>();
@@ -113,21 +175,6 @@ void HoopsLegendsLevel::LevelStartEvent()
 		Player_->SetCheckPoint(HoopsStartPos_[PlayerID] + float4(0, 0, 0));
 		Player_->ResetPlayerPos();
 	}
-}
-
-void HoopsLegendsLevel::LevelEndEvent()
-{
-	StageParentLevel::LevelEndEvent();
-}
-
-bool HoopsLegendsLevel::GameEndingFlag()
-{
-	if (Player_->GetTransform().GetWorldPosition().y <= -20.0f)
-	{
-		return true;
-	}
-
-	return false;
 }
 
 void HoopsLegendsLevel::SetHoopPosition()

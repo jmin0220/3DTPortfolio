@@ -263,6 +263,8 @@ void PlayerActor::Update(float _DeltaTime)
 				if (true == (ObjectUpdate->State == ServerObjectBaseState::Death))
 				{
 					this->Off();
+
+					// invisible?
 				}
 
 				// ½ºÅ²

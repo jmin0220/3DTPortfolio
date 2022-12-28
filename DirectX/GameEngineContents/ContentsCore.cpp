@@ -169,8 +169,6 @@ void ContentsCore::CreateKeys()
 
 	// µð¹ö±ë¿ë
 	GameEngineInput::GetInst()->CreateKey("P", 'P');
-	GameEngineInput::GetInst()->CreateKey("F", 'F');
-	GameEngineInput::GetInst()->CreateKey("I", 'I');
 
 }
 

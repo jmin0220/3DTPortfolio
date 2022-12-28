@@ -29,6 +29,7 @@ private:
 	//std::shared_ptr<class TestGUI> GUI_;
 	std::shared_ptr<GameEngineActor> Hoops_;
 
+	void SpawnHoops();
 	void SetHoopPosition();
 
 	int Num_;
