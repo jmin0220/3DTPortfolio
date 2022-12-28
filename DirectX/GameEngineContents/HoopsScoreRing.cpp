@@ -37,6 +37,10 @@ void HoopsScoreRing::Start()
 
 void HoopsScoreRing::Update(float _DeltaTime)
 {
+	// Ç×»ó
+	Collision_->IsCollision(CollisionType::CT_OBB, CollisionGroup::PlayerCheck, CollisionType::CT_OBB,
+		std::bind(&HoopsScoreRing::CheckCollision, this, std::placeholders::_1, std::placeholders::_2));
+
 
 	if (true == GameServer::IsHost_)
 	{
@@ -179,8 +183,7 @@ void HoopsScoreRing::UpdateHoops(float _DeltaTime)
 	{
 		GetTransform().SetLocalRotate({ 0, -7.0f * _DeltaTime  ,0 });
 	}
-	Collision_->IsCollision(CollisionType::CT_OBB, CollisionGroup::PlayerCheck, CollisionType::CT_OBB,
-		std::bind(&HoopsScoreRing::CheckCollision, this, std::placeholders::_1, std::placeholders::_2));
+
 
 }
 
