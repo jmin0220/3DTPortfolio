@@ -31,5 +31,12 @@ private:
 	std::shared_ptr<GameEngineUIRenderer> CrownRenderer_;
 	std::shared_ptr<GameEngineFontRenderer> Font_;
 
+	// 서버
+public:
+	void SetWinnerFont(const std::string& _PlayerName)
+	{
+		Font_->SetText("플레이어Test", "Noto Sans CJK SC");
+	}
+
 };
 

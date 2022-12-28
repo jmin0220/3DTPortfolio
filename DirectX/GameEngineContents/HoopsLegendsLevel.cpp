@@ -148,7 +148,7 @@ void HoopsLegendsLevel::LevelStartEvent()
 		Player_->ResetPlayerPos();
 	}
 
-	TimerLimit_ = 120.0f;
+	TimerLimit_ = 30.0f;
 }
 
 void HoopsLegendsLevel::LevelEndEvent()
