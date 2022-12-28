@@ -43,7 +43,7 @@ void PlayerActor::CreateAnimationFSMStates()
 		, std::bind(&PlayerActor::DiveGetUpAniStart, this, std::placeholders::_1)
 		, std::bind(&PlayerActor::DiveGetUpAniEnd, this, std::placeholders::_1));
 
-	PlayerAniStateManager_.CreateStateMember("CannotControl"
+	PlayerAniStateManager_.CreateStateMember("Ragdoll"
 		, std::bind(&PlayerActor::CannotControlAniUpdate, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&PlayerActor::CannotControlAniStart, this, std::placeholders::_1)
 		, std::bind(&PlayerActor::CannotControlAniEnd, this, std::placeholders::_1));
@@ -62,7 +62,7 @@ void PlayerActor::IdleAniUpdate(float _DeltaTime, const StateInfo& _Info)
 {
 	if (PlayerStateManager_.GetCurStateStateName() == "CannotControl")
 	{
-		PlayerAniStateManager_.ChangeState("CannotControl");
+		PlayerAniStateManager_.ChangeState("Ragdoll");
 		return;
 	}
 
@@ -103,7 +103,7 @@ void PlayerActor::WalkAniUpdate(float _DeltaTime, const StateInfo& _Info)
 {
 	if (PlayerStateManager_.GetCurStateStateName() == "CannotControl")
 	{
-		PlayerAniStateManager_.ChangeState("CannotControl");
+		PlayerAniStateManager_.ChangeState("Ragdoll");
 		return;
 	}
 
@@ -151,7 +151,7 @@ void PlayerActor::RunAniUpdate(float _DeltaTime, const StateInfo& _Info)
 {
 	if (PlayerStateManager_.GetCurStateStateName() == "CannotControl")
 	{
-		PlayerAniStateManager_.ChangeState("CannotControl");
+		PlayerAniStateManager_.ChangeState("Ragdoll");
 		return;
 	}
 
@@ -210,7 +210,7 @@ void PlayerActor::JumpMidAirAniUpdate(float _DeltaTime, const StateInfo& _Info)
 {
 	if (PlayerStateManager_.GetCurStateStateName() == "CannotControl")
 	{
-		PlayerAniStateManager_.ChangeState("CannotControl");
+		PlayerAniStateManager_.ChangeState("Ragdoll");
 		return;
 	}
 
@@ -256,7 +256,7 @@ void PlayerActor::DiveLoopAniUpdate(float _DeltaTime, const StateInfo& _Info)
 {
 	if (PlayerStateManager_.GetCurStateStateName() == "CannotControl")
 	{
-		PlayerAniStateManager_.ChangeState("CannotControl");
+		PlayerAniStateManager_.ChangeState("Ragdoll");
 		return;
 	}
 
@@ -281,7 +281,7 @@ void PlayerActor::DiveGetUpAniUpdate(float _DeltaTime, const StateInfo& _Info)
 {
 	if (PlayerStateManager_.GetCurStateStateName() == "CannotControl")
 	{
-		PlayerAniStateManager_.ChangeState("CannotControl");
+		PlayerAniStateManager_.ChangeState("Ragdoll");
 		return;
 	}
 
