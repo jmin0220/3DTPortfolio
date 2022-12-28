@@ -49,6 +49,7 @@ std::vector<std::shared_ptr<GameEngineActor>> StageParentLevel::HoopsActor = std
 StageParentLevel::StageParentLevel() 
 	: MyStage_(StageNum::STAGE1)
 	, GameScoreType_(GameScoreType::NONE)
+	, WatchCamIdx(0)
 {
 	CinemaCam_ = std::make_shared<Cinemachine>();
 }
@@ -118,7 +119,7 @@ void StageParentLevel::Update(float _DeltaTime)
 
 	if (true == GameEndingFlag())
 	{
-		Player_->SetIsGoal();
+		Player_->SetGoal(true);
 	}
 	
 	StageStateManager_.Update(_DeltaTime);
@@ -659,4 +660,28 @@ void StageParentLevel::GetGameScoreByCurrentType()
 	}
 
 	GameServer::GetInst()->PlayerScore_ += EarnedScore;
+}
+
+void StageParentLevel::SetWatchCamNextPlayer()
+{
+	// 관전 인덱스 관리
+	WatchCamIdx++;
+
+	// 관전 플레이어 관리
+	WatchPlayers_.clear();
+	for (std::shared_ptr<GameEngineActor> LivePlayer : NetPlayers_)
+	{
+		if (true == LivePlayer->IsUpdate())
+		{
+			WatchPlayers_.push_back(LivePlayer);
+		}
+	}
+
+	if (WatchCamIdx >= static_cast<int>(WatchPlayers_.size()))
+	{
+		WatchCamIdx = 0;
+	}
+
+	CameraArm_->SetFollowCamera(MainCam_, NetPlayers_[WatchCamIdx]);
+	
 }

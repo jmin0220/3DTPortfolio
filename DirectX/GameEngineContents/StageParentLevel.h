@@ -147,9 +147,12 @@ protected:
 private:
 	//virtual void SpawnMyServerPlayer() = 0;
 	void SpawnServerObjects();
+	void SetWatchCamNextPlayer();
 
 	std::vector<std::shared_ptr<GameEngineActor>> NetPlayers_;
 	std::vector<std::shared_ptr<GameEngineActor>> NetObstacles_;
+	std::vector<std::shared_ptr<GameEngineActor>> WatchPlayers_;
+	int WatchCamIdx;
 
 protected:
 	enum class GameScoreType

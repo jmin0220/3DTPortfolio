@@ -38,6 +38,23 @@ private:
 	//플레이어가 멈추는가
 	bool IsPlayerFrozen_;
 
+	// 서버
+public:
+	void SetInputAvailable(bool _Value)
+	{
+		IsInputOn_ = _Value;
+	}
+
+	void SetPlayerForze(bool _Value)
+	{
+		IsPlayerFrozen_ = _Value;
+	}
+
+	void SetPlayerInvisible()
+	{
+		FbxRenderer_->Off();
+	}
+
 public:
 	// constrcuter destructer
 	PlayerActor();
@@ -208,6 +225,12 @@ public:
 	inline void SetCheckPoint(float4 _Pos)
 	{
 		CheckPointPos_ = _Pos;
+	}
+
+	// 서버
+	void SetGoal(bool _Value)
+	{
+		IsGoal_ = _Value;
 	}
 
 	inline void SetIsGoal()

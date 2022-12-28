@@ -201,24 +201,18 @@ void PlayerActor::Update(float _DeltaTime)
 	{
 		//physx의 다이내믹의 속도를 가져옴
 		Velocity_ = DynamicActorComponent_->GetDynamicVelocity();
-
 		//xz 속도를 체크함 (걷기 멈춤 뛰기 애니메이션 구분용)
 		CheckXZSpeed();
 
 		PlayerStateManager_.Update(_DeltaTime);
 		PlayerAniStateManager_.Update(_DeltaTime);
 
-		//GetTransform().SetWorldMove(MoveDir_ * SPEED_PLAYER * _DeltaTime);
-		// TODO::충격테스트코드
-		//ImpulseTest();
-		//일어서는 코드
-		//StandUp(_DeltaTime);
-
-		//플레이어 떨어지면 지정한 위치에 재소환
-		//if (GetTransform().GetWorldPosition().y <= -140.0f)
-		//{
-		//	DynamicActorComponent_->SetPlayerStartPos(CheckPointPos_);
-		//}
+		if (IsPlayerFrozen_ == true)
+		{
+			IsInputOn_ = false;
+			DynamicActorComponent_->FreezeDynamic();
+			FbxRenderer_->PauseSwtich();
+		}
 
 		//체크포인트 실험용 나중에 지워야함
 		if (GameEngineInput::GetInst()->IsDown("TestPos") == true)

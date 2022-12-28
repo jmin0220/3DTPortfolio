@@ -102,6 +102,41 @@ void JumpClubLevel::LevelStartEvent()
 
 	std::shared_ptr<SkyboxActor> Skybox = CreateActor<SkyboxActor>();
 	Skybox->SetSkyTexture("S5_SkyBox_Respawn.png");
+
+	// 플레이어 스폰위치 조정
+	// 위치 6개임
+	StartPositions_;
+
+	if (true == GameServer::GetInst()->IsServerStart())
+	{
+		unsigned int PositionIdx = GameServer::GetInst()->PlayerID_;
+
+		if (PositionIdx < 6)
+		{
+			Player_->SetCheckPoint(StartPositions_[PositionIdx] + float4(0, 0, 0));
+			Player_->ResetPlayerPos();
+		}
+		else
+		{
+			// ex 플레이어 13명 -> 13 / 6 = 2 ... 1
+			// 1은 포지션 리스트의 인덱스, 2는 그 포지션의 3번째(0, 1, 2) 사람
+			PositionIdx = PositionIdx % 6;
+			int PositionIdxPlus = PositionIdx / 6;
+
+			// 1번째 : 0도 돌림, 2번째 중복 : 20도 돌림, 3번째 중복 : 40도 돌림
+			float4 Position = StartPositions_[PositionIdx];
+			Position = float4::VectorRotationToDegreeYAxis(Position, PositionIdxPlus * 20.0f);
+			Player_->SetCheckPoint(Position);
+			Player_->ResetPlayerPos();
+		}
+	}
+	else
+	{
+		Player_->SetCheckPoint(StartPositions_[0] + float4(0, 0, 0));
+		Player_->ResetPlayerPos();
+	}
+
+
 }
 
 void JumpClubLevel::LevelEndEvent()

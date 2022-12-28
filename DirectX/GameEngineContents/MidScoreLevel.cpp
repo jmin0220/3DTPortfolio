@@ -41,13 +41,11 @@ void MidScoreLevel::Update(float _DeltaTime)
 
 		if (LobbyPlayers_[AllServerPlayersCount_ - 1]->GetTransform().GetWorldPosition().y > -400.0f)
 		{
-			FallingTime_ += _DeltaTime * 100.0f;
 			LobbyPlayers_[AllServerPlayersCount_ - 1]->GetTransform().SetWorldMove(float4::DOWN * _DeltaTime * 100.0f);
 		}
 		else
 		{
 			LobbyPlayers_[AllServerPlayersCount_ - 1]->GetTransform().SetWorldPosition(LastActorPos_);
-			FallingTime_ = 0.0f;
 		}
 	}
 
@@ -177,9 +175,11 @@ void MidScoreLevel::LevelStartEvent()
 
 	Once_ = false;
 	IsScoreOn_ = false;
+	ScoreSetted_ = false;
 	BeforeScoreTime_ = 0.0f;
-
+	LerpTime_ = 0.0f;
 	FallingTime_ = 0.0f;
+	MidScoreTime_ = 0.0f;
 
 	GetMainCamera()->SetProjectionMode(CAMERAPROJECTIONMODE::PersPective);
 
@@ -342,11 +342,13 @@ void MidScoreLevel::ServerSetting()
 
 	// ID순으로 정렬
 	std::sort(AllServerPlayers_.begin(), AllServerPlayers_.end(), IDSmaller);
-	AllServerPlayers_;
 
 	// 점수 설정
+	PlayerScores_.clear();
 	PlayerScores_.resize(AllServerPlayersCount_);
-
+	PlayerName_.clear();
+	FontScore_.clear();
+	Font_PlayerName.clear();
 
 	// 폰트 정보 설정
 	for (int i = 0; i < AllServerPlayers_.size(); i++)

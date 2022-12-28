@@ -226,11 +226,10 @@ void HexAGoneLevel::LevelStartEvent()
 	{
 		Player_->SetCheckPoint(PositionList_[0] + float4(0, 0, 0));
 		Player_->ResetPlayerPos();
-
 	}
 	else
 	{
-		int PlayerID = GameServer::GetInst()->PlayerID_;
+		unsigned int PlayerID = GameServer::GetInst()->PlayerID_;
 		Player_->SetCheckPoint(PositionList_[PlayerID] + float4(0, 0, 0));
 		Player_->ResetPlayerPos();
 	}

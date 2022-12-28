@@ -8,7 +8,6 @@
 ///////////////////////////
 // 스테이지 시작전 준비 단계
 ///////////////////////////
-
 bool IdleEnd = false;
 bool AllUserOver = false;
 void StageParentLevel::IdleStart(const StateInfo& _Info)
@@ -30,6 +29,9 @@ void StageParentLevel::IdleStart(const StateInfo& _Info)
 		IntroduceGame_->SetStageTexture(MyStage_);
 	}
 	CameraArm_->SetFollowCamera(MainCam_, Player_);
+
+	// 플레이어 입력 못함
+	Player_->SetInputAvailable(false);
 }
 
 void StageParentLevel::IdleUpdate(float _DeltaTime, const StateInfo& _Info)
@@ -218,18 +220,22 @@ void StageParentLevel::ReadyUpdate(float _DeltaTime, const StateInfo& _Info)
 // 지금부터 달릴 수 있음
 ///////////////////////////
 bool FinishScoreSetted;
+bool LastPlayerReady;
 void StageParentLevel::RaceStart(const StateInfo& _Info)
 {
 	UIs_->OnOffSuccessCount();
 
 	FinishScoreSetted = false;
+
+	// 플레이어 입력 가능
+	Player_->SetInputAvailable(true);
 }
 
 void StageParentLevel::RaceUpdate(float _DeltaTime, const StateInfo& _Info)
 {
 	// 1. 유저가 먼저 신호 끔
 	if (false == GameServer::IsHost_
-		&& GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StagePreviewChangeOver))
+		&& GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StagePreviewChangeOver) && false == FinishScoreSetted)
 	{
 		GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_None);
 	}
@@ -237,7 +243,7 @@ void StageParentLevel::RaceUpdate(float _DeltaTime, const StateInfo& _Info)
 	// 2. 호스트도 신호 끔
 	if (true == GameServer::IsHost_)
 	{
-		if (GameServer::GetInst()->CheckOtherPlayersFlag(PlayerFlag::P_None))
+		if (GameServer::GetInst()->CheckOtherPlayersFlag(PlayerFlag::P_None) && false == FinishScoreSetted)
 		{
 			GameServer::GetInst()->SetServerSignal(ServerFlag::S_None);
 			GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_None);
@@ -283,6 +289,21 @@ void StageParentLevel::RaceUpdate(float _DeltaTime, const StateInfo& _Info)
 		}
 	}
 
+	// 레이스는 모두 들어가면 끝남
+	// 서바이벌은 한명만 남으면 끝남
+	if (GameScoreType_ == GameScoreType::SURVIVAL && false == LastPlayerReady)
+	{
+		// 나머지 모두 탈락이면
+		if (true == GameServer::GetInst()->CheckOtherPlayersFlag(PlayerFlag::P_StageRaceChangeReady))
+		{
+			LastPlayerReady = true;
+			Player_->SetGoal(true);
+			Player_->SetPlayerForze(true);
+		}
+	}
+
+
+
 	// 점수획득
 	if (true == Player_->GetIsGoal() && false == FinishScoreSetted)
 	{
@@ -290,6 +311,25 @@ void StageParentLevel::RaceUpdate(float _DeltaTime, const StateInfo& _Info)
 
 		// 점수 획득
 		GetGameScoreByCurrentType();
+
+		Player_->SetPlayerForze(true);
+		if (GameScoreType_ == GameScoreType::RACE)
+		{
+			// TODO::객체 OFF하고 관전 or 투명하게하고 관전
+			Player_->Off();
+
+			//Player_->SetPlayerInvisible();
+		}
+
+	}
+
+	// 관전 : 다음 플레이어
+	if (true == FinishScoreSetted && true == GameServer::GetInst()->CheckPlayerSignal(PlayerFlag::P_StageRaceChangeReady))
+	{
+		if (true == GameEngineInput::GetInst()->IsDown(KEY_MOUSELEFT))
+		{
+			SetWatchCamNextPlayer();
+		}
 	}
 
 	// 3. 플레이어 준비

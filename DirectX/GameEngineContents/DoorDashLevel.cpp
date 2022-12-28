@@ -64,11 +64,9 @@ void DoorDashLevel::LevelStartEvent()
 	Skybox->SetSkyTexture("Respawn_SkyBox.png");
 
 
-	// 플레이어 포지션 임시
 	int PlayerID = GameServer::GetInst()->PlayerID_;
 	Player_->SetCheckPoint(PlayerPos + float4{ PlayerID * 20.0f, 0, 0 });
 	Player_->ResetPlayerPos();
-
 
 }
 
