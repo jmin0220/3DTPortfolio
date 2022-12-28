@@ -149,9 +149,6 @@ void HoopsLegendsLevel::LevelStartEvent()
 		Player_->ResetPlayerPos();
 	}
 
-	// Å¸ÀÌ¸Ó UI
-	TimerUI_->On();
-	TimerUI_->SetNetTime(0.0f);
 	TimerLimit_ = 120.0f;
 }
 

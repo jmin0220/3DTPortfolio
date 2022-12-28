@@ -31,6 +31,16 @@ void InGameSetUI::OnOffSuccessCount()
 	SuccessCount_->OnOffSwitch();
 }
 
+void InGameSetUI::OffSuccessCount()
+{
+	SuccessCount_->Off();
+}
+
+void InGameSetUI::OnSuccessCount()
+{
+	SuccessCount_->On();
+}
+
 void InGameSetUI::OnOffEnd()
 {
 	RoundEnd_->OnOffSwitch();

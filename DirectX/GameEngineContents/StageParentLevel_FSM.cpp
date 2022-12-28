@@ -32,6 +32,8 @@ void StageParentLevel::IdleStart(const StateInfo& _Info)
 	}
 	CameraArm_->SetFollowCamera(MainCam_, Player_);
 
+	UIs_->OffSuccessCount();
+	TimerUI_->Off();
 }
 
 void StageParentLevel::IdleUpdate(float _DeltaTime, const StateInfo& _Info)
@@ -115,7 +117,7 @@ void StageParentLevel::StagePreviewStart(const StateInfo& _Info)
 		GameServer::GetInst()->SetServerSignal(ServerFlag::S_StageIdleChangeOver);
 	}
 
-	UIs_->OnOffSuccessCount();
+	UIs_->OnSuccessCount();
 	
 	if (GameScoreType_ == GameScoreType::TIMEATTACK)
 	{
