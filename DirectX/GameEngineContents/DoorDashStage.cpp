@@ -22,10 +22,50 @@ void DoorDashStage::Start()
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
 	Renderer_->SetFBXMesh("DoodrDashEnv.FBX", "CustomDefferedColor");
 
+	BlocksRenderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
+	BlocksRenderer_->SetFBXMesh("DoorDashWallBlocks.FBX", "CustomDefferedColor");
+
+	{
+		std::vector<std::vector< std::shared_ptr<GameEngineRenderUnit>>>& UnitSet = WallRenderer_->GetAllRenderUnit();
+		for (std::vector< std::shared_ptr<GameEngineRenderUnit>>& Units : UnitSet)
+		{
+			for (std::shared_ptr<GameEngineRenderUnit> Unit : Units)
+			{
+				Unit->GetRenderer()->RenderOptionInst.IsNormal = 0;
+			}
+		}
+	}
+
+	{
+		std::vector<std::vector< std::shared_ptr<GameEngineRenderUnit>>>& UnitSet = Renderer_->GetAllRenderUnit();
+		for (std::vector< std::shared_ptr<GameEngineRenderUnit>>& Units : UnitSet)
+		{
+			for (std::shared_ptr<GameEngineRenderUnit> Unit : Units)
+			{
+				Unit->GetRenderer()->RenderOptionInst.IsNormal = 0;
+			}
+		}
+	}
+
+	{
+		std::vector<std::vector< std::shared_ptr<GameEngineRenderUnit>>>& UnitSet = PlatformRenderer_->GetAllRenderUnit();
+		for (std::vector< std::shared_ptr<GameEngineRenderUnit>>& Units : UnitSet)
+		{
+			for (std::shared_ptr<GameEngineRenderUnit> Unit : Units)
+			{
+				Unit->GetRenderer()->RenderOptionInst.IsNormal = 0;
+			}
+		}
+	}
+
+
+
 
 	WallPhysXTriMeshGeometry_ = CreateComponent<PhysXTriMeshGeometryComponent>();
 
 	PlatformPhysXTriMeshGeometry_ = CreateComponent<PhysXTriMeshGeometryComponent>();
+
+	BlocksPhysXTriMeshGeometry_ = CreateComponent<PhysXTriMeshGeometryComponent>();
 }
 
 void DoorDashStage::Update(float _DeltaTime)
@@ -54,6 +94,10 @@ void DoorDashStage::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* 
 	float4 MeshBoundScale = WallRenderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
 	WallPhysXTriMeshGeometry_->SetPhysxMaterial(0, 0, 0);
 	WallPhysXTriMeshGeometry_->CreatePhysXActors("DoorDashWallCollisionMesh.fbx", _Scene, _physics, Cooking, false, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z));
+
+	float4 MeshBoundScale3 = BlocksRenderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
+	BlocksPhysXTriMeshGeometry_->SetPhysxMaterial(0, 0, 0);
+	BlocksPhysXTriMeshGeometry_->CreatePhysXActors("DoorDashWallBlocks.fbx", _Scene, _physics, Cooking, false, physx::PxVec3(MeshBoundScale3.x, MeshBoundScale3.y, MeshBoundScale3.z));
 
 
 	float4 MeshBoundScale2 = PlatformRenderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;

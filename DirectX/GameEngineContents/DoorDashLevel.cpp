@@ -24,7 +24,7 @@ void DoorDashLevel::Start()
 	MyStage_ = StageNum::STAGE1;
 	GameScoreType_ = GameScoreType::RACE;
 
-	LightObject_->GetLightData().DifLightPower = 0.7f;
+	LightObject_->GetLightData().DifLightPower = 0.5f;
 	LightObject_->GetLightData().AmbLightPower = 8.3f;
 	LightObject_->GetTransform().SetWorldRotation({ 93.4f,147.7f,0 });
 

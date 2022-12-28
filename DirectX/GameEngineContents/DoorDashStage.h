@@ -28,9 +28,11 @@ protected:
 private:
 	std::shared_ptr<PhysXTriMeshGeometryComponent> WallPhysXTriMeshGeometry_;
 	std::shared_ptr<PhysXTriMeshGeometryComponent> PlatformPhysXTriMeshGeometry_;
+	std::shared_ptr<PhysXTriMeshGeometryComponent> BlocksPhysXTriMeshGeometry_;
 
 	std::shared_ptr<GameEngineFBXStaticRenderer> WallRenderer_;
 	std::shared_ptr<GameEngineFBXStaticRenderer> PlatformRenderer_;
+	std::shared_ptr<GameEngineFBXStaticRenderer> BlocksRenderer_;
 
 	std::shared_ptr<GameEngineFBXStaticRenderer> Renderer_;
 };
