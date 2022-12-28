@@ -85,7 +85,7 @@ void StageParentLevel::Start()
 	IntroduceGame_->Off();
 
 	UIs_ = CreateActor<InGameSetUI>();
-	UIs_->On();
+	UIs_->Off();
 
 	TimerUI_ = CreateActor<TimerActor>();
 	TimerUI_->Off();
@@ -183,6 +183,7 @@ void StageParentLevel::LevelStartEvent()
 	}
 
 
+	UIs_->On();
 
 	MainCam_ = GetMainCameraActor();
 	CameraArm_ = CreateActor<CameraArm>();
@@ -200,7 +201,6 @@ void StageParentLevel::LevelEndEvent()
 
 	CameraArm_->Death();
 	
-	UIs_->Death();
 
 	for (StageObject StageObj : StageObjects_)
 	{
