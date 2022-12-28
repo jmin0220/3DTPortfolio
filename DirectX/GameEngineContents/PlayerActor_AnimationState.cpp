@@ -310,6 +310,11 @@ void PlayerActor::CannotControlAniUpdate(float _DeltaTime, const StateInfo& _Inf
 		PlayerAniStateManager_.ChangeState("Idle");
 		return;
 	}
+
+	if (PlayerStateManager_.GetCurStateStateName() == "DiveGetUp")
+	{
+		PlayerAniStateManager_.ChangeState("Dive_GetUp");
+	}
 }
 
 void PlayerActor::CannotControlAniEnd(const StateInfo& _Info)

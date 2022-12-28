@@ -173,10 +173,7 @@ void PlayerActor::Update(float _DeltaTime)
 			FbxRenderer_->PauseSwtich();
 		}
 
-	//GetTransform().SetWorldMove(MoveDir_ * SPEED_PLAYER * _DeltaTime);
-	// TODO::충격테스트코드
-	ImpulseTest();
-	//StandUp(_DeltaTime);
+		ImpulseTest();
 
 
 
@@ -458,22 +455,26 @@ void PlayerActor::ImpulseTest()
 {
 	float4 tmpPower = float4::ZERO;
 	float tmpImpulse = 1.0f;
-	
+
 	if (true == GameEngineInput::GetInst()->IsPress("ImpulsW"))
 	{
 		tmpPower = { 0.0f, 0.0f, tmpImpulse };
+		OnUnControlable();
 	}
 	if (true == GameEngineInput::GetInst()->IsPress("ImpulsA"))
 	{
 		tmpPower = { -tmpImpulse, 0.0f, 0.0f };
+		OnUnControlable();
 	}
 	if (true == GameEngineInput::GetInst()->IsPress("ImpulsS"))
 	{
 		tmpPower = { 0.0f, 0.0f, -tmpImpulse };
+		OnUnControlable();
 	}
 	if (true == GameEngineInput::GetInst()->IsPress("ImpulsD"))
 	{
 		tmpPower = { tmpImpulse, 0.0f, 0.0f };
+		OnUnControlable();
 	}
 
 	if (true == tmpPower.IsNearlyZero())

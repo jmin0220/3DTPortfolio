@@ -209,7 +209,7 @@ bool PhysXDynamicActorComponent::PlayerStandUp(float _DeltaTime, bool _IsXAixisR
 	physx::PxQuat GlobalRot = dynamic_->getGlobalPose().q;
 	float4 GlobalRotEuler = PhysXCommonFunc::GetQuaternionEulerAngles(GlobalRot);
 	float4 AddedRotX = float4{ -1.0f, 0.0f, 0.0f }.DegreeRotationToQuaternionReturn();
-	float4 AddedRotY = float4{ 0.0f, 5.0f, 0.0f }.DegreeRotationToQuaternionReturn();
+	float4 AddedRotY = float4{ 0.0f, 10.0f, 0.0f }.DegreeRotationToQuaternionReturn();
 	float4 AddedRotmY = float4{ 0.0f, -5.0f, 0.0f }.DegreeRotationToQuaternionReturn();
 	float4 AddedRot = float4{ 0.0f, 0.0f, 0.0f }.DegreeRotationToQuaternionReturn();
 	physx::PxQuat FinalRot;
@@ -260,6 +260,7 @@ bool PhysXDynamicActorComponent::StandUp2(float _DeltaTime, bool _IsXAixisRotRea
 	physx::PxVec3 Vec3	;
 	dynamic_->getGlobalPose().q.toRadiansAndUnitAxis(Angle, Vec3);
 	//기준이 되는 Y-Axis  선언
+	float4 XAxis(1.0f, 0.0f, 0.0f);
 	float4 YAxis(0.0f, 1.0f, 0.0f);
 	float4 ZAxis(0.0f, 0.0f, 1.0f);
 	physx::PxVec3 YAxisVec3(0.0f, 1.0f, 0.0f);
@@ -305,9 +306,17 @@ bool PhysXDynamicActorComponent::StandUp2(float _DeltaTime, bool _IsXAixisRotRea
 		FinalRot.z = 0.0f;
 		FinalRot.y = 1.0f;
 		Result = true;
-
 	}
 
+	if (abs(FinalRot.x) > 0.97f && ChangedAngle == 0.0f)
+	{
+		//float AngDiffXAxis = acosf(float4::DotProduct3D({ Vec3.x, Vec3.y, Vec3.z }, XAxis));
+		FinalRot.x = 0.0f;
+		FinalRot.z = 0.0f;
+		FinalRot.y = 1.0f;
+		Result = true;
+
+	}
 
 	physx::PxVec3 FinalRotVec3(FinalRot.x, FinalRot.y, FinalRot.z);
 	FinalRotVec3.normalize();

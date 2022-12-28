@@ -232,8 +232,8 @@ void CustomSimulationEventCallback::onTrigger(physx::PxTriggerPair* pairs, physx
 		{
 			if (CommonPlayer_ != nullptr)
 			{
-				CommonPlayer_->SetIsStandingReady(true);
 				CommonPlayer_->InitStandUp2();
+				CommonPlayer_->SetIsStandingReady(true);
 				return;
 			}
 		}
@@ -258,12 +258,12 @@ void CustomSimulationEventCallback::onContact(const physx::PxContactPairHeader& 
 			if (current.events & physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS)
 			{
 				CommonPlayer_->TouchGroundOn();
-				CommonPlayer_->Setwaitphysx(true);
+				//CommonPlayer_->Setwaitphysx(true);
 			}
-			else
+			if (current.events & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
 			{
 				CommonPlayer_->TouchGroundOff();
-				//CommonPlayer_->Setwaitphysx(true);
+				CommonPlayer_->Setwaitphysx(true);
 			}
 
 
