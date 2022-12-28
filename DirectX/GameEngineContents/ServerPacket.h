@@ -114,6 +114,7 @@ public:
 	unsigned int PlayerColor;	// 플레이어 : 스킨색상, 기타 : ...
 
 	unsigned int PlayTime;		// 후프레벨 남은 시간
+	std::string PlayerName;
 
 	PlayerStatePacket()
 	{
@@ -128,6 +129,7 @@ public:
 		_Ser << PlayerScore;
 		_Ser << PlayerColor;
 		_Ser << PlayTime;
+		_Ser << PlayerName;
 	}
 	virtual void DeSerialize(GameServerSerializer& _Ser)
 	{
@@ -137,6 +139,7 @@ public:
 		_Ser >> PlayerScore;
 		_Ser >> PlayerColor;
 		_Ser >> PlayTime;
+		_Ser >> PlayerName;
 	}
 };
 

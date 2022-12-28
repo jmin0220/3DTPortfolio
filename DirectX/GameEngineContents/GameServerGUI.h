@@ -32,5 +32,6 @@ private:
 	class GameEngineLevel* LobbyLevel_;
 	const char* PlayerColors_[static_cast<int>(PlayerColor::MAX)];
 	int PrevColorIdx_;
+
 };
 

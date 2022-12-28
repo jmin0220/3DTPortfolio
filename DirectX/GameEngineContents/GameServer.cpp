@@ -15,6 +15,7 @@ unsigned int GameServer::PlayerColorID_ = 0;
 float4 GameServer::PlayerColor_ = float4::ZERO;
 unsigned int GameServer::PlayerScore_ = 0;
 unsigned int GameServer::PlayTime_ = 0;
+std::string GameServer::UserName_;
 
 #include <atomic>
 std::mutex Lock;
@@ -301,6 +302,8 @@ void GameServer::SendPlayerStatePacket()
 	{
 		Packet->PlayTime = 0;
 	}
+
+	Packet->PlayerName = UserName_;
 
 	Net->SendPacket(Packet);
 }

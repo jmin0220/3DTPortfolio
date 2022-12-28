@@ -192,6 +192,8 @@ void LobbyLevel::FallingStart(const StateInfo& _Info)
 
 	//¼­¹ö
 	GameServer::GetInst()->ServerStart();
+
+	auto val = GameServer::GetInst()->UserName_;
 	
 }
 

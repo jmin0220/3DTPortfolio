@@ -74,6 +74,7 @@ private:
 		unsigned int ID_;
 		unsigned int Color_;
 		unsigned int Score_;
+		std::string Name_;
 	};
 
 	static bool ScoreBigger(ServerPlayerInfo _Left, ServerPlayerInfo _Right)

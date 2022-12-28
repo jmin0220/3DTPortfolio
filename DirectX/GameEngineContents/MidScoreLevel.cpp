@@ -329,7 +329,7 @@ void MidScoreLevel::ServerSetting()
 	for (; StartIt != EndIt; ++StartIt)
 	{
 		std::shared_ptr<PlayerStatePacket> Packet = (*StartIt).second;
-		AllServerPlayers_.emplace_back(Packet->PlayerID, Packet->PlayerColor, Packet->PlayerScore);
+		AllServerPlayers_.emplace_back(Packet->PlayerID, Packet->PlayerColor, Packet->PlayerScore, Packet->PlayerName);
 	}
 	// 자기정보도 넣는다
 	std::shared_ptr<GameServer>& Server = GameServer::GetInst();
@@ -337,6 +337,7 @@ void MidScoreLevel::ServerSetting()
 	MyInfo.ID_ = Server->PlayerID_;
 	MyInfo.Color_ = Server->PlayerColorID_;
 	MyInfo.Score_ = Server->PlayerScore_;
+	MyInfo.Name_ = Server->UserName_;
 	AllServerPlayers_.push_back(MyInfo);
 
 	// ID순으로 정렬
@@ -355,7 +356,7 @@ void MidScoreLevel::ServerSetting()
 	{
 		// UI
 		// 플레이어 이름
-		PlayerName_.push_back("Player " + std::to_string(AllServerPlayers_[i].ID_));
+		PlayerName_.push_back(AllServerPlayers_[i].Name_);
 
 		// 플레이어 점수 '폰트엑터'
 		std::shared_ptr<FontActor> FontScore = CreateActor<FontActor>();

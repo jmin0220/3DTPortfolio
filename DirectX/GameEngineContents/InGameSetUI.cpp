@@ -147,17 +147,17 @@ void InGameSetUI::LevelStartEvent()
 {
 	CountDownStart_ = true;
 
-	//if (false == GameEngineInput::GetInst()->IsKey("Fail"))
-	//{
-	//	GameEngineInput::GetInst()->CreateKey("Fail", '1');
-	//	GameEngineInput::GetInst()->CreateKey("Success", '2');
-	//	GameEngineInput::GetInst()->CreateKey("End", '3');
-	//	GameEngineInput::GetInst()->CreateKey("SubTitle", '4');
-	//	GameEngineInput::GetInst()->CreateKey("Tip", '5');
-	//	GameEngineInput::GetInst()->CreateKey("Count", '6');
-	//	GameEngineInput::GetInst()->CreateKey("321GO", '0');
-	//	GameEngineInput::GetInst()->CreateKey("PlusScore", '7');
-	//}
+	if (false == GameEngineInput::GetInst()->IsKey("Fail"))
+	{
+		GameEngineInput::GetInst()->CreateKey("Fail", '1');
+		GameEngineInput::GetInst()->CreateKey("Success", '2');
+		GameEngineInput::GetInst()->CreateKey("End", '3');
+		GameEngineInput::GetInst()->CreateKey("SubTitle", '4');
+		GameEngineInput::GetInst()->CreateKey("Tip", '5');
+		GameEngineInput::GetInst()->CreateKey("Count", '6');
+		GameEngineInput::GetInst()->CreateKey("321GO", '0');
+		GameEngineInput::GetInst()->CreateKey("PlusScore", '7');
+	}
 
 }
 
