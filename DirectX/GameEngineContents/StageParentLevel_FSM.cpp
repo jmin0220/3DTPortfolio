@@ -4,6 +4,7 @@
 #include "InGameSetUI.h"
 #include "Cinemachine.h"
 #include "IntroduceGame.h"
+#include "TimerActor.h"
 
 ///////////////////////////
 // 스테이지 시작전 준비 단계
@@ -227,7 +228,7 @@ void StageParentLevel::RaceStart(const StateInfo& _Info)
 	// 플레이어 입력 가능
 	Player_->SetInputAvailable(true);
 
-	
+	TimerUI_->On();
 }
 
 void StageParentLevel::RaceUpdate(float _DeltaTime, const StateInfo& _Info)
