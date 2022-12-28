@@ -56,7 +56,8 @@ PlayerActor::PlayerActor() :
 	IsInputOn_(true),
 	IsPlayerFrozen_(false),
 	IsNetPlayerColorExist_(false),
-	PrevAnimation_("")
+	PrevAnimation_(""),
+	IsNetDeath_(false)
 {
 }
 
@@ -224,7 +225,17 @@ void PlayerActor::Update(float _DeltaTime)
 		std::shared_ptr<ObjectUpdatePacket> Packet = std::make_shared<ObjectUpdatePacket>();
 		Packet->ObjectID = GetNetID();
 		Packet->Type = ServerObjectType::Player;
-		Packet->State = ServerObjectBaseState::Base;
+	
+		if (true == IsNetDeath_)
+		{
+
+			Packet->State = ServerObjectBaseState::Death;
+		}
+		else
+		{
+			Packet->State = ServerObjectBaseState::Base;
+		}
+
 		Packet->Scale = GetTransform().GetWorldScale();
 		Packet->Pos = GetTransform().GetWorldPosition();
 		Packet->Rot = GetTransform().GetWorldRotation();
@@ -247,6 +258,12 @@ void PlayerActor::Update(float _DeltaTime)
 			{
 				// Player
 				std::shared_ptr<ObjectUpdatePacket> ObjectUpdate = std::dynamic_pointer_cast<ObjectUpdatePacket>(Packet);
+
+				// 네트워크상 죽음
+				if (true == (ObjectUpdate->State == ServerObjectBaseState::Death))
+				{
+					this->Off();
+				}
 
 				// 스킨
 				SetNetPlayerColor(ObjectUpdate->PlayerColor);

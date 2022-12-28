@@ -160,6 +160,7 @@ protected:
 		NONE,
 		RACE,			// 1등이 100점
 		SURVIVAL,		// 1등이 0점
+		TIMEATTACK,		// 후프레벨
 	};
 
 	GameScoreType GameScoreType_;
@@ -168,8 +169,6 @@ protected:
 	void GetGameScoreByCurrentType();
 
 	// 후프를 얻으면 점수 부여 : 레벨에서 함
-
-
 
 	// 빛
 public:

@@ -129,6 +129,7 @@ void StageParentLevel::Update(float _DeltaTime)
 	{
 		GameServer::GetInst()->PlayerScore_ += 100;
 	}
+
 }
 void StageParentLevel::End()
 {
@@ -637,8 +638,6 @@ void StageParentLevel::GetGameScoreByCurrentType()
 	case StageParentLevel::GameScoreType::SURVIVAL:
 	{
 		// FinishedPlayersCount, 0면 꼴등
-
-		
 		unsigned int Ranking = AllPlayersCount - FinishedPlayersCount;
 		// 뒤에서 4등부터 4위, 3위, 2위, 1위
 
@@ -671,6 +670,7 @@ void StageParentLevel::SetWatchCamNextPlayer()
 	WatchPlayers_.clear();
 	for (std::shared_ptr<GameEngineActor> LivePlayer : NetPlayers_)
 	{
+		// TODO::UPDATE방식 안됨
 		if (true == LivePlayer->IsUpdate())
 		{
 			WatchPlayers_.push_back(LivePlayer);

@@ -20,7 +20,7 @@ HoopsLegendsLevel::~HoopsLegendsLevel()
 void HoopsLegendsLevel::Start()
 {
 	MyStage_ = StageNum::STAGE5;
-	GameScoreType_ = GameScoreType::NONE;
+	GameScoreType_ = GameScoreType::TIMEATTACK;
 	StageParentLevel::Start();
 
 	LightObject_->GetLightData().DifLightPower = 0.5f;
@@ -41,6 +41,8 @@ void HoopsLegendsLevel::Update(float _DeltaTime)
 {
 	StageParentLevel::Update(_DeltaTime);
 
+
+	// 이거 서버만 돌려야됨
 	SetHoopPosition();
 }
 
@@ -72,6 +74,8 @@ void HoopsLegendsLevel::LevelStartEvent()
 		PrevPos[i] = -1;
 	}
 
+
+	// 이거도 서버가 해야됨
 	//후프 초기위치 설정
 	for (int i = 0; i < 10; i++)
 	{

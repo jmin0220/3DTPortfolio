@@ -34,7 +34,7 @@ public:
 	bool CheckOtherPlayersFlag(PlayerFlag _Flag);
 	unsigned int CheckOtherPlayersFlagCount(PlayerFlag _Flag);
 
-	const std::map<int, std::shared_ptr<class PlayerStatePacket>>& GetOtherPlayersInfo()
+	std::map<int, std::shared_ptr<class PlayerStatePacket>>& GetOtherPlayersInfo()
 	{
 		return OtherPlayersInfo_;
 	}
