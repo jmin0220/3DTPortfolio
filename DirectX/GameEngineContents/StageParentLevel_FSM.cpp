@@ -204,8 +204,6 @@ void StageParentLevel::ReadyStart(const StateInfo& _Info)
 void StageParentLevel::ReadyUpdate(float _DeltaTime, const StateInfo& _Info)
 {
 
-
-
 	// 카운트다운 종료되면 상태변경
 	// 플레이어 움직일 수 있음
 	if (true == UIs_->IsCountDownEnd())
@@ -228,6 +226,8 @@ void StageParentLevel::RaceStart(const StateInfo& _Info)
 
 	// 플레이어 입력 가능
 	Player_->SetInputAvailable(true);
+
+	
 }
 
 void StageParentLevel::RaceUpdate(float _DeltaTime, const StateInfo& _Info)

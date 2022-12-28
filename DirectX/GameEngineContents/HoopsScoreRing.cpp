@@ -88,8 +88,9 @@ void HoopsScoreRing::Update(float _DeltaTime)
 
 				if (ObjectUpdate->Type == ServerObjectType::HoopRing)
 				{
-					//ObjectUpdate->Rot;
-					
+					GetTransform().SetWorldPosition(ObjectUpdate->Pos);
+					GetTransform().SetWorldRotation(ObjectUpdate->Rot);
+					GetTransform().SetWorldScale(ObjectUpdate->Scale);
 				}
 				else
 				{

@@ -349,6 +349,7 @@ void MidScoreLevel::ServerSetting()
 	PlayerName_.clear();
 	FontScore_.clear();
 	Font_PlayerName.clear();
+	LastActorPos_ = float4::ZERO;
 
 	// 폰트 정보 설정
 	for (int i = 0; i < AllServerPlayers_.size(); i++)
