@@ -44,9 +44,10 @@ void HoopsLegendsLevel::Update(float _DeltaTime)
 
 
 	// 이거 서버만 돌려야됨
-	if (true == GameServer::GetInst()->IsServerStart())
+	if (true == GameServer::GetInst()->IsServerStart()
+		&& true == GameServer::IsHost_)
 	{
-		SetHoopPosition();
+		//SetHoopPosition();
 	}
 }
 

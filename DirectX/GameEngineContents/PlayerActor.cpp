@@ -167,12 +167,6 @@ void PlayerActor::Update(float _DeltaTime)
 		PlayerStateManager_.Update(_DeltaTime);
 		PlayerAniStateManager_.Update(_DeltaTime);
 
-		if (IsPlayerFrozen_ == true)
-		{
-			IsInputOn_ = false;
-			DynamicActorComponent_->FreezeDynamic();
-			FbxRenderer_->PauseSwtich();
-		}
 
 	//GetTransform().SetWorldMove(MoveDir_ * SPEED_PLAYER * _DeltaTime);
 	// TODO::충격테스트코드

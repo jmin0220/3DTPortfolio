@@ -1,6 +1,8 @@
 #include "PreCompile.h"
 #include "TimerActor.h"
 
+const float PivotY = 100;
+
 TimerActor::TimerActor() 
 {
 }
@@ -12,9 +14,9 @@ TimerActor::~TimerActor()
 void TimerActor::Start()
 {
 	Plate_ = CreateComponent<GameEngineUIRenderer>();
-	Plate_->GetTransform().SetWorldScale({ 452,103,1 });
+	Plate_->GetTransform().SetWorldScale({ 452,103 - PivotY,1 });
 	Plate_->SetPivot(PIVOTMODE::RIGHTTOP);
-	Plate_->GetTransform().SetWorldPosition({ 1000.0f, 400.0f, 0 });
+	Plate_->GetTransform().SetWorldPosition({ 1000.0f, 400.0f + PivotY, 0 });
 	Plate_->SetTexture("Success.png");
 
 	FontOneMinute_ = CreateComponent<GameEngineFontRenderer>();
@@ -22,28 +24,28 @@ void TimerActor::Start()
 	FontOneMinute_->SetText("0", FONT_TITAN_ONE);
 	FontOneMinute_->SetSize(40.0f);
 	FontOneMinute_->SetLeftAndRightSort(LeftAndRightSort::CENTER);
-	FontOneMinute_->SetScreenPostion({ 1450.0f, 75.0f });
+	FontOneMinute_->SetScreenPostion({ 1450.0f, 75.0f + PivotY });
 
 	Colon_ = CreateComponent<GameEngineFontRenderer>();
 	Colon_->ChangeCamera(CAMERAORDER::UICAMERA);
 	Colon_->SetText(":", FONT_TITAN_ONE);
 	Colon_->SetSize(40.0f);
 	Colon_->SetLeftAndRightSort(LeftAndRightSort::CENTER);
-	Colon_->SetScreenPostion({ 1475.0f, 70.0f });
+	Colon_->SetScreenPostion({ 1475.0f, 70.0f + PivotY });
 
 	FontTenSecond_ = CreateComponent<GameEngineFontRenderer>();
 	FontTenSecond_->ChangeCamera(CAMERAORDER::UICAMERA);
 	FontTenSecond_->SetText("0", FONT_TITAN_ONE);
 	FontTenSecond_->SetSize(40.0f);
 	FontTenSecond_->SetLeftAndRightSort(LeftAndRightSort::CENTER);
-	FontTenSecond_->SetScreenPostion({ 1500.0f, 75.0f });
+	FontTenSecond_->SetScreenPostion({ 1500.0f, 75.0f + PivotY });
 
 	FontOneSecond_ = CreateComponent<GameEngineFontRenderer>();
 	FontOneSecond_->ChangeCamera(CAMERAORDER::UICAMERA);
 	FontOneSecond_->SetText("0", FONT_TITAN_ONE);
 	FontOneSecond_->SetSize(40.0f);
 	FontOneSecond_->SetLeftAndRightSort(LeftAndRightSort::CENTER);
-	FontOneSecond_->SetScreenPostion({ 1530.0f, 75.0f });
+	FontOneSecond_->SetScreenPostion({ 1530.0f, 75.0f + PivotY });
 }
 
 void TimerActor::Update(float _DeltaTime)
