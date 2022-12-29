@@ -149,7 +149,7 @@ void HoopsLegendsLevel::LevelStartEvent()
 	}
 
 	// 호스트의 시간만 적용됨
-	TimerLimit_ = 300.0f;
+	TimerLimit_ = 60.0f;
 }
 
 void HoopsLegendsLevel::LevelEndEvent()
@@ -161,23 +161,26 @@ void HoopsLegendsLevel::LevelEndEvent()
 
 bool HoopsLegendsLevel::GameEndingFlag()
 {
-	// 서버가 시간되면 강제종료
-	/*if (Player_->GetTransform().GetWorldPosition().y <= -20.0f)
+	// 튕기면 범위지정해서 죽은걸로
+	if (Player_->GetTransform().GetWorldPosition().y <= -20.0f)
 	{
 		return true;
 	}
-
-	return false;*/
 
 	// 이 레벨은 호스트만 종료 체크 가능
-	if (true == GameServer::GetInst()->IsHost_ && true == TimerUI_->IsTimerEnd())
+
+	if (true == GameServer::GetInst()->IsServerStart())
 	{
-		return true;
+		if (true == GameServer::GetInst()->IsHost_ && true == TimerUI_->IsTimerEnd())
+		{
+			return true;
+		}
+		else
+		{
+			return GameServer::GetInst()->CheckHostFlag(PlayerFlag::P_StageRaceChangeReady);
+		}
 	}
-	else
-	{
-		return GameServer::GetInst()->CheckHostFlag(PlayerFlag::P_StageRaceChangeReady);
-	}
+
 
 	return false;
 }

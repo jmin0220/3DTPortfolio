@@ -48,7 +48,7 @@ void HexTile::Start()
 
 void HexTile::Update(float _DeltaTime)
 {
-	if (true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StagePreviewChangeOver))
+	if (true == GameServer::RaceStart_)
 	{
 		ServerActivated_ = true;
 	}

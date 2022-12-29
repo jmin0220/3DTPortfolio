@@ -80,6 +80,7 @@ bool DoorDashLevel::GameEndingFlag()
 	if (Col_Goal::GetIsPlayerGoal_()==true)
 	{
 		Col_Goal::SetIsPlayerGoal(); //false
+		Player_->SetGoal(true);
 		return true;
 	}
 

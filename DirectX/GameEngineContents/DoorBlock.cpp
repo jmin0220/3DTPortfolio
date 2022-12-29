@@ -42,7 +42,7 @@ void DoorBlock::Start()
 
 void DoorBlock::Update(float _DeltaTime)
 {
-	if (true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageIdleChangeOver))
+	if (true == GameServer::RaceStart_)
 	{
 		ServerActivated_ = true;
 	}

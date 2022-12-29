@@ -133,6 +133,7 @@ public:
 	static unsigned int PlayerScore_;
 	static unsigned int PlayTime_;
 	static std::string UserName_;
+	static bool RaceStart_;
 	
 	// 모든 유저 정보
 	std::map<int, std::shared_ptr<class PlayerStatePacket>> OtherPlayersInfo_;

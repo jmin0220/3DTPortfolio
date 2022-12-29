@@ -248,6 +248,12 @@ bool HexAGoneLevel::GameEndingFlag()
 	{
 		return true;
 	}
+	// 다른 모든 플레이어 죽었으면
+	else if (GameServer::GetInst()->CheckOtherPlayersFlag(PlayerFlag::P_StageRaceChangeReady))
+	{
+		Player_->SetGoal(true);
+		return true;
+	}
 
 	return false;
 }

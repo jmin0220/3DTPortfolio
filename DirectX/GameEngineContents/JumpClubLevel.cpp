@@ -105,7 +105,6 @@ void JumpClubLevel::LevelStartEvent()
 
 	// 플레이어 스폰위치 조정
 	// 위치 6개임
-	StartPositions_;
 
 	if (true == GameServer::GetInst()->IsServerStart())
 	{
@@ -136,6 +135,7 @@ void JumpClubLevel::LevelStartEvent()
 		Player_->ResetPlayerPos();
 	}
 
+	TimerLimit_ = 120.0f;
 
 }
 
@@ -144,10 +144,18 @@ void JumpClubLevel::LevelEndEvent()
 	StageParentLevel::LevelEndEvent();
 }
 
+
+
 bool JumpClubLevel::GameEndingFlag()
 {
 	if (Player_->GetTransform().GetWorldPosition().y <= -20.0f)
 	{
+		return true;
+	}
+	// 다른 모든 플레이어 죽었으면
+	else if (GameServer::GetInst()->CheckOtherPlayersFlag(PlayerFlag::P_StageRaceChangeReady))
+	{
+		Player_->SetGoal(true);
 		return true;
 	}
 

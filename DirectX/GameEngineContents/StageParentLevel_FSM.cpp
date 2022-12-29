@@ -42,6 +42,8 @@ void StageParentLevel::IdleStart(const StateInfo& _Info)
 
 	UIs_->OffSuccessCount();
 	TimerUI_->Off();
+
+	GameServer::RaceStart_ = false;
 }
 
 void StageParentLevel::IdleUpdate(float _DeltaTime, const StateInfo& _Info)
@@ -127,7 +129,7 @@ void StageParentLevel::StagePreviewStart(const StateInfo& _Info)
 
 	UIs_->OnSuccessCount();
 	
-	if (GameScoreType_ == GameScoreType::TIMEATTACK)
+	if (MyStage_ == StageNum::STAGE2 || MyStage_ == StageNum::STAGE5)
 	{
 		TimerUI_->On();
 		TimerUI_->SetNetTime(TimerLimit_);
@@ -250,8 +252,7 @@ void StageParentLevel::RaceStart(const StateInfo& _Info)
 {
 	FinishScoreSetted = false;
 
-	// 플레이어 입력 가능
-	Player_->SetInputAvailable(true);
+	GameServer::RaceStart_ = true;
 }
 
 void StageParentLevel::RaceUpdate(float _DeltaTime, const StateInfo& _Info)
@@ -260,6 +261,8 @@ void StageParentLevel::RaceUpdate(float _DeltaTime, const StateInfo& _Info)
 	if (false == GameServer::IsHost_
 		&& GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StagePreviewChangeOver) && false == FinishScoreSetted)
 	{
+		// 플레이어 입력 가능
+		Player_->SetInputAvailable(true);
 		GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_None);
 	}
 
@@ -268,6 +271,8 @@ void StageParentLevel::RaceUpdate(float _DeltaTime, const StateInfo& _Info)
 	{
 		if (GameServer::GetInst()->CheckOtherPlayersFlag(PlayerFlag::P_None) && false == FinishScoreSetted)
 		{
+			// 플레이어 입력 가능
+			Player_->SetInputAvailable(true);
 			GameServer::GetInst()->SetServerSignal(ServerFlag::S_None);
 			GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_None);
 		}
@@ -297,7 +302,7 @@ void StageParentLevel::RaceUpdate(float _DeltaTime, const StateInfo& _Info)
 	// 강제로 자신의 레이스 종료상태 만드는 키
 	if (true == GameEngineInput::GetInst()->IsDown(KEY_ENTER))
 	{
-		Player_->SetIsGoal();
+		Player_->SetGoal(true);
 	}
 
 	// 4. 호스트는 모든 플레이어 준비확인
@@ -312,20 +317,6 @@ void StageParentLevel::RaceUpdate(float _DeltaTime, const StateInfo& _Info)
 		}
 	}
 
-	// 레이스는 모두 들어가면 끝남
-	// 서바이벌은 한명만 남으면 끝남
-	if (GameScoreType_ == GameScoreType::SURVIVAL && false == LastPlayerReady)
-	{
-		// 나머지 모두 탈락이면
-		if (true == GameServer::GetInst()->CheckOtherPlayersFlag(PlayerFlag::P_StageRaceChangeReady))
-		{
-			LastPlayerReady = true;
-			Player_->SetGoal(true);
-			Player_->SetPlayerForze(true);
-		}
-	}
-
-
 
 	// 점수획득
 	if (true == Player_->GetIsGoal() && false == FinishScoreSetted)
@@ -336,15 +327,8 @@ void StageParentLevel::RaceUpdate(float _DeltaTime, const StateInfo& _Info)
 		GetGameScoreByCurrentType();
 
 		Player_->SetPlayerForze(true);
-		if (GameScoreType_ == GameScoreType::RACE)
-		{
-			// TODO::객체 OFF하고 관전 or 투명하게하고 관전
-			//Player_->Off();
-			
-			Player_->SetPlayerNetDeath(true);
-			Player_->SetPlayerInvisible();
-		}
-
+		Player_->SetPlayerNetDeath(true);
+		Player_->SetPlayerInvisible();
 	}
 
 	// 관전 : 다음 플레이어
@@ -379,9 +363,10 @@ void StageParentLevel::EndStart(const StateInfo& _Info)
 		GameServer::GetInst()->SetServerSignal(ServerFlag::S_StageRaceChangeOver);
 	}
 
-
-
+	TimerUI_->Off();
 	UIs_->OnOffEnd();
+
+	GameServer::RaceStart_ = false;
 }
 
 void StageParentLevel::EndUpdate(float _DeltaTime, const StateInfo& _Info)

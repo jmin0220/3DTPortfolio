@@ -16,6 +16,7 @@ float4 GameServer::PlayerColor_ = float4::ZERO;
 unsigned int GameServer::PlayerScore_ = 0;
 unsigned int GameServer::PlayTime_ = 0;
 std::string GameServer::UserName_;
+bool GameServer::RaceStart_ = false;
 
 #include <atomic>
 std::mutex Lock;
