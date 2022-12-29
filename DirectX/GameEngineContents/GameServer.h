@@ -53,7 +53,7 @@ public:
 	{
 		return OtherPlayersInfo_;
 	}
-
+	
 	void GetAllPlayersInfo(std::vector<ServerPlayerInfo>& _PlayerInfos)
 	{
 		_PlayerInfos.clear();

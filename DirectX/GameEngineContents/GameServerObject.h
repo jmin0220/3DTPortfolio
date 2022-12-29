@@ -29,7 +29,16 @@ enum class ServerObjectType
 class GameServerObject
 {
 public:
+	static void SetPlayersCount(int _Count)
+	{
+		PlayersCount = _Count;
+		ObjectSeed = PlayersCount;
+	}
+
+public:
+	static int PlayersCount;
 	static std::atomic<int> IdSeed;
+	static std::atomic<int> ObjectSeed;
 	static std::map<int, GameServerObject*> AllServerActor;
 
 public:
@@ -58,10 +67,15 @@ public:
 		return ++IdSeed;
 	}
 
+	static int GetObjectID()
+	{
+		return ++ObjectSeed;
+	}
+
 public:
 	// constrcuter destructer
 	GameServerObject(/*ServerObjectType _Type*/);
-	~GameServerObject();
+	virtual ~GameServerObject();
 
 	// delete Function
 	GameServerObject(const GameServerObject& _Other) = delete;

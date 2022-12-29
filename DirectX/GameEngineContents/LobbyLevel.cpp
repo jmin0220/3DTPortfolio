@@ -13,7 +13,7 @@
 #include "GameServer.h"
 
 // 서버테스트시 첫 스테이지 선택
-const std::string FirstStage = LEVEL_NAME_HOOPSLEGENDS;
+const std::string FirstStage = LEVEL_NAME_DOORDASH;
 
 LobbyLevel::LobbyLevel() 
 	:Swap(false)
@@ -245,6 +245,8 @@ void LobbyLevel::FallingUpdate(float _DeltaTime, const StateInfo& _Info)
 		PrevUserCount_ = GameServer::GetInst()->GetAllPlayersCount();
 		NumberFont_->SetFont(std::to_string(PrevUserCount_), "Titan One", 70.f, {800,680}, LeftAndRightSort::CENTER);
 
+
+		GameServerObject::SetPlayersCount(PrevUserCount_);
 	}
 
 	// ~~~ 서버 ~~~

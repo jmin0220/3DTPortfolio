@@ -150,8 +150,7 @@ void HoopsLegendsLevel::LevelStartEvent()
 		Player_->ResetPlayerPos();
 	}
 
-	// 호스트의 시간만 적용됨
-	TimerLimit_ = 300.0f;
+	TimerLimit_ = 120.0f;
 
 	RankingActor_ = CreateActor<RankingActor>();
 	RankingActor_->Off();
@@ -162,6 +161,11 @@ void HoopsLegendsLevel::LevelEndEvent()
 	StageParentLevel::LevelEndEvent();
 
 	TimerUI_->Off();
+
+	for (std::shared_ptr<GameEngineActor> Hoop : HoopsActor)
+	{
+		Hoop->Death();
+	}
 
 	RankingActor_->Death();
 }
@@ -233,7 +237,7 @@ void HoopsLegendsLevel::SpawnHoops()
 		HoopsActor[i]->GetTransform().SetWorldPosition(HoopsPos[PrevPos[i]]);
 
 		// 호스트의 서버 초기화
-		HoopsActor[i]->CastThis<HoopsScoreRing>()->ServerInit(ServerObjectType::HoopRing);
+		HoopsActor[i]->CastThis<HoopsScoreRing>()->ClientInit(ServerObjectType::HoopRing, GameServerObject::GetObjectID());
 		HoopsActor[i]->CastThis<HoopsScoreRing>()->PhysXInit();
 	}
 

@@ -123,7 +123,7 @@ void GameSuccess::Update(float _DeltaTime)
 	if (this->IsUpdate() == true && SoundOn_==false)
 	{
 		SoundOn_ = true;
-	}
+}
 
 	if (SoundOn_ == true && Once_ == false)
 	{

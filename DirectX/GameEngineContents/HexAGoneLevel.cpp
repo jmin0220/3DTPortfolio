@@ -240,6 +240,11 @@ void HexAGoneLevel::LevelStartEvent()
 void HexAGoneLevel::LevelEndEvent()
 {
 	StageParentLevel::LevelEndEvent();
+
+	for (std::shared_ptr<GameEngineActor> Tile : TilesVec_)
+	{
+		Tile->Death();
+	}
 }
 
 bool HexAGoneLevel::GameEndingFlag()

@@ -11,13 +11,14 @@
 
 #include "PlayerActor.h"
 #include <GameEngineBase/GameEngineRandom.h>
+#include "TimerActor.h"
 
-BigShotsLevel::BigShotsLevel() 
+BigShotsLevel::BigShotsLevel()
 	: ServerActivated_(false)
 {
 }
 
-BigShotsLevel::~BigShotsLevel() 
+BigShotsLevel::~BigShotsLevel()
 {
 }
 
@@ -64,30 +65,30 @@ void BigShotsLevel::LevelStartEvent()
 	//// *플레이어 생성 후 카메라암 세팅 해줘야함*
 	//CameraArm_->SetFollowCamera(GetMainCameraActor(), Player_);
 
-	std::shared_ptr<BigShotsStage> Stage = CreateActor<BigShotsStage>();
-	Stage->GetTransform().SetWorldPosition({ 0.0f, -50.0f, 0.0f });
-	
+	Stage_ = CreateActor<BigShotsStage>();
+	Stage_->GetTransform().SetWorldPosition({ 0.0f, -50.0f, 0.0f });
+
 	// 호스트만 캐논 생성
 	if (true == GameServer::IsHost_)
 	{
 		std::shared_ptr<BigShots_Cannon> Cannon1 = CreateActor<BigShots_Cannon>();
 		Cannon1->GetTransform().SetWorldPosition({ -50.0f, -20.0f, -250.0f });
 		Cannon1->GetTransform().SetWorldRotation({ -10.0f, 0.0f, 0.0f });
-		Cannon1->ServerInit(ServerObjectType::Cannon);
+		Cannon1->ClientInit(ServerObjectType::Cannon, GameServerObject::GetObjectID());
 		Cannon1->SetInitialInterTime(GameEngineRandom::MainRandom.RandomFloat(2, 5));
 		Cannons_.push_back(Cannon1);
 
 		std::shared_ptr<BigShots_Cannon> Cannon2 = CreateActor<BigShots_Cannon>();
 		Cannon2->GetTransform().SetWorldPosition({ 0.0f, -20.0f, -250.0f });
 		Cannon2->GetTransform().SetWorldRotation({ -10.0f, 0.0f, 0.0f });
-		Cannon2->ServerInit(ServerObjectType::Cannon);
+		Cannon2->ClientInit(ServerObjectType::Cannon, GameServerObject::GetObjectID());
 		Cannon2->SetInitialInterTime(GameEngineRandom::MainRandom.RandomFloat(2, 5));
 		Cannons_.push_back(Cannon2);
 
 		std::shared_ptr<BigShots_Cannon> Cannon3 = CreateActor<BigShots_Cannon>();
 		Cannon3->GetTransform().SetWorldPosition({ 50.0f, -20.0f, -250.0f });
 		Cannon3->GetTransform().SetWorldRotation({ -10.0f, 0.0f, 0.0f });
-		Cannon3->ServerInit(ServerObjectType::Cannon);
+		Cannon3->ClientInit(ServerObjectType::Cannon, GameServerObject::GetObjectID());
 		Cannon3->SetInitialInterTime(GameEngineRandom::MainRandom.RandomFloat(2, 5));
 		Cannons_.push_back(Cannon3);
 	}
@@ -140,6 +141,7 @@ void BigShotsLevel::LevelStartEvent()
 	}
 
 	TimerLimit_ = 120.0f;
+
 }
 
 void BigShotsLevel::LevelEndEvent()
@@ -150,6 +152,15 @@ void BigShotsLevel::LevelEndEvent()
 	{
 		Cannon->Death();
 	}
+
+	BackGroundObj_->Death();
+
+	VFXWaterObj_->Death();
+
+	Stage_->Death();
+
+
+	TimerUI_->Off();
 }
 
 bool BigShotsLevel::GameEndingFlag()

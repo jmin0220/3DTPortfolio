@@ -39,6 +39,7 @@
 #include "TestGUI.h"
 #include "TimerActor.h"
 #include "HoopsScoreRing.h"
+#include "MidScoreLevel.h"
 
 
 std::mutex SpawnLock;
@@ -46,7 +47,6 @@ std::mutex SpawnLock;
 float4 StageParentLevel::PlayerPos = float4::ZERO;
 std::vector<float4> StageParentLevel::HoopsPos = std::vector<float4>();
 std::vector<std::shared_ptr<GameEngineActor>> StageParentLevel::HoopsActor = std::vector<std::shared_ptr<GameEngineActor>>();
-
 
 StageParentLevel::StageParentLevel() 
 	: MyStage_(StageNum::STAGE1)
@@ -111,14 +111,15 @@ void StageParentLevel::Start()
 	StageStateManager_.CreateStateMember("End"
 		, std::bind(&StageParentLevel::EndUpdate, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&StageParentLevel::EndStart, this, std::placeholders::_1));
+
 }
 
 void StageParentLevel::Update(float _DeltaTime)
 {
-	SpawnServerObjects();
-
 	// PhysX업데이트
 	VirtualPhysXLevel::Update(_DeltaTime);
+
+	SpawnServerObjects();
 
 	CinemaCam_->Update();
 
@@ -156,21 +157,25 @@ void StageParentLevel::LevelStartEvent()
 	VirtualPhysXLevel::LevelStartEvent();
 	LevelStartLoad();
 
-
 	// 자신의 메인 플레이어 생성
-	Player_ = CreateActor<PlayerActor>();
 	PlayerActor::IsMainPlayerSpawned_ = false;
+	Player_ = CreateActor<PlayerActor>();
+
 
 	if (true == GameServer::GetInst()->IsServerStart())
 	{
-		if (true == GameServer::IsHost_)
+		GameServerObject::PlayersCount = GameServer::GetInst()->GetAllPlayersCount();
+
+		/*if (true == GameServer::IsHost_)
 		{
-			Player_->ServerInit(ServerObjectType::Player);
+			Player_->ClientInit(ServerObjectType::Player, GameServer::GetInst()->PlayerID_);
 		}
 		else
 		{
-			Player_->ClientInit(ServerObjectType::Player, GameServerObject::GetServerID());
-		}
+			Player_->ClientInit
+		}*/
+
+		Player_->ClientInit(ServerObjectType::Player, GameServer::GetInst()->PlayerID_);
 	}
 
 	Player_->PlayerInit();
@@ -190,17 +195,17 @@ void StageParentLevel::LevelStartEvent()
 
 	MainCam_ = GetMainCameraActor();
 	CameraArm_ = CreateActor<CameraArm>();
-
 	RaceStartSignal_ = false;
-
-
 	StageStateManager_.ChangeState("Idle");
+
+	MidScoreLevel::OnEventPlayed_ = false;
 }
 
 void StageParentLevel::LevelEndEvent()
 {
 	VirtualPhysXLevel::LevelEndEvent();
 	//ContentsCore::GetInst()->ReleaseCurLevelResource();
+
 	GameServerObject::ServerRelease();
 
 	Player_->Death();
@@ -222,6 +227,7 @@ void StageParentLevel::LevelEndEvent()
 	{
 		NetObstacle->Death();
 	}
+
 }
 
 void StageParentLevel::LevelStartLoad()
@@ -569,13 +575,18 @@ void StageParentLevel::SpawnServerObjects()
 
 				NewPlayer->PlayerInit();
 				NewPlayer->PushPacket(CurPacket);
-				
+				NewPlayer->SetPlayerInvisible(false);
+
 				NetPlayers_.push_back(NewPlayer);
 
 				break;
 			}
 			case ServerObjectType::SpinBarDouble:
 			{
+				if (MyStage_ != StageNum::STAGE2)
+				{
+					continue;
+				}
 				std::shared_ptr<JumpClub_SpinBarDouble> SpinBarDouble = CreateActor<JumpClub_SpinBarDouble>();
 				SpinBarDouble->ClientInit(CurPacket->Type, CurPacket->ObjectID);
 				SpinBarDouble->GetTransform().SetWorldPosition(CurPacket->Pos);
@@ -590,6 +601,10 @@ void StageParentLevel::SpawnServerObjects()
 			}
 			case ServerObjectType::SpinBarSingle:
 			{
+				if (MyStage_ != StageNum::STAGE2)
+				{
+					continue;
+				}
 				std::shared_ptr<JumpClub_SpinBarSingle> SpinBarSingle = CreateActor<JumpClub_SpinBarSingle>();
 				SpinBarSingle->ClientInit(CurPacket->Type, CurPacket->ObjectID);
 				SpinBarSingle->GetTransform().SetWorldPosition(CurPacket->Pos);
@@ -603,6 +618,10 @@ void StageParentLevel::SpawnServerObjects()
 			}
 			case ServerObjectType::Cannon:
 			{
+				if (MyStage_ != StageNum::STAGE3)
+				{
+					continue;
+				}
 				std::shared_ptr<BigShots_Cannon> Cannon = CreateActor<BigShots_Cannon>();
 				Cannon->ClientInit(CurPacket->Type, CurPacket->ObjectID);
 				Cannon->GetTransform().SetWorldPosition(CurPacket->Pos);
@@ -615,6 +634,10 @@ void StageParentLevel::SpawnServerObjects()
 			}
 			case ServerObjectType::HoopRing:
 			{
+				if (MyStage_ != StageNum::STAGE5)
+				{
+					continue;
+				}
 				std::shared_ptr<HoopsScoreRing> Ring = CreateActor<HoopsScoreRing>();
 				Ring->ClientInit(CurPacket->Type, CurPacket->ObjectID);
 				Ring->GetTransform().SetWorldPosition(CurPacket->Pos);
@@ -706,8 +729,7 @@ void StageParentLevel::SetWatchCamNextPlayer()
 	WatchPlayers_.clear();
 	for (std::shared_ptr<GameEngineActor> LivePlayer : NetPlayers_)
 	{
-		// TODO::UPDATE방식 안됨
-		if (true == LivePlayer->IsUpdate())
+		if (false == std::dynamic_pointer_cast<PlayerActor>(LivePlayer)->GetNetDeath())
 		{
 			WatchPlayers_.push_back(LivePlayer);
 		}

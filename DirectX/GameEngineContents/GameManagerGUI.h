@@ -20,6 +20,6 @@ protected:
 	void OnGUI(GameEngineLevel* _Level, float _DeltaTime) override;
 
 private:
-	float4 PrevValidPos_;
+
 };
 

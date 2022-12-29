@@ -151,14 +151,8 @@ void PlayerActor::PlayerInit()
 		CreateFSMStates();
 		CreateAnimationFSMStates();
 	}
-	//충돌체크를 위한 CommonPlayer 에 Player 넣기
-	{
-		//if (this == PlayerActor::MainPlayer)
-		//{
-		//	
-		//	;
-		//}
-	}
+	
+	IsNetDeath_ = false;
 }
 
 void PlayerActor::Update(float _DeltaTime)
@@ -181,6 +175,7 @@ void PlayerActor::Update(float _DeltaTime)
 		{
 			ResetPlayer();
 		}
+
 
 		//체크포인트 실험용 나중에 지워야함
 		if (GameEngineInput::GetInst()->IsDown("TestPos") == true)
@@ -236,7 +231,6 @@ void PlayerActor::Update(float _DeltaTime)
 	
 		if (true == IsNetDeath_)
 		{
-
 			Packet->State = ServerObjectBaseState::Death;
 		}
 		else
@@ -268,13 +262,15 @@ void PlayerActor::Update(float _DeltaTime)
 				std::shared_ptr<ObjectUpdatePacket> ObjectUpdate = std::dynamic_pointer_cast<ObjectUpdatePacket>(Packet);
 
 				// 네트워크상 죽음
-				if (true == (ObjectUpdate->State == ServerObjectBaseState::Death))
+				if (ObjectUpdate->State == ServerObjectBaseState::Death)
 				{
-					this->Off();
-
-					// invisible?
+					this->SetPlayerInvisible(true);
 				}
-
+				else
+				{
+					this->SetPlayerInvisible(false);
+				}
+			
 				// 스킨
 				SetNetPlayerColor(ObjectUpdate->PlayerColor);
 
@@ -288,9 +284,9 @@ void PlayerActor::Update(float _DeltaTime)
 				DynamicActorComponent_->SetPlayerStartPos(ObjectUpdate->Pos);
 				DynamicActorComponent_->SetChangedRot(ObjectUpdate->Rot);
 
-				GameEngineDebug::OutPutString("NetID : " + std::to_string(GetNetID()));
+	/*			GameEngineDebug::OutPutString("NetID : " + std::to_string(GetNetID()));
 				GameEngineDebug::OutPutString("NetPos : " + std::to_string(ObjectUpdate->Pos.x) + "|"
-					+ std::to_string(ObjectUpdate->Pos.y) + "|" + std::to_string(ObjectUpdate->Pos.z));
+					+ std::to_string(ObjectUpdate->Pos.y) + "|" + std::to_string(ObjectUpdate->Pos.z));*/
 
 				break;
 			}
@@ -696,7 +692,6 @@ void PlayerActor::CheckXZSpeed()
 	float4 XZVelo = float4{ Velocity_.x, 0.0f, Velocity_.z };
 
 	PlayerXZSpeed_ = XZVelo.Length();
-
 }
 
 bool PlayerActor::CheckOnGround()

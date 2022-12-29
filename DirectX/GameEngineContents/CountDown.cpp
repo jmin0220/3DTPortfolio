@@ -186,7 +186,6 @@ void CountDown::CountDownStart()
 {
 	{
 		//========================================3===========================================
-
 		if (IsThreePop_ == false && IsThreeEnd_==false)
 		{
 			{
