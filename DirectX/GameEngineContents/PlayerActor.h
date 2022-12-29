@@ -185,6 +185,7 @@ private:
 	bool IsDetachGround;
 	bool IsOnGround;
 	bool IsOnGround2;
+	bool IsHeadTouchGround_;
 	float PlayerXZSpeed_;
 	void CheckXZSpeed();
 	bool CheckOnGround();
@@ -316,6 +317,16 @@ public:
 	inline void InitStandUp2()
 	{
 		DynamicActorComponent_->InitializeStandUp2();
+	}
+
+	inline void IsHeadTouchGroundOn()
+	{
+		IsHeadTouchGround_ = true;
+	}
+
+	inline void IsHeadTouchGroundOff()
+	{
+		IsHeadTouchGround_ = false;
 	}
 };
 

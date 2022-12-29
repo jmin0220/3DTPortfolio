@@ -77,7 +77,6 @@ void VirtualPhysXLevel::initPhysics(bool _interactive)
 
 	DefaultCpuDispatcher_ = physx::PxDefaultCpuDispatcherCreate(2);
 	sceneDesc.cpuDispatcher = DefaultCpuDispatcher_;
-	//sceneDesc.flags |= physx::PxSceneFlag::eENABLE_CCD;
 	// sceneDesc.broadPhaseType = physx::PxBroadPhaseType::eABP;
 
 	// Scene 생성
@@ -200,34 +199,6 @@ void CustomSimulationEventCallback::onTrigger(physx::PxTriggerPair* pairs, physx
 		 //C26813  : 비트플래그로 사용된 enum끼리의 비교는 == 이 아닌 bitwise and(&)로 비교하는 것이 좋음
 		 //WARNING : resultFd.word0 == static_cast<physx::PxU32>(PhysXFilterGroup::Ground
 		 //충돌체의 filterData가 ground이면서 닿았을 경우
-		//if (OtherFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::Ground) && 
-		//	TriggerFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::Player) &&
-		//	current.status & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND )
-		//{
-		//	if (CommonPlayer_ != nullptr)
-		//	{
-				//CommonPlayer_->TouchGroundOn();
-				//CommonPlayer_->DetachGroundOff();
-				//CommonPlayer_->Setwaitphysx(true);
-		//		return;
-		//	}
-
-		//}
-
-		// 충돌체의 filterData가 ground이면서 떨어졌을 경우
-		//if (OtherFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::Ground) &&
-		//	TriggerFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::Player) &&
-		//	current.status & physx::PxPairFlag::eNOTIFY_TOUCH_LOST )
-		//{
-		//	if (CommonPlayer_ != nullptr)
-		//	{
-		//		CommonPlayer_->TouchGroundOff();
-		//		CommonPlayer_->DetachGroundOn();
-		//		CommonPlayer_->Setwaitphysx(false);
-		//		return;
-
-		//	}
-		//}
 
 		if (OtherFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::Ground) &&
 			TriggerFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::PlayerFace) &&
@@ -238,6 +209,29 @@ void CustomSimulationEventCallback::onTrigger(physx::PxTriggerPair* pairs, physx
 				CommonPlayer_->InitStandUp2();
 				CommonPlayer_->SetIsStandingReady(true);
 				return;
+			}
+		}
+
+
+		if (OtherFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::Ground) &&
+			TriggerFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::PlayerHead))
+		{
+			if (current.status & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
+			{
+				if (CommonPlayer_ != nullptr)
+				{
+					CommonPlayer_->IsHeadTouchGroundOn();
+					return;
+				}
+			}
+
+			if (current.status & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
+			{
+				if (CommonPlayer_ != nullptr)
+				{
+					CommonPlayer_->IsHeadTouchGroundOff();
+					return;
+				}
 			}
 		}
 	}
@@ -270,34 +264,19 @@ void CustomSimulationEventCallback::onContact(const physx::PxContactPairHeader& 
 			}
 
 		}
-
-		//if (OtherFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::Ground) &&
-		//	ContactFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic) &&
-		//	current.events & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
-		//{
-
-		//	CommonPlayer_->TouchGroundOff();
-		//	CommonPlayer_->DetachGroundOn();
-		//	CommonPlayer_->Setwaitphysx(false);
-		//	return;
-
-		//}
-
-
 		if (OtherFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::Obstacle) &&
 			ContactFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic) &&
 			current.events & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
 		{
-			if (pairs->contactImpulses != nullptr)
+			if (pairs->contactImpulses != NULL)
 			{
 				physx::PxReal K = *pairs->contactImpulses;
-				if (abs(*pairs->contactImpulses) > physx::PxReal(20.0f))
-				{
-					CommonPlayer_->OnUnControlable();
-				}
+
+				CommonPlayer_->OnUnControlable();
 			}
 
 		}
+
 	}
 }
 
@@ -315,19 +294,20 @@ physx::PxFilterFlags CustomFilterShader(physx::PxFilterObjectAttributes attribut
 	 //generate contacts for all that were not filtered above
 	pairFlags = physx::PxPairFlag::eNOTIFY_TOUCH_FOUND | physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS | physx::PxPairFlag::eNOTIFY_TOUCH_LOST |
 		physx::PxPairFlag::eDETECT_DISCRETE_CONTACT | physx::PxPairFlag::eSOLVE_CONTACT | physx::PxPairFlag::eNOTIFY_CONTACT_POINTS;
+
 	return physx::PxFilterFlag::eDEFAULT;
 
-	if ((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1))
-	{
-		pairFlags |= physx::PxPairFlag::eNOTIFY_CONTACT_POINTS;
-		pairFlags |= physx::PxPairFlag::eNOTIFY_TOUCH_FOUND;
+	//if ((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1))
+	//{
+	//	pairFlags |= physx::PxPairFlag::eNOTIFY_CONTACT_POINTS;
+	//	pairFlags |= physx::PxPairFlag::eNOTIFY_TOUCH_FOUND;
 
-	}
+	//}
 
-	if ((filterData0.word0 & filterData1.word2) && (filterData1.word0 & filterData0.word2))
-	{
-		pairFlags |= physx::PxPairFlag::eNOTIFY_CONTACT_POINTS;
-		pairFlags |= physx::PxPairFlag::eMODIFY_CONTACTS;
-	}
+	//if ((filterData0.word0 & filterData1.word2) && (filterData1.word0 & filterData0.word2))
+	//{
+	//	pairFlags |= physx::PxPairFlag::eNOTIFY_CONTACT_POINTS;
+	//	pairFlags |= physx::PxPairFlag::eMODIFY_CONTACTS;
+	//}
 }
 

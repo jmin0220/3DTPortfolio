@@ -50,7 +50,9 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 	// 플레이어 최대 속력
 	// dynamic_->setMaxLinearVelocity(PLAYER_MAX_SPEED);
 
-	dynamic_->setRigidDynamicLockFlags(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_X | physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y |
+	dynamic_->setRigidDynamicLockFlags(
+		physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_X | 
+		physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y |
 		physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z);
 
 	float ScaledRadius = _GeoMetryScale.z;
@@ -95,9 +97,19 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 	faceshape_->setLocalPose(facerelativePose2);
 	faceshape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::PlayerFace), 0, 0, 0));
 
+	headshape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(ScaledHeight * 0.9f), *material_);
+	headshape_->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
+	headshape_->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
+	physx::PxTransform headrelativePose(physx::PxVec3(0.0f, CapsuleHeight * 1.5f, 0.0f));
+	//physx::PxTransform facerelativePose2(headrelativePose);
+	headshape_->setLocalPose(headrelativePose);
+	headshape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::PlayerHead), 0, 0, 0));
+	headshape_->setContactOffset(0.2f);
+
 	// 제동?
 	dynamic_->setLinearDamping(physx::PxReal(0.5f));
-	dynamic_->setAngularDamping(physx::PxReal(0.5f));
+	dynamic_->setMaxAngularVelocity(physx::PxReal(20.0f));
+	dynamic_->setAngularDamping(physx::PxReal(2.0f));
 
 
 	// Scene에 액터 추가
@@ -126,7 +138,7 @@ void PhysXDynamicActorComponent::SetMoveDive(float _Rot)
 {
 	float4 DirVec = float4::DegreeToDirection2D(_Rot);
 	DirVec *= 1.0f;
-	dynamic_->addForce(physx::PxVec3(DirVec.y, PLAYER_JUMP_FORCE, DirVec.x), physx::PxForceMode::eIMPULSE);
+	dynamic_->addForce(physx::PxVec3(DirVec.y, PLAYER_JUMP_FORCE* 0.5f, DirVec.x), physx::PxForceMode::eIMPULSE);
 }
 
 
@@ -264,6 +276,7 @@ bool PhysXDynamicActorComponent::StandUp2(float _DeltaTime, bool _IsXAixisRotRea
 	float4 YAxis(0.0f, 1.0f, 0.0f);
 	float4 ZAxis(0.0f, 0.0f, 1.0f);
 	physx::PxVec3 YAxisVec3(0.0f, 1.0f, 0.0f);
+	physx::PxVec3 mYAxisVec3(0.0f, -1.0f, 0.0f);
 	float AngleDegree = Angle * GameEngineMath::RadianToDegree;
 
 	physx::PxVec3 ASDASFFASGG = dynamic_->getGlobalPose().q.getBasisVector1();
@@ -294,29 +307,43 @@ bool PhysXDynamicActorComponent::StandUp2(float _DeltaTime, bool _IsXAixisRotRea
 	//if (AngDiffEuler);
 	//dynamic의 Axis와 Y-Axis 사이의 NoramlVector
 	physx::PxVec3 Normal = Vec3.cross(YAxisVec3);
+	physx::PxVec3 mNormal = Vec3.cross(mYAxisVec3);
 	Normal.normalize();
 	StandUpProgressYAxisAngle_ += _DeltaTime;
 	float ChangedAngle =  GameEngineMath::LerpLimit(StandUpStartYAxisAngle_, StandUpTargetYAxisAngle_, StandUpProgressYAxisAngle_ * 3.0f);
 
 	//노말백터를 기준으로 YAxis로 AngDiff만큼 회전
-	float4 FinalRot = RodriguesRotate({ Vec3.x, Vec3.y, Vec3.z }, { Normal.x, Normal.y, Normal.z }, 0.08f);
+	float4 FinalRot;
+	GameEngineDebug::OutPutString(std::to_string(Vec3.x) + ", " + std::to_string(Vec3.y) + ", " + std::to_string(Vec3.z) );
+	if (Vec3.y > 0)
+	{
+		FinalRot = RodriguesRotate({ Vec3.x, Vec3.y, Vec3.z }, { Normal.x, Normal.y, Normal.z }, 0.08f);
+	}
+	else
+	{
+		FinalRot = RodriguesRotate({ Vec3.x, Vec3.y, Vec3.z }, { Normal.x, Normal.y, Normal.z }, -0.08f);
+	}
+
+
 	if (abs(FinalRot.y) > 0.97f)
 	{
 		FinalRot.x = 0.0f;
 		FinalRot.z = 0.0f;
 		FinalRot.y = 1.0f;
 		Result = true;
+		GameEngineDebug::OutPutString("WakeUp");
 	}
 
-	if (abs(FinalRot.x) > 0.97f && ChangedAngle == 0.0f)
-	{
-		//float AngDiffXAxis = acosf(float4::DotProduct3D({ Vec3.x, Vec3.y, Vec3.z }, XAxis));
-		FinalRot.x = 0.0f;
-		FinalRot.z = 0.0f;
-		FinalRot.y = 1.0f;
-		Result = true;
+	//if (abs(FinalRot.x) > 0.97f && ChangedAngle == 0.0f)
+	//{
+	//	//float AngDiffXAxis = acosf(float4::DotProduct3D({ Vec3.x, Vec3.y, Vec3.z }, XAxis));
+	//	FinalRot.x = 0.0f;
+	//	FinalRot.z = 0.0f;
+	//	FinalRot.y = 1.0f;
+	//	Result = true;
+	//	GameEngineDebug::OutPutString("WakeUp");
 
-	}
+	//}
 
 	physx::PxVec3 FinalRotVec3(FinalRot.x, FinalRot.y, FinalRot.z);
 	FinalRotVec3.normalize();
@@ -395,6 +422,30 @@ void PhysXDynamicActorComponent::InitializeStandUp2()
 	float Angle;
 	physx::PxVec3 Vec3;
 	dynamic_->getGlobalPose().q.toRadiansAndUnitAxis(Angle, Vec3);
+
+	//if (abs(Vec3.x) > abs(Vec3.z))
+	//{
+	//	if (abs(Vec3.x) > abs(Vec3.y))
+	//	{
+	//		physx::PxReal VecValue = Vec3.x;
+	//		Vec3.x = Vec3.y;
+	//		Vec3.y = VecValue;
+	//	}
+	//}
+	//else
+	//{
+	//	if (abs(Vec3.z) > abs(Vec3.y))
+	//	{
+	//		physx::PxReal VecValue = Vec3.z;
+	//		Vec3.z = Vec3.y;
+	//		Vec3.y = VecValue;
+	//	}
+	//}
+
+	//physx::PxQuat tmpQuat(Angle, Vec3);
+	////const physx::PxQuat tmpPxQuat(tmpQuat.x, tmpQuat.y, tmpQuat.z, tmpQuat.w);
+	//const physx::PxTransform tmpTransform(dynamic_->getGlobalPose().p, tmpQuat);
+	//dynamic_->setGlobalPose(tmpTransform);
 
 	StandUpStartYAxisAngle_ = Angle;
 

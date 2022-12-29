@@ -47,6 +47,7 @@ PlayerActor::PlayerActor() :
 	CheckPointPos_({ 0,200.0f,0 }),
 	IsGoal_(false),
 	IsStanding_(false),
+	IsHeadTouchGround_(false),
 	StandUpDelay_(0.0f),
 	UnControlableTime_(0.0f),
 	IsUnControlable_(false),

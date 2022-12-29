@@ -188,7 +188,7 @@ void PlayerActor::DiveUpdate(float _DeltaTime, const StateInfo& _Info)
 	}
 
 
-	if ((IsTouchGround == true  && waitphysx_ == true && IsStandingReady_ == true) ||
+	if ((IsTouchGround == true  && waitphysx_ == true && IsHeadTouchGround_ == true) ||
 		IsDiving_ == true)
 	{
 		IsDiving_ = true;
@@ -243,16 +243,20 @@ void PlayerActor::CannotControlStart(const StateInfo& _Info)
 void PlayerActor::CannotControlUpdate(float _DeltaTime, const StateInfo& _Info)
 {
 
-	UnControlableTime_ += _DeltaTime;
 
-	if (UnControlableTime_ > 2.0f && IsTouchGround == true)
+	if (IsTouchGround == true && IsHeadTouchGround_ == true)
 	{
+		UnControlableTime_ += _DeltaTime;
+		if (UnControlableTime_ > 1.0f)
+		{
 
 			IsUnControlable_ = false;
 			DynamicActorComponent_->SetlockAxis();
 			PlayerStateManager_.ChangeState("DiveGetUp");
 
+		}
 	}
+
 
 
 }

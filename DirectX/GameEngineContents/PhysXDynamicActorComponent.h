@@ -118,6 +118,7 @@ private:
 	physx::PxMaterial* material_;
 	physx::PxShape* shape_;
 	physx::PxShape* faceshape_;
+	physx::PxShape* headshape_;
 	physx::PxShape* Flagshape_;
 	physx::PxRigidDynamic* dynamic_;
 
