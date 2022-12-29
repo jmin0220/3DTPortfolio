@@ -6,6 +6,8 @@
 #include <GameEngineBase/magic_enum.hpp>
 #include "GameServerGUI.h"
 
+#include "OptionActor.h"
+
 LEVELS LoadingLevel::CurLoadingLevel_(LEVELS::NONE);
 std::string_view LoadingLevel::StrCurLoadingLevel_;
 bool LoadingLevel::AllPlayersReady_ = false;
@@ -119,6 +121,10 @@ void LoadingLevel::Update(float _DeltaTime)
 // 랜덤으로 스테이지를 시작하는게 아니라 원하는 스테이지를 선택할 수 있도록
 void LoadingLevel::LevelStartEvent()
 {
+	GlobalBGM::GetInst()->GetBGM().Stop();
+	GlobalBGM::GetInst()->SetBGM(GameEngineSound::SoundPlayControl("Next.mp3"));
+	GlobalBGM::GetInst()->GetBGM().Volume(OptionActor::VolumeRatio_);
+
 	LevelChangeReady_ = false;
 	LoadingComplete_ = false;
 

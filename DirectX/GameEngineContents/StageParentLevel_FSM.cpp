@@ -6,6 +6,8 @@
 #include "IntroduceGame.h"
 #include "TimerActor.h"
 
+#include "OptionActor.h"
+
 ///////////////////////////
 // 스테이지 시작전 준비 단계
 ///////////////////////////
@@ -27,6 +29,12 @@ void StageParentLevel::IdleStart(const StateInfo& _Info)
 	if (true == GameServer::GetInst()->IsServerStart())
 	{
 		IntroduceGame_->On();
+		{
+			//김예나 : 게임소개 부분 브금 추가
+			GlobalBGM::GetInst()->GetBGM().Stop();
+			GlobalBGM::GetInst()->SetBGM(GameEngineSound::SoundPlayControl("Game_Intro.mp3"));
+			GlobalBGM::GetInst()->GetBGM().Volume(OptionActor::VolumeRatio_);
+		}
 		IntroduceGame_->SetStageTexture(MyStage_);
 		Player_->SetInputAvailable(false);
 	}
@@ -126,10 +134,19 @@ void StageParentLevel::StagePreviewStart(const StateInfo& _Info)
 	}
 
 	IntroduceGame_->Off();
+	{
+		//김예나 : 게임 소개 꺼지면 소개 브금도 같이 꺼짐
+		GlobalBGM::GetInst()->GetBGM().Stop();
+	}
 	MainCam_->OffFreeCameraMode();
 
 	// 시네머신 작동
 	CinemaCam_->SetActivated();
+	{
+		//김예나 : 시네마 카메라 동작시 나오는 브금 On
+		GlobalBGM::GetInst()->SetBGM(GameEngineSound::SoundPlayControl("Ready_Go.mp3"));
+		GlobalBGM::GetInst()->GetBGM().Volume(OptionActor::VolumeRatio_);
+	}
 }
 
 void StageParentLevel::StagePreviewUpdate(float _DeltaTime, const StateInfo& _Info)

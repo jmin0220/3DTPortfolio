@@ -175,6 +175,8 @@ void LobbyLevel::LobbyUpdate(float _DeltaTime, const StateInfo& _Info)
 
 void LobbyLevel::FallingStart(const StateInfo& _Info)
 {
+	GameEngineSound::SoundPlayOneShot("Whoo.mp3");
+
 	LobbySet_->GetTopMenu().lock()->MyState_ = MenuState::Fall;
 
 	Player_->ChangeAnimationFall();
