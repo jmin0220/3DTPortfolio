@@ -48,15 +48,15 @@ void HexTile::Start()
 
 void HexTile::Update(float _DeltaTime)
 {
-	//if (true == GameServer::RaceStart_)
-	//{
-	//	ServerActivated_ = true;
-	//}
+	if (false == ServerActivated_ && true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageRaceStart))
+	{
+		ServerActivated_ = true;
+	}
 
-	//if (false == ServerActivated_)
-	//{
-	//	return;
-	//}
+	if (false == ServerActivated_)
+	{
+		return;
+	}
 
 	if(true == Collision_->IsCollision(CollisionType::CT_OBB, CollisionGroup::Player, CollisionType::CT_OBB))
 	{
