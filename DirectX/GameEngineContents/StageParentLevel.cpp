@@ -160,23 +160,16 @@ void StageParentLevel::LevelStartEvent()
 
 	if (true == GameServer::GetInst()->IsServerStart())
 	{
-		if (true == GameServer::IsHost_)
+		/*if (true == GameServer::IsHost_)
 		{
-			Player_->ServerInit(ServerObjectType::Player);
-
-
-			// 호스트가 나머지 플레이어 생성해줌 일단
-			int NetPlayerCount = GameServer::GetInst()->GetAllPlayersCount() - 1;
-			{
-				for (int i = 0; i < NetPlayerCount; i++)
-				{
-					std::shared_ptr<PlayerActor> Player = CreateActor<PlayerActor>();
-					Player->ClientInit(ServerObjectType::Player, Player->GetServerID());
-					Player->PlayerInit();
-				}
-			}
-
+			Player_->ClientInit(ServerObjectType::Player, GameServer::GetInst()->PlayerID_);
 		}
+		else
+		{
+			Player_->ClientInit
+		}*/
+
+		Player_->ClientInit(ServerObjectType::Player, GameServer::GetInst()->PlayerID_);
 
 	}
 

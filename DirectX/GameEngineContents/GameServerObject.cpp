@@ -70,11 +70,32 @@ void GameServerObject::ServerInit(ServerObjectType _Type)
 void GameServerObject::ClientInit(ServerObjectType _Type, int _ID)
 {
 	ServerType = _Type;
+
+	
+
+	// 플레이어(호스트, 유저1, 유저2, ...)는 자신의 UserId(0, 1, 2로 초기화 할것임
+	// 플레이어 ID는 겹치지 않음
+	// 새로운 클라이언트 올때 가장 큰 넘버 다음부터 오브젝트 생성시작 넘버
+	if (_Type == ServerObjectType::Player)
+	{
+		IdSeed.store(_ID + 1);
+
+	}
+	// 장애물
+	else
+	{
+
+	}
+
 	ID = _ID;
 
-	GameEngineDebug::OutPutString("[ 유저 IDSEED 시작 : " + std::to_string(IdSeed) + " ]");
-
 	IsNetInit = true;
+
+	std::map<int, GameServerObject*>::iterator FindIt = AllServerActor.find(_ID);
+	if (FindIt != AllServerActor.end())
+	{
+		GameEngineDebug::OutPutString("서버 겹치는 오브젝트생성");
+	}
 
 	AllServerActor.insert(std::make_pair(ID, this));
 }
