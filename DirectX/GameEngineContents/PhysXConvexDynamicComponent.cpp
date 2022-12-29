@@ -74,6 +74,11 @@ void PhysXConvexDynamicComponent::CreatePhysXActors(const std::string& _MeshName
 	shape_->setLocalPose(physx::PxTransform(Pivot));
 
 	// 밀도 설정
+	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 0.01f);
+
+	// 제동비율
+	dynamic_->setAngularDamping(physx::PxReal(0.05f));
+
 	shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Obstacle)
 			, 0, static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic), 0));
 
