@@ -155,14 +155,13 @@ void StageParentLevel::LevelStartEvent()
 	VirtualPhysXLevel::LevelStartEvent();
 	LevelStartLoad();
 
-
 	// 자신의 메인 플레이어 생성
 	Player_ = CreateActor<PlayerActor>();
 	if (true == GameServer::GetInst()->IsServerStart())
 	{
 		if (true == GameServer::IsHost_)
 		{
-			Player_->ServerInit(ServerObjectType::Player);
+			Player_->ClientInit(ServerObjectType::Player, GameServer::GetInst()->PlayerID_);
 		}
 		else
 		{

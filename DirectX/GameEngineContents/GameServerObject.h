@@ -61,7 +61,7 @@ public:
 public:
 	// constrcuter destructer
 	GameServerObject(/*ServerObjectType _Type*/);
-	~GameServerObject();
+	virtual ~GameServerObject();
 
 	// delete Function
 	GameServerObject(const GameServerObject& _Other) = delete;

@@ -216,7 +216,7 @@ void GameServerGUI::InGameGUI()
 		
 		if (PlayerActor::MainPlayer != nullptr)
 		{
-			Text += "\n 메인플레이어엑터 ID : " + std::to_string(PlayerActor::MainPlayer->GetNetID());
+			Text += "\n 메인플레이어엑터 ID : " + std::to_string(PlayerActor::MainPlayer->GetNetID()) + "\n";
 		}
 
 		if (PlayerFlag::P_None == GameServer::PlayerSignal_)
@@ -372,5 +372,25 @@ void GameServerGUI::InGameGUI()
 			}
 		}
 	}
-	
+
+
+	ImGui::Text(GameEngineString::AnsiToUTF8Return("< 서버 오브젝트 정보 >").c_str());
+	{
+		std::map<int, GameServerObject*>::iterator StartIt = GameServerObject::AllServerActor.begin();
+		std::map<int, GameServerObject*>::iterator EndIt = GameServerObject::AllServerActor.end();
+
+		std::string Text;
+		for (; StartIt != EndIt; ++StartIt)
+		{
+			Text += std::to_string((*StartIt).first) + "번 엑터 NETID : " + std::to_string((*StartIt).second->GetNetID());
+
+			PlayerActor* IsPlayer = dynamic_cast<PlayerActor*>((*StartIt).second);
+			if (nullptr != IsPlayer)
+			{
+				Text += " 플레이어 엑터입니다";
+			}
+		}
+	}
+
+
 }
