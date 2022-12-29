@@ -58,14 +58,14 @@ InGameSetUI::~InGameSetUI()
 void InGameSetUI::Start()
 {
 	GameFail_ = GetLevel()->CreateActor<GameFail>();
-	GameFail_->GetTransform().SetWorldPosition({ 0.0f,200.0f });
+	//GameFail_->GetTransform().SetWorldPosition({ 0.0f,200.0f });
 	GameFail_->Off();
 
 	GameSuccess_ = GetLevel()->CreateActor<GameSuccess>();
 	GameSuccess_->Off();
 
 	RoundEnd_ = GetLevel()->CreateActor<RoundEnd>();
-	RoundEnd_->GetTransform().SetWorldPosition({ 0.0f,-200.0f });
+	//RoundEnd_->GetTransform().SetWorldPosition({ 0.0f,-200.0f });
 	RoundEnd_->Off();
 
 	CountDown_ = GetLevel()->CreateActor<CountDown>();

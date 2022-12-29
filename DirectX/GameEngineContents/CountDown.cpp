@@ -180,6 +180,7 @@ void CountDown::CountDownStart()
 		//========================================3===========================================
 		if (IsThreePop_ == false && IsThreeEnd_==false)
 		{
+			//GameEngineSound::SoundPlayOneShot("Three.mp3");
 			float4 f4CurrentScale = Three_->GetTransform().GetWorldScale();
 			float4 f4DestinationScale = { 205.0f, 256.0f };
 			Three_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 10.f) });
@@ -219,6 +220,7 @@ void CountDown::CountDownStart()
 		//========================================2===========================================
 		if (IsTwoPop_ == false && IsThreeEnd_ == true && IsTwoEnd_==false && Three_->GetTransform().GetWorldScale().x<=1.0f) //3이 끝낫을때 시작해야하니 체크항목 하나 더 추가
 		{
+			//GameEngineSound::SoundPlayOneShot("Two.mp3");
 			Three_->Off();
 			float4 f4CurrentScale = Two_->GetTransform().GetWorldScale();
 			float4 f4DestinationScale = { 206.0f, 254.0f };
@@ -257,6 +259,7 @@ void CountDown::CountDownStart()
 		//========================================1===========================================
 		if (IsOnePop_ == false && IsTwoEnd_ == true && IsOneEnd_ == false && Two_->GetTransform().GetWorldScale().x <= 1.0f) //3이 끝낫을때 시작해야하니 체크항목 하나 더 추가
 		{
+			//GameEngineSound::SoundPlayOneShot("One.mp3");
 			Two_->Off();
 			float4 f4CurrentScale = One_->GetTransform().GetWorldScale();
 			float4 f4DestinationScale = { 162.0f, 251.0f };
@@ -295,6 +298,7 @@ void CountDown::CountDownStart()
 		//========================================GO===========================================
 		if (IsGoPop_ == false && IsOneEnd_ == true && IsGoEnd_ == false && One_->GetTransform().GetWorldScale().x <= 1.0f) //3이 끝낫을때 시작해야하니 체크항목 하나 더 추가
 		{
+			//GameEngineSound::SoundPlayOneShot("CountDonw_Go.mp3");
 			One_->Off();
 
  			if (IsAniOn_ == false)
