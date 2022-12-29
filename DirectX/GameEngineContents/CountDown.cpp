@@ -12,6 +12,14 @@ CountDown::CountDown()
 	,IsGoEnd_(false)
 	,IsGoPop_(false)
 	,IsCountDownEnd_(false)
+	,Three_SoundOn_(false)
+	,Three_Once_(false)
+	,Two_SoundOn_(false)
+	,Two_Once_(false)
+	,One_SoundOn_(false)
+	,One_Once_(false)
+	,Go_SoundOn_(false)
+	,Go_Once_(false)
 {
 }
 
@@ -178,9 +186,23 @@ void CountDown::CountDownStart()
 {
 	{
 		//========================================3===========================================
+
 		if (IsThreePop_ == false && IsThreeEnd_==false)
 		{
-			//GameEngineSound::SoundPlayOneShot("Three.mp3");
+			{
+				//사운드
+				if (Three_->IsUpdate() == true && Three_SoundOn_ == false)
+				{
+					//사운드
+					Three_SoundOn_ = true;
+				}
+
+				if (Three_SoundOn_ == true && Three_Once_ == false)
+				{
+					GameEngineSound::SoundPlayOneShot("Three.mp3");
+					Three_Once_ = true;
+				}
+			}
 			float4 f4CurrentScale = Three_->GetTransform().GetWorldScale();
 			float4 f4DestinationScale = { 205.0f, 256.0f };
 			Three_->GetTransform().SetWorldScale({ float4::Lerp(f4CurrentScale, f4DestinationScale, GameEngineTime::GetDeltaTime() * 10.f) });
@@ -218,9 +240,23 @@ void CountDown::CountDownStart()
 
 	{
 		//========================================2===========================================
+
 		if (IsTwoPop_ == false && IsThreeEnd_ == true && IsTwoEnd_==false && Three_->GetTransform().GetWorldScale().x<=1.0f) //3이 끝낫을때 시작해야하니 체크항목 하나 더 추가
 		{
-			//GameEngineSound::SoundPlayOneShot("Two.mp3");
+			{
+				//사운드
+				if (Two_->IsUpdate() == true && Two_SoundOn_ == false)
+				{
+					//사운드
+					Two_SoundOn_ = true;
+				}
+
+				if (Two_SoundOn_ == true && Two_Once_ == false)
+				{
+					GameEngineSound::SoundPlayOneShot("Two.mp3");
+					Two_Once_ = true;
+				}
+			}
 			Three_->Off();
 			float4 f4CurrentScale = Two_->GetTransform().GetWorldScale();
 			float4 f4DestinationScale = { 206.0f, 254.0f };
@@ -257,9 +293,25 @@ void CountDown::CountDownStart()
 
 	{
 		//========================================1===========================================
+		
+
 		if (IsOnePop_ == false && IsTwoEnd_ == true && IsOneEnd_ == false && Two_->GetTransform().GetWorldScale().x <= 1.0f) //3이 끝낫을때 시작해야하니 체크항목 하나 더 추가
 		{
-			//GameEngineSound::SoundPlayOneShot("One.mp3");
+			{
+				//사운드
+				if (One_->IsUpdate() == true && One_SoundOn_ == false)
+				{
+					//사운드
+					One_SoundOn_ = true;
+				}
+
+				if (One_SoundOn_ == true && One_Once_ == false)
+				{
+					GameEngineSound::SoundPlayOneShot("One.mp3");
+					One_Once_ = true;
+				}
+			}
+
 			Two_->Off();
 			float4 f4CurrentScale = One_->GetTransform().GetWorldScale();
 			float4 f4DestinationScale = { 162.0f, 251.0f };
@@ -296,12 +348,26 @@ void CountDown::CountDownStart()
 
 	{
 		//========================================GO===========================================
+
 		if (IsGoPop_ == false && IsOneEnd_ == true && IsGoEnd_ == false && One_->GetTransform().GetWorldScale().x <= 1.0f) //3이 끝낫을때 시작해야하니 체크항목 하나 더 추가
 		{
-			//GameEngineSound::SoundPlayOneShot("CountDonw_Go.mp3");
+			{
+				//사운드
+				if (Go_->IsUpdate() == true && Go_SoundOn_ == false)
+				{
+					//사운드
+					Go_SoundOn_ = true;
+				}
+
+				if (Go_SoundOn_ == true && Go_Once_ == false)
+				{
+					GameEngineSound::SoundPlayOneShot("CountDonw_Go.mp3");
+					Go_Once_ = true;
+				}
+			}
 			One_->Off();
 
- 			if (IsAniOn_ == false)
+ 			if (IsAniOn_ == false && Go_->IsUpdate()==true)
 			{
 				PopAni1_->On();
 				PopAni2_->On();
@@ -396,4 +462,13 @@ void CountDown::Reset()
 	PopAni4_->CurAnimationReset();
 	PopAni5_->CurAnimationReset();
 	PopAni6_->CurAnimationReset();
+
+	Three_SoundOn_	= false;
+	Three_Once_		= false;
+	Two_SoundOn_	= false;
+	Two_Once_		= false;
+	One_SoundOn_	= false;
+	One_Once_		= false;
+	Go_SoundOn_		= false;
+	Go_Once_		= false;
 }

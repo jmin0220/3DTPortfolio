@@ -53,6 +53,15 @@ private:
 	bool IsGoEnd_;
 	bool IsAniOn_;
 
+	bool Three_SoundOn_;
+	bool Three_Once_;
+	bool Two_SoundOn_;
+	bool Two_Once_;
+	bool One_SoundOn_;
+	bool One_Once_;
+	bool Go_SoundOn_;
+	bool Go_Once_;
+
 	bool IsCountDownEnd_;
 };
 
