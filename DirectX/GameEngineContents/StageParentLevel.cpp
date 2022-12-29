@@ -160,6 +160,8 @@ void StageParentLevel::LevelStartEvent()
 
 	if (true == GameServer::GetInst()->IsServerStart())
 	{
+		GameServerObject::PlayersCount = GameServer::GetInst()->GetAllPlayersCount();
+
 		/*if (true == GameServer::IsHost_)
 		{
 			Player_->ClientInit(ServerObjectType::Player, GameServer::GetInst()->PlayerID_);
@@ -170,7 +172,6 @@ void StageParentLevel::LevelStartEvent()
 		}*/
 
 		Player_->ClientInit(ServerObjectType::Player, GameServer::GetInst()->PlayerID_);
-
 	}
 
 	Player_->PlayerInit();

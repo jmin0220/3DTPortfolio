@@ -88,13 +88,13 @@ void JumpClubLevel::LevelStartEvent()
 	if (true == GameServer::IsHost_)
 	{
 		std::shared_ptr<JumpClub_SpinBarDouble> BarDouble = CreateActor<JumpClub_SpinBarDouble>();
-		BarDouble->ServerInit(ServerObjectType::SpinBarDouble);
+		BarDouble->ClientInit(ServerObjectType::SpinBarDouble, GameServerObject::GetObjectID());
 		BarDouble->GetTransform().SetWorldPosition({ 0.0f, 77.0f, 0.0f });
 		BarDouble->PhysXInit();
 
 
 		std::shared_ptr<JumpClub_SpinBarSingle> BarSingle = CreateActor<JumpClub_SpinBarSingle>();
-		BarSingle->ServerInit(ServerObjectType::SpinBarSingle);
+		BarSingle->ClientInit(ServerObjectType::SpinBarSingle, GameServerObject::GetObjectID());
 		BarSingle->GetTransform().SetWorldPosition({ 0.0f, 62.0f, 0.0f });
 		BarSingle->PhysXInit();
 	}

@@ -32,12 +32,13 @@ public:
 	static void SetPlayersCount(int _Count)
 	{
 		PlayersCount = _Count;
-		IdSeed = PlayersCount;
+		ObjectSeed = PlayersCount;
 	}
 
 public:
 	static int PlayersCount;
 	static std::atomic<int> IdSeed;
+	static std::atomic<int> ObjectSeed;
 	static std::map<int, GameServerObject*> AllServerActor;
 
 public:
@@ -64,6 +65,11 @@ public:
 	static int GetServerID() 
 	{
 		return ++IdSeed;
+	}
+
+	static int GetObjectID()
+	{
+		return ++ObjectSeed;
 	}
 
 public:

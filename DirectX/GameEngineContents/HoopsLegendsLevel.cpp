@@ -217,7 +217,7 @@ void HoopsLegendsLevel::SpawnHoops()
 		HoopsActor[i]->GetTransform().SetWorldPosition(HoopsPos[PrevPos[i]]);
 
 		// 호스트의 서버 초기화
-		HoopsActor[i]->CastThis<HoopsScoreRing>()->ServerInit(ServerObjectType::HoopRing);
+		HoopsActor[i]->CastThis<HoopsScoreRing>()->ClientInit(ServerObjectType::HoopRing);
 		HoopsActor[i]->CastThis<HoopsScoreRing>()->PhysXInit();
 	}
 
