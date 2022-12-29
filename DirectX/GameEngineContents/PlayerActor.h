@@ -314,6 +314,7 @@ public:
 	inline void ResetPlayerPos()
 	{
 		DynamicActorComponent_->SetPlayerStartPos(CheckPointPos_);
+		ResetPlayer();
 	}
 
 	inline void InitStandUp2()
