@@ -264,7 +264,7 @@ void PlayerActor::Update(float _DeltaTime)
 				// 네트워크상 죽음
 				if (ObjectUpdate->State == ServerObjectBaseState::Death)
 				{
-					this->SetPlayerInvisible();
+					this->SetPlayerInvisible(true);
 				}
 			
 				// 스킨
