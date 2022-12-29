@@ -11,6 +11,7 @@ physx::PxFilterFlags CustomFilterShader(physx::PxFilterObjectAttributes attribut
 VirtualPhysXLevel::VirtualPhysXLevel() 
 	: Player_(nullptr)
 	, CtrManager_(nullptr)
+	, AddDeltaTime_(0.0f)
 {
 }
 
@@ -27,7 +28,14 @@ void VirtualPhysXLevel::Start()
 void VirtualPhysXLevel::Update(float _DeltaTIme)
 {
 	// 물리연산 업데이트
-	stepPhysics(_DeltaTIme, true);
+	//stepPhysics(_DeltaTIme, true);
+
+	GameEngineCore::EngineThreadPool.Work(
+		[=]()
+		{
+			stepPhysics(true);
+		}
+	);	
 }
 
 void VirtualPhysXLevel::End()
@@ -37,6 +45,14 @@ void VirtualPhysXLevel::End()
 void VirtualPhysXLevel::LevelStartEvent()
 {
 	initPhysics(true);
+
+
+	GameEngineCore::EngineThreadPool.Work(
+		[=]()
+		{
+			stepPhysics(true);
+		}
+	);
 }
 
 void VirtualPhysXLevel::LevelEndEvent()
@@ -111,17 +127,25 @@ void VirtualPhysXLevel::initPhysics(bool _interactive)
 }
 
 // PhysX 업데이트
-void VirtualPhysXLevel::stepPhysics(float _DeltaTime, bool _Interactive)
+void VirtualPhysXLevel::stepPhysics(bool _Interactive)
 {
-	float simulateRatio = 120.0f;
+	AddDeltaTime_ += GameEngineTime::GetDeltaTime();
 
-//#ifndef DEBUG
-//	 simulateRatio = 60.0f;
-//#endif
-// 
-	// TODO::현재프레임 만큼 수정할 필요가 있을지도
-	Scene_->simulate(1 / simulateRatio);
-	Scene_->fetchResults(true);
+	// 1/60초
+	if (AddDeltaTime_ >= 0.0166666666666667f)
+	{
+		AddDeltaTime_ = 0.0f;
+
+		float simulateRatio = 120.0f;
+
+		//#ifndef DEBUG
+		//	 simulateRatio = 60.0f;
+		//#endif
+		// 
+			// TODO::현재프레임 만큼 수정할 필요가 있을지도
+		Scene_->simulate(1 / simulateRatio);
+		Scene_->fetchResults(true);
+	}
 }
 
 // PhysX 메모리 Release

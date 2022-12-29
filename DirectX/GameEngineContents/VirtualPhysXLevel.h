@@ -93,11 +93,13 @@ private:
 
 	CustomSimulationEventCallback* SimulationEventCallback_;
 
+	float AddDeltaTime_;
+
 	// 클래스 초기화
 	void initPhysics(bool _interactive);
 
 	// PhysX Update
-	void stepPhysics(float _DeltaTime, bool _Interactive = true);
+	void stepPhysics(bool _Interactive = true);
 
 	// Memory Release
 	void cleanupPhysics(bool _Interactive = true);
