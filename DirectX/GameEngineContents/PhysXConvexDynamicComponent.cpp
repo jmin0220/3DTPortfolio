@@ -79,8 +79,8 @@ void PhysXConvexDynamicComponent::CreatePhysXActors(const std::string& _MeshName
 	// 제동비율
 	dynamic_->setAngularDamping(physx::PxReal(0.05f));
 
-	shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Obstacle)
-			, 0, static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic), 0));
+	//shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Obstacle)
+	//		, 0, static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic), 0));
 
 	//충돌할때 필요한 필터 데이터
 	if (IsObstacle_ == true)
