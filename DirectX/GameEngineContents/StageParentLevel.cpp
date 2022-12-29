@@ -159,14 +159,16 @@ void StageParentLevel::LevelStartEvent()
 	Player_ = CreateActor<PlayerActor>();
 	if (true == GameServer::GetInst()->IsServerStart())
 	{
-		if (true == GameServer::IsHost_)
-		{
-			Player_->ClientInit(ServerObjectType::Player, GameServer::GetInst()->PlayerID_);
-		}
-		else
-		{
-			Player_->ClientInit(ServerObjectType::Player, GameServer::GetInst()->PlayerID_);
-		}
+		//if (true == GameServer::IsHost_)
+		//{
+		//	Player_->ClientInit(ServerObjectType::Player, GameServer::GetInst()->PlayerID_);
+		//}
+		//else
+		//{
+		//	Player_->ClientInit(ServerObjectType::Player, GameServer::GetInst()->PlayerID_);
+		//}
+
+		Player_->ServerInit(ServerObjectType::Player);
 	}
 
 	Player_->PlayerInit();
