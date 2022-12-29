@@ -46,14 +46,13 @@ std::mutex SpawnLock;
 float4 StageParentLevel::PlayerPos = float4::ZERO;
 std::vector<float4> StageParentLevel::HoopsPos = std::vector<float4>();
 std::vector<std::shared_ptr<GameEngineActor>> StageParentLevel::HoopsActor = std::vector<std::shared_ptr<GameEngineActor>>();
-
+bool StageParentLevel::SpawnStart_ = false;
 
 StageParentLevel::StageParentLevel() 
 	: MyStage_(StageNum::STAGE1)
 	, GameScoreType_(GameScoreType::NONE)
 	, WatchCamIdx(0)
 	, TimerLimit_(0.0f)
-	, SpawnStart_(false)
 {
 	CinemaCam_ = std::make_shared<Cinemachine>();
 }

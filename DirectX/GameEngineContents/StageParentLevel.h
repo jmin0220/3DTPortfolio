@@ -148,7 +148,7 @@ protected:
 private:
 	//virtual void SpawnMyServerPlayer() = 0;
 	void SpawnServerObjects(bool _SpawnStart);
-	bool SpawnStart_;
+	static bool SpawnStart_;
 
 	void SetWatchCamNextPlayer();
 
