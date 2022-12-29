@@ -18,6 +18,14 @@ void HoopsScythe::Start()
 	Renderer_->SetFBXMesh("HoopsScythe.FBX", "CustomDefferedColor");
 	Renderer_->GetTransform().SetLocalPosition({ 0,-19.0f,0 });
 
+	std::vector<std::vector< std::shared_ptr<GameEngineRenderUnit>>>& UnitSet = Renderer_->GetAllRenderUnit();
+	for (std::vector< std::shared_ptr<GameEngineRenderUnit>>& Units : UnitSet)
+	{
+		for (std::shared_ptr<GameEngineRenderUnit> Unit : Units)
+		{
+			Unit->GetRenderer()->RenderOptionInst.IsNormal = 0;
+		}
+	}
 
 	ColRenderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
 	ColRenderer_->SetFBXMesh("ScytheCol.FBX", "CustomDefferedColor");

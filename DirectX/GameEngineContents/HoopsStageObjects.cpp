@@ -16,16 +16,56 @@ void HoopsStageObjects::Start()
 	FloorRenderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
 	FloorRenderer_->SetFBXMesh("HoopsFloor.FBX", "CustomDefferedColor");
 
+	{
+		std::vector<std::vector< std::shared_ptr<GameEngineRenderUnit>>>& UnitSet = FloorRenderer_->GetAllRenderUnit();
+		for (std::vector< std::shared_ptr<GameEngineRenderUnit>>& Units : UnitSet)
+		{
+			for (std::shared_ptr<GameEngineRenderUnit> Unit : Units)
+			{
+				Unit->GetRenderer()->RenderOptionInst.IsNormal = 0;
+			}
+		}
+	}
 	PlatformRenderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
 	PlatformRenderer_->SetFBXMesh("HoopsObjectPlatform.FBX", "CustomDefferedColor");
 
+	{
+		std::vector<std::vector< std::shared_ptr<GameEngineRenderUnit>>>& UnitSet = PlatformRenderer_->GetAllRenderUnit();
+		for (std::vector< std::shared_ptr<GameEngineRenderUnit>>& Units : UnitSet)
+		{
+			for (std::shared_ptr<GameEngineRenderUnit> Unit : Units)
+			{
+				Unit->GetRenderer()->RenderOptionInst.IsNormal = 0;
+			}
+		}
+	}
 
 	WallRenderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
 	WallRenderer_->SetFBXMesh("HoopsObjectWall.FBX", "CustomDefferedColor");
 
+	{
+		std::vector<std::vector< std::shared_ptr<GameEngineRenderUnit>>>& UnitSet = WallRenderer_->GetAllRenderUnit();
+		for (std::vector< std::shared_ptr<GameEngineRenderUnit>>& Units : UnitSet)
+		{
+			for (std::shared_ptr<GameEngineRenderUnit> Unit : Units)
+			{
+				Unit->GetRenderer()->RenderOptionInst.IsNormal = 0;
+			}
+		}
+	}
 	Renderer_ = CreateComponent<GameEngineFBXStaticRenderer>();
 	Renderer_->SetFBXMesh("HoopsBackGround.FBX", "CustomDefferedColor");
 
+	{
+		std::vector<std::vector< std::shared_ptr<GameEngineRenderUnit>>>& UnitSet = Renderer_->GetAllRenderUnit();
+		for (std::vector< std::shared_ptr<GameEngineRenderUnit>>& Units : UnitSet)
+		{
+			for (std::shared_ptr<GameEngineRenderUnit> Unit : Units)
+			{
+				Unit->GetRenderer()->RenderOptionInst.IsNormal = 0;
+			}
+		}
+	}
 
 	WallPhysXTriMeshGeometry_ = CreateComponent<PhysXTriMeshGeometryComponent>();
 	FloorPhysXTriMeshGeometry_ = CreateComponent<PhysXTriMeshGeometryComponent>();
