@@ -95,6 +95,10 @@ public:
 
 	void LockAxis();
 
+	inline void SetIsMain(bool _Flag)
+	{
+		IsMain_ = _Flag;
+	}
 
 	//플레이어 멈추는 함수
 	void FreezeDynamic();
@@ -138,6 +142,9 @@ private:
 
 	physx::PxVec3 InitVec3_;
 	physx::PxVec3 TargetVec3_;
+	physx::PxTransform RecentTransform_;
 
+	// 메인플레이어 플래그
+	bool IsMain_;
 };
 

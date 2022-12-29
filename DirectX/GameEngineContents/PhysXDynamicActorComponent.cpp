@@ -5,6 +5,7 @@
 PhysXDynamicActorComponent::PhysXDynamicActorComponent() 
 	:IsSpeedLimit_(false)
 	, StandUpProgressYAxisAngle_(0.0f)
+	, IsMain_(false)
 {
 }
 
@@ -163,6 +164,14 @@ void PhysXDynamicActorComponent::Start()
 
 void PhysXDynamicActorComponent::Update(float _DeltaTime)
 {
+	if (!(physx::PxIsFinite(dynamic_->getGlobalPose().p.x)
+		|| physx::PxIsFinite(dynamic_->getGlobalPose().p.y)
+		|| physx::PxIsFinite(dynamic_->getGlobalPose().p.z))
+		&& true == IsMain_)
+	{
+		dynamic_->setGlobalPose(RecentTransform_);
+	}
+
 	// PhysX Actor의 상태에 맞춰서 부모의 Transform정보를 갱신
 	float4 tmpWorldPos = { dynamic_->getGlobalPose().p.x
 	,dynamic_->getGlobalPose().p.y
@@ -209,6 +218,7 @@ void PhysXDynamicActorComponent::SetPlayerStartPos(float4 _Pos)
 
 	// 부모의 Transform정보를 바탕으로 PhysX Actor의 트랜스폼을 갱신
 	dynamic_->setGlobalPose(tmpPxTransform);
+	RecentTransform_ = tmpPxTransform;
 }
 
 bool PhysXDynamicActorComponent::PlayerStandUp(float _DeltaTime, bool _IsXAixisRotReady)

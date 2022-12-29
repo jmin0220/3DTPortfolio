@@ -153,6 +153,7 @@ void PlayerActor::PlayerInit()
 	{
 		if (this == PlayerActor::MainPlayer)
 		{
+			DynamicActorComponent_->SetIsMain(true);
 			dynamic_cast<VirtualPhysXLevel*>(GetLevel())->SetCommonPlayer(this);
 		}
 	}
