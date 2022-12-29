@@ -9,7 +9,7 @@ std::mutex PacketLock;
 void GameServerObject::ServerRelease()
 {
 	AllServerActor.clear();
-	IdSeed = 0;
+	IdSeed = PlayersCount;
 }
 
 void GameServerObject::PushPacket(std::shared_ptr<GameServerPacket> _Packet)
@@ -78,16 +78,14 @@ void GameServerObject::ClientInit(ServerObjectType _Type, int _ID)
 	// 새로운 클라이언트 올때 가장 큰 넘버 다음부터 오브젝트 생성시작 넘버
 	if (_Type == ServerObjectType::Player)
 	{
-		IdSeed.store(_ID + 1);
-
+		ID = GameServer::GetInst()->PlayerID_;
 	}
 	// 장애물
 	else
 	{
-
+		ID = GetServerID();
 	}
 
-	ID = _ID;
 
 	IsNetInit = true;
 

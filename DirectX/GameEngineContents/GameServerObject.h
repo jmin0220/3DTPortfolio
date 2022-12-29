@@ -29,6 +29,14 @@ enum class ServerObjectType
 class GameServerObject
 {
 public:
+	static void SetPlayersCount(int _Count)
+	{
+		PlayersCount = _Count;
+		IdSeed = PlayersCount;
+	}
+
+public:
+	static int PlayersCount;
 	static std::atomic<int> IdSeed;
 	static std::map<int, GameServerObject*> AllServerActor;
 
