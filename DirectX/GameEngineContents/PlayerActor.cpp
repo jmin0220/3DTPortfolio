@@ -155,6 +155,8 @@ void PlayerActor::PlayerInit()
 			dynamic_cast<VirtualPhysXLevel*>(GetLevel())->SetCommonPlayer(this);
 		}
 	}
+
+	IsNetDeath_ = false;
 }
 
 void PlayerActor::Update(float _DeltaTime)
