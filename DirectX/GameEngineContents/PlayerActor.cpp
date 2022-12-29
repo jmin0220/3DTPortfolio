@@ -266,6 +266,10 @@ void PlayerActor::Update(float _DeltaTime)
 				{
 					this->SetPlayerInvisible(true);
 				}
+				else
+				{
+					this->SetPlayerInvisible(false);
+				}
 			
 				// ½ºÅ²
 				SetNetPlayerColor(ObjectUpdate->PlayerColor);

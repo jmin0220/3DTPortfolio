@@ -326,6 +326,7 @@ void StageParentLevel::RaceUpdate(float _DeltaTime, const StateInfo& _Info)
 			//Player_->Off();
 			
 			Player_->SetPlayerNetDeath(true);
+			Player_->SetPlayerInvisible(true);
 		}
 
 	}
