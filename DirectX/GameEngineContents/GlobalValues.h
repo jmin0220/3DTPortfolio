@@ -136,6 +136,9 @@ enum ServerFlag
 	S_StageMidScoreChangeReady = (1 << 13),
 	S_StageMidScoreChangeOver = (1 << 14),
 	
+	// 서버만 있는 신호
+	S_StageRaceStart = (1 << 15),
+	
 };
 
 // 게임플레이에 관련된 상태 아님

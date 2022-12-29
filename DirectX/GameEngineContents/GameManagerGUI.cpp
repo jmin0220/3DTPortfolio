@@ -2,6 +2,7 @@
 #include "GameManagerGUI.h"
 #include <GameEngineCore/CoreMinimal.h>
 #include <GameEngineCore/GameEngineCore.h>
+#include <math.h>
 
 GameManagerGUI::GameManagerGUI() 
 {
@@ -37,7 +38,16 @@ void GameManagerGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 	// 카메라 월드 위치
 	ImGui::SameLine();
 	{
+
 		float4 Pos = GEngine::GetCurrentLevel()->GetMainCameraActorTransform().GetWorldPosition();
+
+		PrevValidPos_;
+		if (true == isnan(Pos.x))
+		{
+			int a = 0;
+		}
+
+		PrevValidPos_ = Pos;
 		std::string Name = "MainCameraActorPos : " + std::to_string(Pos.x) + " : " + std::to_string(Pos.y) + " : " + std::to_string(Pos.z);
 		ImGui::Text(Name.c_str());
 	}

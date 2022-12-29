@@ -129,7 +129,8 @@ void StageParentLevel::StagePreviewStart(const StateInfo& _Info)
 
 	UIs_->OnSuccessCount();
 	
-	if (MyStage_ == StageNum::STAGE2 || MyStage_ == StageNum::STAGE5)
+	if (MyStage_ == StageNum::STAGE2 || MyStage_ == StageNum::STAGE3
+		|| MyStage_ == StageNum::STAGE5)
 	{
 		TimerUI_->On();
 		TimerUI_->SetNetTime(TimerLimit_);
@@ -247,12 +248,11 @@ void StageParentLevel::ReadyUpdate(float _DeltaTime, const StateInfo& _Info)
 // 지금부터 달릴 수 있음
 ///////////////////////////
 bool FinishScoreSetted;
-bool LastPlayerReady;
+bool RaceStartSignal;
 void StageParentLevel::RaceStart(const StateInfo& _Info)
 {
 	FinishScoreSetted = false;
-
-	GameServer::RaceStart_ = true;
+	RaceStartSignal = false;
 }
 
 void StageParentLevel::RaceUpdate(float _DeltaTime, const StateInfo& _Info)
@@ -262,7 +262,6 @@ void StageParentLevel::RaceUpdate(float _DeltaTime, const StateInfo& _Info)
 		&& GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StagePreviewChangeOver) && false == FinishScoreSetted)
 	{
 		// 플레이어 입력 가능
-		Player_->SetInputAvailable(true);
 		GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_None);
 	}
 
@@ -272,10 +271,15 @@ void StageParentLevel::RaceUpdate(float _DeltaTime, const StateInfo& _Info)
 		if (GameServer::GetInst()->CheckOtherPlayersFlag(PlayerFlag::P_None) && false == FinishScoreSetted)
 		{
 			// 플레이어 입력 가능
-			Player_->SetInputAvailable(true);
-			GameServer::GetInst()->SetServerSignal(ServerFlag::S_None);
+			GameServer::GetInst()->SetServerSignal(ServerFlag::S_StageRaceStart);
 			GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_None);
 		}
+	}
+
+	if (false == RaceStartSignal && true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageRaceStart))
+	{
+		RaceStartSignal = true;
+		Player_->SetInputAvailable(true);
 	}
 
 

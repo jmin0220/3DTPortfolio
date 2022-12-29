@@ -45,7 +45,7 @@ void HoopsScoreRing::Update(float _DeltaTime)
 
 	if (true == GameServer::IsHost_)
 	{
-		if (true == GameServer::RaceStart_)
+		if (false == ServerActivated_ && true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageRaceStart))
 		{
 			ServerActivated_ = true;
 		}

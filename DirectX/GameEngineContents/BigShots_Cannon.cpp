@@ -87,7 +87,7 @@ void BigShots_Cannon::Update(float _DeltaTime)
 	// 유저 : 패킷만 읽어서 캐논 발사
 	if (true == GameServer::GetInst()->IsServerStart())
 	{
-		if (true == GameServer::RaceStart_
+		if (true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageRaceStart)
 			&& false == GetMoveStartActivate())
 		{
 			SetMoveStartActivate(true);

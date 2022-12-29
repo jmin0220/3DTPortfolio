@@ -216,7 +216,7 @@ void MovingBar::Start()
 
 void MovingBar::Update(float _DeltaTime)
 {
-	if (true == GameServer::RaceStart_)
+	if (false == ServerActivated_ && true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageRaceStart))
 	{
 		ServerActivated_ = true;
 	}

@@ -36,7 +36,7 @@ void JumpClub_SpinBarDouble::Update(float _DeltaTime)
 
 	if (true == GameServer::IsHost_)
 	{
-		if (true == GameServer::RaceStart_
+		if (true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageRaceStart)
 			&& false == GetMoveStartActivate())
 		{
 			SetMoveStartActivate(true);
