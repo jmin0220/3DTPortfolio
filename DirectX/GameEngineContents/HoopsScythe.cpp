@@ -33,7 +33,7 @@ void HoopsScythe::Start()
 
 	PhysXConvexGeometry_ = CreateComponent<PhysXConvexDynamicComponent>();
 
-	Speed_ = GameEngineRandom::MainRandom.RandomFloat(40.0f, 80.0f);
+	Speed_ = GameEngineRandom::MainRandom.RandomFloat(80.0f, 140.0f);
 	Dir_ = GameEngineRandom::MainRandom.RandomInt(0, 1);
 }
 

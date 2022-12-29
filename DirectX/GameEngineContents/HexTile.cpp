@@ -8,7 +8,7 @@ HexTile::HexTile() :
 	Trigger_(false),
 	Shake_(false),
 	Flag_(false),
-	Speed_(3.0f),
+	Speed_(5.0f),
 	ServerActivated_(false)
 {
 }
@@ -77,7 +77,7 @@ void HexTile::Update(float _DeltaTime)
 	if (Flag_ == true)
 	{
 		MeshPixelData_.MulColor = 0.7f;
-		MeshPixelData_.PlusColor += 1.0f * _DeltaTime;
+		MeshPixelData_.PlusColor += 2.0f * _DeltaTime;
 
 		if (MeshPixelData_.PlusColor.x >= 2.0f)
 		{

@@ -7,7 +7,7 @@ int HoopsWoodPlank::Num = 0;
 HoopsWoodPlank::HoopsWoodPlank() :
 	Switch(false),
 	Rot_(90),
-	Timer_(3.0f),
+	Timer_(2.0f),
 	ServerActivated_(false)
 {
 	MyNum = Num;
@@ -89,13 +89,13 @@ void HoopsWoodPlank::Update(float _DeltaTime)
 			if (Timer_ <= 0)
 			{
 				Switch = true;
-				Timer_ = 3.0f;
+				Timer_ = 2.0f;
 			}
 			return;
 		}
 
 
-		Rotation_.x = Rotation_.x +_DeltaTime * 5.0f;
+		Rotation_.x = Rotation_.x +_DeltaTime * 10.0f;
 		GetTransform().SetLocalRotation(Rotation_);
 
 	}
@@ -107,11 +107,11 @@ void HoopsWoodPlank::Update(float _DeltaTime)
 			if (Timer_ <= 0)
 			{
 				Switch = false;
-				Timer_ = 3.0f;
+				Timer_ = 2.0f;
 			}
 			return;
 		}
-		Rotation_.x -= _DeltaTime * 3.0f;
+		Rotation_.x -= _DeltaTime * 10.0f;
 		GetTransform().SetLocalRotation(Rotation_);
 
 	}
