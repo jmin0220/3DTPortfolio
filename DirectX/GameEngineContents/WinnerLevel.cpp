@@ -84,7 +84,8 @@ void WinnerLevel::LevelStartEvent()
 		std::sort(AllServerPlayers_.begin(), AllServerPlayers_.end(), ScoreBigger);
 
 		// 1À§
-		Player_->SetPlayerColor(AllServerPlayers_[0].Color_);
+		//GameServer::GetInst()->GetPlayerColorReturn
+		Player_->SetPlayerColor(GameServer::GetInst()->GetPlayerColorReturn(AllServerPlayers_[0].Color_));
 		Winner_->SetWinnerFont(AllServerPlayers_[0].Name_);
 	}
 }

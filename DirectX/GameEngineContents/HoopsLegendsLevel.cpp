@@ -148,7 +148,8 @@ void HoopsLegendsLevel::LevelStartEvent()
 		Player_->ResetPlayerPos();
 	}
 
-	TimerLimit_ = 30.0f;
+	// 호스트의 시간만 적용됨
+	TimerLimit_ = 300.0f;
 }
 
 void HoopsLegendsLevel::LevelEndEvent()
