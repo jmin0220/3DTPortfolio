@@ -157,18 +157,26 @@ void StageParentLevel::LevelStartEvent()
 
 	// 자신의 메인 플레이어 생성
 	Player_ = CreateActor<PlayerActor>();
+
 	if (true == GameServer::GetInst()->IsServerStart())
 	{
-		//if (true == GameServer::IsHost_)
-		//{
-		//	Player_->ClientInit(ServerObjectType::Player, GameServer::GetInst()->PlayerID_);
-		//}
-		//else
-		//{
-		//	Player_->ClientInit(ServerObjectType::Player, GameServer::GetInst()->PlayerID_);
-		//}
+		if (true == GameServer::IsHost_)
+		{
+			Player_->ServerInit(ServerObjectType::Player);
 
-		Player_->ServerInit(ServerObjectType::Player);
+
+			// 호스트가 나머지 플레이어 생성해줌 일단
+			int NetPlayerCount = GameServer::GetInst()->GetAllPlayersCount() - 1;
+			{
+				for (int i = 0; i < NetPlayerCount; i++)
+				{
+					std::shared_ptr<PlayerActor> Player = CreateActor<PlayerActor>();
+					Player->ClientInit(ServerObjectType::Player, Player->GetServerID());
+				}
+			}
+
+		}
+
 	}
 
 	Player_->PlayerInit();

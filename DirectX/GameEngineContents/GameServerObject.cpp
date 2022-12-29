@@ -9,6 +9,7 @@ std::mutex PacketLock;
 void GameServerObject::ServerRelease()
 {
 	AllServerActor.clear();
+	IdSeed = 0;
 }
 
 void GameServerObject::PushPacket(std::shared_ptr<GameServerPacket> _Packet)
