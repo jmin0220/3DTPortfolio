@@ -253,7 +253,7 @@ void CustomSimulationEventCallback::onContact(const physx::PxContactPairHeader& 
 			ContactFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic))
 		{
 
-			if (current.events & physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS)
+			if (current.events & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
 			{
 				CommonPlayer_->TouchGroundOn();
 				//CommonPlayer_->Setwaitphysx(true);

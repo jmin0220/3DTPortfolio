@@ -145,17 +145,19 @@ void PlayerActor::PlayerInit()
 		IsMainPlayerSpawned_ = true;
 		IsPlayerble_ = true;
 
+		DynamicActorComponent_->SetIsMain(true);
+		dynamic_cast<VirtualPhysXLevel*>(GetLevel())->SetCommonPlayer(this);
 		// FSM
 		CreateFSMStates();
 		CreateAnimationFSMStates();
 	}
 	//충돌체크를 위한 CommonPlayer 에 Player 넣기
 	{
-		if (this == PlayerActor::MainPlayer)
-		{
-			DynamicActorComponent_->SetIsMain(true);
-			dynamic_cast<VirtualPhysXLevel*>(GetLevel())->SetCommonPlayer(this);
-		}
+		//if (this == PlayerActor::MainPlayer)
+		//{
+		//	
+		//	;
+		//}
 	}
 }
 
