@@ -264,13 +264,9 @@ void PlayerActor::Update(float _DeltaTime)
 				// 네트워크상 죽음
 				if (ObjectUpdate->State == ServerObjectBaseState::Death)
 				{
-					this->SetPlayerForze(true);
+					this->SetPlayerInvisible();
 				}
-				else
-				{
-					this->SetPlayerForze(false);
-				}
-
+			
 				// 스킨
 				SetNetPlayerColor(ObjectUpdate->PlayerColor);
 
