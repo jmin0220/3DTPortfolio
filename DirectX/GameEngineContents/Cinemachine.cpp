@@ -117,7 +117,7 @@ void Cinemachine::Init(std::shared_ptr<GameEngineCameraActor> _MainCamera)
 		StartInfo.POS = float4{ 276.19,433.78f,159.49f };
 		StartInfo.ROT = float4{ 14.15f,239.0f,0 };
 		StartInfo.INTERTIME = 0.0f;
-		StartInfo.MOVETIME = 12.0f;
+		StartInfo.MOVETIME = 9.0f;
 		StartInfo.SPEED = 0.002f;
 		QueueInfo_.push(StartInfo);
 
@@ -129,7 +129,7 @@ void Cinemachine::Init(std::shared_ptr<GameEngineCameraActor> _MainCamera)
 		StartInfo.POS = float4{ -110.81,209.62f,31.53f };
 		StartInfo.ROT = float4{ 1.07f, 134.16f,0 };
 		StartInfo.INTERTIME = 0.0f;
-		StartInfo.MOVETIME = 18.0f;
+		StartInfo.MOVETIME = 10.0f;
 		StartInfo.SPEED = 0.001f;
 		StartInfo.ResetPos = false;
 		QueueInfo_.push(StartInfo);
@@ -142,8 +142,8 @@ void Cinemachine::Init(std::shared_ptr<GameEngineCameraActor> _MainCamera)
 		StartInfo.POS = float4{ -1.14f,407.56f,218.59f };
 		StartInfo.ROT = float4{ 9.0f, 179.3f,0 };
 		StartInfo.INTERTIME = 0.0f;
-		StartInfo.MOVETIME = 20.0f;
-		StartInfo.SPEED = 0.0005f;
+		StartInfo.MOVETIME = 10.0f;
+		StartInfo.SPEED = 0.001f;
 		StartInfo.ResetPos = false;
 		QueueInfo_.push(StartInfo);
 
@@ -163,8 +163,8 @@ void Cinemachine::Init(std::shared_ptr<GameEngineCameraActor> _MainCamera)
 		StartInfo.POS = float4{ -29.5f,248.5f,-72.8f };
 		StartInfo.ROT = float4{ 74.5f,30.18f,0 };
 		StartInfo.INTERTIME = 0.0f;
-		StartInfo.MOVETIME = 18.0f;
-		StartInfo.SPEED = 0.0005f;
+		StartInfo.MOVETIME = 10.0f;
+		StartInfo.SPEED = 0.001f;
 		QueueInfo_.push(StartInfo);
 
 		StartInfo.POS = float4{ 55.22f,192.51f,235.64f };
@@ -178,8 +178,8 @@ void Cinemachine::Init(std::shared_ptr<GameEngineCameraActor> _MainCamera)
 		StartInfo.POS = float4{ 320.0f,248.5f,-156.6f };
 		StartInfo.ROT = float4{ 21.91f,-58.41f,0 };
 		StartInfo.INTERTIME = 0.0f;
-		StartInfo.MOVETIME = 30.0f;
-		StartInfo.SPEED = 0.0005f;
+		StartInfo.MOVETIME = 10.0f;
+		StartInfo.SPEED = 0.001f;
 		StartInfo.ResetPos = false;
 		QueueInfo_.push(StartInfo);
 		break; 
