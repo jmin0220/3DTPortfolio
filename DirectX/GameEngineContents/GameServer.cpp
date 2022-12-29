@@ -197,13 +197,13 @@ void GameServer::ObjectUpdatePacketProcess(std::shared_ptr<GameServerPacket> _Pa
 	// 없으면 생성
 	if (nullptr == FindObject)
 	{
-		std::lock_guard<std::mutex> LockGuard(Lock);
+		//std::lock_guard<std::mutex> LockGuard(Lock);
 		NewObjectUpdatePacketList_.push_back(Packet);
 	}
 	// 있으면 자신이 처리해야할 패킷 리스트에 추가
 	else
 	{
-		std::lock_guard<std::mutex> LockGuard(Lock);
+		//std::lock_guard<std::mutex> LockGuard(Lock);
 		FindObject->PushPacket(_Packet);
 	}
 
