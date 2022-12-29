@@ -112,7 +112,7 @@ void StageParentLevel::Start()
 		, std::bind(&StageParentLevel::EndUpdate, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&StageParentLevel::EndStart, this, std::placeholders::_1));
 
-	ContentsCore::EngineThreadPool.Work([=]()
+	GameEngineCore::EngineThreadPool.Work([=]()
 		{
 			SpawnServerObjects(SpawnStart_);
 		});
