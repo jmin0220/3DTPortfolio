@@ -31,5 +31,26 @@ private:
 	std::shared_ptr<GameEngineFontRenderer> ScoreFont_[5];
 
 	int Score_[5];
+
+	// ¼­¹ö
+private:
+	void S_BubbleSort();
+	void S_ChaseNameToScore();
+
+private:
+	int S_PlayersCount_;
+
+	std::vector<std::shared_ptr<GameEngineUIRenderer>> S_Renderer_;
+	std::vector<std::shared_ptr<GameEngineFontRenderer>> S_Font_;
+	std::vector<std::shared_ptr<GameEngineFontRenderer>> S_ScoreFont_;
+
+	std::vector<int> S_Score_;
+
+	std::vector<ServerPlayerInfo> S_Players;
+	std::vector<ServerPlayerInfo> S_PrevPlayers;
+
+
+	float SortingCycle_;
+	float SortingTime_;
 };
 

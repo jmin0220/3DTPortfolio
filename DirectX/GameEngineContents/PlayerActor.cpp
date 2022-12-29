@@ -684,6 +684,7 @@ void PlayerActor::CheckXZSpeed()
 	float4 XZVelo = float4{ Velocity_.x, 0.0f, Velocity_.z };
 
 	PlayerXZSpeed_ = XZVelo.Length();
+
 }
 
 bool PlayerActor::CheckOnGround()

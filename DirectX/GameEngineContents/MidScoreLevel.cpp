@@ -333,7 +333,7 @@ void MidScoreLevel::ServerSetting()
 	}
 	// 자기정보도 넣는다
 	std::shared_ptr<GameServer>& Server = GameServer::GetInst();
-	ServerPlayerInfo MyInfo;
+	MidPlayerInfo MyInfo;
 	MyInfo.ID_ = Server->PlayerID_;
 	MyInfo.Color_ = Server->PlayerColorID_;
 	MyInfo.Score_ = Server->PlayerScore_;

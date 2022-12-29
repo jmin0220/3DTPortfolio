@@ -5,6 +5,15 @@
 #include "ServerPacket.h"
 #include "GlobalValues.h"
 
+
+struct ServerPlayerInfo
+{
+	unsigned int ID_;
+	unsigned int Color_;
+	unsigned int Score_;
+	std::string Name_;
+};
+
 // 설명 :
 class GameServer
 {
@@ -13,6 +22,11 @@ private:
 	static bool ServerStart_;
 	static GameServerNetServer Server;
 	static GameServerNetClient Client;
+
+	static bool IdSmaller(ServerPlayerInfo& _Left, ServerPlayerInfo& _Right)
+	{
+		return _Left.ID_ < _Right.ID_;
+	}
 
 public:
 	static std::shared_ptr<GameServer>& GetInst()
@@ -39,7 +53,31 @@ public:
 	{
 		return OtherPlayersInfo_;
 	}
-	
+
+	void GetAllPlayersInfo(std::vector<ServerPlayerInfo>& _PlayerInfos)
+	{
+		_PlayerInfos.clear();
+
+		std::map<int, std::shared_ptr<class PlayerStatePacket>>::iterator StartIt = OtherPlayersInfo_.begin();
+		std::map<int, std::shared_ptr<class PlayerStatePacket>>::iterator EndIt = OtherPlayersInfo_.end();
+
+		for (; StartIt != EndIt; ++StartIt)
+		{
+			std::shared_ptr<PlayerStatePacket> Packet = (*StartIt).second;
+			_PlayerInfos.emplace_back(Packet->PlayerID, Packet->PlayerColor, Packet->PlayerScore, Packet->PlayerName);
+		}
+
+		// 자기정보도 넣는다
+		ServerPlayerInfo MyInfo;
+		MyInfo.ID_ = PlayerID_;
+		MyInfo.Color_ = PlayerColorID_;
+		MyInfo.Score_ = PlayerScore_;
+		MyInfo.Name_ = UserName_;
+		_PlayerInfos.push_back(MyInfo);
+
+		std::sort(_PlayerInfos.begin(), _PlayerInfos.end(), IdSmaller);
+	}
+
 	// ID + float4
 	void SetPlayerColorID(unsigned int _PlayerColor)
 	{

@@ -38,5 +38,7 @@ private:
 
 	bool SettingHoops_;
 	bool ServerActivated_;
+
+	std::shared_ptr<class RankingActor> RankingActor_;
 };
 

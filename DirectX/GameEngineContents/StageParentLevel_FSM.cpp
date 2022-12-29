@@ -146,13 +146,14 @@ void StageParentLevel::StagePreviewStart(const StateInfo& _Info)
 
 	// 시네머신 작동
 	CinemaCam_->SetActivated();
+	UIs_->OnOffSubTitle();
+
 	{
 		//김예나 : 시네마 카메라 동작시 나오는 브금 On
 		GlobalBGM::GetInst()->SetBGM(GameEngineSound::SoundPlayControl("Ready_Go.mp3"));
 		GlobalBGM::GetInst()->GetBGM().Volume(OptionActor::VolumeRatio_);
 
 		//김예나 : 게임소개 UI On
-		UIs_->OnOffSubTitle();
 		switch (MyStage_)
 		{
 		case StageNum::STAGE1:

@@ -69,7 +69,7 @@ private:
 
 	// ¼­¹ö
 private:
-	struct ServerPlayerInfo
+	struct MidPlayerInfo
 	{
 		unsigned int ID_;
 		unsigned int Color_;
@@ -77,12 +77,12 @@ private:
 		std::string Name_;
 	};
 
-	static bool ScoreBigger(ServerPlayerInfo _Left, ServerPlayerInfo _Right)
+	static bool ScoreBigger(MidPlayerInfo _Left, MidPlayerInfo _Right)
 	{
 		return _Left.Score_ > _Right.Score_;
 	}
 
-	static bool IDSmaller(ServerPlayerInfo _Left, ServerPlayerInfo _Right)
+	static bool IDSmaller(MidPlayerInfo _Left, MidPlayerInfo _Right)
 	{
 		return _Left.ID_ < _Right.ID_;
 	}
@@ -90,7 +90,7 @@ private:
 	void ServerSetting();
 	void NoServerSetting();
 
-	std::vector<ServerPlayerInfo> AllServerPlayers_;
+	std::vector<MidPlayerInfo> AllServerPlayers_;
 
 	int AllServerPlayersCount_;
 	float MidScoreTime_;
