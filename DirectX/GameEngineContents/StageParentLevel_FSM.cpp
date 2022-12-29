@@ -120,7 +120,9 @@ void StageParentLevel::StagePreviewStart(const StateInfo& _Info)
 
 	UIs_->OnSuccessCount();
 	
-	if (GameScoreType_ == GameScoreType::TIMEATTACK)
+	if (MyStage_ == StageNum::STAGE2
+		|| MyStage_ == StageNum::STAGE3
+		|| MyStage_ == StageNum::STAGE5)
 	{
 		TimerUI_->On();
 		TimerUI_->SetNetTime(TimerLimit_);

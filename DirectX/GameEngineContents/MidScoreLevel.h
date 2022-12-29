@@ -35,8 +35,6 @@ protected:
 	void LevelStartEvent() override;
 	void LevelEndEvent() override;
 
-	void OnEvent() override;
-	void OffEvent() override;
 
 private:
 	std::shared_ptr<LobbyPlayer> Player1_;
@@ -102,5 +100,10 @@ private:
 	bool ScoreSetted_;
 	float4 LastActorPos_;
 
+public:
+	static bool OnEventPlayed_;
+
+private:
+	void Init();
 };
 

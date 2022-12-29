@@ -39,6 +39,7 @@
 #include "TestGUI.h"
 #include "TimerActor.h"
 #include "HoopsScoreRing.h"
+#include "MidScoreLevel.h"
 
 
 std::mutex SpawnLock;
@@ -195,6 +196,8 @@ void StageParentLevel::LevelStartEvent()
 	CameraArm_ = CreateActor<CameraArm>();
 
 	StageStateManager_.ChangeState("Idle");
+
+	MidScoreLevel::OnEventPlayed_ = false;
 }
 
 void StageParentLevel::LevelEndEvent()
