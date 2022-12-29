@@ -147,7 +147,9 @@ protected:
 	// ¼­¹ö
 private:
 	//virtual void SpawnMyServerPlayer() = 0;
-	void SpawnServerObjects();
+	void SpawnServerObjects(bool _SpawnStart);
+	bool SpawnStart_;
+
 	void SetWatchCamNextPlayer();
 
 	std::vector<std::shared_ptr<GameEngineActor>> NetPlayers_;

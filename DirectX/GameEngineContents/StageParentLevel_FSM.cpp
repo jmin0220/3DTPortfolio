@@ -38,7 +38,6 @@ void StageParentLevel::IdleStart(const StateInfo& _Info)
 
 void StageParentLevel::IdleUpdate(float _DeltaTime, const StateInfo& _Info)
 {
-	SpawnServerObjects();
 
 	if (false == GameServer::GetInst()->IsServerStart())
 	{

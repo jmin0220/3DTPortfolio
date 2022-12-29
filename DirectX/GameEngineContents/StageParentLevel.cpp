@@ -53,6 +53,7 @@ StageParentLevel::StageParentLevel()
 	, GameScoreType_(GameScoreType::NONE)
 	, WatchCamIdx(0)
 	, TimerLimit_(0.0f)
+	, SpawnStart_(false)
 {
 	CinemaCam_ = std::make_shared<Cinemachine>();
 }
@@ -110,12 +111,19 @@ void StageParentLevel::Start()
 	StageStateManager_.CreateStateMember("End"
 		, std::bind(&StageParentLevel::EndUpdate, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&StageParentLevel::EndStart, this, std::placeholders::_1));
+
+	ContentsCore::EngineThreadPool.Work([=]()
+		{
+			SpawnServerObjects(SpawnStart_);
+		});
 }
 
 void StageParentLevel::Update(float _DeltaTime)
 {
 	// PhysX업데이트
 	VirtualPhysXLevel::Update(_DeltaTime);
+
+	//SpawnServerObjects(bool _SpawnStart);
 
 	CinemaCam_->Update();
 
@@ -193,10 +201,14 @@ void StageParentLevel::LevelStartEvent()
 	CameraArm_ = CreateActor<CameraArm>();
 
 	StageStateManager_.ChangeState("Idle");
+
+	SpawnStart_ = true;
 }
 
 void StageParentLevel::LevelEndEvent()
 {
+	SpawnStart_ = false;
+
 	VirtualPhysXLevel::LevelEndEvent();
 	//ContentsCore::GetInst()->ReleaseCurLevelResource();
 
@@ -576,6 +588,10 @@ void StageParentLevel::SpawnServerObjects()
 			}
 			case ServerObjectType::SpinBarDouble:
 			{
+				if (MyStage_ != StageNum::STAGE2)
+				{
+					continue;
+				}
 				std::shared_ptr<JumpClub_SpinBarDouble> SpinBarDouble = CreateActor<JumpClub_SpinBarDouble>();
 				SpinBarDouble->ClientInit(CurPacket->Type, CurPacket->ObjectID);
 				SpinBarDouble->GetTransform().SetWorldPosition(CurPacket->Pos);
@@ -590,6 +606,10 @@ void StageParentLevel::SpawnServerObjects()
 			}
 			case ServerObjectType::SpinBarSingle:
 			{
+				if (MyStage_ != StageNum::STAGE2)
+				{
+					continue;
+				}
 				std::shared_ptr<JumpClub_SpinBarSingle> SpinBarSingle = CreateActor<JumpClub_SpinBarSingle>();
 				SpinBarSingle->ClientInit(CurPacket->Type, CurPacket->ObjectID);
 				SpinBarSingle->GetTransform().SetWorldPosition(CurPacket->Pos);
@@ -603,6 +623,10 @@ void StageParentLevel::SpawnServerObjects()
 			}
 			case ServerObjectType::Cannon:
 			{
+				if (MyStage_ != StageNum::STAGE3)
+				{
+					continue;
+				}
 				std::shared_ptr<BigShots_Cannon> Cannon = CreateActor<BigShots_Cannon>();
 				Cannon->ClientInit(CurPacket->Type, CurPacket->ObjectID);
 				Cannon->GetTransform().SetWorldPosition(CurPacket->Pos);
@@ -615,6 +639,10 @@ void StageParentLevel::SpawnServerObjects()
 			}
 			case ServerObjectType::HoopRing:
 			{
+				if (MyStage_ != StageNum::STAGE5)
+				{
+					continue;
+				}
 				std::shared_ptr<HoopsScoreRing> Ring = CreateActor<HoopsScoreRing>();
 				Ring->ClientInit(CurPacket->Type, CurPacket->ObjectID);
 				Ring->GetTransform().SetWorldPosition(CurPacket->Pos);
