@@ -46,7 +46,6 @@ std::mutex SpawnLock;
 float4 StageParentLevel::PlayerPos = float4::ZERO;
 std::vector<float4> StageParentLevel::HoopsPos = std::vector<float4>();
 std::vector<std::shared_ptr<GameEngineActor>> StageParentLevel::HoopsActor = std::vector<std::shared_ptr<GameEngineActor>>();
-bool StageParentLevel::SpawnStart_ = false;
 
 StageParentLevel::StageParentLevel() 
 	: MyStage_(StageNum::STAGE1)
@@ -111,18 +110,13 @@ void StageParentLevel::Start()
 		, std::bind(&StageParentLevel::EndUpdate, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&StageParentLevel::EndStart, this, std::placeholders::_1));
 
-	GameEngineCore::EngineThreadPool.Work([=]()
-		{
-			SpawnServerObjects(SpawnStart_);
-		});
-}
 
 void StageParentLevel::Update(float _DeltaTime)
 {
 	// PhysX업데이트
 	VirtualPhysXLevel::Update(_DeltaTime);
 
-	//SpawnServerObjects(bool _SpawnStart);
+	SpawnServerObjects();
 
 	CinemaCam_->Update();
 
@@ -200,14 +194,10 @@ void StageParentLevel::LevelStartEvent()
 	CameraArm_ = CreateActor<CameraArm>();
 
 	StageStateManager_.ChangeState("Idle");
-
-	SpawnStart_ = true;
 }
 
 void StageParentLevel::LevelEndEvent()
 {
-	SpawnStart_ = false;
-
 	VirtualPhysXLevel::LevelEndEvent();
 	//ContentsCore::GetInst()->ReleaseCurLevelResource();
 
@@ -546,7 +536,7 @@ void StageParentLevel::LevelStartLoad()
 }
 
 
-void StageParentLevel::SpawnServerObjects(bool _SpawnStart)
+void StageParentLevel::SpawnServerObjects()
 {
 	std::list<std::shared_ptr<ObjectUpdatePacket>>& PacketList = GameServer::GetInst()->NewObjectUpdatePacketList_;
 
