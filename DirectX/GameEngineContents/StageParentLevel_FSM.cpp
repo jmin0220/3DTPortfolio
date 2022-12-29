@@ -320,7 +320,7 @@ void StageParentLevel::RaceUpdate(float _DeltaTime, const StateInfo& _Info)
 		GetGameScoreByCurrentType();
 
 		Player_->SetPlayerForze(true);
-		if (GameScoreType_ == GameScoreType::RACE)
+
 		{
 			// TODO::객체 OFF하고 관전 or 투명하게하고 관전
 			//Player_->Off();

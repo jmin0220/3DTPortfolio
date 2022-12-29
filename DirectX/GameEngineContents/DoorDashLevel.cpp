@@ -73,6 +73,8 @@ void DoorDashLevel::LevelStartEvent()
 void DoorDashLevel::LevelEndEvent()
 {
 	StageParentLevel::LevelEndEvent();
+
+	Stage_->Death();
 }
 
 bool DoorDashLevel::GameEndingFlag()

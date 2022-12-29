@@ -11,13 +11,14 @@
 
 #include "PlayerActor.h"
 #include <GameEngineBase/GameEngineRandom.h>
+#include "TimerActor.h"
 
-BigShotsLevel::BigShotsLevel() 
+BigShotsLevel::BigShotsLevel()
 	: ServerActivated_(false)
 {
 }
 
-BigShotsLevel::~BigShotsLevel() 
+BigShotsLevel::~BigShotsLevel()
 {
 }
 
@@ -64,9 +65,9 @@ void BigShotsLevel::LevelStartEvent()
 	//// *플레이어 생성 후 카메라암 세팅 해줘야함*
 	//CameraArm_->SetFollowCamera(GetMainCameraActor(), Player_);
 
-	std::shared_ptr<BigShotsStage> Stage = CreateActor<BigShotsStage>();
-	Stage->GetTransform().SetWorldPosition({ 0.0f, -50.0f, 0.0f });
-	
+	Stage_ = CreateActor<BigShotsStage>();
+	Stage_->GetTransform().SetWorldPosition({ 0.0f, -50.0f, 0.0f });
+
 	// 호스트만 캐논 생성
 	if (true == GameServer::IsHost_)
 	{
@@ -139,6 +140,8 @@ void BigShotsLevel::LevelStartEvent()
 		Player_->ResetPlayerPos();
 	}
 
+	TimerLimit_ = 120.0f;
+
 }
 
 void BigShotsLevel::LevelEndEvent()
@@ -149,6 +152,15 @@ void BigShotsLevel::LevelEndEvent()
 	{
 		Cannon->Death();
 	}
+
+	BackGroundObj_->Death();
+
+	VFXWaterObj_->Death();
+
+	Stage_->Death();
+
+
+	TimerUI_->Off();
 }
 
 bool BigShotsLevel::GameEndingFlag()

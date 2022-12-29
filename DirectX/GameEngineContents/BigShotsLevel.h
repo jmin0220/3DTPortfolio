@@ -28,6 +28,7 @@ protected:
 private:
 	std::shared_ptr<GameEngineActor> BackGroundObj_;;
 	std::shared_ptr<GameEngineActor> VFXWaterObj_;;
+	std::shared_ptr<GameEngineActor> Stage_;
 
 	// ¼­¹ö
 private:

@@ -14,6 +14,7 @@
 #include "PostEffect_Bloom.h"
 
 #include "InGameSetUI.h"
+#include "TimerActor.h"
 
 JumpClubLevel::JumpClubLevel() 
 {
@@ -137,12 +138,15 @@ void JumpClubLevel::LevelStartEvent()
 		Player_->ResetPlayerPos();
 	}
 
+	TimerLimit_ = 120.0f;
 
 }
 
 void JumpClubLevel::LevelEndEvent()
 {
 	StageParentLevel::LevelEndEvent();
+
+	TimerUI_->Off();
 }
 
 bool JumpClubLevel::GameEndingFlag()
