@@ -571,7 +571,8 @@ void StageParentLevel::SpawnServerObjects()
 
 				NewPlayer->PlayerInit();
 				NewPlayer->PushPacket(CurPacket);
-				
+				NewPlayer->SetPlayerInvisible(false);
+
 				NetPlayers_.push_back(NewPlayer);
 
 				break;

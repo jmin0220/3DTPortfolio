@@ -51,9 +51,16 @@ public:
 		IsPlayerFrozen_ = _Value;
 	}
 
-	void SetPlayerInvisible()
+	void SetPlayerInvisible(bool _Value)
 	{
-		FbxRenderer_->Off();
+		if (true == _Value)
+		{
+			FbxRenderer_->Off();
+		}
+		else
+		{
+			FbxRenderer_->On();
+		}
 	}
 
 	void SetPlayerNetDeath(bool _Value)
