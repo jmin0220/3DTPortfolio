@@ -48,15 +48,15 @@ void HexTile::Start()
 
 void HexTile::Update(float _DeltaTime)
 {
-	if (true == GameServer::RaceStart_)
-	{
-		ServerActivated_ = true;
-	}
+	//if (true == GameServer::RaceStart_)
+	//{
+	//	ServerActivated_ = true;
+	//}
 
-	if (false == ServerActivated_)
-	{
-		return;
-	}
+	//if (false == ServerActivated_)
+	//{
+	//	return;
+	//}
 
 	if(true == Collision_->IsCollision(CollisionType::CT_OBB, CollisionGroup::Player, CollisionType::CT_OBB))
 	{
@@ -122,6 +122,7 @@ void HexTile::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physi
 	// Tip..3번째 매개변수인 GeometryScale은 액터가 가질 물리강체의 크기
 	float4 MeshBoundScale = Renderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
 	PhysXHexTileGeometry_->SetObjectGround();
+	PhysXHexTileGeometry_->SetPhysxMaterial(FLOOR_STATICFRICTION, 1.5f, FLOOR_RESISTUTION);
 	PhysXHexTileGeometry_->CreatePhysXActors("HexTile.fbx", _Scene, _physics, Cooking, physx::PxVec3(MeshBoundScale.x, MeshBoundScale.y, MeshBoundScale.z));
 
 	//float4 MeshBoundScale = Renderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;

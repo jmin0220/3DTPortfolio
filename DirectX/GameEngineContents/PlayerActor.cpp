@@ -106,7 +106,7 @@ void PlayerActor::PlayerInit()
 	EventCol_ = CreateComponent<GameEngineCollision>();
 	EventCol_->ChangeOrder(CollisionGroup::Player);
 	EventCol_->GetTransform().SetWorldScale({ PLAYER_COL_SCALE });
-	EventCol_->GetTransform().SetLocalPosition({ 0.0f, -5.0f, 0.0f });
+	EventCol_->GetTransform().SetLocalPosition({ 0.0f, 0.0f, 0.0f });
 
 	Collision_ = CreateComponent<GameEngineCollision>();
 	Collision_->ChangeOrder(CollisionGroup::PlayerCheck);
