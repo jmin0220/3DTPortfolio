@@ -172,6 +172,7 @@ void StageParentLevel::LevelStartEvent()
 				{
 					std::shared_ptr<PlayerActor> Player = CreateActor<PlayerActor>();
 					Player->ClientInit(ServerObjectType::Player, Player->GetServerID());
+					Player->PlayerInit();
 				}
 			}
 
