@@ -74,6 +74,12 @@ public:
 
 	// ¼­¹ö
 public:
+	static bool IsScoreChanged()
+	{
+		return ScoreChanged_;
+	}
+	static bool ScoreChanged_;
+	
 	void PhysXInit();
 	void UpdateHoops(float _DeltaTime);
 

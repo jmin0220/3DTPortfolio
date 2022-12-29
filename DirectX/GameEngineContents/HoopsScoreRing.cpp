@@ -4,6 +4,8 @@
 #include "GameEngineBase/GameEngineRandom.h"
 #include "PlayerActor.h"
 
+bool HoopsScoreRing::ScoreChanged_ = false;
+
 HoopsScoreRing::HoopsScoreRing()	:	
 	IsCol_(false),
 	Flag_(false),
@@ -141,6 +143,9 @@ CollisionReturn HoopsScoreRing::CheckCollision(std::shared_ptr<GameEngineCollisi
 {
 	_This->Off();
 	IsCol_ = true;
+
+	// 서버
+	ScoreChanged_ = true;
 
 	// 후프통과 플레이어 + 메인플레이어일 경우만 스코어증가
 	if (true == GameServer::GetInst()->IsServerStart())

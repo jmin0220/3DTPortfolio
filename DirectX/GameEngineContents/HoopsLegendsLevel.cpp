@@ -151,7 +151,7 @@ void HoopsLegendsLevel::LevelStartEvent()
 	}
 
 	// 호스트의 시간만 적용됨
-	TimerLimit_ = 60.0f;
+	TimerLimit_ = 300.0f;
 
 	RankingActor_ = CreateActor<RankingActor>();
 	RankingActor_->Off();

@@ -4,6 +4,7 @@
 #include <GameEngineBase/GameEngineRandom.h>
 
 #include <algorithm>
+#include "HoopsScoreRing.h"
 
 RankingActor::RankingActor()
 	: S_PlayersCount_(0)
@@ -57,7 +58,7 @@ void RankingActor::Start()
 
 		S_Renderer_.resize(S_PlayersCount_);
 		S_Font_.resize(S_PlayersCount_);
-		S_Score_.resize(S_PlayersCount_, 0);
+		S_Score_.resize(S_PlayersCount_);
 		S_ScoreFont_.resize(S_PlayersCount_);
 
 		for (int i = 0; i < S_PlayersCount_; ++i)
@@ -76,7 +77,7 @@ void RankingActor::Start()
 			S_Score_[i] = 0;
 
 			S_ScoreFont_[i] = CreateComponent<GameEngineFontRenderer>();
-			S_ScoreFont_[i]->SetText(std::to_string(Score_[i]), FONT_NOTO_SANS_CJK_SC);
+			S_ScoreFont_[i]->SetText(std::to_string(S_Score_[i]), FONT_NOTO_SANS_CJK_SC);
 			S_ScoreFont_[i]->ChangeCamera(CAMERAORDER::UICAMERA);
 			S_ScoreFont_[i]->SetLeftAndRightSort(LeftAndRightSort::CENTER);
 			S_ScoreFont_[i]->SetScreenPostion({ 100,240 + 100 * static_cast<float>(i) });
@@ -109,34 +110,24 @@ void RankingActor::Update(float _DeltaTime)
 		// 정보가 바뀌었을 때만 정렬 하면 됨
 		GameServer::GetInst()->GetAllPlayersInfo(S_Players);
 
-		bool SameData = true;
-		for (int i = 0; i < S_Players.size(); i++)
+		if (true == HoopsScoreRing::IsScoreChanged())
 		{
-			if (S_Players[i].Score_ != S_Score_[i])
+			for (int i = 0; i < S_PlayersCount_; i++)
 			{
-				SameData = false;
-				break;
-			}
-		}
-
-		if (true == SameData)
-		{
-			S_ChaseNameToScore();
-
-			return;
-		}
-		else
-		{
-			for (int i = 0; i < S_Players.size(); i++)
-			{
-				S_Font_[i]->SetText(S_Players[i].Name_, FONT_NOTO_SANS_CJK_SC);
 				S_Score_[i] = static_cast<int>(S_Players[i].Score_);
+
 				S_ScoreFont_[i]->SetText(std::to_string(S_Score_[i]), FONT_NOTO_SANS_CJK_SC);
+
+				S_Font_[i]->SetText(S_Players[i].Name_);
 			}
 
 			S_BubbleSort();
+
+			HoopsScoreRing::ScoreChanged_ = false;
 		}
-	
+		
+		S_ChaseNameToScore();
+
 	}
 
 }
