@@ -53,6 +53,7 @@ StageParentLevel::StageParentLevel()
 	, GameScoreType_(GameScoreType::NONE)
 	, WatchCamIdx(0)
 	, TimerLimit_(0.0f)
+	, RaceStartSignal_(false)
 {
 	CinemaCam_ = std::make_shared<Cinemachine>();
 }
@@ -187,6 +188,9 @@ void StageParentLevel::LevelStartEvent()
 
 	MainCam_ = GetMainCameraActor();
 	CameraArm_ = CreateActor<CameraArm>();
+
+	RaceStartSignal_ = false;
+
 
 	StageStateManager_.ChangeState("Idle");
 }

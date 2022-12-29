@@ -248,11 +248,9 @@ void StageParentLevel::ReadyUpdate(float _DeltaTime, const StateInfo& _Info)
 // 지금부터 달릴 수 있음
 ///////////////////////////
 bool FinishScoreSetted;
-bool RaceStartSignal;
 void StageParentLevel::RaceStart(const StateInfo& _Info)
 {
 	FinishScoreSetted = false;
-	RaceStartSignal = false;
 }
 
 void StageParentLevel::RaceUpdate(float _DeltaTime, const StateInfo& _Info)
@@ -270,16 +268,14 @@ void StageParentLevel::RaceUpdate(float _DeltaTime, const StateInfo& _Info)
 	{
 		if (GameServer::GetInst()->CheckOtherPlayersFlag(PlayerFlag::P_None) && false == FinishScoreSetted)
 		{
-			// 플레이어 입력 가능
-			GameServer::GetInst()->SetServerSignal(ServerFlag::S_StageRaceStart);
 			GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_None);
 		}
 	}
-
-	if (false == RaceStartSignal && true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageRaceStart))
+	
+	if (false == RaceStartSignal_ && true == GameServer::GetInst()->IsHost_ && true == UIs_->IsCountDownEnd())
 	{
-		RaceStartSignal = true;
-		Player_->SetInputAvailable(true);
+		RaceStartSignal_ = true;
+		GameServer::GetInst()->SetServerSignal(ServerFlag::S_StageRaceStart);
 	}
 
 

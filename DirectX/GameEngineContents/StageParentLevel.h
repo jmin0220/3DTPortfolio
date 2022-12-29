@@ -173,6 +173,8 @@ protected:
 	std::shared_ptr<class TimerActor> TimerUI_;
 	float TimerLimit_;
 
+	bool RaceStartSignal_;
+
 public:
 
 	std::shared_ptr<class TestGUI> GUI_;
