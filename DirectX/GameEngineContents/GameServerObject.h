@@ -64,12 +64,12 @@ public:
 public:
 	static int GetServerID() 
 	{
-		return ++IdSeed;
+		return IdSeed++;
 	}
 
 	static int GetObjectID()
 	{
-		return ++ObjectSeed;
+		return ObjectSeed++;
 	}
 
 public:
