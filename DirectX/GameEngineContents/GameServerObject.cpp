@@ -71,6 +71,8 @@ void GameServerObject::ClientInit(ServerObjectType _Type, int _ID)
 	ServerType = _Type;
 	ID = _ID;
 
+	GameEngineDebug::OutPutString("[ 유저 IDSEED 시작 : " + std::to_string(IdSeed) + " ]");
+
 	IsNetInit = true;
 
 	AllServerActor.insert(std::make_pair(ID, this));

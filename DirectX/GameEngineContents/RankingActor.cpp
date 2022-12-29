@@ -82,8 +82,8 @@ void RankingActor::BubbleSort()
 			{
 				SwapFlg = true;
 
-				GameEngineDebug::OutPutString("Swap >> " + std::to_string(Score_[j])
-					+ "  " + std::to_string(Score_[j + 1]));
+				//GameEngineDebug::OutPutString("Swap >> " + std::to_string(Score_[j])
+				//	+ "  " + std::to_string(Score_[j + 1]));
 
 				int Temp = Score_[j];
 				Score_[j] = Score_[j + 1];

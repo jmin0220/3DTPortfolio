@@ -218,6 +218,13 @@ void PlayerActor::Update(float _DeltaTime)
 		// 서버에 패킷 보냄
 		std::shared_ptr<ObjectUpdatePacket> Packet = std::make_shared<ObjectUpdatePacket>();
 		Packet->ObjectID = GetNetID();
+
+		if (false == (GetNetID() == GameServer::GetInst()->PlayerID_))
+		{
+			// 3 == 0
+			GameEngineDebug::OutPutString(std::to_string(GetNetID()) + " == " + std::to_string(GameServer::GetInst()->PlayerID_));
+		}
+
 		Packet->Type = ServerObjectType::Player;
 	
 		if (true == IsNetDeath_)
@@ -274,9 +281,9 @@ void PlayerActor::Update(float _DeltaTime)
 				DynamicActorComponent_->SetPlayerStartPos(ObjectUpdate->Pos);
 				DynamicActorComponent_->SetChangedRot(ObjectUpdate->Rot);
 
-				GameEngineDebug::OutPutString("NetID : " + std::to_string(GetNetID()));
+	/*			GameEngineDebug::OutPutString("NetID : " + std::to_string(GetNetID()));
 				GameEngineDebug::OutPutString("NetPos : " + std::to_string(ObjectUpdate->Pos.x) + "|"
-					+ std::to_string(ObjectUpdate->Pos.y) + "|" + std::to_string(ObjectUpdate->Pos.z));
+					+ std::to_string(ObjectUpdate->Pos.y) + "|" + std::to_string(ObjectUpdate->Pos.z));*/
 
 				break;
 			}

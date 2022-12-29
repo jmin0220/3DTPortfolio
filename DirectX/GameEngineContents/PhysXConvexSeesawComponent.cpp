@@ -121,10 +121,10 @@ void PhysXConvexSeesawComponent::Update(float _DeltaTime)
 	float AngVelX = AngVel.x;
 	float AngVelY = AngVel.y;
 	float AngVelZ = AngVel.z;
-	std::string LOG = "X >> " + std::to_string(AngVelX)
-		+ "Y >> " + std::to_string(AngVelY)
-		+ "Z >> " + std::to_string(AngVelZ);
-	GameEngineDebug::OutPutString(LOG);
+	//std::string LOG = "X >> " + std::to_string(AngVelX)
+	//	+ "Y >> " + std::to_string(AngVelY)
+	//	+ "Z >> " + std::to_string(AngVelZ);
+	//GameEngineDebug::OutPutString(LOG);
 	
 	// PhysX Actor의 상태에 맞춰서 부모의 Transform정보를 갱신
 	float4 tmpWorldPos = { dynamic_->getGlobalPose().p.x

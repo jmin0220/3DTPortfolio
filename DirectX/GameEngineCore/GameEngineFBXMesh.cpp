@@ -721,7 +721,7 @@ void GameEngineFBXMesh::LoadUVInformation(fbxsdk::FbxMesh* pMesh, std::vector<Ga
 		MsgBoxAssert("UV가 2개입니다.");
 	}
 
-	GameEngineDebug::OutPutString(" NewMesh Vertex Size : " + std::to_string(_ArrVtx.size()));
+	//GameEngineDebug::OutPutString(" NewMesh Vertex Size : " + std::to_string(_ArrVtx.size()));
 
 	//iterating over all uv sets
 	// 여러개 있을수 있네요.

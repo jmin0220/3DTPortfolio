@@ -114,7 +114,7 @@ void StageParentLevel::Start()
 
 void StageParentLevel::Update(float _DeltaTime)
 {
-	SpawnServerObjects();
+	//SpawnServerObjects();
 
 	// PhysX업데이트
 	VirtualPhysXLevel::Update(_DeltaTime);
@@ -166,7 +166,7 @@ void StageParentLevel::LevelStartEvent()
 		}
 		else
 		{
-			Player_->ClientInit(ServerObjectType::Player, GameServerObject::GetServerID());
+			Player_->ClientInit(ServerObjectType::Player, GameServer::GetInst()->PlayerID_);
 		}
 	}
 
