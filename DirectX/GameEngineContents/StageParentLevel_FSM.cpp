@@ -7,6 +7,7 @@
 #include "TimerActor.h"
 
 #include "OptionActor.h"
+#include "StartGameTitleActor.h"
 
 ///////////////////////////
 // 스테이지 시작전 준비 단계
@@ -149,6 +150,29 @@ void StageParentLevel::StagePreviewStart(const StateInfo& _Info)
 		//김예나 : 시네마 카메라 동작시 나오는 브금 On
 		GlobalBGM::GetInst()->SetBGM(GameEngineSound::SoundPlayControl("Ready_Go.mp3"));
 		GlobalBGM::GetInst()->GetBGM().Volume(OptionActor::VolumeRatio_);
+
+		//김예나 : 게임소개 UI On
+		UIs_->OnOffSubTitle();
+		switch (MyStage_)
+		{
+		case StageNum::STAGE1:
+			UIs_->GetSubTitle()->SetTitleText("문으로 충돌","움직이는 문을 피하고 결승선에 도달하세요!","UI_Medal_Icon_ChompChomp.png");
+			break;
+		case StageNum::STAGE2:
+			UIs_->GetSubTitle()->SetTitleText("점프 클럽", "회전하는 빔을 뛰어 넘고 점액으로 떨어지지 마라!", "UI_Medal_Icon_JumpClub.png");
+			break;
+		case StageNum::STAGE3:
+			UIs_->GetSubTitle()->SetTitleText("펑이요!", "슬라임에 빠지지 마세요!", "UI_Medal_Icon_BigShots.png");
+			break;
+		case StageNum::STAGE4:
+			UIs_->GetSubTitle()->SetTitleText("바닥 떨어져유", "슬라임 위에 서 있는 최후의 폴가이즈가 되어보세요!", "UI_Medal_Icon_Hexagone.png");
+			break;
+		case StageNum::STAGE5:
+			UIs_->GetSubTitle()->SetTitleText("후프의 전설", "점프와 다이빙으로 후프를 통과하고 점수를 회득하세요!", "UI_Medal_Icon_HoopsLegends.png");
+			break;
+		default:
+			break;
+		}
 	}
 }
 
@@ -216,6 +240,11 @@ void StageParentLevel::StagePreviewUpdate(float _DeltaTime, const StateInfo& _In
 ///////////////////////////
 void StageParentLevel::ReadyStart(const StateInfo& _Info)
 {
+	{
+		//김예나 : 게임 설명 끔
+		UIs_->GetSubTitle()->Off();
+	}
+
 	// 유저나 호스트나 신호 끔
 	GameServer::GetInst()->SetPlayerSignal(PlayerFlag::P_StagePreviewChangeOver);
 	if (true == GameServer::IsHost_)

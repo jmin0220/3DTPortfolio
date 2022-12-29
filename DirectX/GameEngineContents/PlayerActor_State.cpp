@@ -127,7 +127,8 @@ void PlayerActor::RunEnd(const StateInfo& _Info)
 
 void PlayerActor::JumpStart(const StateInfo& _Info)
 {
-	GameEngineSound::SoundPlayOneShot("Jump.mp3");
+	GameEngineSound::SoundPlayOneShot("Woop(Jump).mp3");
+	GameEngineSound::SoundPlayOneShot("Jump_Effect.mp3");
 	IsTouchGround = false;
 	//IsDetachGround = true;
 	waitphysx_ = false;

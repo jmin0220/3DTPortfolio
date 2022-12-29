@@ -37,6 +37,11 @@ public:
 		return CountDown_;
 	}
 
+	std::shared_ptr<StartGameTitleActor> GetSubTitle()
+	{
+		return StartGameTitle_;
+	}
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
