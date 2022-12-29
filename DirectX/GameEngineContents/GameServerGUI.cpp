@@ -12,6 +12,9 @@
 
 bool GameServerGUI::GameStart_ = false;
 
+
+char UserNameInput_[50] = { 0, };
+
 GameServerGUI::GameServerGUI() 
 {
 }
@@ -66,9 +69,17 @@ void GameServerGUI::LobbyGUI()
 		// 게임시작 버튼
 		if (ImGui::Button(GameEngineString::AnsiToUTF8Return("게임시작").c_str()))
 		{
-			GameStart_ = true;	
+			GameStart_ = true;
+
+
 		}
 	}
+
+	// 플레이어 이름 설정
+	ImGui::Text(GameEngineString::AnsiToUTF8Return("플레이어 이름 입력(영어)").c_str());
+	ImGui::InputText("##text", UserNameInput_, sizeof(UserNameInput_));
+
+	GameServer::GetInst()->UserName_ = UserNameInput_;
 
 	// 플레이어 색 설정?
 	ImGui::Text(GameEngineString::AnsiToUTF8Return("캐릭터 색상 선택").c_str());
@@ -201,7 +212,7 @@ void GameServerGUI::InGameGUI()
 	ImGui::NewLine();
 	ImGui::Text(GameEngineString::AnsiToUTF8Return("< 내 정보 >").c_str());
 	{
-		std::string Text = "플레이어 신호 : ";
+		std::string Text = GameServer::GetInst()->UserName_ + " ( ID : " + std::to_string(GameServer::GetInst()->PlayerID_) + " )  [ ";
 
 		if (PlayerFlag::P_None == GameServer::PlayerSignal_)
 		{
@@ -264,8 +275,8 @@ void GameServerGUI::InGameGUI()
 			Text += "P_StageEndChangeOver";
 		}
 
-		Text += "\n 플레이어 ID : " + std::to_string(GameServer::GetInst()->PlayerID_);
-		Text += "\n- 플레이어 점수 : " + std::to_string(GameServer::GetInst()->PlayerScore_);
+		Text += " ]";
+		Text += "\n- 점수 : " + std::to_string(GameServer::GetInst()->PlayerScore_);
 		ImGui::Text(GameEngineString::AnsiToUTF8Return(Text).c_str());
 
 	}
@@ -283,10 +294,11 @@ void GameServerGUI::InGameGUI()
 			unsigned int PlayerID = (*Start).second->PlayerID;
 			PlayerFlag Flag = static_cast<PlayerFlag>((*Start).second->PlayerStateSignal);
 			unsigned int Score = (*Start).second->PlayerScore;
+			const std::string& UserName = (*Start).second->PlayerName;
 			{
-				std::string Text = " PlayerID : ";
+				std::string Text = UserName + " ( ID : ";
 				Text += std::to_string(PlayerID);
-				Text += "  [";
+				Text += ") [";
 
 				if (false == Flag)
 				{
@@ -350,7 +362,7 @@ void GameServerGUI::InGameGUI()
 				}
 
 				Text += " ]\n";
-				Text += " - 플레이어 점수 : " + std::to_string(Score);
+				Text += "- 점수 : " + std::to_string(Score);
 				ImGui::Text(GameEngineString::AnsiToUTF8Return(Text).c_str());
 			}
 		}

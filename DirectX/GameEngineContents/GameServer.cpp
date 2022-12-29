@@ -15,6 +15,7 @@ unsigned int GameServer::PlayerColorID_ = 0;
 float4 GameServer::PlayerColor_ = float4::ZERO;
 unsigned int GameServer::PlayerScore_ = 0;
 unsigned int GameServer::PlayTime_ = 0;
+std::string GameServer::UserName_;
 
 #include <atomic>
 std::mutex Lock;
@@ -64,6 +65,16 @@ unsigned int GameServer::CheckOtherPlayersFlagCount(PlayerFlag _Flag)
 	}
 
 	return Result;
+}
+
+bool GameServer::CheckHostFlag(PlayerFlag _Flag)
+{
+	if (true == IsHost_)
+	{
+		return false;
+	}
+
+	return OtherPlayersInfo_[0]->PlayerStateSignal == static_cast<unsigned int>(_Flag);
 }
 
 GameServer::GameServer()
@@ -254,10 +265,6 @@ void GameServer::PlayerStatePacketProcess(std::shared_ptr<GameServerPacket> _Pac
 	{
 		GameServer::Net->SendPacket(Packet);
 	}
-	else
-	{
-		PlayTime_ = Packet->PlayTime;
-	}
 }
 
 ////////////////////
@@ -305,6 +312,8 @@ void GameServer::SendPlayerStatePacket()
 	{
 		Packet->PlayTime = 0;
 	}
+
+	Packet->PlayerName = UserName_;
 
 	Net->SendPacket(Packet);
 }

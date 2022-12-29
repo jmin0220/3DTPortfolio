@@ -35,5 +35,22 @@ private:
 	std::shared_ptr<UISkyBoxActor> Sky_;
 
 	float ChairTime_;
+
+	// ¼­¹ö
+private:
+	struct ServerPlayerInfo
+	{
+		unsigned int Color_;
+		unsigned int Score_;
+		std::string Name_;
+	};
+
+	std::vector<ServerPlayerInfo> AllServerPlayers_;
+
+
+	static bool ScoreBigger(ServerPlayerInfo _Left, ServerPlayerInfo _Right)
+	{
+		return _Left.Score_ > _Right.Score_;
+	}
 };
 

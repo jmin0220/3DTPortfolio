@@ -33,6 +33,7 @@ public:
 
 	bool CheckOtherPlayersFlag(PlayerFlag _Flag);
 	unsigned int CheckOtherPlayersFlagCount(PlayerFlag _Flag);
+	bool CheckHostFlag(PlayerFlag _Flag);
 
 	std::map<int, std::shared_ptr<class PlayerStatePacket>>& GetOtherPlayersInfo()
 	{
@@ -131,6 +132,7 @@ public:
 	static float4 PlayerColor_;
 	static unsigned int PlayerScore_;
 	static unsigned int PlayTime_;
+	static std::string UserName_;
 	
 	// 모든 유저 정보
 	std::map<int, std::shared_ptr<class PlayerStatePacket>> OtherPlayersInfo_;

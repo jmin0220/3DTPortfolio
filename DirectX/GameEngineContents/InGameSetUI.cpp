@@ -31,6 +31,16 @@ void InGameSetUI::OnOffSuccessCount()
 	SuccessCount_->OnOffSwitch();
 }
 
+void InGameSetUI::OffSuccessCount()
+{
+	SuccessCount_->Off();
+}
+
+void InGameSetUI::OnSuccessCount()
+{
+	SuccessCount_->On();
+}
+
 void InGameSetUI::OnOffEnd()
 {
 	RoundEnd_->OnOffSwitch();
@@ -47,6 +57,29 @@ InGameSetUI::~InGameSetUI()
 
 void InGameSetUI::Start()
 {
+	GameFail_ = GetLevel()->CreateActor<GameFail>();
+	GameFail_->GetTransform().SetWorldPosition({ 0.0f,200.0f });
+	GameFail_->Off();
+
+	GameSuccess_ = GetLevel()->CreateActor<GameSuccess>();
+	GameSuccess_->Off();
+
+	RoundEnd_ = GetLevel()->CreateActor<RoundEnd>();
+	RoundEnd_->GetTransform().SetWorldPosition({ 0.0f,-200.0f });
+	RoundEnd_->Off();
+
+	CountDown_ = GetLevel()->CreateActor<CountDown>();
+	CountDown_->Off();
+
+	StartGameTitle_ = GetLevel()->CreateActor<StartGameTitleActor>();
+	StartGameTitle_->Off();
+
+	GoalTipActor_ = GetLevel()->CreateActor<GoalTipActor>();
+	GoalTipActor_->Off();
+
+	SuccessCount_ = GetLevel()->CreateActor<SuccessCount>();
+	SuccessCount_->Off();
+
 }
 
 void InGameSetUI::Update(float _DeltaTime)
@@ -126,28 +159,6 @@ void InGameSetUI::LevelStartEvent()
 		GameEngineInput::GetInst()->CreateKey("PlusScore", '7');
 	}
 
-	GameFail_ = GetLevel()->CreateActor<GameFail>();
-	GameFail_->GetTransform().SetWorldPosition({ 0.0f,200.0f });
-	GameFail_->Off();
-	
-	GameSuccess_ = GetLevel()->CreateActor<GameSuccess>();
-	GameSuccess_->Off();
-
-	RoundEnd_ = GetLevel()->CreateActor<RoundEnd>();
-	RoundEnd_->GetTransform().SetWorldPosition({ 0.0f,-200.0f });
-	RoundEnd_->Off();
-
-	CountDown_ = GetLevel()->CreateActor<CountDown>();
-	CountDown_->Off();
-
-	StartGameTitle_ = GetLevel()->CreateActor<StartGameTitleActor>();
-	StartGameTitle_->Off();
-
-	GoalTipActor_ = GetLevel()->CreateActor<GoalTipActor>();
-	GoalTipActor_->Off();
-
-	SuccessCount_ = GetLevel()->CreateActor<SuccessCount>();
-	//SuccessCount_->Off();
 }
 
 void InGameSetUI::LevelEndEvent()

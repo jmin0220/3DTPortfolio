@@ -16,6 +16,8 @@ public:
 	bool IsCountDownEnd();
 	void OnOffSubTitle();
 	void OnOffSuccessCount();
+	void OffSuccessCount();
+	void OnSuccessCount();
 
 	void OnOffEnd();
 

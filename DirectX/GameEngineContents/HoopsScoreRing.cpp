@@ -2,6 +2,7 @@
 #include "HoopsScoreRing.h"
 #include "VirtualPhysXLevel.h"
 #include "GameEngineBase/GameEngineRandom.h"
+#include "PlayerActor.h"
 
 HoopsScoreRing::HoopsScoreRing()	:	
 	IsCol_(false),
@@ -131,10 +132,15 @@ CollisionReturn HoopsScoreRing::CheckCollision(std::shared_ptr<GameEngineCollisi
 	_This->Off();
 	IsCol_ = true;
 
-	//스코어증가
+	// 후프통과 플레이어 + 메인플레이어일 경우만 스코어증가
 	if (true == GameServer::GetInst()->IsServerStart())
 	{
-		GameServer::GetInst()->PlayerScore_ += 100;
+		std::shared_ptr<PlayerActor> Player = std::dynamic_pointer_cast<PlayerActor>(_Other->GetActor());
+		
+		if (Player.get() == PlayerActor::MainPlayer)
+		{
+			GameServer::GetInst()->PlayerScore_ += 100;
+		}
 	}
 
 	return CollisionReturn::Break;

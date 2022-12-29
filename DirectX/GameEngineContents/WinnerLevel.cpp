@@ -59,6 +59,34 @@ void WinnerLevel::LevelStartEvent()
 
 	Chair_ = CreateActor<FloorActor>();
 	Chair_->On();
+
+	// 서버
+	std::shared_ptr<GameServer>& Server = GameServer::GetInst();
+	if (true == Server->IsServerStart())
+	{
+		std::map<int, std::shared_ptr<class PlayerStatePacket>>::iterator StartIt = Server->OtherPlayersInfo_.begin();
+		std::map<int, std::shared_ptr<class PlayerStatePacket>>::iterator EndIt = Server->OtherPlayersInfo_.end();
+
+		int ListIdx = 0;
+		for (; StartIt != EndIt; ++StartIt)
+		{
+			std::shared_ptr<PlayerStatePacket> Packet = (*StartIt).second;
+			AllServerPlayers_.emplace_back(Packet->PlayerColor, Packet->PlayerScore, Packet->PlayerName);
+		}
+		// 자기정보도 넣는다
+		
+		ServerPlayerInfo MyInfo;
+		MyInfo.Color_ = Server->PlayerColorID_;
+		MyInfo.Score_ = Server->PlayerScore_;
+		MyInfo.Name_ = Server->UserName_;
+		AllServerPlayers_.push_back(MyInfo);
+
+		std::sort(AllServerPlayers_.begin(), AllServerPlayers_.end(), ScoreBigger);
+
+		// 1위
+		Player_->SetPlayerColor(AllServerPlayers_[0].Color_);
+		Winner_->SetWinnerFont(AllServerPlayers_[0].Name_);
+	}
 }
 
 void WinnerLevel::LevelEndEvent()

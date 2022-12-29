@@ -36,6 +36,13 @@ private:
 	// ¼­¹ö
 public:
 	void SetNetTime(float _Time);
+	bool IsTimerEnd()
+	{
+		return TimerEnd_ == true;
+	}
+
+private:
+	bool TimerStarted_;
 	bool TimerEnd_;
 };
 
