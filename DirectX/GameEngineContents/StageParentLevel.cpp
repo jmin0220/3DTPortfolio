@@ -114,7 +114,7 @@ void StageParentLevel::Start()
 
 void StageParentLevel::Update(float _DeltaTime)
 {
-	//SpawnServerObjects();
+	SpawnServerObjects();
 
 	// PhysX업데이트
 	VirtualPhysXLevel::Update(_DeltaTime);
