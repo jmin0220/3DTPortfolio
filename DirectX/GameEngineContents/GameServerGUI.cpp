@@ -376,8 +376,15 @@ void GameServerGUI::InGameGUI()
 
 	ImGui::Text(GameEngineString::AnsiToUTF8Return("< 서버 오브젝트 정보 >").c_str());
 	{
+		if (GameServerObject::AllServerActor.empty())
+		{
+			return;
+		}
+
 		std::map<int, GameServerObject*>::iterator StartIt = GameServerObject::AllServerActor.begin();
 		std::map<int, GameServerObject*>::iterator EndIt = GameServerObject::AllServerActor.end();
+
+		
 
 		std::string Text;
 		for (; StartIt != EndIt; ++StartIt)
