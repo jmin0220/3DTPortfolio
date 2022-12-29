@@ -213,7 +213,11 @@ void GameServerGUI::InGameGUI()
 	ImGui::Text(GameEngineString::AnsiToUTF8Return("< 내 정보 >").c_str());
 	{
 		std::string Text = GameServer::GetInst()->UserName_ + " ( ID : " + std::to_string(GameServer::GetInst()->PlayerID_) + " )  [ ";
-		Text += "\n 메인플레이어엑터 ID : " + std::to_string(PlayerActor::MainPlayer->GetNetID());
+		
+		if (PlayerActor::MainPlayer != nullptr)
+		{
+			Text += "\n 메인플레이어엑터 ID : " + std::to_string(PlayerActor::MainPlayer->GetNetID());
+		}
 
 		if (PlayerFlag::P_None == GameServer::PlayerSignal_)
 		{
