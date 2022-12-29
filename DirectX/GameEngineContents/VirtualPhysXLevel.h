@@ -93,8 +93,6 @@ private:
 
 	CustomSimulationEventCallback* SimulationEventCallback_;
 
-	float AddDeltaTime_;
-
 	// 클래스 초기화
 	void initPhysics(bool _interactive);
 
