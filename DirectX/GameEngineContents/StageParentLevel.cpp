@@ -110,6 +110,7 @@ void StageParentLevel::Start()
 		, std::bind(&StageParentLevel::EndUpdate, this, std::placeholders::_1, std::placeholders::_2)
 		, std::bind(&StageParentLevel::EndStart, this, std::placeholders::_1));
 
+}
 
 void StageParentLevel::Update(float _DeltaTime)
 {
