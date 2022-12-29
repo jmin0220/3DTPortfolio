@@ -8,6 +8,7 @@
 //#include "TestGUI.h"
 #include "GameEngineBase/GameEngineRandom.h"
 #include "TimerActor.h"
+#include "RankingActor.h"
 
 HoopsLegendsLevel::HoopsLegendsLevel() :
 	SettingHoops_(false)
@@ -47,6 +48,7 @@ void HoopsLegendsLevel::Update(float _DeltaTime)
 		&& true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StagePreviewChangeOver))
 	{
 		ServerActivated_ = true;
+		RankingActor_->On();
 	}
 
 	// 이거 서버만 돌려야됨
@@ -149,6 +151,9 @@ void HoopsLegendsLevel::LevelStartEvent()
 	}
 
 	TimerLimit_ = 120.0f;
+
+	RankingActor_ = CreateActor<RankingActor>();
+	RankingActor_->Off();
 }
 
 void HoopsLegendsLevel::LevelEndEvent()
@@ -161,6 +166,8 @@ void HoopsLegendsLevel::LevelEndEvent()
 	{
 		Hoop->Death();
 	}
+
+	RankingActor_->Death();
 }
 
 bool HoopsLegendsLevel::GameEndingFlag()

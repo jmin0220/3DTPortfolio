@@ -219,6 +219,36 @@ void MidScoreLevel::LevelEndEvent()
 	ContentsCore::GetInst()->ReleaseCurLevelResource();
 }
 
+void MidScoreLevel::OnEvent()
+{
+	// 서버
+// 모든 플레이어의 점수 정보를 자료구조로 던져줄 예정
+	if (true == GameServer::GetInst()->IsServerStart())
+	{
+		MidScoreTime_ = 0.0f;
+		LevelChanged_ = false;
+
+		ServerSetting();
+	}
+	// 서버 안킴
+	else
+	{
+		NoServerSetting();
+	}
+
+	Once_ = false;
+	IsScoreOn_ = false;
+	ScoreSetted_ = false;
+	BeforeScoreTime_ = 0.0f;
+	LerpTime_ = 0.0f;
+	FallingTime_ = 0.0f;
+	MidScoreTime_ = 0.0f;
+}
+
+void MidScoreLevel::OffEvent()
+{
+}
+
 void MidScoreLevel::RandomSocre()
 {
 	if (false == IsScoreOn_ && false == ScoreSetted_)

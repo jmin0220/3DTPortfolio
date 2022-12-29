@@ -34,6 +34,10 @@ protected:
 
 	void LevelStartEvent() override;
 	void LevelEndEvent() override;
+
+	void OnEvent() override;
+	void OffEvent() override;
+
 private:
 	std::shared_ptr<LobbyPlayer> Player1_;
 	std::shared_ptr<FloorActor> Chair1_;
