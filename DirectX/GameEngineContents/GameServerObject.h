@@ -69,7 +69,7 @@ public:
 
 	static int GetObjectID()
 	{
-		return ObjectSeed++;
+		return ++ObjectSeed;
 	}
 
 public:

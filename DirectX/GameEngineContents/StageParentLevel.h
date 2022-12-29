@@ -151,11 +151,13 @@ private:
 	void SetWatchCamNextPlayer();
 
 	std::vector<std::shared_ptr<GameEngineActor>> NetPlayers_;
-	std::vector<std::shared_ptr<GameEngineActor>> NetObstacles_;
 	std::vector<std::shared_ptr<GameEngineActor>> WatchPlayers_;
 	int WatchCamIdx;
 
 protected:
+
+	std::vector<std::shared_ptr<GameEngineActor>> NetObstacles_;
+
 	enum class GameScoreType
 	{
 		NONE,

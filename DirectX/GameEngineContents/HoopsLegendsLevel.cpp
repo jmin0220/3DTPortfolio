@@ -156,6 +156,11 @@ void HoopsLegendsLevel::LevelEndEvent()
 	StageParentLevel::LevelEndEvent();
 
 	TimerUI_->Off();
+
+	for (std::shared_ptr<GameEngineActor> Hoop : HoopsActor)
+	{
+		Hoop->Death();
+	}
 }
 
 bool HoopsLegendsLevel::GameEndingFlag()

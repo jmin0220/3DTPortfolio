@@ -199,6 +199,7 @@ void StageParentLevel::LevelEndEvent()
 {
 	VirtualPhysXLevel::LevelEndEvent();
 	//ContentsCore::GetInst()->ReleaseCurLevelResource();
+
 	GameServerObject::ServerRelease();
 
 	Player_->Death();
@@ -220,6 +221,7 @@ void StageParentLevel::LevelEndEvent()
 	{
 		NetObstacle->Death();
 	}
+
 }
 
 void StageParentLevel::LevelStartLoad()

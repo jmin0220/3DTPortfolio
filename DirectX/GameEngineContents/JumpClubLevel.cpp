@@ -91,12 +91,14 @@ void JumpClubLevel::LevelStartEvent()
 		BarDouble->ClientInit(ServerObjectType::SpinBarDouble, GameServerObject::GetObjectID());
 		BarDouble->GetTransform().SetWorldPosition({ 0.0f, 77.0f, 0.0f });
 		BarDouble->PhysXInit();
+		NetObstacles_.push_back(BarDouble);
 
 
 		std::shared_ptr<JumpClub_SpinBarSingle> BarSingle = CreateActor<JumpClub_SpinBarSingle>();
 		BarSingle->ClientInit(ServerObjectType::SpinBarSingle, GameServerObject::GetObjectID());
 		BarSingle->GetTransform().SetWorldPosition({ 0.0f, 62.0f, 0.0f });
 		BarSingle->PhysXInit();
+		NetObstacles_.push_back(BarSingle);
 	}
 
 
@@ -105,7 +107,6 @@ void JumpClubLevel::LevelStartEvent()
 
 	// 플레이어 스폰위치 조정
 	// 위치 6개임
-	StartPositions_;
 
 	if (true == GameServer::GetInst()->IsServerStart())
 	{

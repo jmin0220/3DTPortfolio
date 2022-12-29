@@ -12,7 +12,7 @@ void GameServerObject::ServerRelease()
 {
 	AllServerActor.clear();
 	IdSeed = 0;
-	ObjectSeed = PlayersCount;
+	ObjectSeed = PlayersCount + 1;
 }
 
 void GameServerObject::PushPacket(std::shared_ptr<GameServerPacket> _Packet)
