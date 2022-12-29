@@ -154,7 +154,9 @@ void StageParentLevel::LevelStartEvent()
 	LevelStartLoad();
 
 	// 자신의 메인 플레이어 생성
+	PlayerActor::IsMainPlayerSpawned_ = false;
 	Player_ = CreateActor<PlayerActor>();
+
 
 	if (true == GameServer::GetInst()->IsServerStart())
 	{
