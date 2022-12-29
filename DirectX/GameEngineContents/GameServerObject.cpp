@@ -2,6 +2,7 @@
 #include "GameServerObject.h"
 
 std::atomic<int> GameServerObject::IdSeed = 0;
+int GameServerObject::PlayersCount = 0;
 std::map<int, GameServerObject*> GameServerObject::AllServerActor;
 
 std::mutex PacketLock;
