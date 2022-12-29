@@ -218,6 +218,8 @@ private:
 
 	SkinData SkinData_;
 
+	void ResetPlayer();
+
 	//캐릭터 카메라 동기 회전관련
 private:
 	float4 GetCameraBaseRotationAng(float4 _ActorRot, float4 _CamRot, float4 _MoveDir, float _DeltaTime);

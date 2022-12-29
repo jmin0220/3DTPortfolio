@@ -106,6 +106,9 @@ public:
 	//플레이어 멈추는거 푸는 함수
 	void WakeUpDynamic();
 
+	//Reset 함수
+	void ResetDynamic();
+
 	//일어설때 목표 각도구하는 함수
 	void InitializeStandUp2();
 protected:

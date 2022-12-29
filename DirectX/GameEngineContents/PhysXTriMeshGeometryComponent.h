@@ -47,6 +47,7 @@ private:
 
 	physx::PxMaterial* material_;
 	physx::PxShape* shape_;
+	physx::PxShape* triggershape_;
 	physx::PxRigidStatic* rigidStatic_;
 
 	std::vector<std::vector<physx::PxVec3>> VertexVec;

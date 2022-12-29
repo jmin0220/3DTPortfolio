@@ -90,7 +90,7 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 	// 
 	physx::PxTransform LocalPose = dynamic_->getCMassLocalPose();
 
-	faceshape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxBoxGeometry(ScaledRadius * 0.1f, ScaledHeight * 0.4f, ScaledRadius * 0.4f), *material_);
+	faceshape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxBoxGeometry(ScaledRadius * 0.1f, ScaledHeight * 0.4f, ScaledHeight * 0.9f), *material_);
 	faceshape_->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
 	faceshape_->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
 	physx::PxTransform facerelativePose(physx::PxVec3(0.0f, CapsuleHeight * 1.3f, ScaledRadius * 1.3f));
@@ -325,14 +325,14 @@ bool PhysXDynamicActorComponent::StandUp2(float _DeltaTime, bool _IsXAixisRotRea
 	//노말백터를 기준으로 YAxis로 AngDiff만큼 회전
 	float4 FinalRot;
 	GameEngineDebug::OutPutString(std::to_string(Vec3.x) + ", " + std::to_string(Vec3.y) + ", " + std::to_string(Vec3.z) );
-	if (Vec3.y > 0)
-	{
+	//if (Vec3.y > 0)
+	//{
 		FinalRot = RodriguesRotate({ Vec3.x, Vec3.y, Vec3.z }, { Normal.x, Normal.y, Normal.z }, 0.08f);
-	}
-	else
-	{
-		FinalRot = RodriguesRotate({ Vec3.x, Vec3.y, Vec3.z }, { Normal.x, Normal.y, Normal.z }, -0.08f);
-	}
+	//}
+	//else
+	//{
+	//	FinalRot = RodriguesRotate({ Vec3.x, Vec3.y, Vec3.z }, { Normal.x, Normal.y, Normal.z }, -0.08f);
+	//}
 
 
 	if (abs(FinalRot.y) > 0.97f)
@@ -404,6 +404,19 @@ void PhysXDynamicActorComponent::WakeUpDynamic()
 	dynamic_->wakeUp();
 }
 
+void PhysXDynamicActorComponent::ResetDynamic()
+{
+	float4 tmpQuat = float4{0.0f,0.0f,0.0f}.DegreeRotationToQuaternionReturn();
+	const physx::PxQuat tmpPxQuat(tmpQuat.x, tmpQuat.y, tmpQuat.z, tmpQuat.w);
+	const physx::PxTransform tmpTansform(dynamic_->getGlobalPose().p, tmpPxQuat);
+
+	dynamic_->setGlobalPose(tmpTansform);
+	dynamic_->setRigidDynamicLockFlags(
+		physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_X |
+		physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y |
+		physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z);
+}
+
 void PhysXDynamicActorComponent::InitializeStandUp2()
 {
 	physx::PxVec3 ASDASFFASGG = dynamic_->getGlobalPose().q.getBasisVector1();
@@ -415,7 +428,6 @@ void PhysXDynamicActorComponent::InitializeStandUp2()
 	{
 		AngDiffXZ += GameEngineMath::PI;
 	}
-
 
 	if (ASDASFFASGG.x > 0.0f && ASDASFFASGG.z < 0.0f)
 	{
@@ -433,29 +445,6 @@ void PhysXDynamicActorComponent::InitializeStandUp2()
 	physx::PxVec3 Vec3;
 	dynamic_->getGlobalPose().q.toRadiansAndUnitAxis(Angle, Vec3);
 
-	//if (abs(Vec3.x) > abs(Vec3.z))
-	//{
-	//	if (abs(Vec3.x) > abs(Vec3.y))
-	//	{
-	//		physx::PxReal VecValue = Vec3.x;
-	//		Vec3.x = Vec3.y;
-	//		Vec3.y = VecValue;
-	//	}
-	//}
-	//else
-	//{
-	//	if (abs(Vec3.z) > abs(Vec3.y))
-	//	{
-	//		physx::PxReal VecValue = Vec3.z;
-	//		Vec3.z = Vec3.y;
-	//		Vec3.y = VecValue;
-	//	}
-	//}
-
-	//physx::PxQuat tmpQuat(Angle, Vec3);
-	////const physx::PxQuat tmpPxQuat(tmpQuat.x, tmpQuat.y, tmpQuat.z, tmpQuat.w);
-	//const physx::PxTransform tmpTransform(dynamic_->getGlobalPose().p, tmpQuat);
-	//dynamic_->setGlobalPose(tmpTransform);
 
 	StandUpStartYAxisAngle_ = Angle;
 

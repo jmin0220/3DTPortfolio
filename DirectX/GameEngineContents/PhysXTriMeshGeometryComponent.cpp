@@ -77,7 +77,6 @@ void PhysXTriMeshGeometryComponent::CreatePhysXActors(const std::string& _MeshNa
 		physx::PxTriangleMesh* TriangleMesh = _physics->createTriangleMesh(readBuffer);
 		//createExclusiveShapefh RigidStatic에 Shape를 넣어준다.
 		shape_ = physx::PxRigidActorExt::createExclusiveShape(*rigidStatic_, physx::PxTriangleMeshGeometry(TriangleMesh), *material_);
-
 		//피벗 설정
 		physx::PxVec3 Pivot(DynamicPivot_.x, DynamicPivot_.y, DynamicPivot_.z);
 		shape_->setLocalPose(physx::PxTransform(Pivot));

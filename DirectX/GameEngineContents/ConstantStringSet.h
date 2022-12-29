@@ -21,7 +21,7 @@
 #define FLOOR_STATICFRICTION 0.7f
 
 //스테이지 바닥의 Dynammicfriction (운동마찰계수)
-#define FLOOR_DYNAMICFRICTION 1.5f
+#define FLOOR_DYNAMICFRICTION 1.8f
 
 //스테이지 바닥의 Resistution (반발계수)
 #define FLOOR_RESISTUTION 0.0f

@@ -234,6 +234,7 @@ void CustomSimulationEventCallback::onTrigger(physx::PxTriggerPair* pairs, physx
 				}
 			}
 		}
+		
 	}
 }
 
@@ -289,7 +290,7 @@ physx::PxFilterFlags CustomFilterShader(physx::PxFilterObjectAttributes attribut
 	// let triggers through
 	if (physx::PxFilterObjectIsTrigger(attributes0) || physx::PxFilterObjectIsTrigger(attributes1))
 	{
-		pairFlags = physx::PxPairFlag::eTRIGGER_DEFAULT;
+		pairFlags = physx::PxPairFlag::eTRIGGER_DEFAULT | physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS;
 		return physx::PxFilterFlag::eDEFAULT;
 	}
 	 //generate contacts for all that were not filtered above

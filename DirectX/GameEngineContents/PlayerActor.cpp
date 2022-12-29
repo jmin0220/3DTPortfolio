@@ -123,7 +123,7 @@ void PlayerActor::PlayerInit()
 		GameEngineInput::GetInst()->CreateKey("ImpulsD", VK_RIGHT);
 
 		//플레이어 멈추기 실험용
-		GameEngineInput::GetInst()->CreateKey("Freeze", 'K');
+		GameEngineInput::GetInst()->CreateKey("Reset", 'K');
 
 		//체크포인트 실험용
 		GameEngineInput::GetInst()->CreateKey("TestPos", 'J');
@@ -175,7 +175,10 @@ void PlayerActor::Update(float _DeltaTime)
 
 		ImpulseTest();
 
-
+		if (GameEngineInput::GetInst()->IsDown("Reset") == true)
+		{
+			ResetPlayer();
+		}
 
 		//체크포인트 실험용 나중에 지워야함
 		if (GameEngineInput::GetInst()->IsDown("TestPos") == true)
@@ -209,6 +212,13 @@ void PlayerActor::Update(float _DeltaTime)
 			IsInputOn_ = false;
 			DynamicActorComponent_->FreezeDynamic();
 			FbxRenderer_->PauseSwtich();
+		}
+
+		ImpulseTest();
+
+		if (GameEngineInput::GetInst()->IsDown("Reset") == true)
+		{
+			ResetPlayer();
 		}
 
 		//체크포인트 실험용 나중에 지워야함
@@ -697,4 +707,12 @@ bool PlayerActor::CheckOnGround()
 	{
 		return false;
 	}
+}
+
+void PlayerActor::ResetPlayer()
+{
+	DynamicActorComponent_->ResetDynamic();
+	PlayerStateManager_.ChangeState("Idle");
+	PlayerAniStateManager_.ChangeState("Idle");
+	IsUnControlable_ = false;
 }
