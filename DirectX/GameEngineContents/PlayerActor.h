@@ -61,6 +61,11 @@ public:
 		IsNetDeath_ = _Value;
 	}
 
+	bool GetNetDeath()
+	{
+		return IsNetDeath_;
+	}
+
 public:
 	// constrcuter destructer
 	PlayerActor();

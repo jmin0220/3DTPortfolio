@@ -724,8 +724,7 @@ void StageParentLevel::SetWatchCamNextPlayer()
 	WatchPlayers_.clear();
 	for (std::shared_ptr<GameEngineActor> LivePlayer : NetPlayers_)
 	{
-		// TODO::UPDATE¹æ½Ä ¾ÈµÊ
-		if (true == LivePlayer->IsUpdate())
+		if (false == std::dynamic_pointer_cast<PlayerActor>(LivePlayer)->GetNetDeath())
 		{
 			WatchPlayers_.push_back(LivePlayer);
 		}

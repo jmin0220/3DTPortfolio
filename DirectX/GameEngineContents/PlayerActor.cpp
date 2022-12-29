@@ -231,7 +231,6 @@ void PlayerActor::Update(float _DeltaTime)
 	
 		if (true == IsNetDeath_)
 		{
-
 			Packet->State = ServerObjectBaseState::Death;
 		}
 		else
@@ -263,11 +262,13 @@ void PlayerActor::Update(float _DeltaTime)
 				std::shared_ptr<ObjectUpdatePacket> ObjectUpdate = std::dynamic_pointer_cast<ObjectUpdatePacket>(Packet);
 
 				// 네트워크상 죽음
-				if (true == (ObjectUpdate->State == ServerObjectBaseState::Death))
+				if (ObjectUpdate->State == ServerObjectBaseState::Death)
 				{
-					this->Off();
-
-					// invisible?
+					this->SetPlayerForze(true);
+				}
+				else
+				{
+					this->SetPlayerForze(false);
 				}
 
 				// 스킨
