@@ -387,9 +387,11 @@ void GameServerGUI::InGameGUI()
 			PlayerActor* IsPlayer = dynamic_cast<PlayerActor*>((*StartIt).second);
 			if (nullptr != IsPlayer)
 			{
-				Text += " 플레이어 엑터입니다";
+				Text += " 플레이어 엑터입니다 \n";
 			}
 		}
+
+		ImGui::Text(GameEngineString::AnsiToUTF8Return(Text).c_str());
 	}
 
 
