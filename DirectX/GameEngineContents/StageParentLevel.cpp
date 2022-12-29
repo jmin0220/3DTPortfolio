@@ -547,7 +547,7 @@ void StageParentLevel::LevelStartLoad()
 }
 
 
-void StageParentLevel::SpawnServerObjects()
+void StageParentLevel::SpawnServerObjects(bool _SpawnStart)
 {
 	std::list<std::shared_ptr<ObjectUpdatePacket>>& PacketList = GameServer::GetInst()->NewObjectUpdatePacketList_;
 
