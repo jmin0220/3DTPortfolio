@@ -20,6 +20,8 @@ HoopsWoodPlank::~HoopsWoodPlank()
 
 void HoopsWoodPlank::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics)
 {
+	PhysXBoxGeometry_->SetAggregateObj(true);
+
 	physx::PxCooking* Cooking = static_cast<VirtualPhysXLevel*>(GetLevel())->GetCooking();
 	float4 MeshBoundScale = Renderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
 	PhysXBoxGeometry_->SetDynamicPivot(Renderer_->GetTransform().GetLocalPosition());

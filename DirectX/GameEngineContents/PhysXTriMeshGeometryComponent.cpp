@@ -123,7 +123,14 @@ void PhysXTriMeshGeometryComponent::CreatePhysXActors(const std::string& _MeshNa
 	//rigidStatic_->attachShape(*shape_);
 
 	// Scene에 액터 추가
-	_Scene->addActor(*rigidStatic_);
+	if (true == IsAggregateObj_)
+	{
+		AddActorAggregate(rigidStatic_);
+	}
+	else
+	{
+		_Scene->addActor(*rigidStatic_);
+	}
 }
 
 void PhysXTriMeshGeometryComponent::Start()

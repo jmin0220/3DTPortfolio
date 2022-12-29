@@ -106,6 +106,9 @@ void VirtualPhysXLevel::initPhysics(bool _interactive)
 		MsgBox("PxCreateCooking failed!");
 	}
 
+	// Aggregate생성
+	MapAggregate_ = Physics_->createAggregate(2000, false);
+	Scene_->addAggregate(*MapAggregate_);
 }
 
 // PhysX 업데이트

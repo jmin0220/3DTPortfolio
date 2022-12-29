@@ -116,6 +116,8 @@ void HexTile::LevelStartEvent()
 
 void HexTile::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics)
 {
+	PhysXHexTileGeometry_->SetAggregateObj(true);
+
 	physx::PxCooking* Cooking = static_cast<VirtualPhysXLevel*>(GetLevel())->GetCooking();
 	// Tip..3번째 매개변수인 GeometryScale은 액터가 가질 물리강체의 크기
 	float4 MeshBoundScale = Renderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;

@@ -53,6 +53,10 @@ void HoopsStageObjects::LevelEndEvent()
 
 void HoopsStageObjects::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics)
 {
+	WallPhysXTriMeshGeometry_->SetAggregateObj(true);
+	PlatformPhysXTriMeshGeometry_->SetAggregateObj(true);
+	FloorPhysXTriMeshGeometry_->SetAggregateObj(true);
+
 	physx::PxCooking* Cooking = static_cast<VirtualPhysXLevel*>(GetLevel())->GetCooking();
 	// Tip..3번째 매개변수인 GeometryScale은 액터가 가질 물리강체의 크기
 	float4 MeshBoundScale = WallRenderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;

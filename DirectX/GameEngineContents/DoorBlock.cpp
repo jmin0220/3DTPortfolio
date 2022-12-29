@@ -76,6 +76,7 @@ void DoorBlock::OnEvent()
 
 void DoorBlock::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics)
 {
+	PhysXBoxGeometry_->SetAggregateObj(true);
 
 	float4 Scale = GetTransform().GetWorldScale();
 

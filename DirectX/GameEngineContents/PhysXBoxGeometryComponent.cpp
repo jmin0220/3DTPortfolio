@@ -71,7 +71,14 @@ void PhysXBoxGeometryComponent::CreatePhysXActors(physx::PxScene* _Scene, physx:
 	shape_->setLocalPose(physx::PxTransform(Pivot));
 
 	// Scene에 액터 추가
-	_Scene->addActor(*rigidDynamic_);
+	if (true == IsAggregateObj_)
+	{
+		AddActorAggregate(rigidDynamic_);
+	}
+	else
+	{
+		_Scene->addActor(*rigidDynamic_);
+	}
 
 	//// 충돌체의 종류
 	//rigidStatic_ = _physics->createRigidStatic(localTm);

@@ -38,6 +38,8 @@ void JumpClubStage::LevelEndEvent()
 
 void JumpClubStage::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics)
 {
+	PhysXTriMeshGeometry_->SetAggregateObj(true);
+
 	physx::PxCooking* Cooking = static_cast<VirtualPhysXLevel*>(GetLevel())->GetCooking();
 
 	PhysXTriMeshGeometry_->SetPhysxMaterial(FLOOR_STATICFRICTION, FLOOR_DYNAMICFRICTION, FLOOR_RESISTUTION);

@@ -2,10 +2,13 @@
 #include "PhysXCommonFunc.h"
 #include <math.h>
 
+physx::PxAggregate* PhysXCommonFunc::MapAggregate_ = nullptr;
+
 PhysXCommonFunc::PhysXCommonFunc() 
     : CommonPlayer_(nullptr)
     , IsObstacle_(false)
     , IsGround_(false)
+    , IsAggregateObj_(false)
 {
 }
 

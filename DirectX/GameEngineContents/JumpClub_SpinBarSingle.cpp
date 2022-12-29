@@ -116,6 +116,8 @@ void JumpClub_SpinBarSingle::LevelEndEvent()
 
 void JumpClub_SpinBarSingle::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics)
 {
+	PhysXSpinBarComponent_->SetAggregateObj(true);
+
 	physx::PxCooking* Cooking = static_cast<VirtualPhysXLevel*>(GetLevel())->GetCooking();
 
 	PhysXSpinBarComponent_->SetPhysxMaterial(FLOOR_STATICFRICTION, 0.7f, 0.5f);

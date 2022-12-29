@@ -56,16 +56,26 @@ public:
 		DynamicPivot_ = _Pivot;
 	}
 
-	//오브젝트의 필터데이터를 넣기위한 boo값을 설정하는 함수
+	//오브젝트의 필터데이터를 넣기위한 bool값을 설정하는 함수
 	inline void SetObjectObstacle()
 	{
 		IsObstacle_ = true;
 	}
 	
-	//오브젝트의 필터데이터를 넣기위한 boo값을 설정하는 함수
+	//오브젝트의 필터데이터를 넣기위한 bool값을 설정하는 함수
 	inline void SetObjectGround()
 	{
 		IsGround_ = true;
+	}
+
+	inline void SetAggregateObj(bool _Flag)
+	{
+		IsAggregateObj_ = _Flag;
+	}
+
+	inline void AddActorAggregate(physx::PxActor* _Actor)
+	{
+		MapAggregate_->addActor(*_Actor);
 	}
 
 	//쿼터니언 관련 함수
@@ -88,6 +98,10 @@ protected:
 	PlayerActor* CommonPlayer_;
 	bool IsObstacle_;
 	bool IsGround_;
+	bool IsAggregateObj_;
+
+	static physx::PxAggregate* MapAggregate_;
+
 private:
 };
 

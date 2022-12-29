@@ -112,7 +112,14 @@ void PhysXSpinBarComponent::CreatePhysXActors(const std::string& _MeshName, phys
 	//rigidStatic_->attachShape(*shape_);
 
 	// Scene에 액터 추가
-	_Scene->addActor(*dynamic_);
+	if (true == IsAggregateObj_)
+	{
+		AddActorAggregate(dynamic_);
+	}
+	else
+	{
+		_Scene->addActor(*dynamic_);
+	}
 }
 
 void PhysXSpinBarComponent::Start()

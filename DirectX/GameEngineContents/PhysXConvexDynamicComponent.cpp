@@ -102,7 +102,14 @@ void PhysXConvexDynamicComponent::CreatePhysXActors(const std::string& _MeshName
 	//dynamic_->setAngularDamping(physx::PxReal(0.05f));
 
 	// Scene에 액터 추가
-	_Scene->addActor(*dynamic_);
+	if (true == IsAggregateObj_)
+	{
+		AddActorAggregate(dynamic_);
+	}
+	else
+	{
+		_Scene->addActor(*dynamic_);
+	}
 
 	//// 시소를 받칠 발판 생성
 	//physx::PxRigidStatic* PlaneStatic = _physics->createRigidStatic(physx::PxTransform(physx::PxVec3(0.0f, -15.0f, 0.0f)));

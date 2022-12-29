@@ -78,11 +78,15 @@ void PhysXConvexGeometryComponent::CreatePhysXActors(const std::string& _MeshNam
 			, static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic), 0, 0));
 	}
 
-
-
-	//createExclusiveShapefh RigidStatic에 Shape를 넣어준다.
 	// Scene에 액터 추가
-	_Scene->addActor(*rigidStatic_);
+	if (true == IsAggregateObj_)
+	{
+		AddActorAggregate(rigidStatic_);
+	}
+	else
+	{
+		_Scene->addActor(*rigidStatic_);
+	}
 }
 
 void PhysXConvexGeometryComponent::Start()

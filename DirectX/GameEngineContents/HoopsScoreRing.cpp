@@ -119,6 +119,8 @@ void HoopsScoreRing::LevelStartEvent()
 
 void HoopsScoreRing::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _physics)
 {
+	PhysXTriGeometry_->SetAggregateObj(true);
+
 	physx::PxCooking* Cooking = static_cast<VirtualPhysXLevel*>(GetLevel())->GetCooking();
 	float4 MeshBoundScale = Renderer_->GetFBXMesh()->GetRenderUnit(0)->BoundScaleBox;
 	PhysXTriGeometry_->SetDynamicPivot(Renderer_->GetTransform().GetLocalPosition());
