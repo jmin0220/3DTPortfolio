@@ -406,7 +406,7 @@ void GameEngineFBXMesh::LoadTangent(fbxsdk::FbxMesh* _Mesh, fbxsdk::FbxAMatrix _
 	if (0 == iCount)
 	{
 		// ***탄젠트 정보가 없는경우 탄젠트를 생성***(선생님 코드와 다름)
-		_Mesh->GenerateTangentsData(0);
+		_Mesh->GenerateTangentsData(1.0f);
 		//return;
 	}
 	FbxGeometryElementTangent* pElement = _Mesh->GetElementTangent();
