@@ -38,5 +38,8 @@ private:
 	bool IsOut_;
 	float PopUpTime_;
 	float4 SlicePos_;
+
+	bool SoundOn_;
+	bool Once_;
 };
 

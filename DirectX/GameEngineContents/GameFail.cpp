@@ -6,6 +6,8 @@ GameFail::GameFail()
 	, PopUpTime_(0.0f)
 	, IsOut_(false)
 	, IsBoing_(false)
+	, SoundOn_(false)
+	, Once_(false)
 {
 }
 
@@ -108,6 +110,17 @@ void GameFail::Update(float _DeltaTime)
 	TextRendererPop();
 
 	AlphaSet();
+
+	if (this->IsUpdate() == true && SoundOn_ == false)
+	{
+		SoundOn_ = true;
+	}
+
+	if (SoundOn_ == true && Once_ == false)
+	{
+		GameEngineSound::SoundPlayOneShot("Fail.mp3");
+		Once_ = true;
+	}
 }
 
 void GameFail::AlphaSet()
@@ -275,6 +288,9 @@ void GameFail::Reset()
 	IsOut_ = false;
 	IsBoing_ = false;
 	PopUpTime_ = 0.0f;
+
+	SoundOn_ = false;
+	Once_ = false;
 
 	Text_->On();
 

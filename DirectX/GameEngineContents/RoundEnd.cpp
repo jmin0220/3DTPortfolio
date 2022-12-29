@@ -5,6 +5,8 @@ RoundEnd::RoundEnd()
 	:Pop_(false)
 	,PopUpTime_(0.0f)
 	,IsOut_(false)
+	,SoundOn_(false)
+	,Once_(false)
 {
 }
 
@@ -107,6 +109,17 @@ void RoundEnd::Update(float _DeltaTime)
 	if (IsOut_ ==false && SlicePos_.x <= 1.0f)
 	{
 		SlicePos_.x += _DeltaTime * 5.0f;
+	}
+
+	if (this->IsUpdate() == true && SoundOn_ == false)
+	{
+		SoundOn_ = true;
+	}
+
+	if (SoundOn_ == true && Once_ == false)
+	{
+		GameEngineSound::SoundPlayOneShot("Success.mp3");
+		Once_ = true;
 	}
 }
 
@@ -247,4 +260,7 @@ void RoundEnd::Reset()
 	Pop_ = false;
 	IsOut_ = false;
 	PopUpTime_ = 0.0f;
+
+	SoundOn_ = false;
+	Once_ = false;
 }

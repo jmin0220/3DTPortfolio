@@ -6,6 +6,8 @@ GameSuccess::GameSuccess()
 	:IsPop_(false)
 	, PopUpTime_(0.0f)
 	, IsOut_(false)
+	, SoundOn_(false)
+	, Once_(false)
 {
 }
 
@@ -118,6 +120,16 @@ void GameSuccess::Update(float _DeltaTime)
 		SlicePos_.x -= 0.1f;
 	}
 
+	if (this->IsUpdate() == true && SoundOn_==false)
+	{
+		SoundOn_ = true;
+	}
+
+	if (SoundOn_ == true && Once_ == false)
+	{
+		GameEngineSound::SoundPlayOneShot("Success.mp3");
+		Once_ = true;
+	}
 }
 
 void GameSuccess::AlphaSet()
@@ -194,6 +206,9 @@ void GameSuccess::Reset()
 	IsPop_ = false;
 	IsOut_ = false;
 	PopUpTime_ = 0.0f;
+
+	SoundOn_ = false;
+	Once_ = false;
 
 	Text_->On();
 

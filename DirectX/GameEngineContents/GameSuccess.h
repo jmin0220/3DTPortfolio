@@ -42,6 +42,9 @@ private:
 	bool IsPop_;
 	bool IsOut_;
 
+	bool SoundOn_;
+	bool Once_;
+
 	float4 SlicePos_;
 };
 

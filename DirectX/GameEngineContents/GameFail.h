@@ -39,6 +39,9 @@ private:
 	bool IsBoing_;
 	float PopUpTime_;
 
+	bool SoundOn_;
+	bool Once_;
+
 	float4 SlicePos_;
 };
 
