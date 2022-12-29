@@ -268,24 +268,14 @@ void CustomSimulationEventCallback::onContact(const physx::PxContactPairHeader& 
 			ContactFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::Obstacle) &&
 			current.events & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
 		{
-			if (pairs->contactImpulses != NULL)
-			{
-				physx::PxReal K = *pairs->contactImpulses;
-
-				CommonPlayer_->OnUnControlable();
-			}
+			CommonPlayer_->OnUnControlable();
 		}
 
 		if (OtherFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::Obstacle) &&
 			ContactFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic) &&
 			current.events & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
 		{
-			if (pairs->contactImpulses != NULL)
-			{
-				physx::PxReal K = *pairs->contactImpulses;
-
-				CommonPlayer_->OnUnControlable();
-			}
+			CommonPlayer_->OnUnControlable();
 		}
 
 	}
