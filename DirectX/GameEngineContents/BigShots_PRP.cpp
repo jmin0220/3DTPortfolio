@@ -68,11 +68,11 @@ void BigShots_PRP::CreatePhysXActors(physx::PxScene* _Scene, physx::PxPhysics* _
 	float tmpMass = static_cast<float>(PhysXConvexDynamicComponent_->GetMass());
 
 	// 힘 * 밀도
-	//int RandomForce = GameEngineRandom::MainRandom.RandomInt(430 * tmpMass, 470 * tmpMass);
+	// BigShots_Cannon::SetShootSetting()으로부터 SettingForce_를 입력받음
 	int RandomForce = SettingForce_ * tmpMass;
 
 	// 밀도에 따른 y,z축 이동 추가
-	PhysXConvexDynamicComponent_->SetUpdateForce(physx::PxVec3(0.0f, -400.0f * tmpMass, 700.0f * tmpMass));
+	PhysXConvexDynamicComponent_->SetUpdateForce(physx::PxVec3(0.0f, -300.0f * tmpMass, 700.0f * tmpMass));
 	// 던져지는 각도 벡터
 	float4 ThrowRot = float4::DegreeToDirection2D(3.0f);
 	// 던지는 벡터값 * (힘 * 밀도)

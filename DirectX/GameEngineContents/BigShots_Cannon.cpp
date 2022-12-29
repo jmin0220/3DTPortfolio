@@ -213,7 +213,7 @@ void BigShots_Cannon::SetShootSetting()
 	//float SettingForce_; // x : 회전값, y : 회전값, z : 회전값, w : 힘
 	// 힘 : 430 ~ 470
 	float4 RandomRot = GameEngineRandom::MainRandom.RandomFloat4(-9.0f, 9.0f);
-	float RandomPower = GameEngineRandom::MainRandom.RandomFloat(430, 460);
+	float RandomPower = GameEngineRandom::MainRandom.RandomFloat(470, 540);
 	CurShootSetting_ = RandomRot;
 	CurShootSetting_.w = RandomPower;
 }
