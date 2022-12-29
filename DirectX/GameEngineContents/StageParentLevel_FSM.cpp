@@ -264,7 +264,7 @@ void StageParentLevel::ReadyStart(const StateInfo& _Info)
 
 void StageParentLevel::ReadyUpdate(float _DeltaTime, const StateInfo& _Info)
 {
-
+	
 	// 카운트다운 종료되면 상태변경
 	// 플레이어 움직일 수 있음
 	if (true == UIs_->IsCountDownEnd())
@@ -280,6 +280,44 @@ void StageParentLevel::ReadyUpdate(float _DeltaTime, const StateInfo& _Info)
 bool FinishScoreSetted;
 void StageParentLevel::RaceStart(const StateInfo& _Info)
 {
+	{
+		//김예나 : 본격적인 브금의 시작
+		switch (MyStage_)
+		{
+		case StageNum::STAGE1:
+			GlobalBGM::GetInst()->GetBGM().Stop();
+			GlobalBGM::GetInst()->SetBGM(GameEngineSound::SoundPlayControl("DoorDash_BGM.mp3"));
+			GlobalBGM::GetInst()->GetBGM().Volume(OptionActor::VolumeRatio_);
+			break;
+
+		case StageNum::STAGE2:
+			GlobalBGM::GetInst()->GetBGM().Stop();
+			GlobalBGM::GetInst()->SetBGM(GameEngineSound::SoundPlayControl("HoopLegend_BGM.mp3"));
+			GlobalBGM::GetInst()->GetBGM().Volume(OptionActor::VolumeRatio_);
+			break;
+
+		case StageNum::STAGE3:
+			GlobalBGM::GetInst()->GetBGM().Stop();
+			GlobalBGM::GetInst()->SetBGM(GameEngineSound::SoundPlayControl("BigShot_BGM.mp3"));
+			GlobalBGM::GetInst()->GetBGM().Volume(OptionActor::VolumeRatio_);
+			break;
+
+		case StageNum::STAGE4:
+			GlobalBGM::GetInst()->GetBGM().Stop();
+			GlobalBGM::GetInst()->SetBGM(GameEngineSound::SoundPlayControl("HexAGone_BGM.mp3"));
+			GlobalBGM::GetInst()->GetBGM().Volume(OptionActor::VolumeRatio_);
+			break;
+
+		case StageNum::STAGE5:
+			GlobalBGM::GetInst()->GetBGM().Stop();
+			GlobalBGM::GetInst()->SetBGM(GameEngineSound::SoundPlayControl("HoopLegend_BGM.mp3"));
+			GlobalBGM::GetInst()->GetBGM().Volume(OptionActor::VolumeRatio_);
+			break;
+		default:
+			break;
+		}
+	}
+
 	FinishScoreSetted = false;
 }
 
