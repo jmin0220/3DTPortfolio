@@ -134,6 +134,21 @@ void RankingActor::Update(float _DeltaTime)
 
 void RankingActor::LevelStartEvent()
 {
+
+	if (true == GameServer::GetInst()->IsServerStart())
+	{
+		GameServer::GetInst()->GetAllPlayersInfo(S_Players);
+
+		for (int i = 0; i < S_PlayersCount_; ++i)
+		{
+			S_Font_[i]->SetText(S_Players[i].Name_, FONT_TITAN_ONE);
+
+			S_Score_[i] = static_cast<int>(S_Players[i].Score_);
+
+			S_ScoreFont_[i]->SetText(std::to_string(S_Score_[i]), FONT_NOTO_SANS_CJK_SC);
+		}
+	}
+
 }
 
 void RankingActor::LevelEndEvent()
