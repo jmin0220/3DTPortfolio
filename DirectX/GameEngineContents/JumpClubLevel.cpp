@@ -16,7 +16,8 @@
 #include "InGameSetUI.h"
 #include "TimerActor.h"
 
-JumpClubLevel::JumpClubLevel() 
+JumpClubLevel::JumpClubLevel()
+	: ServerActivated_(false)
 {
 }
 
@@ -39,6 +40,35 @@ void JumpClubLevel::Update(float _DeltaTime)
 {
 	StageParentLevel::Update(_DeltaTime);
 
+	// 타이머 동기화
+	if (true == GameServer::GetInst()->IsServerStart())
+	{
+		if (false == ServerActivated_ && true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageRaceStart))
+		{
+			ServerActivated_ = true;
+		}
+
+		if (true == GameServer::IsHost_)
+		{
+
+			// 호스트만 남은시간 조절
+			if (true == ServerActivated_)
+			{
+				TimerLimit_ -= _DeltaTime;
+			}
+
+			GameServer::GetInst()->PlayTime_ = static_cast<unsigned int>(TimerLimit_);
+			TimerUI_->SetNetTime(TimerLimit_);
+		}
+		else
+		{
+			// 클라이언트는 호스트 유저플레이어의 시간 받아와야됨
+			std::map<int, std::shared_ptr<class PlayerStatePacket>>& Players = GameServer::GetInst()->GetOtherPlayersInfo();
+
+			TimerLimit_ = static_cast<float>(Players[0]->PlayTime);
+			TimerUI_->SetNetTime(TimerLimit_);
+		}
+	}
 }
 
 void JumpClubLevel::End()

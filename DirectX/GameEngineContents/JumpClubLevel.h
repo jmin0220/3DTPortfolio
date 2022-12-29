@@ -32,5 +32,6 @@ private:
 	std::shared_ptr<GameEngineActor> BackGroundObj_;;
 	std::shared_ptr<GameEngineActor> VFXWaterObj_;;
 
+	bool ServerActivated_;
 };
 
