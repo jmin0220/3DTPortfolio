@@ -403,7 +403,7 @@ void CountDown::CountDownStart()
 			}
 		}
 
-		if (IsGoPop_ == false && IsGoEnd_ == true)
+		if (IsGoPop_ == false && IsGoEnd_ == true && Go_->IsUpdate()==true)
 		{
 			float4 f4CurrentScale = Go_->GetTransform().GetWorldScale();
 			float4 f4DestinationScale = { 0.0f,0.0f };
