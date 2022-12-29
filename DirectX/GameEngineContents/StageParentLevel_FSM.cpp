@@ -272,11 +272,18 @@ void StageParentLevel::RaceUpdate(float _DeltaTime, const StateInfo& _Info)
 		}
 	}
 	
-	if (false == RaceStartSignal_ && true == GameServer::GetInst()->IsHost_ && true == UIs_->IsCountDownEnd())
+	if (false == RaceStartSignal_ &&  true == UIs_->IsCountDownEnd()
+		&& true == GameServer::GetInst()->IsHost_)
 	{
-		RaceStartSignal_ = true;
 		GameServer::GetInst()->SetServerSignal(ServerFlag::S_StageRaceStart);
 	}
+
+	if (true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageRaceStart))
+	{
+		Player_->SetInputAvailable(true);
+		RaceStartSignal_ = true;
+	}
+
 
 
 	// 5. 상태변경
