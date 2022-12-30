@@ -267,14 +267,14 @@ void CustomSimulationEventCallback::onContact(const physx::PxContactPairHeader& 
 		}
 		if (OtherFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic) &&
 			ContactFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::Obstacle) &&
-			current.events & physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS)
+			current.events & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
 		{
 			CommonPlayer_->OnUnControlable();
 		}
 
 		if (OtherFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::Obstacle) &&
 			ContactFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic) &&
-			current.events & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
+			current.events & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
 		{
 			CommonPlayer_->OnUnControlable();
 		}
@@ -294,7 +294,7 @@ physx::PxFilterFlags CustomFilterShader(physx::PxFilterObjectAttributes attribut
 		return physx::PxFilterFlag::eDEFAULT;
 	}
 	 //generate contacts for all that were not filtered above
-	pairFlags = physx::PxPairFlag::eNOTIFY_TOUCH_FOUND /*| physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS*/ | physx::PxPairFlag::eNOTIFY_TOUCH_LOST |
+	pairFlags = physx::PxPairFlag::eNOTIFY_TOUCH_FOUND | physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS | physx::PxPairFlag::eNOTIFY_TOUCH_LOST |
 		physx::PxPairFlag::eDETECT_DISCRETE_CONTACT | physx::PxPairFlag::eSOLVE_CONTACT;
 
 	return physx::PxFilterFlag::eDEFAULT;
