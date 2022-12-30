@@ -369,6 +369,11 @@ void MidScoreLevel::BubbleSortLerp()
 
 void MidScoreLevel::RenderBubbleSort()
 {
+	if (FontScore_.empty())
+	{
+		return;
+	}
+
 	if (Once_ == true) //버블소트로 실제 정돈이 끝난후 그걸 토대로 러프 하는 부분(함수로 정돈하자)
 	{
 		for (int i = 0; i < FontScore_.size(); ++i)

@@ -32,7 +32,5 @@ void GoalTipActor::Update(float _DeltaTime)
 
 void GoalTipActor::LevelStartEvent()
 {
-	Renderer_->GetTransform().SetWorldPosition({ -800.0f, 400.0f });
-	Font_->SetScreenPostion({ 210.0f, 70.0f });
 }
 
