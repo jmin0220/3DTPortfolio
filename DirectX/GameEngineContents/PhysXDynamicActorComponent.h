@@ -111,6 +111,16 @@ public:
 
 	//일어설때 목표 각도구하는 함수
 	void InitializeStandUp2();
+
+	void SetMainPlayerFlags()
+	{
+		shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic),
+			static_cast<physx::PxU32>(PhysXFilterGroup::Ground),
+			static_cast<physx::PxU32>(PhysXFilterGroup::Obstacle), 0));
+		Instshape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Player), 0, 0, 0));
+		faceshape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::PlayerFace), 0, 0, 0));
+		headshape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::PlayerHead), 0, 0, 0));
+	}
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -124,6 +134,7 @@ private:
 
 	physx::PxMaterial* material_;
 	physx::PxShape* shape_;
+	physx::PxShape* Instshape_;
 	physx::PxShape* faceshape_;
 	physx::PxShape* headshape_;
 	physx::PxShape* Flagshape_;

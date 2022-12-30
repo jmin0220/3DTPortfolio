@@ -69,18 +69,16 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 	relativePose.p = DynamicCenter;
 	physx::PxTransform relativePose2(DynamicCenter);
 	shape_->setLocalPose(relativePose);
-	shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic), 
-		static_cast<physx::PxU32>(PhysXFilterGroup::Ground), 
-		static_cast<physx::PxU32>(PhysXFilterGroup::Obstacle), 0));
+	//shape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic), 
+	//	static_cast<physx::PxU32>(PhysXFilterGroup::Ground), 
+	//	static_cast<physx::PxU32>(PhysXFilterGroup::Obstacle), 0));
 	//physx::PxTransform relativePose(physx::PxQuat(physx::PxHalfPi, physx::PxVec3(0, 0, 1)));
 	shape_->setContactOffset(0.2f);
 	physx::PxRigidBodyExt::updateMassAndInertia(*dynamic_, 0.01f);
 
-
-	physx::PxShape* Instshape_;
 	Instshape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxCapsuleGeometry(ScaledRadius * 1.3f, ScaledHeight * 0.9f), *material_);
 	// 충돌시점 콜백을 위한 세팅
-	Instshape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Player), 0, 0, 0));
+	//Instshape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::Player), 0, 0, 0));
 	Instshape_->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
 	Instshape_->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
 
@@ -96,7 +94,7 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 	physx::PxTransform facerelativePose(physx::PxVec3(0.0f, CapsuleHeight * 1.3f, ScaledRadius * 1.3f));
 	physx::PxTransform facerelativePose2(facerelativePose);
 	faceshape_->setLocalPose(facerelativePose2);
-	faceshape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::PlayerFace), 0, 0, 0));
+	//faceshape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::PlayerFace), 0, 0, 0));
 
 	headshape_ = physx::PxRigidActorExt::createExclusiveShape(*dynamic_, physx::PxSphereGeometry(ScaledHeight * 0.9f), *material_);
 	headshape_->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
@@ -104,7 +102,7 @@ physx::PxRigidDynamic* PhysXDynamicActorComponent::CreatePhysXActors(physx::PxSc
 	physx::PxTransform headrelativePose(physx::PxVec3(0.0f, CapsuleHeight * 1.5f, 0.0f));
 	//physx::PxTransform facerelativePose2(headrelativePose);
 	headshape_->setLocalPose(headrelativePose);
-	headshape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::PlayerHead), 0, 0, 0));
+	//headshape_->setSimulationFilterData(physx::PxFilterData(static_cast<physx::PxU32>(PhysXFilterGroup::PlayerHead), 0, 0, 0));
 	headshape_->setContactOffset(0.2f);
 
 	// 제동?

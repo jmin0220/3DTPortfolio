@@ -294,7 +294,7 @@ physx::PxFilterFlags CustomFilterShader(physx::PxFilterObjectAttributes attribut
 		return physx::PxFilterFlag::eDEFAULT;
 	}
 	 //generate contacts for all that were not filtered above
-	pairFlags = physx::PxPairFlag::eNOTIFY_TOUCH_FOUND | physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS | physx::PxPairFlag::eNOTIFY_TOUCH_LOST |
+	pairFlags = physx::PxPairFlag::eNOTIFY_TOUCH_FOUND /*| physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS*/ | physx::PxPairFlag::eNOTIFY_TOUCH_LOST |
 		physx::PxPairFlag::eDETECT_DISCRETE_CONTACT | physx::PxPairFlag::eSOLVE_CONTACT;
 
 	return physx::PxFilterFlag::eDEFAULT;

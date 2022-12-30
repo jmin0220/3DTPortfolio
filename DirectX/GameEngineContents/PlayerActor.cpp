@@ -146,6 +146,7 @@ void PlayerActor::PlayerInit()
 		IsPlayerble_ = true;
 
 		DynamicActorComponent_->SetIsMain(true);
+		DynamicActorComponent_->SetMainPlayerFlags();
 		dynamic_cast<VirtualPhysXLevel*>(GetLevel())->SetCommonPlayer(this);
 		// FSM
 		CreateFSMStates();
