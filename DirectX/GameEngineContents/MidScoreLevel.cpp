@@ -369,7 +369,7 @@ void MidScoreLevel::BubbleSortLerp()
 
 void MidScoreLevel::RenderBubbleSort()
 {
-	if (FontScore_.empty())
+	if (FontScore_.empty() || PlayerScores_.empty())
 	{
 		return;
 	}
