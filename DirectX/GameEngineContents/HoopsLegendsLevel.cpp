@@ -150,7 +150,7 @@ void HoopsLegendsLevel::LevelStartEvent()
 		Player_->ResetPlayerPos();
 	}
 
-	TimerLimit_ = 120.0f;
+	TimerLimit_ = 60.0f;
 
 	RankingActor_ = CreateActor<RankingActor>();
 	RankingActor_->Off();
