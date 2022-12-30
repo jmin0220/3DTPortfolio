@@ -126,7 +126,8 @@ public:
 protected:
 	void Start();
 
-	void ChangeRenderingOrder(std::shared_ptr < GameEngineRenderer> _Renderer, int _ChangeOrder);
+
+	void ChangeRenderingOrder(std::shared_ptr<GameEngineRenderer> _Renderer, int _ChangeOrder, RENDERINGPATHORDER _Path /*= RENDERINGPATHORDER::MAX*/);
 
 
 private:

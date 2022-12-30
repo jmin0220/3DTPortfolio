@@ -602,7 +602,7 @@ float4 GameEngineCamera::GetMouseWorldPositionToActor()
 	return GetTransform().GetWorldPosition() + GetMouseWorldPosition();
 }
 
-void GameEngineCamera::ChangeRenderingOrder(std::shared_ptr<GameEngineRenderer> _Renderer, int _ChangeOrder)
+void GameEngineCamera::ChangeRenderingOrder(std::shared_ptr<GameEngineRenderer> _Renderer, int _ChangeOrder, RENDERINGPATHORDER _Path /*= RENDERINGPATHORDER::MAX*/)
 {
 	AllRenderer_[_Renderer->GetRenderingOrder()].remove(_Renderer);
 
@@ -620,7 +620,16 @@ void GameEngineCamera::ChangeRenderingOrder(std::shared_ptr<GameEngineRenderer> 
 
 	for (std::shared_ptr<GameEngineRenderUnit> Unit : Units)
 	{
-		AllRenderUnit_[Unit->GetPath()][_ChangeOrder].push_back(Unit);
+		if (_Path == RENDERINGPATHORDER::MAX)
+		{
+			AllRenderUnit_[Unit->GetPath()][_ChangeOrder].push_back(Unit);
+		}
+		else
+		{
+			Unit->SetPath(_Path);
+			AllRenderUnit_[_Path][_ChangeOrder].push_back(Unit);
+		}
+
 	}
 
 	AllRenderer_[_Renderer->GetRenderingOrder()].push_back(_Renderer);
