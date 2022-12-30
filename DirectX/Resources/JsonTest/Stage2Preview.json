@@ -1,0 +1,132 @@
+{
+    "Object0" : 
+    {
+        "Mesh" : 
+        {
+            "Name" : "JumboTron1",
+            "Transform" : 
+            {
+                "Pos" : [ 0.0, 87.0, 125.0 ],
+                "Rot" : [ 0.0, 0.0, 0.0 ],
+                "Size" : [ 1.0, 1.0, 1.0 ]
+            }
+        }
+    },
+    "Object1" : 
+    {
+        "Mesh" : 
+        {
+            "Name" : "JumboTron1",
+            "Transform" : 
+            {
+                "Pos" : [ 0.0, 87.0, -125.0 ],
+                "Rot" : [ 0.0, 180.0, 0.0 ],
+                "Size" : [ 1.0, 1.0, 1.0 ]
+            }
+        }
+    },
+    "Object2" : 
+    {
+        "Mesh" : 
+        {
+            "Name" : "Col_StartPos",
+            "Transform" : 
+            {
+                "Pos" : [ -42.0, 65.0, -12.0 ],
+                "Rot" : [ 0.0, 0.0, 0.0 ],
+                "Size" : [ 10.0, 10.0, 10.0 ]
+            }
+        }
+    },
+    "Object3" : 
+    {
+        "Mesh" : 
+        {
+            "Name" : "Col_StartPos",
+            "Transform" : 
+            {
+                "Pos" : [ -28.0, 65.0, -15.0 ],
+                "Rot" : [ 0.0, 0.0, 0.0 ],
+                "Size" : [ 10.0, 10.0, 10.0 ]
+            }
+        }
+    },
+    "Object4" : 
+    {
+        "Mesh" : 
+        {
+            "Name" : "Col_StartPos",
+            "Transform" : 
+            {
+                "Pos" : [ -33.0, 65.0, -28.0 ],
+                "Rot" : [ 0.0, 0.0, 0.0 ],
+                "Size" : [ 10.0, 10.0, 10.0 ]
+            }
+        }
+    },
+    "Object5" : 
+    {
+        "Mesh" : 
+        {
+            "Name" : "Col_StartPos",
+            "Transform" : 
+            {
+                "Pos" : [ 42.0, 65.0, 12.0 ],
+                "Rot" : [ 0.0, 0.0, 0.0 ],
+                "Size" : [ 10.0, 10.0, 10.0 ]
+            }
+        }
+    },
+    "Object6" : 
+    {
+        "Mesh" : 
+        {
+            "Name" : "Col_StartPos",
+            "Transform" : 
+            {
+                "Pos" : [ 33.0, 65.0, 28.0 ],
+                "Rot" : [ 0.0, 0.0, 0.0 ],
+                "Size" : [ 10.0, 10.0, 10.0 ]
+            }
+        }
+    },
+    "Object7" : 
+    {
+        "Mesh" : 
+        {
+            "Name" : "Col_StartPos",
+            "Transform" : 
+            {
+                "Pos" : [ 28.0, 65.0, 15.0 ],
+                "Rot" : [ 0.0, 0.0, 0.0 ],
+                "Size" : [ 10.0, 10.0, 10.0 ]
+            }
+        }
+    },
+    "Object8" : 
+    {
+        "Mesh" : 
+        {
+            "Name" : "JumpClubMap",
+            "Transform" : 
+            {
+                "Pos" : [ 0.0, 0.0, 0.0 ],
+                "Rot" : [ 0.0, 0.0, 0.0 ],
+                "Size" : [ 1.0, 1.0, 1.0 ]
+            }
+        }
+    },
+    "Object9" : 
+    {
+        "Mesh" : 
+        {
+            "Name" : "JumpClubStage",
+            "Transform" : 
+            {
+                "Pos" : [ 0.0, 65.507415771484375, 0.0 ],
+                "Rot" : [ 0.0, 0.0, 0.0 ],
+                "Size" : [ 1.0, 1.0, 1.0 ]
+            }
+        }
+    }
+}

@@ -1,0 +1,184 @@
+{
+    "Object0" : 
+    {
+        "Mesh" : 
+        {
+            "Name" : "S04Chevron_low1_TopRotater_low_MainTriRotater2_low",
+            "Transform" : 
+            {
+                "Pos" : [ 148.0, 23.0, 42.0 ],
+                "Rot" : [ 0.0, 0.0, 0.0 ],
+                "Size" : [ 1.0, 1.0, 1.0 ]
+            }
+        }
+    },
+    "Object1" : 
+    {
+        "Mesh" : 
+        {
+            "Name" : "S04Chevron_low1_TopRotater_low_MainTriRotater2_low",
+            "Transform" : 
+            {
+                "Pos" : [ 148.0, 27.0, -60.0 ],
+                "Rot" : [ 0.0, 0.0, 0.0 ],
+                "Size" : [ 1.0, 1.0, 1.0 ]
+            }
+        }
+    },
+    "Object10" : 
+    {
+        "Mesh" : 
+        {
+            "Name" : "Col_StartPos",
+            "Transform" : 
+            {
+                "Pos" : [ -20.0, -50.0, -4.0 ],
+                "Rot" : [ 0.0, 0.0, 0.0 ],
+                "Size" : [ 10.0, 10.0, 10.0 ]
+            }
+        }
+    },
+    "Object11" : 
+    {
+        "Mesh" : 
+        {
+            "Name" : "Col_StartPos",
+            "Transform" : 
+            {
+                "Pos" : [ -30.0, -50.0, 8.0 ],
+                "Rot" : [ 0.0, 0.0, 0.0 ],
+                "Size" : [ 10.0, 10.0, 10.0 ]
+            }
+        }
+    },
+    "Object12" : 
+    {
+        "Mesh" : 
+        {
+            "Name" : "BigShatsStage",
+            "Transform" : 
+            {
+                "Pos" : [ 0.0, 0.0, 0.0 ],
+                "Rot" : [ 0.0, 0.0, 0.0 ],
+                "Size" : [ 1.0, 1.0, 1.0 ]
+            }
+        }
+    },
+    "Object13" : 
+    {
+        "Mesh" : 
+        {
+            "Name" : "BigShotsMap",
+            "Transform" : 
+            {
+                "Pos" : [ 0.0, 0.0, 0.0 ],
+                "Rot" : [ 0.0, 0.0, 0.0 ],
+                "Size" : [ 1.0, 1.0, 1.0 ]
+            }
+        }
+    },
+    "Object2" : 
+    {
+        "Mesh" : 
+        {
+            "Name" : "S04Chevron_low1_TopRotater_low_MainTriRotater2_low",
+            "Transform" : 
+            {
+                "Pos" : [ 148.0, 23.0, -147.5 ],
+                "Rot" : [ 0.0, 0.0, 0.0 ],
+                "Size" : [ 1.0, 1.0, 1.0 ]
+            }
+        }
+    },
+    "Object3" : 
+    {
+        "Mesh" : 
+        {
+            "Name" : "S04Chevron_low1_TopRotater_low_MainTriRotater2_low",
+            "Transform" : 
+            {
+                "Pos" : [ -148.0, 23.0, 42.0 ],
+                "Rot" : [ 0.0, 0.0, 0.0 ],
+                "Size" : [ 1.0, 1.0, 1.0 ]
+            }
+        }
+    },
+    "Object4" : 
+    {
+        "Mesh" : 
+        {
+            "Name" : "S04Chevron_low1_TopRotater_low_MainTriRotater2_low",
+            "Transform" : 
+            {
+                "Pos" : [ -148.0, 23.0, -60.0 ],
+                "Rot" : [ 0.0, 0.0, 0.0 ],
+                "Size" : [ 1.0, 1.0, 1.0 ]
+            }
+        }
+    },
+    "Object5" : 
+    {
+        "Mesh" : 
+        {
+            "Name" : "S04Chevron_low1_TopRotater_low_MainTriRotater2_low",
+            "Transform" : 
+            {
+                "Pos" : [ -148.0, 23.0, -147.5 ],
+                "Rot" : [ 0.0, 0.0, 0.0 ],
+                "Size" : [ 1.0, 1.0, 1.0 ]
+            }
+        }
+    },
+    "Object6" : 
+    {
+        "Mesh" : 
+        {
+            "Name" : "Col_StartPos",
+            "Transform" : 
+            {
+                "Pos" : [ 40.0, -50.0, 8.0 ],
+                "Rot" : [ 0.0, 0.0, 0.0 ],
+                "Size" : [ 10.0, 10.0, 10.0 ]
+            }
+        }
+    },
+    "Object7" : 
+    {
+        "Mesh" : 
+        {
+            "Name" : "Col_StartPos",
+            "Transform" : 
+            {
+                "Pos" : [ 20.0, -50.0, 8.0 ],
+                "Rot" : [ 0.0, 0.0, 0.0 ],
+                "Size" : [ 10.0, 10.0, 10.0 ]
+            }
+        }
+    },
+    "Object8" : 
+    {
+        "Mesh" : 
+        {
+            "Name" : "Col_StartPos",
+            "Transform" : 
+            {
+                "Pos" : [ 30.0, -50.0, -4.0 ],
+                "Rot" : [ 0.0, 0.0, 0.0 ],
+                "Size" : [ 10.0, 10.0, 10.0 ]
+            }
+        }
+    },
+    "Object9" : 
+    {
+        "Mesh" : 
+        {
+            "Name" : "Col_StartPos",
+            "Transform" : 
+            {
+                "Pos" : [ -40.0, -50.0, -4.0 ],
+                "Rot" : [ 0.0, 0.0, 0.0 ],
+                "Size" : [ 10.0, 10.0, 10.0 ]
+            }
+        }
+    }
+}
