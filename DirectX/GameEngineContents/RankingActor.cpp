@@ -61,6 +61,9 @@ void RankingActor::Start()
 		S_Score_.resize(S_PlayersCount_);
 		S_ScoreFont_.resize(S_PlayersCount_);
 
+		std::vector<ServerPlayerInfo> ServerPlayers;
+		GameServer::GetInst()->GetAllPlayersInfo(ServerPlayers);
+
 		for (int i = 0; i < S_PlayersCount_; ++i)
 		{
 			S_Renderer_[S_PlayersCount_ -1 - i] = CreateComponent<GameEngineUIRenderer>();
@@ -69,12 +72,12 @@ void RankingActor::Start()
 			S_Renderer_[S_PlayersCount_ - 1 - i]->GetTransform().SetWorldPosition({ -700.0f,-200.0f + 100.0f * static_cast<float>(S_PlayersCount_ - 1 - i) });
 
 			S_Font_[i] = CreateComponent<GameEngineFontRenderer>();
-			S_Font_[i]->SetText("Player" + std::to_string(i), FONT_TITAN_ONE);
+			S_Font_[i]->SetText(ServerPlayers[i].Name_, FONT_TITAN_ONE);
 			S_Font_[i]->ChangeCamera(CAMERAORDER::UICAMERA);
 			S_Font_[i]->SetLeftAndRightSort(LeftAndRightSort::CENTER);
 			S_Font_[i]->SetScreenPostion({ 100,220 + 100 * static_cast<float>(i) });
 
-			S_Score_[i] = 0;
+			S_Score_[i] = static_cast<int>(ServerPlayers[i].Score_);
 
 			S_ScoreFont_[i] = CreateComponent<GameEngineFontRenderer>();
 			S_ScoreFont_[i]->SetText(std::to_string(S_Score_[i]), FONT_NOTO_SANS_CJK_SC);
