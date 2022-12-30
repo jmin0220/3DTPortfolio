@@ -92,7 +92,7 @@ private:
 	void ServerSetting();
 	void NoServerSetting();
 
-	std::vector<MidPlayerInfo> AllServerPlayers_;
+	std::vector<ServerPlayerInfo> AllServerPlayers_;
 
 	int AllServerPlayersCount_;
 	float MidScoreTime_;

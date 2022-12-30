@@ -32,6 +32,8 @@ MidScoreLevel::~MidScoreLevel()
 
 void MidScoreLevel::Start()
 {
+
+
 }
 
 void MidScoreLevel::Update(float _DeltaTime)
@@ -158,6 +160,8 @@ void MidScoreLevel::LevelStartEvent()
 	Font2nd_ = CreateActor<FontActor>();
 	Font2nd_->SetFont("2nd. ", FONT_TITAN_ONE, 60.0f, { 20,320 }, LeftAndRightSort::LEFT);
 
+
+
 	// 서버
 	// 모든 플레이어의 점수 정보를 자료구조로 던져줄 예정
 	if (true == GameServer::GetInst()->IsServerStart())
@@ -165,12 +169,68 @@ void MidScoreLevel::LevelStartEvent()
 		MidScoreTime_ = 0.0f;
 		LevelChanged_ = false;
 
+
+		AllServerPlayersCount_ = static_cast<int>(GameServer::GetInst()->OtherPlayersInfo_.size() + 1);
+		GameServer::GetInst()->GetAllPlayersInfo(AllServerPlayers_);
+
+		for (int i = 0; i < AllServerPlayers_.size(); i++)
+		{
+			// UI
+			// 플레이어 이름
+			PlayerName_.push_back(AllServerPlayers_[i].Name_);
+
+			// 플레이어 점수 '폰트엑터'
+			std::shared_ptr<FontActor> FontScore = CreateActor<FontActor>();
+			FontScore->SetFont(std::to_string(AllServerPlayers_[i].Score_), FONT_NOTO_SANS_CJK_SC, 50.0f, { 170,250 + i * 120.0f }, LeftAndRightSort::LEFT);
+			FontScore_.push_back(FontScore);
+
+			// 플레이어 이름 '폰트엑터'
+			std::shared_ptr<FontActor> FontPlayerName = CreateActor<FontActor>();
+			FontPlayerName->SetFont(PlayerName_[i], FONT_TITAN_ONE, 60.0f, { 170, 200 + i * 120.0f }, LeftAndRightSort::LEFT);
+			Font_PlayerName.push_back(FontPlayerName);
+		}
+
+
+		int LobbyPlayersCount = AllServerPlayersCount_ > 4 ? 4 : AllServerPlayersCount_;
+
+		// 로비 플레이어, 발판 생성
+		for (int i = 0; i < LobbyPlayersCount; i++)
+		{
+			// 로비플레이어 엑터 2명 생성
+			std::shared_ptr<LobbyPlayer> Player = CreateActor<LobbyPlayer>();
+			float4 PlayerColor = GameServer::GetInst()->GetPlayerColorReturn(AllServerPlayers_[i].Color_);
+			Player->SetPlayerColor(PlayerColor);
+
+			float4 PlayerPos = FirstActorPos + float4(i * 40.0f, i * -15.0f, 0);
+			Player->GetTransform().SetWorldPosition(PlayerPos);
+			Player->GetTransform().SetWorldRotation(FirstActorRot + float4(0, i * 10.0f, 0));
+
+			LobbyPlayers_.push_back(Player);
+
+			// 의자는 로비플레이어 -1 개 생성
+			// 마지막 로비플레이어
+			if (i == LobbyPlayersCount - 1)
+			{
+				Player->GetTransform().SetWorldMove({ 0, 300, 140 });
+				LastActorPos_ = Player->GetTransform().GetWorldPosition();
+
+				break;
+			}
+
+			std::shared_ptr<FloorActor> Chair = CreateActor<FloorActor>();
+
+			Chair->GetTransform().SetWorldPosition(PlayerPos + float4(0, 15.5f, 0));
+
+			Chairs_.push_back(Chair);
+
+		}
+
 		ServerSetting();
 	}
 	// 서버 안킴
 	else
 	{
-		NoServerSetting();
+		//NoServerSetting();
 	}
 
 	//if (false == GameEngineInput::GetInst()->IsKey("RandomScore"))
@@ -236,11 +296,6 @@ void MidScoreLevel::Init()
 
 		ServerSetting();
 	}
-	// 서버 안킴
-	else
-	{
-		NoServerSetting();
-	}
 
 	Once_ = false;
 	IsScoreOn_ = false;
@@ -284,8 +339,6 @@ void MidScoreLevel::RandomSocre()
 		}
 
 	}
-
-
 
 }
 
@@ -351,93 +404,18 @@ void MidScoreLevel::ChaseNameToScore()
 void MidScoreLevel::ServerSetting()
 {
 	// 자기제외 모든 플레이어 + 자신
-	AllServerPlayersCount_ = static_cast<int>(GameServer::GetInst()->OtherPlayersInfo_.size() + 1);
+	//AllServerPlayersCount_ = static_cast<int>(GameServer::GetInst()->OtherPlayersInfo_.size() + 1);
 	AllServerPlayers_.clear();
-
-	std::map<int, std::shared_ptr<class PlayerStatePacket>>::iterator StartIt = GameServer::GetInst()->OtherPlayersInfo_.begin();
-	std::map<int, std::shared_ptr<class PlayerStatePacket>>::iterator EndIt = GameServer::GetInst()->OtherPlayersInfo_.end();
-
-	int ListIdx = 0;
-	for (; StartIt != EndIt; ++StartIt)
-	{
-		std::shared_ptr<PlayerStatePacket> Packet = (*StartIt).second;
-		AllServerPlayers_.emplace_back(Packet->PlayerID, Packet->PlayerColor, Packet->PlayerScore, Packet->PlayerName);
-	}
-	// 자기정보도 넣는다
-	std::shared_ptr<GameServer>& Server = GameServer::GetInst();
-	MidPlayerInfo MyInfo;
-	MyInfo.ID_ = Server->PlayerID_;
-	MyInfo.Color_ = Server->PlayerColorID_;
-	MyInfo.Score_ = Server->PlayerScore_;
-	MyInfo.Name_ = Server->UserName_;
-	AllServerPlayers_.push_back(MyInfo);
+	GameServer::GetInst()->GetAllPlayersInfo(AllServerPlayers_);
 
 	// ID순으로 정렬
 	std::sort(AllServerPlayers_.begin(), AllServerPlayers_.end(), IDSmaller);
 
-	// 점수 설정
-	PlayerScores_.clear();
-	PlayerScores_.resize(AllServerPlayersCount_);
-	PlayerName_.clear();
-	FontScore_.clear();
-	Font_PlayerName.clear();
-	LastActorPos_ = float4::ZERO;
-
-	// 폰트 정보 설정
-	for (int i = 0; i < AllServerPlayers_.size(); i++)
-	{
-		// UI
-		// 플레이어 이름
-		PlayerName_.push_back(AllServerPlayers_[i].Name_);
-
-		// 플레이어 점수 '폰트엑터'
-		std::shared_ptr<FontActor> FontScore = CreateActor<FontActor>();
-		FontScore->SetFont(std::to_string(AllServerPlayers_[i].Score_), FONT_NOTO_SANS_CJK_SC, 50.0f, { 170,250 + i * 120.0f }, LeftAndRightSort::LEFT);
-		FontScore_.push_back(FontScore);
-
-		// 플레이어 이름 '폰트엑터'
-		std::shared_ptr<FontActor> FontPlayerName = CreateActor<FontActor>();
-		FontPlayerName->SetFont(PlayerName_[i], FONT_TITAN_ONE, 60.0f, { 170, 200 + i * 120.0f }, LeftAndRightSort::LEFT);
-		Font_PlayerName.push_back(FontPlayerName);
-	}
-
+	LastActorPos_ = LobbyPlayers_[LobbyPlayers_.size() - 1]->GetTransform().GetWorldPosition();
 	
 	// *최상위 4명의 색정보 필요
 	std::sort(AllServerPlayers_.begin(), AllServerPlayers_.end(), ScoreBigger);
 
-	int LobbyPlayersCount = AllServerPlayersCount_ > 4 ? 4 : AllServerPlayersCount_;
-
-	// 로비 플레이어, 발판 생성
-	for (int i = 0; i < LobbyPlayersCount; i++)
-	{
-		// 로비플레이어 엑터 2명 생성
-		std::shared_ptr<LobbyPlayer> Player = CreateActor<LobbyPlayer>();
-		float4 PlayerColor = GameServer::GetInst()->GetPlayerColorReturn(AllServerPlayers_[i].Color_);
-		Player->SetPlayerColor(PlayerColor);
-
-		float4 PlayerPos = FirstActorPos + float4(i * 40.0f, i * -15.0f, 0);
-		Player->GetTransform().SetWorldPosition(PlayerPos);
-		Player->GetTransform().SetWorldRotation(FirstActorRot + float4(0, i * 10.0f, 0));
-
-		LobbyPlayers_.push_back(Player);
-
-		// 의자는 로비플레이어 -1 개 생성
-		// 마지막 로비플레이어
-		if (i == LobbyPlayersCount - 1)
-		{
-			Player->GetTransform().SetWorldMove({ 0, 300, 140 });
-			LastActorPos_ = Player->GetTransform().GetWorldPosition();
-
-			break;
-		}
-
-		std::shared_ptr<FloorActor> Chair = CreateActor<FloorActor>();
-
-		Chair->GetTransform().SetWorldPosition(PlayerPos + float4(0, 15.5f, 0));
-
-		Chairs_.push_back(Chair);
-
-	}
 
 	// 애니메이션 설정
 	if (AllServerPlayersCount_ == 2)
