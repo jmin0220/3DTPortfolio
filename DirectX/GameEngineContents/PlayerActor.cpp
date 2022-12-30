@@ -123,7 +123,7 @@ void PlayerActor::PlayerInit()
 		GameEngineInput::GetInst()->CreateKey("ImpulsD", VK_RIGHT);
 
 		//플레이어 멈추기 실험용
-		GameEngineInput::GetInst()->CreateKey("Reset", 'Q');
+		GameEngineInput::GetInst()->CreateKey("Reset", 'R');
 
 		//체크포인트 실험용
 		GameEngineInput::GetInst()->CreateKey("TestPos", 'J');
