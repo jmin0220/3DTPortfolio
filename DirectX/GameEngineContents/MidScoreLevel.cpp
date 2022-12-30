@@ -177,6 +177,8 @@ void MidScoreLevel::LevelStartEvent()
 		PlayerScores_.resize(AllServerPlayersCount_);
 		FontScore_.resize(AllServerPlayersCount_);
 		Font_PlayerName.resize(AllServerPlayersCount_);
+		LobbyPlayers_.resize(AllServerPlayersCount_);
+		Chairs_.resize(AllServerPlayersCount_ - 1);
 
 		AllServerPlayers_;
 
@@ -209,7 +211,7 @@ void MidScoreLevel::LevelStartEvent()
 			Player->GetTransform().SetWorldPosition(PlayerPos);
 			Player->GetTransform().SetWorldRotation(FirstActorRot + float4(0, i * 10.0f, 0));
 
-			LobbyPlayers_.push_back(Player);
+			LobbyPlayers_[i] = Player;
 
 			// 의자는 로비플레이어 -1 개 생성
 			// 마지막 로비플레이어
@@ -225,7 +227,7 @@ void MidScoreLevel::LevelStartEvent()
 
 			Chair->GetTransform().SetWorldPosition(PlayerPos + float4(0, 15.5f, 0));
 
-			Chairs_.push_back(Chair);
+			Chairs_[i] = Chair;
 
 		}
 
