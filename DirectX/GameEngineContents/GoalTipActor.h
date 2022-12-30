@@ -25,7 +25,7 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override {};
 
-	//void LevelStartEvent() override;
+	void LevelStartEvent() override;
 private:
 	std::shared_ptr<GameEngineUIRenderer> Renderer_;
 	std::shared_ptr<GameEngineFontRenderer> Font_;
