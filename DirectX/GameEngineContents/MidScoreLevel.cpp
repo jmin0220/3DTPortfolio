@@ -173,28 +173,25 @@ void MidScoreLevel::LevelStartEvent()
 		AllServerPlayersCount_ = static_cast<int>(GameServer::GetInst()->OtherPlayersInfo_.size() + 1);
 		GameServer::GetInst()->GetAllPlayersInfo(AllServerPlayers_);
 
-		PlayerName_.reserve(AllServerPlayersCount_);
-		PlayerScores_.reserve(AllServerPlayersCount_);
-		FontScore_.reserve(AllServerPlayersCount_);
-		Font_PlayerName.reserve(AllServerPlayersCount_);
+		PlayerName_.resize(AllServerPlayersCount_);
+		PlayerScores_.resize(AllServerPlayersCount_);
+		FontScore_.resize(AllServerPlayersCount_);
+		Font_PlayerName.resize(AllServerPlayersCount_);
+
+		AllServerPlayers_;
 
 		for (int i = 0; i < AllServerPlayers_.size(); i++)
 		{
-			// UI
-			// 플레이어 이름
-			PlayerName_.push_back(AllServerPlayers_[i].Name_);
-
-			PlayerScores_[AllServerPlayers_[i].Score_];
 
 			// 플레이어 점수 '폰트엑터'
 			std::shared_ptr<FontActor> FontScore = CreateActor<FontActor>();
-			FontScore->SetFont(std::to_string(AllServerPlayers_[i].Score_), FONT_NOTO_SANS_CJK_SC, 50.0f, { 170,250 + i * 120.0f }, LeftAndRightSort::LEFT);
-			FontScore_.push_back(FontScore);
+			FontScore->SetFont(std::to_string(0), FONT_NOTO_SANS_CJK_SC, 50.0f, { 170,250 + i * 120.0f }, LeftAndRightSort::LEFT);
+			FontScore_[i] = FontScore;
 
 			// 플레이어 이름 '폰트엑터'
 			std::shared_ptr<FontActor> FontPlayerName = CreateActor<FontActor>();
 			FontPlayerName->SetFont(PlayerName_[i], FONT_TITAN_ONE, 60.0f, { 170, 200 + i * 120.0f }, LeftAndRightSort::LEFT);
-			Font_PlayerName.push_back(FontPlayerName);
+			Font_PlayerName[i] = FontPlayerName;
 		}
 
 
@@ -237,7 +234,7 @@ void MidScoreLevel::LevelStartEvent()
 	// 서버 안킴
 	else
 	{
-		//NoServerSetting();
+		NoServerSetting();
 	}
 
 	//if (false == GameEngineInput::GetInst()->IsKey("RandomScore"))
@@ -422,9 +419,9 @@ void MidScoreLevel::ServerSetting()
 
 	for (int i = 0; i < AllServerPlayers_.size(); i++)
 	{
-		PlayerName_.push_back(AllServerPlayers_[i].Name_);
+		PlayerName_[i] = AllServerPlayers_[i].Name_;
 
-		PlayerScores_[AllServerPlayers_[i].Score_];
+		PlayerScores_[i] = AllServerPlayers_[i].Score_;
 
 		FontScore_[i]->SetFont(std::to_string(AllServerPlayers_[i].Score_), FONT_NOTO_SANS_CJK_SC, 50.0f, {170,250 + i * 120.0f}, LeftAndRightSort::LEFT);
 
