@@ -71,20 +71,20 @@ private:
 
 	// ¼­¹ö
 private:
-	struct MidPlayerInfo
-	{
-		unsigned int ID_;
-		unsigned int Color_;
-		unsigned int Score_;
-		std::string Name_;
-	};
+	//struct MidPlayerInfo
+	//{
+	//	unsigned int ID_;
+	//	unsigned int Color_;
+	//	unsigned int Score_;
+	//	std::string Name_;
+	//};
 
-	static bool ScoreBigger(MidPlayerInfo _Left, MidPlayerInfo _Right)
+	static bool ScoreBigger(ServerPlayerInfo _Left, ServerPlayerInfo _Right)
 	{
 		return _Left.Score_ > _Right.Score_;
 	}
 
-	static bool IDSmaller(MidPlayerInfo _Left, MidPlayerInfo _Right)
+	static bool IDSmaller(ServerPlayerInfo _Left, ServerPlayerInfo _Right)
 	{
 		return _Left.ID_ < _Right.ID_;
 	}
