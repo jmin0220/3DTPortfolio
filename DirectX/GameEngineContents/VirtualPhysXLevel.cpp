@@ -253,7 +253,7 @@ void CustomSimulationEventCallback::onContact(const physx::PxContactPairHeader& 
 			ContactFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic))
 		{
 
-			if (current.events & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
+			if (current.events & physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS)
 			{
 				CommonPlayer_->TouchGroundOn();
 				//CommonPlayer_->Setwaitphysx(true);
@@ -267,14 +267,14 @@ void CustomSimulationEventCallback::onContact(const physx::PxContactPairHeader& 
 		}
 		if (OtherFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic) &&
 			ContactFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::Obstacle) &&
-			current.events & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
+			current.events & physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS)
 		{
 			CommonPlayer_->OnUnControlable();
 		}
 
 		if (OtherFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::Obstacle) &&
 			ContactFilterdata.word0 & static_cast<physx::PxU32>(PhysXFilterGroup::PlayerDynamic) &&
-			current.events & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
+			current.events & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
 		{
 			CommonPlayer_->OnUnControlable();
 		}
