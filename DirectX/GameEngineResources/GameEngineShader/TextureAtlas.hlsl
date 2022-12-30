@@ -106,7 +106,11 @@ float4 TextureAtlas_PS(Output _Input) : SV_Target0
         Result.a = 1.0f;
 
     }
-    
+    if (0 >= Result.a)
+    {
+        Result.a = 0.0f;
+
+    }
     // Result.a = 1.0f;
     
     return Result;
