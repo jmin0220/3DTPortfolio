@@ -441,12 +441,19 @@ void MidScoreLevel::ServerSetting()
 	{
 		LobbyPlayers_[0]->ChangeAnimationGasp();
 		LobbyPlayers_[1]->ChangeAnimationTumbel();
+
+		LobbyPlayers_[0]->SetPlayerColor(GameServer::GetInst()->GetPlayerColorReturn(AllServerPlayers_[0].Color_));
+		LobbyPlayers_[1]->SetPlayerColor(GameServer::GetInst()->GetPlayerColorReturn(AllServerPlayers_[1].Color_));
 	}
 	else if (AllServerPlayersCount_ == 3)
 	{
 		LobbyPlayers_[0]->ChangeAnimationGasp();
 		LobbyPlayers_[1]->ChangeAnimationJogging();
 		LobbyPlayers_[2]->ChangeAnimationFall();
+
+		LobbyPlayers_[0]->SetPlayerColor(GameServer::GetInst()->GetPlayerColorReturn(AllServerPlayers_[0].Color_));
+		LobbyPlayers_[1]->SetPlayerColor(GameServer::GetInst()->GetPlayerColorReturn(AllServerPlayers_[1].Color_));
+		LobbyPlayers_[2]->SetPlayerColor(GameServer::GetInst()->GetPlayerColorReturn(AllServerPlayers_[2].Color_));
 	}
 	else if (AllServerPlayersCount_ >= 4)
 	{
@@ -454,6 +461,12 @@ void MidScoreLevel::ServerSetting()
 		LobbyPlayers_[1]->ChangeAnimationJogging();
 		LobbyPlayers_[2]->ChangeAnimationIdle();
 		LobbyPlayers_[3]->ChangeAnimationTumbel();
+
+		LobbyPlayers_[0]->SetPlayerColor(GameServer::GetInst()->GetPlayerColorReturn(AllServerPlayers_[0].Color_));
+		LobbyPlayers_[1]->SetPlayerColor(GameServer::GetInst()->GetPlayerColorReturn(AllServerPlayers_[1].Color_));
+		LobbyPlayers_[2]->SetPlayerColor(GameServer::GetInst()->GetPlayerColorReturn(AllServerPlayers_[2].Color_));
+		LobbyPlayers_[3]->SetPlayerColor(GameServer::GetInst()->GetPlayerColorReturn(AllServerPlayers_[3].Color_));
+
 	}
 
 	// 처음에 보여줄때는 ID순서대로
