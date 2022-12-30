@@ -19,7 +19,10 @@ void BigShots_Puff::Start()
 	PuffRenderer_->SetTexture("VFX_SomePuff_02.png");
 	//PuffRenderer_->SetMaterial("CustomDefferedColor");
 	PuffRenderer_->GetTransform().SetWorldScale({ SumValue_,SumValue_,0 });
-	PuffRenderer_->GetRenderUnit()->GetMaterial()->GetPixelShader()->SetIsAlphaEffect(true);
+	//PuffRenderer_->GetRenderUnit()->GetMaterial()->GetPixelShader()->SetIsAlphaEffect(true);
+
+	PuffRenderer_->GetCamera()->ChangeRenderingOrder(PuffRenderer_, 0, RENDERINGPATHORDER::ALPHAEFFECT);
+	PuffRenderer_->GetRenderUnit()->GetMaterial()->SetOutputMergerDepthStencil("AlwaysDepth");
 }
 
 void BigShots_Puff::Update(float _DeltaTime)
