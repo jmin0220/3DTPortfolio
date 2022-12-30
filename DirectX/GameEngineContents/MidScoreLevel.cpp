@@ -173,11 +173,18 @@ void MidScoreLevel::LevelStartEvent()
 		AllServerPlayersCount_ = static_cast<int>(GameServer::GetInst()->OtherPlayersInfo_.size() + 1);
 		GameServer::GetInst()->GetAllPlayersInfo(AllServerPlayers_);
 
+		PlayerName_.reserve(AllServerPlayersCount_);
+		PlayerScores_.reserve(AllServerPlayersCount_);
+		FontScore_.reserve(AllServerPlayersCount_);
+		Font_PlayerName.reserve(AllServerPlayersCount_);
+
 		for (int i = 0; i < AllServerPlayers_.size(); i++)
 		{
 			// UI
 			// 플레이어 이름
 			PlayerName_.push_back(AllServerPlayers_[i].Name_);
+
+			PlayerScores_[AllServerPlayers_[i].Score_];
 
 			// 플레이어 점수 '폰트엑터'
 			std::shared_ptr<FontActor> FontScore = CreateActor<FontActor>();
@@ -369,10 +376,6 @@ void MidScoreLevel::BubbleSortLerp()
 
 void MidScoreLevel::RenderBubbleSort()
 {
-	if (FontScore_.empty() || PlayerScores_.empty())
-	{
-		return;
-	}
 
 	if (Once_ == true) //버블소트로 실제 정돈이 끝난후 그걸 토대로 러프 하는 부분(함수로 정돈하자)
 	{
@@ -415,6 +418,18 @@ void MidScoreLevel::ServerSetting()
 
 	// ID순으로 정렬
 	std::sort(AllServerPlayers_.begin(), AllServerPlayers_.end(), IDSmaller);
+
+
+	for (int i = 0; i < AllServerPlayers_.size(); i++)
+	{
+		PlayerName_.push_back(AllServerPlayers_[i].Name_);
+
+		PlayerScores_[AllServerPlayers_[i].Score_];
+
+		FontScore_[i]->SetFont(std::to_string(AllServerPlayers_[i].Score_), FONT_NOTO_SANS_CJK_SC, 50.0f, {170,250 + i * 120.0f}, LeftAndRightSort::LEFT);
+
+		Font_PlayerName[i]->SetFont(PlayerName_[i], FONT_TITAN_ONE, 60.0f, {170, 200 + i * 120.0f}, LeftAndRightSort::LEFT);
+	}
 
 	LastActorPos_ = LobbyPlayers_[LobbyPlayers_.size() - 1]->GetTransform().GetWorldPosition();
 	

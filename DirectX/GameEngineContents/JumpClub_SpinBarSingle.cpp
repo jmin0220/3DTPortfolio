@@ -3,7 +3,7 @@
 #include "VirtualPhysXLevel.h"
 
 JumpClub_SpinBarSingle::JumpClub_SpinBarSingle() 
-	: AccSpeed_(50.0f)
+	: AccSpeed_(15.0f)
 	, AccTime_(5.0f)
 {
 }
