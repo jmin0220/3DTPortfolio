@@ -257,6 +257,7 @@ void StageParentLevel::ReadyStart(const StateInfo& _Info)
 
 	//UIs_-> 카운트다운 스타트
 	UIs_->CountdownStart();
+	UIs_->GetSubTitle()->Off();
 }
 
 void StageParentLevel::ReadyUpdate(float _DeltaTime, const StateInfo& _Info)
