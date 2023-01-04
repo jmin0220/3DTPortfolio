@@ -217,17 +217,26 @@ void MovingBar::Start()
 
 void MovingBar::Update(float _DeltaTime)
 {
-	if (false == ServerActivated_ && true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageRaceStart))
+	if (true == GameServer::GetInst()->IsServerStart())
 	{
-		ServerActivated_ = true;
+		if (false == ServerActivated_ && true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageRaceStart))
+		{
+			ServerActivated_ = true;
+		}
+
+		if (false == ServerActivated_)
+		{
+			return;
+		}
+
+		Move(_DeltaTime);
+	}
+	else
+	{
+		Move(_DeltaTime);
 	}
 
-	if (false == ServerActivated_)
-	{
-		return;
-	}
 
-	Move(_DeltaTime);
 }
 
 void MovingBar::LevelStartEvent()

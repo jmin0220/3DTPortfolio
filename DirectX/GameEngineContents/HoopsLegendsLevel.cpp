@@ -44,42 +44,48 @@ void HoopsLegendsLevel::Update(float _DeltaTime)
 {
 	StageParentLevel::Update(_DeltaTime);
 
-	if (false == ServerActivated_
-		&& true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StagePreviewChangeOver))
-	{
-		ServerActivated_ = true;
-		RankingActor_->On();
-	}
-
-	// 이거 서버만 돌려야됨
 	if (true == GameServer::GetInst()->IsServerStart())
 	{
-		if (true == GameServer::IsHost_)
+		if (false == ServerActivated_
+			&& true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StagePreviewChangeOver))
 		{
-			// 호스트만 실시간 후프위치 조절
-			SetHoopPosition();
+			ServerActivated_ = true;
+			RankingActor_->On();
+		}
 
-			// 호스트만 남은시간 조절
-			if (true == ServerActivated_)
+		// 이거 서버만 돌려야됨
+		if (true == GameServer::GetInst()->IsServerStart())
+		{
+			if (true == GameServer::IsHost_)
 			{
-				TimerLimit_ -= _DeltaTime;
+				// 호스트만 실시간 후프위치 조절
+				SetHoopPosition();
+
+				// 호스트만 남은시간 조절
+				if (true == ServerActivated_)
+				{
+					TimerLimit_ -= _DeltaTime;
+				}
+
+				GameServer::GetInst()->PlayTime_ = static_cast<unsigned int>(TimerLimit_);
+				TimerUI_->SetNetTime(TimerLimit_);
+			}
+			else
+			{
+				// 클라이언트는 호스트 유저플레이어의 시간 받아와야됨
+				std::map<int, std::shared_ptr<class PlayerStatePacket>>& Players = GameServer::GetInst()->GetOtherPlayersInfo();
+
+				TimerLimit_ = static_cast<float>(Players[0]->PlayTime);
+				TimerUI_->SetNetTime(TimerLimit_);
 			}
 
-			GameServer::GetInst()->PlayTime_ = static_cast<unsigned int>(TimerLimit_);
-			TimerUI_->SetNetTime(TimerLimit_);
 		}
-		else
-		{
-			// 클라이언트는 호스트 유저플레이어의 시간 받아와야됨
-			std::map<int, std::shared_ptr<class PlayerStatePacket>>& Players = GameServer::GetInst()->GetOtherPlayersInfo();
-			
-			TimerLimit_ = static_cast<float>(Players[0]->PlayTime);
-			TimerUI_->SetNetTime(TimerLimit_);
-		}
-
 	}
-
-
+	// 서버 안킨 상태
+	else
+	{
+		
+	}
 
 }
 

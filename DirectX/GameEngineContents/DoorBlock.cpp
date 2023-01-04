@@ -42,17 +42,26 @@ void DoorBlock::Start()
 
 void DoorBlock::Update(float _DeltaTime)
 {
-	if (false == ServerActivated_ && true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageRaceStart))
+	if (true == GameServer::GetInst()->IsServerStart())
 	{
-		ServerActivated_ = true;
+		if (false == ServerActivated_ && true == GameServer::GetInst()->CheckServerSignal(ServerFlag::S_StageRaceStart))
+		{
+			ServerActivated_ = true;
+		}
+
+		if (false == ServerActivated_)
+		{
+			return;
+		}
+
+		DoorMove(_DeltaTime);
+	}
+	else
+	{
+		DoorMove(_DeltaTime);
 	}
 
-	if (false == ServerActivated_)
-	{
-		return;
-	}
 
-	DoorMove(_DeltaTime);
 	
 }
 
