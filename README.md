@@ -4,6 +4,7 @@ DX11 라이브러리와 PhysX를 사용한 3D게임 폴가이즈 모작입니다
 https://youtu.be/c6LxyqUI7Dc
 
 프로젝트 실행방법---<br/>
+0. Level5/GameApp 프로젝트를 시작 프로젝트로 설정<br/>
 1. DirectX/GameEngineCore/ThirdParty/bin 에서 프로필에 맞는 폴더(Debug, Release)를 선택하여, 내부에 있는 .zip 압축파일을 같은 폴더에 해제<br/>
 2. 타이틀 화면에서 로비 화면으로 넘어가는 키는 Enter<br/>
 3. 싱글 플레이의 경우, 하단의 IMGUI 인터페이스에서 원하는 레벨을 클릭하여 이동<br/>
