@@ -36,15 +36,24 @@ void ActorPicker::Update(float _DeltaTime)
 {
 	
 	// 카메라와 동일한 위치 
-	CamPos_ = GetLevel()->GetMainCameraActor()->GetTransform().GetWorldPosition() + GetLevel()->GetMainCameraActor()->GetTransform().GetForwardVector() * 20.0f;
+	float4 CamFwd = GetLevel()->GetMainCameraActor()->GetTransform().GetForwardVector();
+	CamPos_ = GetLevel()->GetMainCameraActor()->GetTransform().GetWorldPosition() + CamFwd * 20.0f;
 	GetTransform().SetWorldPosition(CamPos_);
 
-	// 피킹용 콜리전(Ray) 회전
-	// -1 과 1 사이가 아니라 화면 비율에 따라 달라지는거 적용안했음
-	float4 MouseVectorFromCam = GetLevel()->GetMainCamera()->GetMouseWorldPosition();
-	float4 PickerAngle = float4(MouseVectorFromCam.y * GameEngineMath::RadianToDegree * -1,
-		MouseVectorFromCam.x * GameEngineMath::RadianToDegree,
-		MouseVectorFromCam.z * GameEngineMath::RadianToDegree);
+
+	// 회전각 공식(수정 전)
+	//float4 MouseVectorFromCam = GetLevel()->GetMainCamera()->GetMouseWorldPosition();
+	//float4 PickerAngle = float4(MouseVectorFromCam.y * GameEngineMath::RadianToDegree * -1,
+	//	MouseVectorFromCam.x * GameEngineMath::RadianToDegree,
+	//	MouseVectorFromCam.z * GameEngineMath::RadianToDegree);
+
+	// 회전각 공식(수정 후)
+	float4 MouseVectorFromCam = GetLevel()->GetMainCamera()->GetMouseWorldPosition().Normalize3DReturn();
+
+	float XAngle = asinf(MouseVectorFromCam.x) * GameEngineMath::RadianToDegree;
+	float YAngle = asinf(MouseVectorFromCam.y) * GameEngineMath::RadianToDegree;
+
+	float4 PickerAngle = float4(YAngle * -1, XAngle, 0);
 
 	float4 Rot = GetLevel()->GetMainCameraActor()->GetTransform().GetLocalRotation();
 	GetTransform().SetWorldRotation(Rot + PickerAngle);
